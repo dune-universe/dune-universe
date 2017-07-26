@@ -1,4 +1,4 @@
-version: "1.11.1"
+version: "1.11.0"
 opam-version: "1.2"
 maintainer:   "thomas@gazagnaire.org"
 authors:      "Thomas Gazagnaire"
@@ -19,7 +19,7 @@ depends: [
   "cmdliner"
   "logs"
   "git-http" {>= "1.11.0"}
-  "conduit"  {>= "0.8.4" < "1.0.0"}
+  "conduit"  {>= "0.8.4"}
   "nocrypto" {>= "0.2.0"}
   "mtime"    {>= "1.0.0"}
   "base-unix"

@@ -1,4 +1,4 @@
-version: "1.11.1"
+version: "1.11.0"
 opam-version: "1.2"
 maintainer:   "thomas@gazagnaire.org"
 authors:      "Thomas Gazagnaire"
@@ -24,7 +24,6 @@ depends: [
   "fmt"
   "hex"
   "astring"
-  "ocplib-endian"
   "decompress" {>= "0.6"}
   "alcotest" {test}
   "nocrypto" {test}
