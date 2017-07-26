@@ -1,0 +1,8 @@
+(library
+ ((name variantslib)
+  (public_name variantslib)
+  (libraries (base))
+  (preprocess (pps ( ppx_driver.runner)))
+))
+
+(jbuild_version 1)

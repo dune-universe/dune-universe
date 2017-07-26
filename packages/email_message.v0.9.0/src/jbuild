@@ -1,0 +1,19 @@
+(library
+ ((name email_message)
+  (public_name email_message)
+  (libraries (async
+              core_extended.base64
+              core
+              core_extended
+              cryptokit
+              oUnit
+              re2
+              magic-mime))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+ ))
+
+(ocamllex (email_lexer media_type_lexer quoted_printable_lexer email_address_lexer_v1))
+(ocamlyacc (email_grammar media_type_grammar))
+
+
+(jbuild_version 1)

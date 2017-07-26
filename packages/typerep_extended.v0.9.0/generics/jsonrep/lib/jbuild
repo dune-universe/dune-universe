@@ -1,0 +1,11 @@
+(library (
+  (name json_typerep)
+  (libraries (
+    core
+    json-wheel_jane_street_overlay
+    typerep_experimental
+  ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+))
+
+(jbuild_version 1)

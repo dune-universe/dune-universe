@@ -1,0 +1,10 @@
+(library
+ ((name selector)
+  (public_name core_extended.selection)
+  (libraries
+   (re2
+    core))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+))
+
+(jbuild_version 1)

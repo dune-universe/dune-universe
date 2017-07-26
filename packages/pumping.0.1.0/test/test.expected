@@ -1,0 +1,138 @@
+
+type t = [ `A of [ `B of 'a | `C of 'a | `End ] as 'a ]
+- : t = `A `End
+- : t = `A (`B `End)
+- : t = `A (`B (`B `End))
+- : t = `A (`C (`B `End))
+Characters 16-18:
+  (`A : t) ;;
+   ^^
+Error: This expression has type [> `A ]
+       but an expression was expected of type t
+       Types for tag `A are incompatible
+Characters 1-8:
+  (`B `End : t) ;;
+   ^^^^^^^
+Error: This expression has type [> `B of [> `End ] ]
+       but an expression was expected of type t
+       The second variant type does not allow tag(s) `B
+Characters 4-13:
+  (`A (`A `End) : t) ;;
+      ^^^^^^^^^
+Error: This expression has type [> `A of [> `End ] ]
+       but an expression was expected of type
+         [ `B of 'a | `C of 'a | `End ] as 'a
+       The second variant type does not allow tag(s) `A
+Characters 8-17:
+  (`A (`C (`A `End)) : t) ;;
+          ^^^^^^^^^
+Error: This expression has type [> `A of [> `End ] ]
+       but an expression was expected of type
+         [ `B of 'a | `C of 'a | `End ] as 'a
+       The second variant type does not allow tag(s) `A
+- : [ `A of [ `End ]
+    | `B of [ `End ]
+    | `C of [ `End ]
+    | `D of [ `End ]
+    | `E of [ `End ]
+    | `F of [ `End ]
+    | `G of [ `End ]
+    | `H of [ `End ]
+    | `I of [ `End ]
+    | `J of [ `End ]
+    | `K of [ `End ]
+    | `L of [ `End ]
+    | `M of [ `End ]
+    | `N of [ `End ]
+    | `O of [ `End ]
+    | `P of [ `End ]
+    | `Q of [ `End ]
+    | `R of [ `End ]
+    | `S of [ `End ]
+    | `T of [ `End ]
+    | `U of [ `End ]
+    | `V of [ `End ]
+    | `W of [ `End ]
+    | `X of [ `End ]
+    | `Y of [ `End ]
+    | `Z of [ `End ] ]
+= `A `End
+- : [ `C of [ `End ] ] = `C `End
+- : [ `C of [ `End ] ] = `C `End
+- : [ `End ] = `End
+- : [ `a of [ `End ] ] = `a `End
+- : [ `abc of [ `End ] ] = `abc `End
+- : [ `a of [ `End ] | `b of [ `End ] ] = `a `End
+Characters 1-8:
+  (`c `End :[%re"[ab]"]) ;; (*fail*)
+   ^^^^^^^
+Error: This expression has type [> `c of [> `End ] ]
+       but an expression was expected of type
+         [ `a of [ `End ] | `b of [ `End ] ]
+       The second variant type does not allow tag(s) `c
+- : [ `a of [ `End ] | `b of [ `End ] | `c of [ `End ] | `d of [ `End ] ] =
+`a `End
+Characters 1-8:
+  (`x `End :[%re"[a-d]"]) ;; (*fail*)
+   ^^^^^^^
+Error: This expression has type [> `x of [> `End ] ]
+       but an expression was expected of type
+         [ `a of [ `End ] | `b of [ `End ] | `c of [ `End ] | `d of [ `End ] ]
+       The second variant type does not allow tag(s) `x
+- : [ `End | `a of 'a ] as 'a = `a (`a (`a `End))
+- : [ `End | `a of 'a ] as 'a = `End
+- : [ `a of [ `End | `a of 'a ] as 'a ] = `a (`a (`a `End))
+Characters 1-5:
+  (`End :[%re"a+"]) ;; (*fail*)
+   ^^^^
+Error: This expression has type [> `End ]
+       but an expression was expected of type
+         [ `a of [ `End | `a of 'a ] as 'a ]
+       The second variant type does not allow tag(s) `End
+- : [ `a of [ `a of [ `a of [ `End | `a of 'a ] as 'a ] ] ] =
+`a (`a (`a `End))
+- : [ `a of [ `a of [ `a of [ `End | `a of 'a ] as 'a ] ] ] =
+`a (`a (`a (`a `End)))
+Characters 8-12:
+  (`a (`a `End) :[%re"a{3,}"]) ;; (*fail*)
+          ^^^^
+Error: This expression has type [> `End ]
+       but an expression was expected of type
+         [ `a of [ `End | `a of 'a ] as 'a ]
+       The second variant type does not allow tag(s) `End
+- : [ `a of [ `a of [ `a of [ `End | `a of [ `End ] ] ] ] ] =
+`a (`a (`a `End))
+- : [ `a of [ `a of [ `a of [ `End | `a of [ `End ] ] ] ] ] =
+`a (`a (`a (`a `End)))
+Characters 8-12:
+  (`a (`a `End) :[%re"a{3,4}"]) ;; (*fail*)
+          ^^^^
+Error: This expression has type [> `End ]
+       but an expression was expected of type
+         [ `a of [ `End | `a of [ `End ] ] ]
+       The second variant type does not allow tag(s) `End
+Characters 16-25:
+  (`a (`a (`a (`a (`a `End)))) :[%re"a{3,4}"]) ;; (*fail*)
+                  ^^^^^^^^^
+Error: This expression has type [> `a of [> `End ] ]
+       but an expression was expected of type [ `End ]
+       The second variant type does not allow tag(s) `a
+- : [ `b of [ `End ] ] = `b `End
+Characters 1-8:
+  (`a `End :[%re"[ab]&[bc]"]) ;; (*fail*)
+   ^^^^^^^
+Error: This expression has type [> `a of [> `End ] ]
+       but an expression was expected of type [ `b of [ `End ] ]
+       The second variant type does not allow tag(s) `a
+val id : 'a -> 'a = <fun>
+- : [ `a of [ `a of [ `End | `a of 'a ] as 'a ] ] -> [ `a of [ `a of 'a ] ] =
+<fun>
+- : [ `b of [ `End ] ] -> [ `b of [ `End ] ] = <fun>
+- : [ `a of [ `c of [ `End ] | `d of [ `End ] ]
+    | `b of [ `c of [ `End ] | `d of [ `End ] ] ] ->
+    [ `a of [ `c of [ `End ] | `d of [ `End ] ]
+    | `b of [ `c of [ `End ] | `d of [ `End ] ] ]
+= <fun>
+
+val f : ([ `End | `a of 'a ] as 'a) -> ([ `End | `a of 'b | `b of 'b ] as 'b) =
+   <fun>

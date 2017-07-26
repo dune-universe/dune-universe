@@ -1,0 +1,9 @@
+(library
+ ((name ppx_typerep_conv)
+  (public_name ppx_typerep_conv)
+  (kind ppx_deriver)
+  (ppx_runtime_libraries (typerep))
+  (libraries (ppx_core ppx_type_conv))
+  (preprocess (pps (ppx_metaquot ppx_driver.runner)))))
+
+(jbuild_version 1)

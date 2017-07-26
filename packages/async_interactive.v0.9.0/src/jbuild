@@ -1,0 +1,11 @@
+(library (
+  (name async_interactive)
+  (public_name async_interactive)
+  (libraries (
+    async
+    core
+  ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+))
+
+(jbuild_version 1)

@@ -1,0 +1,31 @@
+
+(* Errors *)
+let x = 1 + 'e'
+[%%expect{|
+Line _, characters 12-15:
+Error: This expression has type char but an expression was expected of type
+         int
+|}];;
+
+(* Printing *)
+print_string "blah"
+[%%expect{|
+blah
+|}];;
+
+#verbose true;;
+
+(* Printing + verbose *)
+print_string "foo"
+[%%expect{|
+- : unit = ()
+foo
+|}];;
+
+open Sexplib
+
+(* Value printing *)
+let x = Sexp.List [Atom "abc"; Atom "42"]
+[%%expect{|
+val x : Type.t = (abc 42)
+|}];;

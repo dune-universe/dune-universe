@@ -1,0 +1,6 @@
+(library
+ ((name ppx_driver_omp_test_ppx)
+  (libraries (ocaml-migrate-parsetree))
+  (preprocess no_preprocessing)))
+
+(jbuild_version 1)

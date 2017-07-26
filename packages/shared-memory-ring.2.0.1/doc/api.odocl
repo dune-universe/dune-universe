@@ -1,0 +1,7 @@
+# OASIS_START
+# DO NOT EDIT (digest: 6243f8db02b3b91e94a36b11c563f42f)
+Ring
+Lwt_ring
+Xenstore_ring
+Console_ring
+# OASIS_STOP

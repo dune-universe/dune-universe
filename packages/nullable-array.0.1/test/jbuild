@@ -1,0 +1,31 @@
+(jbuild_version 1)
+
+(executables
+ ((names (basic))
+  (modules (basic))
+  (libraries (nullable_array))))
+
+(alias
+ ((name    runtest)
+  (deps    (basic.exe))
+  (action  (run ${<}))))
+
+(alias
+ ((name    runtest)
+  (deps    (basic.bc))
+  (action  (run ${<}))))
+
+(executables
+ ((names (basic_float))
+  (modules (basic_float))
+  (libraries (nullable_array))))
+
+(alias
+ ((name    runtest)
+  (deps    (basic_float.exe))
+  (action  (run ${<}))))
+
+(alias
+ ((name    runtest)
+  (deps    (basic_float.bc))
+  (action  (run ${<}))))

@@ -1,0 +1,14 @@
+(executables
+ ((names (patdiff))
+  (libraries (core_extended
+              patdiff_lib
+              pcre
+              sexplib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(install
+ ((section bin)
+  (files ((patdiff.exe as patdiff)
+          patdiff-git-wrapper))))
+
+(jbuild_version 1)

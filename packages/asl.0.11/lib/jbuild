@@ -1,0 +1,8 @@
+(library
+ ((name        asl)
+  (public_name asl)
+  (libraries   (unix result logs))
+  (flags       (:standard -safe-string -principal -strict-sequence))
+  (c_names     (asl_stubs))
+  (wrapped     false)
+))

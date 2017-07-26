@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+(library
+ ((name        topkg_jbuilder)
+  (public_name topkg-jbuilder)
+  (libraries (topkg))
+  (modules (topkg_jbuilder))))
+
+(library
+ ((name        topkg_jbuilder_auto)
+  (public_name topkg-jbuilder.auto)
+  (libraries (topkg_jbuilder))
+  (modules (topkg_jbuilder_auto))))

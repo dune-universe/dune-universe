@@ -1,0 +1,13 @@
+(library
+ ((name patdiff_lib)
+  (public_name patdiff.lib)
+  (libraries
+   (core
+    core_extended
+    ;; expect_test_helpers
+    patience_diff
+    pcre
+    sexplib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

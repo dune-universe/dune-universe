@@ -1,0 +1,9 @@
+(library
+ ((name async)
+  (public_name async)
+  (libraries  (async_extra async_kernel async_unix core))
+  (preprocess (pps (ppx_jane -check-doc-comments ppx_driver.runner)))
+  ))
+
+
+(jbuild_version 1)

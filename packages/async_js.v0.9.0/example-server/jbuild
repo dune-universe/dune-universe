@@ -1,0 +1,7 @@
+(executables
+  ((names (key_value_store))
+   (libraries (core async cohttp cohttp_async_lib ocaml_uri))
+   (preprocess (pps (ppx_jane ppx_driver.runner)))
+   ))
+
+(jbuild_version 1)

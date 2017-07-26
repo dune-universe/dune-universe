@@ -1,0 +1,8 @@
+(library
+ ((name ppx_optcomp)
+  (public_name ppx_optcomp)
+  (libraries (compiler-libs.common ppx_core))
+  (preprocess no_preprocessing)
+  ))
+
+(jbuild_version 1)

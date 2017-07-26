@@ -1,0 +1,20 @@
+(library
+ ((name wamp)
+  (public_name wamp)
+  (modules (wamp))
+  (libraries (result uri))))
+
+(library
+ ((name wamp_yojson)
+  (public_name wamp-yojson)
+  (modules (wamp_yojson))
+  (optional)
+  (libraries (wamp yojson))))
+
+(library
+ ((name wamp_msgpck)
+  (public_name wamp-msgpck)
+  (modules (wamp_msgpck))
+  (optional)
+  (libraries (wamp msgpck))))
+

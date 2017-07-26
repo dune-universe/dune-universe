@@ -1,0 +1,11 @@
+(library
+ ((name        csvfields)
+  (public_name csvfields)
+  (libraries
+   (core
+    csvlib
+    sexplib
+    xml_light))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

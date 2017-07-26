@@ -1,0 +1,8 @@
+(library
+ ((name ppx_pipebang_sample)
+  (preprocess (pps (ppx_pipebang ppx_driver.runner)))))
+
+(alias ((name DEFAULT)
+        (deps (test.ml.pp))))
+
+(jbuild_version 1)

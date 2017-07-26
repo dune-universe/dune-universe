@@ -1,0 +1,12 @@
+(executables
+ ((names (main))
+  (libraries (ppx_jane ppx_driver))
+  (link_flags (-linkall))
+  (preprocess no_preprocessing)))
+
+
+(install
+ ((section bin)
+  (files ((main.exe as ppx-jane)))))
+
+(jbuild_version 1)

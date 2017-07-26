@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name        nullable_array)
+  (public_name nullable-array)
+  (modules (nullable_array))
+  (flags (:standard "-keep-docs" "-keep-locs"))))

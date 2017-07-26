@@ -1,0 +1,17 @@
+(rule
+  ((targets (incremental_kernel_debug.ml))
+   (deps (../src/incremental_kernel.pack-order
+          (glob_files ../src/*.ml)
+          (glob_files ../src/*.mli)
+          ./generate_debug_lib.sh))
+   (action (bash "./generate_debug_lib.sh incremental_kernel incremental_kernel_debug cat"))))
+
+(library
+ ((name incremental_kernel_debug)
+  (libraries
+   (core_kernel
+    incremental_kernel))
+  (preprocessor_deps (debug.mlh))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

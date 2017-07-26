@@ -1,0 +1,10 @@
+(executables
+ ((names (main))
+  (libraries (async
+                    core
+                    core_extended
+                    fieldslib
+                    sexplib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

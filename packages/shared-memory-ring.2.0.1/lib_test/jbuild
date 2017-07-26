@@ -1,0 +1,14 @@
+(library
+ ((name test_library)
+  (c_names (old_ring_stubs))
+))
+
+(executables
+ ((names     (ring_test))
+  (libraries (lwt lwt.unix shared-memory-ring oUnit test_library))
+))
+
+(alias
+ ((name    runtest)
+  (deps    (ring_test.exe))
+  (action  (run ${<}))))

@@ -1,0 +1,5 @@
+(jbuild_version 1)
+
+(executables
+ ((libraries (threads core redis.lwt redis.syc))
+  (names (examples))))

@@ -1,0 +1,39 @@
+let () = Ppx_bench_lib.Benchmark_accumulator.Current_libname.set "foo"
+let () =
+  Expect_test_collector.Current_file.set ~absolute_filename:"blah/example.ml"
+let () = Ppx_inline_test_lib.Runtime.set_lib_and_partition "foo" ""
+# 1 "example.ml"
+type t = int [@@deriving sexp]
+# 8 "example.ml.pp"
+let _ = fun (_ : t)  -> ()
+let t_of_sexp : Sexplib.Sexp.t -> t =
+  let _tp_loc = "example.ml.t"  in fun t  -> int_of_sexp t
+let _ = t_of_sexp
+let sexp_of_t : t -> Sexplib.Sexp.t = fun v  -> sexp_of_int v
+let _ = sexp_of_t
+# 3 "example.ml"
+let f x = x + 1
+
+# 18 "example.ml.pp"
+let () =
+  Ppx_inline_test_lib.Runtime.test ~config:(module Inline_test_config)
+    ~descr:": <<(f 1) = 2>>" ~tags:[] ~filename:"example.ml" ~line_number:5
+    ~start_pos:0 ~end_pos:20 (fun ()  -> (f 1) = 2)
+
+let () =
+  Ppx_inline_test_lib.Runtime.test ~config:(module Inline_test_config)
+    ~descr:": <<(f 2) = 3>>" ~tags:[] ~filename:"example.ml" ~line_number:6
+    ~start_pos:0 ~end_pos:20 (fun ()  -> (f 2) = 3)
+
+# 8 "example.ml"
+let () = ()
+let () = print_s 
+# 32 "example.ml.pp"
+(Sexplib.Sexp.List
+   [Sexplib.Sexp.List [Sexplib.Sexp.Atom "x"; Sexplib.Conv.sexp_of_int 1]])
+# 9 "example.ml"
+                                  ; ()
+# 37 "example.ml.pp"
+let () = Ppx_inline_test_lib.Runtime.unset_lib "foo"
+let () = Expect_test_collector.Current_file.unset ()
+let () = Ppx_bench_lib.Benchmark_accumulator.Current_libname.unset ()

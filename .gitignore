@@ -1,0 +1,4 @@
+.opam-root
+_build
+*.install
+.merlin

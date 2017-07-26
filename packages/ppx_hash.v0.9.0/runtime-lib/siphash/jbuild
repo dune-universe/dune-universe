@@ -1,0 +1,7 @@
+(library
+ ((name siphash_lib)
+  (c_names (siphash))
+  (libraries (base))
+  (preprocess (pps ( ppx_driver.runner)))))
+
+(jbuild_version 1)

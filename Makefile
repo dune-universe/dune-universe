@@ -1,0 +1,2 @@
+default:
+	./scripts/fetch.sh

@@ -1,0 +1,5 @@
+(library
+ ((name        msgpck)
+  (public_name msgpck)
+  (modules (msgpck))
+  (libraries (ocplib-endian))))

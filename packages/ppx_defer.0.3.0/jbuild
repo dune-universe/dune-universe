@@ -1,0 +1,5 @@
+(jbuild_version 1)
+
+(alias
+ ((name example)
+  (deps (examples/ic.exe))))

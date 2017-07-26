@@ -1,0 +1,9 @@
+(executables
+ ((names (test_fs_unix))
+  (libraries   (unix ptime mirage-clock-unix alcotest rresult mirage-fs-lwt mirage-fs-unix))
+))
+
+(alias
+ ((name    runtest)
+  (deps    (test_fs_unix.exe (files_recursively_in test_directory)))
+  (action  (run ${<}))))

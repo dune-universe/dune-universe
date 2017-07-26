@@ -1,0 +1,11 @@
+(library (
+  (name jsonrep_test)
+  (libraries (
+    core
+    json
+    json_typerep
+    typerep_experimental
+    ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

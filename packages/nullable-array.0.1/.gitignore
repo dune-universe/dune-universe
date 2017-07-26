@@ -1,0 +1,11 @@
+lib_explo
+test_explo
+asm
+*/*.cm?
+*/*.cm??
+*/*.a
+*/*.annot
+*/*.o
+*/*.byte
+*/*.opt
+_build

@@ -1,0 +1,16 @@
+*~
+*.cmi
+*.cmo
+*.cmx
+*.cma
+*.cmxa
+*.cmxs
+*.a
+*.o
+*.annot
+*.run
+*.opt
+*.exe
+_build
+.merlin
+*.install

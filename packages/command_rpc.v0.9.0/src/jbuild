@@ -1,0 +1,8 @@
+(library (
+  (name command_rpc)
+  (public_name command_rpc)
+  (libraries (async core))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+  ))
+
+(jbuild_version 1)

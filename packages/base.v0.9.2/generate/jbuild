@@ -1,0 +1,7 @@
+(executables
+ ((names (generate_pow_overflow_bounds))
+  (libraries (num))
+  (preprocess no_preprocessing)))
+
+
+(jbuild_version 1)

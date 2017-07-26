@@ -1,0 +1,24 @@
+(library
+ ((name mirage_block_xen)
+  (public_name mirage-block-xen)
+  (modules (Blkproto Device_number))
+  (libraries (cstruct cstruct.ppx io-page))
+  (wrapped false)
+  (preprocess (pps (cstruct.ppx)))
+))
+
+(library
+ ((name mirage_block_xen_front)
+  (public_name mirage-block-xen.front)
+  (modules (Blkfront Block))
+  (libraries (logs stringext lwt cstruct cstruct.ppx mirage-block-lwt io-page shared-memory-ring shared-memory-ring-lwt mirage-block-xen xen-evtchn xen-gnt mirage-xen))
+  (wrapped false)
+))
+
+(library
+ ((name mirage_block_xen_back)
+  (public_name mirage-block-xen.back)
+  (modules (Blkback Block_request))
+  (libraries (logs lwt cstruct cstruct.ppx io-page shared-memory-ring shared-memory-ring-lwt mirage-block-xen xen-evtchn xen-gnt xenstore mirage-block-lwt rresult))
+  (wrapped false)
+))

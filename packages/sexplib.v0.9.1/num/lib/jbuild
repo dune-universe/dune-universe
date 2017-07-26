@@ -1,0 +1,7 @@
+(library
+ ((name sexplib_num)
+  (public_name sexplib.num)
+  (libraries (num sexplib))
+  (preprocess no_preprocessing)))
+
+(jbuild_version 1)

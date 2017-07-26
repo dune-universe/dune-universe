@@ -1,0 +1,52 @@
+;; config.h is created atomically by discover.sh to avoid a problem where gcc -MM on some
+;; file that includes config.h reads a partial written file, and fails
+(rule
+ ((targets (config.h rt-flags))
+  (deps    (config/discover.exe))
+  (action  (run ${<} -ocamlc ${OCAMLC}))))
+
+(library
+ ((name core_kernel)
+  (public_name core_kernel)
+  (install_c_headers (time_ns_stubs))
+  (libraries
+   (base
+    base_for_tests
+    base.caml
+    stdio
+    bin_prot
+    fieldslib
+    jane-street-headers
+    num
+    ppx_assert.runtime-lib
+    ppx_hash.runtime-lib
+    ppx_inline_test.runtime-lib
+    sexplib
+    typerep
+    variantslib))
+  (c_flags (:standard -D_LARGEFILE64_SOURCE -mpopcnt))
+  (c_library_flags (:include rt-flags))
+  (c_names
+   ;; If you add c stubs in here, ask yourself this question: would it make sense/can it
+   ;; be implemented under windows and in javascript? If not, perhaps this piece of code
+   ;; should go in core instead, since core_kernel is supposed to be the portable subset
+   ;; of core.
+   (bigstring_marshal_stubs
+    bigstring_stubs
+    core_array_stubs
+    core_gc_stubs
+    time_ns_stubs
+    version_util_fallback_stubs))
+  (preprocess (pps (ppx_jane -check-doc-comments ppx_driver.runner)))
+  (preprocessor_deps (config.h))
+))
+
+(alias
+ ((name save_benchmarks)
+  (deps (inline_benchmarks_runner inline_benchmarks_runner.exe))
+  (action (bash "./inline_benchmarks_runner jenga-save-benchmarks"))))
+
+
+(install ((section lib) (files (strftime.js runtime.js))))
+
+(jbuild_version 1)

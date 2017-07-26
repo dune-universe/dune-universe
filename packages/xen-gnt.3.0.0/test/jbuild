@@ -1,0 +1,4 @@
+(executables
+ ((names (test_gntshr))
+  (libraries (xen-gnt xen-gnt-unix cstruct))
+))

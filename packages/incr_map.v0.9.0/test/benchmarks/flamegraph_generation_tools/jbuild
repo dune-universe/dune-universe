@@ -1,0 +1,11 @@
+(executables
+ ((names (html_table))
+  (libraries (
+    incremental_kernel
+    incr_map
+    incr_map_benchmarks
+    ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+  ))
+
+(jbuild_version 1)

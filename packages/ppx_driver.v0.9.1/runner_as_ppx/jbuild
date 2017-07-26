@@ -1,0 +1,10 @@
+;; This library just contain the entry point for ppx drivers. It must
+;; be linked after all other libraries and units.
+(library
+ ((name ppx_driver_runner_as_ppx)
+  (public_name ppx_driver.runner_as_ppx)
+  (library_flags (-linkall))
+  (libraries (ppx_driver))
+  (preprocess no_preprocessing)))
+
+(jbuild_version 1)

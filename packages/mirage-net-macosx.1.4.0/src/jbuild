@@ -1,0 +1,7 @@
+(library
+ ((name        mirage_net_macosx)
+  (public_name mirage-net-macosx)
+  (libraries   (cstruct io-page io-page.unix ipaddr lwt lwt.unix mirage-net-lwt sexplib logs vmnet.lwt threads))
+  (flags       (:standard -w "A-4-41-44" -warn-error "+1..49" -short-paths -safe-string))
+  (wrapped     false)
+))

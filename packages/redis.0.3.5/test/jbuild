@@ -1,0 +1,20 @@
+(jbuild_version 1)
+
+(library
+ ((name redis_test)
+  (modules test)
+  (libraries (redis oUnit))))
+
+(executables
+ ((libraries (redis_test redis_sync redis_lwt))
+  (names (test_sync test_lwt))))
+
+(alias
+ ((name   runtest)
+  (deps   (test_lwt.exe))
+  (action (run ${<}))))
+
+(alias
+ ((name   runtest)
+  (deps   (test_sync.exe))
+  (action (run ${<}))))

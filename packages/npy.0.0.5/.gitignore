@@ -1,0 +1,7 @@
+*.swp
+*.swo
+*.o
+*.native
+*.cm*
+*.npy
+_build

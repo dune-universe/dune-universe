@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library
+ ((name ppx_defer)
+  (public_name ppx_defer)
+  (synopsis "Defer evaluation of expressions")
+  (modules (ppx_defer))
+  (libraries (compiler-libs.common
+              ocaml-migrate-parsetree
+              ppx_tools_versioned))
+  (kind ppx_rewriter)
+  (preprocess (pps (ppx_tools_versioned.metaquot_404)))))

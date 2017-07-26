@@ -1,0 +1,14 @@
+
+(executables
+ ((names (run))
+  (libraries
+   (async
+    bin_prot
+    core
+    ocaml_plugin
+    sexplib))
+  (modules (run plugin_intf))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+
+(jbuild_version 1)

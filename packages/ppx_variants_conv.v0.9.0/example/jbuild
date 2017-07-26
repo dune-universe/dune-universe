@@ -1,0 +1,10 @@
+(executables
+ ((names (test))
+  (libraries (variantslib))
+  (preprocess (pps (ppx_type_conv ppx_variants_conv ppx_driver.runner)))))
+
+(alias
+ ((name DEFAULT)
+  (deps (test.ml.pp test.mli.pp))))
+
+(jbuild_version 1)

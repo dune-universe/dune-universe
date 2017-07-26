@@ -1,0 +1,13 @@
+.merlin
+*.swp
+*.swo
+*.o
+*.native
+*.cm*
+*.png
+_build
+scripts/data
+data
+data/train-images-idx3-ubyte
+data/train-labels-idx1-ubyte
+tensorflow.install

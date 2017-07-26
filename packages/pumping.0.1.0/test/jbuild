@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(executable
+ ((name main)
+  (libraries (pumping ocaml-migrate-parsetree))))
+
+(rule
+ ((targets (test.result))
+  (deps   (test.ml))
+  (action (system "TERM=dumb ${OCAML} -noinit -noprompt -ppx ./${exe:main.exe} < ${<} 2>&1 | tail -n +2 > ${@}"))))
+
+(alias
+ ((name   runtest)
+  (deps   (test.result test.expected))
+  (action (run diff -dEbZBt test.result test.expected))))

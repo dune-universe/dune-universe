@@ -1,0 +1,8 @@
+(executables
+ ((names (server_test))
+  (libraries (lwt lwt.unix xenstore xenstore.server oUnit))
+))
+(alias
+ ((name    runtest)
+  (deps    (server_test.exe))
+  (action  (run ${<} ))))

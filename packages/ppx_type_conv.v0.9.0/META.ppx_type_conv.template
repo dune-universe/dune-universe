@@ -1,0 +1,2 @@
+# JBUILDER_GEN
+requires(-ppx_driver,-custom_ppx) += "ppx_deriving"

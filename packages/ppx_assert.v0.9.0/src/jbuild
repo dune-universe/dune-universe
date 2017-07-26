@@ -1,0 +1,14 @@
+(library
+ ((name ppx_assert)
+  (public_name ppx_assert)
+  (ppx_runtime_libraries (ppx_assert.runtime-lib))
+  (kind ppx_rewriter)
+  (libraries (
+              ppx_core
+              ppx_driver
+              ppx_sexp_conv.expander
+              ppx_here.expander
+              ppx_compare.expander))
+  (preprocess (pps (ppx_metaquot ppx_driver.runner)))))
+
+(jbuild_version 1)

@@ -1,0 +1,7 @@
+(library
+ ((name textutils)
+  (public_name textutils)
+  (libraries (core))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

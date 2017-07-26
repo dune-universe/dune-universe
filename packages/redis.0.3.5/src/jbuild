@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name redis)
+  (public_name redis)
+  (libraries (bytes re.str uuidm))))

@@ -1,0 +1,15 @@
+(library (
+  (name virtual_dom)
+  (public_name virtual_dom)
+  (preprocess (pps (async_js.ppx ppx_jane ppx_driver.runner)))
+  (libraries (
+    tyxml.functor
+    js_of_ocaml
+    base
+  ))
+))
+
+(install
+ ((section lib) (files (../lib/virtualdom.compiled.js ./soft-set-hook.js))))
+
+(jbuild_version 1)

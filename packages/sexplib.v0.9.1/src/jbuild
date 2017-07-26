@@ -1,0 +1,11 @@
+(library
+ ((name sexplib)
+  (libraries (bigarray sexplib0))
+  (public_name sexplib)
+  (preprocess (per_file ((action (system "${PA_CPP} ${<}")) (pre_sexp))))
+))
+
+(ocamllex (lexer))
+(ocamlyacc (parser parser_with_layout))
+
+(jbuild_version 1)

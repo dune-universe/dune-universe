@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(executables
+ ((names (gen))
+  (flags (:standard -w -27))
+  (libraries (base tensorflow))))

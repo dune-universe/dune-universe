@@ -1,0 +1,10 @@
+(library
+ ((name core_test)
+  (libraries (core
+              core_kernel_test
+              expect_test_helpers))
+  (preprocessor_deps (../../src/config.h))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+
+(jbuild_version 1)

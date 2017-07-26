@@ -1,0 +1,13 @@
+- Ops Generation.
+  - Switch to ocaml-protoc ?
+
+- Proper wrapper around wrapper.ml.
+  - Even more functional and type-safe api.
+
+- Gradient Computation and Descent.
+  - Register the gradients for even more functions.
+
+- Examples and tests.
+  - Tutorials (MNIST based).
+  - Add tests.
+    - Gradient, graph with sharing/multiple contributions...

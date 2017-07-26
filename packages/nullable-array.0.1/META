@@ -1,0 +1,7 @@
+version = "0.1"
+description = "Efficient and compact option arrays"
+archive(byte) = "nullable_array.cma"
+archive(byte, plugin) = "nullable_array.cma"
+archive(native) = "nullable_array.cmxa"
+archive(native, plugin) = "nullable_array.cmxs"
+exists_if = "nullable_array.cma"

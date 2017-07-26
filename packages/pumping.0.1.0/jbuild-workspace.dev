@@ -1,0 +1,6 @@
+;; Install the following opam switches
+;;
+;; $ jbuilder build @runtest --workspace jbuild-workspace.dev
+
+(context ((switch 4.03.0)))
+(context ((switch 4.04.0)))

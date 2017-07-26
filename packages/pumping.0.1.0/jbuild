@@ -1,0 +1,19 @@
+(jbuild_version 1)
+
+;; Library
+(library
+ ((name pumping)
+  (public_name pumping)
+  (synopsis "Pumping - Regular languages in types")
+  (libraries (compiler-libs.common
+              ocaml-migrate-parsetree
+              str fmt))
+  (modules pumping)
+  (kind ppx_rewriter)
+  (flags (:standard
+          -safe-string
+          -keep-locs
+          -short-paths
+          -w -6-9+58+59
+          ))
+  ))

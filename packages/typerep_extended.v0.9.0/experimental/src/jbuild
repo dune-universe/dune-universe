@@ -1,0 +1,16 @@
+(library (
+  (name typerep_experimental)
+  (public_name typerep_extended.experimental)
+  (libraries (
+    bin_prot
+    core_kernel
+    sexplib
+    typerep_bin_io
+    typerep_extended
+    typerep
+    typerep_sexp
+  ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+))
+
+(jbuild_version 1)

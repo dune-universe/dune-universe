@@ -1,0 +1,6 @@
+(alias
+ ((name runtest)
+  (deps   (test.ml))
+  (action (bash "${bin:cinaps} ${<}"))))
+
+(jbuild_version 1)
