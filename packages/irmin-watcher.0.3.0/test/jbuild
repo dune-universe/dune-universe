@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executable
+  ((name test)
+   (libraries (alcotest logs.fmt irmin-watcher mtime mtime.clock.os))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (chdir ${ROOT} (run ${exe:test.exe} -q --color=always)))))

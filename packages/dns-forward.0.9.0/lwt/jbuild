@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name        dns_forward_lwt_unix)
+  (public_name dns-forward-lwt-unix)
+  (libraries   (dns-forward lwt lwt.unix cstruct-lwt io-page.unix
+                mirage-clock-unix))))

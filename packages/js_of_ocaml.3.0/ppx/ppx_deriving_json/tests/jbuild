@@ -1,0 +1,24 @@
+(jbuild_version 1)
+
+(executables
+ ((names (main))
+  (libraries (
+    toplevel_expect_test
+    js_of_ocaml.deriving
+    js_of_ocaml-ppx.deriving
+    ppx_deriving.api
+  ))
+  (link_flags (-linkall))
+  ))
+
+(rule
+ ((targets (ppx.mlt.corrected))
+  (deps    (ppx.mlt ../../../lib/deriving_json/deriving_Json.cmi))
+  (action  (run ${exe:main.bc} ppx.mlt))
+ ))
+
+(alias
+  ((name   runtest)
+;; (package js_of_ocaml-ppx)
+   (deps (ppx.mlt ppx.mlt.corrected))
+   (action (run diff ppx.mlt ppx.mlt.corrected))))

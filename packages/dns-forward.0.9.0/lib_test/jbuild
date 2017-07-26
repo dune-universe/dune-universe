@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executables
+ ((names (test))
+  (libraries   (dns-forward dns-forward-lwt-unix logs logs.fmt alcotest))))
+
+(alias
+ ((name    runtest)
+  (package dns-forward-lwt-unix)
+  (deps    (test.exe))
+  (action  (run ${<}))))

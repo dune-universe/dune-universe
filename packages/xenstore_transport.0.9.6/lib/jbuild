@@ -1,0 +1,6 @@
+(library
+ ((name xenstore_transport)
+  (public_name xenstore_transport)
+  (libraries (lwt xenstore xenstore.client))
+  (wrapped false)
+))

@@ -1,0 +1,8 @@
+(library
+ ((name mirage_net_xen)
+  (public_name mirage-net-xen)
+  (modules     (Netif))
+  (libraries   (netchannel))
+  (wrapped     false)
+))
+

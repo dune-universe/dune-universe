@@ -1,0 +1,4 @@
+(executables
+ ((names (serve))
+  (libraries (cohttp.lwt cowabloga cow))
+))

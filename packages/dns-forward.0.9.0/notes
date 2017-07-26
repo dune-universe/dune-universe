@@ -1,0 +1,34 @@
+(* framing *)
+Dns_forward_tcp.ReaderWriter: FLOW -> READERWRITER
+Dns_forward_udp.ReaderWriter: FLOW -> READERWRITER
+
+(* Receives incoming requests from SOCKETS, rewrites id and sends to READERWRITER *)
+Dns_forward_rpc.Make: SOCKETS -> READERWRITER -> TIME -> RPC_{CLIENT,SERVER}
+
+(* creates a Cstruct.t -> Cstruct.t responder, multiplexing via RPC_CLIENT *)
+Dns_forward.Make_resolver: RPC_CLIENT -> TIME -> RESOLVER
+
+(* listens on an address, uses a resolver to answer queries *)
+Dns_forward.Make_server: RPC_SERVER -> RPC_CLIENT -> TIME -> SERVER
+
+(* Framing takes care of converting byte streams into packet streams *)
+Framing.Tcp: FLOW -> READERWRITER
+Framing.Udp: FLOW -> READERWRITER
+
+Client: FLOW_CLIENT -> READERWRITER -> RPC_CLIENT
+Server: FLOW_SERVER -> READERWRITER -> RESOLVER -> RPC_SERVER
+
+(* Can I split this into Client and Server? *)
+Protocol: SOCKETS -> READERWRITER -> TIME -> RPC_{CLIENT,SERVER}
+
+Resolver: RPC_CLIENT -> TIME -> RESOLVER
+
+
+(* Things vpnkit needs: *)
+
+For UDP: I need to use Resolver.answer: Cstruct.t -> Cstruct.t Lwt.t
+
+For TCP: Check whether I can instantiate Framing.Tcp over the FLOW I'll
+  get from the Stack_tcp, and then write a "DNS proxy" loop which
+  calls Resolver.answer with each query and returns the request (if successful)
+

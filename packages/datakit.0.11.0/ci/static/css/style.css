@@ -1,0 +1,173 @@
+body {
+  padding-top: 50px;
+}
+.content {
+  padding: 40px 15px;
+}
+
+button span {
+  padding-right: 4px;
+}
+
+span.glyphicon {
+  padding-right: 2px;
+}
+
+.log {
+  background: #000;
+  color: #fff;
+}
+
+.dashboard {
+  margin-bottom: 20px;
+}
+
+.dashboard #title {
+  margin-bottom: 40px;
+}
+
+.dashboard #status {
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+
+.dashboard #icon {
+  margin-bottom: 0px;
+}
+
+.dashboard-pending {
+  background: #f0ad4e
+}
+
+.dashboard-success {
+  background: #5cb85c;
+  color: #fff
+}
+
+.dashboard-error {
+  background: #d9534f
+}
+
+.dashboard-failure {
+  background: #d9534f;
+  color: #fff
+}
+
+form.cancel {
+  display: inline;
+  padding-right: 1em;
+}
+
+iframe.log {
+  width: 100%;
+  flex-grow: 40;
+  overflow: auto;
+  border: 0;
+}
+
+body.split-page {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+body.log {
+  padding: 1em;
+  color: black;
+  background: white;
+}
+
+div.upper {
+  flex-grow: 60;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  overflow: auto;
+  height: 1em;
+}
+
+body.split-page nav.navbar-fixed-top {
+  position: static;
+  flex-grow: 0;
+  margin-bottom: 0;
+}
+
+button.rebuild {
+  margin-right: 0.5em;
+}
+
+button.failed {
+  color: white;
+  background: red;
+}
+
+table.results {
+  margin-bottom: 0;
+}
+
+a.selected-log {
+  background: yellow;
+}
+
+tr.selected-job {
+  background: #ffffd0;
+}
+
+span.status {
+  border: 1px solid black;
+  padding: 1px;
+}
+
+table.results span.status {
+  margin-right: 8px;
+}
+
+div.github-auth {
+  max-width: 40em;
+}
+
+pre span.bold {
+  font-weight: bold;
+}
+
+body.log pre {
+  color: rgb(229, 229, 229);
+  background: black;
+}
+
+pre span.fg-black   { color: rgb(0, 0, 0) }
+pre span.fg-red     { color: rgb(205, 0, 0) }
+pre span.fg-green   { color: rgb(0, 205, 0) }
+pre span.fg-yellow  { color: rgb(205, 205, 0) }
+pre span.fg-blue    { color: rgb(0, 0, 238) }
+pre span.fg-magenta { color: rgb(205, 0, 205) }
+pre span.fg-cyan    { color: rgb(0, 205, 205) }
+pre span.fg-white   { color: rgb(229, 229, 229) }
+
+pre span.fg-bright-black   { color: rgb(127, 127, 127) }
+pre span.fg-bright-red     { color: rgb(255, 0, 0) }
+pre span.fg-bright-green   { color: rgb(0, 255, 0) }
+pre span.fg-bright-yellow  { color: rgb(255, 255, 0) }
+pre span.fg-bright-blue    { color: rgb(92, 92, 255) }
+pre span.fg-bright-magenta { color: rgb(255, 0, 255) }
+pre span.fg-bright-cyan    { color: rgb(0, 255, 255) }
+pre span.fg-bright-white   { color: rgb(255, 255, 255) }
+
+pre span.bg-black   { background: rgb(0, 0, 0) }
+pre span.bg-red     { background: rgb(205, 0, 0) }
+pre span.bg-green   { background: rgb(0, 205, 0) }
+pre span.bg-yellow  { background: rgb(205, 205, 0) }
+pre span.bg-blue    { background: rgb(0, 0, 238) }
+pre span.bg-magenta { background: rgb(205, 0, 205) }
+pre span.bg-cyan    { background: rgb(0, 205, 205) }
+pre span.bg-white   { background: rgb(229, 229, 229) }
+
+pre span.bg-bright-black   { background: rgb(127, 127, 127) }
+pre span.bg-bright-red     { background: rgb(255, 0, 0) }
+pre span.bg-bright-green   { background: rgb(0, 255, 0) }
+pre span.bg-bright-yellow  { background: rgb(255, 255, 0) }
+pre span.bg-bright-blue    { background: rgb(92, 92, 255) }
+pre span.bg-bright-magenta { background: rgb(255, 0, 255) }
+pre span.bg-bright-cyan    { background: rgb(0, 255, 255) }
+pre span.bg-bright-white   { background: rgb(255, 255, 255) }

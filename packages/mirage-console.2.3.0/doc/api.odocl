@@ -1,4 +1,0 @@
-src/Mirage_console
-lwt/Mirage_console_lwt
-unix/Console_unix
-#xen/Console_xen

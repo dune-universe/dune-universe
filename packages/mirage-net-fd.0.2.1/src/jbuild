@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library
+ ((name mirage_net_fd)
+  (public_name mirage-net-fd)
+  (libraries (io-page io-page-unix cstruct cstruct-lwt lwt.unix mirage-net-lwt result ipaddr))
+  (wrapped false)
+))

@@ -1,0 +1,6 @@
+(library
+ ((name        mstruct)
+  (public_name mstruct)
+  (libraries   (cstruct))
+))
+

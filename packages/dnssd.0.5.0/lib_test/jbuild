@@ -1,0 +1,8 @@
+(executables
+ ((names (test))
+  (libraries   (dnssd logs logs.fmt alcotest))
+))
+(alias
+ ((name    runtest)
+  (deps    (test.exe))
+  (action  (run ${<}))))

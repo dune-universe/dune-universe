@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+  ((name mirage_flow_rawlink)
+   (public_name mirage-flow-rawlink)
+   (libraries (rawlink mirage-flow-lwt cstruct lwt))))

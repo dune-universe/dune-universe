@@ -1,0 +1,6 @@
+(library
+ ((name        mirage_bootvar_xen)
+  (public_name mirage-bootvar-xen)
+  (libraries   (astring lwt parse-argv mirage-xen))
+  (wrapped     false)
+))

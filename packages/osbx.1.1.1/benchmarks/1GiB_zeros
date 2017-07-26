@@ -1,0 +1,35 @@
+official SeqBox
+==============================================
+hashing file 'dummy_file'...
+SHA256 49bc20df15e412a64472421e13fe86ff1c5165e18b2afccf160d4dc19fe68a14
+creating file 'dummy_file.sbx'...
+100%   
+SBX file size: 1108379648 - blocks: 2164804 - overhead: 3.2%
+Elapsed time : 0:24.94, Peak Memory : 14768, Waits : 34
+
+decoding 'dummy_file.sbx'...
+metadata block found!
+creating file 'dummy_file'...
+SBX decoding complete
+SHA256 49bc20df15e412a64472421e13fe86ff1c5165e18b2afccf160d4dc19fe68a14
+hash match!
+Elapsed time : 0:32.12, Peak Memory : 14584, Waits : 12
+
+ocaml-SeqBox
+==============================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 2164804
+Number of metadata blocks written : 1
+Number of data     blocks written : 2164803
+Amount of data encoded (in bytes) : 1073741824
+Elapsed time : 0:22.35, Peak Memory : 17204, Waits : 13
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 2164804
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 2164803
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:28.15, Peak Memory : 16612, Waits : 17
+

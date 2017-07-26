@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library
+ ((name mvar)
+  (public_name mvar)
+  (wrapped false)
+  (libraries (threads))
+))

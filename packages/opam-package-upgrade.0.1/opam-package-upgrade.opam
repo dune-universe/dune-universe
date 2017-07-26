@@ -1,0 +1,16 @@
+opam-version: "1.2"
+name: "opam-package-upgrade"
+version: "0.1"
+maintainer: "Louis Gesbert <louis.gesbert@ocamlpro.com>"
+authors: "Louis Gesbert <louis.gesbert@ocamlpro.com>"
+license: "GPL-3"
+homepage: "https://github.com/AltGr/opam-package-upgrade"
+bug-reports: "https://github.com/AltGr/opam-package-upgrade/issues"
+tags: ["org:ocamlpro" "flags:plugin"]
+depends: [
+  "opam-client" {= "2.0.0~beta3.1"}
+  "cmdliner"
+  "jbuilder"
+]
+build: ["jbuilder" "build" "-p" name]
+dev-repo: "https://github.com/AltGr/opam-package-upgrade.git"

@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executables
+ ((names (test_mvar))
+  (libraries (mvar oUnit))
+))
+
+(alias
+ ((name runtest)
+  (deps (test_mvar.exe))
+  (action (run ${<}))
+))

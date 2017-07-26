@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executables
+ ((libraries (mirage-net-fd alcotest))
+  (names (test))))
+
+(alias
+ ((name   runtest)
+  (deps   (test.exe))
+  (action (run ${<}))))
+

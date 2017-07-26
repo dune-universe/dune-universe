@@ -1,0 +1,15 @@
+(executable
+ ((name           osbx)
+  (public_name    osbx)
+  (ocamlopt_flags (-nodynlink))
+  (libraries      (stdint
+                   nocrypto
+                   nocrypto.unix
+                   angstrom
+                   #| core_kernel |#
+                   hex
+                   cmdliner
+                   digestif
+                   digestif.c
+                  ))
+ ))

@@ -1,0 +1,245 @@
+Official SeqBox
+=======================================================
+hashing file 'dummy_file'...
+SHA256 e5b844cc57f57094ea4585e235f36c78c1cd222262bb89d53c94dcb4d6b3e55d
+creating file 'dummy_file.sbx'...
+100%
+SBX file size: 10824704 - blocks: 21142 - overhead: 3.2%
+Elapsed time : 0:00.32, Peak Memory : 14740, Waits : 68
+
+decoding 'dummy_file.sbx'...
+metadata block found!
+creating file 'dummy_file'...
+SBX decoding complete
+SHA256 e5b844cc57f57094ea4585e235f36c78c1cd222262bb89d53c94dcb4d6b3e55d
+hash match!
+Elapsed time : 0:00.34, Peak Memory : 14648, Waits : 1
+
+ocaml-SeqBox with proper CRC
+========================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:01.96, Peak Memory : 13952, Waits : 0
+
+Single block encode 21150 times
+Elapsed time : 0:01.94, Peak Memory : 8724, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:02.20, Peak Memory : 13724, Waits : 2
+
+Single block decode 21150 times
+Elapsed time : 0:02.03, Peak Memory : 7204, Waits : 1
+
+ocaml-SeqBox with no CRC
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.13, Peak Memory : 14332, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:00.03, Peak Memory : 6620, Waits : 1
+
+ocaml-SeqBox with CRC optimization (1st try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:01.82, Peak Memory : 13684, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:01.69, Peak Memory : 7092, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:02.28, Peak Memory : 13924, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:01.71, Peak Memory : 7212, Waits : 1
+
+ocaml-SeqBox with CRC optimization (2nd try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:01.02, Peak Memory : 12780, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:00.89, Peak Memory : 6888, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:01.30, Peak Memory : 13816, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.92, Peak Memory : 7148, Waits : 1
+
+ocaml-SeqBox with CRC optimization (3rd try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:01.03, Peak Memory : 14212, Waits : 0
+
+Single block encoding 21150 times
+Elapsed time : 0:00.92, Peak Memory : 6860, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:01.28, Peak Memory : 13760, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.94, Peak Memory : 6968, Waits : 1
+
+ocaml-SeqBox with CRC optimization (4th try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.36, Peak Memory : 13884, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:00.83, Peak Memory : 6548, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:01.20, Peak Memory : 13212, Waits : 4
+
+Single block decoding 21150 times
+Elapsed time : 0:00.86, Peak Memory : 6696, Waits : 1
+
+ocaml-SeqBox with CRC optimization (5th try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.33, Peak Memory : 12232, Waits : 0
+
+Single block encoding 21150 times
+Elapsed time : 0:00.69, Peak Memory : 8672, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:01.09, Peak Memory : 12140, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.76, Peak Memory : 6700, Waits : 1
+
+ocaml-SeqBox with CRC optimization (6th try)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.19, Peak Memory : 14192, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:00.08, Peak Memory : 6724, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:00.23, Peak Memory : 13104, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.32, Peak Memory : 6720, Waits : 1
+
+ocaml-SeqBox with FFI to CRC
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.23, Peak Memory : 15316, Waits : 1
+
+Single block encoding 21150 times
+Elapsed time : 0:00.09, Peak Memory : 7684, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:00.27, Peak Memory : 15540, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.11, Peak Memory : 7812, Waits : 1
+
+ocaml-SeqBox with FFI to CRC(with specialised C functions)
+=======================================================
+Block size used in encoding       : 512
+Data  size used in encoding       : 496
+Number of          blocks written : 21142
+Number of metadata blocks written : 1
+Number of data     blocks written : 21141
+Amount of data encoded (in bytes) : 10485760
+Elapsed time : 0:00.22, Peak Memory : 14200, Waits : 2
+
+Single block encoding 21150 times
+Elapsed time : 0:00.09, Peak Memory : 7788, Waits : 1
+
+Block size used in decoding                    : 512
+Number of          blocks processed            : 21142
+Number of metadata blocks successfully decoded : 1
+Number of data     blocks successfully decoded : 21141
+Number of          blocks failed to decode     : 0
+First up to 500 failing positions (block and bytes index start at 0)
+Elapsed time : 0:00.29, Peak Memory : 13908, Waits : 2
+
+Single block decoding 21150 times
+Elapsed time : 0:00.10, Peak Memory : 7728, Waits : 1

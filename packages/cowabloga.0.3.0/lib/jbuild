@@ -1,0 +1,6 @@
+(library
+ ((name        cowabloga)
+  (public_name cowabloga)
+  (libraries   (cow lwt omd cstruct re.str magic-mime))
+  (flags       (:standard -w "A-4-41-44" -warn-error "+1..49" -strict-sequence -principal))
+))

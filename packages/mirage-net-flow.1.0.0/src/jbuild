@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+  ((name mirage_net_flow)
+   (public_name mirage-net-flow)
+   (libraries (logs cstruct-lwt mirage-net-lwt mirage-flow-lwt))))

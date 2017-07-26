@@ -1,0 +1,7 @@
+(executables
+ ((names (hvcat))
+  (libraries (cmdliner hvsock hvsock.lwt hvsock.lwt-unix lwt lwt.unix bytes))))
+
+(install
+ ((section bin)
+  (files ((hvcat.exe as hvcat)))))

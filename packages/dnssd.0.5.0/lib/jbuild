@@ -1,0 +1,6 @@
+(library
+ ((name        dnssd)
+  (public_name dnssd)
+  (libraries   (lwt logs dns))
+  (c_names     (osx_dnssd))
+))

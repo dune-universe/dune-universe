@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+ ((name        dns_forward)
+  (public_name dns-forward)
+  (libraries   (lwt logs dns astring result cstruct fmt rresult ipaddr
+                mirage-flow-lwt mirage-time-lwt mirage-channel-lwt
+                mirage-clock-lwt sexplib duration))
+  (preprocess (pps (ppx_sexp_conv)))))

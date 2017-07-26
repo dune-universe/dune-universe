@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executable
+ ((name        tests)
+  (libraries   (bitstring oUnit))
+  (preprocess  (pps (ppx_bitstring)))
+  ))
+
+(alias
+ ((name    runtest)
+  (deps    (tests.exe))
+  (action  (run ${<}))))
