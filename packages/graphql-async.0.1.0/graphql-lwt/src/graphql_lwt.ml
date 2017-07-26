@@ -1,1 +1,0 @@
-module Schema = Graphql_schema.Make(Lwt)
