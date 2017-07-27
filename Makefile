@@ -10,5 +10,4 @@ update-local:
 update:
 	./scripts/fetch.sh
 	git add packages
-	git commit -m "Updated packages"
-	git push
+	if git commit -m "Updated packages"; then git push; fi
