@@ -1,0 +1,12 @@
+<"Also_Useless"> := <"Undefined"> .
+<"B"> := <"Also_Useless"> <"S"> | <"O"> .
+<"C"> := "n1" | "n2" | "n3" | "n4" | "n5" | "n6" | "n7" | "n8" | "n9" .
+<"E"> := <"C"> | <"E"> <"O"> <"E"> | <"V"> .
+<"Eternal1"> := <"Eternal1"> <"Eternal2"> <"Partly_Eternal"> .
+<"Eternal2"> := <"Eternal1"> .
+<"O"> := "add" | "div" | "mul" | "sub" .
+<"Partly_Eternal"> := "not_eternal_but_then_unreachable" | <"Eternal1"> .
+<"S"> := <"E"> | <"Eternal1">
+       | <"Undefined"> <"Not_Productive"> "not_productive" .
+<"Useless"> := "useless" | <"Also_Useless"> | <"Undefined"> .
+<"V"> := "x1" | "x2" | "x3" | "x4" | "x5" | "x6" | "x7" | "x8" | "x9" .

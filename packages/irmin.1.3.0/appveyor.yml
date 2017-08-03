@@ -1,0 +1,18 @@
+platform:
+  - x86
+
+environment:
+  global:
+    FORK_USER: ocaml
+    FORK_BRANCH: master
+    CYG_ROOT: C:\cygwin64
+    PINS: "irmin.dev:. irmin-mem.dev:. irmin-fs.dev:. irmin-http.dev:. irmin-git.dev:. irmin-mirage.dev:. irmin-unix.dev:."
+  matrix:
+  - PACKAGE: "irmin-unix.dev"
+  - PACKAGE: "irmin-mirage.dev"
+
+install:
+  - ps: iex ((new-object net.webclient).DownloadString("https://raw.githubusercontent.com/$env:FORK_USER/ocaml-ci-scripts/$env:FORK_BRANCH/appveyor-install.ps1"))
+
+build_script:
+  - call %CYG_ROOT%\bin\bash.exe -l %APPVEYOR_BUILD_FOLDER%\appveyor-opam.sh

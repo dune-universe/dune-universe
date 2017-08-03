@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library (
+  (name cfg)
+  (public_name cfg)
+  (flags (
+    :standard
+    -w -9
+    -safe-string -strict-sequence
+    -principal -short-paths
+  ))
+))
+
+(ocamllex (bnf_lexer))
+(ocamlyacc (bnf_parser))
