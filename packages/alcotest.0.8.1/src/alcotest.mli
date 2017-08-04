@@ -27,7 +27,7 @@
     the run (with the full logs ready to inspect), with a simple (yet
     expressive) query language to select the tests to run.
 
-    {e Release 0.8.0 } *)
+    {e Release 0.8.1 } *)
 
 type speed_level = [`Quick | `Slow]
 (** Speed level for a test. *)
@@ -156,6 +156,9 @@ val check: 'a testable -> string -> 'a -> 'a -> unit
 
 val fail: string -> 'a
 (** Simply fail. *)
+
+val failf: ('a, Format.formatter, unit, 'b) format4 -> 'a
+(** Simply fail with a formatted message. *)
 
 val neg: 'a testable -> 'a testable
 (** [neg t] is [t]'s negation: it is [true] when [t] is [false] and it
