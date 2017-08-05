@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library (
+  (name pomap)
+  (public_name pomap)
+  (flags (
+    :standard
+    -w -9
+    -safe-string -strict-sequence
+    -principal -short-paths
+  ))
+))
