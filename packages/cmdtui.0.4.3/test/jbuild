@@ -1,0 +1,25 @@
+(* -*- tuareg -*- *)
+
+let coverage =
+ try Sys.getenv "COVERAGE" = "1"
+ with Not_found -> false
+
+let optional_coverage =
+  if coverage then {| (preprocess (pps (bisect_ppx))) |}
+  else ""
+
+let () =
+  Printf.ksprintf Jbuild_plugin.V1.send {|
+(executables
+ ((names (example test))
+  %s
+  (libraries (cmdtui_lambda_term))))
+
+(install
+ ((section doc)
+  (package cmdtui-lambda-term)
+  (files (example.ml))))
+
+(alias ((name runtest)
+        (action (run ${exe:test.exe}))))
+|} optional_coverage

@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(alias
+ ((name doc)
+  (deps (index.html))
+  (action (run cp index.html ../_doc))))
