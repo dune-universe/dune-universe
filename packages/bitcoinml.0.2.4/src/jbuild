@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library
+ ((name        bitcoinml)
+  (public_name bitcoinml)
+  (libraries (ppx_jane
+              bitstring 
+              stdint 
+              cryptokit 
+              bignum))
+  (preprocess (pps (ppx_jane ppx_bitstring -no-check ppx_driver.runner)))))
+
