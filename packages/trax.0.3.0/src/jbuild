@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name trax)
+  (public_name trax)
+  (synopsis "Stack-independent exception tracing")))
