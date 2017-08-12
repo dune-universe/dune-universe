@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(executables (
+  (names (fuzz))
+  (libraries (capnp-rpc alcotest logs.fmt testbed afl-persistent))
+))
