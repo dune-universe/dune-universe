@@ -1,0 +1,9 @@
+version = "0.5"
+description = "Find roots of 1D functions."
+archive(byte) = "root1d.cma"
+archive(byte, plugin) = "root1d.cma"
+archive(native) = "root1d.cmxa"
+archive(native, plugin) = "root1d.cmxs"
+exists_if = "root1d.cma"
+
+

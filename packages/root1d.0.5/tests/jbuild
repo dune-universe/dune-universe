@@ -1,0 +1,26 @@
+(jbuild_version 1)
+
+(executables
+ ((names     (simple difficult speed precision))
+  (libraries (root1d benchmark))))
+
+
+(alias
+ ((name    runtest)
+  (deps    (simple.exe))
+  (action  (run ${<}))))
+
+(alias
+ ((name    runtest)
+  (deps    (difficult.exe))
+  (action  (run ${<}))))
+
+(alias
+ ((name    runtest)
+  (deps    (speed.exe))
+  (action  (run ${<}))))
+
+(alias
+ ((name    runtest)
+  (deps    (precision.exe))
+  (action  (run ${<}))))
