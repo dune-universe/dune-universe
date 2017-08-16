@@ -88,7 +88,7 @@ end = struct
       end else begin
         let old  = t.elements in
         let new_ = Array.(make (2 * length old) sentinel) in
-        Array.blit old t.front t.elements 0 len;
+        Array.blit old t.front new_ 0 len;
         t.elements <- new_
       end;
       t.front <- 0;
@@ -205,8 +205,8 @@ let flush_buffer t =
   let len = t.write_pos - t.scheduled_pos in
   if len > 0 then begin
     let off = t.scheduled_pos in
-    t.scheduled_pos <- t.write_pos;
-    schedule_iovec t ~off ~len (`Bigstring t.buffer)
+    schedule_iovec t ~off ~len (`Bigstring t.buffer);
+    t.scheduled_pos <- t.write_pos
   end
 
 let flush t f =
@@ -267,7 +267,10 @@ let schedule_bigstring =
 let ensure_space t len =
   if free_bytes_in_buffer t < len then begin
     flush_buffer t;
-    t.buffer <- Bigarray.(Array1.create char c_layout (Array1.dim t.buffer))
+    t.buffer <-
+      Bigarray.(Array1.create char c_layout (max (Array1.dim t.buffer) len));
+    t.write_pos <- 0;
+    t.scheduled_pos <- 0
   end
 
 let write_gen t ~length ~blit ?(off=0) ?len a =
@@ -361,7 +364,7 @@ module Make_endian(EBigstring:EndianBigstringSig)(EBytes:EndianBytesSig) = struc
     let blit src src_off dst dst_off len =
       assert (src_off = 0);
       assert (len = 8);
-      EBigstring.set_float dst dst_off src
+      EBigstring.set_double dst dst_off src
     in
     fun t a -> write_gen t ~length ~blit ~off:0 ~len:8 a
 end
@@ -411,8 +414,10 @@ let rec shift_buffers t written =
       Buffers.enqueue_front (IOVec.shift iovec written) t.scheduled
   with Not_found ->
     assert (written = 0);
-    t.scheduled_pos <- 0;
-    t.write_pos <- 0
+    if t.scheduled_pos = t.write_pos then begin
+      t.scheduled_pos <- 0;
+      t.write_pos <- 0
+    end
 
 let rec shift_flushes t =
   try

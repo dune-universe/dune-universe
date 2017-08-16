@@ -53,6 +53,21 @@ let write =
       check ~iovecs:1 ~msg:"char"      [`Write_char      'A'   ] "A"
   end ]
 
+let write_tiny_buf =
+  [ "single with tiny buffer", `Quick, begin fun () ->
+      check ~buf_size:1 ~iovecs:1 ~msg:"string"    [`Write_string    "test"] "test";
+      check ~buf_size:1 ~iovecs:1 ~msg:"bytes"     [`Write_bytes     "test"] "test";
+      check ~buf_size:1 ~iovecs:1 ~msg:"bigstring" [`Write_bigstring "test"] "test"
+  end 
+  ; "multiple writes with tiny buffer", `Quick,  begin fun () ->
+      check ~buf_size:1 ~iovecs:2 ~msg:"string" [`Write_string "test1"; `Write_string "test2"] "test1test2"
+  end
+  ; "too many writes with tiny buffer", `Quick,  begin fun () ->
+      check ~buf_size:1 ~iovecs:5 ~msg:"string"
+        [`Write_string "te"; `Write_string "st"; `Write_string "te"; `Write_string "st"; `Write_string "te" ] 
+        "testtestte"
+  end ]
+
 let schedule =
   [ "single", `Quick, begin fun () ->
       check ~iovecs:1 ~msg:"string"    [`Schedule_string    "test"] "test";
@@ -92,7 +107,8 @@ let interleaved =
 
 let () =
   Alcotest.run "test suite"
-    [ "empty output"      , empty
-    ; "single write"      , write
-    ; "single schedule"   , schedule
-    ; "interleaved calls" , interleaved ]
+    [ "empty output"              , empty
+    ; "single write"              , write
+    ; "writes (tiny buffer)"      , write_tiny_buf
+    ; "single schedule"           , schedule
+    ; "interleaved calls"         , interleaved ]
