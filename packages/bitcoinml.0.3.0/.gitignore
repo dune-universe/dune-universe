@@ -1,0 +1,3 @@
+_build
+bitcoinml.0.2.4
+test/data/*.hex
