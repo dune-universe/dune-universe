@@ -1,0 +1,8 @@
+*~
+_build
+\#*#
+.#*
+html
+.merlin
+amqp-client.install
+tests/jbuild

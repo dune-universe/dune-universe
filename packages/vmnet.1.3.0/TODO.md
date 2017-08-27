@@ -1,0 +1,3 @@
+- Add a readv/writev interface for batching more than one packet.
+- Implement interface shutdown.
+- Cleanup dispatch queue memory leaks (which needs interface shutdown first).

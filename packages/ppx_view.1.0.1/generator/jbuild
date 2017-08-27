@@ -1,0 +1,5 @@
+(executables
+ ((names (generator))
+  (libraries (compiler-libs.common
+              ocaml-migrate-parsetree
+              ppx_view_common))))

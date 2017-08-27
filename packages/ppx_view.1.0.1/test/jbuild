@@ -1,0 +1,21 @@
+(library
+ ((name ppx_view_test)
+  (libraries (expect_test_helpers
+              compiler-libs.common
+              ocaml-migrate-parsetree
+              viewast))
+  (modules (test))
+  (preprocess (pps (ppx_expect ppx_view_rewriter -no-check)))))
+
+(executable
+ ((name runtest)
+  (modules (runtest))
+  (libraries (ppx_view_test
+              ppx_expect.evaluator
+              ppx_inline_test.runner.lib))
+  (link_flags (-linkall))))
+
+(alias
+ ((name runtest)
+  (action
+   (chdir ${ROOT} (run ${exe:runtest.exe} inline-test-runner ppx_view_test -no-color)))))

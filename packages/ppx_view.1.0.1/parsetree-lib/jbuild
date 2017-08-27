@@ -1,0 +1,16 @@
+(library
+ ((name viewast)
+  (public_name ppx_view.ast)
+  (libraries (compiler-libs.common
+              ocaml-migrate-parsetree
+              viewlib))))
+
+(rule
+ ((targets (parseview.mli  parseview.ml ast_viewer.mli ast_viewer.ml))
+  (deps    (../generator/generator.exe
+            (glob_files ../generator/ast_viewer_const_ml{,i}-src)
+            (glob_files ../ast404/stdlib/*.mli)
+            (glob_files ../ast404/parsing/*.mli)))
+  (action  (run ${<} -ocaml-where-path ../ast404
+                     -data-path ../generator
+                     -dest-path .))))

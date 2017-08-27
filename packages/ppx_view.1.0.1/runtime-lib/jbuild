@@ -1,0 +1,4 @@
+(library
+ ((name viewlib)
+  (public_name ppx_view.lib)
+  (libraries (compiler-libs.common ocaml-migrate-parsetree))))

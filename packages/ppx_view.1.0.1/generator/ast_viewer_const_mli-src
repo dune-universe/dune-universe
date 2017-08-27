@@ -1,0 +1,35 @@
+module Const : sig
+
+  val char
+     : (char, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val string
+     : (string * string option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val integer
+     : (string * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val int
+     : (int * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val int32
+     : (int32 * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val int64
+     : (int64 * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val nativeint
+     : (nativeint * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+  val float
+     : (string * char option, 'i, 'o) View.t
+    -> (Parsetree.constant, 'i, 'o) View.t
+
+end

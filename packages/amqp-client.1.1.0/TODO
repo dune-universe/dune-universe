@@ -1,0 +1,4 @@
+* Support immutable strings
+
+* Fix connection stalls
+* Fix non-existing vhosts connection stalls
