@@ -1,0 +1,25 @@
+(* -*- tuareg -*- *)
+
+let coverage =
+ try Sys.getenv "COVERAGE" = "1"
+ with Not_found -> false
+
+let optional_coverage =
+  if coverage then {| (preprocess (pps (bisect_ppx))) |}
+  else ""
+
+let () =
+  Printf.ksprintf Jbuild_plugin.V1.send {|
+(jbuild_version 1)
+
+(executable
+ ((name test)
+  (flags (:standard -warn-error -3))
+  %s
+  (libraries (anycache-async core async_unix anycacheTest))))
+
+(alias
+ ((name runtest)
+  (package anycache-async)
+  (action (run ${exe:test.exe} -v))))
+|} (optional_coverage)
