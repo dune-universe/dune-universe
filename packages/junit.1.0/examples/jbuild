@@ -1,0 +1,22 @@
+(jbuild_version 1)
+
+(executable
+ ((name examples)
+  (libraries (junit))
+  (modules (examples simple))
+  (flags (:standard -safe-string))
+  ))
+
+(rule
+ ((targets (examples.output))
+  (deps (examples.exe))
+  (action (with-stdout-to ${@} (run ${<})))))
+
+(alias
+ ((name   runtest)
+  (action (run diff -u ${path:examples.expected} ${path:examples.output}))))
+
+(alias
+  ((name examples)
+   (deps (examples.exe))
+   ))

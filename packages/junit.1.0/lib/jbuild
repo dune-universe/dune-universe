@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name junit)
+  (public_name junit)
+  (wrapped false)
+  (synopsis "JUnit XML reports generation library")
+  (libraries (tyxml ptime ptime.clock.os))
+  (flags (:standard -safe-string))
+ ))
