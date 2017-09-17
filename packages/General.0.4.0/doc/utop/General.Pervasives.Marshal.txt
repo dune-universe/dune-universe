@@ -1,0 +1,2 @@
+module Marshal: sig
+end

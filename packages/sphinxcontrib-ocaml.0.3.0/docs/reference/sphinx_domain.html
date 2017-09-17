@@ -1,0 +1,708 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OCaml Sphinx domain &#8212; sphinxcontrib-ocaml 0.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Autodoc directives" href="autodoc.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ocaml-sphinx-domain">
+<h1>OCaml Sphinx domain<a class="headerlink" href="#ocaml-sphinx-domain" title="Permalink to this headline">¶</a></h1>
+<p>Remember that these directives and roles are in a Sphinx <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html">domain</a>,
+so you can either prefix them with <code class="docutils literal"><span class="pre">ocaml:</span></code> or set the default domain to <code class="docutils literal"><span class="pre">&quot;ocaml&quot;</span></code>, either with the <code class="docutils literal"><span class="pre">default-domain</span></code> directive:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">default-domain</span><span class="p">::</span> ocaml
+</pre></div>
+</div>
+<p>or in the <code class="docutils literal"><span class="pre">conf.py</span></code> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">primary_domain</span> <span class="o">=</span> <span class="s2">&quot;ocaml&quot;</span>
+</pre></div>
+</div>
+<p>Examples below assume the default domain is set.</p>
+<div class="section" id="directives">
+<h2>Directives<a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="values-and-types">
+<h3>Values and types<a class="headerlink" href="#values-and-types" title="Permalink to this headline">¶</a></h3>
+<dl class="directive">
+<dt id="directive-val">
+<code class="descname">.. val::</code><code class="descclassname"> name</code><a class="headerlink" href="#directive-val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document a value:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">val</span><span class="p">::</span> v
+
+    Some doc for <span class="ge">*v*</span>.
+</pre></div>
+</div>
+<p>is rendered as:</p>
+<blockquote>
+<div><dl class="val">
+<dt id="val v">
+<em class="property">val </em><code class="descname">v</code><a class="headerlink" href="#val v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some doc for <em>v</em>.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>The value’s type can be documented using the <code class="docutils literal"><span class="pre">:type:</span></code> option:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">val</span><span class="p">::</span> coords
+    <span class="nc">:type:</span> <span class="nf">(int * int) list</span>
+
+    The coordinates.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="val">
+<dt id="val coords">
+<em class="property">val </em><code class="descname">coords</code><em class="property">: (int * int) list</em><a class="headerlink" href="#val coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>The coordinates.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>Refer to values using the <a class="reference internal" href="#role-val" title="val role"><code class="xref rst rst-role docutils literal"><span class="pre">val</span></code></a> role.</p>
+</dd></dl>
+
+<dl class="directive">
+<dt id="directive-type">
+<code class="descname">.. type::</code><code class="descclassname"> name</code><a class="headerlink" href="#directive-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document a type:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">type</span><span class="p">::</span> t
+
+    Some doc for <span class="ge">*t*</span>.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="type">
+<dt id="typ t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some doc for <em>t</em>.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>The type’s parameters can be documented using the <code class="docutils literal"><span class="pre">:parameters:</span></code> option:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">type</span><span class="p">::</span> t3
+    <span class="nc">:parameters:</span> <span class="nf">(&#39;a, &#39;b, &#39;c)</span>
+
+    <span class="ge">*t3*</span> has three parameters.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="type">
+<dt id="typ t3">
+<em class="property">type ('a, 'b, 'c) </em><code class="descname">t3</code><a class="headerlink" href="#typ t3" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>t3</em> has three parameters.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>The type’s manifest (<em>i.e.</em> if it is an alias for some other type) can be documented using the <code class="docutils literal"><span class="pre">:manifest:</span></code> option:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">type</span><span class="p">::</span> int_list
+    <span class="nc">:manifest:</span> <span class="nf">int list</span>
+
+    A list of integers.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="type">
+<dt id="typ int_list">
+<em class="property">type </em><code class="descname">int_list</code><em class="property"> = int list</em><a class="headerlink" href="#typ int_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of integers.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>The type’s kind (<em>i.e.</em> its constructors and record labels) can be documented using the <code class="docutils literal"><span class="pre">:kind:</span></code> option
+and the <code class="docutils literal"><span class="pre">:constructor:</span></code> and <code class="docutils literal"><span class="pre">:label:</span></code> doc fields:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">type</span><span class="p">::</span> variant
+    <span class="nc">:kind:</span> <span class="nf">A | B of int</span>
+
+    A variant type.
+
+    <span class="nc">:constructor A:</span> <span class="nf">a</span>
+
+    <span class="nc">:constructor B:</span> <span class="nf">b</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="type">
+<dt id="typ variant">
+<em class="property">type </em><code class="descname">variant</code><em class="property"> = A | B of int</em><a class="headerlink" href="#typ variant" title="Permalink to this definition">¶</a></dt>
+<dd><p>A variant type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A:</th><td class="field-body">a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B:</th><td class="field-body">b</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">type</span><span class="p">::</span> record
+    <span class="nc">:kind:</span> <span class="nf">{a: int; b: float}</span>
+
+    A record type.
+
+    <span class="nc">:label a:</span> <span class="nf">a</span>
+
+    <span class="nc">:label b:</span> <span class="nf">b</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="type">
+<dt id="typ record">
+<em class="property">type </em><code class="descname">record</code><em class="property"> = {a: int; b: float}</em><a class="headerlink" href="#typ record" title="Permalink to this definition">¶</a></dt>
+<dd><p>A record type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">b</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+<p>Refer to types using the <a class="reference internal" href="#role-typ" title="typ role"><code class="xref rst rst-role docutils literal"><span class="pre">typ</span></code></a> role.</p>
+</dd></dl>
+
+<dl class="directive">
+<dt id="directive-exception">
+<code class="descname">.. exception::</code><code class="descclassname"> name</code><a class="headerlink" href="#directive-exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document an exception:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">exception</span><span class="p">::</span> MyException
+
+    Some doc for <span class="ge">*MyException*</span>.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="exception">
+<dt id="exn MyException">
+<em class="property">exception </em><code class="descname">MyException</code><a class="headerlink" href="#exn MyException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some doc for <em>MyException</em>.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>The exception’s payload can be documented using the <code class="docutils literal"><span class="pre">:payload:</span></code> option.
+The <code class="docutils literal"><span class="pre">:label:</span></code> doc field is used like for a type:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">exception</span><span class="p">::</span> TupleException
+    <span class="nc">:payload:</span> <span class="nf">int * float</span>
+
+    With a tuple payload.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="exception">
+<dt id="exn TupleException">
+<em class="property">exception </em><code class="descname">TupleException</code><em class="property"> of int * float</em><a class="headerlink" href="#exn TupleException" title="Permalink to this definition">¶</a></dt>
+<dd><p>With a tuple payload.</p>
+</dd></dl>
+
+</div></blockquote>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">exception</span><span class="p">::</span> RecordException
+    <span class="nc">:payload:</span> <span class="nf">{a: int; b: float}</span>
+
+    With a record payload.
+
+    <span class="nc">:label a:</span> <span class="nf">a</span>
+
+    <span class="nc">:label b:</span> <span class="nf">b</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="exception">
+<dt id="exn RecordException">
+<em class="property">exception </em><code class="descname">RecordException</code><em class="property"> of {a: int; b: float}</em><a class="headerlink" href="#exn RecordException" title="Permalink to this definition">¶</a></dt>
+<dd><p>With a record payload.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">b</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+<p>Refer to exceptions using the <a class="reference internal" href="#role-exn" title="exn role"><code class="xref rst rst-role docutils literal"><span class="pre">exn</span></code></a> role.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="modules-and-module-types">
+<h3>Modules and module types<a class="headerlink" href="#modules-and-module-types" title="Permalink to this headline">¶</a></h3>
+<dl class="directive">
+<dt id="directive-module">
+<code class="descname">.. module::</code><code class="descclassname"> Name</code><a class="headerlink" href="#directive-module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document a module:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module</span><span class="p">::</span> MyModule
+
+    Some documentation for <span class="ge">*MyModule*</span>.
+
+<span class="p">    ..</span> <span class="ow">type</span><span class="p">::</span> t
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module">
+<dt id="mod MyModule">
+<em class="property">module </em><code class="descname">MyModule</code><em class="property"> : sig</em><a class="headerlink" href="#mod MyModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some documentation for <em>MyModule</em>.</p>
+<dl class="type">
+<dt id="typ MyModule.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ MyModule.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<p>The module can be documented as an <a class="reference external" href="https://caml.inria.fr/pub/docs/manual-ocaml-4.05/extn.html#sec235">alias</a> using the <code class="docutils literal"><span class="pre">:alias_of:</span></code> option.
+There should be no contents in that case:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module</span><span class="p">::</span> MyAlias
+    <span class="nc">:alias_of:</span> <span class="nf">Original</span>
+
+    Some documentation for <span class="ge">*MyAlias*</span>.
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module">
+<dt id="mod MyAlias">
+<em class="property">module </em><code class="descname">MyAlias</code><em class="property"> = Original</em><a class="headerlink" href="#mod MyAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some documentation for <em>MyAlias</em>.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>If the module get its contents from something else (<em>e.g</em> a module type, a functor application, <em>etc.</em>),
+this can be documented using the <code class="docutils literal"><span class="pre">:contents_from:</span></code> option:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module</span><span class="p">::</span> Contents
+    <span class="nc">:contents_from:</span> <span class="nf">SomeModuleType</span>
+
+<span class="p">    ..</span> <span class="ow">type</span><span class="p">::</span> t
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module">
+<dt id="mod Contents">
+<em class="property">module </em><code class="descname">Contents</code><em class="property"> : SomeModuleType = sig</em><a class="headerlink" href="#mod Contents" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Contents.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Contents.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<p>Refer to modules using the <a class="reference internal" href="#role-mod" title="mod role"><code class="xref rst rst-role docutils literal"><span class="pre">mod</span></code></a> role.</p>
+</dd></dl>
+
+<dl class="directive">
+<dt id="directive-module_type">
+<code class="descname">.. module_type::</code><code class="descclassname"> Name</code><a class="headerlink" href="#directive-module_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document a module type:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module_type</span><span class="p">::</span> MyModuleType
+
+    Some documentation for <span class="ge">*MyModuleType*</span>.
+
+<span class="p">    ..</span> <span class="ow">type</span><span class="p">::</span> t
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module_type">
+<dt id="modtyp MyModuleType">
+<em class="property">module type </em><code class="descname">MyModuleType</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp MyModuleType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some documentation for <em>MyModuleType</em>.</p>
+<dl class="type">
+<dt id="typ MyModuleType:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ MyModuleType:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<p>The <code class="docutils literal"><span class="pre">:contents_from:</span></code> option is also applicable to module types:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module_type</span><span class="p">::</span> Contents
+    <span class="nc">:contents_from:</span> <span class="nf">SomeModuleType</span>
+
+<span class="p">    ..</span> <span class="ow">type</span><span class="p">::</span> t
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module_type">
+<dt id="modtyp Contents">
+<em class="property">module type </em><code class="descname">Contents</code><em class="property"> = SomeModuleType = sig</em><a class="headerlink" href="#modtyp Contents" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Contents:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Contents:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<p>Refer to module types using the <a class="reference internal" href="#role-modtyp" title="modtyp role"><code class="xref rst rst-role docutils literal"><span class="pre">modtyp</span></code></a> role.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="functors">
+<h3>Functors<a class="headerlink" href="#functors" title="Permalink to this headline">¶</a></h3>
+<dl class="directive">
+<dt id="directive-functor_parameter">
+<code class="descname">.. functor_parameter::</code><code class="descclassname"> Name</code><a class="headerlink" href="#directive-functor_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Document a functor parameter:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module</span><span class="p">::</span> Functor
+
+<span class="p">    ..</span> <span class="ow">functor_parameter</span><span class="p">::</span> Parameter
+
+<span class="p">        ..</span> <span class="ow">val</span><span class="p">::</span> n
+            <span class="nc">:type:</span> <span class="nf">int</span>
+
+<span class="p">    ..</span> <span class="ow">val</span><span class="p">::</span> m
+        <span class="nc">:type:</span> <span class="nf">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module">
+<dt id="mod Functor">
+<em class="property">module </em><code class="descname">Functor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Functor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">Parameter</code><em class="property"> : sig</em></dt>
+<dd><dl class="val">
+<dt id="val Functor.Parameter$n">
+<em class="property">val </em><code class="descname">n</code><em class="property">: int</em><a class="headerlink" href="#val Functor.Parameter$n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="val">
+<dt id="val Functor.m">
+<em class="property">val </em><code class="descname">m</code><em class="property">: int</em><a class="headerlink" href="#val Functor.m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module_type</span><span class="p">::</span> FunctorType
+
+<span class="p">    ..</span> <span class="ow">functor_parameter</span><span class="p">::</span> Parameter
+
+<span class="p">        ..</span> <span class="ow">val</span><span class="p">::</span> n
+            <span class="nc">:type:</span> <span class="nf">int</span>
+
+<span class="p">    ..</span> <span class="ow">val</span><span class="p">::</span> m
+        <span class="nc">:type:</span> <span class="nf">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module_type">
+<dt id="modtyp FunctorType">
+<em class="property">module type </em><code class="descname">FunctorType</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp FunctorType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">Parameter</code><em class="property"> : sig</em></dt>
+<dd><dl class="val">
+<dt id="val FunctorType:Parameter$n">
+<em class="property">val </em><code class="descname">n</code><em class="property">: int</em><a class="headerlink" href="#val FunctorType:Parameter$n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="val">
+<dt id="val FunctorType:m">
+<em class="property">val </em><code class="descname">m</code><em class="property">: int</em><a class="headerlink" href="#val FunctorType:m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+<p>The <code class="docutils literal"><span class="pre">:contents_from:</span></code> option is also applicable to functor parameters:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">module</span><span class="p">::</span> Functor2
+
+<span class="p">    ..</span> <span class="ow">functor_parameter</span><span class="p">::</span> Parameter
+        <span class="nc">:contents_from:</span> <span class="nf">SomeModuleType</span>
+
+<span class="p">        ..</span> <span class="ow">val</span><span class="p">::</span> n
+            <span class="nc">:type:</span> <span class="nf">int</span>
+
+<span class="p">    ..</span> <span class="ow">val</span><span class="p">::</span> m
+        <span class="nc">:type:</span> <span class="nf">int</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="module">
+<dt id="mod Functor2">
+<em class="property">module </em><code class="descname">Functor2</code><em class="property"> : functor</em><a class="headerlink" href="#mod Functor2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">Parameter</code><em class="property"> : SomeModuleType = sig</em></dt>
+<dd><dl class="val">
+<dt id="val Functor2.Parameter$n">
+<em class="property">val </em><code class="descname">n</code><em class="property">: int</em><a class="headerlink" href="#val Functor2.Parameter$n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="val">
+<dt id="val Functor2.m">
+<em class="property">val </em><code class="descname">m</code><em class="property">: int</em><a class="headerlink" href="#val Functor2.m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="roles">
+<h2>Roles<a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h2>
+<p>Some <a class="reference internal" href="#directives">directives</a> create entries in the <a class="reference internal" href="../genindex.html"><span class="std std-ref">general index</span></a> and other <a class="reference internal" href="#indexes">indexes</a>.
+You can avoid creating entries by using their <code class="docutils literal"><span class="pre">:noindex:</span></code> option. (That’s what we’ve secretly done above, to avoid polluting the indexes.)</p>
+<dl class="role">
+<dt id="role-val">
+<code class="descname">:val:</code><a class="headerlink" href="#role-val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refer to a <a class="reference internal" href="#directive-val" title="val directive"><code class="xref rst rst-dir docutils literal"><span class="pre">val</span></code></a>: <code class="docutils literal"><span class="pre">:val:`Linked.M.v2`</span></code> creates this link: <a class="reference internal" href="#val Linked.M.v2"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">Linked.M.v2</span></code></a>.</p>
+<p>Notice that a dot is used to link to the contents of a <a class="reference internal" href="#directive-module" title="module directive"><code class="xref rst rst-dir docutils literal"><span class="pre">module</span></code></a>.
+To refer to the contents of a <a class="reference internal" href="#directive-module_type" title="module_type directive"><code class="xref rst rst-dir docutils literal"><span class="pre">module_type</span></code></a>, use a colon: <code class="docutils literal"><span class="pre">:val:`Linked.MT:v3`</span></code> produces <a class="reference internal" href="#val Linked.MT:v3"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">Linked.MT.v3</span></code></a>.
+And to refer to the contents of a <a class="reference internal" href="#directive-functor_parameter" title="functor_parameter directive"><code class="xref rst rst-dir docutils literal"><span class="pre">functor_parameter</span></code></a>, use a dollar sign: <code class="docutils literal"><span class="pre">:val:`Linked.M.P$v1`</span></code> produces <a class="reference internal" href="#val Linked.M.P$v1"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">Linked.M.P.v1</span></code></a>.</p>
+<p>To create shorter references, you can strip the path by prefixing it with a tilde: <code class="docutils literal"><span class="pre">:val:`~Linked.M.v2`</span></code> produces <a class="reference internal" href="#val Linked.M.v2"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v2</span></code></a>.
+When there is no ambiguity, you can also omit a prefix of the path: <code class="docutils literal"><span class="pre">:val:`.M.v2`</span></code> produces <a class="reference internal" href="#val Linked.M.v2"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">M.v2</span></code></a> and <code class="docutils literal"><span class="pre">:val:`.v2`</span></code> produces <a class="reference internal" href="#val Linked.M.v2"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v2</span></code></a>.
+The shortened path must start with either a dot, a colon or a dollar sign according to the kind of the previous (omitted) part: <code class="docutils literal"><span class="pre">:val:`$v1`</span></code> produces <a class="reference internal" href="#val Linked.M.P$v1"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v1</span></code></a> and <code class="docutils literal"><span class="pre">:val:`:v3`</span></code> produces <a class="reference internal" href="#val Linked.MT:v3"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v3</span></code></a>.
+You can combine both: <code class="docutils literal"><span class="pre">:val:`~.M.v2`</span></code> produces <a class="reference internal" href="#val Linked.M.v2"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v2</span></code></a>.
+This is consistent with the default <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html#cross-referencing-python-objects">Python Sphinx domain</a>.</p>
+</dd></dl>
+
+<dl class="role">
+<dt id="role-typ">
+<code class="descname">:typ:</code><a class="headerlink" href="#role-typ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="role">
+<dt id="role-exn">
+<code class="descname">:exn:</code><a class="headerlink" href="#role-exn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="role">
+<dt id="role-mod">
+<code class="descname">:mod:</code><a class="headerlink" href="#role-mod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="role">
+<dt id="role-modtyp">
+<code class="descname">:modtyp:</code><a class="headerlink" href="#role-modtyp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Referring to other kinds of elements follows the same rules:</p>
+<ul class="simple">
+<li>for <a class="reference internal" href="#directive-type" title="type directive"><code class="xref rst rst-dir docutils literal"><span class="pre">type</span></code></a>, <code class="docutils literal"><span class="pre">:typ:`.t2`</span></code> produces <a class="reference internal" href="#typ Linked.M.t2"><code class="xref ocaml ocaml-typ docutils literal"><span class="pre">t2</span></code></a></li>
+<li>for <a class="reference internal" href="#directive-exception" title="exception directive"><code class="xref rst rst-dir docutils literal"><span class="pre">exception</span></code></a>, <code class="docutils literal"><span class="pre">:exn:`.E2`</span></code> produces <a class="reference internal" href="#exn Linked.M.E2"><code class="xref ocaml ocaml-exn docutils literal"><span class="pre">E2</span></code></a></li>
+<li>for <a class="reference internal" href="#directive-module" title="module directive"><code class="xref rst rst-dir docutils literal"><span class="pre">module</span></code></a>, <code class="docutils literal"><span class="pre">:mod:`.M`</span></code> produces <a class="reference internal" href="#mod Linked.M"><code class="xref ocaml ocaml-mod docutils literal"><span class="pre">M</span></code></a></li>
+<li>for <a class="reference internal" href="#directive-module_type" title="module_type directive"><code class="xref rst rst-dir docutils literal"><span class="pre">module_type</span></code></a>, <code class="docutils literal"><span class="pre">:modtyp:`.MT`</span></code> produces <a class="reference internal" href="#modtyp Linked.MT"><code class="xref ocaml ocaml-modtyp docutils literal"><span class="pre">MT</span></code></a></li>
+</ul>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Linked">
+<em class="property">module </em><code class="descname">Linked</code><em class="property"> : sig</em><a class="headerlink" href="#mod Linked" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module">
+<dt id="mod Linked.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : functor</em><a class="headerlink" href="#mod Linked.M" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">P</code><em class="property"> : sig</em></dt>
+<dd><dl class="val">
+<dt id="val Linked.M.P$v1">
+<em class="property">val </em><code class="descname">v1</code><a class="headerlink" href="#val Linked.M.P$v1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="val">
+<dt id="val Linked.M.v2">
+<em class="property">val </em><code class="descname">v2</code><a class="headerlink" href="#val Linked.M.v2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Linked.M.t2">
+<em class="property">type </em><code class="descname">t2</code><a class="headerlink" href="#typ Linked.M.t2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="exn Linked.M.E2">
+<em class="property">exception </em><code class="descname">E2</code><a class="headerlink" href="#exn Linked.M.E2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Linked.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Linked.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="val">
+<dt id="val Linked.MT:v3">
+<em class="property">val </em><code class="descname">v3</code><a class="headerlink" href="#val Linked.MT:v3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div>
+<div class="section" id="indexes">
+<h2>Indexes<a class="headerlink" href="#indexes" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">sphinxcontrib-ocaml</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=jacquev6&repo=sphinxcontrib-ocaml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/jacquev6/sphinxcontrib-ocaml">
+    <img
+        alt="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+        src="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc.html">Autodoc directives</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OCaml Sphinx domain</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#directives">Directives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#values-and-types">Values and types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules-and-module-types">Modules and module types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functors">Functors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#roles">Roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indexes">Indexes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 <a href="http://vincent-jacques.net/">Vincent Jacques</a> <script>var jacquev6_ribbon_github="sphinxcontrib-ocaml"</script><script src="https://jacquev6.github.io/ribbon.js"></script>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/reference/sphinx_domain.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

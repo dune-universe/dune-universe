@@ -1,0 +1,11 @@
+module O: sig
+  val (=): bool -> bool -> bool
+  val (<>): bool -> bool -> bool
+  val (<): bool -> bool -> bool
+  val (<=): bool -> bool -> bool
+  val (>): bool -> bool -> bool
+  val (>=): bool -> bool -> bool
+  val not: bool -> bool
+  val (&&): bool -> bool -> bool
+  val (||): bool -> bool -> bool
+end

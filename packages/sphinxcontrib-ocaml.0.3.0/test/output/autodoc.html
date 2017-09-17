@@ -1,0 +1,3504 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Autodoc &#8212; Test project  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Indexes and tables" href="indexes.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="autodoc">
+<h1>Autodoc<a class="headerlink" href="#autodoc" title="Permalink to this headline">¶</a></h1>
+<dl class="module">
+<dt id="mod Exceptions">
+<em class="property">module </em><code class="descname">Exceptions</code><em class="property"> : sig</em><a class="headerlink" href="#mod Exceptions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp Exceptions.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Exceptions.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="exn Exceptions.MT:Simple">
+<em class="property">exception </em><code class="descname">Simple</code><a class="headerlink" href="#exn Exceptions.MT:Simple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Simple</p>
+<p>Doc’ for Simple</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.MT:SinglePayload">
+<em class="property">exception </em><code class="descname">SinglePayload</code><em class="property"> of int</em><a class="headerlink" href="#exn Exceptions.MT:SinglePayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SinglePayload</p>
+<p>Doc’ for SinglePayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.MT:SeveralPayload">
+<em class="property">exception </em><code class="descname">SeveralPayload</code><em class="property"> of int * float * string</em><a class="headerlink" href="#exn Exceptions.MT:SeveralPayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SeveralPayload</p>
+<p>Doc’ for SeveralPayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.MT:TuplePayload">
+<em class="property">exception </em><code class="descname">TuplePayload</code><em class="property"> of (int * float * string)</em><a class="headerlink" href="#exn Exceptions.MT:TuplePayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for TuplePayload</p>
+<p>Doc’ for TuplePayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.MT:RecordPayload">
+<em class="property">exception </em><code class="descname">RecordPayload</code><em class="property"> of {a: int; mutable b: float}</em><a class="headerlink" href="#exn Exceptions.MT:RecordPayload" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">Doc for RecordPayload.a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">Doc for RecordPayload.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for RecordPayload</p>
+<p>Doc’ for RecordPayload</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl Exceptions.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl Exceptions.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="exception">
+<dt id="exn Exceptions.Simple">
+<em class="property">exception </em><code class="descname">Simple</code><a class="headerlink" href="#exn Exceptions.Simple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Simple</p>
+<p>Doc’ for Simple</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.Hidden">
+<em class="property">exception </em><code class="descname">Hidden</code><a class="headerlink" href="#exn Exceptions.Hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Hidden</p>
+<p>Doc’ for Hidden</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.SinglePayload">
+<em class="property">exception </em><code class="descname">SinglePayload</code><em class="property"> of int</em><a class="headerlink" href="#exn Exceptions.SinglePayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SinglePayload</p>
+<p>Doc’ for SinglePayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.SeveralPayload">
+<em class="property">exception </em><code class="descname">SeveralPayload</code><em class="property"> of int * float * string</em><a class="headerlink" href="#exn Exceptions.SeveralPayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SeveralPayload</p>
+<p>Doc’ for SeveralPayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.TuplePayload">
+<em class="property">exception </em><code class="descname">TuplePayload</code><em class="property"> of (int * float * string)</em><a class="headerlink" href="#exn Exceptions.TuplePayload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for TuplePayload</p>
+<p>Doc’ for TuplePayload</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="exn Exceptions.RecordPayload">
+<em class="property">exception </em><code class="descname">RecordPayload</code><em class="property"> of {a: int; mutable b: float}</em><a class="headerlink" href="#exn Exceptions.RecordPayload" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">Doc for RecordPayload.a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">Doc for RecordPayload.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for RecordPayload</p>
+<p>Doc’ for RecordPayload</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>A reference to an exception: <a class="reference internal" href="#exn Exceptions.Simple"><code class="xref ocaml ocaml-exn docutils literal"><span class="pre">Exceptions.Simple</span></code></a>.</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Includes">
+<em class="property">module </em><code class="descname">Includes</code><em class="property"> : sig</em><a class="headerlink" href="#mod Includes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp Includes.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Includes.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="incl">
+<dt id="incl Includes.MT:0">
+<em class="property">include </em><em class="property">sig</em><a class="headerlink" href="#incl Includes.MT:0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for include</p>
+<p>Doc’ for include</p>
+<dl class="type">
+<dt id="typ Includes.MT:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.MT:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Includes.MT:A">
+<em class="property">module </em><code class="descname">A</code><em class="property"> : sig</em><a class="headerlink" href="#mod Includes.MT:A" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="incl">
+<dt id="incl Includes.MT:A.0">
+<em class="property">include </em><code class="descname">ModuleType</code><em class="property"> = sig</em><a class="headerlink" href="#incl Includes.MT:A.0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for include</p>
+<p>Doc’ for include</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Includes.MT:A.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.MT:A.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Includes.MT:B">
+<em class="property">module </em><code class="descname">B</code><em class="property"> : sig</em><a class="headerlink" href="#mod Includes.MT:B" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="incl">
+<dt id="incl Includes.MT:B.0">
+<em class="property">include </em><code class="descname">ModuleTypeAlias</code><em class="property"> = sig</em><a class="headerlink" href="#incl Includes.MT:B.0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for indirect include</p>
+<p>Doc’ for indirect include</p>
+<p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Includes.MT:B.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.MT:B.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl Includes.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl Includes.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Includes.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Includes.u">
+<em class="property">type </em><code class="descname">u</code><a class="headerlink" href="#typ Includes.u" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="module_type">
+<dt id="modtyp Includes.ModuleType">
+<em class="property">module type </em><code class="descname">ModuleType</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Includes.ModuleType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Includes.ModuleType:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.ModuleType:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Includes.A">
+<em class="property">module </em><code class="descname">A</code><em class="property"> : sig</em><a class="headerlink" href="#mod Includes.A" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Includes.A.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.A.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Includes.ModuleTypeAlias">
+<em class="property">module type </em><code class="descname">ModuleTypeAlias</code><em class="property"> = ModuleType = sig</em><a class="headerlink" href="#modtyp Includes.ModuleTypeAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Includes.ModuleTypeAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.ModuleTypeAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Includes.B">
+<em class="property">module </em><code class="descname">B</code><em class="property"> : sig</em><a class="headerlink" href="#mod Includes.B" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Includes.B.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Includes.B.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod KnownBugModTypeNotFound">
+<em class="property">module </em><code class="descname">KnownBugModTypeNotFound</code><em class="property"> : sig</em><a class="headerlink" href="#mod KnownBugModTypeNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.A">
+<em class="property">module type </em><code class="descname">A</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.A" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.A:B">
+<em class="property">module type </em><code class="descname">B</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.A:B" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.A:B:C">
+<em class="property">module type </em><code class="descname">C</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.A:B:C" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ KnownBugModTypeNotFound.A:B:C:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ KnownBugModTypeNotFound.A:B:C:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.A:B:Alias">
+<em class="property">module type </em><code class="descname">Alias</code><em class="property"> = C = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.A:B:Alias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ KnownBugModTypeNotFound.A:B:Alias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ KnownBugModTypeNotFound.A:B:Alias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl KnownBugModTypeNotFound.0">
+<em class="property">include </em><code class="descname">A</code><em class="property"> = sig</em><a class="headerlink" href="#incl KnownBugModTypeNotFound.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.B">
+<em class="property">module type </em><code class="descname">B</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.B" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp KnownBugModTypeNotFound.B:C">
+<em class="property">module type </em><code class="descname">C</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp KnownBugModTypeNotFound.B:C" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ KnownBugModTypeNotFound.B:C:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ KnownBugModTypeNotFound.B:C:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>Known bug in sphinxcontrib-ocaml (we’d love some help from a compiler-libs expert): module type not found C</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod ModuleTypes">
+<em class="property">module </em><code class="descname">ModuleTypes</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp ModuleTypes.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:Signature">
+<em class="property">module type </em><code class="descname">Signature</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:Signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:Signature:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:Signature:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:Alias">
+<em class="property">module type </em><code class="descname">Alias</code><em class="property"> = Signature = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:Alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Alias</p>
+<p>Doc’ for Alias</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:Alias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:Alias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:DoubleAlias">
+<em class="property">module type </em><code class="descname">DoubleAlias</code><em class="property"> = Alias = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:DoubleAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for DoubleAlias</p>
+<p>Doc’ for DoubleAlias</p>
+<p>Doc for Alias</p>
+<p>Doc’ for Alias</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:DoubleAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:DoubleAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:Functor">
+<em class="property">module type </em><code class="descname">Functor</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:Functor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:Functor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:Functor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:Functor:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.MT:Functor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:MultiFunctor">
+<em class="property">module type </em><code class="descname">MultiFunctor</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:MultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:MultiFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:MultiFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:MultiFunctor:B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ ModuleTypes.MT:MultiFunctor:B$b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:MultiFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:MultiFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:FunctorAlias">
+<em class="property">module type </em><code class="descname">FunctorAlias</code><em class="property"> = Functor = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:FunctorAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorAlias</p>
+<p>Doc’ for FunctorAlias</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorAlias:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.MT:FunctorAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:DoubleFunctorAlias">
+<em class="property">module type </em><code class="descname">DoubleFunctorAlias</code><em class="property"> = FunctorAlias = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:DoubleFunctorAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:DoubleFunctorAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:DoubleFunctorAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for DoubleFunctorAlias</p>
+<p>Doc’ for DoubleFunctorAlias</p>
+<p>Doc for FunctorAlias</p>
+<p>Doc’ for FunctorAlias</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:DoubleFunctorAlias:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.MT:DoubleFunctorAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:FunctorWithIdentifierContents">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContents</code><em class="property"> = Signature = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:FunctorWithIdentifierContents" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContents:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContents:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContents:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContents:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:FunctorWithIdentifierContentsAlias">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContentsAlias</code><em class="property"> = FunctorWithIdentifierContents = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:FunctorWithIdentifierContentsAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContentsAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContentsAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContentsAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsAlias</p>
+<p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContentsAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContentsAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContentsDoubleAlias</code><em class="property"> = FunctorWithIdentifierContentsAlias = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContentsDoubleAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsDoubleAlias</p>
+<p>Doc for FunctorWithIdentifierContentsAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsAlias</p>
+<p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:FunctorWithIdentifierContentsDoubleAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOf">
+<em class="property">module type </em><code class="descname">ModuleTypeOf</code><em class="property"> = module type of Module = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOf</p>
+<p>Doc’ for ModuleTypeOf</p>
+<p>Doc for Module</p>
+<p>Doc’ for Module</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOf:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOf:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOfFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfFunctor</code><em class="property"> = module type of FunctorModule = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfFunctor</p>
+<p>Doc’ for ModuleTypeOfFunctor</p>
+<p>Doc for FunctorModule</p>
+<p>Doc’ for FunctorModule</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfFunctor:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOfMultiFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfMultiFunctor</code><em class="property"> = module type of MultiFunctorModule = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOfMultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:B$b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfMultiFunctor</p>
+<p>Doc’ for ModuleTypeOfMultiFunctor</p>
+<p>Doc for MultiFunctorModule</p>
+<p>Doc’ for MultiFunctorModule</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfMultiFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOfStruct">
+<em class="property">module type </em><code class="descname">ModuleTypeOfStruct</code><em class="property"> = module type of struct ... end = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOfStruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOfStruct</p>
+<p>Doc’ for ModuleTypeOfStruct</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfStruct:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfStruct:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOfLiteralFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfLiteralFunctor</code><em class="property"> = module type of functor (...) -&gt; struct ... end = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOfLiteralFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfLiteralFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfLiteralFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfLiteralFunctor</p>
+<p>Doc’ for ModuleTypeOfLiteralFunctor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfLiteralFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfLiteralFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:ModuleTypeOfApply">
+<em class="property">module type </em><code class="descname">ModuleTypeOfApply</code><em class="property"> = module type of FunctorModule(struct ... end) = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:ModuleTypeOfApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOfApply</p>
+<p>Doc’ for ModuleTypeOfApply</p>
+<p>Doc for FunctorModule</p>
+<p>Doc’ for FunctorModule</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:ModuleTypeOfApply:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = int list</em><a class="headerlink" href="#typ ModuleTypes.MT:ModuleTypeOfApply:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:WithType">
+<em class="property">module type </em><code class="descname">WithType</code><em class="property"> = ForWithType with type t0 = int and type 'a t1 = 'a list and type ('a, 'b) t2 = ('a, 'b) result = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:WithType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithType</p>
+<p>Doc’ for WithType</p>
+<p>Doc for ForWithType</p>
+<p>Doc’ for ForWithType</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:WithType:t0">
+<em class="property">type </em><code class="descname">t0</code><em class="property"> = int</em><a class="headerlink" href="#typ ModuleTypes.MT:WithType:t0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithType:v0">
+<em class="property">val </em><code class="descname">v0</code><em class="property">: t0</em><a class="headerlink" href="#val ModuleTypes.MT:WithType:v0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v0</p>
+<p>Doc’ for v0</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.MT:WithType:t1">
+<em class="property">type +'a </em><code class="descname">t1</code><em class="property"> = 'a list</em><a class="headerlink" href="#typ ModuleTypes.MT:WithType:t1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithType:v1">
+<em class="property">val </em><code class="descname">v1</code><em class="property">: int t1</em><a class="headerlink" href="#val ModuleTypes.MT:WithType:v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v1</p>
+<p>Doc’ for v1</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.MT:WithType:t2">
+<em class="property">type (+'a, +'b) </em><code class="descname">t2</code><em class="property"> = ('a, 'b) result</em><a class="headerlink" href="#typ ModuleTypes.MT:WithType:t2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithType:v2">
+<em class="property">val </em><code class="descname">v2</code><em class="property">: (int, float) t2</em><a class="headerlink" href="#val ModuleTypes.MT:WithType:v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v2</p>
+<p>Doc’ for v2</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:WithTypeSubst">
+<em class="property">module type </em><code class="descname">WithTypeSubst</code><em class="property"> = ForWithType with type t0 := int and type 'a t1 := 'a list and type ('a, 'b) t2 := ('a, 'b) result = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:WithTypeSubst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithTypeSubst</p>
+<p>Doc’ for WithTypeSubst</p>
+<p>Doc for ForWithType</p>
+<p>Doc’ for ForWithType</p>
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithTypeSubst:v0">
+<em class="property">val </em><code class="descname">v0</code><em class="property">: int</em><a class="headerlink" href="#val ModuleTypes.MT:WithTypeSubst:v0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v0</p>
+<p>Doc’ for v0</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithTypeSubst:v1">
+<em class="property">val </em><code class="descname">v1</code><em class="property">: int list</em><a class="headerlink" href="#val ModuleTypes.MT:WithTypeSubst:v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v1</p>
+<p>Doc’ for v1</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithTypeSubst:v2">
+<em class="property">val </em><code class="descname">v2</code><em class="property">: (int, float) result</em><a class="headerlink" href="#val ModuleTypes.MT:WithTypeSubst:v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v2</p>
+<p>Doc’ for v2</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:WithModule">
+<em class="property">module type </em><code class="descname">WithModule</code><em class="property"> = ForWithModule with module M = MyM = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:WithModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithModule</p>
+<p>Doc’ for WithModule</p>
+<p>Doc for ForWithModule</p>
+<p>Doc’ for ForWithModule</p>
+<dl class="module">
+<dt id="mod ModuleTypes.MT:WithModule:M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes.MT:WithModule:M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MyM</p>
+<p>Doc’ for MyM</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MT:WithModule:M.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = int</em><a class="headerlink" href="#typ ModuleTypes.MT:WithModule:M.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t=int</p>
+<p>Doc’ for t=int</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithModule:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: M.t</em><a class="headerlink" href="#val ModuleTypes.MT:WithModule:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MT:WithModuleSubst">
+<em class="property">module type </em><code class="descname">WithModuleSubst</code><em class="property"> = ForWithModule with module M := MyM = sig</em><a class="headerlink" href="#modtyp ModuleTypes.MT:WithModuleSubst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithModuleSubst</p>
+<p>Doc’ for WithModuleSubst</p>
+<p>Doc for ForWithModule</p>
+<p>Doc’ for ForWithModule</p>
+<dl class="val">
+<dt id="val ModuleTypes.MT:WithModuleSubst:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: MyM.t</em><a class="headerlink" href="#val ModuleTypes.MT:WithModuleSubst:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl ModuleTypes.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl ModuleTypes.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp ModuleTypes.Signature">
+<em class="property">module type </em><code class="descname">Signature</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.Signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.Signature:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.Signature:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.Alias">
+<em class="property">module type </em><code class="descname">Alias</code><em class="property"> = Signature = sig</em><a class="headerlink" href="#modtyp ModuleTypes.Alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Alias</p>
+<p>Doc’ for Alias</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.Alias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.Alias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.DoubleAlias">
+<em class="property">module type </em><code class="descname">DoubleAlias</code><em class="property"> = Alias = sig</em><a class="headerlink" href="#modtyp ModuleTypes.DoubleAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for DoubleAlias</p>
+<p>Doc’ for DoubleAlias</p>
+<p>Doc for Alias</p>
+<p>Doc’ for Alias</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.DoubleAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.DoubleAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.Functor">
+<em class="property">module type </em><code class="descname">Functor</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp ModuleTypes.Functor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.Functor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.Functor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.Functor:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.Functor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.MultiFunctor">
+<em class="property">module type </em><code class="descname">MultiFunctor</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp ModuleTypes.MultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MultiFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MultiFunctor:B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctor:B$b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MultiFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.FunctorAlias">
+<em class="property">module type </em><code class="descname">FunctorAlias</code><em class="property"> = Functor = functor</em><a class="headerlink" href="#modtyp ModuleTypes.FunctorAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.FunctorAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.FunctorAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorAlias</p>
+<p>Doc’ for FunctorAlias</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.FunctorAlias:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.FunctorAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.DoubleFunctorAlias">
+<em class="property">module type </em><code class="descname">DoubleFunctorAlias</code><em class="property"> = FunctorAlias = functor</em><a class="headerlink" href="#modtyp ModuleTypes.DoubleFunctorAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.DoubleFunctorAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.DoubleFunctorAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for DoubleFunctorAlias</p>
+<p>Doc’ for DoubleFunctorAlias</p>
+<p>Doc for FunctorAlias</p>
+<p>Doc’ for FunctorAlias</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.DoubleFunctorAlias:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.DoubleFunctorAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.FunctorWithIdentifierContents">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContents</code><em class="property"> = Signature = functor</em><a class="headerlink" href="#modtyp ModuleTypes.FunctorWithIdentifierContents" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContents:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContents:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContents:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContents:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.FunctorWithIdentifierContentsAlias">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContentsAlias</code><em class="property"> = FunctorWithIdentifierContents = functor</em><a class="headerlink" href="#modtyp ModuleTypes.FunctorWithIdentifierContentsAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContentsAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContentsAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContentsAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsAlias</p>
+<p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContentsAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContentsAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.FunctorWithIdentifierContentsDoubleAlias">
+<em class="property">module type </em><code class="descname">FunctorWithIdentifierContentsDoubleAlias</code><em class="property"> = FunctorWithIdentifierContentsAlias = functor</em><a class="headerlink" href="#modtyp ModuleTypes.FunctorWithIdentifierContentsDoubleAlias" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContentsDoubleAlias:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContentsDoubleAlias:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorWithIdentifierContentsDoubleAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsDoubleAlias</p>
+<p>Doc for FunctorWithIdentifierContentsAlias</p>
+<p>Doc’ for FunctorWithIdentifierContentsAlias</p>
+<p>Doc for FunctorWithIdentifierContents</p>
+<p>Doc’ for FunctorWithIdentifierContents</p>
+<p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ ModuleTypes.FunctorWithIdentifierContentsDoubleAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.FunctorWithIdentifierContentsDoubleAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod ModuleTypes.Module">
+<em class="property">module </em><code class="descname">Module</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes.Module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Module</p>
+<p>Doc’ for Module</p>
+<dl class="type">
+<dt id="typ ModuleTypes.Module.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.Module.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOf">
+<em class="property">module type </em><code class="descname">ModuleTypeOf</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOf</p>
+<p>Doc’ for ModuleTypeOf</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOf:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOf:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod ModuleTypes.FunctorModule">
+<em class="property">module </em><code class="descname">FunctorModule</code><em class="property"> : Functor = functor</em><a class="headerlink" href="#mod ModuleTypes.FunctorModule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.FunctorModule.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.FunctorModule.A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorModule</p>
+<p>Doc’ for FunctorModule</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.FunctorModule.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.FunctorModule.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOfFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfFunctor</code><em class="property"> = Functor = functor</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+<p>Doc’ for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfFunctor</p>
+<p>Doc’ for ModuleTypeOfFunctor</p>
+<p>Doc for Functor</p>
+<p>Doc’ for Functor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfFunctor:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A.a list</em><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod ModuleTypes.MultiFunctorModule">
+<em class="property">module </em><code class="descname">MultiFunctorModule</code><em class="property"> : MultiFunctor = functor</em><a class="headerlink" href="#mod ModuleTypes.MultiFunctorModule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MultiFunctorModule.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctorModule.A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.MultiFunctorModule.B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctorModule.B$b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for MultiFunctorModule</p>
+<p>Doc’ for MultiFunctorModule</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MultiFunctorModule.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.MultiFunctorModule.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOfMultiFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfMultiFunctor</code><em class="property"> = MultiFunctor = functor</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOfMultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfMultiFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfMultiFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfMultiFunctor:B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfMultiFunctor:B$b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfMultiFunctor</p>
+<p>Doc’ for ModuleTypeOfMultiFunctor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfMultiFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfMultiFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOfStruct">
+<em class="property">module type </em><code class="descname">ModuleTypeOfStruct</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOfStruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOfStruct</p>
+<p>Doc’ for ModuleTypeOfStruct</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfStruct:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfStruct:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOfLiteralFunctor">
+<em class="property">module type </em><code class="descname">ModuleTypeOfLiteralFunctor</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOfLiteralFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfLiteralFunctor:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfLiteralFunctor:A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfLiteralFunctor</p>
+<p>Doc’ for ModuleTypeOfLiteralFunctor</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfLiteralFunctor:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfLiteralFunctor:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ModuleTypeOfApply">
+<em class="property">module type </em><code class="descname">ModuleTypeOfApply</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.ModuleTypeOfApply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeOfApply</p>
+<p>Doc’ for ModuleTypeOfApply</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ModuleTypeOfApply:t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = int list</em><a class="headerlink" href="#typ ModuleTypes.ModuleTypeOfApply:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ForWithType">
+<em class="property">module type </em><code class="descname">ForWithType</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.ForWithType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ForWithType</p>
+<p>Doc’ for ForWithType</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ForWithType:t0">
+<em class="property">type </em><code class="descname">t0</code><a class="headerlink" href="#typ ModuleTypes.ForWithType:t0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t0</p>
+<p>Doc’ for t0</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.ForWithType:v0">
+<em class="property">val </em><code class="descname">v0</code><em class="property">: t0</em><a class="headerlink" href="#val ModuleTypes.ForWithType:v0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v0</p>
+<p>Doc’ for v0</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.ForWithType:t1">
+<em class="property">type 'a </em><code class="descname">t1</code><a class="headerlink" href="#typ ModuleTypes.ForWithType:t1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t1</p>
+<p>Doc’ for t1</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.ForWithType:v1">
+<em class="property">val </em><code class="descname">v1</code><em class="property">: int t1</em><a class="headerlink" href="#val ModuleTypes.ForWithType:v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v1</p>
+<p>Doc’ for v1</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.ForWithType:t2">
+<em class="property">type ('a, 'b) </em><code class="descname">t2</code><a class="headerlink" href="#typ ModuleTypes.ForWithType:t2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t2</p>
+<p>Doc’ for t2</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.ForWithType:v2">
+<em class="property">val </em><code class="descname">v2</code><em class="property">: (int, float) t2</em><a class="headerlink" href="#val ModuleTypes.ForWithType:v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v2</p>
+<p>Doc’ for v2</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.WithType">
+<em class="property">module type </em><code class="descname">WithType</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.WithType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithType</p>
+<p>Doc’ for WithType</p>
+<dl class="type">
+<dt id="typ ModuleTypes.WithType:t0">
+<em class="property">type </em><code class="descname">t0</code><em class="property"> = int</em><a class="headerlink" href="#typ ModuleTypes.WithType:t0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithType:v0">
+<em class="property">val </em><code class="descname">v0</code><em class="property">: t0</em><a class="headerlink" href="#val ModuleTypes.WithType:v0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v0</p>
+<p>Doc’ for v0</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.WithType:t1">
+<em class="property">type +'a </em><code class="descname">t1</code><em class="property"> = 'a list</em><a class="headerlink" href="#typ ModuleTypes.WithType:t1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithType:v1">
+<em class="property">val </em><code class="descname">v1</code><em class="property">: int t1</em><a class="headerlink" href="#val ModuleTypes.WithType:v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v1</p>
+<p>Doc’ for v1</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ ModuleTypes.WithType:t2">
+<em class="property">type (+'a, +'b) </em><code class="descname">t2</code><em class="property"> = ('a, 'b) result</em><a class="headerlink" href="#typ ModuleTypes.WithType:t2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithType:v2">
+<em class="property">val </em><code class="descname">v2</code><em class="property">: (int, float) t2</em><a class="headerlink" href="#val ModuleTypes.WithType:v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v2</p>
+<p>Doc’ for v2</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.WithTypeSubst">
+<em class="property">module type </em><code class="descname">WithTypeSubst</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.WithTypeSubst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithTypeSubst</p>
+<p>Doc’ for WithTypeSubst</p>
+<dl class="val">
+<dt id="val ModuleTypes.WithTypeSubst:v0">
+<em class="property">val </em><code class="descname">v0</code><em class="property">: int</em><a class="headerlink" href="#val ModuleTypes.WithTypeSubst:v0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v0</p>
+<p>Doc’ for v0</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithTypeSubst:v1">
+<em class="property">val </em><code class="descname">v1</code><em class="property">: int list</em><a class="headerlink" href="#val ModuleTypes.WithTypeSubst:v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v1</p>
+<p>Doc’ for v1</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithTypeSubst:v2">
+<em class="property">val </em><code class="descname">v2</code><em class="property">: (int, float) result</em><a class="headerlink" href="#val ModuleTypes.WithTypeSubst:v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v2</p>
+<p>Doc’ for v2</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.ForWithModule">
+<em class="property">module type </em><code class="descname">ForWithModule</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.ForWithModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ForWithModule</p>
+<p>Doc’ for ForWithModule</p>
+<dl class="module">
+<dt id="mod ModuleTypes.ForWithModule:M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes.ForWithModule:M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc of M</p>
+<p>Doc’ of M</p>
+<dl class="type">
+<dt id="typ ModuleTypes.ForWithModule:M.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ ModuleTypes.ForWithModule:M.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc of t</p>
+<p>Doc’ of t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.ForWithModule:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: M.t</em><a class="headerlink" href="#val ModuleTypes.ForWithModule:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod ModuleTypes.MyM">
+<em class="property">module </em><code class="descname">MyM</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes.MyM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MyM</p>
+<p>Doc’ for MyM</p>
+<dl class="type">
+<dt id="typ ModuleTypes.MyM.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = int</em><a class="headerlink" href="#typ ModuleTypes.MyM.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t=int</p>
+<p>Doc’ for t=int</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.WithModule">
+<em class="property">module type </em><code class="descname">WithModule</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.WithModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithModule</p>
+<p>Doc’ for WithModule</p>
+<dl class="module">
+<dt id="mod ModuleTypes.WithModule:M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod ModuleTypes.WithModule:M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MyM</p>
+<p>Doc’ for MyM</p>
+<dl class="type">
+<dt id="typ ModuleTypes.WithModule:M.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = int</em><a class="headerlink" href="#typ ModuleTypes.WithModule:M.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t=int</p>
+<p>Doc’ for t=int</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="val">
+<dt id="val ModuleTypes.WithModule:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: M.t</em><a class="headerlink" href="#val ModuleTypes.WithModule:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp ModuleTypes.WithModuleSubst">
+<em class="property">module type </em><code class="descname">WithModuleSubst</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp ModuleTypes.WithModuleSubst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithModuleSubst</p>
+<p>Doc’ for WithModuleSubst</p>
+<dl class="val">
+<dt id="val ModuleTypes.WithModuleSubst:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: MyM.t</em><a class="headerlink" href="#val ModuleTypes.WithModuleSubst:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>A reference to a module type: <a class="reference internal" href="#modtyp ModuleTypes.Signature"><code class="xref ocaml ocaml-modtyp docutils literal"><span class="pre">ModuleTypes.Signature</span></code></a>.</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules">
+<em class="property">module </em><code class="descname">Modules</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp Modules.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module">
+<dt id="mod Modules.MT:Signature">
+<em class="property">module </em><code class="descname">Signature</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:Signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ Modules.MT:Signature.t1">
+<em class="property">type </em><code class="descname">t1</code><a class="headerlink" href="#typ Modules.MT:Signature.t1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Floating doc</p>
+<dl class="type">
+<dt id="typ Modules.MT:Signature.t2">
+<em class="property">type </em><code class="descname">t2</code><a class="headerlink" href="#typ Modules.MT:Signature.t2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Floating doc with many leading spaces (which should be removed),
+several lines:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ow">and</span> <span class="n">a</span> <span class="n">quoted</span><span class="p">,</span> <span class="n">indented</span> <span class="n">part</span> <span class="p">(</span><span class="n">that</span> <span class="n">should</span> <span class="n">keep</span> <span class="n">its</span> <span class="n">indentation</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">another</span> <span class="n">line</span> <span class="k">with</span> <span class="n">trailing</span> <span class="n">spaces</span> <span class="p">(</span><span class="n">that</span> <span class="n">should</span> <span class="n">be</span> <span class="n">removed</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And a conclusion with many trailing spaces (which should be removed as well).</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:AliasOfSignature">
+<em class="property">module </em><code class="descname">AliasOfSignature</code><em class="property"> = Signature</em><a class="headerlink" href="#mod Modules.MT:AliasOfSignature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AliasOfSignature</p>
+<p>Doc’ for AliasOfSignature</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:SimpleFunctor">
+<em class="property">module </em><code class="descname">SimpleFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.MT:SimpleFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">N</code><em class="property"> : sig</em></dt>
+<dd><p>Floating Doc in sig of SimpleFunctor.N (because I’ve not found a way to attach doc to a functor parameter)</p>
+<dl class="val">
+<dt id="val Modules.MT:SimpleFunctor.N$n">
+<em class="property">val </em><code class="descname">n</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:SimpleFunctor.N$n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SimpleFunctor.N.n</p>
+<p>Doc’ for SimpleFunctor.N.n</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for SimpleFunctor</p>
+<p>Doc’ for SimpleFunctor</p>
+<dl class="type">
+<dt id="typ Modules.MT:SimpleFunctor.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:SimpleFunctor.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SimpleFunctor.t</p>
+<p>Doc’ for SimpleFunctor.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:MultiFunctor">
+<em class="property">module </em><code class="descname">MultiFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.MT:MultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:MultiFunctor.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.MT:MultiFunctor.A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.A.a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:MultiFunctor.B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ Modules.MT:MultiFunctor.B$b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.B.b</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">C</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:MultiFunctor.C$c">
+<em class="property">type </em><code class="descname">c</code><a class="headerlink" href="#typ Modules.MT:MultiFunctor.C$c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.C.c</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for MultiFunctor</p>
+<dl class="type">
+<dt id="typ Modules.MT:MultiFunctor.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:MultiFunctor.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:FunctorOfFunctor">
+<em class="property">module </em><code class="descname">FunctorOfFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.MT:FunctorOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">F</code><em class="property"> : functor</em></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:FunctorOfFunctor.F$A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.MT:FunctorOfFunctor.F$A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:FunctorOfFunctor.F$f">
+<em class="property">type </em><code class="descname">f</code><a class="headerlink" href="#typ Modules.MT:FunctorOfFunctor.F$f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:FunctorOfFunctor.ff">
+<em class="property">type </em><code class="descname">ff</code><a class="headerlink" href="#typ Modules.MT:FunctorOfFunctor.ff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:AliasOfFunctorOfFunctor">
+<em class="property">module </em><code class="descname">AliasOfFunctorOfFunctor</code><em class="property"> = FunctorOfFunctor</em><a class="headerlink" href="#mod Modules.MT:AliasOfFunctorOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AliasOfFunctorOfFunctor</p>
+<p>Doc’ for AliasOfFunctorOfFunctor</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:ModuleTypeOfAliasOfFunctor">
+<em class="property">module </em><code class="descname">ModuleTypeOfAliasOfFunctor</code><em class="property"> : module type of AliasOfFunctorOfFunctor = functor</em><a class="headerlink" href="#mod Modules.MT:ModuleTypeOfAliasOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">F</code><em class="property"> : functor</em></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:ModuleTypeOfAliasOfFunctor.F$A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.MT:ModuleTypeOfAliasOfFunctor.F$A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:ModuleTypeOfAliasOfFunctor.F$f">
+<em class="property">type </em><code class="descname">f</code><a class="headerlink" href="#typ Modules.MT:ModuleTypeOfAliasOfFunctor.F$f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfAliasOfFunctor</p>
+<p>Doc’ for ModuleTypeOfAliasOfFunctor</p>
+<p>Doc for AliasOfFunctorOfFunctor</p>
+<p>Doc’ for AliasOfFunctorOfFunctor</p>
+<dl class="type">
+<dt id="typ Modules.MT:ModuleTypeOfAliasOfFunctor.ff">
+<em class="property">type </em><code class="descname">ff</code><em class="property"> = FunctorOfFunctor(F).ff</em><a class="headerlink" href="#typ Modules.MT:ModuleTypeOfAliasOfFunctor.ff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:Identifier">
+<em class="property">module </em><code class="descname">Identifier</code><em class="property"> : ModuleType = sig</em><a class="headerlink" href="#mod Modules.MT:Identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Identifier</p>
+<p>Doc’ for Identifier</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.MT:Identifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:Identifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.MT:Identifier.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:Identifier.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:Identifier.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:Identifier.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.MT:Identifier.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:Identifier.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.MT:Identifier.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.MT:Identifier.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.MT:Identifier.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:Identifier.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:WithType">
+<em class="property">module </em><code class="descname">WithType</code><em class="property"> : ModuleType with type t = float = sig</em><a class="headerlink" href="#mod Modules.MT:WithType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithType</p>
+<p>Doc’ for WithType</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.MT:WithType.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = float</em><a class="headerlink" href="#typ Modules.MT:WithType.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val Modules.MT:WithType.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:WithType.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:WithType.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:WithType.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.MT:WithType.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:WithType.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.MT:WithType.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.MT:WithType.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.MT:WithType.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:WithType.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:IndirectIdentifier">
+<em class="property">module </em><code class="descname">IndirectIdentifier</code><em class="property"> : ModuleTypeAlias = sig</em><a class="headerlink" href="#mod Modules.MT:IndirectIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for IndirectIdentifier</p>
+<p>Doc’ for IndirectIdentifier</p>
+<p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.MT:IndirectIdentifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:IndirectIdentifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.MT:IndirectIdentifier.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:IndirectIdentifier.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:IndirectIdentifier.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:IndirectIdentifier.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.MT:IndirectIdentifier.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:IndirectIdentifier.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.MT:IndirectIdentifier.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.MT:IndirectIdentifier.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.MT:IndirectIdentifier.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:IndirectIdentifier.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:FunctorWithIdentifierParam">
+<em class="property">module </em><code class="descname">FunctorWithIdentifierParam</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.MT:FunctorWithIdentifierParam" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : ModuleTypeAlias = sig</em></dt>
+<dd><p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.MT:FunctorWithIdentifierParam.A$t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:FunctorWithIdentifierParam.A$t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.MT:FunctorWithIdentifierParam.A$v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:FunctorWithIdentifierParam.A$v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:FunctorWithIdentifierParam.A$M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:FunctorWithIdentifierParam.A$M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.MT:FunctorWithIdentifierParam.A$M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:FunctorWithIdentifierParam.A$M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.MT:FunctorWithIdentifierParam.A$MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.MT:FunctorWithIdentifierParam.A$MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.MT:FunctorWithIdentifierParam.A$MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.MT:FunctorWithIdentifierParam.A$MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd></dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:FunctorAsIdentifier">
+<em class="property">module </em><code class="descname">FunctorAsIdentifier</code><em class="property"> : FunctorType = functor</em><a class="headerlink" href="#mod Modules.MT:FunctorAsIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MT:FunctorAsIdentifier.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.MT:FunctorAsIdentifier.A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorAsIdentifier</p>
+<p>Doc’ for FunctorAsIdentifier</p>
+<p>Doc for FunctorType</p>
+<p>Doc’ for FunctorType</p>
+<dl class="type">
+<dt id="typ Modules.MT:FunctorAsIdentifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MT:FunctorAsIdentifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:Recursive1">
+<em class="property">module </em><code class="descname">Recursive1</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:Recursive1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Recursive1</p>
+<p>Doc’ for Recursive1</p>
+<dl class="type">
+<dt id="typ Modules.MT:Recursive1.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A1 | B1 of Recursive2.t</em><a class="headerlink" href="#typ Modules.MT:Recursive1.t" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A1:</th><td class="field-body">Doc for A1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B1:</th><td class="field-body">Doc for B1</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:Recursive2">
+<em class="property">module </em><code class="descname">Recursive2</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.MT:Recursive2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Recursive2</p>
+<p>Doc’ for Recursive2</p>
+<dl class="type">
+<dt id="typ Modules.MT:Recursive2.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A2 | B2 of Recursive1.t</em><a class="headerlink" href="#typ Modules.MT:Recursive2.t" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A2:</th><td class="field-body">Doc for A2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B2:</th><td class="field-body">Doc for B2</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MT:AbstractAsIdentifier">
+<em class="property">module </em><code class="descname">AbstractAsIdentifier</code><em class="property"> : Abstract = sig</em><a class="headerlink" href="#mod Modules.MT:AbstractAsIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AbstractAsIdentifier</p>
+<p>Doc’ for AbstractAsIdentifier</p>
+<p>Doc for Abstract</p>
+<p>Doc’ for Abstract</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl Modules.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl Modules.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module">
+<dt id="mod Modules.Signature">
+<em class="property">module </em><code class="descname">Signature</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.Signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Signature</p>
+<p>Doc’ for Signature</p>
+<dl class="type">
+<dt id="typ Modules.Signature.t1">
+<em class="property">type </em><code class="descname">t1</code><a class="headerlink" href="#typ Modules.Signature.t1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Modules.Signature.t2">
+<em class="property">type </em><code class="descname">t2</code><a class="headerlink" href="#typ Modules.Signature.t2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.AliasOfSignature">
+<em class="property">module </em><code class="descname">AliasOfSignature</code><em class="property"> = Signature</em><a class="headerlink" href="#mod Modules.AliasOfSignature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AliasOfSignature</p>
+<p>Doc’ for AliasOfSignature</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.Hidden">
+<em class="property">module </em><code class="descname">Hidden</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.Hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Hidden</p>
+<p>Doc for Hidden</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.SimpleFunctor">
+<em class="property">module </em><code class="descname">SimpleFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.SimpleFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">N</code><em class="property"> : sig</em></dt>
+<dd><dl class="val">
+<dt id="val Modules.SimpleFunctor.N$n">
+<em class="property">val </em><code class="descname">n</code><em class="property">: int</em><a class="headerlink" href="#val Modules.SimpleFunctor.N$n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SimpleFunctor.N.n</p>
+<p>Doc’ for SimpleFunctor.N.n</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for SimpleFunctor</p>
+<p>Doc’ for SimpleFunctor</p>
+<dl class="type">
+<dt id="typ Modules.SimpleFunctor.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.SimpleFunctor.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for SimpleFunctor.t</p>
+<p>Doc’ for SimpleFunctor.t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.MultiFunctor">
+<em class="property">module </em><code class="descname">MultiFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.MultiFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MultiFunctor.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.MultiFunctor.A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.A.a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">B</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MultiFunctor.B$b">
+<em class="property">type </em><code class="descname">b</code><a class="headerlink" href="#typ Modules.MultiFunctor.B$b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.B.b</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+<dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">C</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.MultiFunctor.C$c">
+<em class="property">type </em><code class="descname">c</code><a class="headerlink" href="#typ Modules.MultiFunctor.C$c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MultiFunctor.C.c</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for MultiFunctor</p>
+<dl class="type">
+<dt id="typ Modules.MultiFunctor.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.MultiFunctor.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.FunctorOfFunctor">
+<em class="property">module </em><code class="descname">FunctorOfFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.FunctorOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">F</code><em class="property"> : functor</em></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.FunctorOfFunctor.F$A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.FunctorOfFunctor.F$A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.FunctorOfFunctor.F$f">
+<em class="property">type </em><code class="descname">f</code><a class="headerlink" href="#typ Modules.FunctorOfFunctor.F$f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.FunctorOfFunctor.ff">
+<em class="property">type </em><code class="descname">ff</code><a class="headerlink" href="#typ Modules.FunctorOfFunctor.ff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.AliasOfFunctorOfFunctor">
+<em class="property">module </em><code class="descname">AliasOfFunctorOfFunctor</code><em class="property"> = FunctorOfFunctor</em><a class="headerlink" href="#mod Modules.AliasOfFunctorOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AliasOfFunctorOfFunctor</p>
+<p>Doc’ for AliasOfFunctorOfFunctor</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.ModuleTypeOfAliasOfFunctor">
+<em class="property">module </em><code class="descname">ModuleTypeOfAliasOfFunctor</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.ModuleTypeOfAliasOfFunctor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">F</code><em class="property"> : functor</em></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.ModuleTypeOfAliasOfFunctor.F$A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.ModuleTypeOfAliasOfFunctor.F$A$a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.ModuleTypeOfAliasOfFunctor.F$f">
+<em class="property">type </em><code class="descname">f</code><a class="headerlink" href="#typ Modules.ModuleTypeOfAliasOfFunctor.F$f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for ModuleTypeOfAliasOfFunctor</p>
+<p>Doc’ for ModuleTypeOfAliasOfFunctor</p>
+<dl class="type">
+<dt id="typ Modules.ModuleTypeOfAliasOfFunctor.ff">
+<em class="property">type </em><code class="descname">ff</code><em class="property"> = FunctorOfFunctor(F).ff</em><a class="headerlink" href="#typ Modules.ModuleTypeOfAliasOfFunctor.ff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.ModuleType">
+<em class="property">module type </em><code class="descname">ModuleType</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.ModuleType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.ModuleType:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.ModuleType:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.ModuleType:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleType:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.ModuleType:M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.ModuleType:M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.ModuleType:M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleType:M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.ModuleType:MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.ModuleType:MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.ModuleType:MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleType:MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.Identifier">
+<em class="property">module </em><code class="descname">Identifier</code><em class="property"> : ModuleType = sig</em><a class="headerlink" href="#mod Modules.Identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Identifier</p>
+<p>Doc’ for Identifier</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.Identifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.Identifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.Identifier.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.Identifier.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.Identifier.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.Identifier.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.Identifier.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.Identifier.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.Identifier.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.Identifier.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.Identifier.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.Identifier.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.WithType">
+<em class="property">module </em><code class="descname">WithType</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.WithType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for WithType</p>
+<p>Doc’ for WithType</p>
+<dl class="type">
+<dt id="typ Modules.WithType.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = float</em><a class="headerlink" href="#typ Modules.WithType.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val Modules.WithType.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.WithType.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.WithType.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.WithType.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.WithType.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.WithType.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.WithType.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.WithType.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.WithType.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.WithType.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.ModuleTypeAlias">
+<em class="property">module type </em><code class="descname">ModuleTypeAlias</code><em class="property"> = ModuleType = sig</em><a class="headerlink" href="#modtyp Modules.ModuleTypeAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.ModuleTypeAlias:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.ModuleTypeAlias:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.ModuleTypeAlias:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleTypeAlias:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.ModuleTypeAlias:M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.ModuleTypeAlias:M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.ModuleTypeAlias:M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleTypeAlias:M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.ModuleTypeAlias:MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.ModuleTypeAlias:MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.ModuleTypeAlias:MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.ModuleTypeAlias:MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.IndirectIdentifier">
+<em class="property">module </em><code class="descname">IndirectIdentifier</code><em class="property"> : ModuleTypeAlias = sig</em><a class="headerlink" href="#mod Modules.IndirectIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for IndirectIdentifier</p>
+<p>Doc’ for IndirectIdentifier</p>
+<p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.IndirectIdentifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.IndirectIdentifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.IndirectIdentifier.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.IndirectIdentifier.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.IndirectIdentifier.M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.IndirectIdentifier.M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.IndirectIdentifier.M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.IndirectIdentifier.M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.IndirectIdentifier.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.IndirectIdentifier.MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.IndirectIdentifier.MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.IndirectIdentifier.MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.FunctorWithIdentifierParam">
+<em class="property">module </em><code class="descname">FunctorWithIdentifierParam</code><em class="property"> : functor</em><a class="headerlink" href="#mod Modules.FunctorWithIdentifierParam" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : ModuleTypeAlias = sig</em></dt>
+<dd><p>Doc for ModuleTypeAlias</p>
+<p>Doc’ for ModuleTypeAlias</p>
+<p>Doc for ModuleType</p>
+<p>Doc’ for ModuleType</p>
+<dl class="type">
+<dt id="typ Modules.FunctorWithIdentifierParam.A$t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.FunctorWithIdentifierParam.A$t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for ModuleType.t</p>
+<p>Doc’ for ModuleType.t</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Modules.FunctorWithIdentifierParam.A$v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Modules.FunctorWithIdentifierParam.A$v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="module">
+<dt id="mod Modules.FunctorWithIdentifierParam.A$M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.FunctorWithIdentifierParam.A$M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for M</p>
+<p>Doc’ for M</p>
+<dl class="val">
+<dt id="val Modules.FunctorWithIdentifierParam.A$M.w">
+<em class="property">val </em><code class="descname">w</code><em class="property">: int</em><a class="headerlink" href="#val Modules.FunctorWithIdentifierParam.A$M.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.FunctorWithIdentifierParam.A$MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.FunctorWithIdentifierParam.A$MT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for MT</p>
+<p>Doc’ for MT</p>
+<dl class="val">
+<dt id="val Modules.FunctorWithIdentifierParam.A$MT:x">
+<em class="property">val </em><code class="descname">x</code><em class="property">: int</em><a class="headerlink" href="#val Modules.FunctorWithIdentifierParam.A$MT:x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd></dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.FunctorType">
+<em class="property">module type </em><code class="descname">FunctorType</code><em class="property"> = functor</em><a class="headerlink" href="#modtyp Modules.FunctorType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.FunctorType:A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.FunctorType:A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorType</p>
+<p>Doc’ for FunctorType</p>
+<dl class="type">
+<dt id="typ Modules.FunctorType:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.FunctorType:t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.FunctorAsIdentifier">
+<em class="property">module </em><code class="descname">FunctorAsIdentifier</code><em class="property"> : FunctorType = functor</em><a class="headerlink" href="#mod Modules.FunctorAsIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="functor_parameter">
+<dt>
+<em class="property">(</em><code class="descname">A</code><em class="property"> : sig</em></dt>
+<dd><dl class="type">
+<dt id="typ Modules.FunctorAsIdentifier.A$a">
+<em class="property">type </em><code class="descname">a</code><a class="headerlink" href="#typ Modules.FunctorAsIdentifier.A$a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for a</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end)</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">-&gt; sig</em></dt>
+<dd><p>Doc for FunctorAsIdentifier</p>
+<p>Doc’ for FunctorAsIdentifier</p>
+<p>Doc for FunctorType</p>
+<p>Doc’ for FunctorType</p>
+<dl class="type">
+<dt id="typ Modules.FunctorAsIdentifier.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Modules.FunctorAsIdentifier.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.Recursive1">
+<em class="property">module </em><code class="descname">Recursive1</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.Recursive1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Recursive1</p>
+<p>Doc’ for Recursive1</p>
+<dl class="type">
+<dt id="typ Modules.Recursive1.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A1 | B1 of Recursive2.t</em><a class="headerlink" href="#typ Modules.Recursive1.t" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A1:</th><td class="field-body">Doc for A1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B1:</th><td class="field-body">Doc for B1</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.Recursive2">
+<em class="property">module </em><code class="descname">Recursive2</code><em class="property"> : sig</em><a class="headerlink" href="#mod Modules.Recursive2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Recursive2</p>
+<p>Doc’ for Recursive2</p>
+<dl class="type">
+<dt id="typ Modules.Recursive2.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = A2 | B2 of Recursive1.t</em><a class="headerlink" href="#typ Modules.Recursive2.t" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A2:</th><td class="field-body">Doc for A2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B2:</th><td class="field-body">Doc for B2</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for t</p>
+<p>Doc’ for t</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module_type">
+<dt id="modtyp Modules.Abstract">
+<em class="property">module type </em><code class="descname">Abstract</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Modules.Abstract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for Abstract</p>
+<p>Doc’ for Abstract</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Modules.AbstractAsIdentifier">
+<em class="property">module </em><code class="descname">AbstractAsIdentifier</code><em class="property"> : Abstract = sig</em><a class="headerlink" href="#mod Modules.AbstractAsIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for AbstractAsIdentifier</p>
+<p>Doc’ for AbstractAsIdentifier</p>
+<p>Doc for Abstract</p>
+<p>Doc’ for Abstract</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>A reference to a module: <a class="reference internal" href="#mod Modules.Signature"><code class="xref ocaml ocaml-mod docutils literal"><span class="pre">Modules.Signature</span></code></a>.</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Types">
+<em class="property">module </em><code class="descname">Types</code><em class="property"> : sig</em><a class="headerlink" href="#mod Types" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp Types.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Types.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Types.MT:manifest">
+<em class="property">type </em><code class="descname">manifest</code><em class="property"> = int</em><a class="headerlink" href="#typ Types.MT:manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for manifest</p>
+<p>Doc’ for manifest</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:parameter">
+<em class="property">type 'a </em><code class="descname">parameter</code><a class="headerlink" href="#typ Types.MT:parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for parameter</p>
+<p>Doc’ for parameter</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:parameters">
+<em class="property">type ('a, 'b) </em><code class="descname">parameters</code><a class="headerlink" href="#typ Types.MT:parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for parameters</p>
+<p>Doc’ for parameters</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:variances">
+<em class="property">type (-'a, +'b) </em><code class="descname">variances</code><a class="headerlink" href="#typ Types.MT:variances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for variances</p>
+<p>Doc’ for variances</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:unused_parameters">
+<em class="property">type ('a, 'b) </em><code class="descname">unused_parameters</code><em class="property"> = [ `Foo ]</em><a class="headerlink" href="#typ Types.MT:unused_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for unused_parameters</p>
+<p>Doc’ for unused_parameters</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:record">
+<em class="property">type </em><code class="descname">record</code><em class="property"> = {a: int; mutable b: float}</em><a class="headerlink" href="#typ Types.MT:record" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">Doc for record.a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">Doc for record.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for record</p>
+<p>Doc’ for record</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:variant">
+<em class="property">type </em><code class="descname">variant</code><em class="property"> = None | Single of int | Several of int * float | Tuple of (int * float) | Record of {a: int; mutable b: float}</em><a class="headerlink" href="#typ Types.MT:variant" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor None:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for None</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Constructor Single:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Doc for Single</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor Several:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for Several</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Constructor Tuple:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Doc for Tuple</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor Record:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for Record</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label a:</th><td class="field-body">Doc for Record.a</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Label b:</th><td class="field-body">Doc for Record.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for variant</p>
+<p>Doc’ for variant</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:recursive1">
+<em class="property">type </em><code class="descname">recursive1</code><em class="property"> = A1 | B1 of recursive2</em><a class="headerlink" href="#typ Types.MT:recursive1" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A1:</th><td class="field-body">Doc for A1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B1:</th><td class="field-body">Doc for B1</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for recursive1</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:recursive2">
+<em class="property">type </em><code class="descname">recursive2</code><em class="property"> = A2 | B2 of recursive1</em><a class="headerlink" href="#typ Types.MT:recursive2" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A2:</th><td class="field-body">Doc for A2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B2:</th><td class="field-body">Doc for B2</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for recursive2</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:open_">
+<em class="property">type </em><code class="descname">open_</code><em class="property"> = ..</em><a class="headerlink" href="#typ Types.MT:open_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for open_</p>
+<p>Doc’ for open_</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:private_int">
+<em class="property">type </em><code class="descname">private_int</code><em class="property"> = private int</em><a class="headerlink" href="#typ Types.MT:private_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:private_variant">
+<em class="property">type </em><code class="descname">private_variant</code><em class="property"> = private Private</em><a class="headerlink" href="#typ Types.MT:private_variant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Types.MT:private_record">
+<em class="property">type </em><code class="descname">private_record</code><em class="property"> = private {c: int}</em><a class="headerlink" href="#typ Types.MT:private_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl Types.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl Types.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Types.manifest">
+<em class="property">type </em><code class="descname">manifest</code><em class="property"> = int</em><a class="headerlink" href="#typ Types.manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for manifest</p>
+<p>Doc’ for manifest</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.hidden">
+<em class="property">type </em><code class="descname">hidden</code><a class="headerlink" href="#typ Types.hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for hidden</p>
+<p>Doc’ for hidden</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.parameter">
+<em class="property">type 'a </em><code class="descname">parameter</code><a class="headerlink" href="#typ Types.parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for parameter</p>
+<p>Doc’ for parameter</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.parameters">
+<em class="property">type ('a, 'b) </em><code class="descname">parameters</code><a class="headerlink" href="#typ Types.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for parameters</p>
+<p>Doc’ for parameters</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.variances">
+<em class="property">type (-'a, +'b) </em><code class="descname">variances</code><a class="headerlink" href="#typ Types.variances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for variances</p>
+<p>Doc’ for variances</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.unused_parameters">
+<em class="property">type ('a, 'b) </em><code class="descname">unused_parameters</code><em class="property"> = [ `Foo ]</em><a class="headerlink" href="#typ Types.unused_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for unused_parameters</p>
+<p>Doc’ for unused_parameters</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.record">
+<em class="property">type </em><code class="descname">record</code><em class="property"> = {a: int; mutable b: float}</em><a class="headerlink" href="#typ Types.record" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Label a:</th><td class="field-body">Doc for record.a</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label b:</th><td class="field-body">Doc for record.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for record</p>
+<p>Doc’ for record</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.variant">
+<em class="property">type </em><code class="descname">variant</code><em class="property"> = None | Single of int | Several of int * float | Tuple of (int * float) | Record of {a: int; mutable b: float}</em><a class="headerlink" href="#typ Types.variant" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor None:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for None</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Constructor Single:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Doc for Single</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor Several:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for Several</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Constructor Tuple:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Doc for Tuple</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Constructor Record:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Doc for Record</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Label a:</th><td class="field-body">Doc for Record.a</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Label b:</th><td class="field-body">Doc for Record.b</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for variant</p>
+<p>Doc’ for variant</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.recursive1">
+<em class="property">type </em><code class="descname">recursive1</code><em class="property"> = A1 | B1 of recursive2</em><a class="headerlink" href="#typ Types.recursive1" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A1:</th><td class="field-body">Doc for A1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B1:</th><td class="field-body">Doc for B1</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for recursive1</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.recursive2">
+<em class="property">type </em><code class="descname">recursive2</code><em class="property"> = A2 | B2 of recursive1</em><a class="headerlink" href="#typ Types.recursive2" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Constructor A2:</th><td class="field-body">Doc for A2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Constructor B2:</th><td class="field-body">Doc for B2</td>
+</tr>
+</tbody>
+</table>
+<p>Doc for recursive2</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.open_">
+<em class="property">type </em><code class="descname">open_</code><em class="property"> = ..</em><a class="headerlink" href="#typ Types.open_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for open_</p>
+<p>Doc’ for open_</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="typ Types.private_int">
+<em class="property">type </em><code class="descname">private_int</code><em class="property"> = private int</em><a class="headerlink" href="#typ Types.private_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Types.private_variant">
+<em class="property">type </em><code class="descname">private_variant</code><em class="property"> = private Private</em><a class="headerlink" href="#typ Types.private_variant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="typ Types.private_record">
+<em class="property">type </em><code class="descname">private_record</code><em class="property"> = private {c: int}</em><a class="headerlink" href="#typ Types.private_record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>A reference to a type: <a class="reference internal" href="#typ Types.parameters"><code class="xref ocaml ocaml-typ docutils literal"><span class="pre">Types.parameters</span></code></a>.</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod Values">
+<em class="property">module </em><code class="descname">Values</code><em class="property"> : sig</em><a class="headerlink" href="#mod Values" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp Values.MT">
+<em class="property">module type </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#modtyp Values.MT" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="val">
+<dt id="val Values.MT:v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Values.MT:v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Values.MT:(+)">
+<em class="property">val </em><code class="descname">(+)</code><em class="property">: unit</em><a class="headerlink" href="#val Values.MT:(+)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for (+): there should be parentheses</p>
+<p>Doc’ for (+)</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="incl">
+<dt id="incl Values.0">
+<em class="property">include </em><code class="descname">MT</code><em class="property"> = sig</em><a class="headerlink" href="#incl Values.0" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="val">
+<dt id="val Values.v">
+<em class="property">val </em><code class="descname">v</code><em class="property">: int</em><a class="headerlink" href="#val Values.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for v</p>
+<p>Doc’ for v</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Values.hidden">
+<em class="property">val </em><code class="descname">hidden</code><em class="property">: int</em><a class="headerlink" href="#val Values.hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for hidden</p>
+<p>Doc’ for hidden</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Values.(+)">
+<em class="property">val </em><code class="descname">(+)</code><em class="property">: unit</em><a class="headerlink" href="#val Values.(+)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doc for (+): there should be parentheses</p>
+<p>Doc’ for (+)</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<p>A reference to a value: <a class="reference internal" href="#val Values.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">Values.v</span></code></a>.</p>
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod DependOnStdlib">
+<em class="property">module </em><code class="descname">DependOnStdlib</code><em class="property"> : sig</em><a class="headerlink" href="#mod DependOnStdlib" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp DependOnStdlib.T">
+<em class="property">module type </em><code class="descname">T</code><em class="property"> = Set.OrderedType = sig</em><a class="headerlink" href="#modtyp DependOnStdlib.T" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ DependOnStdlib.T:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ DependOnStdlib.T:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnStdlib.T:compare">
+<em class="property">val </em><code class="descname">compare</code><em class="property">: t -&gt; t -&gt; int</em><a class="headerlink" href="#val DependOnStdlib.T:compare" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod DependOnNum">
+<em class="property">module </em><code class="descname">DependOnNum</code><em class="property"> : sig</em><a class="headerlink" href="#mod DependOnNum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ DependOnNum.t">
+<em class="property">type </em><code class="descname">t</code><em class="property"> = Num.num</em><a class="headerlink" href="#typ DependOnNum.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<dl class="module">
+<dt id="mod DependOnFindLibPackage">
+<em class="property">module </em><code class="descname">DependOnFindLibPackage</code><em class="property"> : sig</em><a class="headerlink" href="#mod DependOnFindLibPackage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="module_type">
+<dt id="modtyp DependOnFindLibPackage.T">
+<em class="property">module type </em><code class="descname">T</code><em class="property"> = General.Traits.Comparable.S0 = sig</em><a class="headerlink" href="#modtyp DependOnFindLibPackage.T" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ DependOnFindLibPackage.T:t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ DependOnFindLibPackage.T:t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:compare">
+<em class="property">val </em><code class="descname">compare</code><em class="property">: t -&gt; t -&gt; General.Compare.t</em><a class="headerlink" href="#val DependOnFindLibPackage.T:compare" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:less_than">
+<em class="property">val </em><code class="descname">less_than</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:less_than" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:less_or_equal">
+<em class="property">val </em><code class="descname">less_or_equal</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:less_or_equal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:greater_than">
+<em class="property">val </em><code class="descname">greater_than</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:greater_than" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:greater_or_equal">
+<em class="property">val </em><code class="descname">greater_or_equal</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:greater_or_equal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:between">
+<em class="property">val </em><code class="descname">between</code><em class="property">: t -&gt; low:t -&gt; high:t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:between" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:between_or_equal">
+<em class="property">val </em><code class="descname">between_or_equal</code><em class="property">: t -&gt; low:t -&gt; high:t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:between_or_equal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:min">
+<em class="property">val </em><code class="descname">min</code><em class="property">: t -&gt; t -&gt; t</em><a class="headerlink" href="#val DependOnFindLibPackage.T:min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:max">
+<em class="property">val </em><code class="descname">max</code><em class="property">: t -&gt; t -&gt; t</em><a class="headerlink" href="#val DependOnFindLibPackage.T:max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:min_max">
+<em class="property">val </em><code class="descname">min_max</code><em class="property">: t -&gt; t -&gt; t * t</em><a class="headerlink" href="#val DependOnFindLibPackage.T:min_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="module">
+<dt id="mod DependOnFindLibPackage.T:O">
+<em class="property">module </em><code class="descname">O</code><em class="property"> : sig</em><a class="headerlink" href="#mod DependOnFindLibPackage.T:O" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="val">
+<dt id="val DependOnFindLibPackage.T:O.(&lt;)">
+<em class="property">val </em><code class="descname">(&lt;)</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:O.(<)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:O.(&lt;=)">
+<em class="property">val </em><code class="descname">(&lt;=)</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:O.(<=)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:O.(&gt;)">
+<em class="property">val </em><code class="descname">(&gt;)</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:O.(>)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val DependOnFindLibPackage.T:O.(&gt;=)">
+<em class="property">val </em><code class="descname">(&gt;=)</code><em class="property">: t -&gt; t -&gt; bool</em><a class="headerlink" href="#val DependOnFindLibPackage.T:O.(>=)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Test project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="both_domains.html">Both domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="all_references.html">All references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexes.html">Indexes and tables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Autodoc</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 <a href="http://vincent-jacques.net/">Vincent Jacques</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/autodoc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

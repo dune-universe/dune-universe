@@ -1,0 +1,62 @@
+# Copyright (c) 2015, Christian Lindig <lindig@gmail.com>
+# All rights reserved.
+#
+# Unix manual page for ago(1) in Perl POD format. Use pod2man(1) to
+# translate this document to troff format suitable for manual pages.
+# 
+
+=head1 NAME
+
+ascii85enc - encode file in ASCII85 encoding
+
+=head1 SYNOPSIS
+
+B<ascii85enc> [-ps | -p I<prefix>] [I<file>]
+
+=head1 DESCRIPTION
+
+B<ascii85enc> reads input from I<file> or from standard input (if no
+I<file> given) and emits its Ascii85 encoding to standard output. The
+output is by default prefixed with C<< <~ >>.  The end of the encoding is
+signaled by C<< ~> >>, as it is demanded by the standard. 
+
+=head1 OPTIONS
+
+=over 4
+
+=item -p I<prefix>
+
+Use I<prefix> instead of the default C<< <~ >> as a prefix.
+
+=item -ps
+
+Use as a prefix the following PostScript operators:
+
+    currentfile /ASCII85Decode filter cvx exec
+
+This sequence instructs a PostScript interpreter to decode the following 
+stream and to execute as a PostScript program. This assumes that the input,
+and hence the decoded output, contains PostScript code.
+
+=back
+
+=head1 EXIT CODE AND DIAGNOSTICS
+
+The exit code is zero for success and positive in the case of errors. Error
+messages are emitted to standard error.
+
+=head1 SEE ALSO
+
+Adobe _PostScript LANGUAGE REFERENCE third edition_.  For the details of
+the format, see sections _ASCII Base-85 Strings_ and _ASCII85Encode
+Filter_.
+
+=head1 AUTHOR
+
+Christian Lindig <lindig@gmail.com>. The source code is
+available from L<http://github.com/lindig/ascii85>.
+
+=head1 LICENSE
+
+This program is licensed under the BSD-2 Open Source License.
+

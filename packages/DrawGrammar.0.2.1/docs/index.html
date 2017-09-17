@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <title>DrawGrammar</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1>DrawGrammar</h1>
+        <p>Draw <a href="https://en.wikipedia.org/wiki/Syntax_diagram">railroad diagrams</a> of your EBNF grammar.
+        DrawGrammar is also <a href="https://github.com/jacquev6/DrawGrammar">available as a command-line tool</a>.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#grammar_tab" role="tab">Grammar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#settings_tab" role="tab">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#examples_tab" role="tab">Examples</a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="grammar_tab" role="tabpanel">
+            <h2>Grammar</h2>
+            <form>
+              <div class="form-group">
+                <label for="syntax">Syntax:</label>
+                <select class="form-control" id="syntax">
+                </select>
+                <p><a id="syntax_online_reference" href="#">Syntax reference</a></p>
+              </div>
+              <div class="form-group">
+                <label for="grammar">Grammar:</label>
+                <textarea class="form-control" id="grammar" rows="15"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane" id="settings_tab" role="tabpanel">
+            <h2>Transformations</h2>
+            <form id="transformation_settings">
+            </form>
+            <h2>Drawing</h2>
+            <h3>Absolute sizes</h3>
+            <form id="primary_settings">
+            </form>
+            <h3>Relative sizes</h3>
+            <form id="secondary_settings">
+            </form>
+          </div>
+          <div class="tab-pane" id="examples_tab" role="tabpanel">
+            <h2>Examples</h2>
+            <div>
+              <h3>Arithmetics</h3>
+              <p>The language of additions, subtractions, multiplications and divisions on integers, with parentheses.
+              <button data-syntax="iso-ebnf" data-src="arithmetics.iso-ebnf">Load (normal)</button>
+              <p>@todo Inline instead of loading special file</p>
+              <button data-syntax="iso-ebnf" data-src="arithmetics-single-rule.iso-ebnf">Load (huge single rule)</button>
+              </p>
+            </div>
+            <div>
+              <h3>JSON</h3>
+              <p>As described on <a href="http://json.org">json.org</a>.
+              <button data-syntax="iso-ebnf" data-src="json.iso-ebnf">Load</button></p>
+            </div>
+            <div>
+              <h3>Python</h3>
+              <p>As defined by <a href="https://github.com/python/cpython/blob/master/Grammar/Grammar">this grammar</a>.
+              <button data-syntax="python-ebnf" data-src="https://cdn.rawgit.com/python/cpython/2.7/Grammar/Grammar">Load version 2.7</button>
+              <button data-syntax="python-ebnf" data-src="https://cdn.rawgit.com/python/cpython/3.6/Grammar/Grammar">Load version 3.6</button>
+              </p>
+            </div>
+            <div>
+              <h3>OCaml</h3>
+              <p>As defined by <a href="https://github.com/ocaml/ocaml/tree/trunk/manual/manual/refman">this reference manual</a>.
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/lex.etex">Load "Lexical conventions"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/names.etex">Load "Names"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/types.etex">Load "Type expressions"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/const.etex">Load "Constants"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/patterns.etex">Load "Patterns"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/expr.etex">Load "Expressions"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/typedecl.etex">Load "Type definitions"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/classes.etex">Load "Classes"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/modtypes.etex">Load "Module types"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/modules.etex">Load "Module expressions"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/compunit.etex">Load "Compilation units"</button>
+              <button data-syntax="ocaml-etex-ebnf" data-src="https://raw.githubusercontent.com/ocaml/ocaml/trunk/manual/manual/refman/exten.etex">Load "Language extensions"</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <p id="waiting">Computing, please wait...<!-- No animated dancing cow gif because the rendering thread is busy running Javascript :-/ --></p>
+        <div id="error">
+          <p><b>There is an error in the grammar you're trying to draw:</b></p>
+          <p id="error_message"></p>
+          <p>Is the appropriate syntax selected for your grammar?
+          Don't hesitate to <a href="https://github.com/jacquev6/DrawGrammar/issues">open an issue</a> if this message is not helpful.
+          Please include the part of your grammar that produces the error and explain how you finally understood what's wrong.
+          We'll try to improve the message based on your feedback.</p>
+        </div>
+        <canvas style="border: 1px solid black" class="img-fluid" id="output"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="draw_grammar_js.bc.js"></script>
+  <script src="settings.js"></script>
+  <script>
+    var updateDuration = 200;
+    var timeoutBeforeNextUpdate = null;
+    function updateAfterTimeout(timeout) {
+      if(timeoutBeforeNextUpdate) {
+        clearTimeout(timeoutBeforeNextUpdate);
+      };
+      $("#error").hide();
+      $("#output").hide();
+      $("#waiting").show();
+      if(timeout == undefined) {
+        timeout = updateDuration;
+      }
+      timeoutBeforeNextUpdate = setTimeout(function() {
+        timeoutBeforeNextUpdate = null;
+        doUpdate();
+      }, timeout);
+    }
+
+    function updateSoon() {
+      // We just want to let the rendering thread show and hide #error, #output and #waiting
+      updateAfterTimeout(10);
+    }
+
+    function doUpdate() {
+      var start_time = performance.now();
+
+      $("#syntax_online_reference").attr("href", $("#syntax option:selected").data("online-reference"));
+
+      try {
+        update_rules_list(DrawGrammar.list_rules($("#syntax").val(), $("#grammar").val()));
+
+        var transformation_settings = get_settings("#transformation_settings");
+        var primary_settings = get_settings("#primary_settings");
+        var secondary_settings = get_settings("#secondary_settings");
+
+        var output = $("#output");
+        DrawGrammar.draw_on_canvas(
+          $("#syntax").val(),
+          $("#grammar").val(),
+          output.get(0),
+          transformation_settings,
+          primary_settings,
+          secondary_settings,
+        );
+        output.show();
+      } catch(err) {
+        $("#error_message").text(err.toString());
+        $("#error").show();
+      }
+
+      $("#waiting").hide();
+      updateDuration = performance.now() - start_time;
+      // console.log("update() took " + updateDuration + "ms");
+    }
+
+    function load_example(event) {
+      var button = $(event.target);
+      $("#syntax").val(button.data("syntax"));
+      $.ajax({
+        url: button.data("src"),
+        mimeType: "text/plain; charset=utf-8",
+        dataType: "text",
+        success: function(data) {
+          $("#grammar").val(data);
+          $('a[href="#grammar_tab"]').tab("show");
+          updateSoon();
+        },
+      });
+    };
+
+    $(document).ready(function() {
+      $("#error").hide();
+      for(var i = 1; i < DrawGrammar.syntaxes.length; ++i) {
+        var syntax = DrawGrammar.syntaxes[i];
+        $("#syntax").append('<option value="{0}" data-online-reference="{2}">{1}</option>'.format(syntax.value, syntax.description, syntax.online_reference));
+      };
+      make_settings("#transformation_settings", DrawGrammar.transformation_settings_description);
+      make_settings("#primary_settings", DrawGrammar.primary_settings_description);
+      make_settings("#secondary_settings", DrawGrammar.secondary_settings_description);
+      if($("#grammar").val() == "") {
+        load_example({target: $("button").get(0)});
+      } else {
+        updateSoon();
+      };
+      $("#examples_tab button").on("click", load_example);
+      $("#syntax").on("change", updateSoon);
+      $("#grammar").on("paste", updateSoon);
+      $("#grammar").on("keyup", function(event) {
+        // https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+        if([16, 17, 18, 19, 20, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 144, 145].indexOf(event.which) == -1) {
+          updateAfterTimeout();
+        }
+      });
+      $("select").on("change", updateSoon);
+    })
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>var jacquev6_ribbon_github="DrawGrammar";</script>
+  <script src="https://jacquev6.github.io/ribbon.js"></script>
+</body>
+</html>

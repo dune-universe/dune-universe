@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+(alias (
+  (name runtest)
+  (deps (src/drawing_tests_in_command_line.bc src/drawing_tests_in_javascript.bc.js drawing_tests_in_node.js))
+  (action (progn
+    (run mkdir drawing_tests)
+    (run mkdir drawing_tests/in_command_line)
+    (run mkdir drawing_tests/in_node)
+    (run ${exe:src/drawing_tests_in_command_line.bc})
+    (run ${bin:node} drawing_tests_in_node.js)
+  ))
+))

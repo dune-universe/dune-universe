@@ -1,0 +1,28 @@
+language: c
+dist: trusty
+sudo: false
+addons:
+  apt:
+    sources:
+    - avsm
+    packages:
+    - aspcud
+    - opam
+install:
+  - opam init --yes
+  - opam update --yes
+  - opam switch --yes $OCAML_VERSION
+  - eval `opam config env`
+  - opam switch
+  - opam install --yes jbuilder cppo js_of_ocaml-compiler
+  - opam upgrade --yes
+  - opam list
+script:
+  - jbuilder runtest
+env:
+  - OCAML_VERSION=4.02.3
+  - OCAML_VERSION=4.05.0
+  - OCAML_VERSION=4.05.0+flambda
+cache:
+  directories:
+  - $HOME/.opam

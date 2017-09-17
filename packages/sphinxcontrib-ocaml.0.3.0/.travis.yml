@@ -1,0 +1,45 @@
+language: python
+python:
+  - "3.6"
+sudo: false
+addons:
+  apt:
+    sources:
+      - avsm
+    packages:
+      - aspcud
+      - opam
+install:
+  - opam init --yes
+  - opam update --yes
+  - opam switch --yes $OCAML_VERSION
+  - eval `opam config env`
+  - opam switch
+  - opam pin add --yes General --dev-repo
+  - opam install --yes General yojson
+  - opam upgrade --yes
+  - opam list
+  - pip install --upgrade pip setuptools
+  - pip install --upgrade coverage sphinx coveralls
+script:
+  - jbuilder build ocaml_autodoc/ocaml_autodoc.exe
+  - coverage run --branch --include "sphinxcontrib/*" $(which sphinx-build) test/input test/output -d build/test_doctrees
+  - git diff --exit-code test
+after_success:
+  - coveralls
+env:
+  - OCAML_VERSION=4.05.0
+  - OCAML_VERSION=4.05.0+flambda
+cache:
+  directories:
+  - $HOME/.opam
+deploy:
+- provider: pypi
+  user: jacquev6
+  password:
+    secure: "jlEQUe2wl8Z5+pedp2h2Q0CcSFBYQSBgY/Eh9FL75HbH8cvYJRI0skr8TRdaHOZ5fRCTrsNfQAhigIFnnaJtplBSVJIoCkBc/CYHHogM6twKqJ4R66bp1SvRxAck8Dg9v/nqPUCP7JDEiY/Tk6xXVAMqQw9rnBqK68Trxhs5KJAT5+qKYVY+mftB4j8l0553J/77ixR+31c273KQefEg4aY97Q9Zi/63kyaN5D/wyPV3ZL0P6yQ6ekBL2xU9rU19117TF8/k8ziJg8JJz4riBySM2iQKEEKv/LZM/Qt5G6hWuSUwmIjYk6OdjmZ11gj/RvVLux3d9d0z5ZZUZh+Zckptf4VC0ZsP1zYWG+e2A1XN4ELnHXwHkusz3znll32W5hDcm+sicEHC7InWQji/h2WI6ghyYVDLO++0lqFY0ycd12R2NNaWDEiuochKEUYeDc0/ZO6J4bZ5jYdPtlvJYrhdoOq56YUWMInJX3008Ai3B3LrKrH3TcEty6PqxP8FDEOLP+cU+N++Z8Mu0gO2qzeW1Xn3Cv1JPgylSFs2wD0S5kgrafd8w5oFnmnL5qDSESirIKTJueLe1FD4VpAWLeEdXrzcUBYuN0c7W0GfmzjZTAZLXtJIQ+ciGZJ9fO9V+NVtt4FlR0LWyOO1SLrnk4RuRoW9TWXealeZJZ3NSME="
+  skip_upload_docs: true
+  on:
+    tags: true
+    repo: jacquev6/sphinxcontrib-ocaml
+    python: 3.6

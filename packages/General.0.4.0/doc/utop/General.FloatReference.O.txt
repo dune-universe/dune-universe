@@ -1,0 +1,9 @@
+module O: sig
+  val ref: float -> General.FloatReference.t
+  val (!): General.FloatReference.t -> float
+  val (:=): General.FloatReference.t -> float -> unit
+  val (=+): General.FloatReference.t -> float -> unit
+  val (=-): General.FloatReference.t -> float -> unit
+  val (=*): General.FloatReference.t -> float -> unit
+  val (=/): General.FloatReference.t -> float -> unit
+end

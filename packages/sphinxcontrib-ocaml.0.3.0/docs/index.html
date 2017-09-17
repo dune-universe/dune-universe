@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sphinxcontrib-ocaml &#8212; sphinxcontrib-ocaml 0.3.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="user_guide.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sphinxcontrib-ocaml">
+<h1>sphinxcontrib-ocaml<a class="headerlink" href="#sphinxcontrib-ocaml" title="Permalink to this headline">¶</a></h1>
+<p><em>sphinxcontrib-ocaml</em> is a <a class="reference external" href="http://www.sphinx-doc.org/">Sphinx</a> (1.6.3+) extension to document <a class="reference external" href="https://ocaml.org/">OCaml</a> libraries.
+It provides a Sphinx <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html">domain</a> for OCaml and
+<a class="reference external" href="http://www.sphinx-doc.org/en/stable/ext/autodoc.html">autodoc</a>-like directives to generate documentation from source code.</p>
+<p>It’s licensed under the <a class="reference external" href="http://choosealicense.com/licenses/mit/">MIT license</a>.
+It’s available in two parts, on the <a class="reference external" href="http://pypi.python.org/pypi/sphinxcontrib-ocaml">Python package index</a>
+and <a class="reference external" href="https://opam.ocaml.org/packages/sphinxcontrib-ocaml/">OPAM</a> (both are required).
+Its <a class="reference external" href="http://jacquev6.github.io/sphinxcontrib-ocaml">documentation</a>
+and its <a class="reference external" href="https://github.com/jacquev6/sphinxcontrib-ocaml">source code</a> are on GitHub.</p>
+<p>Questions? Remarks? Bugs? Want to contribute? <a class="reference external" href="https://github.com/jacquev6/sphinxcontrib-ocaml/issues">Open an issue</a>!</p>
+<a class="reference external image-reference" href="https://travis-ci.org/jacquev6/sphinxcontrib-ocaml"><img alt="https://img.shields.io/travis/jacquev6/sphinxcontrib-ocaml/master.svg" src="https://img.shields.io/travis/jacquev6/sphinxcontrib-ocaml/master.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/sphinxcontrib-ocaml/issues"><img alt="https://img.shields.io/github/issues/jacquev6/sphinxcontrib-ocaml.svg" src="https://img.shields.io/github/issues/jacquev6/sphinxcontrib-ocaml.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/sphinxcontrib-ocaml/network"><img alt="https://img.shields.io/github/forks/jacquev6/sphinxcontrib-ocaml.svg" src="https://img.shields.io/github/forks/jacquev6/sphinxcontrib-ocaml.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/sphinxcontrib-ocaml/stargazers"><img alt="https://img.shields.io/github/stars/jacquev6/sphinxcontrib-ocaml.svg" src="https://img.shields.io/github/stars/jacquev6/sphinxcontrib-ocaml.svg" /></a>
+<div class="section" id="status">
+<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>sphinxcontrib-ocaml is still highly experimental.
+Interfaces may be changed unannounced.
+We welcome all feedback from our daring early users.</p>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>Install both packages:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip3 install sphinxcontrib-ocaml
+$ opam install sphinxcontrib-ocaml
+</pre></div>
+</div>
+<p>Enable and configure the Sphinx extension in your <code class="docutils literal"><span class="pre">conf.py</span></code> file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">extensions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ocaml&quot;</span><span class="p">)</span>
+<span class="n">primary_domain</span> <span class="o">=</span> <span class="s2">&quot;ocaml&quot;</span>  <span class="c1"># Optional</span>
+<span class="n">ocaml_source_directories</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+<span class="n">ocaml_findlib_packages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;batteries&quot;</span><span class="p">,</span> <span class="s2">&quot;js_of_ocaml&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>And document your module (in an <code class="docutils literal"><span class="pre">.rst</span></code> file):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">autoocamlmodule</span><span class="p">::</span> <span class="n">MyModule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/configuration.html">Configuration values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/autodoc.html">Autodoc directives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/autodoc.html#directives">Directives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/autodoc.html#source-code-attributes">Source code attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/autodoc.html#documentation">Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/autodoc.html#special-behavior">Special behavior</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sphinx_domain.html">OCaml Sphinx domain</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/sphinx_domain.html#directives">Directives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/sphinx_domain.html#values-and-types">Values and types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/sphinx_domain.html#modules-and-module-types">Modules and module types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/sphinx_domain.html#functors">Functors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/sphinx_domain.html#roles">Roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/sphinx_domain.html#indexes">Indexes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indexes-and-tables">
+<h2>Indexes and tables<a class="headerlink" href="#indexes-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">sphinxcontrib-ocaml</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=jacquev6&repo=sphinxcontrib-ocaml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/jacquev6/sphinxcontrib-ocaml">
+    <img
+        alt="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+        src="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 <a href="http://vincent-jacques.net/">Vincent Jacques</a> <script>var jacquev6_ribbon_github="sphinxcontrib-ocaml"</script><script src="https://jacquev6.github.io/ribbon.js"></script>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

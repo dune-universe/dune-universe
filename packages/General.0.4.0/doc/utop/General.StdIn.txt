@@ -1,0 +1,3 @@
+module StdIn: sig
+  val channel: in_channel
+end

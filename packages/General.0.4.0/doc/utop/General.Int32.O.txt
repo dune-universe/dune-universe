@@ -1,0 +1,16 @@
+module O: sig
+  val (=): int32 -> int32 -> bool
+  val (<>): int32 -> int32 -> bool
+  val (~+): int32 -> int32
+  val (~-): int32 -> int32
+  val (+): int32 -> int32 -> int32
+  val (-): int32 -> int32 -> int32
+  val (*): int32 -> int32 -> int32
+  val (/): int32 -> int32 -> int32
+  val (**): int32 -> int -> int32
+  val (<): int32 -> int32 -> bool
+  val (<=): int32 -> int32 -> bool
+  val (>): int32 -> int32 -> bool
+  val (>=): int32 -> int32 -> bool
+  val (mod): int32 -> int32 -> int32
+end

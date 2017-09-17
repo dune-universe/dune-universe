@@ -1,0 +1,16 @@
+(jbuild_version 1)
+
+(executable
+ ((name main)
+  (public_name ascii85enc)
+  (libraries
+   (ascii85))))
+
+(install
+ ((section doc)
+  (files
+   (ascii85enc.pod))
+  (section man)
+  (files
+   (ascii85enc.1))))
+

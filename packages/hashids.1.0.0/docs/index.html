@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hashids-ocaml &#8212; hashids-ocaml 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hashids-ocaml">
+<h1>hashids-ocaml<a class="headerlink" href="#hashids-ocaml" title="Permalink to this headline">¶</a></h1>
+<p><em>hashids-ocaml</em> is an OCaml (4.02.3+) implementation of <a class="reference external" href="http://hashids.org/">hashids</a>.
+It generates short, unique, non-sequential ids from numbers, that you can also decode.
+It is compatible with version 1.0.0 of hashids.</p>
+<p>It’s licensed under the <a class="reference external" href="http://choosealicense.com/licenses/mit/">MIT license</a>.
+It’s available on <a class="reference external" href="https://opam.ocaml.org/packages/hashids">OPAM</a>,
+its <a class="reference external" href="http://jacquev6.github.io/hashids-ocaml">documentation</a>
+and its <a class="reference external" href="https://github.com/jacquev6/hashids-ocaml">source code</a> are on GitHub.</p>
+<p>Questions? Remarks? Bugs? Want to contribute? <a class="reference external" href="https://github.com/jacquev6/hashids-ocaml/issues">Open an issue</a>!</p>
+<a class="reference external image-reference" href="https://travis-ci.org/jacquev6/hashids-ocaml"><img alt="https://img.shields.io/travis/jacquev6/hashids-ocaml/master.svg" src="https://img.shields.io/travis/jacquev6/hashids-ocaml/master.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/hashids-ocaml/issues"><img alt="https://img.shields.io/github/issues/jacquev6/hashids-ocaml.svg" src="https://img.shields.io/github/issues/jacquev6/hashids-ocaml.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/hashids-ocaml/network"><img alt="https://img.shields.io/github/forks/jacquev6/hashids-ocaml.svg" src="https://img.shields.io/github/forks/jacquev6/hashids-ocaml.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/jacquev6/hashids-ocaml/stargazers"><img alt="https://img.shields.io/github/stars/jacquev6/hashids-ocaml.svg" src="https://img.shields.io/github/stars/jacquev6/hashids-ocaml.svg" /></a>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>Install from OPAM:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ opam install hashids
+</pre></div>
+</div>
+<p>Launch utop:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ utop -require hashids
+</pre></div>
+</div>
+<p>Create a config:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>utop # let config = Hashids.make ();;
+val config : Hashids.t = &lt;abstr&gt;
+</pre></div>
+</div>
+<p>Encode some integers:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>utop # Hashids.encode config [42; 57];;
+- : string = &quot;wYcGX&quot;
+</pre></div>
+</div>
+<p>And decode them:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>utop # Hashids.decode config &quot;wYcGX&quot;;;
+- : int list = [42; 57]
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="module">
+<dt id="mod Hashids">
+<em class="property">module </em><code class="descname">Hashids</code><em class="property"> : sig</em><a class="headerlink" href="#mod Hashids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="type">
+<dt id="typ Hashids.t">
+<em class="property">type </em><code class="descname">t</code><a class="headerlink" href="#typ Hashids.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val Hashids.make">
+<em class="property">val </em><code class="descname">make</code><em class="property">: ?salt:string -&gt; ?min_length:int -&gt; ?alphabet:string -&gt; unit -&gt; t</em><a class="headerlink" href="#val Hashids.make" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">salt</span></code>: an arbitrary string used to randomize the encoding.</p>
+<p><code class="docutils literal"><span class="pre">min_length</span></code>: an integer specifying the minimal length of encoded values.
+Useful to hide their order of magnitude.</p>
+<p><code class="docutils literal"><span class="pre">alphabet</span></code>: the set of characters used to encode.</p>
+</dd></dl>
+
+<dl class="val">
+<dt id="val Hashids.encode">
+<em class="property">val </em><code class="descname">encode</code><em class="property">: t -&gt; int list -&gt; string</em><a class="headerlink" href="#val Hashids.encode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="val">
+<dt id="val Hashids.decode">
+<em class="property">val </em><code class="descname">decode</code><em class="property">: t -&gt; string -&gt; int list</em><a class="headerlink" href="#val Hashids.decode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">hashids-ocaml</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=jacquev6&repo=hashids-ocaml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/jacquev6/hashids-ocaml">
+    <img
+        alt="https://secure.travis-ci.org/jacquev6/hashids-ocaml.svg?branch=master"
+        src="https://secure.travis-ci.org/jacquev6/hashids-ocaml.svg?branch=master"
+    />
+</a>
+</p>
+
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016-2017 <a href="http://vincent-jacques.net">Vincent Jacques</a> <script>var jacquev6_ribbon_github="hashids-ocaml"</script><script src="https://jacquev6.github.io/ribbon.js"></script>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

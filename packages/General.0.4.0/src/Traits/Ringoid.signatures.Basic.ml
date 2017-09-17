@@ -1,0 +1,12 @@
+module type S0 = sig
+  type t
+
+  val zero: t
+  val one: t
+
+  val negate: t -> t
+  val add: t -> t -> t
+  val substract: t -> t -> t
+  val multiply: t -> t -> t
+  val divide: t -> t -> t
+end

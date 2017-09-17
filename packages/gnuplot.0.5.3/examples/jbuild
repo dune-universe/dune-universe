@@ -1,0 +1,9 @@
+(executables
+ ((names
+   (candlesticks
+    gaussian_noise
+    gbm_paths
+    save_plot
+    simple_plot
+    supply_demand))
+  (libraries (core gnuplot))))

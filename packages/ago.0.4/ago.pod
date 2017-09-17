@@ -1,0 +1,75 @@
+# Copyright (c) 2015, Christian Lindig <lindig@gmail.com>
+# All rights reserved.
+#
+# Unix manual page for ago in Perl POD format. Use pod2man(1) to translate
+# this document to troff format suitable for manual pages.
+# 
+
+=head1 NAME
+
+ago - compute number of days between two calendar dates
+
+=head1 SYNOPSIS
+
+B<ago> I<yyyy-mm-dd> [I<yyyy-mm-dd>]
+
+=head1 DESCRIPTION
+
+B<ago> computes the difference in days between two calendar dates provided
+as arguments. If just one date is given, the current date is taken as the
+second one.  B<ago> emits the result to standard output.
+
+The difference in days is negative if the first date is before the second
+date (or the current date, if no second date is given). Conversely, if the
+first date is after the second, the difference is positive.
+
+=head1 DATE FORMAT
+
+A date can be given in the following formats:
+
+=over 4
+
+=item I<yyyy-mm-dd> as in C<2014-12-28>
+
+Day and month must be designated by two digits.
+
+=item I<dd.mm.yyyy> as in C<28.12.2014> or C<3.1.2010>
+
+Day and month may be designate by one or two digits.
+
+=item C<today> or C<now>.
+
+This designates the current local date.
+
+=item C<epoch>
+
+The C<epoch> designates January 1st, 1 (0001-01-01). This can be useful for
+enumerating dates.
+
+=back
+
+=head1 EXIT CODE AND DIAGNOSTICS
+
+The exit code is zero for success and positive in the case of errors. Error
+messages are emitted to standard error.
+
+=head1 LIMITATIONS
+
+The date must range between 0001-01-01 and 9999-12-31. The Gregorian
+calendar was introduced 1582 and hence dates prior to its introduction are
+an extrapolation.
+
+=head1 SEE ALSO
+
+date(1)
+
+=head1 AUTHOR
+
+Christian Lindig <lindig@gmail.com>. The source code is
+available from L<http://github.com/lindig/ocaml-ago>.
+
+=head1 LICENSE
+
+This program is licensed under the BSD-2 Open Source
+License.
+

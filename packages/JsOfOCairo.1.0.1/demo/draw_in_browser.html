@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- Copyright 2017 Vincent Jacques <vincent@vincent-jacques.net> -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <title>JsOfOCairo demo</title>
+</head>
+<body>
+  <h1>PNG image from command-line</h1>
+  <img src="draw_on_command_line.png" />
+  <h1>HTML5 canvas</h1>
+  <canvas id="drawings" width="100" height="100"></canvas>
+  <script src="_build/default/draw_in_browser.bc.js"></script>
+  <script>
+    draw(document.getElementById("drawings"));
+  </script>
+</body>
+</html>

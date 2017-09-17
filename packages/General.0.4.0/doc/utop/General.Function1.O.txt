@@ -1,0 +1,5 @@
+module O: sig
+  val (@@): ('a, 'z) General.Function1.t -> 'a -> 'z
+  val (|>): 'a -> ('a, 'z) General.Function1.t -> 'z
+  val (%): ('a, 'b) General.Function1.t -> ('c, 'a) General.Function1.t -> ('c, 'b) General.Function1.t
+end

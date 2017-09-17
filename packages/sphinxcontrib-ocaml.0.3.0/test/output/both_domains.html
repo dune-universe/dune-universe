@@ -1,0 +1,154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Both domains &#8212; Test project  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="All references" href="all_references.html" />
+    <link rel="prev" title="Test project" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="both-domains">
+<h1>Both domains<a class="headerlink" href="#both-domains" title="Permalink to this headline">¶</a></h1>
+<p>This proves that we can document both Python and OCaml elements in the same document.</p>
+<div class="section" id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="module">
+<dt id="mod M">
+<em class="property">module </em><code class="descname">M</code><em class="property"> : sig</em><a class="headerlink" href="#mod M" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an OCaml module named <cite>M</cite>.</p>
+<dl class="module">
+<dt id="mod M.S">
+<em class="property">module </em><code class="descname">S</code><em class="property"> : sig</em><a class="headerlink" href="#mod M.S" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an OCaml module named <cite>S</cite> in module <cite>M</cite>.</p>
+<dl class="val">
+<dt id="val M.S.v">
+<em class="property">val </em><code class="descname">v</code><a class="headerlink" href="#val M.S.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an OCaml value named <cite>v</cite> in module <cite>M.S</cite>.</p>
+</dd></dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+</dd><dt>
+<em class="property">end</em></dt>
+</dl>
+
+<span class="target" id="module-M"></span><p>This is a Python module named <cite>M</cite>.</p>
+<span class="target" id="module-M.S"></span><p>This is a Python module named <cite>S</cite> in module <cite>M</cite>.</p>
+<dl class="data">
+<dt id="M.S.v">
+<code class="descclassname">M.S.</code><code class="descname">v</code><a class="headerlink" href="#M.S.v" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a Python data named <cite>v</cite> in module <cite>M.S</cite>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>We can link to modules: <a class="reference internal" href="#mod M"><code class="xref ocaml ocaml-mod docutils literal"><span class="pre">M</span></code></a> and <a class="reference internal" href="#module-M" title="M"><code class="xref py py-mod docutils literal"><span class="pre">M</span></code></a>.</p>
+<p>We can link to sub-modules: <a class="reference internal" href="#mod M.S"><code class="xref ocaml ocaml-mod docutils literal"><span class="pre">M.S</span></code></a> and <a class="reference internal" href="#module-M.S" title="M.S"><code class="xref py py-mod docutils literal"><span class="pre">M.S</span></code></a>.</p>
+<p>We can link to fully qualified values: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">M.S.v</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">M.S.v</span></code></a>.</p>
+<p>We can link to fully qualified values with explicit titles: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">vv</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">vv</span></code></a>.</p>
+<p>We can link to fully qualified values and strip their qualifications: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">v</span></code></a>.</p>
+<p>We can link to non-qualified values: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">v</span></code></a>.</p>
+<p>We can link to non-qualified values with explicit titles: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">vv</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">vv</span></code></a>.</p>
+<p>We can link to partially qualified values: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">S.v</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">S.v</span></code></a>.</p>
+<p>We can link to partially qualified values with explicit titles: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">vv</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">vv</span></code></a>.</p>
+<p>We can link to partially qualified values and strip their qualifications: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">v</span></code></a> and <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">v</span></code></a>.</p>
+<p>We can refer to OCaml as default domain: <a class="reference internal" href="#val M.S.v"><code class="xref ocaml ocaml-val docutils literal"><span class="pre">M.S.v</span></code></a>.</p>
+<p>We can refer to Python as default domain: <a class="reference internal" href="#M.S.v" title="M.S.v"><code class="xref py py-data docutils literal"><span class="pre">M.S.v</span></code></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Test project</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Both domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="all_references.html">All references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexes.html">Indexes and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autodoc.html">Autodoc</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 <a href="http://vincent-jacques.net/">Vincent Jacques</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/both_domains.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

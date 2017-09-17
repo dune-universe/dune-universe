@@ -1,0 +1,3 @@
+module InChannel: sig
+  type t = in_channel
+end

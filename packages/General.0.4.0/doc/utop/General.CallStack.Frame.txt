@@ -1,0 +1,6 @@
+module Frame: sig
+  type t = General.CallStack.Frame.t
+  val is_raise: t -> bool
+  val location: t -> General.CallStack.Location.t option
+  val format: int -> t -> string option
+end

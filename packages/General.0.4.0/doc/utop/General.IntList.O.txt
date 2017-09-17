@@ -1,0 +1,3 @@
+module O: sig
+  val (@): General.IntList.t -> General.IntList.t -> General.IntList.t
+end

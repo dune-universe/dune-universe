@@ -1,0 +1,2 @@
+module Buffer: sig
+end

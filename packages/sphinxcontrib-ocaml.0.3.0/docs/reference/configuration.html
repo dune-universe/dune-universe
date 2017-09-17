@@ -1,0 +1,154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Configuration values &#8212; sphinxcontrib-ocaml 0.3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Autodoc directives" href="autodoc.html" />
+    <link rel="prev" title="Reference" href="../reference.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="configuration-values">
+<h1>Configuration values<a class="headerlink" href="#configuration-values" title="Permalink to this headline">¶</a></h1>
+<p>The following settings are available in your <code class="docutils literal"><span class="pre">conf.py</span></code> file.</p>
+<dl class="data">
+<dt id="ocaml_autodoc_executable">
+<code class="descname">ocaml_autodoc_executable</code><a class="headerlink" href="#ocaml_autodoc_executable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of, or the full path to, the <cite>sphinxcontrib-ocaml-autodoc</cite> executable.
+The default value (<code class="docutils literal"><span class="pre">&quot;sphinxcontrib-ocaml-autodoc&quot;</span></code>) matches what is installed by
+the <a class="reference external" href="https://opam.ocaml.org/packages/sphinxcontrib-ocaml/">OPAM package</a>, so it should be fine.
+Use this setting if you’re doing something special with your OPAM root.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ocaml_source_directories">
+<code class="descname">ocaml_source_directories</code><a class="headerlink" href="#ocaml_source_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of directories to consider when looking for an <code class="docutils literal"><span class="pre">.mli</span></code> file in autodoc directives.
+You <em>must</em> set this if you use <a class="reference internal" href="autodoc.html#autodoc"><span class="std std-ref">autodoc directives</span></a>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ocaml_findlib_packages">
+<code class="descname">ocaml_findlib_packages</code><a class="headerlink" href="#ocaml_findlib_packages" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of <a class="reference external" href="http://projects.camlcity.org/projects/findlib.html">findlib</a> packages to use
+when parsing an <code class="docutils literal"><span class="pre">.mli</span></code> file in autodoc directives.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ocaml_include_directories">
+<code class="descname">ocaml_include_directories</code><a class="headerlink" href="#ocaml_include_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of directories (containing <code class="docutils literal"><span class="pre">.cmi</span></code> files) to include when parsing an <code class="docutils literal"><span class="pre">.mli</span></code> file in autodoc directives.
+You should use <a class="reference internal" href="#ocaml_findlib_packages" title="ocaml_findlib_packages"><code class="xref py py-data docutils literal"><span class="pre">ocaml_findlib_packages</span></code></a> when possible.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">sphinxcontrib-ocaml</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=jacquev6&repo=sphinxcontrib-ocaml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/jacquev6/sphinxcontrib-ocaml">
+    <img
+        alt="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+        src="https://secure.travis-ci.org/jacquev6/sphinxcontrib-ocaml.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodoc.html">Autodoc directives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sphinx_domain.html">OCaml Sphinx domain</a></li>
+</ul>
+</li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017 <a href="http://vincent-jacques.net/">Vincent Jacques</a> <script>var jacquev6_ribbon_github="sphinxcontrib-ocaml"</script><script src="https://jacquev6.github.io/ribbon.js"></script>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/reference/configuration.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

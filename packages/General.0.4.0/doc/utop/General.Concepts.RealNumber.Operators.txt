@@ -1,0 +1,19 @@
+module Operators: sig
+  module type S0 = sig
+    type t
+    val (=): t -> t -> bool
+    val (<>): t -> t -> bool
+    val (~+): t -> t
+    val (~-): t -> t
+    val (+): t -> t -> t
+    val (-): t -> t -> t
+    val (*): t -> t -> t
+    val (/): t -> t -> t
+    val (**): t -> int -> t
+    val (<): t -> t -> bool
+    val (<=): t -> t -> bool
+    val (>): t -> t -> bool
+    val (>=): t -> t -> bool
+    val (mod): t -> t -> t
+  end
+end

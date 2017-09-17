@@ -1,0 +1,8 @@
+module O: sig
+  val (=): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+  val (<>): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+  val (<): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+  val (<=): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+  val (>): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+  val (>=): General.CallStack.Location.t -> General.CallStack.Location.t -> bool
+end

@@ -1,0 +1,3 @@
+module Poly: sig
+  val contains: 'a list -> 'a -> bool
+end

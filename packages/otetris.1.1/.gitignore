@@ -1,0 +1,19 @@
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+ttetris
+gtetris
+._d/*
+
+# jbuild-generated files
+.merlin
+otetris.install
+
+# ocamlbuild working directory
+_build/

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- Copyright 2017 Vincent Jacques <vincent@vincent-jacques.net> -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <title>Drawing tests for JsOfOCairo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <style type="text/css">
+    canvas {
+      border: 1px solid black;
+      background-color: white;
+    }
+    div.success {
+      background-color: #DFD;
+    }
+    div.failure {
+      background-color: #F00;
+    }
+    div.known_failure {
+      background-color: #FDD;
+    }
+    div.unexpected_success {
+      background-color: #0F0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="drawing_tests">
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+  <script src="_build/default/pixelmatch.js"></script>
+  <script src="_build/default/src/drawing_tests_in_javascript.bc.js"></script>
+  <script>
+    // https://stackoverflow.com/a/5077091/905845
+    String.prototype.format = function () {
+      var args = arguments;
+      return this.replace(/\{\{|\}\}|\{(\d+)\}/g, function (m, n) {
+        if (m == "{{") { return "{"; }
+        if (m == "}}") { return "}"; }
+        return args[n];
+      });
+    };
+
+    $(document).ready(function() {
+      for (var i = 1; i < drawing_tests.length; i++) {
+        var test = drawing_tests[i];
+        var html_template =
+            '<div id="{0}" class="failure">'
+          + '<p>{0}</p>'
+          + '<div class="row">'
+          + '<div class="col-4"><canvas class="img-fluid cairo" width="{1}" height="{2}" /></div>'
+          + '<div class="col-4"><canvas class="img-fluid html5" width="{1}" height="{2}" /></div>'
+          + '<div class="col-4"><canvas class="img-fluid diff" width="{1}" height="{2}" /></div>'
+          + '</div>'
+          + '</div>';
+        $("#drawing_tests").append(html_template.format(test.name, test.width, test.height))
+
+        var image = $(new Image());
+        image.attr("src", "_build/default/drawing_tests/in_command_line/{0}.png".format(test.name));
+        image.data("test", test);
+        image.on("load", function() {
+          var test = $(this).data("test");
+          var div = $(document.getElementById(test.name));
+
+          var cairo_context = div.find("canvas.cairo").get(0).getContext("2d");
+          cairo_context.drawImage(this, 0, 0);
+          var cairo_data = cairo_context.getImageData(0, 0, test.width, test.height);
+
+          var html5_canvas = div.find("canvas.html5").get(0);
+          try {
+            test.draw(html5_canvas);
+          } catch(err) {
+            div.append("<p>Exception: {0}</p>".format(err))
+            return;
+          }
+          var html5_data = html5_canvas.getContext("2d").getImageData(0, 0, test.width, test.height);
+
+          var diff_context = div.find("canvas.diff").get(0).getContext("2d");
+          var diff_data = diff_context.createImageData(test.width, test.height);
+          var differences = pixelmatch(cairo_data.data, html5_data.data, diff_data.data, test.width, test.height, {threshold: 0.09, includeAA: false});
+          diff_context.putImageData(diff_data, 0, 0);
+          if(differences == 0) {
+            div.removeClass("failure");
+            if(test.known_failure) {
+              div.addClass("unexpected_success");
+            } else {
+              div.addClass("success");
+            }
+          } else if(test.known_failure) {
+            div.removeClass("failure");
+            div.addClass("known_failure");
+          }
+        })
+      }
+    })
+  </script>
+</body>
+</html>

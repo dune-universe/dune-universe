@@ -1,0 +1,21 @@
+(jbuild_version 1)
+
+(library (
+  (name Hashids)
+  (public_name hashids)
+;  (preprocess (pps (bisect_ppx)))
+  (modules (:standard \ Unit_tests))
+  (libraries (General))
+))
+
+(executable (
+  (name unit_tests)
+  (modules (Unit_tests))
+  (libraries (hashids))
+))
+
+(alias (
+  (name runtest)
+  (deps (unit_tests.bc))
+  (action (run ${exe:unit_tests.bc}))
+))

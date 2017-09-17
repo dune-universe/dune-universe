@@ -1,0 +1,5 @@
+module Poly: sig
+  val equal: 'a -> 'a -> bool
+  val different: 'a -> 'a -> bool
+  module O
+end
