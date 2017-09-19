@@ -1,0 +1,80 @@
+1.1.1:
+* Let jbuilder wrap the library
+* Use jbuilder to generate documentation
+* Allow empty queue name to have AMQP specify name (closes #4)
+
+1.1.0:
+* Handle mandatory flag on channels with confirm set
+* Fix bug where message would always be signalled as delivered
+  successfully even if delivery failed.
+* Allow multiple listeners for returned messages
+* Minor optimizations and code improvements
+* Fixed bug in lwt thread causing flush to hang for ever if
+  there are no consumers
+* Switch build system to jbuild
+* Add backward compatabilty to async < 0.9
+* Allow specification of correlation id per rpc call
+* Wait at most ttl for rpc replies (by Leonidas-from-XIV)
+
+1.0.7:
+* Enable travis ci
+
+1.0.6:
+* Delete amqp_thread.mli, as it makes Deferred.t opaque and makes it
+  impossible to use with existing threading system (lwt / async) as
+  intended. Tests has been exteded to make sure this does not happen again.
+
+1.0.5:
+* Compile against async 0.9
+
+1.0.4:
+* Fix lwt compilation
+
+1.0.3:
+* Fix parsing of array in message headers.
+* Log through thread library (Async.Std.Log / Lwt_log_core)
+* Copy .cmx files to avoid warning 58 - patch by Satoshi Ogasawara
+
+1.0.2:
+* Allow buffers to be in the output chain forever.
+* Fix crash when all channels are requested blocked / unblocked by the server
+
+1.0.0:
+* Compatible with 4.03.0
+* Allow extra arguments to exchange declare
+
+0.9.9:
+* Improve error handling when connection closes unexpectedly
+
+0.9.0:
+* Added support for Lwt in addition to Async
+* Remove dependency on Core
+* Split into amqp-client.async and amqp-client.lwt findlib packages
+  and autodetect which libraries are installed and install appropriate versions
+  of the library
+
+0.2.0:
+* Library renamed to amqp-client
+* Fix bug when heartbeats are disabled serverside.
+* Use polymorphic variants when binding to exchanges
+
+0.1.1:
+* Flush on channel / connection close
+* Implement connection close
+* Replace hash tables with arrays
+* Add per channel transaction support
+* Limit number of queued messages
+* Add channel recover
+* Allow specification of hearbeat freq to detect connection stalls
+
+0.1.0:
+* Less data copying when constructing messages
+* Use Core's endian functions
+* Exchange.t is now a gadt to indicate type of bind arguments
+* Handle channel flow messages.
+  Publishing messages will now wait until the channel is open
+* Handle RabbitMQ's Connection block / unblock messages
+* Some refactoring of protocol helpers
+
+
+0.0.1: Initial release

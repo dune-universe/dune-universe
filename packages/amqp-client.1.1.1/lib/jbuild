@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library
+ ((name lib)
+  (public_name amqp-client.lib)
+  (synopsis "Layer providing access to pervasives modules + helper modules")
+ )
+)
