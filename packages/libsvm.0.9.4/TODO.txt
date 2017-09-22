@@ -1,0 +1,5 @@
+* more testing, in particular n-fold cross validation
+* improve documentation
+* add probability estimate support to svm_cli
+* add accessor function for support vectors in Svm.Model
+* eliminate the `Mat.transpose_copy` function

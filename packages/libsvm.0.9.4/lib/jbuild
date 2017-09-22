@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name libsvm)
+  (public_name libsvm)
+  (wrapped false)
+  (libraries (threads base stdio lacaml))
+  (cxx_names (svm libsvm_stubs))
+  (c_library_flags (:standard -lstdc++))
+))
