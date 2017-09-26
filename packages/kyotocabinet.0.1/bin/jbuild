@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executables
+ ((names (kyoto_pairs kyoto_append))
+  (libraries (kyotocabinet))))
+
+(install
+ ((section bin)
+  (files (
+   (kyoto_pairs.exe as kyoto_pairs)
+   (kyoto_append.exe as kyoto_append)
+  ))))

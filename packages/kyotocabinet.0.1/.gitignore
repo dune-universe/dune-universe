@@ -1,0 +1,13 @@
+*.swp
+*.so
+*.a
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.o
+*.ipc
+*.exe
+_build
+.merlin
