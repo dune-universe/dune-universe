@@ -95,6 +95,11 @@ This extension point supports error reporting. However, the algorithm is rather 
 
 ## Contribute
 
+### Implementation details
+
+* Uses `ocaml-migrate-parsetree` to make it forward and backward compatible.
+* Uses `jbuilder` as compilation system.
+
 ### Code generation
 
 To see the parse tree of a ML file:
@@ -106,12 +111,8 @@ ocamlc -dparsetree foo.ml
 To see the output of a development version of the extension:
 
 ```bash
-ocamlfind opt -package bitstring,core -thread -dsource -ppx ./ppx_bitstring foo.ml
+ocamlfind opt -package bitstring -thread -dsource -ppx '_build/default/.ppx/ppx_bitsring/ppx.exe --as-ppx' foo.ml
 ```
-
-### Oasis file update
-
-We use Jane Street's own configure/Makefile scripts. When updating `_oasis` and calling `oasis setup`, any changes to configure and Makefile **must be reverted**. In addition, `oasis setup` must **not** be run with `v0.4.7` of `oasis`. We used to have a hard conflict in the `opam` file but that caused too many headaches.
 
 ## License
 

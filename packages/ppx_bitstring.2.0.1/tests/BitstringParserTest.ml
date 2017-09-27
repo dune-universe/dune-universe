@@ -172,7 +172,7 @@ let function_parser = function%bitstring
     |} ->
     assert_bool "Bitstring is valid" true
   | {| _ |} ->
-    assert_bool "Invlaid bitstring" false
+    assert_bool "Invalid bitstring" false
 ;;
 
 let function_parser_test context =
@@ -192,7 +192,7 @@ let function_parser_inline_test context =
     |} ->
     assert_bool "Bitstring is valid" true
   | {| _ |} ->
-    assert_bool "Invlaid bitstring" false
+    assert_bool "Invalid bitstring" false
 
 (*
  * parser with a guard (PR#16)
@@ -207,14 +207,34 @@ let parser_with_guard_test context =
     assert_bool "Guard was honored" true
 
 (*
+ * Wrong fastpath extraction function #46
+ *)
+
+let wrong_fp_extraction context =
+  let mb = ("\000\000\145", 0, 24) in
+  match%bitstring mb with
+  | {| matched_value : 24 : bigendian |} -> assert_equal matched_value 145_l
+  | {| _ |} -> assert_bool "Invalid bitstring" false
+
+let wrong_fp_extraction_dynamic context =
+  let mb = ("\000\000\000\145", 0, 32)
+  and on = 8
+  in
+  match%bitstring mb with
+  | {| _ : on ; matched_value : 24 : bigendian |} -> assert_equal matched_value 145
+  | {| _ |} -> assert_bool "Invalid bitstring" false
+
+(*
  * Test suite definition
  *)
 
 let suite = "BitstringParserTest" >::: [
-    "ext3"              >:: ext3_test;
-    "gif"               >:: gif_test;
-    "pcap"              >:: pcap_test;
-    "function"          >:: function_parser_test;
-    "function_inline"   >:: function_parser_inline_test;
-    "parser_with_guard" >:: parser_with_guard_test
+    "ext3"                        >:: ext3_test;
+    "gif"                         >:: gif_test;
+    "pcap"                        >:: pcap_test;
+    "function"                    >:: function_parser_test;
+    "function_inline"             >:: function_parser_inline_test;
+    "parser_with_guard"           >:: parser_with_guard_test;
+    "wrong_fp_extraction"         >:: wrong_fp_extraction;
+    "wrong_fp_extraction_dynamic" >:: wrong_fp_extraction_dynamic;
   ]

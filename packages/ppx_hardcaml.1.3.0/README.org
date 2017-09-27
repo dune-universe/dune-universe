@@ -1,0 +1,107 @@
+#+TITLE: PPX rewriter for HardCaml
+#+AUTHOR: Xavier Guerin
+
+This module provides a ~PPX~ rewriter for some of [[https://github.com/ujamjar/hardcaml][HardCaml]] syntax:
+
+- Enable the use of pervasive operator names to manipulate signals
+- Reuse the 2D string indexing syntax for signal indexing
+
+* Examples
+
+** Operators
+
+Original syntax:
+
+#+BEGIN_SRC ocaml
+let some_function a b =
+  a &: b
+#+END_SRC
+
+Using the PPX rewriter:
+
+#+BEGIN_SRC ocaml
+let some_function a b =
+  [%hw a land b]
+#+END_SRC
+
+Using the ~let%~ extension of the PPX rewriter:
+
+#+BEGIN_SRC ocaml
+let some_function a b =
+  let%hw result = a land b in
+  result
+#+END_SRC
+
+Signal in binary operations are also automatically resized using ~uresize~ to ~max a b~.
+
+** Indexing
+
+Original syntax:
+
+#+BEGIN_SRC ocaml
+let some_function a =
+  a.[7:0]
+#+END_SRC
+
+Using the PPX rewriter:
+
+#+BEGIN_SRC ocaml
+let some_function a =
+  [%hw a.[7,0]]
+#+END_SRC
+
+Using the expression ~let%~ extension of the PPX rewriter:
+
+#+BEGIN_SRC ocaml
+let some_function a =
+  let%hw result = a.[7,0] in
+  result
+#+END_SRC
+
+Using the structural ~let%~ extension of the PPX rewriter:
+
+#+BEGIN_SRC ocaml
+let%hw some_function a =
+  a.[7,0]
+#+END_SRC
+
+** If expression
+
+The ~if~ operator needs to bear the ~hw~ attribute regardless of its scope:
+
+#+BEGIN_SRC ocaml
+let%hw select_const sel1 sel2 a b c d =
+  if sel1 then
+    if%hw sel2 then (a+b) else (a-b)
+  else
+    if%hw sel2 then (c+d) else (c-d)
+#+END_SRC
+
+** Match expression
+
+The ~match~ operator needs to bear the ~hw~ attribute regardless of its scope:
+
+#+BEGIN_SRC ocaml
+let%hw simple_match v = 
+  let f x = 
+    match%hw x with
+    | 1 -> 10h
+    | 7 -> 77h
+    | _ -> 100h
+  in
+  f v
+#+END_SRC
+
+* Hardware constants
+
+Hardware constants can be built using the ~h~ integer constant suffix: ~0x17h~, ~32h~, ~0b0001000h~.
+
+* Signed operations
+
+Signed operations are accessible through the ~[%hw.signed]~ extension.
+
+* Implementation details
+
+- The ~[%hw]~ extension is recursively applied to function calls, tuples, and lists
+- When using the expression ~let%hw~ syntax, the extension is only applied to the value-binding part of the expression
+- When using the structural ~let%hw~ syntax, the extension is recursively applied to all expressions

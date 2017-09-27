@@ -564,20 +564,39 @@ let get_inttype ~loc ~fastpath = function
   | v when v = 32 -> "int32"
   | v when v > 32 && v <= 64 -> "int64"
   | _ -> location_exn ~loc "Invalid integer size"
-;;
+
+and get_intshift ~loc = function
+  | v when v > 8  && v <= 16 -> 16 - v
+  | v when v > 16 && v <= 32 -> 32 - v
+  | v when v > 32 && v <= 64 -> 64 - v
+  | _ -> location_exn ~loc "Invalid integer size"
+
+and apply_intshift ~loc size sh ex =
+  match sh, size with
+  | 0, _ -> ex
+  | _, v when v > 8   && v <= 16 -> [%expr [%e ex] lsr [%e int ~loc sh]]
+  | _, v when v > 16  && v <= 32 -> [%expr Int32.shift_right_logical [%e ex] [%e int ~loc sh]]
+  | _, v when v > 32  && v <= 64 -> [%expr Int64.shift_right_logical [%e ex] [%e int ~loc sh]]
+  | _, _ -> location_exn ~loc "Invalid integer size"
+
+and cast_inttype ~loc size ex =
+  if size > 16 && size <= 31 then [%expr [%e ex] |> Int32.to_int]
+  else ex
 
 let gen_int_extractor_static ~loc nxt size sign endian =
   let edat = nxt.Context.dat.Entity.exp
   and eoff = nxt.Context.off.Entity.exp
   in
   let sn = Sign.to_string sign
+  and sh = get_intshift ~loc size
   and ft = get_inttype ~loc ~fastpath:true size
   and en = Endian.to_string endian in
   let fp = sprintf "Bitstring.extract_fastpath_%s_%s_%s" ft en sn
   in
-  [%expr
-    [%e evar ~loc fp] [%e edat] ([%e eoff] lsr 3)]
-    [@metaloc loc]
+    [%expr
+      [%e evar ~loc fp] [%e edat] ([%e eoff] lsr 3)]
+      [@metaloc loc]
+  |> apply_intshift ~loc size sh
 ;;
 
 let gen_int_extractor_dynamic ~loc nxt size sign endian =
@@ -586,6 +605,7 @@ let gen_int_extractor_dynamic ~loc nxt size sign endian =
   and elen = nxt.Context.len.Entity.exp
   in
   let sn = Sign.to_string sign
+  and sh = get_intshift ~loc size
   and it = get_inttype ~loc ~fastpath:false size
   and ft = get_inttype ~loc ~fastpath:true size
   and es = int ~loc size
@@ -593,14 +613,16 @@ let gen_int_extractor_dynamic ~loc nxt size sign endian =
   let ex = sprintf "Bitstring.extract_%s_%s_%s" it en sn
   and fp = sprintf "Bitstring.extract_fastpath_%s_%s_%s" ft en sn
   in
+  let fe = [%expr [%e evar ~loc fp] [%e edat] ([%e eoff] lsr 3)]
+           |> apply_intshift ~loc size sh
+           |> cast_inttype ~loc size
+  and se = [%expr [%e evar ~loc ex] [%e edat] [%e eoff] [%e elen] [%e int ~loc size]]
+  in
   [%expr
     if Pervasives.(=) ([%e eoff] land 7) 0 &&
        Pervasives.(>) [%e es] 8 &&
        Pervasives.(=) ([%e es] land 7) 0
-    then
-      [%e evar ~loc fp] [%e edat] ([%e eoff] lsr 3)
-    else
-      [%e evar ~loc ex] [%e edat] [%e eoff] [%e elen] [%e int ~loc size]]
+    then [%e fe] else [%e se]]
     [@metaloc loc]
 ;;
 
@@ -820,7 +842,9 @@ and gen_bound_int ~loc cur nxt fld beh fields =
   let (l, _) = fld.MatchField.len
   in
   [%expr
-    if Pervasives.(>=) [%e l] 1 && Pervasives.(<=) [%e l] 64 && Pervasives.(>=) [%e nxt.len.exp] [%e l] then
+    if Pervasives.(>=) [%e l]           1  &&
+       Pervasives.(<=) [%e l]           64 &&
+       Pervasives.(>=) [%e nxt.len.exp] [%e l] then
       [%e (gen_match ~loc cur nxt fld beh fields)]
     else ()]
     [@metaloc loc]
@@ -1164,6 +1188,5 @@ let rewriter config cookies =
   { Ast_mapper.default_mapper with expr = expression }
 
 let () =
-  Driver.register ~name:"ppx_bitstring" ~args:[] Versions.ocaml_403 rewriter;
-  Migrate_parsetree.Driver.run_main ()
+  Driver.register ~name:"ppx_bitstring" ~args:[] Versions.ocaml_403 rewriter
 ;;

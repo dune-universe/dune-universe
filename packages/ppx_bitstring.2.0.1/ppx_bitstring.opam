@@ -1,6 +1,6 @@
 opam-version: "1.2"
 name: "ppx_bitstring"
-version: "2.0.0"
+version: "2.0.1"
 maintainer: "Xavier Guérin <ghub@applepine.org>"
 authors: "Xavier Guérin <ghub@applepine.org>"
 homepage: "https://github.com/xguerin/ppx_bitstring"

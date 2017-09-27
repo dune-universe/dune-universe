@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executable
+ ((name       ppx_hardcaml_test)
+  (libraries  (hardcaml oUnit))
+  (preprocess (pps (ppx_hardcaml)))
+  ))
+
+(alias
+ ((name    runtest)
+  (deps    (ppx_hardcaml_test.exe))
+  (action  (run ${<}))))
