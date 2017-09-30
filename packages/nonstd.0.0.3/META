@@ -1,0 +1,7 @@
+version = "0.0.1"
+description = "Non-standard mini-library"
+archive(byte) = "nonstd.cma"
+archive(byte,plugin) = "nonstd.cma"
+archive(native) = "nonstd.cmxa"
+archive(native,plugin) = "nonstd.cmxs"
+exists_if = "nonstd.cma"
