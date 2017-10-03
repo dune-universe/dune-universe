@@ -14,12 +14,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-module Def = Migrate_parsetree_def
-module From = Ast_406
-module To = Ast_405
-
-let migration_error location feature =
-  raise (Def.Migration_error (feature, location))
+module From = Ast_405
+module To = Ast_406
 
 let rec copy_expression :
   From.Parsetree.expression -> To.Parsetree.expression =
@@ -333,12 +329,11 @@ and copy_core_type_desc :
   | From.Parsetree.Ptyp_object (x0,x1) ->
       To.Parsetree.Ptyp_object
         ((List.map
-            (function
-              | From.Parsetree.Otag (x0,x1,x2) ->
-               (copy_loc (fun x  -> x) x0, (copy_attributes x1),
-                (copy_core_type x2))
-              | From.Parsetree.Oinherit _ ->
-                migration_error Location.none Def.Oinherit) x0),
+            (fun x  ->
+               let (x0,x1,x2) = x  in
+               To.Parsetree.Otag
+                 (copy_loc (fun x  -> x) x0, (copy_attributes x1),
+                  (copy_core_type x2))) x0),
           (copy_closed_flag x1))
   | From.Parsetree.Ptyp_class (x0,x1) ->
       To.Parsetree.Ptyp_class
@@ -376,7 +371,7 @@ and copy_row_field :
   function
   | From.Parsetree.Rtag (x0,x1,x2,x3) ->
       To.Parsetree.Rtag
-        ((copy_label x0.txt),
+        (({ txt = copy_label x0; loc = Location.none; }),
           (copy_attributes x1), (copy_bool x2),
           (List.map copy_core_type x3))
   | From.Parsetree.Rinherit x0 ->
@@ -540,8 +535,6 @@ and copy_class_expr_desc :
           (copy_class_type x1))
   | From.Parsetree.Pcl_extension x0 ->
       To.Parsetree.Pcl_extension (copy_extension x0)
-  | From.Parsetree.Pcl_open (_, loc, _) ->
-      migration_error loc.From.Location.loc Def.Pcl_open
 
 and copy_class_structure :
   From.Parsetree.class_structure -> To.Parsetree.class_structure =
@@ -726,11 +719,12 @@ and copy_with_constraint :
           (copy_loc copy_longident x1))
   | From.Parsetree.Pwith_typesubst x0 ->
       To.Parsetree.Pwith_typesubst
-        (copy_type_declaration x0)
+        (copy_loc (fun x -> Longident.Lident x) x0.From.Parsetree.ptype_name,
+         copy_type_declaration x0)
   | From.Parsetree.Pwith_modsubst (x0,x1) ->
       To.Parsetree.Pwith_modsubst
-        ((copy_loc (fun x  -> x) x0),
-          (copy_loc copy_longident x1))
+        (copy_loc (fun x -> Longident.Lident x) x0,
+         copy_loc copy_longident x1)
 
 and copy_signature :
   From.Parsetree.signature -> To.Parsetree.signature =
@@ -839,8 +833,6 @@ and copy_class_type_desc :
           (copy_class_type x2))
   | From.Parsetree.Pcty_extension x0 ->
       To.Parsetree.Pcty_extension (copy_extension x0)
-  | From.Parsetree.Pcty_open (_, loc, _) ->
-      migration_error loc.From.Location.loc Def.Pcty_open
 
 and copy_class_signature :
   From.Parsetree.class_signature -> To.Parsetree.class_signature =
@@ -1648,7 +1640,8 @@ and copy_out_value :
               let (x0,x1) = x  in
               ((copy_out_ident x0),
                 (copy_out_value x1))) x0)
-  | From.Outcometree.Oval_string (x0, _, _) -> To.Outcometree.Oval_string x0
+  | From.Outcometree.Oval_string x0 ->
+      To.Outcometree.Oval_string (x0, max_int, Ostr_string)
   | From.Outcometree.Oval_stuff x0 -> To.Outcometree.Oval_stuff x0
   | From.Outcometree.Oval_tuple x0 ->
       To.Outcometree.Oval_tuple
