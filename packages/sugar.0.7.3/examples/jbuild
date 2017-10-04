@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(executables
+ ((names       (example_basic example_strict))
+  (libraries
+    (sugar))
+))

@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name        sugar)
+  (public_name sugar)
+  (libraries (result))))

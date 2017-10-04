@@ -1,0 +1,6 @@
+
+(executable
+ ((name       example_lwt_strict)
+  (libraries
+    (sugar lwt lwt.unix))
+))

@@ -1,0 +1,11 @@
+_build
+*.native
+*.byte
+*.docdir
+
+setup.data
+*.log
+.merlin
+doc/latest
+doc/releases
+sugar.install

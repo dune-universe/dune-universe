@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>index</title>
+    <link rel="stylesheet" href="./odoc.css"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+    <link rel="import" href="latest/index.html">
+  </head>
+  <body>
+    <div class="by-name">
+    <h2>Sugar documentation</h2>
+    <ol>
+    <li><a href="sugar/index.html">sugar</a></li>
+    </ol>
+
+    <link rel="import" href="http://example.com/elements.html">
+
+    <div id="doc-placeholder"></div>
+
+    <script>
+      var link = document.querySelector('link[rel="import"]');
+      var content = link.import;
+
+      // Grab DOM from warning.html's document.
+      var el = content.querySelector('.warning');
+
+      var placeholder = document.querySelector('#doc-placeholder');
+      placeholder.appendChild(el.cloneNode(true));
+    </script>
+ </body>
+ </html>

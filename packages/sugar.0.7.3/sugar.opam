@@ -1,0 +1,19 @@
+opam-version: "1.2"
+name: "sugar"
+version: "0.7.3"
+maintainer: "Gerson Moraes <gerson@digirati.com.br>"
+authors: "Gerson Moraes <gerson@digirati.com.br>"
+homepage: "https://github.com/gersonmoraes/ocaml-sugar"
+dev-repo: "https://github.com/gersonmoraes/ocaml-sugar"
+bug-reports: "https://github.com/gersonmoraes/ocaml-sugar/issues"
+doc: "https://gersonmoraes.github.io/ocaml-sugar/doc"
+license: "MIT"
+build: [
+  ["jbuilder" "subst"] {pinned}
+  ["jbuilder" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "jbuilder" {>= "1.0+beta11"}
+  "result" {>= "1.2"}
+]
+available: [ ocaml-version >= "4.02.3" ]
