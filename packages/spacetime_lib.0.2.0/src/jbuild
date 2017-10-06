@@ -1,0 +1,7 @@
+(jbuild_version 1)
+(library
+  ((name spacetime_lib)
+   (public_name spacetime_lib)
+   (modules (spacetime_lib elf_locations versioned))
+   (libraries
+      (owee raw_spacetime))))
