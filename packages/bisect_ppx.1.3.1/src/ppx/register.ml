@@ -1,0 +1,54 @@
+(* This Source Code Form is subject to the terms of the Mozilla Public License,
+   v. 2.0. If a copy of the MPL was not distributed with this file, You can
+   obtain one at http://mozilla.org/MPL/2.0/. *)
+
+
+
+let conditional = ref false
+
+let switches = [
+  ("-exclude",
+  Arg.String Exclusions.add,
+  "<pattern>  Exclude functions matching pattern") ;
+
+  ("-exclude-file",
+  Arg.String Exclusions.add_file,
+  "<filename>  Exclude functions listed in given file") ;
+
+  ("-mode",
+  (Arg.Symbol (["safe"; "fast"; "faster"], ignore)),
+  "  Ignored") ;
+
+  ("-conditional",
+  Arg.Set conditional,
+  "  Do not instrument unless environment variable BISECT_ENABLE is YES");
+]
+
+   
+
+open Migrate_parsetree
+open Ppx_tools_404
+
+let () =
+  Driver.register ~name:"bisect_ppx" ~args:switches
+    Versions.ocaml_404 begin fun _config _cookies ->
+      let enabled =
+        match !conditional with
+        | false ->
+          `Enabled
+        | true ->
+          match Sys.getenv "BISECT_ENABLE" with
+          | exception Not_found ->
+            `Disabled
+          | s when (String.uppercase [@ocaml.warning "-3"]) s = "YES" ->
+            `Enabled
+          | _ ->
+            `Disabled
+      in
+
+      match enabled with
+      | `Enabled ->
+        Ast_mapper_class.to_mapper (new Instrument.instrumenter)
+      | `Disabled ->
+        Ast_404.shallow_identity
+    end
