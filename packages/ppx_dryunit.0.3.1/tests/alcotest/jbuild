@@ -1,0 +1,29 @@
+(executables
+ ((names (main normalize))
+  (libraries (alcotest))
+  (preprocess (pps (ppx_dryunit)))))
+
+(rule
+ ((targets (main.output))
+  (deps    (main.exe))
+  (action  (with-stdout-to ${@} (run ${<} --json)))))
+
+(rule
+ ((targets (main.normalized))
+  (deps    (normalize.exe main.output))
+  (action  (with-stdout-to ${@} (run ${<})))))
+
+(alias
+ ((name   runtest)
+  (deps   (main.expected main.normalized))
+  (action (run diff -u main.expected main.normalized))))
+
+(rule
+ ((targets (main.ml))
+  (deps    (primary.ml secondary.ml))
+  (action  (with-stdout-to ${@} (run
+    dryunit gen
+      --framework alcotest
+      ;; --ignore "webservice broker"
+      ;; --filter "filter1 filter2"
+  )))))

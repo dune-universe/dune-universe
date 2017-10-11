@@ -1,0 +1,13 @@
+(executables
+ ((names (main))
+  (preprocess (pps (ppx_dryunit)))))
+
+(rule
+ ((targets (main.output))
+  (deps    (main.exe))
+  (action  (with-stdout-to ${@} (run ${<})))))
+
+(alias
+ ((name   runtest)
+  (deps   (main.expected main.output))
+  (action (run diff -u main.expected main.output))))

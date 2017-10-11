@@ -1,7 +1,0 @@
-(jbuild_version 1)
-
-(library ((name vcardgen) ))
-
-(install
- ((section doc)
-  (files (example.ml botero.jpeg))))

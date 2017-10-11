@@ -1,0 +1,4 @@
+(library
+ ((name        binbin)
+  (public_name binbin)
+))
