@@ -3,7 +3,7 @@
 (library
  ((name        topkg_jbuilder)
   (public_name topkg-jbuilder)
-  (libraries (topkg))
+  (libraries (topkg unix))
   (modules (topkg_jbuilder))))
 
 (library

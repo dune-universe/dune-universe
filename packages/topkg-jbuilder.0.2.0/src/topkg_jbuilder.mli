@@ -1,6 +1,6 @@
 (** Helpers for using topkg with jbuilder.
 
-    {e 0.1.0 - {{:https://github.com/diml/topkg-jbuilder}homepage}} *)
+    {e 0.2.0 - {{:https://github.com/samoht/topkg-jbuilder}homepage}} *)
 
 open Topkg
 
