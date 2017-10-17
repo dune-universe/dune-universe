@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name faraday)
+  (public_name faraday)
+  (libraries (bigarray))))

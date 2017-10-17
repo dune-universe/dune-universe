@@ -1,0 +1,5 @@
+.*.sw[pon]
+_build/
+*.merlin
+*.install
+*~
