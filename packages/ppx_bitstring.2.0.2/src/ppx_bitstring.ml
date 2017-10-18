@@ -29,7 +29,6 @@ open Printf
  *)
 
 let ocaml_version = Versions.ocaml_403
-let from_current = Versions.migrate Versions.ocaml_current ocaml_version
 
 (* Type definition *)
 
@@ -240,8 +239,7 @@ let rec process_expr_loc ~loc expr =
 
 let parse_expr expr =
   try
-    Parse.expression (Lexing.from_string expr.txt)
-    |> from_current.Versions.copy_expression
+    Parse.expression Versions.ocaml_403 (Lexing.from_string expr.txt)
     |> process_expr_loc ~loc:expr.loc
   with
     _ -> location_exn ~loc:expr.loc ("Parse expression error: '" ^ expr.txt ^ "'")
@@ -258,8 +256,7 @@ let rec process_pat_loc ~loc pat =
 
 let parse_pattern pat =
   try
-    Parse.pattern (Lexing.from_string pat.txt)
-    |> from_current.Versions.copy_pattern
+    Parse.pattern Versions.ocaml_403 (Lexing.from_string pat.txt)
     |> process_pat_loc ~loc:pat.loc
   with
     _ -> location_exn ~loc:pat.loc ("Parse pattern error: '" ^ pat.txt ^ "'")

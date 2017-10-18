@@ -1,4 +1,4 @@
-version: "1.20.0"
+version: "1.20.2"
 opam-version: "1.2"
 maintainer: "Markus Mottl <markus.mottl@gmail.com>"
 authors: [
@@ -17,8 +17,8 @@ build: [
 ]
 
 depends: [
-  "conf-gsl"
-  "conf-pkg-config"
+  "conf-gsl" {build}
+  "conf-pkg-config" {build}
   "base" {build}
   "stdio" {build}
   "configurator" {build}
