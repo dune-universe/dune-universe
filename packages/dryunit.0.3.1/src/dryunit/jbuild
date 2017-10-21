@@ -1,5 +1,0 @@
-(executable
- ((name dryunit)
-  (package dryunit)
-  (public_name dryunit)
-  (libraries (cmdliner str unix))))

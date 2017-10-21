@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executables
+ ((names (main))
+  (libraries (horned_worm))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(install
+ ((section bin)
+  (files ((main.exe as horned_worm)))))

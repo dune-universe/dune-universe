@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(library
+ ((name horned_worm)
+  (libraries (
+              async
+              cohttp-async
+              core
+              logs
+              logs.fmt
+              re
+              yojson
+              ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))

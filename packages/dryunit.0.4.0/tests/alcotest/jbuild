@@ -1,0 +1,31 @@
+(executables
+ ((names (main normalize))
+  (libraries (alcotest))))
+
+(rule
+ ((targets (main.ml))
+  (deps ( (glob_files *tests.ml) (glob_files *Tests.ml) ))
+  (action  (with-stdout-to ${@} (run
+    ../../src/dryunit/main.exe gen
+      --framework alcotest
+      ;; Filters:
+      ;; --ignore "webservice broker"
+      ;; --filter "filter1 filter2"
+      ;; --ignore-path "secondary"
+  )))))
+
+
+(rule
+ ((targets (main.output))
+  (deps    (main.exe))
+  (action  (with-stdout-to ${@} (run ${<} --json)))))
+
+(rule
+ ((targets (main.normalized))
+  (deps    (normalize.exe main.output))
+  (action  (with-stdout-to ${@} (run ${<})))))
+
+(alias
+ ((name   runtest)
+  (deps   (main.expected main.normalized))
+  (action (run diff -u main.expected main.normalized))))

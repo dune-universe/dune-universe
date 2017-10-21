@@ -1,0 +1,11 @@
+(executable
+ ((name main)
+  (package dryunit)
+  (public_name dryunit)
+  (flags (-safe-string))
+  (libraries (cmdliner str unix))))
+
+(rule
+ ((targets (core_capitalize.ml))
+  (deps    (core_capitalize.cppo.ml))
+  (action  (run ${bin:cppo} -V OCAML:${ocaml_version} ${<} -o ${@}))))

@@ -1,0 +1,16 @@
+(library
+ ((name        ppx_dryunit)
+  (public_name ppx_dryunit)
+  (kind ppx_rewriter)
+  (libraries (ocaml-migrate-parsetree ppx_tools_versioned unix str))
+  (preprocess (action (run ${bin:cppo} -V OCAML:${ocaml_version} ${<})))))
+
+(rule
+ ((targets (core_util.ml))
+  (deps    (../dryunit/core_util.ml))
+  (action  (copy ../dryunit/core_util.ml core_util.ml))))
+
+(rule
+ ((targets (core_runtime.ml))
+  (deps    (../dryunit/core_runtime.ml))
+  (action  (copy ../dryunit/core_runtime.ml core_runtime.ml))))

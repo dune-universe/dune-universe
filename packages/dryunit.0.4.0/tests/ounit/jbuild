@@ -1,0 +1,31 @@
+(executables
+  ((names (main normalize))
+  (libraries (oUnit))))
+
+(rule
+ ((targets (main.ml))
+  (deps ( (glob_files *tests.ml) (glob_files *Tests.ml) ))
+  (action  (with-stdout-to ${@} (run dryunit gen
+    --framework ounit
+    ;;
+    ;; Uncomment to apply filters:
+    ;;
+    ;;  --ignore "space separated list"
+    ;;  --filter "space separated list"
+    ;;  --ignore-path "space separated list"
+  )))))
+
+(rule
+ ((targets (main.output))
+  (deps    (main.exe))
+  (action  (with-stdout-to ${@} (run ${<})))))
+
+(rule
+ ((targets (main.normalized))
+  (deps    (normalize.exe main.output))
+  (action  (with-stdout-to ${@} (run ${<})))))
+
+(alias
+ ((name   runtest)
+  (deps   (main.expected main.normalized))
+  (action (run diff -u main.expected main.normalized))))
