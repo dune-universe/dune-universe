@@ -1,0 +1,115 @@
+(jbuild_version 1)
+
+(library
+ ((name              mccs)
+  ;; the following are all the objects from GLPK that we need, from src/glpk
+  ;; (can be replaced by (c_library_flags (-lglpk)) if installed)
+  (c_names           (bfd
+                      glpapi06
+                      glpapi09
+                      glpapi10
+                      glpapi12
+                      glpapi13
+                      glpios01
+                      glpios02
+                      glpios03
+                      glpios07
+                      glpios09
+                      glpios10
+                      glpios11
+                      glpios12
+                      glpnpp01
+                      glpnpp02
+                      glpnpp03
+                      glpnpp04
+                      glpnpp05
+                      glpscl
+                      advbas
+                      cpxbas
+                      prob1
+                      prob2
+                      prob4
+                      prob5
+                      btf
+                      btfint
+                      fhv
+                      fhvint
+                      fvs
+                      ifu
+                      luf
+                      lufint
+                      scf
+                      scfint
+                      sgf
+                      sva
+                      cfg
+                      cfg1
+                      cfg2
+                      clqcut
+                      gmicut
+                      gmigen
+                      mirgen
+                      spv
+                      alloc
+                      dlsup
+                      env
+                      error
+                      stdc
+                      stdout
+                      time
+                      tls
+                      avl
+                      dmp
+                      gcd
+                      jd
+                      mc13d
+                      mc21a
+                      rng
+                      rng1
+                      round2n
+                      triang
+                      wclique
+                      wclique1
+                      proxy
+                      proxy1
+                      spxat
+                      spxchuzc
+                      spxchuzr
+                      spxlp
+                      spxnt
+                      spxprim
+                      spxprob
+                      spychuzc
+                      spychuzr
+                      spydual))
+  ;; the following are the objects from mccs
+  (cxx_names         (changed_criteria
+                      constraint_generation
+                      count_criteria
+                      cudf_reductions
+                      cudf_tools
+                      glpk_solver
+                      lexagregate_combiner
+                      new_criteria
+                      notuptodate_criteria
+                      removed_criteria
+                      mccscudf
+                      mccs_stubs))
+  (public_name       mccs)
+  (c_flags           (:standard -w))
+  (cxx_flags         (:standard -I .))
+  (c_library_flags   (:standard -lstdc++)) ;; dynlink version
+  ;; (no_dynlink) (c_library_flags   (:standard -lz -lltdl)) ;; static version
+  ;; (library_flags     (-cclib -static-libgcc -cclib -Wl,-l:libstdc++.a,-l:libglpk.a))
+  (wrapped           false)
+  (libraries         (cudf))
+  ))
+
+(copy_files# glpk/*.{c,h})
+(copy_files# glpk/api/*.{c,h})
+(copy_files# glpk/bflib/*.{c,h})
+(copy_files# glpk/cglib/*.{c,h})
+(copy_files# glpk/env/*.{c,h})
+(copy_files# glpk/misc/*.{c,h})
+(copy_files# glpk/proxy/*.{c,h})
+(copy_files# glpk/simplex/*.{c,h})
