@@ -1,0 +1,9 @@
+/_build
+/biocaml.install
+/.merlin
+/.ocamlinit
+/*.byte
+/*.native
+/tmp
+*~
+.merlin
