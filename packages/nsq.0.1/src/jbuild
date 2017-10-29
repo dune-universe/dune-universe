@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name        nsq)
+  (public_name nsq)
+  (libraries (lwt containers ocplib-endian lwt.unix integers))))
