@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{graphicx,tikz}
+\usepackage{times,mathptmx}
+
+% \newcommand{\meshpoint}[3]{%
+%   \begin{pgfscope}
+%     \pgfsetlinewidth{0pt}
+%     \pgfpathcircle{\pgfpointxy{#2}{#3}}{1pt}
+%     \pgfusepath{fill}
+%   \end{pgfscope}}
+
+\begin{document}
+
+\setlength{\unitlength}{75mm}
+\noindent
+\begin{tikzpicture}
+  \pgfsetlinewidth{1pt}
+  \pgfsetxvec{\pgfpoint{0.5\linewidth}{0mm}}
+  \pgfsetyvec{\pgfpoint{0mm}{0.5\linewidth}}
+  \input{testmesh1.tex}
+  \newcommand{\meshpoint}[3]{%
+    \node[fill=white,inner sep=0pt] at (#2,#3) {%
+      \textcolor{red}{\fontsize{3pt}{5pt}\selectfont #1}};}
+  % Superpose the original mesh with thinner lines so that differences
+  % are easily detected.
+  \pgfsetlinewidth{0.3pt}
+  \input{testmesh.tex}
+
+  \begin{scope}[xshift=\unitlength]
+    \input{testmesh1.tex}
+  \end{scope}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \pgfsetxvec{\pgfpoint{0.45\linewidth}{0mm}}
+  \pgfsetyvec{\pgfpoint{0mm}{0.45\linewidth}}
+  \input{levels.tex}
+\end{tikzpicture}
+
+
+% Include the EPS file of Scilab
+\IfFileExists{triangle.eps}{%
+  \rotatebox{-90}{%
+    \includegraphics[height=\linewidth]{triangle}%
+  }%
+}{}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

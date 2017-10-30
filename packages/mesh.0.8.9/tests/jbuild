@@ -1,0 +1,19 @@
+(jbuild_version 1)
+
+(executables
+ ((names     (square_easymesh ))
+  (modules   (square_easymesh ))
+  (libraries (mesh_display lacaml))))
+
+(executables
+ ((names     (square_triangle level_display refine attributes export
+              degenerate_pslg))
+  (modules   (square_triangle level_display refine attributes export
+              degenerate_pslg))
+  (libraries (mesh_triangle mesh_display lacaml))))
+
+(alias
+ ((name    runtest)
+  (package mesh-display)
+  (deps   (square_easymesh.exe))
+  (action (run ${exe:square_easymesh.exe}))))

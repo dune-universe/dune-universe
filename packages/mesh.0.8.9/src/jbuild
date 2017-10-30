@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library
+ ((name        mesh)
+  (public_name mesh)
+  (synopsis  "Triangular mesh generation and manipulation")
+  (modules   (Mesh  Mesh_utils Mesh_common MeshF MeshC))
+  (flags     (:standard -safe-string))
+  (libraries (bigarray bytes))))
+
+(rule
+ ((targets (meshF.ml meshC.ml))
+  (deps    (../config/make_FC_code.exe
+            meshFC.ml mesh_level_curvesFC.ml))
+  (action  (run ../config/make_FC_code.exe))))

@@ -1,0 +1,26 @@
+(jbuild_version 1)
+
+
+(executables
+ ((names        (plotgitsch plotkicadsch))
+  (public_names (plotgitsch plotkicadsch))
+  (package plotkicadsch)
+ (libraries
+  (
+   git-unix
+   lwt
+   lwt.unix
+   sha
+   pcre
+   tyxml
+   base64
+   str
+   )
+  )
+ (flags (:standard -w -3 -safe-string))
+ ))
+
+(install
+  ((section bin)
+   (files   (git-imgdiff))
+  ))

@@ -1,0 +1,25 @@
+(jbuild_version 1)
+
+(library
+ ((name        mesh_easymesh)
+  (public_name mesh-easymesh)
+  (synopsis  "Triangular mesh generation with Easymesh")
+  (modules   (Easymesh  EasymeshF EasymeshC Mesh_common Mesh_utils))
+  (flags     (:standard -safe-string))
+  (libraries (mesh bigarray bytes))))
+
+(rule
+ ((targets (easymeshF.ml easymeshC.ml))
+  (deps    (../config/make_FC_code.exe
+            easymeshFC.ml))
+  (action  (run ../config/make_FC_code.exe))))
+
+(rule
+ ((targets (mesh_common.ml))
+  (deps    (../src/mesh_common.ml))
+  (action  (copy# ${^} mesh_common.ml))))
+
+(rule
+ ((targets (mesh_utils.ml))
+  (deps    (../src/mesh_utils.ml))
+  (action  (copy# ${^} mesh_utils.ml))))
