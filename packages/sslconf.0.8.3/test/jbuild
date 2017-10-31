@@ -1,0 +1,18 @@
+(jbuild_version 1)
+
+(executables
+ ((names (sslconf_test sslconf_dumpcases))
+  (libraries (oUnit sexplib fpath cmdliner rresult sslconf))
+  (preprocess (pps (ppx_sexp_conv)))
+  (flags (:standard -w +A-4-41-42-44))
+ ))
+
+(alias
+ ((name runtest)
+  (package sslconf)
+  (action
+   (progn
+    (run ${exe:sslconf_test.exe})
+    (run ${exe:sslconf_dumpcases.exe} cases))
+   )
+ ))

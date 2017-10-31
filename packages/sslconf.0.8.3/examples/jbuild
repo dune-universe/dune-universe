@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(executables
+ ((names (sslconf_show_config sslconf_show_value sslconf_show_section))
+  (public_names (sslconf_show_config sslconf_show_value sslconf_show_section))
+  (libraries (fpath cmdliner rresult sslconf))
+  (flags (:standard -w +A-4-41-42-44))
+ ))
