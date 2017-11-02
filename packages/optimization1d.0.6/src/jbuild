@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name        optimization1d)
+  (public_name optimization1d)
+  (synopsis    "Find extrema of 1D functions")
+  (wrapped false)))
