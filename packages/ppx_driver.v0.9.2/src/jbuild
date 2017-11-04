@@ -1,0 +1,20 @@
+(library
+ ((name ppx_driver)
+  (public_name ppx_driver)
+  (flags (:standard -unsafe-string))
+  (libraries (compiler-libs.common
+              ppx_core
+              ppx_optcomp
+              print_diff
+              ocaml-migrate-parsetree))
+  (preprocess no_preprocessing)
+  ))
+
+(alias
+ ((name DEFAULT)
+  (deps (../../ppx_core/src/cinaps_helpers
+         (glob_files *.ml)
+         (glob_files *.mli)))
+  (action (bash "${bin:cinaps} *.ml *.mli"))))
+
+(jbuild_version 1)
