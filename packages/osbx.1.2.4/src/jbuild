@@ -1,0 +1,14 @@
+(executable
+ ((name           osbx)
+  (public_name    osbx)
+  (ocamlopt_flags (-nodynlink -safe-string -w "+a-4-6-9-29-40-42-44-48-50"))
+  (libraries      (stdint
+                   nocrypto
+                   nocrypto.unix
+                   angstrom
+                   hex
+                   cmdliner
+                   digestif
+                   digestif.c
+                  ))
+ ))

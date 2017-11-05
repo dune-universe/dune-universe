@@ -1,0 +1,6 @@
+/_build
+/*.install
+.merlin
+/tmp
+*~
+.DS_Store
