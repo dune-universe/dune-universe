@@ -14,8 +14,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-type ba = Cstruct.buffer
-
 type t = {
   mutable buffer: Cstruct.t;
 }
@@ -45,13 +43,6 @@ let length t =
 
 let offset t =
   t.buffer.Cstruct.off
-
-let length_ba ba =
-  Bigarray.Array1.dim ba
-
-external unsafe_blit_bigstring_to_string :
-  Cstruct.buffer -> int -> string -> int -> int -> unit
-  = "caml_blit_bigstring_to_string" "noalloc"
 
 let hexdump t =
   Cstruct.hexdump t.buffer
@@ -147,19 +138,19 @@ let get_le_uint64 t =
 let get_string t len =
   if len = 0 then ""
   else
-    let str = String.create len in
+    let str = Bytes.create len in
     get t len (fun _ _ ->
         Cstruct.blit_to_string t.buffer 0 str 0 len;
       );
-    str
+    Bytes.to_string str
 
 let pick_string t len =
   if len = 0 then Some ""
   else if len > length t then None
   else (
-    let str = String.create len in
+    let str = Bytes.create len in
     Cstruct.blit_to_string t.buffer 0 str 0 len;
-    Some str
+    Some (Bytes.to_string str)
   )
 
 let index t c =
