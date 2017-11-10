@@ -1,0 +1,23 @@
+version: "0.2"
+opam-version: "1.2"
+name: "ocamlformat"
+maintainer: "OCamlFormat Team <ocamlformat-team@fb.com>"
+authors: "Josh Berdine <jjb@fb.com>"
+homepage: "https://github.com/ocaml-ppx/ocamlformat"
+bug-reports: "https://github.com/ocaml-ppx/ocamlformat/issues"
+dev-repo: "https://github.com/ocaml-ppx/ocamlformat.git"
+license: "MIT"
+available: [ ocaml-version >= "4.04.0" ]
+depends: [
+  "base"
+  "base-unix"
+  "cmdliner"
+  "jbuilder" {build}
+  "ocaml-migrate-parsetree" {>= "1.0.5"}
+  "ocamlformat_support"
+  "stdio"
+]
+build: [
+  ["jbuilder" "subst"] {pinned}
+  [make]
+]
