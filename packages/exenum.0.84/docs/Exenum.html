@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="next" href="Lwt_tester.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Exenum" rel="Chapter" href="Exenum.html">
+<link title="Lwt_tester" rel="Chapter" href="Lwt_tester.html"><link title="Basics" rel="Section" href="#3_Basics">
+<link title="Finite enumerations for ground types" rel="Section" href="#3_Finiteenumerationsforgroundtypes">
+<link title="Infinite enumerations for ground types" rel="Section" href="#3_Infiniteenumerationsforgroundtypes">
+<link title="Composition" rel="Section" href="#3_Composition">
+<link title="Recursion, map" rel="Section" href="#3_Recursionmap">
+<link title="Helper functions" rel="Section" href="#3_Helperfunctions">
+<title>Exenum</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Lwt_tester.html" title="Lwt_tester">Next</a>
+</div>
+<h1>Module <a href="type_Exenum.html">Exenum</a></h1>
+
+<pre><span class="keyword">module</span> Exenum: <code class="code">sig</code> <a href="Exenum.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<h2 id="2_Buildefficientenumerationsfordatatypes">Build efficient enumerations for datatypes</h2>
+<p>
+
+    The exenum library offers constructors to build enumerations for datatypes, that is, functions
+    from (arbitrarily large) integers to values. Such enumerations are very useful for unit testing.
+<p>
+
+    The library is efficient: the n-th element of an enumeration
+    is returned without having computed the (n-1) previous elements.
+    Complexity is in log(n), except for some pathological datatypes.
+<p>
+
+    Homepage: <a href=" https://github.com/lebotlan/ocaml-exenum"> https://github.com/lebotlan/ocaml-exenum </a>
+<p>
+
+    <i>Inspired by Feat: Functional Enumeration of Algebraic Types, by Duregard, Jansson, Wang, Chalmers University.</i>
+<p>
+
+    <i>Contact: D. Le Botlan (github.lebotlan@dfgh.met where you replace .met by .net.) </i>
+<p>
+
+    <h3 id="3_Example">Example</h3>
+<p>
+
+    As an example, consider the following familiar datatype:
+    <pre class="codepre"><code class="code"> type term = Var of string | App of term * term | Lambda of string * term </code></pre>
+    Using exenum, one may easily generate zillions of different lambda-terms.
+    For this example, we limit ourselves to four variable names : x, y, u, and v.
+    Then, one may compute for instance term number 2000000000000, which happens to be
+    <pre class="verbatim">((((x v) (fun u -&gt; y)) ((fun u -&gt; y) (fun y -&gt; y))) (((x v) (fun u -&gt; v)) (fun u -&gt; y)))</pre>
+<p>
+
+    Building an enumeration from a datatype is straightforward. For instance, the enumeration corresponding to type <code class="code">term</code> is
+    built as follows:
+    <pre class="codepre"><code class="code">(* We restrict ourselves to four variable names. *)
+let e_vars = from_list ~name:"variables" ["x" ; "y" ; "u" ; "v"]
+
+(* Type term is recursive, hence we need a lazy enumeration first. *)
+let rec e_term = lazy
+  begin
+    (* In order to use the enumeration recursively, we need to "pay" a recursive fee. *)
+    let r_term = pay e_term in
+   
+    (* Now, this is the direct translation of the datatype definition. *)
+    union 
+      [ map e_vars (fun x -&gt; Var x) ;
+        map (pair r_term r_term) (fun (t1, t2) -&gt; App (t1, t2)) ;
+        map (pair e_vars r_term) (fun (x, t) -&gt; Lambda (x, t))  ] 
+  end
+
+(* Here is the enumeration for lambda-terms. *)
+let e_term = Lazy.force e_term
+    </code></pre>
+<p>
+
+See examples in <a href=" https://github.com/lebotlan/ocaml-exenum/tree/master/examples"> https://github.com/lebotlan/ocaml-exenum/tree/master/examples</a><br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEenum"><span class="keyword">type</span> <code class="type">'a</code> enum</span> </pre>
+<div class="info ">
+The type of exhaustive enumerations of values of type 'a. 
+    Enumerations can be finite of infinite.<br>
+</div>
+
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> = <code class="type">'a <a href="Exenum.html#TYPEenum">enum</a></code> </pre>
+
+<br>
+<h3 id="3_Basics">Basics</h3><br>
+
+<pre><span id="VALfrom_list"><span class="keyword">val</span> from_list</span> : <code class="type">?name:string -> 'a list -> 'a <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Builds a finite enumeration from a finite set of values. 
+    The name is used for nicer debugging.<br>
+</div>
+
+<pre><span id="VALsingle"><span class="keyword">val</span> single</span> : <code class="type">?name:string -> 'a -> 'a <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumeration of a single value (derived from <a href="Exenum.html#VALfrom_list"><code class="code">Exenum.from_list</code></a>).<br>
+</div>
+
+<pre><span id="VALcardinal"><span class="keyword">val</span> cardinal</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> Z.t option</code></pre><div class="info ">
+<code class="code">cardinal enum</code> Returns the cardinality of <code class="code">enum</code>. None means infinity.<br>
+</div>
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> Z.t -> 'a</code></pre><div class="info ">
+<code class="code">get enum n</code> Returns the nth value of type 'a, starting at 0.<br>
+<b>Raises</b> <code>Failure</code> if <code class="code">n</code> is greater or equal than the cardinality of <code class="code">enum</code>.<br>
+</div>
+<br>
+<h3 id="3_Finiteenumerationsforgroundtypes">Finite enumerations for ground types</h3><br>
+
+<pre><span id="VALe_unit"><span class="keyword">val</span> e_unit</span> : <code class="type">unit <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+One element: ().<br>
+</div>
+
+<pre><span id="VALe_bool"><span class="keyword">val</span> e_bool</span> : <code class="type">bool <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Two elements: true, false<br>
+</div>
+
+<pre><span id="VALe_char"><span class="keyword">val</span> e_char</span> : <code class="type">char <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Contains 256 elements: from '\000' to '\255'.<br>
+</div>
+
+<pre><span id="VALe_pchar"><span class="keyword">val</span> e_pchar</span> : <code class="type">char <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Printable characters (from 32 to 125).<br>
+</div>
+
+<pre><span id="VALe_biginterval"><span class="keyword">val</span> e_biginterval</span> : <code class="type">Z.t -> Z.t -> Z.t <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumeration of a big-integer interval.<br>
+</div>
+
+<pre><span id="VALe_interval"><span class="keyword">val</span> e_interval</span> : <code class="type">int -> int -> int <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumeration of an integer interval.<br>
+</div>
+
+<pre><span id="VALsub"><span class="keyword">val</span> sub</span> : <code class="type">max:Z.t -> 'a <a href="Exenum.html#TYPEt">t</a> -> 'a <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+<code class="code">sub ~max enum</code> Returns a finite enumeration with at most <code class="code">max</code> elements.<br>
+</div>
+<br>
+<h3 id="3_Infiniteenumerationsforgroundtypes">Infinite enumerations for ground types</h3><br>
+<br>
+For these enumerations of integers, do not expect the n-th value to be equal to the integer n. Integers are shuffled.<br>
+
+<pre><span id="VALe_bigpos"><span class="keyword">val</span> e_bigpos</span> : <code class="type">Z.t <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Strictly positive numbers: [1, +infty[<br>
+</div>
+
+<pre><span id="VALe_bignat"><span class="keyword">val</span> e_bignat</span> : <code class="type">Z.t <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Natural numbers: [0, +infty[<br>
+</div>
+
+<pre><span id="VALe_bigint"><span class="keyword">val</span> e_bigint</span> : <code class="type">Z.t <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+All numbers: ] -infty, +infty [ 
+    This enumeration starts from 0 and alternates between positive and negative values.<br>
+</div>
+
+<pre><span id="VALe_nat"><span class="keyword">val</span> e_nat</span> : <code class="type">int <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Natural integers: [0, max_int] as an infinite enumeration (hence, non-injective).<br>
+</div>
+
+<pre><span id="VALe_pos"><span class="keyword">val</span> e_pos</span> : <code class="type">int <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Strictly positive integers: [1, max_int] as an infinite enumeration (hence, non-injective).<br>
+</div>
+
+<pre><span id="VALe_int"><span class="keyword">val</span> e_int</span> : <code class="type">int <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+All integers: [min_int, max_int].
+    This enumeration starts from 0 and alternates between positive and negative values. 
+    This enumeration is infinite, hence non-injective.<br>
+</div>
+
+<pre><span id="VALe_string"><span class="keyword">val</span> e_string</span> : <code class="type">string <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Strings, built only with printable characters.<br>
+</div>
+
+<pre><span id="VALe_rstring"><span class="keyword">val</span> e_rstring</span> : <code class="type">char list -> string <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Strings, built only with the given characters.<br>
+</div>
+<br>
+<h3 id="3_Composition">Composition</h3><br>
+
+<pre><span id="VALunion"><span class="keyword">val</span> union</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> list -> 'a <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+<code class="code">union enums</code> builds an enumeration from a union of enumerations. 
+    If <code class="code">enums</code> are disjoint enumerations, the resulting enumeration is injective.<br>
+</div>
+
+<pre><span id="VALproduct"><span class="keyword">val</span> product</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> list -> 'a list <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Builds an enumeration from a cartesian product of enumerations.<br>
+</div>
+
+<pre><span id="VALpair"><span class="keyword">val</span> pair</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'b <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b) <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Convenience function to build an enumeration of pairs from two enumerations (derived from product and projection functions).<br>
+</div>
+
+<pre><span id="VALtriple"><span class="keyword">val</span> triple</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'b <a href="Exenum.html#TYPEt">t</a> -> 'c <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b * 'c) <a href="Exenum.html#TYPEt">t</a></code></pre>
+<pre><span id="VALtuple2"><span class="keyword">val</span> tuple2</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'b <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b) <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+This is the same as <code class="code">pair</code><br>
+</div>
+
+<pre><span id="VALtuple3"><span class="keyword">val</span> tuple3</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'b <a href="Exenum.html#TYPEt">t</a> -> 'c <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b * 'c) <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+This is the same as <code class="code">triple</code><br>
+</div>
+
+<pre><span id="VALtuple4"><span class="keyword">val</span> tuple4</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -><br>       'b <a href="Exenum.html#TYPEt">t</a> -> 'c <a href="Exenum.html#TYPEt">t</a> -> 'd <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b * 'c * 'd) <a href="Exenum.html#TYPEt">t</a></code></pre>
+<pre><span id="VALtuple5"><span class="keyword">val</span> tuple5</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -><br>       'b <a href="Exenum.html#TYPEt">t</a> -><br>       'c <a href="Exenum.html#TYPEt">t</a> -><br>       'd <a href="Exenum.html#TYPEt">t</a> -> 'e <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b * 'c * 'd * 'e) <a href="Exenum.html#TYPEt">t</a></code></pre>
+<pre><span id="VALtuple6"><span class="keyword">val</span> tuple6</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -><br>       'b <a href="Exenum.html#TYPEt">t</a> -><br>       'c <a href="Exenum.html#TYPEt">t</a> -><br>       'd <a href="Exenum.html#TYPEt">t</a> -><br>       'e <a href="Exenum.html#TYPEt">t</a> -> 'f <a href="Exenum.html#TYPEt">t</a> -> ('a * 'b * 'c * 'd * 'e * 'f) <a href="Exenum.html#TYPEt">t</a></code></pre>
+<pre><span id="VALe_list"><span class="keyword">val</span> e_list</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'a list <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumerations of lists of arbitrary size, starting from the empty list.<br>
+</div>
+
+<pre><span id="VALe_ne_list"><span class="keyword">val</span> e_ne_list</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'a list <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumerations of non-empty lists (see e_list).<br>
+</div>
+
+<pre><span id="VALe_array"><span class="keyword">val</span> e_array</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'a array <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Enumerations of arrays.<br>
+</div>
+
+<pre><span id="VALe_option"><span class="keyword">val</span> e_option</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> 'a option <a href="Exenum.html#TYPEt">t</a></code></pre><br>
+<h3 id="3_Recursionmap">Recursion, map</h3><br>
+
+<pre><span id="VALpay"><span class="keyword">val</span> pay</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> Lazy.t -> 'a <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+An enumeration is a possibly-infinite set of finite parts.
+    Recursive, infinite enumerations must be built by increasing the cost of each part.
+    The enumeration given in argument <b>must</b> be infinite (which is usually the case when building a recursive enumeration). 
+    See examples to understand how to use <code class="code">pay</code>.<br>
+</div>
+
+<pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> ('a -> 'b) -> 'b <a href="Exenum.html#TYPEt">t</a></code></pre><div class="info ">
+Builds an enumeration by mapping an existing enumeration.<br>
+</div>
+<br>
+<h3 id="3_Helperfunctions">Helper functions</h3><br>
+
+<pre><span id="VALshow"><span class="keyword">val</span> show</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> ('a -> string) -> int -> int -> unit</code></pre><div class="info ">
+<code class="code">show enum to_string index len</code> outputs values of the given enumeration, using the <code class="code">to_string</code> conversion function, 
+    from index index to index (index + len - 1).<br>
+</div>
+
+<pre><span id="VALbigshow"><span class="keyword">val</span> bigshow</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -> ('a -> string) -> Z.t -> int -> unit</code></pre><div class="info ">
+<code class="code">bigshow enum to_string index len</code> is similar to <code class="code">show</code>, except that index is a Z.t.<br>
+</div>
+
+<pre><span id="VALtester"><span class="keyword">val</span> tester</span> : <code class="type">'a <a href="Exenum.html#TYPEt">t</a> -><br>       ?from:Z.t -><br>       ?upto:Z.t -><br>       ?verbose_period:int -> ?tos:('a -> string) -> len:int -> ('a -> unit) -> unit</code></pre><div class="info ">
+<code class="code">tester enum ~len f</code> applies f in sequence to different values of the enumeration. 
+    First, <code class="code">len</code> values are taken starting at 0 (or starting from <code class="code">from</code>, if specified).
+    Then, the current index is multiplied by 2 (that is, we start at 2*len) and again <code class="code">len</code> values are considered.
+    This is repeated forever (or while the current index is lower than the upper bound <code class="code">upto</code>).
+<p>
+
+    If <code class="code">verbose_period</code> is strictly positive, a message giving the current index is printed on stdout every <code class="code">verbose_period</code> tests.
+    If tos is given, the test value is printed too.
+<p>
+
+    Typical usage is: <code class="code">tester enum ~len:10000 f</code>, where f is a testing function.<br>
+<b>Raises</b> <code>Assert_failure</code> if <code class="code">len &lt;= 0</code><br>
+</div>
+</body></html>

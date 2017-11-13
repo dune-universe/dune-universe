@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executables
+ ((names (test_enum test_serious))
+  (libraries (exenum))))
+
+(alias
+  ((name tests)
+   (deps (test_enum.exe test_serious.exe))))
+   
+
+   
+   
+

@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+(executables
+ ((names (ex_in_readme ex_lambda ex_record))
+  (libraries (exenum))))
+
+(alias
+  ((name   examples)
+   (deps (ex_in_readme.exe ex_lambda.exe ex_record.exe))))
+
+   
+   
+
