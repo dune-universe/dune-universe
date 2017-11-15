@@ -1,4 +1,4 @@
-version: "2.0.1"
+version: "3.0.0"
 opam-version: "1.2"
 maintainer:   "dave@recoil.org"
 authors:      ["Anil Madhavapeddy" "David Scott"]
@@ -16,8 +16,10 @@ build: [
 depends: [
   "ocamlfind" {build}
   "jbuilder"  {build & >="1.0+beta9"}
-  "cstruct" {>= "2.4.1"}
+  "cstruct" {>= "2.4.1" }
   "ppx_cstruct" {build}
+  "shared-memory-ring"
+  "lwt"
   "mirage-profile"
   "ounit" {test}
 ]

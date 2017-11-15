@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library
+ ((name            mecab)
+  (public_name     mecab)
+  (modules         (Mecab Tagger Node Unicode))
+  (preprocess      (pps (ppx_sexp_conv)))
+  (libraries       (sexplib camomile))
+  (flags           (:standard
+					-w A-4-31-33-34-39-41-42-43-44-45-48-49-50-58
+					-safe-string -strict-sequence -strict-formats
+					-short-paths -no-alias-deps))
+  (c_names         (mecab_stubs))
+  (c_flags         (-std=c99 -Wall -g -fPIC -DPIC -O3 -march=native))
+  (c_library_flags (-L/usr/local/lib -lmecab))))

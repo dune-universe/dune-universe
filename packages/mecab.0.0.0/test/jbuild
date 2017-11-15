@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executables
+ ((names      (test_runner))
+  (libraries  (mecab re re.perl oUnit))
+  (flags      (:standard
+			   -w A-4-31-33-34-39-41-42-43-44-45-48-49-50-58
+			   -safe-string -strict-sequence -strict-formats
+			   -short-paths -no-alias-deps))))
+
+(alias
+ ((name   runtest)
+  (deps   (test_runner.exe))
+  (action (run ${<}))))

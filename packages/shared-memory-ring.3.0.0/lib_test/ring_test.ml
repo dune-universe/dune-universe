@@ -56,16 +56,18 @@ let xenstore_init () =
 
 let xenstore_hello () =
 	let msg = "hello" in
+	let msg' = Bytes.of_string msg in
 	let buf = String.make 16 '\000' in
+	let buf' = Bytes.make 16 '\000' in
 	with_xenstores
 		(fun b1 b2 a b ->
-			let x = Xenstore_ring.Ring.Front.unsafe_write a msg 0 (String.length msg) in
+			let x = Xenstore_ring.Ring.Front.unsafe_write a msg' 0 (Bytes.length msg') in
 			let y = Old_ring.C_Xenstore.unsafe_write b msg (String.length msg) in
 			assert_equal ~printer:string_of_int x y;
 			compare_bufs b1 b2;
-			let x = Xenstore_ring.Ring.Back.unsafe_read a buf 0 (String.length buf) in
+			let x = Xenstore_ring.Ring.Back.unsafe_read a buf' 0 (Bytes.length buf') in
 			assert_equal ~printer:string_of_int x (String.length msg);
-			assert_equal msg (String.sub buf 0 x);
+			assert_equal msg' (Bytes.sub buf' 0 x);
 			let x = Old_ring.C_Xenstore.Back.unsafe_read b buf (String.length buf) in
 			assert_equal ~printer:string_of_int x (String.length msg);
 			assert_equal msg (String.sub buf 0 x);
@@ -86,6 +88,7 @@ type ring = {
 let check_signed_unsigned_write () =
 	(* Check for errors performing comparison across int32 max_int *)
 	let msg = "this is a test" in
+	let msg' = Bytes.of_string msg in
 	let ofs = Int32.(succ (succ max_int)) in
 	with_xenstores
 		(fun b1 b2 a b ->
@@ -93,7 +96,7 @@ let check_signed_unsigned_write () =
 			set_ring_output_prod a ofs;
 			set_ring_output_cons (Cstruct.of_bigarray b2) ofs;
 			set_ring_output_prod (Cstruct.of_bigarray b2) ofs;
-			let x = Xenstore_ring.Ring.Front.unsafe_write a msg 0 (String.length msg) in
+			let x = Xenstore_ring.Ring.Front.unsafe_write a msg' 0 (Bytes.length msg') in
 			let y = Old_ring.C_Xenstore.unsafe_write b msg (String.length msg) in
 			assert_equal ~printer:string_of_int x y;
 			compare_bufs b1 b2;
@@ -102,13 +105,14 @@ let check_signed_unsigned_write () =
 let check_signed_unsigned_read () =
 	let msg = "this is a test" in
 	let buf = String.make (String.length msg) '\000' in
+	let buf' = Bytes.make (String.length msg) '\000' in
 	with_xenstores
 		(fun b1 b2 a b ->
 			set_ring_output_cons a (Int32.(pred (pred max_int)));
 			set_ring_output_prod a (Int32.(succ (succ max_int)));
 			set_ring_output_cons (Cstruct.of_bigarray b2) (Int32.(pred (pred max_int)));
  			set_ring_output_prod (Cstruct.of_bigarray b2) (Int32.(succ (succ max_int)));
-			let x' = Xenstore_ring.Ring.Back.unsafe_read a buf 0 (String.length buf) in
+			let x' = Xenstore_ring.Ring.Back.unsafe_read a buf' 0 (Bytes.length buf') in
 			let y' = Old_ring.C_Xenstore.Back.unsafe_read b buf (String.length buf) in
 			assert_equal ~printer:string_of_int x' y';
 			compare_bufs b1 b2;
@@ -131,16 +135,18 @@ let console_init () =
 
 let console_hello () =
 	let msg = "hello" in
+	let msg' = Bytes.of_string msg in
 	let buf = String.make 16 '\000' in
+	let buf' = Bytes.make 16 '\000' in
 	with_consoles
 		(fun b1 b2 a b ->
-			let x = Console_ring.Ring.Front.unsafe_write a msg 0 (String.length msg) in
+			let x = Console_ring.Ring.Front.unsafe_write a msg' 0 (Bytes.length msg') in
 			let y = Old_ring.C_Console.unsafe_write b msg (String.length msg) in
 			assert_equal ~printer:string_of_int x y;
 			compare_bufs b1 b2;
-			let x = Console_ring.Ring.Back.unsafe_read a buf 0 (String.length buf) in
-			assert_equal ~printer:string_of_int x (String.length msg);
-			assert_equal msg (String.sub buf 0 x);
+			let x = Console_ring.Ring.Back.unsafe_read a buf' 0 (Bytes.length buf') in
+			assert_equal ~printer:string_of_int x (Bytes.length msg');
+			assert_equal msg (Bytes.to_string @@ Bytes.sub buf' 0 x);
 			let x = Old_ring.C_Console.Back.unsafe_read b buf (String.length buf) in
 			assert_equal ~printer:string_of_int x (String.length msg);
 			assert_equal msg (String.sub buf 0 x);
@@ -162,8 +168,8 @@ let throughput_test ~use_ocaml ~write_chunk_size ~read_chunk_size ~verify () =
 		(fun b1 b2 a b ->
 			let read_chunk = String.make read_chunk_size '\000' in
 			let input = bigarray_to_string block' in
-			let length = String.length input in
-			let output = String.make length 'X' in
+			let length = Bytes.length input in
+			let output = Bytes.make length 'X' in
 			let producer = ref 0 in
 			let consumer = ref 0 in
 			let start = Unix.gettimeofday () in
@@ -174,7 +180,7 @@ let throughput_test ~use_ocaml ~write_chunk_size ~read_chunk_size ~verify () =
 				let written =
 					if use_ocaml
 					then Console_ring.Ring.Front.unsafe_write a input !producer can_write
-					else Old_ring.C_Console.unsafe_write b (String.sub input !producer can_write) can_write in
+					else Old_ring.C_Console.unsafe_write b (Bytes.to_string @@ Bytes.sub input !producer can_write) can_write in
 				producer := !producer + written;
 				let remaining = length - !consumer in
 				let can_read = min read_chunk_size remaining in
@@ -194,11 +200,11 @@ let throughput_test ~use_ocaml ~write_chunk_size ~read_chunk_size ~verify () =
 					end in
 				(* verify *)
 				if verify then begin
-					let originally_written = String.sub input !consumer read in
-					let block_read = String.sub output !consumer read in
+					let originally_written = Bytes.sub input !consumer read in
+					let block_read = Bytes.sub output !consumer read in
 					if originally_written <> block_read then begin
 						Printf.fprintf stderr "producer = %d\nconsumer = %d\nwritten = %d\nread = %d\n%!" !producer !consumer written read;
-						assert_equal ~msg:"transfer" ~printer:(fun x -> x) originally_written block_read
+						assert_equal ~msg:"transfer" ~printer:Bytes.to_string originally_written block_read
 					end;
 				end;
 

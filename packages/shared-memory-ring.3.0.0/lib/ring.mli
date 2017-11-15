@@ -30,6 +30,10 @@ module Rpc : sig
       pretty-printing. [buf] should be a Cstruct.t comprising pre-allocated
       contiguous I/O pages. *)
 
+  val of_buf_no_init : buf:Cstruct.t -> idx_size:int -> name:string -> sring
+  (** [of_buf_no_init] is like [of_buf], but does not initialise the ring.
+      Use this if the other party has already initialised it. *)
+
   val to_summary_string : sring -> string
   (** [to_summary_string ring] is a printable single-line summary of the
       ring. *)
@@ -199,17 +203,17 @@ module type S = sig
      If you do need to reconnect or need to avoid copying, use the READER and
      WRITABLE signatures above *)
 
-  val write: Cstruct.t -> string -> int -> int -> int
+  val write: Cstruct.t -> bytes -> int -> int -> int
   (** [write stream buf ofs len] writes up to [len] bytes from [buf] at [ofs]
       to [stream]. If this returns short it means EOF *)
 
-  val read: Cstruct.t -> string -> int -> int -> int
+  val read: Cstruct.t -> bytes -> int -> int -> int
   (** [read stream buf ofs len] reads up to [len] bytes to [buf] at [ofs] from
       [stream]. If this returns short it means EOF *)
 
   (* These functions are deprecated (and nolonger unsafe, see #10) *)
-  val unsafe_write: Cstruct.t -> string -> int -> int -> int
-  val unsafe_read: Cstruct.t -> string -> int -> int -> int
+  val unsafe_write: Cstruct.t -> bytes -> int -> int -> int
+  val unsafe_read: Cstruct.t -> bytes -> int -> int -> int
 end
 
 module Pipe: functor(RW: RW) -> S

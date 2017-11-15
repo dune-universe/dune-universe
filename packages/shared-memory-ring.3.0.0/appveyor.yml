@@ -1,0 +1,20 @@
+platform:
+  - x64
+
+environment:
+  CYG_ROOT: "C:\\cygwin64"
+  CYG_CACHE: C:/cygwin64/var/cache/setup
+  CYG_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
+  CYG_ARCH: x86_64
+  CYG_BASH: "%CYG_ROOT%\\bin\\bash -lc"
+  CYGWIN: "winsymlinks:native"
+  PACKAGE: "shared-memory-ring-lwt"
+
+install:
+  - 'appveyor DownloadFile http://cygwin.com/setup-%CYG_ARCH%.exe -FileName setup.exe'
+  - 'setup.exe -gqnNdO -R "%CYG_ROOT%" -s "%CYG_MIRROR%" -l "%CYG_CACHE%" -P make,git,rsync,perl,gcc-core,gcc-g++,libncurses-devel,unzip,libmpfr-devel,patch,flexdll,libglpk-devel'
+  - appveyor DownloadFile https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/appveyor-opam.sh
+  - curl -L -o C:/cygwin64/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-win32.exe
+
+build_script:
+  - "%CYG_BASH% '${APPVEYOR_BUILD_FOLDER}/appveyor-opam.sh'"

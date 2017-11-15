@@ -1,3 +1,8 @@
+## 3.0.0 (2017-11-05)
+
+* Update to use `bytes` in the `read` and `write`, to work with OCaml 4.06 and
+  `-safe-string`
+
 ## 2.0.1 (2017-06-07)
 * Don't force clients to link against `cstruct.ppx`: this is the support code
   for the PPX rewriter itself, and brings in the `compiler-libs` package etc.

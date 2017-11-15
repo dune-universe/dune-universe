@@ -1,11 +1,13 @@
 (library
  ((name test_library)
   (c_names (old_ring_stubs))
+  (modules ())
 ))
 
 (executables
  ((names     (ring_test))
   (libraries (lwt lwt.unix shared-memory-ring oUnit test_library))
+  (preprocess (pps (cstruct.ppx)))
 ))
 
 (alias
