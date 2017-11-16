@@ -163,6 +163,7 @@ let bytes_of_command = function
 
 let send command (_, oc) =
   bytes_of_command command 
+  |> Bytes.to_string
   |> Lwt_io.write oc
 
 let catch_result promise =
@@ -197,6 +198,7 @@ let read_raw_frame (ic, _) =
   return @@ frame_from_bytes bytes
 
 let parse_response_body body =
+  let body = Bytes.to_string body in
   match body with
   | "OK" -> Result.Ok ResponseOk
   | "_heartbeat_" -> Result.Ok Heartbeat
