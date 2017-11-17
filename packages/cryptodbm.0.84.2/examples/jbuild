@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(executables
+ ((names (ex_read ex_write))
+  (libraries (cryptodbm))))
+
+(alias
+  ((name examples)
+   (deps (ex_read.exe ex_write.exe))))

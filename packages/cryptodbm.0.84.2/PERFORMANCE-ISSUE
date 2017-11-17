@@ -1,0 +1,5 @@
+
+Possible performance issue:
+
+ - Cryptodbm.add_phony_bindings needs to explore the whole dbfile before writing extra phony bindings.
+

@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+ ((name        cryptodbm)
+  (public_name cryptodbm)
+  (modules cryptodbm)
+  (libraries (cryptodbm_internals))
+  (synopsis "Encrypted layer over the DBM library.")))
+

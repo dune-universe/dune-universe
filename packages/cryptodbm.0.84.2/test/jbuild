@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executables
+ ((names (dbm_reader test_cipher test_data_kind test_dbm test_key_kind))
+  (libraries (cryptodbm exenum))))
+
+(alias
+  ((name tests)
+   (deps (dbm_reader.exe test_cipher.exe test_data_kind.exe test_dbm.exe test_key_kind.exe))))
+   
+  

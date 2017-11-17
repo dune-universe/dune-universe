@@ -1,0 +1,211 @@
+body
+	{
+	font-family: "Georgia", "Palatino Linotype", "Palatino,serif";
+	margin: 0ex 1ex 1ex 4ex;
+	background-color: #F0F0F0;
+	}
+
+div.navbar
+	{
+	font-size: 80%;
+	}
+
+div.navbar a
+	{
+	text-decoration: none;
+	padding: 0.25ex 1.2ex 0.25ex 1.2ex;
+	margin: 0pt;
+	display: inline-block;
+	position: relative;
+	font-family: "Droid Sans", sans-serif;
+	font-weight: bold;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.85);
+	border-radius: 8px;
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	transition: background 0.2s ease-in-out 0s;
+	color: rgb(102, 102, 102);
+	box-shadow: 0px 0.3em 0.3em rgba(255, 254, 255, 0.6) inset, 0px -0.1em 0.3em rgba(0, 0, 0, 0.15) inset, 0px 0.1em 3px rgb(153, 153, 153), 0px 0.3em 1px rgb(114, 114, 114), 0px 0.5em 5px rgba(0, 0, 0, 0.2);
+	color: #884400;
+	background-color: #FF8000;
+	box-shadow: 0px 0.3em 0.3em rgba(255, 255, 255, 0.6) inset, 0px -0.1em 0.3em rgba(0, 0, 0, 0.15) inset, 0px 0.1em 3px rgb(204, 132, 0), 0px 0.3em 1px rgb(153, 99, 0), 0px 0.5em 5px rgba(0, 0, 0, 0.2);
+	margin-left: -2ex;
+	}
+
+div.info.module
+	{
+	background-color: #E8E8E8;
+	margin: 2ex 0ex 1ex 20ex;
+	padding: 1ex 1ex 1ex 1ex;
+	color: #224;
+	border-radius: 18px;
+	font-style: normal;
+	font-family: "trebuchet ms", helvetica, sans-serif;
+	}
+
+code
+	{
+	color: #3333BB;
+	}
+
+hr
+	{
+	color: #88F;
+	border: none;
+	}
+
+div.module h2
+	{
+	margin: 0 0 0 0;
+	text-align: center;
+	font-size: 125%;
+	color: #66A;
+	}
+
+h1
+	{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", "Geneva", sans-serif;
+	text-shadow: 0px 2px 1px #FFFFFF;
+	font-weight: bold;
+	color: rgb(0, 128, 180);
+	font-size: 200%;
+	}
+
+h1 a
+	{
+	color: inherit;
+	}
+
+h3
+	{
+	margin: 1ex 0 0.5ex 0;
+	padding: 0;
+	font-family: "Helvetica Neue", "Helvetica", "Arial", "Geneva", sans-serif;
+	text-shadow: 0px 2px 1px #FFFFFF;
+	font-weight: bold;
+	color: rgb(0, 128, 180);
+	font-size: 135%;
+	}
+
+h4
+	{
+	text-decoration: none;
+	padding: 0.25ex 1.2ex 0.25ex 1.2ex;
+	margin: 0pt;
+	display: inline-block;
+	position: relative;
+	font-family: "Droid Sans", sans-serif;
+	font-weight: bold;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.85);
+	border-radius: 8px;
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	transition: background 0.2s ease-in-out 0s;
+	color: rgb(102, 102, 102);
+	box-shadow: 0px 0.3em 0.3em rgba(255, 254, 255, 0.6) inset, 0px -0.1em 0.3em rgba(0, 0, 0, 0.15) inset, 0px 0.1em 3px rgb(153, 153, 153), 0px 0.3em 1px rgb(114, 114, 114), 0px 0.5em 5px rgba(0, 0, 0, 0.2);
+	font-size: 90%;
+	margin: 1ex 0 0 0;
+	font-variant: small-caps;
+	box-shadow: 0px 0.1em 1px rgb(153, 153, 153);
+	margin-left: -2ex;
+	}
+
+div.info
+	{
+	font-size: 96%;
+	font-style: italic;
+	color: black;
+	padding: 0;
+	margin: 0 0 1ex 6ex;
+	}
+
+div.param_info
+	{
+	margin: 0 0 0 2ex;
+	}
+
+div.param_info:before
+	{
+	color: #3333BB;
+	content: "\2726";
+	font-size: 50%;
+	padding: 0 0.75ex 0 0;
+	vertical-align: middle;
+	}
+
+div.param_info code
+	{
+	font-weight: bold;
+	}
+
+br
+	{
+	margin: -2ex 0 0 0;
+	padding: 0;
+	}
+
+pre
+	{
+	white-space: pre;
+	font-family: monospace;
+	font-size: 105%;
+	padding: 0;
+	margin: 1.5ex 0 0.5ex 0;
+	}
+
+span.keyword
+	{
+	font-weight: bold;
+	color: #FF3333;
+	}
+
+a
+	{
+	text-decoration: none;
+	}
+
+ul
+	{
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0 0 0 0;
+	}
+
+div.info.module ul li:before
+	{
+	content: "\2726";
+	font-size: 50%;
+	padding: 0 0.75ex 0 0;
+	vertical-align: middle;
+	}
+
+div.info.module ul
+	{
+	margin-top: -1ex;
+	}
+
+div.info.module ul li
+	{
+	margin-top: 0.5ex;
+	font-size: 94%;
+	}
+
+td
+	{
+	vertical-align: baseline;
+	}
+
+td.typefieldcomment, td.typefieldcomment code
+	{
+	font-size: 96%;
+	font-style: italic;
+	color: black;
+	padding: 0 0.5ex 0 0.5ex;
+	color: #666;
+	}
+
+td.typefieldcomment code
+	{
+	color: #CCC;
+	}
+

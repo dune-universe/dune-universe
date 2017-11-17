@@ -1,0 +1,176 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Cryptodbm" rel="Chapter" href="Cryptodbm.html"><title>Index of values</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Index of values</h1>
+<table>
+<tr><td align="left"><br>A</td></tr>
+<tr><td><a href="Cryptodbm.html#VALadd">add</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+<code class="code">add subt key data</code> binds <code class="code">key</code> to <code class="code">data</code> in subtable <code class="code">subt</code>.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALappend_subtable">append_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Open a standard subtable for appending bindings.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALappend_uncrypted_subtable">append_uncrypted_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Open an uncrypted subtable for appending bindings.
+</div>
+</td></tr>
+<tr><td align="left"><br>C</td></tr>
+<tr><td><a href="Cryptodbm.html#VALclear">clear</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+<code class="code">clear subt</code> removes all the bindings in subtable <code class="code">subt</code>.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALclose">close</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+If in write mode, sign if necessary, add extra bindings if required, then flush and close the file.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALclose_subtable">close_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+If in write mode, sign if necessary, then flush and close the subtable.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALcreate_subtable">create_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Creates a standard subtable for writing.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALcreate_uncrypted_subtable">create_uncrypted_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Creates an uncrypted subtable (even when the global table is encrypted).
+</div>
+</td></tr>
+<tr><td align="left"><br>D</td></tr>
+<tr><td><a href="Cryptodbm.html#VALdelete">delete</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+<code class="code">delete subt key</code> removes the binding associated to <code class="code">key</code> in subtable <code class="code">subt</code>.
+</div>
+</td></tr>
+<tr><td align="left"><br>E</td></tr>
+<tr><td><a href="Cryptodbm.Error.html#VALerror2s">error2s</a> [<a href="Cryptodbm.Error.html">Cryptodbm.Error</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cryptodbm.html#VALexport">export</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Exports a dbfile to a durable binary format.
+</div>
+</td></tr>
+<tr><td align="left"><br>F</td></tr>
+<tr><td><a href="Cryptodbm.html#VALfind">find</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+<code class="code">find subt key</code> returns the data associated to <code class="code">key</code> in subtable <code class="code">subt</code>.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALflush">flush</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Sign if necessary, and flush.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALfold">fold</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+See iter.
+</div>
+</td></tr>
+<tr><td align="left"><br>G</td></tr>
+<tr><td><a href="Cryptodbm.html#VALget_name">get_name</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Returns this subtable's name.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALget_number">get_number</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Returns this subtable's identifier (a number).
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALget_rootfile">get_rootfile</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Returns the root filename (without the .pag or .dir extension).
+</div>
+</td></tr>
+<tr><td align="left"><br>I</td></tr>
+<tr><td><a href="Cryptodbm.html#VALimport">import</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Imports a binary file to a dbfile.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALiter">iter</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Iterate over all pairs (key, data) of the given subtable.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALiter_extra_bindings">iter_extra_bindings</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+For debugging.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALiter_subtables">iter_subtables</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Iterate over standard subtables.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALiter_uncrypted_subtables">iter_uncrypted_subtables</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Iterate over uncrypted subtables.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALiterkey">iterkey</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Iterate over all keys of the given subtable.
+</div>
+</td></tr>
+<tr><td align="left"><br>L</td></tr>
+<tr><td><a href="Cryptodbm.Error.html#VALloc2s">loc2s</a> [<a href="Cryptodbm.Error.html">Cryptodbm.Error</a>]</td>
+<td><div class="info">
+Printing functions.
+</div>
+</td></tr>
+<tr><td align="left"><br>O</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_append">open_append</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Opens an existing encrypted-dbm file in append mode.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_create">open_create</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Creates a new encrypted-dbm file.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_only_uncrypted">open_only_uncrypted</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Opens a table to access only uncrypted subtables.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_read">open_read</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Opens an encrypted-dbm file for reading.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_subtable">open_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Open a standard subtable for reading.
+</div>
+</td></tr>
+<tr><td><a href="Cryptodbm.html#VALopen_uncrypted_subtable">open_uncrypted_subtable</a> [<a href="Cryptodbm.html">Cryptodbm</a>]</td>
+<td><div class="info">
+Open an uncrypted subtable for reading.
+</div>
+</td></tr>
+</table>
+</body>
+</html>

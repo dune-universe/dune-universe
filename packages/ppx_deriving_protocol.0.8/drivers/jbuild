@@ -1,0 +1,19 @@
+(jbuild_version 1)
+
+(library
+ ((name deriving_protocol_json)
+  (public_name ppx_deriving_protocol.json)
+  (modules (Json))
+  (libraries (deriving_protocol base yojson))
+  (synopsis "json (de)serialization driver for ppx_protocol_deriver")
+ )
+)
+
+(library
+ ((name deriving_protocol_xml)
+  (public_name ppx_deriving_protocol.xml)
+  (modules (Xml_light))
+  (libraries (deriving_protocol base xml-light))
+  (synopsis "xml-light (de)serialization driver for ppx_protocol_deriver")
+ )
+)

@@ -1,0 +1,46 @@
+ o  types.ml            : a few types used by several modules
+ o  errors.ml           : error reporting
+ o  strings.mli         : low-level operations on strings to append / remove padding.
+
+
+ o  cipher.mli		: basic encryption and decryption primitives, as well as password strengthening
+
+ ^
+/ \
+ |
+ |
+ |
+
+ o  kinds.mli		: how to encode/decode keys (including their subtable number), and data
+
+ ^
+/ \
+ |
+ |
+ |
+
+ o  operations.mli	: basic read, write, and iter operations on encrypted bindings
+
+ ^
+/ \
+ |
+ |
+ |
+
+ o  signature.mli       : compute and check signatures
+
+ ^
+/ \
+ |
+ |
+ |
+
+ o  subtable.mli        : operations on subtables (read, write, open, close, sign)
+
+ ^
+/ \
+ |
+ |
+ |
+
+ o  cryptodbm.mli           : operations on the table (open, close, sign, open subtable)
