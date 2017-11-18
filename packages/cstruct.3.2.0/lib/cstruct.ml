@@ -98,6 +98,8 @@ let create_unsafe len =
 let check_bounds t len =
   len >= 0 && Bigarray.Array1.dim t.buffer >= len
 
+let empty = create_unsafe 0
+
 external check_alignment_bigstring : buffer -> int -> int -> bool = "caml_check_alignment_bigstring"
 
 let check_alignment t alignment =
@@ -125,7 +127,8 @@ let debug t =
 
 let sub t off0 len =
   let off = t.off + off0 in
-  if off0 < 0 || len < 0 || not (check_bounds t (off+len)) then err_sub t off0 len
+  let offlen = off + len in
+  if off < off0 || offlen < off || off0 < 0 || len < 0 || not (check_bounds t (offlen)) then err_sub t off0 len
   else { t with off; len }
 
 let shift t amount =
@@ -223,74 +226,78 @@ let create len =
 
 let set_uint8 t i c =
   if i >= t.len || i < 0 then err_invalid_bounds "set_uint8" t i 1
-  else EndianBigstring.BigEndian.set_int8 t.buffer (t.off+i) c
+  else Bigarray.Array1.set t.buffer (t.off+i) (Char.unsafe_chr c)
 
 let set_char t i c =
   if i >= t.len || i < 0 then err_invalid_bounds "set_char" t i 1
-  else EndianBigstring.BigEndian.set_char t.buffer (t.off+i) c
+  else Bigarray.Array1.set t.buffer (t.off+i) c
 
 let get_uint8 t i =
   if i >= t.len || i < 0 then err_invalid_bounds "get_uint8" t i 1
-  else EndianBigstring.BigEndian.get_uint8 t.buffer (t.off+i)
+  else Char.code (Bigarray.Array1.get t.buffer (t.off+i))
 
 let get_char t i =
   if i >= t.len || i < 0 then err_invalid_bounds "get_char" t i 1
-  else EndianBigstring.BigEndian.get_char t.buffer (t.off+i)
+  else Bigarray.Array1.get t.buffer (t.off+i)
+
+
+external ba_set_int16 : buffer -> int -> uint16 -> unit = "caml_ba_uint8_set16"
+external ba_set_int32 : buffer -> int -> uint32 -> unit = "caml_ba_uint8_set32"
+external ba_set_int64 : buffer -> int -> uint64 -> unit = "caml_ba_uint8_set64"
+external ba_get_int16 : buffer -> int -> uint16 = "caml_ba_uint8_get16"
+external ba_get_int32 : buffer -> int -> uint32 = "caml_ba_uint8_get32"
+external ba_get_int64 : buffer -> int -> uint64 = "caml_ba_uint8_get64"
+
+external swap16 : int -> int = "%bswap16"
+external swap32 : int32 -> int32 = "%bswap_int32"
+external swap64 : int64 -> int64 = "%bswap_int64"
+
+let set_uint16 swap p t i c =
+  if (i+2) > t.len || i < 0 then err_invalid_bounds (p ^ ".set_uint16") t i 2
+  else ba_set_int16 t.buffer (t.off+i) (if swap then swap16 c else c)
+
+let set_uint32 swap p t i c =
+  if (i+4) > t.len || i < 0 then err_invalid_bounds (p ^ ".set_uint32") t i 4
+  else ba_set_int32 t.buffer (t.off+i) (if swap then swap32 c else c)
+
+let set_uint64 swap p t i c =
+  if (i+8) > t.len || i < 0 then err_invalid_bounds (p ^ ".set_uint64") t i 8
+  else ba_set_int64 t.buffer (t.off+i) (if swap then swap64 c else c)
+
+let get_uint16 swap p t i =
+  if (i+2) > t.len || i < 0 then err_invalid_bounds (p ^ ".get_uint16") t i 2
+  else
+    let r = ba_get_int16 t.buffer (t.off+i) in
+    if swap then swap16 r else r
+
+let get_uint32 swap p t i =
+  if (i+4) > t.len || i < 0 then err_invalid_bounds (p ^ ".get_uint32") t i 4
+  else
+    let r = ba_get_int32 t.buffer (t.off+i) in
+    if swap then swap32 r else r
+
+let get_uint64 swap p t i =
+  if (i+8) > t.len || i < 0 then err_invalid_bounds (p ^ "uint64") t i 8
+  else
+    let r = ba_get_int64 t.buffer (t.off+i) in
+    if swap then swap64 r else r
 
 module BE = struct
-  include EndianBigstring.BigEndian
-
-  let set_uint16 t i c =
-    if (i+2) > t.len || i < 0 then err_invalid_bounds "BE.set_uint16" t i 2
-    else set_int16 t.buffer (t.off+i) c
-
-  let set_uint32 t i c =
-    if (i+4) > t.len || i < 0 then err_invalid_bounds "BE.set_uint32" t i 4
-    else set_int32 t.buffer (t.off+i) c
-
-  let set_uint64 t i c =
-    if (i+8) > t.len || i < 0 then err_invalid_bounds "BE.set_uint64" t i 8
-    else set_int64 t.buffer (t.off+i) c
-
-  let get_uint16 t i =
-    if (i+2) > t.len || i < 0 then err_invalid_bounds "BE.get_uint16" t i 2
-    else get_uint16 t.buffer (t.off+i)
-
-  let get_uint32 t i =
-    if (i+4) > t.len || i < 0 then err_invalid_bounds "BE.get_uint32" t i 4
-    else get_int32 t.buffer (t.off+i)
-
-  let get_uint64 t i =
-    if (i+8) > t.len || i < 0 then err_invalid_bounds "BE.uint64" t i 8
-    else get_int64 t.buffer (t.off+i)
+  let set_uint16 t i c = set_uint16 (not Sys.big_endian) "BE" t i c
+  let set_uint32 t i c = set_uint32 (not Sys.big_endian) "BE" t i c
+  let set_uint64 t i c = set_uint64 (not Sys.big_endian) "BE" t i c
+  let get_uint16 t i = get_uint16 (not Sys.big_endian) "BE" t i
+  let get_uint32 t i = get_uint32 (not Sys.big_endian) "BE" t i
+  let get_uint64 t i = get_uint64 (not Sys.big_endian) "BE" t i
 end
 
 module LE = struct
-  include EndianBigstring.LittleEndian
-
-  let set_uint16 t i c =
-    if (i+2) > t.len || i < 0 then err_invalid_bounds "LE.set_uint16" t i 2
-    else set_int16 t.buffer (t.off+i) c
-
-  let set_uint32 t i c =
-    if (i+4) > t.len || i < 0 then err_invalid_bounds "LE.set_uint32" t i 4
-    else set_int32 t.buffer (t.off+i) c
-
-  let set_uint64 t i c =
-    if (i+8) > t.len || i < 0 then err_invalid_bounds "LE.set_uint64" t i 8
-    else set_int64 t.buffer (t.off+i) c
-
-  let get_uint16 t i =
-    if (i+2) > t.len || i < 0 then err_invalid_bounds "LE.get_uint16" t i 2
-    else get_uint16 t.buffer (t.off+i)
-
-  let get_uint32 t i =
-    if (i+4) > t.len || i < 0 then err_invalid_bounds "LE.get_uint32" t i 4
-    else get_int32 t.buffer (t.off+i)
-
-  let get_uint64 t i =
-    if (i+8) > t.len || i < 0 then err_invalid_bounds "LE.get_uint64" t i 8
-    else get_int64 t.buffer (t.off+i)
+  let set_uint16 t i c = set_uint16 Sys.big_endian "LE" t i c
+  let set_uint32 t i c = set_uint32 Sys.big_endian "LE" t i c
+  let set_uint64 t i c = set_uint64 Sys.big_endian "LE" t i c
+  let get_uint16 t i = get_uint16 Sys.big_endian "LE" t i
+  let get_uint32 t i = get_uint32 Sys.big_endian "LE" t i
+  let get_uint64 t i = get_uint64 Sys.big_endian "LE" t i
 end
 
 let len t =
@@ -339,12 +346,16 @@ let fillv ~src ~dst =
   aux dst 0 src
 
 
-let to_string t =
+let to_bytes t =
   let sz = len t in
   let b = Bytes.create sz in
   unsafe_blit_bigstring_to_bytes t.buffer t.off b 0 sz;
-  (* The following call is safe, since b is not visible elsewhere. *)
-  Bytes.unsafe_to_string b
+  b
+
+let to_string t =
+  (* The following call is safe, since this is the only reference to the
+     freshly-created value built by [to_bytes t]. *)
+  Bytes.unsafe_to_string (to_bytes t)
 
 let of_string ?allocator buf =
   let buflen = String.length buf in
@@ -370,11 +381,49 @@ let of_bytes ?allocator buf =
     blit_from_bytes buf 0 c 0 buflen;
     set_len c buflen
 
+let of_hex str =
+  let string_fold ~f ~z str =
+    let st = ref z in
+    ( String.iter (fun c -> st := f !st c) str  ; !st )
+  in
+  let hexdigit p = function
+    | 'a' .. 'f' as x -> int_of_char x - 87
+    | 'A' .. 'F' as x -> int_of_char x - 55
+    | '0' .. '9' as x -> int_of_char x - 48
+    | x ->
+      Format.ksprintf invalid_arg "of_hex: invalid character at pos %d: %C" p x
+  in
+  let whitespace = function
+    | ' ' | '\t' | '\r' | '\n' -> true
+    | _ -> false
+  in
+  match
+    string_fold
+      ~f:(fun (cs, i, p, acc) ->
+          let p' = succ p in
+          function
+          | char when whitespace char -> (cs, i, p', acc)
+          | char ->
+            match acc, hexdigit p char with
+            | (None  , x) -> (cs, i, p', Some (x lsl 4))
+            | (Some y, x) -> set_uint8 cs i (x lor y) ; (cs, succ i, p', None))
+      ~z:(create_unsafe (String.length str lsr 1), 0, 0, None)
+      str
+  with
+  | _ , _, _, Some _ ->
+    Format.ksprintf invalid_arg "of_hex: odd numbers of characters"
+  | cs, i, _, _ -> sub cs 0 i
+
 let hexdump_pp fmt t =
+  Format.pp_open_box fmt 0 ;
   for i = 0 to len t - 1 do
-    Format.fprintf fmt "%.2x " (Char.code (Bigarray.Array1.get t.buffer (t.off+i)));
-    if i mod 16 = 15 then Format.pp_print_space fmt ();
-  done
+    Format.fprintf fmt "%.2x@ " (Char.code (Bigarray.Array1.get t.buffer (t.off+i)));
+    match i mod 16 with
+    | 15 -> Format.pp_force_newline fmt ()
+    |  7 -> Format.pp_print_space fmt ()
+    |  _ -> ()
+  done ;
+  Format.pp_close_box fmt ()
 
 let hexdump = Format.printf "@\n%a@." hexdump_pp
 

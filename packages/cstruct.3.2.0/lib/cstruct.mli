@@ -186,6 +186,9 @@ type uint64 = int64
 
 (** {2 Creation and conversion} *)
 
+val empty : t
+(** [empty] is the cstruct of length 0. *)
+
 val of_bigarray: ?off:int -> ?len:int -> buffer -> t
 (** [of_bigarray ~off ~len b] is the cstruct contained in [b] starting
     at [off], of length [len]. *)
@@ -216,10 +219,19 @@ val of_string: ?allocator:(int -> t) -> string -> t
     with the underlying buffer allocated by [alloc]. If [allocator] is not
     provided, [create] is used. *)
 
-val of_bytes: ?allocator:(int -> t) -> Bytes.t -> t
+val of_bytes: ?allocator:(int -> t) -> bytes -> t
 (** [of_bytes ~allocator byt] is the cstruct representation of [byt],
     with the underlying buffer allocated by [alloc]. If [allocator] is not
     provided, [create] is used. *)
+
+val of_hex: string -> t
+(** [of_hex str] is the cstruct [cs].  Every pair of hex-encoded characters in
+    [str] are converted to one byte in [cs].  Whitespaces (space, newline, tab,
+    carriage return) in [str] are skipped.  The resulting cstruct is exactly
+    half the size of the non-skipped characters of [str].
+
+    @raise Invalid_argument if the input string contains invalid characters or
+    has an odd numbers of non-whitespace characters. *)
 
 (** {2 Comparison } *)
 
@@ -301,7 +313,7 @@ val blit_from_string: string -> int -> t -> int -> int -> unit
     valid substring of [src], or if [dstoff] and [len] do not
     designate a valid segment of [dst]. *)
 
-val blit_from_bytes: Bytes.t -> int -> t -> int -> int -> unit
+val blit_from_bytes: bytes -> int -> t -> int -> int -> unit
 (** [blit_from_bytes src srcoff dst dstoff len] copies [len]
     characters from bytes [src], starting at index [srcoff], to
     cstruct [dst], starting at index [dstoff].
@@ -310,7 +322,7 @@ val blit_from_bytes: Bytes.t -> int -> t -> int -> int -> unit
     valid subsequence of [src], or if [dstoff] and [len] do not
     designate a valid segment of [dst]. *)
 
-val blit_to_bytes: t -> int -> Bytes.t -> int -> int -> unit
+val blit_to_bytes: t -> int -> bytes -> int -> int -> unit
 (** [blit_to_string src srcoff dst dstoff len] copies [len] characters
     from cstruct [src], starting at index [srcoff], to string [dst],
     starting at index [dstoff].
@@ -319,7 +331,7 @@ val blit_to_bytes: t -> int -> Bytes.t -> int -> int -> unit
     valid segment of [src], or if [dstoff] and [len] do not designate
     a valid substring of [dst]. *)
 
-val blit_to_string: t -> int -> Bytes.t -> int -> int -> unit
+val blit_to_string: t -> int -> bytes -> int -> int -> unit
 (** [blit_to_string] is a deprecated alias of {!blit_to_bytes}. 
 
     @deprecated This is a deprecated alias of {!blit_to_bytes}. *)
@@ -353,6 +365,10 @@ val split: ?start:int -> t -> int -> t * t
 val to_string: t -> string
 (** [to_string t] will allocate a fresh OCaml [string] and copy the
     contents of the cstruct into it, and return that string copy. *)
+
+val to_bytes: t -> bytes
+(** [to_bytes t] will allocate a fresh OCaml [bytes] and copy the
+    contents of the cstruct into it, and return that byte copy. *)
 
 (** {2 Debugging } *)
 
