@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+	http-equiv="content-type" />
+  <title>OCaml Rope module</title>
+  <meta name="author" content="Christophe Troestler" />
+  <meta name="description"
+	content="Module implementing the rope datastructure" />
+  <link title="Rope style" rel="stylesheet" href="rope.css" type="text/css">
+</head>
+<body>
+<div id="banner">
+  <img
+     style="width: 800px; height: 111px;" alt="OCaml Rope"
+     src="rope.png" >
+</div>
+
+<div id="menu">
+  <ul>
+    <li><a href="https://github.com/Chris00/ocaml-rope"
+	   class="menu"
+	   ><img style="border: 0px solid ; width: 117px; height: 31px;"
+		 alt="Summary"
+		 src="summary.png"></a></li>
+    <li><a href="doc/Rope.html"
+	   class="menu"
+	   ><img style="border: 0px solid ; width: 185px; height: 31px;"
+		 alt="Documentation"
+		 src="documentation.png"></a></li>
+    <li><a href="https://github.com/Chris00/ocaml-rope/releases"
+	   class="menu"
+	   ><img style="border: 0px solid ; width: 122px; height: 31px;"
+		 alt="Download"
+		 src="download.png"></a></li>
+    <li><a href="https://github.com/Chris00/ocaml-rope/blob/master/LICENSE"
+	   class="menu"
+	   ><img style="border: 0px solid ; width: 92px; height: 31px;"
+		 alt="License"
+		 src="license.png"></a></li>
+  </ul>
+</div>
+<div id="main">
+  <p>
+    As its name implies, the OCaml Rope library implements the
+    immutable
+    <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.14.9450&rep=rep1&type=pdf">rope
+      datastructure</a>&nbsp;[1] (with some small variations).
+    All  meaningful <code>String</code> module functions
+    are implemented; regular expressions are planned (help
+    appreciated).
+  </p>
+  <p>
+    Here is an example use of <code>Rope</code> in the
+    interactive toploop (notice the special printer to
+    conveniently display ropes):<br/>
+    <pre><code class="ocaml"
+><span class="prompt">#</span> <span class="input">#load "rope.cma"</span>;;
+<span class="prompt">#</span> <span class="input">#install_printer <span class="module">Rope</span>.<span class="module">Rope_toploop</span>.printer</span>;;
+
+<span class="prompt">#</span> <span class="input"><span class="let">let</span> ( ^ ) = Rope.concat2</span>;;
+<span class="answer">val ( ^ ) : Rope.t -> Rope.t -> Rope.t = &lt;fun&gt;</span>
+<span class="prompt">#</span> <span class="input"><span class="let">let</span> r = <span class="module">Rope</span>.of_string "Hello" ^ <span class="module">Rope</span>.of_string " " ^ <span class="module">Rope</span>.of_string "world!"</span>;;
+<span class="answer">val r : Rope.t = "Hello world!"</span>
+<span class="prompt">#</span> <span class="input"><span class="module">Rope</span>.length r</span>;;
+<span class="answer">- : int = 12</span></code> </pre>
+
+    For a complete description of the functions, see the
+    interface <a href="doc/Rope.html"><code>Rope.mli</code></a>.
+    If you have questions, suggestions, bugs,... you can
+    <a href="mailto:Christophe.TroestlerREMOVE@umons.ac.be?SUBJECT=OCaml%20Rope"
+       >contact me by email</a>.
+  </p>
+  <p> The code is released under the GNU Lesser General Public License
+    (LGPL) with the same special exception as for the OCaml
+    standard library (see the file
+    <a href="https://github.com/Chris00/ocaml-rope/blob/master/LICENSE"
+       >LICENSE</a>
+    for more details).
+  </p>
+
+  <br/> <hr width="10%" align="left" />
+  <p>[1] Hans Boehm, Russ Atkinson, Michael Plass, "Ropes: an
+    alternative to strings", Software Practice and Experience 25,
+    vol. 12 (1995), pp. 1315-1330.
+  </p>
+</div>
+
+</body>
+</html>

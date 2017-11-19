@@ -1,0 +1,106 @@
+
+A:active {
+  color: #ff6600;
+}
+
+A:visited {
+  color: #999999;
+}
+
+/***
+   * Code
+   */
+
+code.ocaml {
+  display: block;
+/*   font-size: large; */
+  background-color: rgb(240,245,254);
+  padding: 5px;
+}
+
+.prompt {
+  color: rgb(128,128,128);
+}
+
+.let {
+  font-weight: bold;
+}
+
+.module {
+  color: rgb(126,27,29);
+}
+
+span.input:hover {
+  background-color: rgb(200,200,200);
+}
+
+.answer {
+  font-style: italic;
+}
+span.answer:hover {
+  background-color: rgb(200,200,200);
+}
+
+/* Banner ---------------------------------------- */
+
+#banner {
+  text-align: center;
+}
+
+#banner img {
+  padding-top: 1ex;
+  clear: both;
+}
+
+/* Menu ---------------------------------------- */
+
+#menu {
+  Float: left;
+  width: 18%;
+  /* border: 1px dashed black; */
+  font-family: sans-serif;
+  font-weight: bolde;
+  font-size: x-large;
+  color: #981419;
+  margin-top: 2ex;
+  background: #d5dbe4;
+  /* padding: 2px; */
+}
+
+#menu ul, #menu li {
+  display : inline;
+  list-style-type : none;
+  margin : 0;
+  padding : 0;
+}
+
+#menu li {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  display: block;
+}
+
+#menu li:hover {
+  background-color: #fdf9b9;
+}
+
+#menu a {
+  text-decoration: none;
+  width: 120px;
+}
+
+#main {
+  Float: right;
+  width: 80%;
+}
+
+/* General */
+
+body {
+  color: black;
+  background-color: rgb(255,255,255);
+}
+
+A:link {
+  color: rgb(126,27,29);
+}
