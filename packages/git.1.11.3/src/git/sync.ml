@@ -74,7 +74,7 @@ module type IO = sig
   val flush: oc -> unit Lwt.t
 end
 
-let ogit_agent = "git/ogit.1.11.2"
+let ogit_agent = "git/ogit.1.11.3"
 
 module Capability = struct
 

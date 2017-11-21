@@ -16,7 +16,7 @@
 
 (** Implementation of the Git protocol in pure OCaml
 
-    1.11.2
+    1.11.3
  *)
 
 (** {1 Common signatures to all objects} *)

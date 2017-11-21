@@ -604,7 +604,7 @@ let default =
       clone.doc fetch.doc pull.doc push.doc graph.doc in
   Term.(pure usage $ setup_log),
   Term.info "ogit"
-    ~version:"1.11.2"
+    ~version:"1.11.3"
     ~sdocs:global_option_section
     ~doc
     ~man

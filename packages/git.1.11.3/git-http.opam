@@ -1,4 +1,4 @@
-version: "1.11.2"
+version: "1.11.3"
 opam-version: "1.2"
 maintainer:   "thomas@gazagnaire.org"
 authors:      "Thomas Gazagnaire"
