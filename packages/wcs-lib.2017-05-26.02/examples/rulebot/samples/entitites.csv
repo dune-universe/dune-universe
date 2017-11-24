@@ -1,0 +1,7 @@
+entity,transaction, the transaction
+entity,authorization,authorization response,the authorization,the authorization response
+field,country, country code
+field,amount
+field,account
+field,message
+field,transaction

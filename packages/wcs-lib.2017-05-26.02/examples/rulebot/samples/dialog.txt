@@ -1,0 +1,34 @@
+C: What would you like to do?
+H: I'd like to create an event rule
+
+-- Rule construction workspace
+C: Sure, when is that rule triggered?
+H: It is triggered by a transaction   H: It is triggered when a transaction arrives
+  C: Ok, I'll call that 'the transaction', is that ok?
+  H: Sounds good.
+C: Are there conditions that apply on 'the transaction'?
+H: Yes, the transaction should not be in the United States
+C: Ok, any other condition?
+H: It should be more than 1000
+H: Ok, the amount should be more than a 1000, is that right?
+C: Yes.
+H: Any other condition?
+C: No that's it.
+H: Ok, so that's what I have so far:
+```
+when a transaction occurs , called 'the transaction'
+if
+    the country code of 'the transaction' is not "US"
+    and the amount of 'the transaction' is more than 1000
+```
+now what should happen when that event occurs?
+C: You should emit a new authorization
+H: Ok, you mean a new 'authorization response'?
+C: Yep.
+H: An 'authorization response' has three fields: an account, a message, and a transaction. How are those filled?
+C: The account and the transaction is that of the transaction.
+H: OK, what about the message?
+C: The messages should be the string "R01: Out of country transaction greater than 1000"
+H: That's complicated, but ok. Does the final rule look right to you?
+C: Pretty much, thank you.
+

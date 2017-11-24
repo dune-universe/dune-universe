@@ -1,0 +1,46 @@
+(*
+ *  This file is part of the Watson Conversation Service OCaml API project.
+ *
+ * Copyright 2016-2017 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *)
+
+(** JSON with embedded expressions. *)
+
+
+type json_spel = [
+    `Assoc of (string * json_spel) list
+  | `Bool of bool
+  | `Float of float
+  | `Int of int
+  | `List of json_spel list
+  | `Null
+  | `Expr of Spel_t.expression
+]
+(** JSON with embedded expressions. *)
+
+
+
+(** {6 [json]/[json_spel] conversion}
+    All these functions represents Spel expressions as string in the
+    concret syntax of Spel, not the AST as JSON.
+*)
+
+val yojson_of_json_spel : json_spel -> Json_t.basic
+
+val json_spel_of_yojson : Json_t.basic -> json_spel
+
+val write_json_spel : Json_t.bi_outbuf_t -> json_spel -> unit
+val read_json_spel : Json_t.lexer_state -> Lexing.lexbuf -> json_spel
+val to_string : json_spel -> string

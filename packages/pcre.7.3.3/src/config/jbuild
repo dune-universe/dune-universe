@@ -1,6 +1,0 @@
-(jbuild_version 1)
-
-(executables (
-  (names (discover))
-  (libraries (base stdio configurator))
-))

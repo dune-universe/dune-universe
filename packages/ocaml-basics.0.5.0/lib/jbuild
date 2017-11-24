@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+  ((name Basics)
+   (public_name ocaml-basics)
+   (libraries (ppx_sexp_conv result sexplib))
+   (preprocess (pps (ppx_sexp_conv)))))

@@ -1,0 +1,86 @@
+In global-rules github: queryTests/data/solutions/creditcard
+
+** Business Model (./MyCreditCardSolutionBOM/bom/creditcard/BusinessModel.bmd):
+
+   an account is a business entity identified by an id.
+   an account has a status (an account status).
+
+   an account is related to a customer.
+   an account has a balance (numeric).
+   an account has a last check time (date & time).
+
+   an account status can be one of: Excellent, Good, Fair, Poor, Risky.
+
+   a customer is a business entity identified by an email with a first name, a last name, a phone number.
+   a customer is related to some accounts.
+
+   a transaction is a business event time-stamped by a date.
+   a transaction is related to an account.
+   a transaction has an amount (a number).
+   a transaction has a country code.
+
+   an exception is a concept.
+   an exception has a reason.
+   an exception has a code.
+
+   an authorization response is a business event time-stamped by a date.
+   an authorization response is related to an account.
+   an authorization response has a message.
+   an authorization response has a transaction.
+   an authorization response has an exception.
+
+   an account initialization is a business event time-stamped by a date.
+   an account initialization is related to an account.
+   an account initialization is related to a customer.
+   an account initialization has a balance (a number).
+   an account initialization has a status (an account status).
+
+** Initialization (also in ./MyCreditCardSolutionBOM/bom/creditcard/BusinessModel.bmd):
+
+   an account is initialized from an account initialization , where this account comes from the account of this account initialization : 
+   	- set the customer of this account to the customer of this account initialization 
+   	- set the balance of this account to the balance of this account initialization
+   	- set the status of this account to the status of this account initialization . 
+
+   a customer is initialized from an account initialization , where this customer comes from the customer of this account initialization .
+
+** Sample global rule (./MyCreditCardSolutionBOM/aggregates/Average Risky Account Balance.agg)
+
+  define 'Average Risky Account Balance' as the average balance of all accounts , 
+   	  where  the status of each account is Risky , 
+  	  evaluated every day at 1:00 AM 
+
+** Sample global rule (./MyCreditCardSolutionBOM/aggregates/Average Transaction Amount Per Day.agg)
+
+define 'Average Transaction Amount Per Day' as the average amount of all transactions , 
+  	where the date of each transaction is during the last period of 1 day 
+
+** Sample event handler (/CreditCardRules/rules/my_rules/Check Risky And Below Average.brl):
+
+when a transaction occurs, called 'the transaction' 
+if
+    the balance of 'the account' is less than 'Average Risky Account Balance'
+then
+	print "aggregate " + 'Average Risky Account Balance' ;
+	print "balance" + the balance of 'the account';
+	define 'the exception' as a new exception where
+        the reason is "The account for " + the email of the customer of 'the account' + " is risky and below the average balance for risky accounts." ,
+        the code is "R04" ;
+    emit a new authorization response where
+        the account is 'the account' ,
+        the message is "R04: the account for " + the email of the customer of 'the account' + " is risky and below the average balance for risky accounts.",
+        the exception is 'the exception' ,
+        the transaction is 'the transaction' ;
+
+** Sample event handler (/CreditCardRules/rules/my_rules/Transaction Out Of Country.brl):
+
+when a transaction occurs , called 'the transaction'
+if
+    the country code of 'the transaction' is not "US"
+    and the amount of 'the transaction' is more than 1000
+then
+    emit a new authorization response where
+        the account is 'the account' ,
+        the message is "R01: Out of country transaction greater than 1000" ,
+        the transaction is 'the transaction' ;
+

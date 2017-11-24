@@ -1,0 +1,23 @@
+when, mk_when
+trigger, mk_when
+triggered, mk_when
+arrives, mk_when
+condition, mk_cond
+if, mk_cond
+should, mk_cond
+must, mk_cond
+such that, mk_cond
+need to, mk_cond
+where, mk_cond
+negation, cond_neg
+not, cond_neg
+isn't, cond_neg
+more, cond_more
+more than, cond_more
+greater than, cond_more
+greater, cond_more
+emit, mk_emit
+send, mk_emit
+respond, mk_emit
+output, mk_emit
+do, mk_emit
