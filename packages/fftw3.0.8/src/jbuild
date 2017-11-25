@@ -1,0 +1,27 @@
+(jbuild_version 1)
+
+(library
+ ((name        fftw3)
+  (public_name fftw3)
+  (modules    (fftw3 fftw3_utils
+               fftw3_geomC fftw3_geomF fftw3D fftw3S))
+  (c_names    (fftw3_stubs_c))
+  (c_flags    (:standard (:include c_flags.sexp)))
+  (c_library_flags (:standard (:include c_library_flags.sexp)))
+  (synopsis "Binding to Fast Fourier Transform library FFTW3")))
+
+(rule
+ ((targets (fftw3_geomC.ml fftw3_geomF.ml fftw3D.ml fftw3S.ml))
+  (deps    (../config/make_prec_dep.exe fftw3SD.ml fftw3_geomCF.ml))
+  (action  (run ${<}))))
+
+(rule
+ ((targets (fftw3_stubs_c.c))
+  (deps    (fftw3_stubs.c fftw3SD_stubs.c
+            bigarray_stubs.c bigarray_stubs_old.c))
+  (action  (copy fftw3_stubs.c fftw3_stubs_c.c))))
+
+(rule
+ ((targets (c_flags.sexp c_library_flags.sexp))
+  (deps    (../config/discover.exe))
+  (action  (run ${<}))))

@@ -1,0 +1,19 @@
+environment:
+  global:
+    CYG_ROOT: C:/cygwin
+    CYG_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
+    CYG_CACHE: C:/cygwin/var/cache/setup
+  matrix:
+    - OCAML_BRANCH: 4.05
+    - OCAML_BRANCH: 4.06
+
+install:
+  - '"%CYG_ROOT%\setup-x86.exe" -qnNdO -R "%CYG_ROOT%" -s "%CYG_MIRROR%" -l "%CYG_CACHE%" -P fftw3-devel'
+  - appveyor DownloadFile "https://raw.githubusercontent.com/Chris00/ocaml-appveyor/master/install_ocaml.cmd" -FileName "C:\install_ocaml.cmd"
+  - C:\install_ocaml.cmd
+
+build_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - opam install cppo configurator base stdio
+  - jbuilder subst
+  - jbuilder build -p fftw3
