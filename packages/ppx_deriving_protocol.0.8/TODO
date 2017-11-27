@@ -1,6 +1,0 @@
-Handle more types:
-  * adt's
-  * recursive types (and mutial recursive types)
-  * polymorphic variants
-
-Signature for protocol providers

@@ -1,4 +1,0 @@
-_build
-.merlin
-ppx_deriving_protocol.install
-ppx_deriving_protocol.[0-9]*
