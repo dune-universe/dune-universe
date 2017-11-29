@@ -1,6 +1,0 @@
-(library
- ((name        tar)
-  (public_name tar)
-  (libraries   (result cstruct re.str))
-  (preprocess (pps (cstruct.ppx)))
-))
