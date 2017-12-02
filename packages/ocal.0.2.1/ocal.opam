@@ -1,4 +1,4 @@
-version: "0.2.0"
+version: "0.2.1"
 opam-version: "1.2"
 maintainer: "Richard Mortier <mort@cantab.net>"
 authors: [ "Richard Mortier" ]
@@ -9,8 +9,10 @@ dev-repo: "https://github.com/mor1/ocal.git"
 bug-reports: "https://github.com/mor1/ocal/issues"
 doc: "https://mor1.github.io/ocal/"
 
+available: [ ocaml-version >= "4.02.3" ]
+
 build: [
-  [ "jbuilder" "subst"] {pinned}
+  [ "jbuilder" "subst" ] {pinned}
   [ "jbuilder" "build" "-p" name "-j" jobs ]
 ]
 
@@ -20,4 +22,5 @@ depends: [
   "astring"   {build}
   "calendar"  {build}
   "cmdliner"  {build}
+  "notty"     {build & >="0.2.0"}
 ]

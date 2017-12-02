@@ -1,7 +1,14 @@
+### 0.2.1 (2017-11-30)
+
+  * Update to use [notty][] 0.2.0 after breaking API change
+  * Change default to display week-of-year; `-w` now stops display
+  * Fix compiler and library constraints
+  * Fix display of current month by default
+
 ### 0.2.0 (2017-08-28)
 
   * Update `pkg/pkg.ml` to *not* build docs during `topkg publish`
-  * Use [notty](https://pqwy.github.io/notty/) for layout
+  * Use [notty][] for layout
   * Add option to display week-of-year
   * Set timezone to be Local rather than UTC
 
@@ -18,3 +25,5 @@
 ### 0.1.1 (2016-01-05)
 
   * Initial release
+
+[notty]: https://pqwy.github.io/notty

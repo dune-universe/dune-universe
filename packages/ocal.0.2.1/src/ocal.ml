@@ -49,7 +49,7 @@ module F = struct
   let lpad ?(f=s) ~w x = x |> f |> I.hsnap ~align:`Right w
   let rpad ?(f=s) ~w x = x |> f |> I.hsnap ~align:`Left w
   let centre ?(f=s) ~w x = x |> f |> I.hsnap ~align:`Middle w
-  let endl = Notty_unix.output_image_endline
+  let endl i = Notty_unix.(i |> eol |> output_image)
 end
 
 let chunk n list =
@@ -178,8 +178,9 @@ let months range =
   | _        -> invalid_arg ("invalid date range: " ^ range)
 
 let cal plain weeks_of_year today ncols sep first_dow range =
+  let weeks_of_year = not weeks_of_year in (* default to true *)
   let f = if plain then F.plain else F.pretty in
-  let sep = F.s sep in
+  let sep = f.F.s sep in
 
   range
   |> months

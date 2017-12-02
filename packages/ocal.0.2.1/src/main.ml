@@ -36,7 +36,7 @@ let sep =
   Arg.(value & opt string "    " & info ["s"; "separator"] ~docv:"sep" ~doc)
 
 let weeks_of_year =
-  let doc = "Display weeks of year." in
+  let doc = "Don't display weeks of year." in
   Arg.(value & flag & info ["w"; "weeks"] ~doc)
 
 let first_dow =
@@ -64,8 +64,8 @@ let range =
             \  $(i,d1-d2) (all months in the range $(i,d1-d2)).\
             "
   in
-  let thismonth = Some (Printer.Date.sprint "%b%Y" (Date.today ())) in
-  Arg.(required & pos 0 (some string) thismonth & info [] ~docv:"DATES" ~doc)
+  let thismonth = Printer.Date.sprint "%b%Y" (Date.today ()) in
+  Arg.(value & pos 0 string thismonth & info [] ~docv:"DATES" ~doc)
 
 let cmd =
   let doc = "pretty print calendar months" in
