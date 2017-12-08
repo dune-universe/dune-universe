@@ -1,5 +1,0 @@
-(library
- ((name xenstore_server)
-  (public_name xenstore.server)
-  (libraries (lwt xenstore))
-))
