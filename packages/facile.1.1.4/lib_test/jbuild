@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executables
+ ((libraries (facile))
+  (modules (queens))
+  (names (queens))))
+
+(alias
+ ((name    runtest)
+  (deps    (queens.exe))
+  (action  (run ${<} 8))))

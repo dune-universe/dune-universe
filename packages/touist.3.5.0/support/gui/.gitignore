@@ -1,0 +1,12 @@
+build/
+.gradle/
+.idea/
+out/
+bin/
+.nb*
+
+out/
+.nb-gradle/
+
+**/*.eml
+**/*.iml

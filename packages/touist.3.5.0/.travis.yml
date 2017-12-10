@@ -1,0 +1,131 @@
+#
+# Maël Valais <mael.valais@gmail.com>
+#
+# This Travis-ci configuration file has been writen to automate
+# the building process and make deploying the application easy.
+# for the platforms Linux and Mac OS X.
+#
+# The travis-ci servers are going to run this script on any push
+# to the repo. Basically, it
+# - tells the author of a commit if his commit has broken the build,
+# - deploys two .zip containing the linux and osx apps, with the
+#   touist compiled in it
+#
+# To allow Travis-ci to know that something has been pushed to the repo
+# the owner of the project (Olivier Lezaud back then) had had to link
+# the repo to the Travis-ci website.
+#
+# vim:set et sw=2 ts=2:
+
+
+language: java
+os:
+  - linux
+  - osx
+# Install packages using apt-get on linux environment
+addons:
+  apt:
+    sources:
+    - avsm
+    packages:
+    - opam
+    - libgmp-dev
+    - aspcud
+
+cache:
+  apt: true
+  directories:
+    - $HOME/.opam
+    - $HOME/.gradle
+
+before_install:
+  # Install packages using brew on osx environment
+  - javac -version
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew install opam; fi
+  - opam init -y --auto-setup
+  - opam switch -y 4.05.0
+  - eval `opam config env`
+  - opam update
+  - opam install -y ocamlfind menhir minisat yices2 qbf ounit jbuilder re odoc cmdliner
+install:
+  # Build touist
+  - cd $TRAVIS_BUILD_DIR
+  - jbuilder build
+  - jbuilder install
+
+  # Build the Java GUI touist.jar (in support/gui)
+  - cd $TRAVIS_BUILD_DIR/support/gui
+  - cp $(which touist) external/touist
+  - chmod ugo+x external/touist
+  - |
+    set -e # exit if one of the following commands fail
+    case $TRAVIS_OS_NAME in
+    linux)
+      TERM=dumb ./gradlew createJarZip
+      ARCH=linux-x86_64
+      ;;
+    osx)
+      TERM=dumb ./gradlew createMacAppZip createJarZip
+      ARCH=mac-x86_64
+      ;;
+    esac
+  - |
+    # Add $ARCH to the end of the .zip filename
+    for f in $(find build/distributions -name "TouIST*"); do
+      mv $f $(echo $f | sed "s/\(.*\)\.zip$/\1-${ARCH}.zip/")
+    done
+  - ls build/distributions
+  - cd $TRAVIS_BUILD_DIR
+  - |
+    git status
+    if ! git status 2> /dev/null | tail -n1 | grep "nothing.*clean"; then
+      echo 'STOP!!! The build ends in a dirty state; see the diff:'
+      git diff
+      exit 1
+    fi
+  - jbuilder build @doc
+
+# This part is meant for unit tests (among others).
+script:
+  - jbuilder runtest
+  - jbuilder uninstall
+
+before_deploy:
+  - |
+    set -e # exit if one of the following commands fail
+    cd $TRAVIS_BUILD_DIR
+    git clone https://${TOK}@github.com/touist/touist.github.io.git
+    mkdir -p touist.github.io/api/v/$(git describe --tags)
+    cp -LR _build/default/_doc/* touist.github.io/api
+    cp -LR _build/default/_doc/* touist.github.io/api/v/$(git describe --tags)
+    cd touist.github.io
+    git config user.name "Travis-ci"
+    git config user.email "robot@travis-ci.org"
+    git add api/*
+    git commit -m "Generated API documentation for $(cd .. && git describe --tags)" || true
+    git push
+  - cd $TRAVIS_BUILD_DIR
+
+# This is the part where the touist.zip is pushed to the Github
+# Releases. It will only do so when we create new tags, like v1.1.2.
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    # This is maelvalais's ciphered credentials.
+    # It has been ciphered by travis's encryption system.
+    secure: PNvSXUUBTgQjfio2QL9qQYtV8JCpT6nWkvRNDGFoAwdskusi719jRLjGYDKHrTHelxiehepKSxiFcPcOCfFD/WkfOLZvEBs463Xb3fldoNxUgRAWwYy/uEWwlD3lbSBREgtqrfuHP3uVKF7tYDlJXhTFpdM/nuwXGIwU5AuUhCw=
+  file_glob: true
+  file: support/gui/build/distributions/*
+  on:
+    branch: master
+    tags: true
+
+# The commiter will be informed that one of his commits
+# broke the build. I didn't want us to receive an email
+# each time we did a new branch, so I changed to 
+#     on_success: never
+notifications:
+  email:
+    on_success: never # default: change
+    on_failure: always # default: always

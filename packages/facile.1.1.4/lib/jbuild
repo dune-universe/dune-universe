@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+ ((public_name facile)
+  (name        facile)
+
+
+  (ocamlopt_flags (-unsafe -noassert -inline 10))
+  ))

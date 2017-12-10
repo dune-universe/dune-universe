@@ -1,0 +1,14 @@
+{
+ "displayName":    "Grammar",
+ "name":           "grammar",
+ 
+ "tokenizer": {
+   "root": [
+     [ "<[a-zA-Z<>()-]+>", "constructor" ],
+     [ "[|]", "operator" ],
+     [ "::=", "operator" ],
+     [ "\\(\\*.*\\*\\)","comment"],
+     ["<-.*$", "comment"]
+   ]
+ }
+}

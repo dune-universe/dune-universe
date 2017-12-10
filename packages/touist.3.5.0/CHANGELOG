@@ -1,0 +1,362 @@
+v3.5.0 (2017-11-28)
+  - Command-line
+    - touist finally has a proper man page. To open it, use `touist --help'
+      or `man touist'.
+    - you can now pass arguemnts both using `--flag PARAM' or `--flag=PARAM'.
+    - (BREAKING) `--smt' can be used without a logic; by default, QF_LRA is used.
+    - (BREAKING) `--debug' renamed to `--verbose'
+    - (BREAKING) removed `--debug-cnf' (replaced by `--show=cnf')
+    - (BREAKING) removed `--debug-syntax' (replaced by `--verbose')
+    - (BREAKING) removed `--latex-full (replaced by `--latex=document)
+    - `--show' now takes an optional parameter (can be form, cnf, prenex).
+      `--show' keeps the same behaviour but `--debug-cnf' is now `--show=cnf'.
+    - `--latex' now takes an optional argument (mathjax or document).
+      `--latex' stays the same and refers to `--latex=mathjax', `--latex-full'
+      is removed and becomes `--latex=document'.
+  - API
+    - (BREAKING) Modules renamed (again, sorry!) from `TouistParse'
+      to `Touist.Parse'. Function 'SatSolve.Model.pprint' takes 'table' as first
+      argument.
+    - (internal) use jbuilder instead of oasis, cmdliner instead of Arg.Parse.
+v3.4.4 (2017-11-14)
+  - Command-line
+    - fix (AGAIN) the --solver option; when parsing the integers of the model,
+      it was accepting non-model lines. I hope that will be enough...
+v3.4.3 (2017-11-13)
+  - Command-line
+    - fix the option --solver with --sat solvers, once for all.
+    - option --solver now supports Minisat output.
+v3.4.2 (2017-11-12)
+  - Command-line (new features)
+    - the option '--solver CMD' can be used with --debug in order to display
+      the stdin, stdout and stderr w.r.t. the external solver.
+  - Command-line (fixes)
+    - the option '--solver CMD' now uses the same error codes as with
+      '--solve'; it expects the external solver to return 10 for SAT and
+      20 for UNSAT (as most minisat-inspired solvers do).
+    - in --sat mode, the option '--solver CMD' will now work properly instead
+      of throwing "assert raised in src/Minisat.ml".
+v3.4.1 (2017-11-05)
+  - Command-line (new features)
+    - added option '--solver CMD'; combined with --sat or --qbf, touist
+      will run CMD feeding the (Q)DIMACS into stdin and expecting a
+      DIMACS on stdout; it then prints the model as usual.
+    - with --latex, fixed 'subset' that was translated into \subset instead
+      of \subseteq.
+    - (internal) drop the 'fileutils' dependency as it was not used anyway.
+v3.4.0 (2017-09-13)
+  - TouIST language:
+    - 'inter', 'union', 'diff' and 'subset' are now infix operators;
+      the prefix versions are still available (but they produce a warning).
+  - API:
+    - when touist is installed through opam ('opam install touist'), you can
+      use it as a library. The API reference is now published on the website.
+  - GUI (new features):
+    - added the menu button 'Log' that allows to monitor what is happening
+      under the hood.
+    - the look of the main window has been (kind of) improved with
+      less useless blank spaces. Also, the window can be resized smaller
+      than before.
+    - in the result view, you can now hide all valuations that
+      are not true or false. For example, it allows us to hide all
+      undefined valuations (denoted by '?') that clutter the results.
+    - on macOS, a native application is now available; on Windows, a .exe
+      is available (instead of clicking on the .jar). On Linux, a simple
+      script launches the jar.
+    - 'save' and 'open' now remember the last file opened; the current
+      file is displayed in the window title. Also, a friendly warning is now
+      displayed when opening or quitting while the current file is unsaved.
+    - drag-and-drop enabled on macOS in native TouIST.app (dropping on
+      the dock or in the app) and on Windows native TouIST.exe.
+    - added links to the manual in 'Help' menu
+  - GUI (fixes)
+    - fixed 'inter', 'union' and 'subset' that were not properly colored
+    - fixed the extremely slow/laggy scrolling of the latex right-panel when
+      using the mouse wheel.
+    - fixed the 'Solve' button hanging indefinitely in QBF mode
+    - fixed the filtering (regex or true/false) of the results on SMT
+      and QBF modes.
+    - fixed a bug that was preventing the user from filtering when a
+      single result was returned.
+  - Command-line (new features):
+    - in --sat mode, the new option --interactive will enable the
+      display of one model at a time by pressing any key (q/n to stop).
+    - it is now possible to output QDIMACS using --qbf
+    - added --debug-dimacs which displays names instead of numbers in
+      DIMACS (--sat) and QDIMACS (--qbf).
+  - Command-line (fixes):
+    - fixed a bug with --sat --solve where touist was giving a model
+      although the formula is UNSAT (it was caused by a misuse of minisat).
+    - fixed --latex that failing without --linter
+    - (BREAKING) We had not correctly followed the DIMACS specification:
+      any comments had to appear before the preamble 'p cnf 4 7'.
+      Now, the mapping table (between propositions names and numbers)
+      will be given before anything else (with flags --qbf or --sat).
+v3.2.3 (2017-09-05)
+  - added an option (--debug) which enable the display of stacktrace
+    on exception catched on exit
+  - vars indices '$var(1,2)' are now printed as indices in latex
+v3.2.2 (2017-07-07)
+  - fixed `card()` that was expecting two closing parenthesis instead of one
+  - the 'let' construct can now handle multiple variables separated with ','
+  - interface: ctrl+s is now remembering the file you opened/saved
+v3.2.1 (2017-06-23)
+  - added the '--latex-full' option. It does the same as '--latex' except that
+    multi-line spanning parenthesis are translated with 'pmatrix' and a header
+    and footer are added to make the output direclty compatible with pdflatex.
+  - (breaking) With --sat --solve which by default only returns one model,
+    touist now omits the ==== lines (which are useless for one model).
+    This change also allows us to have a unified --solve experience, as
+    the --smt and --qbf solvers also return the first model.
+  - the 'let' statement can now be used with a list of vars/values. For
+    example: let $i,$j = 1,2: p($i,$j)
+
+v3.2.0 (2017-06-13)
+  - (breaking) removed '--detailed' that wasn't really helpful to
+    '--error-format' that allows to use placeholders (%l for line, %c for
+    column...) to customize how errors should display.
+  - (breaking) error messages are now using a more informative layout:
+        filename: line 9, col 67-80: error: the error message
+  - added the argument --wrap-width N that allows to choose the width
+    of the error messages. If N is set to 0, the wrapping is disabled.
+  - (experimental) added support for QBF (quantified boolean formula). It relies
+    on Simon Cruanes' ocaml-qbf project, which relies on quantor and picosat.
+  - added '\\' for spliting a long formula on two lines in latex view (inspired
+    from latex language).
+v3.1.0 (2017-05-11)
+  - touist:
+    - (experimental) an SMT solver is now available directly from the touist
+      binary instead of a separate binary. This step took a LOT a work because
+      the libyices library wasn't adapted to Windows building. I also had
+      to publish ocamlyices2 to opam. To enable the SMT solver, you just
+      have to do 'opam install yices2' followed by 'opam reinstall touist'.
+v3.0.1 (2017-03-29)
+  - touist:
+    - fixed powerset([a,b]) that now correclty returns the empty set
+v3.0.0 (2017-03-29)
+  - touist:
+    - (breaking change) the 'touistc' command-line binary is now named
+      'touist' as it is not solely a compiler anymore (also plays the
+      role of the solver)
+    - (breaking change) command-line options have been normalized:
+      1. -sat renamed to --sat and is enabled by default (if --smt is
+         not given);
+      2. -smt2 renamed to --smt
+      3. -table is now --table
+    - sets can now contain sets: [[a,b],[c,d]] is now correct
+    - added the function 'powerset([a,b])' which computes a set of all
+      subsets (including empty set) of [a,b].
+    - added option --show that shows the formula after it has been
+      evaluated (no more variables or bigands, only propositions, 'and',
+      'or', '=>'...). Handy for debugging how your touistl has been
+      translated.
+v2.3.0 (2017-03-12)
+  - touist:
+    - it is now possible to generate sets using the following syntax:
+      p(a,[1..2],[c]) will generate the set [p(a,1,c) p(a,2,c)]. It
+      basically generates the cartesian product of the given sets.
+      It can be really useful for creating time-related propositions
+      indexed by numbers (time(1), time(2), time(3)...)
+    - tuple-propositions of the form p(a,b,c) are now printed with no
+      additional whitespaces. No more p(a, b, c).
+    - fixed -smt2 so that it can handle +,-,/,* in formulas
+    - fixed -smt2 so that variables in formulas can contain int and float
+    - fixed --latex when propositions or variables contain '_'
+    - enabled error coloring when touist is used in a terminal
+    - the option --linter now does what --linter-expand is doing. The
+      separation of both in the first place was due to the 'expand' being
+      very expensive (because of the evaluations of bigand, bigor, exact,
+      atleast, atmost and range sets). To make the 'expand' faster, I just
+      'bypassed' these. As it is now duplicate, --linter-expand is removed.
+v2.2.2 (2017-03-11)
+  - touist:
+    - added --latex option for transforming any touistl document into latex
+    - when using --linter-expand, warnings are now displayed correctly
+v2.2.1 (2017-03-11)
+  - gui:
+    - multiple errors can now be displayed, with a difference between warnings
+      in blue and errors in red
+  - touist:
+    - a warning is given when using an empty set in bigand or bigor
+v2.2.0 (2017-03-10)
+  - gui:
+    - when using one of the SMT selectors (QF_IDL...), the errors are now
+      correctly linted (underlined in red)
+  - touist:
+    - global variables can now be affected anywhere (as long as it is not
+      nested). The 'data' is still supported for compatibility but is not
+      required anymore.
+    - fixed '-smt2'; it had been broken for a long time
+    - type checking has been moved from parse time to eval time. This means
+      that less errors will (for now) appear automatically in the editor,
+      and you will have to push 'Solve' to see the errors.
+    - (internal) the grammar has been re-designed; I have to say, the previous
+      parser (in v2.1.0) was broken: $i == 3.0 was always giving an error and
+      3.0 == $i was not. I have to be honest: writing a parser is a pain.
+      Along the way, I understood that having nasty reduce/reduce conflicts
+      is a BAD idea. In this version, there is no more conflict!
+    - (internal) added unit tests for the touist compiler, mainly to check
+      that the parser accepts the right language and throws the right errors
+    - the '--verbose' flag has been temporarily disabled (because of the code
+      refactoring)
+v2.1.4 (2017-03-06)
+  - gui:
+    - when clicking on the Solve button, it turns into 'Translating' as long
+      as `touist` is translating, and then 'Solving' when the SAT solver is
+      running. Also removed the alert message when stopping the solver.
+    - on macOS, use system's menu bar look and feel
+v2.1.3 (2017-03-03)
+  - gui:
+    - fixed a bug in the latex viwer that was removing the carriage return
+      when a line was beginning with a '('.
+    - ctrl+left and ctrl+right are now working properly for moving
+      word by word in the text editor on Windows
+v2.1.2 (2017-02-15)
+  - touist:
+    - abs() is now supported (absolute value)
+v2.1.1 (2016-11-07)
+  - gui:
+    - fixed a bug that was preventing from ./external/touist to be run when
+      the path contains whitespaces
+v2.1.0 (2016-11-06)
+  - gui: 
+    - semantic errors (that only appear when pressing 'Solve' are now
+      displayed) are now displayed like the syntaxic errors (still after
+      'Solve')
+  - touist:
+    - it is now possible to do the affectations before the formulas, with
+      no separator between sets and formulas. It is still possible to affect
+      after formulas with the separation keyword 'data'. You can only affect
+      before or after, not both.
+    - semantic errors (e.g., variables with wrong type) are now giving
+      a location (line, column). Some errors still lack the location but 99%
+      of them are covered.
+    - (internal) revamped the grammar specification to make it clear. The
+      'simple' and 'smt-augmented' grammars are now well separated.
+      Many error messages have been re-worked; among them, suggestions of
+      operators when an expression continuation is expected.
+      The number of messages goes from 89 to 144.
+    - merged 'term' and 'tuple-term' into one single concept: the proposition.
+      A proposition can be either 'abcd' or 'abcd(1,cd,56,$i)'.
+v2.0.1 (2016-11-03)
+  - gui:
+    - fixed crash when touist.jar was opened from inside the zip archive
+  - touist:
+    - when dimacs and table both printing on stdout, the table now
+      begins with 'c' to be able to pipe directly to a solver
+    - added possibility of using a term in a 'when' or 'if' statement, e.g.,
+      'bigand $i in [a,b,c] when $i != a: p($i) end
+v2.0.0 (2016-11-01)
+  - touist:
+    - simplified 'begin sets end sets begin formula end formula'; syntax is
+        <formulas> data <sets>
+      Note that the sets are now after formulas. It will be soon possible
+      to give the formulas and sets as two separate files, for genericity
+      of the models (defined by the formulas) and the data (the sets).
+   - fixed the problem of "Clause is always true/false" when bigand or
+     bigor does not produce anything
+   - added --linter for syntax errors and --linter-expand for syntax+
+     semantic errors. The first is fast, the second is a bit slower.
+   - added --verbose to have a sense of what is happening when the
+     compiler is taking a long time to anwser.
+  - gui:
+    - now shows the errors in the editor we red-underlyings; you can
+      see the error hovering the mouse over the error.
+    - merged the sets and formulas tabs in GUI; the solution is now to
+      use the syntax <formulas> data <sets>. I'm still looking for
+      a way to separate formulas and sets in GUI, e.g., two separate
+      files that have each its own tab
+    - matching parenthesis are now hightlighted
+    - when error message is too large, added 'click to view' message
+    - linux: "solve" now works properly when touist.jar is opened by
+      icon-clicking
+v1.4.2 (2016-10-28)
+    - (regression) possible to declare a set with terms: [a,b,c]...
+v1.4.1 (2016-10-26)
+    - (regression) output of the table (id,name) had been inverted (!)
+v1.4.0 (2016-10-26)
+  - touist:
+    - touist is now able to solve SAT problems on its own. You can use
+      '--solve' to return the first model of your problem, '--count' for
+      counting the number of models), '--limit i' for setting a limit to
+      the number of models returned (or 0 for no limit). Way faster that
+      the java call to minisat.jar!
+    - Added --equiv that allows to test the equivalency of two files.
+      Note that it is not an actual equivalence as both problems must 
+      have the exact same set of propositions/literals.
+    - (internal) merged exp and clause types for less code redundancy
+    - added support for local variables of the form 'let $i=1: p($i)'.
+      A 'let' variable is local to the clause it precedes, e.g., p($i) 
+  - gui:
+    - added support for local variables of the form
+      'let $i=1: p($i) end'. For now, the scope of these variables is
+      not actually limited to the current context (the current clause);
+      the variables exist even after 'end'.
+v1.3.1 (2016-10-23)
+  - touist:
+    - fixed `a (b)` recognized as `a(b)` instead of `a and b`
+    - added --debug-formula-expansion which prints the "expanded" version
+      of bigand, bigor, exact and numerical expressions; helps for debugging
+      complex formulas!
+  - gui:
+    - select the system language automatically
+    - fix "export" button not working
+    - export and import are now use the operating system UI (jre>=1.7)
+    - jre>=1.7 is now required; it solves the wierd mac problem that says
+      that you need to install the JDK for using command-line functions
+v1.3.0 (2016-10-08)
+  - touist.jar:
+    - fix touist hanging on "solve" on some unsatisfiable formulas
+    - fix subset(.,.) construct not displayed in latex display
+  - touist:
+    - now possible to have empty sets or formula block
+    - added message when using a undeclared $var
+    - added message when using a set instead of a term
+    - added message when using a variable that doesn't have
+      the expected content
+    - revamped syntax errors, with multi-lines errors and precise position
+      Note that many syntax errors still lack a proper message; some error
+      messages still you can help us improve these messages in
+      parser.messages file.
+    - added <=> symbol that had been forgotten at some point
+    - fixed bug with `not((p => p) => (q => q))` that should be
+      unsat; it was related to CNF expansion happening in inner -> outer
+      instead of outer -> inner
+    - added --debug-cnf option for debugging cnf.ml transformations
+    - added --debug-syntax option for debugging parser.messages messages
+v1.2.0 (2016-10-03)
+  - touist: select stdin with "-" and default output to stdout
+  - touist: fixed bugs when translating to CNF; now handles correctly
+    forms like `((p => q) and (q => r)) => r` and cleaned code.
+v1.1.4 (2016-09-28)
+  - fixed bug on expressions like (a=>b)=>c
+v1.1.3 (2016-04-11)
+  - added "View" menu item with zoom/unzoom latex viewer
+  - ctrl-related shortcuts will now work with cmd on osx 
+
+v1.1.2 (2016-04-03)
+  - fix problem with whitespaces in path names (Victor David)
+  - touist: In SMT mode, "Float" was produced instead of "Real" (Frédéric Maris)
+  - touist: Now display a proper error when -smt2 is given with no logic    (Maël Valais)
+  - gui: the left "snippets" panel has now a correct size (Maël Valais)
+  - gui: more explicit error message when touist is missing (Maël Valais)
+
+v1.1.1 (2016-03-23)
+  - gui: dollars in variables are now displaying in bold font in latex (Maël Valais)
+  - touist: the left panel with formulas should now be wide enough (Maël Valais)
+  - gui: the _ characters won't trigger anymore small indices in latex (Maël Valais)
+  - touist: fixed the exception given by touist when a variable has not been declared (Maël Valais)
+  - workflow: added AppVeyor for the windows continuous integration (Maël Valais)
+
+v1.1 (2015-06-10)
+  - No entries before that version
+v1.0.0 (2015-06-04)
+v1.0 (2015-06-04)
+v0.32 (2015-05-12)
+v0.31 (2015-05-03)
+v0.30 (2015-05-01)
+v0.2.3 (2015-04-20)
+v0.2.2 (2015-04-16)
+v0.2.1 (2015-03-29)
+v0.2.0 (2015-03-20)
+v0.1 (2015-03-10)
