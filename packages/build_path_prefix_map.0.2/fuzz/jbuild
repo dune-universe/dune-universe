@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executable
+   ((name fuzzer)
+    (libraries (build_path_prefix_map crowbar))
+    (modules (fuzzer))))
+
+(alias
+ ((name    fuzz)
+  (deps    (fuzzer.exe))
+  (action  (run ${<}))))

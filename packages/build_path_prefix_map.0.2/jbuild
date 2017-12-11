@@ -1,0 +1,16 @@
+(jbuild_version 1)
+
+(library
+ ((name        build_path_prefix_map)
+  (public_name build_path_prefix_map)
+  (modules     (build_path_prefix_map))))
+
+(executable
+  ((name test)
+   (libraries (build_path_prefix_map))
+   (modules (test))))
+
+(alias
+ ((name    runtest)
+  (deps    (test.exe))
+  (action  (run ${<}))))
