@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(executables
+ ((names (numa_async_test))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+  (libraries (core async numalib.async))))

@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name numalib_raw)
+  (public_name numalib.raw)
+  (c_library_flags (-lnuma))
+  (c_flags (:standard))
+  (c_names
+   (numa_stubs))
+  ))

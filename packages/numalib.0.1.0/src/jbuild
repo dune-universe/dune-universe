@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name numalib)
+   (public_name numalib)
+   (libraries (numalib_raw))
+ ))

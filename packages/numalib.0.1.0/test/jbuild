@@ -1,0 +1,5 @@
+(jbuild_version 1)
+
+(executables
+ ((names (numa_test))
+  (libraries (unix numalib.raw numalib))))

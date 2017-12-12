@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name numalib_async)
+   (public_name numalib.async)
+   (libraries (numalib numalib_raw_async))
+ ))
