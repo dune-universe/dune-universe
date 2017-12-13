@@ -1,0 +1,121 @@
+
+
+(library (
+  (name foo)
+  (modules foo)
+))
+
+(alias (
+  (name base)
+  (deps (foo.cma))
+  (action (progn
+    (system "cp -R ../../../test/input_base ./input_base")
+    (system "mkdir output_base")
+    (run og-create
+         --input input_base
+         --output output_base
+         --dependency foo.cma
+         --lib stdlib
+         --lib +base/runtime.js
+         --lib base
+         --doc
+    )
+  ))
+))
+
+
+(alias (
+  (name core_kernel)
+  (deps (foo.cma))
+  (action (progn
+    (system "cp -R ../../../test/input_core_kernel ./input_core_kernel")
+    (system "mkdir output_core_kernel")
+    (run og-create
+         --input input_core_kernel
+         --output output_core_kernel
+         --dependency foo.cma
+         --lib stdlib
+         --lib +base/runtime.js
+         --lib base
+         --lib stdio
+         --lib core_kernel
+         --lib +core_kernel/runtime.js
+         --lib +core_kernel/strftime.js
+         --lib +bin_prot/runtime.js
+         --lib +ppx_expect/runtime.js
+         --doc
+    )
+  ))
+))
+
+(alias (
+  (name core_kernel_no_doc)
+  (deps (foo.cma))
+  (action (progn
+    (system "cp -R ../../../test/input_core_kernel ./input_core_kernel")
+    (system "mkdir output_core_kernel_no_doc")
+    (run og-create
+         --input input_core_kernel
+         --output output_core_kernel_no_doc
+         --dependency foo.cma
+         --lib stdlib
+         --lib +base/runtime.js
+         --lib base
+         --lib stdio
+         --lib core_kernel
+         --lib +core_kernel/runtime.js
+         --lib +core_kernel/strftime.js
+         --lib +bin_prot/runtime.js
+         --lib +ppx_expect/runtime.js
+    )
+  ))
+))
+
+(alias (
+  (name lwt)
+  (deps (foo.cma))
+  (action (progn
+    (system "cp -R ../../../test/input_lwt ./input_lwt")
+    (system "mkdir output_lwt")
+    (run og-create
+         --input input_lwt
+         --output output_lwt
+         --dependency foo.cma
+         --lib stdlib
+         --lib result
+         --lib lwt
+         --lib js_of_ocaml-lwt
+         --lib js_of_ocaml
+    )
+  ))
+))
+
+(alias (
+  (name stdlib)
+  (deps (foo.cma))
+  (action (progn
+    (system "cp -R ../../../test/input_stdlib ./input_stdlib")
+    (system "mkdir output_stdlib")
+    (run og-create
+         --lib stdlib
+         --input input_stdlib
+         --output output_stdlib
+         --doc
+    )
+  ))
+))
+
+(alias (
+  (name runtest)
+  (deps (
+    (alias base)
+    (alias core_kernel)
+    (alias core_kernel_no_doc)
+    (alias stdlib)
+    (alias lwt)
+  ))
+  (action (progn
+      (system "python -m SimpleHTTPServer")
+    )
+  )
+))

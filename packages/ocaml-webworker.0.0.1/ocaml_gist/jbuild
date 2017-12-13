@@ -1,0 +1,88 @@
+(rule
+ ((targets (gist_tool.re))
+  (deps    (src/gist_tool.re))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (index.html))
+  (deps    (src/index.html))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (ocaml.js))
+  (deps    (src/ocaml.js))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (show-hint.js))
+  (deps    (src/show-hint.js))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (active-line.js))
+  (deps    (src/active-line.js))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (ocaml-gist.css))
+  (deps    (src/ocaml-gist.css))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (codemirror.js))
+  (deps    (src/codemirror.js))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (error.svg))
+  (deps    (src/error.svg))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (execute.svg))
+  (deps    (src/execute.svg))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (ocaml_gist.js))
+ (deps (bsconfig.json
+        package.json
+        webpack.config.js
+        gist_tool.re
+        ocaml.js
+        active-line.js
+        show-hint.js
+  ))
+ (action (progn
+   (echo "Running npm install (this will take awhile)")
+   (system "npm install")
+   (echo "Running BuckleScript commands \n")
+   (system "npm run clean")
+   (system "npm run make-world")
+   ;(system "ls -l")
+   ;(system "ls -l lib")
+   (system "npm run webpack")
+   (echo "webpack DONE")
+ ))
+))
+
+(install (
+  (package ocaml-gist)
+  (section lib)
+  (files (
+         ocaml_gist.js
+         index.html
+         ocaml-gist.css
+         error.svg
+         execute.svg))
+))
+
+(executable (
+  (name create)
+  (package ocaml-gist)
+  (libraries (cmdliner findlib unix str))
+  (public_name og-create)
+  (modules (
+    create
+  ))
+))

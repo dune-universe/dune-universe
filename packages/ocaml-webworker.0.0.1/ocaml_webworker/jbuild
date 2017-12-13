@@ -1,0 +1,295 @@
+(rule
+  ((targets (std.ml))
+   (deps    (merlin_lite/src/utils/std.ml))
+   (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (extend_protocol.ml))
+  (deps    (merlin_lite/src/extend/extend_protocol.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (sturgeon_stub.ml))
+  (deps    (merlin_lite/src/sturgeon_null/sturgeon_stub.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (logger.ml))
+  (deps    (merlin_lite/src/utils/logger.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (stat_cache.ml))
+  (deps    (merlin_lite/src/utils/stat_cache.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (file_cache.ml))
+  (deps    (merlin_lite/src/utils/file_cache.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (browse_raw.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/browse_raw.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (raw_compat.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/raw_compat.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (location_aux.ml))
+  (deps    (merlin_lite/src/ocaml/support/location_aux.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (saved_parts.mli))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/saved_parts.mli))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (saved_parts.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/saved_parts.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (pprintast2.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/parsing/pprintast2.ml))
+  (action  (copy ${<} ${@}))))
+
+
+(rule
+ ((targets (builtin_attributes.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/parsing/builtin_attributes.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (msupport.ml))
+  (deps    (merlin_lite/src/ocaml/support/msupport.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (path_aux.ml))
+  (deps    (merlin_lite/src/ocaml/support/path_aux.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (mbrowse.ml))
+  (deps    (merlin_lite/src/kernel/mbrowse.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (marg.ml))
+  (deps    (merlin_lite/src/utils/marg.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (ppxsetup.ml))
+  (deps    (merlin_lite/src/utils/ppxsetup.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (msource.ml))
+  (deps    (merlin_lite/src/kernel/msource.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (mconfig.ml))
+  (deps    (merlin_lite/src/kernel/mconfig.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (mreader.ml))
+  (deps    (merlin_lite/src/kernel/mreader.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (query_protocol.ml))
+  (deps    (merlin_lite/src/frontend/query_protocol.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (query_json.ml))
+  (deps    (merlin_lite/src/frontend/query_json.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (tail_analysis.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/tail_analysis.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (tast_helper.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/typing/tast_helper.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (untypeast2.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/typing/untypeast2.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (parmatch2.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/typing/parmatch2.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (longident2.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/parsing/longident2.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (printf_compat.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/printf_compat.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (env_compat.ml))
+  (deps    (merlin_lite/src/ocaml/typer_${ocaml_version}/env_compat.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (browse_tree.ml))
+  (deps    (merlin_lite/src/analysis/browse_tree.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (browse_misc.ml))
+  (deps    (merlin_lite/src/analysis/browse_misc.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (type_utils.ml))
+  (deps    (merlin_lite/src/analysis/type_utils.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (expansion.ml))
+  (deps    (merlin_lite/src/analysis/expansion.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (completion.ml))
+  (deps    (merlin_lite/src/analysis/completion.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (destruct.ml))
+  (deps    (merlin_lite/src/analysis/destruct.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (ocamldoc.ml))
+  (deps    (merlin_lite/src/analysis/ocamldoc.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (outline.ml))
+  (deps    (merlin_lite/src/analysis/outline.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (cmt_cache.ml))
+  (deps    (merlin_lite/src/ocaml/support/cmt_cache.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (typedtrie.ml))
+  (deps    (merlin_lite/src/analysis/typedtrie.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (misc2.ml))
+  (deps    (merlin_lite/src/utils/misc2.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (track_definition.ml))
+  (deps    (merlin_lite/src/analysis/track_definition.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (string_compat.ml))
+  (deps    (compat/${ocaml_version}/string_compat.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (syntaxerr_compat.ml))
+  (deps    (compat/${ocaml_version}/syntaxerr_compat.ml))
+  (action  (copy ${<} ${@}))))
+
+(rule
+ ((targets (extend_helper.ml))
+  (deps    (merlin_lite/src/extend/extend_helper.ml))
+  (action  (copy ${<} ${@}))))
+
+(library (
+  (name ocaml_webworker)
+  (public_name ocaml-webworker)
+  (libraries (js_of_ocaml-compiler
+              js_of_ocaml
+              js_of_ocaml-toplevel
+              compiler-libs
+              yojson
+              str
+              unix))
+  (modules (std
+            extend_protocol
+            sturgeon_stub
+            logger
+            stat_cache
+            file_cache
+            browse_raw
+            raw_compat
+            location_aux
+            saved_parts
+            pprintast2
+            extend_helper
+            builtin_attributes
+            msupport
+            path_aux
+            mbrowse
+            marg
+            ppxsetup
+            printf_compat
+            msource
+            mconfig
+            mreader
+            query_protocol
+            query_json
+            tail_analysis
+            tast_helper
+            untypeast2
+            parmatch2
+            longident2
+            browse_tree
+            browse_misc
+            env_compat
+            type_utils
+            expansion
+            completion
+            destruct
+            ocamldoc
+            outline
+            cmt_cache
+            typedtrie
+            misc2
+            track_definition
+            string_compat
+            syntaxerr_compat
+            code_execution_webworker
+            ))
+  (preprocess (pps (js_of_ocaml-ppx)))
+))
+
+(executable (
+  (name cmti_bundler)
+  (package ocaml-webworker)
+  (public_name cmti-bundler)
+  (libraries ( bytes
+    js_of_ocaml-compiler
+    js_of_ocaml-compiler.findlib-support
+  findlib js_of_ocaml unix))
+  (modules (cmti_bundler))
+))
