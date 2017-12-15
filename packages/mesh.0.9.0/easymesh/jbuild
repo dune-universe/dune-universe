@@ -1,0 +1,39 @@
+(jbuild_version 1)
+
+(library
+ ((name        mesh_easymesh)
+  (public_name mesh-easymesh)
+  (synopsis  "Triangular mesh generation with Easymesh")
+  (modules   (Mesh_easymesh  Mesh_easymeshF Mesh_easymeshC
+              Mesh_common Mesh_utils))
+  (flags     (:standard -safe-string))
+  (libraries (mesh bigarray bytes))))
+
+(rule
+ ((targets (mesh_easymeshF.ml mesh_easymeshC.ml))
+  (deps    (../config/make_FC_code.exe
+            mesh_easymeshFC.ml))
+  (action  (run ../config/make_FC_code.exe))))
+
+(rule
+ ((targets (mesh_common.ml))
+  (deps    (../src/mesh_common.ml))
+  (action  (copy# ${^} mesh_common.ml))))
+
+(rule
+ ((targets (mesh_utils.ml))
+  (deps    (../src/mesh_utils.ml))
+  (action  (copy# ${^} mesh_utils.ml))))
+
+;; EasyMesh is no longer downloadble from the internet.  Build it and
+;; install it alongside Mesh_easymesh
+(rule
+ ((targets (EasyMesh.exe))
+  (deps    (easymesh.c))
+  ;(action  (run ${!CC} -o EasyMesh.exe easymesh.c -ccopt -lm))))
+  (action  (run cc -o EasyMesh.exe easymesh.c -lm))))
+
+(install
+ ((section bin)
+  (package mesh-easymesh)
+  (files (EasyMesh.exe))))
