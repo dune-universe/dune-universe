@@ -1,0 +1,21 @@
+(library
+ ((name ppx_custom_printf)
+  (public_name ppx_custom_printf)
+  (kind ppx_rewriter)
+  (flags (:standard -safe-string))
+  (libraries (compiler-libs.common
+              ppx_core
+              ppx_driver
+              ppx_sexp_conv.expander
+              ppx_metaquot.lifters
+              ))
+  (preprocess (pps (ppx_metaquot ppx_traverse ppx_driver.runner)))))
+
+;; This copies the types from CamlinternalFormatBasics and adds
+;; [@@deriving traverse_lift]
+(rule
+ ((targets (format_lifter.ml))
+  (deps    (gen/gen.bc))
+  (action  (run ${<} -o format_lifter.ml))))
+
+(jbuild_version 1)

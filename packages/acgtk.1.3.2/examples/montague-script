@@ -1,0 +1,32 @@
+load d montague.acg;
+
+wait;
+
+# We first show that the term "LOVE MARY JOHN"
+# that is built in the "syntax" signature
+# is indeed of type s
+syntax check LOVE MARY JOHN : s;
+
+# And, for instance, that it is not of type np
+syntax check LOVE MARY JOHN : np;
+
+# How is that term realized as a string?
+# Just ask:
+syntactic_realisation realize LOVE MARY JOHN : s;
+
+# And how is it realised semantically?
+semantics realize LOVE MARY JOHN : s;
+
+# Now let's check the relalisation and the meaning of
+# (EVERY MAN) (lambda x. (SOME WOMAN) (lambda y. LOVE y x)) 
+# which of course is of type s;
+syntactic_realisation semantics realize (EVERY MAN) (lambda x. (SOME WOMAN) (lambda y. LOVE y x)) : s;
+
+# And the one of
+# (SOME WOMAN) (lambda y. (EVERY MAN) (lambda x. LOVE y x))
+# which is also of type s;
+syntactic_realisation semantics realize (SOME WOMAN) (lambda y. (EVERY MAN) (lambda x. LOVE y x)) : s;
+
+# Indeed, these two different syntactic terms have the same syntactic realisation
+# but two different meanings
+

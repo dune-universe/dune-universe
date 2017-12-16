@@ -1,0 +1,13 @@
+# Builtin configuration file
+
+  ".*\\.ml[il]?" -> line open:"(*" line:"-" close:"*)"
+| ".*\\.fml[i]?" -> line open:"(*" line:"-" close:"*)"
+| ".*\\.ac[g]?"	 -> line open:"(*" line:"-" close:"*)"
+| ".*-script"	 -> line open:"#"  line:"-" close:"#"
+| ".*\\.mly"     -> line open:"/*" line:"-" close:"*/"
+| ".*\\.dyp"     -> line open:"/*" line:"-" close:"*/"
+| ".*\\.[ch]"    -> line open:"/*" line:"-" close:"*/"
+| ".*Makefile.*" -> line open:"#"  line:"#" close:"#"
+| ".*README.*"   -> line open:"*"  line:"-" close:"*"
+| ".*INSTALL.*"  -> line open:"*"  line:"-" close:"*"
+

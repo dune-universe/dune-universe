@@ -1,0 +1,1 @@
+diff -I "\$Date" -I "\$Author" -I "\$Rev" -E -b -w -B -x "*.svn*" -q -r 

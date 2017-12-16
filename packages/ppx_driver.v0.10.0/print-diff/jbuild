@@ -1,0 +1,8 @@
+(library
+ ((name print_diff)
+  (public_name ppx_driver.print_diff)
+  (flags (:standard -safe-string))
+  (preprocess no_preprocessing)
+))
+
+(jbuild_version 1)

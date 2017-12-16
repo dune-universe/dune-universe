@@ -1,0 +1,58 @@
+signature Syntax=
+    S,NP,V,VP,PN,Det,N,Prep,PP,T:type;
+
+    subj:NP->VP->S;
+    
+    pn:PN->NP;
+    np:Det -> N -> NP;
+    np_pp: NP -> PP -> NP;
+
+    obj: V -> NP -> VP;
+    vp_pp : VP -> PP -> VP;
+
+    pp: Prep -> NP -> PP;
+
+    Jean:PN;
+    un:Det;
+    regarde:V;
+    dort:VP;
+    homme:N;
+    telescope:N;
+    avec:Prep;
+
+    loop1:T->NP;
+    loop2:NP->T;
+
+
+end
+
+signature Strings =
+    o:type;
+    string=o->o: type;
+    infix +=lambda x y z.x(y z):string -> string -> string;
+
+    Jean, regarde, dort,un ,homme, avec,telescope:string;
+
+
+end
+
+lexicon CFG (Syntax):Strings =
+    S,NP,V,VP,PN,Det,N,Prep,PP,T:=string;
+
+    subj,np,np_pp,obj,vp_pp,pp:=lambda x y.x+y;
+    
+    pn:=lambda x.x;
+
+    Jean:=Jean;
+    un:=un;
+    regarde:=regarde;
+    dort:=dort;
+    homme:=homme;
+    telescope:=telescope;
+    avec:=avec;
+
+    loop1,loop2:=lambda x.x;
+end
+    
+
+    

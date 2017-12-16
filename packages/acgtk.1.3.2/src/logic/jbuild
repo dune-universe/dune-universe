@@ -1,0 +1,26 @@
+;; -*-lisp-*-
+
+(jbuild_version 1)
+
+;; This declares the Logic libreary
+(library
+ ((name logic)
+  (modules (:standard \ typeInference_test type_inference type_inference_test))
+  (preprocess (per_module
+	       ((action (system "${bin:camlp4} -parser o -parser op -printer a -loc loc ${lib:bolt:bolt_pp.cmo} -level NONE ${<}"  ))
+		(typeInference varUnionFind))
+	       ))
+  (libraries (dyp ; external library
+	      ANSITerminal ; external library
+	      utilsLib ; internal library
+	      ))))
+(executables
+ ((names (typeInference_test))
+  (modules (typeInference_test))
+  (libraries (threads
+	      utilsLib
+	      logic))))
+
+(alias
+ ((name testbuild)
+  (deps (typeInference_test.exe))))

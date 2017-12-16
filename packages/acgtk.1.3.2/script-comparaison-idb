@@ -1,0 +1,43 @@
+#!/bin/bash
+
+ACG_REF=$(which acg.opt)
+
+ACG=/home/pogodall/work/dev/acg/dev/trunk/acg.opt
+
+TMP=/home/pogodall/tmp/acg-idbs
+
+echo Processing $1...
+
+LEXICONS="$(grep lexicon $1 | sed -n 's/.*lexicon *\([a-zA-Z0-9_]*\) *\(\((.*).*=\)\|\(=.*<<\)\).*/\1/p')"
+
+SCRIPT=$(printf "load d %s;\n" $1;\
+	 for lexicon in $LEXICONS ; do
+	     printf "%s idb;\n" $lexicon;
+	 done;\
+	 echo "exit;")
+
+FILE_DIR=$(dirname $1)
+BASENAME=$(basename $1)
+
+echo $SCRIPT > $TMP/$BASENAME-script
+
+echo REF computation
+echo "$SCRIPT" | $ACG_REF -I $FILE_DIR > $TMP/$BASENAME.ref
+
+echo "                    ============="
+echo New computation
+echo "$SCRIPT" | $ACG  -I $FILE_DIR > $TMP/$BASENAME.new
+echo "                    ============="
+
+
+
+diff $TMP/$BASENAME.ref $TMP/$BASENAME.new
+
+if [ $? -eq 0 ] ; then
+    echo "No difference for $1"
+else
+    echo "There are differences for $1"
+fi
+
+echo "***********************************************"
+    

@@ -1,0 +1,110 @@
+(*
+ *  This file is part of the Watson Conversation Service OCaml API project.
+ *
+ * Copyright 2016-2017 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *)
+
+open Wcs_lib
+open Wcs_api
+
+let process read_input_server get_input new_input text =
+  let input text =
+    let txt = get_input () in
+    Rml_async.safe_emit text txt
+  in
+  loop
+    await new_input;
+    run Rml_async.proc_of_fun input text
+  end
+
+
+let process print_output_server print_output computer_output =
+  loop
+    await computer_output (rule_opt, msg) in
+    print_output rule_opt msg
+  end
+
+let process rulebot wcs_cred bmd =
+  let computer_output_gather (r1, s1) (r2, s2) =
+    let r =
+      begin match r1, r2 with
+      | Some r, None | None, Some r -> Some r
+      | Some r, Some _ -> Some r
+      | None, None -> None
+      end
+    in
+    r, s2 ^ s1
+  in
+  signal text default "" gather (fun x y -> x) in
+  signal new_input default () gather (fun () () -> ()) in
+  signal stop default () gather (fun () () -> ()) in
+  signal computer_output default (None, "") gather computer_output_gather in
+  let ws_ids =
+    Rulebot_main.load_ws_ids wcs_cred
+      !Rulebot_main.workspaces_config
+      !Rulebot_main.ws_update
+      bmd
+  in
+  let get_input, print_output =
+    if !Rulebot_main.is_slack then
+      Slack_io.launch !Rulebot_main.slackbot
+    else (Io_util.get_input_stdin, Io_util.print_output_stdout)
+  in
+  do
+    run read_input_server get_input new_input text ||
+    run print_output_server print_output computer_output ||
+    let process user_input =
+      pause;
+      emit new_input ();
+      await text(line) in
+      line
+    in
+    let rule =
+      run R_dialog_ctrl.automaton wcs_cred ws_ids user_input computer_output
+    in
+    Io_util.print_rule rule;
+    emit stop
+  until stop done;
+  Io_util.print_done ()
+
+
+let () =
+  Arg.parse Rulebot_main.args Rulebot_main.anon_args Rulebot_main.usage;
+  let bmd =
+    begin match !Rulebot_main.bmd, !Rulebot_main.bom_io with
+    | None, None ->
+	("[Sample BMD]", Bmd_samples.creditcard_schema)
+    | None, Some io_file ->
+	let io_j = Rulebot_main.load_io io_file
+	in
+        ("[BMD from "^io_file^"]", Io_to_bmd.bmd_of_io io_j)
+    | Some file, _ ->
+	(Parser_util.string_of_file file,
+         Bmd_spec_to_bmd.bmd_schema_of_spec
+           (Parser_util.parse_bmd_spec_from_file file))
+    end
+  in
+  begin match !Rulebot_main.rulebot_mode with
+  | Rulebot_main.M_bot ->
+      let wcs_cred = Wcs_bot.get_credential !Rulebot_main.wcs_credential in
+      run rulebot wcs_cred bmd
+  | Rulebot_main.M_nothing->
+      Arg.usage Rulebot_main.args Rulebot_main.usage
+  | Rulebot_main.M_ws_gen ->
+      Rulebot_main.workspaces_generation bmd
+  | Rulebot_main.M_ws_delete ->
+      let wcs_cred = Wcs_bot.get_credential !Rulebot_main.wcs_credential in
+      Rulebot_main.workspaces_delete wcs_cred
+  end

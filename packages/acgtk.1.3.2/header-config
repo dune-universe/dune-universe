@@ -1,0 +1,15 @@
+# Builtin configuration file
+
+  ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.fml[i]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.ac[g]?"	 -> frame open:"(*" line:"*" close:"*)"
+| ".*-script" -> frame open:"#"  line:"#" close:"#"
+| ".*\\.mly"     -> frame open:"/*" line:"*" close:"*/"
+| ".*\\.dyp"     -> frame open:"/*" line:"*" close:"*/"
+| ".*\\.[ch]"    -> frame open:"/*" line:"*" close:"*/"
+| ".*Makefile.*" -> frame open:"#"  line:"#" close:"#"
+| ".*README.*"   -> frame open:"*"  line:"*" close:"*"
+| ".*INSTALL.*"  -> frame open:"*"  line:"*" close:"*"
+| ".*\\.el"	-> frame open:";;" line:";" close: ""
+
+

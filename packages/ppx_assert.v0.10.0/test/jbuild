@@ -1,0 +1,13 @@
+(library
+ ((name ppx_assert_test_lib)
+  (flags (:standard -safe-string))
+  (libraries (sexplib str))
+  (preprocess
+   (pps (ppx_type_conv
+         ppx_compare
+         ppx_sexp_conv
+         ppx_here
+         ppx_assert
+         ppx_inline_test ppx_driver.runner)))))
+
+(jbuild_version 1)

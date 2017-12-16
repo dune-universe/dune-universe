@@ -1,0 +1,162 @@
+##########################################################################
+#                                                                        #
+#                 ACG development toolkit                                #
+#                                                                        #
+#                  Copyright 2008 INRIA                                  #
+#                                                                        #
+#  More information on "http://acg.gforge.inria.fr/"                     #
+#  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     #
+#  Authors: see the AUTHORS file                                         #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#  $Rev::                              $:  Revision of last commit       #
+#  $Author::                           $:  Author of last commit         #
+#  $Date::                             $:  Date of last commit           #
+#                                                                        #
+##########################################################################
+
+.PHONY: config byte opt clean superclean install uninstall tar version release test force www install-all install-emacs install-examples uninstall-all uninstall-emacs uninstall-examples
+
+BINARIES=acg acg.opt acgc acgc.opt
+
+VERSION_FILE = src/utils/version.ml
+VERSION_BASENAME=1.3.2
+VERSION = $(VERSION_BASENAME)-$(shell date "+%Y%m%d")
+RELEASE = acg-$(VERSION)
+
+#TAR_RELEASE =acg-$(TAR_VERSION)
+TAR_RELEASE = $(RELEASE)
+
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+ACG_DIR=src/scripting
+ACGC_DIR=src/grammars
+
+DATA_DIR=@datarootdir@/acgtk
+
+
+
+
+byte: acg acgc
+
+opt: acg.opt acgc.opt
+
+all: byte opt test
+
+acg acg.opt: force
+	$(MAKE) -C $(ACG_DIR) $@
+	cp $(ACG_DIR)/$@ .
+
+acgc acgc.opt: force
+	$(MAKE) -C $(ACGC_DIR) $@
+	cp $(ACGC_DIR)/$@ .
+
+force:
+
+
+test:
+	$(MAKE) -C src $@
+
+clean:
+	-if test "$@" = clean ; then $(MAKE) -C config $@ ; fi
+	-$(MAKE) -C src $@
+	rm -rf *.log  *~ autom4te.cache *.tar.gz *.acgo
+	find . -name "*~" -exec rm -f {} \;
+	-for file in $(BINARIES); do rm -f $$file ; done
+
+superclean: clean
+	-find . -path "./*/*.in" -print | sed -e 's/\(.*\)\.in/\1/' | xargs -n 1 rm
+
+
+install-all: install install-emacs install-examples
+
+uninstall-all: uninstall uninstall-emacs uninstall-examples
+
+install:
+	mkdir -p @bindir@ && for file in $(BINARIES); do if test -x $$file ; then cp $$file @bindir@/. ; fi ; done
+
+uninstall:
+	for file in $(BINARIES); do if test -x @bindir@/$$file ; then rm @bindir@/$$file ; fi ; done
+	rm -r $(DATA_DIR)
+
+install-emacs:
+	mkdir -p $(DATA_DIR) && cp -r emacs $(DATA_DIR)/.
+
+uninstall-emacs:
+	rm -rf $(DATA_DIR)/emacs
+
+install-examples:
+	mkdir -p $(DATA_DIR) && cp -r examples $(DATA_DIR)/.
+
+uninstall-examples:
+	rm -rf $(DATA_DIR)/examples
+
+
+
+# Part for the auto configuration
+
+config: configure
+
+configure: config/configure.ac  config/ac_lib_checking.m4
+	cd $(<D) && autoconf && mv configure .. & cd ..
+
+tar: TAR_VERSION = $(shell grep "version" $(VERSION_FILE) | sed -e 's/^.*version.* = "\(.*\)"/\1/')
+
+tar: superclean
+	if test -d ../$(TAR_RELEASE) ; then rm ../$(TAR_RELEASE) ; fi
+	cd .. && ln -s trunk $(TAR_RELEASE) && cd trunk
+	echo $(TAR_RELEASE).tar.gz
+	tar cvfz ../$(TAR_RELEASE).tar.gz -C ..  -h $(TAR_RELEASE) --exclude="*/.svn*" --exclude "$(TAR_RELEASE)/data" --exclude "$(TAR_RELEASE)/src/data" --exclude "$(TAR_RELEASE)/src/*.old" --exclude "$(TAR_RELEASE)/*.tar.*" --exclude "$(TAR_RELEASE)/TODO" --exclude "$(TAR_RELEASE)/*~" --exclude "opam-package" && mv ../$(TAR_RELEASE).tar.gz .
+	if test -d ../$(TAR_RELEASE) ; then rm ../$(TAR_RELEASE) ; fi
+	./configure
+
+version :
+	sed -i 's/\(VERSION *= *\)".*"/\1"$(VERSION)"/' config/configure.ac
+	sed -i 's/\(version *= *\)".*"/\1"$(VERSION)"/' $(VERSION_FILE)
+
+www:
+	cp acg-$(VERSION).tar.gz ~/www-acg/software/.
+	scp acg-$(VERSION).tar.gz pogodall@loria.loria.fr:www-acg/software/.
+	scp INSTALL pogodall@loria.loria.fr:www-acg/software/.
+	scp README pogodall@loria.loria.fr:www-acg/software/.
+	cp INSTALL ~/www-acg/software/.
+	cp README ~/www-acg/software/.
+	sed -i -e 's/acg-[^-]*-[0-9]*\.tar\.gz/acg-$(VERSION).tar.gz/' ~/www-acg/index.html
+	scp ~/www-acg/index.html pogodall@loria.loria.fr:www-acg/.
+
+release : version tar www
+	if svn status -q -u | grep -v "^Status against" | grep -q -v "opam-package/url" | grep -q -v "^\?" ; \
+	then  \
+	printf "\n\nERROR:\nPlease commit before making a release\n\n" ; \
+	else \
+	if svn list ^/dev/tags/release-$(VERSION) > /dev/null ; then \
+	printf "\n\nERROR: the svn tag directory already exists\n" ; \
+	else \
+	svn cp ^/dev/trunk ^/dev/tags/release-$(VERSION) -m "Tagging the $(VERSION) release of the 'acg' project" ; \
+	fi \
+	fi
+
+OPAM_TESTING_DIR=~/work/dev/opam-contrib/testing/packages
+OPAM_GIT_REPO_DIR=~/work/dev/opam-contrib/opam-repository/packages
+OPAM_ACG_REPO_DIR=~/www-acg/software/opam-acg
+
+opam-package/url: tar
+	md5sum acg-$(VERSION).tar.gz | cut -d " " -f 1 | xargs -i printf "archive: \"http://calligramme.loria.fr/acg/software/acg-$(VERSION).tar.gz\"\nchecksum: \"%s\"\n" {} > $@
+
+test-www-acg:
+	cd $(OPAM_ACG_REPO_DIR) && opam-admin make && scp -r . pogodall@loria.loria.fr:$(OPAM_ACG_REPO_DIR)
+
+opam-meta:
+	cp -rT opam-package $(OPAM_TESTING_DIR)/acgtk/acgtk.$(VERSION_BASENAME)
+	cp -rT opam-package $(OPAM_GIT_REPO_DIR)/acgtk/acgtk.$(VERSION_BASENAME)
+	cp -rT opam-package $(OPAM_ACG_REPO_DIR)/packages/acgtk/acgtk.$(VERSION_BASENAME) && cd $(OPAM_ACG_REPO_DIR) && opam-admin make && scp -r . pogodall@loria.loria.fr:$(OPAM_ACG_REPO_DIR)
+
+
+opam:opam-package/url www
+	cp -rT opam-package $(OPAM_TESTING_DIR)/acgtk/acgtk.$(VERSION_BASENAME)
+	cp -rT opam-package $(OPAM_GIT_REPO_DIR)/acgtk/acgtk.$(VERSION_BASENAME)
+	cp -rT opam-package $(OPAM_ACG_REPO_DIR)/packages/acgtk/acgtk.$(VERSION_BASENAME) && cd $(OPAM_ACG_REPO_DIR) && opam-admin make && scp -r . pogodall@loria.loria.fr:$(OPAM_ACG_REPO_DIR)

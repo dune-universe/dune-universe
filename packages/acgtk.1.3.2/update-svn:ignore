@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#DIRECTORIES=`find . -name "*.svn" -prune -o \( -type d -print \)`
+#IGNORE_PATTERNS="acg acgc acg.opt acgc.opt *.ps *.dot"
+
+#Pour supprimer les doublons
+DIRECTORIES=`find . -name "*.svn" -prune -o \( -type d -print \)`
+IGNORE_PATTERNS=
+
+
+#DIRECTORIES=`find . -name "scripting" `
+#IGNORE_PATTERNS="doc *_temp.ml"
+
+#DIRECTORIES=`find . -name "datalog" `
+#IGNORE_PATTERNS="test test.opt"
+
+
+#DIRECTORIES="."
+#IGNORE_PATTERNS="*.gz"
+
+for file in $DIRECTORIES ; do
+    TEMP_FILE=/tmp/svn.ignore
+    if `svn proplist $file | grep "svn:ignore" > /dev/null` ; then
+       svn propget svn:ignore $file | sort -u > $TEMP_FILE
+       for pattern in $IGNORE_PATTERNS ; do
+       	   echo $pattern >> $TEMP_FILE ;
+       done ;
+       printf "updating the svn:ignore property on the repository: %s\n" $file
+#       cat $TEMP_FILE
+       svn propset svn:ignore -F $TEMP_FILE $file
+    fi  
+done
+    

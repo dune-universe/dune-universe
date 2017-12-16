@@ -1,0 +1,38 @@
+(library
+ ((name ppx_core)
+  (libraries (ocaml-compiler-libs.common
+              compiler-libs.common
+              ocaml-compiler-libs.shadow
+              ppx_ast
+              base stdio
+              ppx_traverse_builtins))
+  (flags (:standard -open Ocaml_shadow -safe-string))
+  (public_name ppx_core)
+  (preprocess no_preprocessing)
+  ))
+
+(rule
+ ((targets (ast_pattern_generated.ml))
+  (deps    (gen/gen_ast_pattern.exe))
+  (action  (run ./gen/gen_ast_pattern.exe ${findlib:ppx_ast:ast.ml}))))
+
+(rule
+ ((targets (ast_builder_generated.ml))
+  (deps (gen/gen_ast_builder.exe))
+  (action  (run ./gen/gen_ast_builder.exe ${findlib:ppx_ast:ast.ml}))))
+
+(alias
+ ((name DEFAULT)
+  (deps (cinaps_helpers
+         (glob_files *.ml)
+         (glob_files *.mli)))
+  (action (bash "${bin:cinaps} *.ml *.mli"))))
+
+;; This is to make the code compatible with different versions of
+;; OCaml
+(rule
+ ((targets (compiler_specifics.ml))
+  (deps    (gen-compiler_specifics))
+  (action  (run ${OCAML} ${<} ${ocaml_version} ${@}))))
+
+(jbuild_version 1)

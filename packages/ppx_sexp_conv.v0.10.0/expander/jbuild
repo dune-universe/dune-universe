@@ -1,0 +1,10 @@
+(library
+ ((name ppx_sexp_conv_expander)
+  (public_name ppx_sexp_conv.expander)
+  (flags (:standard -safe-string))
+  (libraries (ppx_core))
+  (ppx_runtime_libraries (sexplib))
+  (preprocess (pps (ppx_metaquot ppx_driver.runner)))
+  ))
+
+(jbuild_version 1)

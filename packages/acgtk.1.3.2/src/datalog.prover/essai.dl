@@ -1,0 +1,9 @@
+
+TUTU(i).
+
+TOUTOU(1,2,j):-titou(1,k),TOTO(k,j).
+
+TOTO(i,j):-TITI(i,j,k),TOTO(i,j),tagada(1).
+
+titou(i,j):- TUTU(i).
+

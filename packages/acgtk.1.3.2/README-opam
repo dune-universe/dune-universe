@@ -1,0 +1,5 @@
+Before commiting changes, run:
+
+git remote add upstream https://github.com/ocaml/opam-repository
+git fetch upstream
+git rebase upstream/master

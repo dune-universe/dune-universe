@@ -1,0 +1,12 @@
+(library
+ ((name sexplib)
+  (libraries (bigarray sexplib0))
+  (flags (:standard -safe-string))
+  (public_name sexplib)
+  (preprocess (per_module ((action (system "${PA_CPP} ${<}")) (pre_sexp))))
+))
+
+(ocamllex (lexer))
+(ocamlyacc (parser parser_with_layout))
+
+(jbuild_version 1)

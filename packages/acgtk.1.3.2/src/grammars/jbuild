@@ -1,0 +1,37 @@
+;; -*-lisp-*-
+
+(jbuild_version 1)
+
+(rule
+ ((targets (data_parser.ml))
+  (deps    (data_parser.dyp))
+  (action  (chdir ${ROOT} (run ${bin:dypgen} --noemit-token-type --no-pp --no-obj-type --no-mli ${<}))))
+ )
+
+(ocamllex (data_lexer))
+
+;; This stanza declares the Grammar library
+(library
+ ((name grammars)
+  (preprocess (per_module ((action  (system "${bin:camlp4} -parser o -parser op -printer a -loc loc ${lib:bolt:bolt_pp.cmo} -level NONE ${<}"  ))(entry))))
+  (flags (:standard -w -58))
+  (modules (:standard \ acgc interactive))
+  (libraries (
+	      logic
+	      acgData
+   	      ))
+  ))
+
+;; This declares the acgc executable implemented by acgc.ml
+(executable
+ ((name acgc)
+  (public_name acgc)
+  (package acgtk)
+  (modules acgc)
+  (libraries (
+	      threads
+	      logic
+	      acgData
+	      grammars
+	      ))))
+

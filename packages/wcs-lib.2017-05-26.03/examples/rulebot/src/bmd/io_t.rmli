@@ -1,0 +1,31 @@
+open Wcs_lib
+
+type json = Json_t.json
+
+type type_def = {
+  io_typeName (*atd typeName *): string;
+  io_typeDef (*atd typeDef *): json
+}
+
+type derives_from = {
+  io_sub (*atd sub *): string;
+  io_sup (*atd sup *): string
+}
+
+type brand_type = {
+  io_brand (*atd brand *): string;
+  io_typeName (*atd typeName *): string
+}
+
+type schema = {
+  io_hierarchy (*atd hierarchy *): derives_from list;
+  io_brandTypes (*atd brandTypes *): brand_type list;
+  io_typeDefs (*atd typeDefs *): type_def list;
+  io_globals (*atd globals *): json
+}
+
+type io = {
+  io_schema (*atd schema *): schema;
+  io_input (*atd input *): json;
+  io_output (*atd output *): json
+}

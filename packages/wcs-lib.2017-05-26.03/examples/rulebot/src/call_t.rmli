@@ -1,0 +1,10 @@
+open Wcs_lib
+
+type json = Json_t.json
+
+type call = {
+  call_workspace_id (*atd workspace_id *): string;
+  call_text (*atd text *): string;
+  call_context (*atd context *): json;
+  call_return (*atd return *): string option
+}

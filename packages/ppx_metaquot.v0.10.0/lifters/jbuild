@@ -1,0 +1,9 @@
+(library
+ ((name        ppx_metaquot_lifters)
+  (public_name ppx_metaquot.lifters)
+  (flags (:standard -safe-string))
+  (libraries   (ppx_core ppx_traverse_builtins))
+  (preprocess  no_preprocessing)
+))
+
+(jbuild_version 1)

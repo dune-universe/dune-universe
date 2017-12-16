@@ -1,0 +1,58 @@
+##########################################################################
+#                                                                        #
+#                 ACG development toolkit                                #
+#                                                                        #
+#                  Copyright 2008 INRIA                                  #
+#                                                                        #
+#  More information on "http://acg.gforge.inria.fr/"                     #
+#  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     #
+#  Authors: see the AUTHORS file                                         #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#  $Rev:: 380                          $:  Revision of last commit       #
+#  $Author:: pogodall                  $:  Author of last commit         #
+#  $Date:: 2012-11-19 14:57:00 +0100 (#$:  Date of last commit           #
+#                                                                        #
+##########################################################################
+
+include ../Makefile.master
+
+###############################
+#                             #
+# Set the following variables #
+#                             #
+###############################
+
+# Used libraries
+LIBS += dyp.cma str.cma ANSITerminal.cma 
+
+# The corresponding directories
+# (if not in the main ocaml lib directory,
+# ex. -I  +campl4
+LIBDIR += -I /home/pogodall/.opam/4.05.0/lib/dyp  -I /home/pogodall/.opam/4.05.0/lib/ANSITerminal
+
+# Directories to which the current source files depend on
+PREVIOUS_DIRS = ../utils
+
+# Source files in the right order of dependance
+
+ML = persistentArray.ml arrayTraversal.ml unionFind.ml datalog_AbstractSyntax.ml datalog.ml db_parser.ml db_lexer.ml
+
+EXE_SOURCES = test.ml db_test.ml
+
+CAMLLEX = db_lexer.mll
+
+####################################
+#                                  #
+# End of the configuration section #
+#                                  #
+####################################
+
+include ../Makefile.common
+
+db_lexer.ml : db_parser.mli
+
+db_parser.mli : db_parser.mly
+	ocamlyacc $<

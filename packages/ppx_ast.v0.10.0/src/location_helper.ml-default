@@ -1,0 +1,1 @@
+let deprecated loc s = Ocaml_common.Location.prerr_warning loc (Ocaml_common.Warnings.Deprecated s)

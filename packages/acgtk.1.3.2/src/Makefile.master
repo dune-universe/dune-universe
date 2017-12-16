@@ -1,0 +1,65 @@
+##########################################################################
+#                                                                        #
+#                 ACG development toolkit                                #
+#                                                                        #
+#                  Copyright 2008 INRIA                                  #
+#                                                                        #
+#  More information on "http://acg.gforge.inria.fr/"                     #
+#  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     #
+#  Authors: see the AUTHORS file                                         #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#  $Rev::                              $:  Revision of last commit       #
+#  $Author::                           $:  Author of last commit         #
+#  $Date::                             $:  Date of last commit           #
+#                                                                        #
+##########################################################################
+
+DEBUGFLAG   = -g
+OCAMLCPOPT = -p fm
+
+# Remove warnings:
+#	58: Missing cmx file
+DISABLED_WARNINGS=-58
+
+
+
+# All warnings are treated as errors
+WARNINGS = -w z -w $(DISABLED_WARNINGS) -warn-error A
+COMMONFLAGS= $(WARNINGS) -dtypes
+BYTEFLAGS = $(COMMONFLAGS) $(DEBUGFLAG)
+OPTFLAGS = $(COMMONFLAGS)
+LFLAGS= -a
+
+
+TITLE="The ACG Development Toolkit Documentation"
+OCAMLDOC_FLAGS = -sort -keep-code -html -t $(TITLE)
+#CAMLDOC_FLAGS = -html -t $(TITLE)
+
+BOLT_DEPENDENCIES=unix.cma
+BOLT_LEVEL=NONE
+
+CAMLP4_DEPENDENCIES=dynlink.cma
+
+LIBS = $(CAMLP4_DEPENDENCIES) camlp4lib.cma $(BOLT_DEPENDENCIES) bolt.cma 
+LIBDIR = -I +camlp4 -I /home/pogodall/.opam/4.05.0/lib/bolt
+
+MACRO_PP_ARGS=-DDEBUG
+
+OCAMLPP_ARG= pa_extend.cmo pa_macro.cmo $(MACRO_PP_ARGS) -loc loc /home/pogodall/.opam/4.05.0/lib/bolt/bolt_pp.cmo -level $(BOLT_LEVEL)
+OCAMLPP = -pp "camlp4o $(OCAMLPP_ARG)"
+ifeq ($(strip ),)
+KAPUTT_OCAMLPP = $(OCAMLPP)
+else
+KAPUTT_OCAMLPP = -pp " off camlp4o $(OCAMLPP_ARG)"
+endif
+
+
+
+# Make byte the very first target
+byte: 
+
+config:
+	pushd ../.. && ./configure && popd

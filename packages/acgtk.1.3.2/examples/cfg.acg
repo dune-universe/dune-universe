@@ -1,0 +1,101 @@
+signature strings =
+    s:type ;
+    string = s->s : type;
+    infix + = lambda g f x.g(f x) : string -> string -> string;
+    
+    (*	string: type;
+       infix + : string -> string -> string; *)
+    
+    epsilon = lambda x.x:string;
+    
+    a,b,c:string;    
+end
+
+
+signature CFG1 =
+    S:type;
+
+    r1 : S -> S -> S;
+    r2 : S;
+
+end
+
+(* L1 is the Dyck language of well-nested brackets *)
+lexicon L1 (CFG1):strings=
+    S:= string;
+
+    r1:=lambda s s'.a+s+b+s';
+    r2:=epsilon
+end
+
+signature CFG2 =
+    S,A,C,A0,A1,A2,C0,C1,C2:type;
+
+    r0: A -> S;
+    r1: C -> S;
+    
+    r2: A0 -> C2 -> A;
+    r3: A1 -> C2 -> A;
+
+    r4: C2;
+    r5: C2 -> C2;
+
+    r6: A0;
+    r7: A0 -> A0;
+    r8: A0 -> A0;
+
+    r9: A1;
+    r10: A1 -> A1;
+    r11: A1 -> A1;
+
+    r12: A2 -> C0 -> C;
+    r13: A2 -> C1 -> C;
+
+    r14: A2;
+    r15: A2 -> A2;
+
+    r16: C0;
+    r17: C0 -> C0;
+    r18: C0 -> C0;
+
+    r19: C1;
+    r20: C1 -> C1;
+    r21: C1 -> C1;
+end
+
+(* L2 is the language {a^i b^j c^k | i<>j or j<>k} *)
+lexicon L2(CFG2):strings =
+    S,A,C,A0,A1,A2,C0,C1,C2:= string;
+    
+    r0,r1 := lambda x.x;
+
+    r2,r3:= lambda x y.x + y;
+
+    r4:= c;
+
+    r5:= lambda x. c + x;
+
+    r6:= a;
+    r7:= lambda x. a + x;
+    r8:= lambda x. a + x + b;
+
+    r9:= b;
+    r10:= lambda x. x + b;
+    r11:= lambda x. a + x + c;
+
+    r12,r13:= lambda x y.x + y;
+
+    r14:= a;
+    r15:= lambda x. a + x;
+
+    r16:= c;
+    r17:= lambda x. x + c;
+    r18:= lambda x. b + x + c;
+
+    r19:= b;
+    r20:= lambda x. b + x;
+    r21:= lambda x. b + x + c;
+end
+
+    
+    

@@ -1,0 +1,36 @@
+;; -*-lisp-*-
+
+(jbuild_version 1)
+
+(ocamllex (db_lexer))
+(ocamlyacc (db_parser))
+
+;; This stanza declares the DatalogLib
+(library
+ ((name datalogLib)
+  (preprocess (per_module
+	       ((action (system "${bin:camlp4} -parser o -parser op -printer a -loc loc ${lib:bolt:bolt_pp.cmo} -level NONE ${<}"  ))
+		(datalog unionFind))
+	       ))
+  (modules (:standard db_parser db_lexer \ test db_test))
+  (libraries (bolt ; external libraries
+	      str ; external libraries
+	      ANSITerminal ; external libraries
+	      utilsLib ; internal library
+	      ))))
+
+(executables
+ ((names (test db_test))
+  (modules (test db_test))
+  (preprocess (per_module
+	       ((action (system "${bin:camlp4} -parser o -parser op -printer a -loc loc ${lib:bolt:bolt_pp.cmo} -level NONE ${<}"  ))
+		(db_test))
+	       ))
+  (libraries (threads
+	      utilsLib
+	      datalogLib))))
+
+(alias
+ ((name testbuild)
+  (deps (test.exe db_test.exe))))
+

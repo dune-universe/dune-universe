@@ -1,0 +1,19 @@
+{
+    "signatures": [
+	{ "name": "TAG", "engine": "trees" },
+	{ "name": "DSTAG", "engine": "trees" },
+	{ "name": "CoTAG", "engine": "trees" },
+	{ "name": "derivations", "engine": "trees" },
+	{ "name": "strings", "engine" : "strings"},
+	{ "name": "Strings", "engine" : "strings"},
+	{ "name": "logic", "engine" : "logic"},
+	{ "name": "low_logic", "engine" : "logic"},
+	{ "name": "derived_trees", "engine" : "unranked trees"},
+	{ "name": "Derived_trees", "engine" : "unranked trees"},
+	{ "name": "trees", "engine" : "unranked trees"},
+    ],
+  "colors": {
+    "node-background": (128, 128, 128),
+      "Background": (1,2,4)
+  }
+}

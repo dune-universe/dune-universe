@@ -1,0 +1,709 @@
+/*-*- mode: tuareg -*-*/
+/**************************************************************************/
+/*                                                                        */
+/*                 ACG development toolkit                                */
+/*                                                                        */
+/*                  Copyright 2008 INRIA                                  */
+/*                                                                        */
+/*  More information on "http://acg.gforge.inria.fr/"                     */
+/*  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     */
+/*  Authors: see the AUTHORS file                                         */
+/*                                                                        */
+/*                                                                        */
+/*                                                                        */
+/*                                                                        */
+/*  $Rev::                              $:  Revision of last commit       */
+/*  $Author::                           $:  Author of last commit         */
+/*  $Date::                             $:  Date of last commit           */
+/*                                                                        */
+/**************************************************************************/
+
+ %mltop {
+
+      
+  open Dyp
+
+  open UtilsLib
+
+  open Logic
+  open Abstract_syntax
+
+  open AcgData
+         
+  open Environment
+
+  module Env = Utils.StringSet
+    
+
+  type token=Acg_token.Token.t
+  open Acg_token.Token
+               
+  (*  module Make (E:Environment.Environment_sig) = *)
+  module Parser =
+  struct  
+        
+    type local_data =
+      | Signature of Environment.Signature1.t
+      | Abs_and_obj of (Environment.Signature1.t * Environment.Signature1.t)
+      | Env of Environment.t
+
+}
+
+{
+
+  open Entry
+
+  exception No_sig
+
+  let cpt = ref 0
+
+  let incr () = cpt := (!cpt)+1
+
+  let cpt_to_string () = Printf.sprintf "%d" !cpt
+
+  type type_or_cst =
+    | Nothing
+    | Type
+    | Cst
+    | Both
+
+  let type_or_cst_to_string = function
+    | Nothing -> "Nothing"
+    | Type -> "Type"
+    | Cst -> "Cst"
+    | Both -> "Both"
+
+  exception Is_type
+  exception Is_cst
+
+  let emit_parse_error e loc = raise (Error.Error (Error.Parse_error (e,loc)))
+
+  let local_data = None
+
+  let global_data = false
+
+(*  type abstraction =
+    | Linear
+    | Non_linear  *)
+
+      
+  let new_loc (s,_) (_,e) = (s,e)
+
+  let get_term_location = function
+    | Abstract_syntax.Var (_,l) -> l
+    | Abstract_syntax.Const (_,l) -> l
+    | Abstract_syntax.Abs (_,_,_,l) -> l
+    | Abstract_syntax.LAbs (_,_,_,l) -> l
+    | Abstract_syntax.App (_,_,l) -> l
+
+
+  let abs x l1 t = function
+    | Abstract_syntax.Linear -> Abstract_syntax.LAbs (x,l1,t,new_loc l1 (get_term_location t))
+    | Abstract_syntax.Non_linear -> Abstract_syntax.Abs (x,l1,t,new_loc l1 (get_term_location t))
+
+  let rec multiple_abs e ws k_a ids t k =
+    match ids with
+      | [] -> k (t e ws)
+      | [a,l_a] ->
+	  let new_t,new_ws = t (Env.add a e) ws in
+	    k (abs a l_a new_t k_a,new_ws)
+      | (a,l_a)::((_,l_b)::_ as tl) -> 
+	  let new_env = Env.add a e in
+	    multiple_abs new_env ws k_a tl t (fun r -> k (abs a l_a (fst r) k_a,(snd r)))
+
+  let reset_location l = function
+    | Abstract_syntax.LAbs(x,l1,t,l2),ws -> Abstract_syntax.LAbs(x,l1,t,new_loc l l2),ws
+    | Abstract_syntax.Abs(x,l1,t,l2),ws -> Abstract_syntax.Abs(x,l1,t,new_loc l l2),ws
+    | _ -> failwith "Bug"
+
+  let bind c x l t lin = Abstract_syntax.App (c,abs x l t lin,new_loc l (get_term_location t))
+
+  let rec multiple_bind e ws binder lin ids t k =
+    match ids with
+      | [] -> k (t e ws)
+      | [a,l_a] ->
+	  let new_t,new_ws = t (Env.add a e) ws in
+	    k (bind binder a l_a new_t lin,new_ws)
+      | (a,l_a)::((_,l_b)::_ as tl) ->
+	  let new_env = Env.add a e in
+	    multiple_bind new_env ws binder lin tl t (fun r -> k (bind binder a l_a (fst r) lin,(snd r)))
+
+  let reset_binder_location l1 = function
+    | Abstract_syntax.App(u,v,l2),ws -> Abstract_syntax.App(u,v,new_loc l1 l2),ws
+    | _ -> failwith "Bug"
+
+
+  let get_sig_value = function
+    | None -> raise No_sig
+    | Some (Signature s) -> s
+    | Some (Abs_and_obj (_,o)) -> o
+    | Some (Env _) -> failwith "Bug: looking for a signature while env is the current local data"
+
+  let get_abs_and_obj_sig_value = function
+    | None -> raise No_sig
+    | Some (Signature _) -> failwith "Bug: looking for an abs_obj while signature is the current local data"
+    | Some (Abs_and_obj (a,o)) -> a,o
+    | Some (Env _) -> failwith "Bug: looking for an abs_obj while env is the current local data"
+
+
+  let get_env_value = function
+    | None -> Environment.empty
+    | Some (Env e) -> e
+    | Some (Abs_and_obj _) -> failwith "Bug: looking for an env while abs_obj is the current local data"
+    | Some (Signature _) -> failwith "Bug: looking for an env while signature is the current local data"
+
+
+  let raise_expect v (p1,p2) =
+    let s = Entry.valuation_to_string v in
+      raise (Error.Error (Error.Lexer_error (Error.Expect s,(p1,p2))))
+
+	
+}
+
+
+%token
+EOI
+					 <Abstract_syntax.location> EQUAL
+					 <Abstract_syntax.location> COMPOSE
+					 <Abstract_syntax.location> SEMICOLON
+					 <Abstract_syntax.location> COLON
+					 <Abstract_syntax.location> COMMA
+					 <Abstract_syntax.location> LPAREN
+					 <Abstract_syntax.location> RPAREN
+					 <Abstract_syntax.location> DOT
+					 <Abstract_syntax.location> SIG_OPEN
+					 <Abstract_syntax.location> LEX_OPEN
+					 <Abstract_syntax.location> NL_LEX_OPEN
+					 <Abstract_syntax.location> END_OF_DEC
+					 <Abstract_syntax.location> TYPE
+					 <Abstract_syntax.location> PREFIX
+					 <Abstract_syntax.location> INFIX
+					 <Abstract_syntax.location> BINDER
+					 <Abstract_syntax.location> LAMBDA
+					 <Abstract_syntax.location> LAMBDA0
+					 <Abstract_syntax.location> ARROW
+					 <Abstract_syntax.location> COLON_EQUAL
+					 <Abstract_syntax.location> LIN_ARROW
+					 <(string*Abstract_syntax.location)> IDENT
+					 <(string*Abstract_syntax.location)> SYMBOL
+
+/*  
+%start <Environment.t> data  
+%start <Environment.Signature1.t -> Environment.Signature1.t> sig_entry  
+%start <Environment.Lexicon.t -> Environment.Lexicon.t> lex_entry
+%start <(Environment.Signature1.term*Environment.Signature1.stype)> term_alone
+*/
+
+/* optional types for entry points are removed due to a bug in dypgen 20090430 */
+%start data  
+%start sig_entry  
+%start lex_entry
+%start term_alone
+%start heterogenous_term_and_type
+%start term
+%start type_expression
+
+  
+%relation atom<app<sym_app<binder atom_type<arrow_type
+
+/** Dypgen repository */
+/*%local_data_type <(local_data option)>
+%global_data_type <(bool)>*/
+  
+%%
+
+  data:
+| EOI {get_env_value dyp.last_local_data}
+| signature<s> ...@{s,[Local_data (Some (Env (Environment.insert ~override:dyp.global_data (Environment.Signature s) ~to_be_dumped:true (get_env_value dyp.last_local_data))))]} data<d> {d}
+| lexicon<l> ...@{let () = Environment.Lexicon.check l in l,[Local_data (Some (Env (Environment.insert ~override:dyp.global_data (Environment.Lexicon l) ~to_be_dumped:true (get_env_value dyp.last_local_data))))]} data<d> {d}
+  
+      signature : 
+| SIG_OPEN sig_ident EQUAL sig_entries {$4}
+| SIG_OPEN sig_ident EQUAL sig_entries {$4}
+| IDENT<extend_kwd,extend_loc>
+		     SIG_OPEN
+		       IDENT<name,loc> IDENT<with_kwd,with_loc>
+				       ...@{
+					 let () =
+					   if (extend_kwd<>"extend")&&(with_kwd<>"with")  then
+					     raise Dyp.Giveup
+					   else
+					     () in
+					 let env = get_env_value dyp.last_local_data in
+					 let signature = 
+					   try
+					     Environment.get_signature name env
+					   with
+					   | Environment.Signature_not_found _ -> raise Dyp.Giveup in
+					 signature,[Local_data (Some (Signature (signature)))]}
+				       sig_entries {$5}
+				       
+      sig_ident :
+| IDENT<n> @{n,[Local_data (Some (Signature (Environment.Signature1.empty n)))]}
+	  
+	  lexicon : 
+| LEX_OPEN lex_opening<l> EQUAL lex_entries<e> {e (l~non_linear:false)}
+| LEX_OPEN lex_opening<l> EQUAL lex_entries<e> {e (l ~non_linear:false)}
+| NL_LEX_OPEN lex_opening<l> EQUAL lex_entries<e> {e (l ~non_linear:true)}
+| LEX_OPEN IDENT<name> EQUAL lexicon_composition<c> {c name}
+
+lexicon_composition :
+| IDENT<name1,loc> COMPOSE composition_argument<l> {
+  fun name ->
+    try
+      let env=get_env_value dyp.last_local_data in
+      let l1 = Environment.get_lexicon name1 env in
+      Environment.Lexicon.compose l1 (l ("__NO__NAME__",(Lexing.dummy_pos,Lexing.dummy_pos))) ( name)
+    with
+    | Environment.Lexicon_not_found _ -> 
+      emit_parse_error (Error.No_such_signature name1) loc}
+| LPAREN lexicon_composition<c> RPAREN {c}
+
+composition_argument:
+| IDENT<name,loc> {fun res_name-> 
+  try
+    Environment.get_lexicon name (get_env_value dyp.last_local_data)
+  with
+  | Environment.Lexicon_not_found _ -> 
+    emit_parse_error (Error.No_such_signature name) loc}
+| lexicon_composition<c> {c}
+
+
+      lex_opening :
+| IDENT<name> LPAREN IDENT<abs_name,abs_loc> RPAREN COLON IDENT<obj_name,obj_loc> @{
+    let env = get_env_value dyp.last_local_data in
+    let abs = 
+      try
+	Environment.get_signature abs_name env
+      with
+      | Environment.Signature_not_found _ -> emit_parse_error (Error.No_such_signature abs_name) abs_loc in
+    let obj = 
+      try
+	Environment.get_signature obj_name env
+      with
+      | Environment.Signature_not_found _ -> emit_parse_error (Error.No_such_signature obj_name) obj_loc in
+    let lex = fun ~non_linear ->
+      Environment.Lexicon.empty name ~abs:abs ~obj:obj ~non_linear:non_linear in
+      lex,[Local_data (Some (Abs_and_obj (abs,obj)))]}
+
+sig_entries :
+| END_OF_DEC {get_sig_value dyp.local_data}
+| sig_entry END_OF_DEC {$1 (get_sig_value dyp.local_data)}
+| sig_entry
+      SEMICOLON ...@{let new_sg = $1 (get_sig_value dyp.local_data) in
+		       (new_sg,[Local_data (Some (Signature new_sg))])}
+      sig_entries @{$4,[Local_data (Some (Signature $4))]}
+      
+      sig_entry :
+| type_declaration {$1}
+| type_definition {$1}
+| term_declaration {$1}
+| term_definition {$1}
+
+
+      
+      
+      
+      type_declaration :
+| comma_ids COLON TYPE {
+    fun s ->
+      let new_sig =
+	List.fold_left
+	  (fun acc id ->
+	     try
+	       Environment.Signature1.add_entry (Abstract_syntax.Type_decl (fst id,snd id,(Abstract_syntax.K []))) acc
+	     with
+	       | Environment.Signature1.Duplicate_type_definition -> 
+		   let pos1,pos2= snd id in
+		     emit_parse_error (Error.Duplicated_type (fst id)) (pos1,pos2))
+	  s
+	  $1 in
+	new_sig}
+	  
+	  comma_ids :
+| IDENT<id> {[id]}
+| IDENT<id> COMMA comma_ids<id_list> {id::id_list}
+      
+      type_definition :
+| IDENT EQUAL type_expression COLON TYPE {
+    fun s ->
+      let new_sig =
+	try
+	  Environment.Signature1.add_entry (Abstract_syntax.Type_def (fst $1,snd $1,fst ($3 s),Abstract_syntax.K [])) s
+	with
+	  | Environment.Signature1.Duplicate_type_definition -> 
+	      let pos1,pos2= snd $1 in
+		emit_parse_error (Error.Duplicated_type (fst $1)) (pos1,pos2) in 
+	new_sig}
+| IDENT EQUAL type_expression COLON type_expression {let s = get_sig_value dyp.last_local_data in
+						       try
+							 let _ = $3 s in
+							   raise_expect Entry.Type_kwd (snd ($5 s))
+						       with
+							 | Error.Error (Error.Parse_error ((Error.Unknown_type _),_)) -> raise Dyp.Giveup}
+| IDENT EQUAL type_expression COLON term {let s = get_sig_value dyp.last_local_data in
+					    try
+					      let _ = $3 s in
+					      let l = get_term_location (fst ($5 Env.empty [])) in
+						raise_expect Entry.Type_kwd l
+					    with
+					      | Error.Error (Error.Parse_error ((Error.Unknown_type _),_)) -> raise Dyp.Giveup
+					      | Error.Error (Error.Parse_error ((Error.Unknown_constant _),(p1,p2))) -> raise_expect Entry.Type_kwd (p1,p2)}
+	  
+    type_expression :
+| atomic_type {$1} atom_type
+| atomic_type (<= atom_type) arrow<a> type_expression (<=arrow_type)  {fun sg ->
+									  let ty1,loc1 = $1 sg in
+									  let ty2,loc2 = $3 sg in
+									  let new_loc = new_loc loc1 loc2 in (a (ty1,ty2,new_loc)),new_loc} arrow_type
+
+ arrow :
+| LIN_ARROW {fun (ty1,ty2,l) ->Abstract_syntax.Linear_arrow (ty1,ty2,l)}
+| ARROW {fun (ty1,ty2,l) ->Abstract_syntax.Arrow (ty1,ty2,l)}
+      
+      atomic_type :
+| IDENT {fun sg ->
+	   let id,((pos1,pos2) as l) = $1 in
+	     match Environment.Signature1.is_type id sg with
+	       | true -> Abstract_syntax.Type_atom (id,l,[]),l
+	       | false -> emit_parse_error (Error.Unknown_type id) (pos1,pos2)} atom_type
+| LPAREN type_expression RPAREN {fun sg -> fst ($2 sg),new_loc $1 $3} atom_type
+      
+      term_declaration :
+| term_dec_start COLON type_expression  {
+    fun s ->
+      let new_sig =
+	List.fold_left
+	  (fun acc (id,kind,loc) -> 
+	     try
+	       let ty = fst ($3 s) in
+	       Environment.Signature1.add_entry (Abstract_syntax.Term_decl (id,kind,loc,ty)) acc
+	     with
+	       | Environment.Signature1.Duplicate_term_definition -> 
+		   let pos1,pos2= loc in
+		     emit_parse_error (Error.Duplicated_term id) (pos1,pos2))
+	  s
+	  $1 in
+	new_sig}
+	  
+	  term_dec_start : 
+| comma_ids {List.map (fun (id,loc) -> (id,Abstract_syntax.Default,loc)) $1}
+| PREFIX SYMBOL<sym,l> {[sym,Abstract_syntax.Prefix,l]} 
+| INFIX SYMBOL<sym,l> {[sym,Abstract_syntax.Infix,l]}
+| BINDER IDENT {[fst $2,Abstract_syntax.Binder,snd $2]}
+      
+      term_def_start : 
+| IDENT {fst $1,Abstract_syntax.Default,snd $1}
+| PREFIX SYMBOL<sym,l> {(sym,Abstract_syntax.Prefix,l)}
+| INFIX SYMBOL<sym,l> {(sym,Abstract_syntax.Infix,l)}
+| BINDER IDENT {fst $2,Abstract_syntax.Binder,snd $2}
+
+
+      term_definition :
+| term_def_start EQUAL term COLON type_expression {fun s ->
+						     let id,k,l = $1 in
+						     let new_sig =
+						       try
+							 let term_value,ws = $3 Env.empty [] in
+							 let new_sig2 = Environment.Signature1.add_entry (Abstract_syntax.Term_def (id,k,l,term_value,fst ($5 s))) s  in 
+							   (match ws with
+							      | [] -> new_sig2
+							      | lst -> Environment.Signature1.add_warnings ws new_sig2) with
+							     | Environment.Signature1.Duplicate_term_definition ->
+								 emit_parse_error (Error.Duplicated_term id) (fst l,snd l) in
+						       new_sig}
+	  
+	  term_alone :
+| term<t> COLON type_expression<ty> EOI {let sg = (get_sig_value dyp.last_local_data) in
+					   Environment.Signature1.convert_term (fst (t Env.empty [])) (fst (ty sg)) sg }	  
+
+
+	      heterogenous_term_and_type :
+| term<t> ...@{t,let abs_sig,_=get_abs_and_obj_sig_value dyp.last_local_data in [Local_data (Some (Signature abs_sig))]} COLON type_expression<ty> EOI {
+  let abs_sig=get_sig_value dyp.last_local_data in
+  (fst (t Env.empty [])),(fst (ty abs_sig))}	  
+
+
+	  term :
+| LAMBDA0  idents DOT term {
+  let _sg = get_sig_value dyp.last_local_data in 
+      fun env ws -> reset_location $1 (multiple_abs env ws Abstract_syntax.Linear $2 $4 (fun x -> x))} binder
+| LAMBDA  idents DOT term {
+  let _sg = get_sig_value dyp.last_local_data in
+      fun env ws -> reset_location $1 (multiple_abs env ws Abstract_syntax.Non_linear $2 $4 (fun x -> x))} binder
+| IDENT<b>  idents<ids> DOT ...{let sg = get_sig_value dyp.last_local_data in
+				let binder,((p1,p2) as l) = b in
+				  match Environment.Signature1.is_constant binder sg with
+				    | true,Some Abstract_syntax.Binder -> (
+					match Environment.Signature1.get_binder_argument_functional_type binder sg with
+					  | None -> failwith "Binder of non functional type"
+					  | Some k -> k)
+				    | _ -> emit_parse_error (Error.Binder_expected binder) (p1,p2) }<lin>
+      term<t> {
+	let binder,((p1,p2) as l) = b in
+	  fun env ws -> reset_binder_location l (multiple_bind env ws (Abstract_syntax.Const(binder,l)) lin ids t (fun x -> x))} binder 
+| application(<=app) {$1} app 
+| atomic_term(<=atom)<arg1> SYMBOL<sym> ...{let id,((pos1,pos2) as l) = sym in
+					    let sg = get_sig_value dyp.last_local_data in
+					      match Environment.Signature1.is_constant id sg with
+						| true,Some (Abstract_syntax.Infix) -> Error.unset_infix ()
+						| true,_ -> raise Dyp.Giveup
+						| _ -> emit_parse_error (Error.Unknown_constant id) (pos1,pos2)}
+      term(<=app)<arg2> {let id,((pos1,pos2) as l) = sym in
+			   (fun env ws->
+			      let u1,ws1 = arg1 env ws in
+			      let u2,ws2 = arg2 env ws1 in
+				(Abstract_syntax.App (Abstract_syntax.App(Abstract_syntax.Const(id,l),u1,new_loc (get_term_location u1) l),u2,new_loc (get_term_location u1) (get_term_location u2))),ws2)}  app 
+      
+      atomic_term :
+| IDENT {let id,l=$1 in
+	 let s = get_sig_value dyp.last_local_data in 
+	 let is_constant,_ = Environment.Signature1.is_constant id s in
+	   fun env ws -> 
+	     match Env.mem id env,is_constant with
+	       | true,false -> Abstract_syntax.Var (id,l),ws
+	       | true,true -> Abstract_syntax.Var (id,l),(Error.Variable_or_constant (id,fst l,snd l))::ws
+	       | false,true -> Abstract_syntax.Const (id,l),ws
+	       | false,false ->emit_parse_error (Error.Unknown_constant id) (fst l,snd l)} atom
+| LPAREN term RPAREN {$2} atom
+| SYMBOL<sym> ...{let sg = get_sig_value dyp.last_local_data in
+	     let id,((pos1,pos2) as l) = sym in
+	       match Environment.Signature1.is_constant id sg with
+		 | true,Some (Abstract_syntax.Prefix) -> ()
+		 | true,_ -> let () = Error.set_infix sym in
+		     raise Dyp.Giveup
+		 | _ -> emit_parse_error (Error.Unknown_constant id) (pos1,pos2)}
+      term<t> {let id,((pos1,pos2) as l) = sym in
+		 (fun env ws ->
+		    let u2,ws2 = t env ws in
+		      (Abstract_syntax.App(Abstract_syntax.Const(id,l),u2,new_loc l (get_term_location u2))),ws2)} atom 
+	     
+	     application :
+| atomic_term(<=atom) {$1} app
+| application(<=app) atomic_term(<=atom) {fun e ws ->
+					    let u1,ws1 = $1 e ws in
+					    let u2,ws2 = $2 e ws1 in
+					      (Abstract_syntax.App(u1,u2,new_loc (get_term_location u1) (get_term_location u2))),ws2} app
+      
+      idents :
+| {[]}
+| IDENT idents {$1::$2}
+
+      lex_entries :      
+| END_OF_DEC {fun lex -> lex}
+| lex_entry<e> END_OF_DEC {fun lex -> e lex}
+| lex_entry<e> SEMICOLON lex_entries<es> {fun lex -> es (e lex)}
+
+    
+      lex_entry :
+| comma_ids_or_sym<ids> COLON_EQUAL ...{
+    let () = incr () in
+    let abs,obj = get_abs_and_obj_sig_value dyp.last_local_data in    
+    let kind =
+      List.fold_left
+	(fun k (id,loc) ->
+	   match k,fst (Environment.Signature1.is_constant id abs),Environment.Signature1.is_type id abs with
+	     | (Nothing|Cst|Both),true,false -> Cst
+	     | (Nothing|Both),true,true -> Both
+	     | Cst,true,_ -> Cst
+	     | (Nothing|Both),false,true -> raise Dyp.Giveup 
+	     | (Nothing|Both),false,false -> emit_parse_error (Error.Unknown_constant id) loc
+	     | Cst,false,_ -> emit_parse_error (Error.Unknown_constant id) loc
+	     | Type,_,_ -> failwith "Bug: should not occur")
+	Nothing
+	ids in
+      kind}<kind>
+	  term<t>  {
+	    try
+	      fun lex ->
+		let term = fst (t Env.empty []) in
+		List.fold_left
+		  (fun acc (id,loc) -> Environment.Lexicon.insert (Abstract_syntax.Constant (id,loc,term)) acc)
+		  lex
+		  ids
+	    with
+	    | Error.Error (Error.Parse_error (Error.Unknown_constant _,_)) when kind = Both ->  raise Dyp.Giveup 
+	    | exc -> raise exc }
+| comma_ids<ids> COLON_EQUAL ...{
+  let abs,obj = get_abs_and_obj_sig_value dyp.last_local_data in    
+  let _kind =
+    List.fold_left
+      (fun k (id,loc) ->
+	match k,fst (Environment.Signature1.is_constant id abs),Environment.Signature1.is_type id abs with
+	| (Nothing|Type|Both),false,true -> Type
+	| (Nothing|Both),true,true -> Both
+	| Type,_,true -> Type
+	| (Nothing|Both),true,false -> raise Dyp.Giveup 
+	| (Nothing|Both),false,false -> emit_parse_error (Error.Unknown_type id) loc
+	| Type,_,false -> emit_parse_error (Error.Unknown_type id) loc
+	| Cst,_,_ -> failwith "Bug: should not occur" )
+      Nothing
+      ids in ()}
+	      type_expression<ty>  {
+		  fun lex ->
+		    let _,obj = get_abs_and_obj_sig_value dyp.last_local_data in    
+		    let actual_type = fst (ty obj) in
+		      List.fold_left
+			(fun acc (id,loc) -> Environment.Lexicon.insert (Abstract_syntax.Type (id,loc,actual_type)) acc)
+			lex
+			ids}
+
+	  comma_ids_or_sym :
+| IDENT<id> {[id]}
+| SYMBOL<id> {[id]}
+| IDENT<id> COMMA comma_ids<id_list> {id::id_list}
+| SYMBOL<id> COMMA comma_ids<id_list> {id::id_list}
+
+    
+%%
+{
+
+  let parse_data ?(override=false) ?(output=false) filename includes env =
+    try
+      let in_ch =
+	let fullname = Utils.find_file filename includes  in
+	  open_in fullname in
+      let lexbuf = Lexing.from_channel in_ch in
+      let actual_env = if env=Environment.empty then None else Some (Env env) in
+      let () = Printf.printf "Parsing \"%s\"...\n%!" filename in
+      let () = Data_lexer.set_to_data () in
+      let e = 
+	try (fst (List.hd (data ~global_data:override ~local_data:actual_env Data_lexer.lexer lexbuf))) with
+	  |  Dyp.Syntax_error -> raise (Error.dyp_error lexbuf filename) in
+      let () = Printf.printf "Done.\n%!" in
+      let () = match output with
+	| false -> ()
+	| true ->
+	    Environment.iter 
+	      (function 
+		 | Environment.Signature sg -> 
+		     let () = Printf.printf "%s\n%!" (Environment.Signature1.to_string sg) in
+		       Printf.printf "%s\n%!" (Error.warnings_to_string filename (Environment.Signature1.get_warnings sg))
+		 | Environment.Lexicon lex ->
+		     Printf.printf "%s\n%!" (Environment.Lexicon.to_string lex))
+	      e in
+	Some e
+    with
+      | Utils.No_file(f,msg) -> let e =  Error.System_error (Printf.sprintf "No such file \"%s\" in %s" f msg) in 
+	let () = Printf.fprintf stderr "Error: %s\n%!" (Error.error_msg e filename) in None
+      | Sys_error s -> let e = Error.System_error s in
+	let () = Printf.fprintf stderr "Error: %s\n%!" (Error.error_msg e filename) in None
+      | Error.Error e -> 
+	  let () = Printf.fprintf stderr "Error: %s\n%!" (Error.error_msg e filename) in
+	  None
+	      
+let pp_error er t = 
+  let () = Utils.sformat "@." in    
+  let _ = Format.flush_str_formatter () in
+  let s,e = Error.get_loc_error er in
+  let s',e' = s.Lexing.pos_cnum - s.Lexing.pos_bol,e.Lexing.pos_cnum - e.Lexing.pos_bol in
+  let t_init = String.sub t 0 s' in
+  let t_error = Utils.red (String.sub t s' (e'-s')) in
+  let end_start_index  = (s' + (e'-s')) in
+  let t_end = String.sub t end_start_index ((String.length t) - end_start_index) in
+  let () = Printf.fprintf stderr "%s%s%s\n" t_init t_error t_end in
+  Printf.fprintf stderr "Error: %s\n%!" (Error.error_msg er "stdin")
+
+let parse_term ?(output=false) t sg = 
+  let lexbuf = Lexing.from_string t in
+  try 
+    let () = Data_lexer.set_to_term () in
+    let abs_term,abs_type = 
+      try fst (List.hd(term_alone ~global_data:false ~local_data:(Some (Signature sg)) Data_lexer.lexer lexbuf)) with
+      | Dyp.Syntax_error -> raise (Error.dyp_error lexbuf "stdin") in
+    let () = 
+      match output with
+      | true -> 
+	let () = Utils.sformat "@[" in
+	let () = Utils.sformat "@[" in
+	let () = Environment.Signature1.term_to_formatted_string Format.str_formatter abs_term sg in
+	let () = Utils.sformat "@] :@ @[" in
+	let () = Environment.Signature1.type_to_formatted_string Format.str_formatter abs_type sg in
+	let () = Utils.sformat "@]" in
+	let expanded_term = Environment.Signature1.unfold abs_term sg in
+	let () =
+	  if abs_term=expanded_term then
+	    ()
+	  else
+	    let () = Utils.sformat "@,@ @[=@ " in
+	    let () = Environment.Signature1.term_to_formatted_string Format.str_formatter expanded_term sg in Utils.sformat "@]"
+	in
+	let () = Utils.sformat "@]" in
+	()
+      | false -> () in
+    Some (abs_term,abs_type)
+  with
+  | Error.Error er -> 
+    let () = pp_error er t in
+    None
+  | End_of_file -> None
+
+
+
+let parse_heterogenous_term  ?(output=false) t lex = 
+  let lexbuf = Lexing.from_string t in
+  let abs,obj=Environment.Lexicon.get_sig lex in
+  try 
+    let () = Data_lexer.set_to_term () in
+    let obj_term,abs_type = 
+      try fst (List.hd(heterogenous_term_and_type ~global_data:false ~local_data:(Some (Abs_and_obj (abs,obj))) Data_lexer.lexer lexbuf)) with
+      | Dyp.Syntax_error -> raise (Error.dyp_error lexbuf "stdin") in
+    let abs_type=Environment.Signature1.convert_type abs_type abs in
+    let obj_type=Environment.Lexicon.interpret_type abs_type lex in
+    let obj_term=Environment.Signature1.typecheck obj_term obj_type obj in
+    let () = match output with
+      | true -> 
+	let () = 
+	  Printf.printf
+	    "%s : %s (as image of %s)\n%!"
+	    (Environment.Signature1.term_to_string obj_term obj)
+	    (Environment.Signature1.type_to_string obj_type obj)
+	    (Environment.Signature1.type_to_string abs_type abs) in
+	Printf.printf
+	  "%s : %s (as image of %s)\n%!"
+	  (Environment.Signature1.term_to_string (Environment.Signature1.unfold obj_term obj) obj)
+	  (Environment.Signature1.type_to_string obj_type obj)
+	  (Environment.Signature1.type_to_string abs_type abs)
+      | false -> () in
+    Some (obj_term,abs_type)
+  with
+  | Error.Error er -> 
+    let () = pp_error er t in
+    None
+  | End_of_file -> None
+
+
+
+
+    
+    
+	    
+  let parse_sig_entry t sg = 
+    let lexbuf = Lexing.from_string t in
+      try 
+	let () = Data_lexer.set_to_sig_entry () in
+	  try Some ((fst (List.hd(sig_entry ~global_data:false ~local_data:(Some (Signature sg)) Data_lexer.lexer lexbuf))) sg) with
+	    | Dyp.Syntax_error -> raise (Error.dyp_error lexbuf "stdin")
+      with
+	| Error.Error er -> 
+	  let () = pp_error er t in
+	      None
+	| End_of_file -> None
+
+
+  let parse_lex_entry t lex = 
+    let lexbuf = Lexing.from_string t in
+      try 
+	let () = Data_lexer.set_to_lex_entry () in
+	  try Some ((fst (List.hd(lex_entry ~global_data:false ~local_data:(Some (Abs_and_obj (Environment.Lexicon.get_sig lex))) Data_lexer.lexer lexbuf))) lex) with
+	    | Dyp.Syntax_error -> raise (Error.dyp_error lexbuf "stdin")
+      with
+	| Error.Error er -> 
+	  let () = pp_error er t in
+	      None
+	| End_of_file -> None
+
+    
+
+
+end}

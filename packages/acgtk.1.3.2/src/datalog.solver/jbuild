@@ -1,0 +1,13 @@
+;; -*-lisp-*-
+
+(jbuild_version 1)
+
+(executable
+ ((name test)
+  (libraries (threads
+	      utilsLib
+	      logic))))
+
+(alias
+ ((name testbuild)
+  (deps (test.exe))))

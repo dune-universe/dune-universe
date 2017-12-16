@@ -1,0 +1,25 @@
+S(i,k) :- NP(i,j),VP(j,k).
+NP(i,j) :- PN(i,j).
+NP(i,k) :- Det(i,j),N(j,k).
+NP(i,k):-NP(i,j),PP(j,k).
+VP(i,k):-V(i,j),NP(j,k).
+VP(i,k):-VP(i,j),PP(j,k).
+PP(i,k):-Prep(i,j),NP(j,k).
+
+PN(i,j):-Jean(i,j).
+Det(i,j):-un(i,j).
+V(i,j):-regarde(i,j).
+N(i,j):-homme(i,j).
+N(i,j):-telescope(i,j).
+Prep(i,j):-avec(i,j).
+
+(*S(x,y):-T(x,y). 
+T(x,y):-S(x,y).*)
+
+Jean(0,1).
+regarde(1,2).
+un(2,3).
+homme(3,4).
+avec(4,5).
+un(5,6).
+telescope(6,7).

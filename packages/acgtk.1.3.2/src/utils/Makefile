@@ -1,0 +1,52 @@
+##########################################################################
+#                                                                        #
+#                 ACG development toolkit                                #
+#                                                                        #
+#                  Copyright 2008 INRIA                                  #
+#                                                                        #
+#  More information on "http://acg.gforge.inria.fr/"                     #
+#  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     #
+#  Authors: see the AUTHORS file                                         #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#  $Rev::                              $:  Revision of last commit       #
+#  $Author::                           $:  Author of last commit         #
+#  $Date::                             $:  Date of last commit           #
+#                                                                        #
+##########################################################################
+
+include ../Makefile.master
+
+###############################
+#                             #
+# Set the following variables #
+#                             #
+###############################
+
+# Used libraries
+LIBS += str.cma ANSITerminal.cma
+
+# The corresponding directories
+# (if not in the main ocaml lib directory,
+# ex.  +campl4
+LIBDIR +=  -I /home/pogodall/.opam/4.05.0/lib/ANSITerminal
+
+# Directories to which the current source files depend on
+PREVIOUS_DIRS =
+
+# Source files in the right order of dependance
+ML = utils.ml table.ml tries.ml version.ml focused_list.ml sharedForest.ml idGenerator.ml dependencyManager.ml
+
+# Uncomment the next line and put the name of the exe of this directory, if relevant
+
+EXE_SOURCES =test_sharedForest.ml test_dependencyManager.ml
+
+####################################
+#                                  #
+# End of the configuration section #
+#                                  #
+####################################
+
+include ../Makefile.common

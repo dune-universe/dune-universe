@@ -1,0 +1,10 @@
+
+(library
+ ((name example_ppx_sexp_value_lib)
+  (flags (:standard -safe-string))
+  (libraries (core))
+  (preprocess (pps (ppx_sexp_value ppx_driver.runner)))))
+
+(alias ((name DEFAULT) (deps (example.ml.pp))))
+
+(jbuild_version 1)

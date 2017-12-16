@@ -1,0 +1,44 @@
+signature Derivation_trees =
+    S,S_A:type;
+    C:S_A -> S_A;
+    Start:S_A -> S;
+    I_S:S_A;
+end
+
+signature Derived_trees =
+    tree:type;
+    S_3:tree -> tree -> tree -> tree;
+    S_2:tree -> tree -> tree;
+    Empty:tree;
+    a,b,c,d:tree;
+end
+
+lexicon Abs(Derivation_trees):Derived_trees =
+    S:=tree ;
+    S_A:=tree -> tree;
+    Start := lambda aux. aux Empty;
+    C:=lambda aux sub.S_3 a (aux (S_3 b sub c)) d;
+    I_S:=lambda x.x;
+end
+
+signature Strings =
+    o:type;
+    string=o->o:type;
+    infix +=lambda x y z.x(y z):string -> string -> string;
+    a,b,c,d:string;
+    E=lambda x.x:string;
+end
+
+lexicon Yield (Derived_trees):Strings=
+    tree:=string;
+    S_3:=lambda x y z.x + y + z;
+    S_2:=lambda x y.x + y;
+    a:=a;
+    b:=b;
+    c:=c;
+    d:=d;
+    Empty:=E;
+end
+
+lexicon Full = Yield << Abs
+	

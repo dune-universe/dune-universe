@@ -1,0 +1,126 @@
+(* This signature correspond to the example of figure 3.2 p5 of the *)
+(* lecture notes of the 3rd lecture of Makoto Kanazawa on Formal *)
+(* The later elaborates on an example given in *)
+(* "Speech and Language Processing, by Daniel Jurafsky *)
+(* and James H. Martin, (Fig. 10.2), *)
+
+(* Grammar. *)
+(* See http://research.nii.ac.jp/~kanazawa/FormalGrammar/index.html *)
+
+(* If you compile this file with the command *)
+(* "acgc MK-lecture-example.acg" *)
+
+(* Running the following commands in the acg environment *)
+(* "load o MK-lecture-example.acgo;" *)
+(* then *)
+(* "surface parse  book+the+flight+from+Houston:S;" *)
+(* in the acg environment will produce 2 readings *)
+
+(* The corresponding idb (showed at Figure 3.3 p 6 of the lecture notes) *)
+(* can be produced by the following command: *)
+(* "surface idb;" *)
+
+(* And the input database of p8 by the command *)
+(* "surface query book+the+flight+from+Houston:S;" *)
+
+(* As for now, the derivation trees of p11 are only *)
+(* available to developers :-) *)
+
+signature Rules =
+    S, NP, VP, Aux, Det, Name, Pronoun, 
+	V, N, N1, PP, P :type;
+
+    r_1_S: NP -> VP -> S;
+    r_2_S: Aux -> NP -> VP -> S;
+    r_3_S: VP -> S;
+    
+    r_1_NP: Det -> N1 -> NP;
+    r_2_NP: Name -> NP;
+    r_3_NP: Pronoun -> NP;
+
+    r_1_VP: V -> VP;
+    r_2_VP: V -> NP -> VP;
+    r_3_VP: V -> NP -> PP -> VP;
+    r_4_VP: VP -> PP -> PP;
+
+    r_1_N1: N -> N1;
+    r_2_N1: Name -> N1 -> N1;
+    r_3_N1: N1 -> PP -> N1;
+
+    r_1_PP: P -> NP -> PP;
+
+    does:Aux;
+    that, this, a, the:Det;
+    Houston, TWA:Name;
+    I, she, me:Pronoun;
+    book_V, include, prefer:V;
+    book_N, flight, meal, money:N;
+    from, to, on:P;
+end
+    
+
+signature strings =
+    o:type;
+
+    string=o->o:type;
+    infix + = lambda a b.lambda z.a (b z):string -> string -> string;
+    Empty_string:string;
+
+
+    does, that, this, a, the, Houston, TWA, I, she, me,
+	book, include, prefer, flight, meal, money, from,
+	to, on:string;
+
+    arity_1=lambda x.x:string -> string;
+    arity_2=lambda x y.x+y:string -> string -> string;
+    arity_3=lambda x y z.x + y +z:string -> string -> string -> string;
+
+end
+
+lexicon surface(Rules):strings =
+    S, NP, VP, Aux, Det, Name, Pronoun, 
+	V, N, N1, PP, P :=string;
+
+    r_1_S:= arity_2;
+    r_2_S:=arity_3;
+    r_3_S:=arity_1;
+    
+    r_1_NP:=arity_2;
+    r_2_NP:=arity_1;
+    r_3_NP:=arity_1;
+
+    r_1_VP:=arity_1;
+    r_2_VP:=arity_2;
+    r_3_VP:=arity_3;
+    r_4_VP:=arity_2;
+
+    r_1_N1:=arity_1;
+    r_2_N1:=arity_2;
+    r_3_N1:=arity_2;
+
+    r_1_PP:=arity_2;
+
+    does:=does;
+    that:=that;
+    this:=this;
+    a:=a;
+    the:=the;
+    Houston:=Houston;
+    TWA:=TWA;
+    I:=I;
+    she:=she;
+    me:=me;
+    book_V:=book;
+    include:=include;
+    prefer:=prefer;
+    book_N:=book;
+    flight:=flight;
+    meal:=meal;
+    money:=money;
+    from:=from;
+    to:=to;
+    on:=on;
+end
+
+	
+    

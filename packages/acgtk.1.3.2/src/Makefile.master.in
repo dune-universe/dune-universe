@@ -1,0 +1,65 @@
+##########################################################################
+#                                                                        #
+#                 ACG development toolkit                                #
+#                                                                        #
+#                  Copyright 2008 INRIA                                  #
+#                                                                        #
+#  More information on "http://acg.gforge.inria.fr/"                     #
+#  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     #
+#  Authors: see the AUTHORS file                                         #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#                                                                        #
+#  $Rev::                              $:  Revision of last commit       #
+#  $Author::                           $:  Author of last commit         #
+#  $Date::                             $:  Date of last commit           #
+#                                                                        #
+##########################################################################
+
+DEBUGFLAG   = -g
+OCAMLCPOPT = -p fm
+
+# Remove warnings:
+#	58: Missing cmx file
+DISABLED_WARNINGS=-58
+
+
+
+# All warnings are treated as errors
+WARNINGS = @OCAML09WARNINGS@ -w $(DISABLED_WARNINGS) @WARN_ERROR@
+COMMONFLAGS= $(WARNINGS) @TYPES@
+BYTEFLAGS = $(COMMONFLAGS) $(DEBUGFLAG)
+OPTFLAGS = $(COMMONFLAGS)
+LFLAGS= -a
+
+
+TITLE="The ACG Development Toolkit Documentation"
+OCAMLDOC_FLAGS = -sort -keep-code -html -t $(TITLE)
+#CAMLDOC_FLAGS = -html -t $(TITLE)
+
+BOLT_DEPENDENCIES=unix.cma
+BOLT_LEVEL=@BOLT_LEVEL@
+
+CAMLP4_DEPENDENCIES=dynlink.cma
+
+LIBS = $(CAMLP4_DEPENDENCIES) @CAMLP4_LIB@ $(BOLT_DEPENDENCIES) @BOLT_LIB@ 
+LIBDIR = -I +camlp4 @BOLT_INCLUDE@
+
+MACRO_PP_ARGS=-DDEBUG
+
+OCAMLPP_ARG= pa_extend.cmo pa_macro.cmo $(MACRO_PP_ARGS) @OCAMLP4_LOC@ @BOLT_PP@
+OCAMLPP = -pp "@OCAMLP4@ $(OCAMLPP_ARG)"
+ifeq ($(strip @KAPUTT_PP@),)
+KAPUTT_OCAMLPP = $(OCAMLPP)
+else
+KAPUTT_OCAMLPP = -pp "@KAPUTT_PP@ off @OCAMLP4@ $(OCAMLPP_ARG)"
+endif
+
+@SET_MAKE@
+
+# Make byte the very first target
+byte: 
+
+config:
+	pushd ../.. && ./configure && popd

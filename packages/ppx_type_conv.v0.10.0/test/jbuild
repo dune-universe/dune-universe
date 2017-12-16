@@ -1,0 +1,12 @@
+(library
+ ((name ppx_type_conv_test)
+  (flags (:standard -safe-string))
+  (libraries (base))
+  (preprocess (pps (ppx_type_conv
+                    ppx_sexp_conv
+                    ppx_compare
+                    ppx_bin_prot
+                    -type-conv-keep-w32=both ppx_driver.runner)))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,44 @@
+(library
+ ((name        ppx_ast)
+  (public_name ppx_ast)
+  (libraries   (ocaml-compiler-libs.shadow
+                ocaml-compiler-libs.common
+                compiler-libs.common
+                ocaml-migrate-parsetree))
+  (flags ((:standard -open Ocaml_shadow -safe-string) -w -9-27-32))
+  (modules (ast_helper
+            ast
+            docstrings
+            import
+            lexer
+            location_helper
+            parse
+            parser
+            pprintast
+            ppx_ast
+            syntaxerr
+            warn))
+  (lint (pps (ppx_traverse -type-conv-keep-w32=impl)))
+  (preprocess no_preprocessing)))
+
+(ocamllex  (lexer))
+(ocamlyacc (parser0))
+
+(rule
+ ((targets (location_helper.ml))
+  (deps    (../generate/select.exe location_helper.ml-4.06 location_helper.ml-default))
+  (action  (bash "../generate/select.exe location_helper.ml-4.06 location_helper.ml-default > ${@}"))))
+
+(rule
+ ((targets (parser.ml))
+  (deps    (parser0.ml))
+  (action  (bash "( echo \"open Import\"; cat ${<}; ) > ${@}"))))
+
+(rule
+ ((targets (parser.mli))
+  (deps    (parser0.mli))
+  (action  (bash "( echo \"open Import\"; cat ${<}; ) > ${@}"))))
+
+
+
+(jbuild_version 1)
