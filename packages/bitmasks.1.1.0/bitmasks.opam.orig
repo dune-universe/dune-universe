@@ -1,0 +1,18 @@
+opam-version: "1.2"
+version: "1.1.0"
+maintainer: "david.allsopp@metastack.com"
+authors: [ "David Allsopp" ]
+license: "BSD-3-clause with OCaml linking exception"
+homepage: "https://metastack.github.io/bitmasks"
+dev-repo: "https://github.com/metastack/bitmasks"
+bug-reports: "https://github.com/metastack/bitmasks/issues"
+build: [ "jbuilder" "build" "@install" ]
+build-doc: [
+  ["jbuilder" "build" "@doc"]
+  ["cp" "-r" "_build/default/_doc/bitmasks" "_build/default/_doc/index.html" "_build/default/_doc/odoc.css" "%{doc}%/"]
+]
+build-test: ["jbuilder" "runtest"]
+depends: [
+  "jbuilder" {build}
+  "odoc" {build & doc}
+]

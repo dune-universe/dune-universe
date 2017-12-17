@@ -1,0 +1,23 @@
+This is the INSTALL file for the bitmasks distribution.
+
+Dependencies
+============
+
+In order to compile this package, you will need:
+
+* ocaml (>= 4.02.3)
+* findlib or opam
+* jbuilder
+
+Installing
+==========
+
+1. Uncompress the source archive and go to the root of the package
+2. Run 'jbuilder build @install'
+3. Run 'jbuilder install'
+
+Uninstalling
+============
+
+1. Go to the root of the package
+2. Run 'jbuilder ununinstall'

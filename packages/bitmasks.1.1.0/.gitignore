@@ -1,0 +1,6 @@
+# Build system files
+_build
+.merlin
+bitmasks.install
+# Vim swap files
+.*.swp
