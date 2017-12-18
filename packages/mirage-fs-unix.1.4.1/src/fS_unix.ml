@@ -145,7 +145,7 @@ let write {base} path off buf =
     Lwt.catch
       (fun () ->
          Lwt_unix.lseek fd off Unix.SEEK_SET >>= fun _seek ->
-         let buf = Cstruct.to_string buf in
+         let buf = Cstruct.to_bytes buf in
          let rec aux off remaining =
            if remaining = 0 then
              Lwt_unix.close fd
@@ -153,7 +153,7 @@ let write {base} path off buf =
              Lwt_unix.write fd buf off remaining >>= fun n ->
              aux (off+n) (remaining-n))
          in
-         aux 0 (String.length buf) >>= fun () ->
+         aux 0 (Bytes.length buf) >>= fun () ->
          Lwt.return (Ok ()))
       (fun e ->
          Lwt_unix.close fd >>= fun () ->
