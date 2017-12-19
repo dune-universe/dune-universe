@@ -24,8 +24,9 @@ let () = init()
 include Mesh_triangle_common
 
 let pslg ?(hole: 'a Mesh.mat option) ?(region: 'a Mesh.mat option)
+         ?(point_marker: 'a Mesh.int_vec option)
          ?(point_attribute: 'a Mesh.mat option)
-         ?(point_marker: 'a Mesh.int_vec option) (point: 'a Mesh.mat)
+         (point: 'a Mesh.mat)
          ?(segment_marker: 'a Mesh.int_vec option) (segment: 'a Mesh.int_mat) =
   if Mesh_utils.is_c_layout (Array2.layout point) then
     let m = Mesh_triangleC.pslg
@@ -48,6 +49,45 @@ let pslg ?(hole: 'a Mesh.mat option) ?(region: 'a Mesh.mat option)
               ~segment:(mat_to_fortran segment) in
     (Obj.magic (m: fortran_layout pslg) : 'a pslg)
 
+let create ?(hole: 'a Mesh.mat option) ?(region: 'a Mesh.mat option)
+      ?(point_marker: 'a Mesh.int_vec option)
+      ?(point_attribute: 'l Mesh.mat option)
+      (point:'a Mesh.mat)
+      ?(segment_marker: 'a Mesh.int_vec option) ?(segment: 'a Mesh.int_mat option)
+      ?(neighbor: 'a Mesh.int_mat option)
+      ?(edge: 'a Mesh.int_mat option) ?(edge_marker: 'a Mesh.int_vec option)
+      ?(triangle_attribute: 'l Mesh.mat option)
+      (triangle: 'a Mesh.int_mat) =
+  if Mesh_utils.is_c_layout (Array2.layout point) then
+    let m = Mesh_triangleC.create
+              ~hole:(mat_opt_to_c hole)
+              ~region:(mat_opt_to_c region)
+              ~point_attribute:(mat_opt_to_c point_attribute)
+              ~point_marker:(vec_opt_to_c point_marker)
+              ~point:(mat_to_c point)
+              ~segment_marker:(vec_opt_to_c segment_marker)
+              ~segment:(mat_opt_to_c segment)
+              ~neighbor:(mat_opt_to_c neighbor)
+              ~edge:(mat_opt_to_c edge)
+              ~edge_marker:(vec_opt_to_c edge_marker)
+              ~triangle_attribute:(mat_opt_to_c triangle_attribute)
+              ~triangle:(mat_to_c triangle) in
+    (Obj.magic (m: c_layout t) : 'a t)
+  else
+    let m = Mesh_triangleF.create
+              ~hole:(mat_opt_to_fortran hole)
+              ~region:(mat_opt_to_fortran region)
+              ~point_attribute:(mat_opt_to_fortran point_attribute)
+              ~point_marker:(vec_opt_to_fortran point_marker)
+              ~point:(mat_to_fortran point)
+              ~segment_marker:(vec_opt_to_fortran segment_marker)
+              ~segment:(mat_opt_to_fortran segment)
+              ~neighbor:(mat_opt_to_fortran neighbor)
+              ~edge:(mat_opt_to_fortran edge)
+              ~edge_marker:(vec_opt_to_fortran edge_marker)
+              ~triangle_attribute:(mat_opt_to_fortran triangle_attribute)
+              ~triangle:(mat_to_fortran triangle) in
+    (Obj.magic (m: fortran_layout t) : 'a t)
 
 let triangle ?delaunay ?min_angle ?max_area ?region_area ?max_steiner
              ?voronoi ?edge ?neighbor ?subparam ?triangle_area

@@ -41,6 +41,39 @@ let pslg ?(hole: 'a mat option) ?(region: 'a mat option)
                        ~segment:(mat_to_fortran segment) in
     (Obj.magic (m: fortran_layout pslg) : 'a pslg)
 
+let create ?(hole: 'a mat option) ?(region: 'a mat option)
+      ?(point_marker: 'a int_vec option)  (point:'a mat)
+      ?(segment_marker: 'a int_vec option) ?(segment: 'a int_mat option)
+      ?(neighbor: 'a int_mat option)
+      ?(edge: 'a int_mat option) ?(edge_marker: 'a int_vec option)
+      (triangle: 'a int_mat) =
+  if Mesh_utils.is_c_layout (Array2.layout point) then
+    let m = MeshC.create
+              ~hole:(mat_opt_to_c hole)
+              ~region:(mat_opt_to_c region)
+              ~point_marker:(vec_opt_to_c point_marker)
+              ~point:(mat_to_c point)
+              ~segment_marker:(vec_opt_to_c segment_marker)
+              ~segment:(mat_opt_to_c segment)
+              ~neighbor:(mat_opt_to_c neighbor)
+              ~edge:(mat_opt_to_c edge)
+              ~edge_marker:(vec_opt_to_c edge_marker)
+              ~triangle:(mat_to_c triangle) in
+    (Obj.magic (m: c_layout t) : 'a t)
+  else
+    let m = MeshF.create
+              ~hole:(mat_opt_to_fortran hole)
+              ~region:(mat_opt_to_fortran region)
+              ~point_marker:(vec_opt_to_fortran point_marker)
+              ~point:(mat_to_fortran point)
+              ~segment_marker:(vec_opt_to_fortran segment_marker)
+              ~segment:(mat_opt_to_fortran segment)
+              ~neighbor:(mat_opt_to_fortran neighbor)
+              ~edge:(mat_opt_to_fortran edge)
+              ~edge_marker:(vec_opt_to_fortran edge_marker)
+              ~triangle:(mat_to_fortran triangle) in
+    (Obj.magic (m: fortran_layout t) : 'a t)
+
 let copy (mesh: 'l t) =
   make_mesh
     ~point: (copy_mat mesh#point)

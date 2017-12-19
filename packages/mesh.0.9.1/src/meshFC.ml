@@ -16,34 +16,52 @@ let layout = LAYOUT;;
 let empty_vec = Array1.create int layout 0
 let empty_mat2 = CREATE_MAT(float64, 2, 0)
 let empty_mat4 = CREATE_MAT(float64, 4, 0)
+let empty_int_mat2 = CREATE_MAT(int, 2, 0)
+let empty_int_mat3 = CREATE_MAT(int, 3, 0)
+
+let check_point name point =
+  if NCOLS(point) = 0 then
+    invalid_arg(name ^ ": points cannot be empty");
+  if NROWS(point) <> 2 then
+    invalid_arg(name ^ ": ROWS points must be 2")
+
+let check_point_marker name point = function
+  | None -> empty_vec
+  | Some m ->
+     let n = Array1.dim m in
+     if 0 < n && n < NCOLS(point) then
+       invalid_arg(name ^ ": point_marker too small");
+     m
+
+let check_segment_marker name segment = function
+  | None -> empty_vec
+  | Some m ->
+     let n = Array1.dim m in
+     if 0 < n && n < NCOLS(segment) then
+       invalid_arg(name ^ ": segment_marker too small");
+     m
+
+let check_hole name = function
+  | None -> empty_mat2
+  | Some h ->
+     if NCOLS(h) > 0 && NROWS(h) <> 2 then
+       invalid_arg(name ^ ": ROWS hole must be 2");
+     h
+
+let check_region name = function
+  | None -> empty_mat4
+  | Some r ->
+     if NCOLS(r) > 0 && NROWS(r) <> 4 then
+       invalid_arg(name ^ ": ROWS region must be 4");
+     r
 
 let pslg ~hole ~region ~point_marker ~point ~segment_marker ~segment =
-  let point_marker = match point_marker with
-    | None -> empty_vec
-    | Some m ->
-       let n = Array1.dim m in
-       if 0 < n && n < NCOLS(point) then
-         invalid_arg "Mesh.pslg: point_marker too small";
-       m in
-  let segment_marker = match segment_marker with
-    | None -> empty_vec
-    | Some m ->
-       let n = Array1.dim m in
-       if 0 < n && n < NCOLS(segment) then
-         invalid_arg "Mesh.pslg: segment_marker too small";
-       m in
-  let hole = match hole with
-    | None -> empty_mat2
-    | Some h ->
-       if NCOLS(h) > 0 && NROWS(h) <> 2 then
-         invalid_arg "Mesh.pslg: ROWS hole must be 2";
-       h in
-  let region = match region with
-    | None -> empty_mat4
-    | Some r ->
-       if NCOLS(r) > 0 && NROWS(r) <> 4 then
-         invalid_arg "Mesh.pslg: ROWS region must be 4";
-       r in
+  check_point "Mesh.pslg" point;
+  let point_marker = check_point_marker "Mesh.pslg" point point_marker in
+  let segment_marker =
+    check_segment_marker "Mesh.pslg" segment segment_marker in
+  let hole = check_hole "Mesh.pslg" hole in
+  let region = check_region "Mesh.pslg" region in
   (object
       method point = point
       method point_marker = point_marker
@@ -53,6 +71,59 @@ let pslg ~hole ~region ~point_marker ~point ~segment_marker ~segment =
       method region = region
     end : LAYOUT pslg)
 
+(* Similar to [make_mesh] but with some elementary checks. *)
+let create ~hole ~region ~point_marker ~point ~segment_marker ~segment
+      ~neighbor ~edge ~edge_marker ~triangle =
+  check_point "Mesh.create" point;
+  let point_marker = check_point_marker "Mesh.create" point point_marker in
+  let segment = match segment with
+    | None -> empty_int_mat2
+    | Some s ->
+       if NCOLS(s) > 0 && NROWS(s) <> 2 then
+         invalid_arg "Mesh.create: ROWS segment must be 2";
+       s in
+  let segment_marker =
+    check_segment_marker "Mesh.create" segment segment_marker in
+  let hole = check_hole "Mesh.create" hole in
+  let region = check_region "Mesh.create" region in
+  if NCOLS(triangle) = 0 then
+    invalid_arg "Mesh.create: triangle cannot be empty";
+  if NROWS(triangle) < 3 then
+    invalid_arg "Mesh.create: ROWS triangle must be at least 3";
+  let neighbor = match neighbor with
+    | None -> empty_int_mat3
+    | Some nbh ->
+       if NCOLS(nbh) > 0 then (
+         if NCOLS(nbh) <> NCOLS(triangle) then
+           invalid_arg "Mesh.create: COLS neighbor <> COLS triangle";
+         if NROWS(nbh) <> 3 then
+           invalid_arg "Mesh.create: ROWS neighbor <> 3";
+       );
+       nbh in
+  let edge = match edge with
+    | None -> empty_int_mat2
+    | Some e ->
+       if NCOLS(e) > 0 && NROWS(e) <> 2 then
+         invalid_arg "Mesh.create: ROWS edge <> 2";
+       e in
+  let edge_marker = match edge_marker with
+    | None -> empty_vec
+    | Some e ->
+       if Array1.dim e > 0 && Array1.dim e <> NCOLS(edge) then
+         invalid_arg "Mesh.create: COLS edge_marker <> COLS edge";
+       e in
+  (object
+     method point = point
+     method point_marker = point_marker
+     method segment = segment
+     method segment_marker = segment_marker
+     method hole = hole
+     method region = region
+     method triangle = triangle
+     method neighbor = neighbor
+     method edge = edge
+     method edge_marker = edge_marker
+   end : LAYOUT t)
 
 
 (** Return the smaller box (xmin, xmax, ymin, ymax) containing the [mesh]. *)
@@ -156,7 +227,7 @@ let scilab (mesh: mesh) ?(longitude=70.) ?(azimuth=60.)
      is seldom drawn. *)
   fprintf fh "mode(0);\n\
               // Run in Scilab with: exec('%s')\n\
-              // Written by the OCaml Mesh module (version 0.9.0).\n\
+              // Written by the OCaml Mesh module (version 0.9.1).\n\
               // mesh: %i triangles, %i points.\n\
               ocaml = struct('f', scf(), 'e', null, \
                              'x', fscanfMat('%s'), 'y', fscanfMat('%s'), \
@@ -174,7 +245,7 @@ let scilab (mesh: mesh) ?(longitude=70.) ?(azimuth=60.)
   fprintf fh "plot3d1(ocaml.x, ocaml.y, ocaml.z, theta=%g, alpha=%g, \
                 flag=[%d,2,%d]);\n\
               disp('Save: xs2pdf(ocaml.f, ''%s.pdf'')');\n"
-    longitude azimuth mode box fname;
+    longitude azimuth mode box (Filename.basename fname);
   close_out fh;
   let save_mat fname coord =
     let fh = open_out fname in
@@ -225,7 +296,7 @@ let matlab (mesh: mesh) ?(edgecolor=`Color 0) ?(linestyle="-") ?(facealpha=1.)
     fprintf fh "\n" in
   let fh = open_out mat in
   fprintf fh "%% Run in Matlab with: run %s\n\
-              %% Created by the OCaml Mesh module (version 0.9.0).\n\
+              %% Created by the OCaml Mesh module (version 0.9.1).\n\
               %% print -painters -dpdf -r600 %s.pdf\n" mat base;
   fprintf fh "mesh_x = [" ;
   save_xy fh FST;
@@ -352,7 +423,7 @@ let mathematica (mesh: mesh) (z: vec) fname =
     else mathematica_safe base, fname ^ ".m" in
   let pkg = String.capitalize_ascii pkg in
   let fh = open_out fname in
-  fprintf fh "(* Created by the OCaml Mesh module (version 0.9.0)) \
+  fprintf fh "(* Created by the OCaml Mesh module (version 0.9.1)) \
               *)\n";
   fprintf fh "%s`xyz = {" pkg;
   output_string fh "{";

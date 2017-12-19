@@ -50,7 +50,7 @@ object
 end
 
 val pslg : ?hole: 'l Mesh.mat -> ?region: 'l Mesh.mat ->
-           ?point_attribute: 'l Mesh.mat -> ?point_marker: 'l Mesh.int_vec ->
+           ?point_marker: 'l Mesh.int_vec -> ?point_attribute: 'l Mesh.mat ->
            'l Mesh.mat ->
            ?segment_marker: 'l Mesh.int_vec ->
            'l Mesh.int_mat -> 'l pslg
@@ -76,6 +76,20 @@ object
       number of attributes per triangle and [n] is the number of
       triangles (may be [0] if [a = 0]). *)
 end
+
+val create :
+  ?hole: 'l Mesh.mat -> ?region: 'l Mesh.mat ->
+  ?point_marker: 'l Mesh.int_vec -> ?point_attribute: 'l Mesh.mat ->
+  'l Mesh.mat ->
+  ?segment_marker: 'l Mesh.int_vec -> ?segment:'l Mesh.int_mat ->
+  ?neighbor: 'l Mesh.int_mat ->
+  ?edge: 'l Mesh.int_mat -> ?edge_marker: 'l Mesh.int_vec ->
+  ?triangle_attribute: 'l Mesh.mat ->
+  'l Mesh.int_mat -> 'l t
+(** [create point triangle] creates a mesh with the proper methods.
+   The default values for unspecified values are empty arrays.
+   @raise Invalid_argument if a size is incorrect. *)
+
 
 (** Voronoi diagram ({!Mesh.voronoi} enriched with methods specific to
     Triangle). *)

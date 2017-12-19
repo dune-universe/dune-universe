@@ -18,41 +18,63 @@ let empty_vec = Array1.create int layout 0
 let empty_mat0 = CREATE_MAT(float64, 0, 0)
 let empty_mat2 = CREATE_MAT(float64, 2, 0)
 let empty_mat4 = CREATE_MAT(float64, 4, 0)
+let empty_int_mat2 = CREATE_MAT(int, 2, 0)
+let empty_int_mat3 = CREATE_MAT(int, 3, 0)
+
+let check_point name point =
+  if NCOLS(point) = 0 then
+    invalid_arg(name ^ ": points cannot be empty");
+  if NROWS(point) <> 2 then
+    invalid_arg(name ^ ": ROWS points must be 2")
+
+let check_point_marker name ~point = function
+  | None -> empty_vec
+  | Some m ->
+     let n = Array1.dim m in
+     if 0 < n && n < NCOLS(point) then
+       invalid_arg(name ^ ": point_marker too small");
+     m
+
+let check_point_attribute name ~point = function
+  | None -> empty_mat0
+  | Some a ->
+     if NROWS(a) > 0 && NCOLS(a) <> NCOLS(point) then
+       invalid_arg(name ^ ": COLS point_attribute <> COLS point");
+     a
+
+let check_segment_marker name ~segment = function
+  | None -> empty_vec
+  | Some m ->
+     let n = Array1.dim m in
+     if 0 < n && n < NCOLS(segment) then
+       invalid_arg(name ^ ": segment_marker too small");
+     m
+
+let check_hole name = function
+  | None -> empty_mat2
+  | Some h ->
+     if NCOLS(h) > 0 && NROWS(h) <> 2 then
+       invalid_arg(name ^ ": ROWS hole must be 2");
+     h
+
+let check_region name = function
+  | None -> empty_mat4
+  | Some r ->
+     if NCOLS(r) > 0 && NROWS(r) <> 4 then
+       invalid_arg(name ^ ": ROWS region must be 4");
+     r
 
 let pslg ~hole ~region ~point_attribute ~point_marker ~point
          ~segment_marker ~segment =
-  let point_marker = match point_marker with
-    | None -> empty_vec
-    | Some m ->
-       let n = Array1.dim m in
-       if 0 < n && n < NCOLS(point) then
-         invalid_arg "Mesh_triangle.pslg: point_marker too small";
-       m in
-  let point_attribute = match point_attribute with
-    | None -> empty_mat0
-    | Some a ->
-       if NROWS(a) > 0 && NCOLS(a) <> NCOLS(point) then
-         invalid_arg "Mesh_triangle.pslg: COLS point_attribute <> COLS point";
-       a in
-  let segment_marker = match segment_marker with
-    | None -> empty_vec
-    | Some m ->
-       let n = Array1.dim m in
-       if 0 < n && n < NCOLS(segment) then
-         invalid_arg "Mesh_triangle.pslg: segment_marker too small";
-       m in
-  let hole = match hole with
-    | None -> empty_mat2
-    | Some h ->
-       if NCOLS(h) > 0 && NROWS(h) <> 2 then
-         invalid_arg "Mesh_triangle.pslg: ROWS hole must be 2";
-       h in
-  let region = match region with
-    | None -> empty_mat4
-    | Some r ->
-       if NCOLS(r) > 0 && NROWS(r) <> 4 then
-         invalid_arg "Mesh_triangle.pslg: ROWS region must be 4";
-       r in
+  check_point "Mesh_triangle.pslg" point;
+  let point_marker =
+    check_point_marker "Mesh_triangle.pslg" ~point point_marker in
+  let point_attribute =
+    check_point_attribute "Mesh_triangle.pslg" ~point point_attribute in
+  let segment_marker =
+    check_segment_marker "Mesh_triangle.pslg" ~segment segment_marker in
+  let hole = check_hole "Mesh_triangle.pslg" hole in
+  let region = check_region "Mesh_triangle.pslg" region in
   (object
       method point = point
       method point_marker = point_marker
@@ -63,6 +85,71 @@ let pslg ~hole ~region ~point_attribute ~point_marker ~point
       method region = region
     end : LAYOUT pslg)
 
+let create ~hole ~region ~point_attribute ~point_marker ~point
+      ~segment_marker ~segment ~neighbor ~edge ~edge_marker
+      ~triangle_attribute ~triangle =
+  check_point "Mesh_triangle.create" point;
+  let point_marker =
+    check_point_marker "Mesh_triangle.create" ~point point_marker in
+  let point_attribute =
+    check_point_attribute "Mesh_triangle.pslg" ~point point_attribute in
+  let segment = match segment with
+    | None -> empty_int_mat2
+    | Some s ->
+       if NCOLS(s) > 0 && NROWS(s) <> 2 then
+         invalid_arg "Mesh_triangle.create: ROWS segment must be 2";
+       s in
+  let segment_marker =
+    check_segment_marker "Mesh_triangle.create" ~segment segment_marker in
+  let hole = check_hole "Mesh_triangle.create" hole in
+  let region = check_region "Mesh_triangle.create" region in
+  if NCOLS(triangle) = 0 then
+    invalid_arg "Mesh_triangle.create: triangle cannot be empty";
+  if NROWS(triangle) < 3 then
+    invalid_arg "Mesh_triangle.create: ROWS triangle must be at least 3";
+  let triangle_attribute = match triangle_attribute with
+    | None -> empty_mat0
+    | Some a ->
+       if NROWS(a) > 0 && NCOLS(a) > 0 && NCOLS(a) <> NCOLS(triangle) then
+         invalid_arg "Mesh_triangle.create: COLS triangle_attribute <> \
+                      COLS triangle";
+       a in
+  let neighbor = match neighbor with
+    | None -> empty_int_mat3
+    | Some nbh ->
+       if NCOLS(nbh) > 0 then (
+         if NCOLS(nbh) <> NCOLS(triangle) then
+           invalid_arg "Mesh_triangle.create: COLS neighbor <> COLS triangle";
+         if NROWS(nbh) <> 3 then
+           invalid_arg "Mesh_triangle.create: ROWS neighbor <> 3";
+       );
+       nbh in
+  let edge = match edge with
+    | None -> empty_int_mat2
+    | Some e ->
+       if NCOLS(e) > 0 && NROWS(e) <> 2 then
+         invalid_arg "Mesh_triangle.create: ROWS edge <> 2";
+       e in
+  let edge_marker = match edge_marker with
+    | None -> empty_vec
+    | Some e ->
+       if Array1.dim e > 0 && Array1.dim e <> NCOLS(edge) then
+         invalid_arg "Mesh_triangle.create: COLS edge_marker <> COLS edge";
+       e in
+  (object
+     method point = point
+     method point_marker = point_marker
+     method point_attribute = point_attribute
+     method segment = segment
+     method segment_marker = segment_marker
+     method hole = hole
+     method region = region
+     method triangle_attribute = triangle_attribute
+     method triangle = triangle
+     method neighbor = neighbor
+     method edge = edge
+     method edge_marker = edge_marker
+   end : LAYOUT t)
 
 external triangle :
   string ->                        (* options *)

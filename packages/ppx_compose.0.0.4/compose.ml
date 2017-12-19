@@ -14,5 +14,10 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *)
 
-let (%) g f x = g (f x)
-let (%>) f g x = g (f x)
+(* The `();`-prefix, suggested by Gabriel Scherer in [1], forces the compiler to
+ * produce a binary function, allowing an flambda-enabled compiler to inline the
+ * typical usage.
+ *
+ * [1]: https://discuss.ocaml.org/t/ann-ppx-compose-0-0-3/345 *)
+let (%)  g f = (); fun x -> g (f x)
+let (%>) f g = (); fun x -> g (f x)

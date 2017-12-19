@@ -132,8 +132,19 @@ object
       [n] is the number of edges.  *)
 end
 
+val create :
+  ?hole: 'l mat -> ?region: 'l mat -> ?point_marker: 'l int_vec ->
+  'l mat ->
+  ?segment_marker: 'l int_vec -> ?segment:'l int_mat ->
+  ?neighbor: 'l int_mat -> ?edge: 'l int_mat -> ?edge_marker: 'l int_vec ->
+  'l int_mat -> 'l t
+(** [create point triangle] creates a mesh with the proper methods.
+   The default values for unspecified values are empty arrays.
+   @raise Invalid_argument if a size is incorrect. *)
+
+
 (** Voronoi diagram. *)
-and ['layout] voronoi =
+class type ['layout] voronoi =
 object
   method point : 'layout mat
   (** Array of points coordinates (x,y).  It is of size [2 * n]
@@ -243,7 +254,9 @@ sig
 
       @param edge allows to specify the color of each edge.  If the
       function returns [None], the edge is not drawn.  Default: all
-      are black. *)
+      are black.
+      @raise Invalid_argument if [mesh#edge] is empty or [mesh#point] is
+      empty. *)
 
   val write : ?edge:(int -> color option) -> 'l #t -> out_channel -> unit
   (** Same as {!save} but write the command to the channel. *)
