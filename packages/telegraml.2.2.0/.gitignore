@@ -1,0 +1,15 @@
+*~
+bin
+.merlin
+*.install
+
+# Bot blobs
+*.token
+*.id
+
+# ocamlbuild working directory
+_build/
+
+
+# generated documentation
+*.docdir
