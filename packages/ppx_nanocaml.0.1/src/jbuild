@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+  ((name nanocaml)
+   (public_name ppx_nanocaml)
+   (kind ppx_rewriter)
+   (libraries (batteries
+               ocaml-migrate-parsetree))
+   (preprocess no_preprocessing)))

@@ -1,7 +1,0 @@
-(library
- ((name        configurator)
-  (public_name configurator)
-  (libraries (base stdio unix))
-  (preprocess (pps (ppx_base ppx_driver.runner)))))
-
-(jbuild_version 1)
