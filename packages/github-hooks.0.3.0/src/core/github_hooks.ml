@@ -64,7 +64,7 @@ struct
   type token = Github.Token.t
 
   module HTTP = struct
-    type body = Cohttp_lwt_body.t
+    type body = Cohttp_lwt.Body.t
 
     type response = Response.t * body
 
@@ -182,7 +182,7 @@ struct
         if String.sub sign 0 prefix_len = prefix
         then
           let hex = String.(sub sign prefix_len (length sign - prefix_len)) in
-          Cohttp_lwt_body.to_string body >|= fun body ->
+          Cohttp_lwt.Body.to_string body >|= fun body ->
           let `Hex hmac = hmac ~secret body in
           if String.compare hex hmac = 0 then Some body else None
         else Lwt.return_none
@@ -366,7 +366,7 @@ struct
     | `Unknown (cons, _) -> Fmt.pf ppf "unknown:%s" cons
 
   let notification_handler t (user, repo) _id req body =
-    Cohttp_lwt_body.to_string body >>= fun payload ->
+    Cohttp_lwt.Body.to_string body >>= fun payload ->
     let e = match event_type req with
       | None        -> None
       | Some constr -> Some (Github.Repo.Hook.parse_event ~constr ~payload ())

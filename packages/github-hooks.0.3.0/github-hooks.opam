@@ -1,4 +1,4 @@
-version: "0.2.0"
+version: "0.3.0"
 opam-version: "1.2"
 maintainer: "sheets@alum.mit.edu"
 authors: [
@@ -21,10 +21,14 @@ build: [
 ]
 
 depends: [
-  "jbuilder"         { build & >= "1.0+beta9" }
-  "github-unix"      {>= "3.0.1"}
-  "conduit-lwt-unix" {>= "1.0.0"}
-  "github-hooks"     {>= "0.2.0"}
-  "cohttp-lwt-unix"  {>= "0.99.0"}
+  "jbuilder" { build & >= "1.0+beta9"}
+  "fmt"
+  "logs"
+  "lwt"
+  "cohttp-lwt" {>= "0.99.0"}
+  "github" {>= "3.0.1"}
+  "nocrypto"
+  "cstruct"
+  "hex"
 ]
 available: [ ocaml-version >= "4.02.0" ]

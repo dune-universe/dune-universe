@@ -1,3 +1,7 @@
+## v0.10.1
+
+- Disable checks by default
+
 ## 113.43.00
 
 - Update for the new context free API

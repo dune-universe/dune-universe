@@ -1,4 +1,4 @@
-let perform_checks = true
+let perform_checks = false
 (* The checks on extensions are only to get better error messages
    since the compiler will choke on unknown extensions. We disable
    them externally to make it easier to use non ppx_driver based
