@@ -1,0 +1,24 @@
+# -*- conf -*-
+opam-version: "1.2"
+name: "brotli"
+version: "2.0.3"
+maintainer: "Edgar Aroutiounian <edgar.factorial@gmail.com>"
+authors: [ "Edgar Aroutiounian <edgar.factorial@gmail.com>" ]
+license: "BSD-3-clause"
+homepage: "http://hyegar.com"
+bug-reports: "https://github.com/fxfactorial/reasonml-brotli/issues"
+dev-repo: "https://github.com/fxfactorial/reasonml-brotli.git"
+tags: [ "clib:stdc" "clib:brotli"  ]
+build: ["make" "build"]
+install: ["make" "install"]
+remove: ["make" "remove"]
+# build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
+post-messages:["Be sure to have libbrotli installed on your machine" {failure}]
+build-doc: [ "make" "docs" ]
+depends: [
+  "jbuilder" {build}
+  "odoc" {build}
+  "opam-installer" {build}
+  "conf-brotli"
+]
+available: [ ocaml-version >= "4.04.0" ]

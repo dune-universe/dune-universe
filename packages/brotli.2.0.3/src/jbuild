@@ -1,0 +1,18 @@
+(jbuild_version 1)
+
+(library
+ ((name            brotli)
+  (public_name     brotli)
+  (libraries       (unix))
+  (c_names         (brotli_stubs))
+  (c_flags         (-std=c++11
+                    -x c++
+		    -Wextra
+		    -fno-omit-frame-pointer
+		    -O2
+		    -fno-optimize-sibling-calls
+		    -I/usr/local/include))
+  (c_library_flags (-L/usr/local/lib
+		    -lbrotlidec
+		    -lbrotlienc
+		    -lstdc++))))

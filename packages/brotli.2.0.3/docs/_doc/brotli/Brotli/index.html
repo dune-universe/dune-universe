@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Brotli (brotli.Brotli)</title><link rel="stylesheet" href="../../odoc.css"/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><meta name="generator" content="doc-ock-html v1.0.0-1-g1fc9bf0"/></head><body><nav id="top"><a href="../index.html">Up</a> &mdash; <span class="package">package <a href="../index.html">brotli</a></span></nav><header><h1><span class="keyword">Module</span> <span class="module-path">Brotli</span></h1></header><div class="spec module" id="module-Decompress"><a href="#module-Decompress" class="anchor"></a><div class="def module"><code><span class="keyword">module </span><a href="Decompress/index.html">Decompress</a> : <span class="keyword">sig</span> ... <span class="keyword">end</span></code></div><div class="doc"><p>Provides two functions for decompressing Brotli algorithm
+compressed bytes, files; functions may raise Failure
+exception. Note that on_part_decompressed and on_part_compressed
+require OCaml to acquire and release the runtime lock
+repeatedly.</p></div></div><div class="spec module" id="module-Compress"><a href="#module-Compress" class="anchor"></a><div class="def module"><code><span class="keyword">module </span><a href="Compress/index.html">Compress</a> : <span class="keyword">sig</span> ... <span class="keyword">end</span></code></div><div class="doc"><p>Provides functions for compression using the Brotli algorithm with
+adjustable parameters, defaults are what Google uses. Be aware
+that compression may raise Failure exception</p></div></div></body></html>
