@@ -1,3 +1,20 @@
+v4.0.0 2017-12-25 Cambridge
+---------------------------
+
+Major API iteration to:
+
+- switch to multistage container builds for smaller containers
+- instead of separate `ocaml` and `opam` containers, just generate
+  a single `opam` one which can optionally have the system compiler
+  or a locally compiled one.
+- explicitly support aliases for distributions, and allow older
+  distributions to be marked as deprecated.
+
+Other changes:
+* Update OPAM 2 build mechanism to use `make cold`.
+* Drop support for opam1 containers; use an older library version for those.
+* Also mark OCaml 4.05.0 and 4.06.0 as a mainline release for opam2 as well.
+
 v3.1.0 2017-07-14 Cambridge
 ---------------------------
 
