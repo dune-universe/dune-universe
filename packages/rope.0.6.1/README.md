@@ -6,7 +6,7 @@ efficient operation that involve the string as a whole such as
 concatenation and substring. This library implements ropes for OCaml
 (it is rich enough to replace strings).
 
-Version 0.6
+Version 0.6.1
 
 Installation
 ------------
