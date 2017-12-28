@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name tiny_json)
+  (public_name tiny_json)
+  (libraries ())))

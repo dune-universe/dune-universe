@@ -1,0 +1,2 @@
+build_dir=_build/default
+module_prefix=tiny_json

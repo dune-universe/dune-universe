@@ -1,0 +1,8 @@
+(* OASIS_START *)
+(* DO NOT EDIT (digest: 5bdbe20d60e9d1c566b49f14bb0b8971) *)
+
+Authors of tiny_json:
+
+* Jun FURUSE
+
+(* OASIS_STOP *)
