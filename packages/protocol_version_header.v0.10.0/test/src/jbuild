@@ -1,0 +1,9 @@
+(library
+ ((name protocol_version_header_test)
+  (libraries (async
+              core
+              expect_test_helpers
+              protocol_version_header))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

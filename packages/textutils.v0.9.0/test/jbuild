@@ -1,6 +1,0 @@
-(library
- ((name textutils_test)
-  (libraries (expect_test_helpers textutils))
-  (preprocess (pps (ppx_jane ppx_driver.runner)))))
-
-(jbuild_version 1)

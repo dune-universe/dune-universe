@@ -1,0 +1,6 @@
+(library (
+(name record_builder_test)
+(libraries (core_kernel record_builder))
+(preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)

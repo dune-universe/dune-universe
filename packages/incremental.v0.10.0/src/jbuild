@@ -1,0 +1,10 @@
+(library
+ ((name incremental_lib)
+  (public_name incremental)
+  (flags (:standard -safe-string))
+  (libraries (incremental_kernel core))
+  (preprocess (pps (ppx_jane -check-doc-comments ppx_driver.runner)))
+  ))
+
+
+(jbuild_version 1)

@@ -1,0 +1,450 @@
+{1 Core_profiler}
+
+[Core_profiler] is a library that helps you profile programs and
+estimate various various costs.
+The full API is browsable {{!Core_profiler}{b here}}.
+
+Here is a toy program to help understand how to use it:
+{[
+  (* No usage of core_profiler yet *)
+  open! Core.Std
+
+  let func () =
+    let key = Random.int 100 in
+    if key mod 3 <> 0 then begin
+      ignore (Array.create ~len:100 10);
+    end
+
+  let () =
+    for _i = 1 to 10_000_000 do
+      func ()
+    done
+]}
+
+The library lets us put probes into our program. Here is a probe:
+{[
+  open! Core.Std
+  open Core_profiler.Std_offline
+
+  let p = Probe.create ~name:"array_len" ~units:Profiler_units.Int
+
+  let func () =
+    let len = 100 in
+    let key = Random.int 100 in
+    if key mod 3 <> 0 then begin
+      ignore (Array.create ~len 10);
+      Probe.record p len
+    end
+
+  let () =
+    for _i = 1 to 10_000_000 do
+      func ()
+    done
+]}
+
+You can run the program like this:
+{v
+CORE_PROFILER= ./prog2.exe
+v}
+
+If the environment variable called [CORE_PROFILER] is not set, this
+will complain. This will let us know if we accidentally deploy a
+binary with profiling into production.  Running this program produces
+an output file called [profiler.dat] whose contents we can analyze
+with the profiler tool:
+{v
++ profiler_tool.exe summary
+┌───────────┬───┬───────┬──────┬─────┬─────┬───────┬──────┬───────┐
+│ name      │   │ count │ mean │ min │ max │ stdev │ 5 %l │ 95 %l │
+├───────────┼───┼───────┼──────┼─────┼─────┼───────┼──────┼───────┤
+│ array_len │ v │ 6.6e6 │  100 │ 100 │ 100 │     0 │  100 │   100 │
+└───────────┴───┴───────┴──────┴─────┴─────┴───────┴──────┴───────┘
+v}
+
+The output says that [array_len] has its value set 6.6 million times
+and provides various stats about it.  If the program had setup multiple
+probes you would see the value of all the probes.  The summary
+subcommands can dump out various quantiles and do other things.
+
+We can change the program to prints stats "online", i.e. when the
+program is running by opening Std_online:
+{[
+  open! Core.Std
+  open Core_profiler.Std_online
+
+  let p = Probe.create ~name:"array_len" ~units:Profiler_units.Int
+
+  let func () =
+    let len = 100 in
+    let key = Random.int 100 in
+    if key mod 3 <> 0 then begin
+      ignore (Array.create ~len 10);
+      Probe.record p len
+    end
+
+  let () =
+    for _i = 1 to 10_000_000 do
+      func ();
+      Profiler.safe_to_delay ()
+    done
+]}
+
+When this program is run it will print a summary of the probes to
+stdout every second:
+{v
+┌───────────┬───────┬─────────┬──────┬─────┬─────┬───────┐
+│ name      │ count │     sum │ mean │ min │ max │ stdev │
+├───────────┼───────┼─────────┼──────┼─────┼─────┼───────┤
+│ array_len │ 6.6e6 │ 660.1e6 │  100 │ 100 │ 100 │     0 │
+└───────────┴───────┴─────────┴──────┴─────┴─────┴───────┘
+v}
+
+The rate of output can be controlled by setting [PRINT_INTERVAL] to
+some integer number of seconds. i.e.
+
+In general, online profiling is more limited than offline profiling in
+what stats in tracks.  Depending on how performance sensitive your
+program is, it might also be more disruptive to the execution of the
+program because it has to do the work of maintaining stats in
+process.  Offline probes have been tuned to reduce the impact on the
+running process.
+
+Finally, once you are done profiling your program and what to ship it,
+you can ship it as follows:
+{[
+  open! Core.Std
+  open Core_profiler.Std_disabled
+
+  let p = Probe.create ~name:"array_len" ~units:Profiler_units.Int
+
+  let func () =
+    let len = 100 in
+    let key = Random.int 100 in
+    if key mod 3 <> 0 then begin
+      ignore (Array.create ~len 10);
+      Probe.record p len
+    end
+
+  let () =
+    for _i = 1 to 10_000_000 do
+      func ();
+      Profiler.safe_to_delay ()
+    done
+]}
+
+All the functions exposed in {!Core_profiler_disabled.Std} are no-ops
+and do not contribute to the cost of the running program.  If [exp] is
+some expensive computation in [Probe.report p <exp>], then one should
+write this as [if profiling_enabled then Probe.report p <exp>] to avoid
+the cost of computing [exp] when the profiling is disabled.
+
+If you just want to track times at which various events happened, you
+can use {!Timer} instead of probe.
+
+{2 Groups of probes}
+
+[Core_profiler] includes of a notion of groups of probes.  Groups are
+handy for measuring changes in values between two probes in a group
+and times when various probes in the group were set.  Here is an
+example:
+
+{[
+  open! Core.Std
+  open Core_profiler.Std_offline
+
+
+  let g = Probe.Group.create ~name:"func" ~units:Profiler_units.Words
+  let p1 = Probe.Group.add_probe g ~name:"p1" ()
+  let p2 = Probe.Group.add_probe g ~name:"p2" ()
+  let px = Probe.Group.add_probe g ~name:"px" ()
+
+  let func () =
+    Probe.Group.reset g;
+    Probe.record p1 (Gc.minor_words ());
+    let len = 100 in
+    let key = Random.int 100 in
+    if key mod 3 <> 0 then begin
+      ignore (Array.create ~len 10);
+      Probe.record p2 (Gc.minor_words ());
+    end;
+    Probe.record px (Gc.minor_words ())
+
+  let () =
+    for _i = 1 to 10_000_000 do
+      func ();
+    done
+]}
+
+
+{v
++ ../offline_tool/bin/profiler_tool.exe summary -file profiler.dat
+┌────────────┬────┬───────┬──────────┬──────────┬──────────┬──────────┬─────────┬──────────┐
+│ name       │    │ count │     mean │      min │      max │    stdev │    5 %l │    95 %l │
+├────────────┼────┼───────┼──────────┼──────────┼──────────┼──────────┼─────────┼──────────┤
+│ func:p1    │ v  │  10e6 │ 333.77Mw │ 410.53kw │ 667.12Mw │ 192.48Mw │    32Mw │ 635.58Mw │
+│ func:p2    │ v  │ 6.6e6 │ 333.76Mw │ 410.63kw │ 667.12Mw │ 192.46Mw │ 38.93Mw │ 635.58Mw │
+│ func:px    │ v  │  10e6 │ 333.77Mw │ 410.63kw │ 667.12Mw │ 192.48Mw │ 34.21Mw │ 636.57Mw │
+│ func:p1,p2 │ dt │ 6.6e6 │    181ns │    112ns │   2.88ms │   3.98us │   122ns │    277ns │
+│ func:p1,p2 │ dv │ 6.6e6 │     101w │     101w │     116w │       0w │    101w │     101w │
+│ func:p1,px │ dt │ 3.4e6 │     66ns │     40ns │   2.43ms │   1.85us │    52ns │     69ns │
+│ func:p1,px │ dv │ 3.4e6 │       0w │       0w │      15w │       0w │      0w │       0w │
+│ func:p2,px │ dt │ 6.6e6 │     25ns │     13ns │    3.3ms │    1.9us │    16ns │     57ns │
+│ func:p2,px │ dv │ 6.6e6 │       0w │       0w │      15w │       0w │      0w │       0w │
+└────────────┴────┴───────┴──────────┴──────────┴──────────┴──────────┴─────────┴──────────┘
+v}
+
+In the above table there are a few new values like [func:p1,p2]. These
+refer to the change in time [dt] between [p1] and [p2] and the change
+in value [dv] between the same probes. The syntax [func:p1,p2] is an
+instance of a more general idea of paths that we will see below.
+
+
+{2 Specifying paths}
+
+The strings in the output [func:p1,p2] are called "interests" in the
+[Core_profiler] speak.
+
+Point interests: An interest can be just a probe name such as [p1]. A
+probe that is part of group is prefixed by the group name such as
+[func:p1] above.
+
+Path interests: An interest can also be a path that includes one or
+more probes of the same group.  The interest [func:p1,px] means all
+paths from the probe [func:p1] directly to the probe [func:px] with no
+intervening probes in between.  Other than the [,] separator one can
+also use the [..] sperator.  The interest [func:p1..px] means any path
+from [func:p1] to [func:px] that may have intervening probes in
+between.
+
+Further, path calculuation does not cross a [Group.reset].  This means
+that in the above code there are no paths between two calls to
+[func].
+
+Here is a comparison of two paths.  Notice that the numbers are
+different for [func:p1..px] because two-thirds of the paths went
+through [func:p2].
+
+{v
++ ../offline_tool/bin/profiler_tool.exe summary -file profiler.dat func:p1,px func:p1..px
+┌─────────────┬────┬───────┬───────┬──────┬────────┬────────┬──────┬───────┐
+│ name        │    │ count │  mean │  min │    max │  stdev │ 5 %l │ 95 %l │
+├─────────────┼────┼───────┼───────┼──────┼────────┼────────┼──────┼───────┤
+│ func:p1,px  │ dt │ 3.4e6 │  66ns │ 40ns │ 2.43ms │ 1.85us │ 54ns │  69ns │
+│ func:p1,px  │ dv │ 3.4e6 │    0w │   0w │    15w │     0w │   0w │    0w │
+│ func:p1..px │ dt │  10e6 │ 159ns │ 40ns │  3.3ms │ 3.74us │ 59ns │ 286ns │
+│ func:p1..px │ dv │  10e6 │   67w │   0w │   116w │    48w │   0w │  101w │
+└─────────────┴────┴───────┴───────┴──────┴────────┴────────┴──────┴───────┘
+v}
+
+One can also compose [..] and [,] in interests,  [func:p1,p2..px] and
+[func:p1..p2..px] are valid. Note that a probe name cannot appear
+twice in a path other than as end points -- i.e. [func:p1..p1] is ok,
+but [func:p1..p1..p1] is not.
+
+{2 Range filters}
+
+Once can filter interests by value ranges.  Filters have the form
+[~dt[<RANGE>]], [~dv[<RANGE>]] and [~v[<RANGE>]] to filter on time
+delta, value deltas and values respectively.  For example:
+
+- [g:x..z~dt[0ns,400ns]] filters paths between [g:x..z] to ones where
+  the time difference it within 0 and 400ns.
+
+{2 Graphs}
+
+One can also generate quantile plots. This shows the value difference
+along the path:
+
+{v
++ ../offline_tool/bin/profiler_tool.exe plot func:p1..px delta
+  0w --   5w 34.19 |----1----2----3----4----5
+  6w --  11w  0.00 |
+ 12w --  17w  0.00 |
+ 18w --  23w  0.00 |
+ 24w --  29w  0.00 |
+ 30w --  35w  0.00 |
+ 36w --  40w  0.00 |
+ 41w --  46w  0.00 |
+ 47w --  52w  0.00 |
+ 53w --  58w  0.00 |
+ 59w --  64w  0.00 |
+ 65w --  70w  0.00 |
+ 71w --  76w  0.00 |
+ 77w --  81w  0.00 |
+ 82w --  87w  0.00 |
+ 88w --  93w  0.00 |
+ 94w --  99w  0.00 |
+100w -- 105w 65.81 |----1----2----3----4----5----6----7----8----9----|
+106w -- 111w  0.00 |
+112w -- 116w  0.00 |
+(each '-' is approximately 1.316 units.)
+v}
+
+This shows the time difference along the path:
+{v
++ ../offline_tool/bin/profiler_tool.exe plot 'func:p1..px~dt[0,300ns]' time_delta
+ 42ns --  54ns  1.80 |---
+ 55ns --  67ns 21.98 |----1----2----3----4----5----6----7--
+ 68ns --  80ns  9.28 |----1----2----3
+ 81ns --  93ns  0.79 |-
+ 94ns -- 106ns  0.12 |
+107ns -- 119ns  0.07 |
+120ns -- 132ns  0.02 |
+133ns -- 145ns  3.28 |----1
+146ns -- 158ns 29.22 |----1----2----3----4----5----6----7----8----9----|
+159ns -- 171ns 11.05 |----1----2----3---
+172ns -- 184ns  4.36 |----1--
+185ns -- 197ns  2.47 |----
+198ns -- 210ns  3.59 |----1-
+211ns -- 223ns  5.28 |----1----
+224ns -- 236ns  3.08 |----1
+237ns -- 249ns  1.70 |--
+250ns -- 262ns  0.75 |-
+263ns -- 275ns  0.55 |
+276ns -- 288ns  0.36 |
+289ns -- 300ns  0.25 |
+(each '-' is approximately 0.584 units.)
+v}
+
+One can also look at the density plot in log-scale and this is useful
+when chasing tails. This plot takes a little gettign used to, but is
+handy. We scale the density to be in the range 0 to 100_000 and
+display the log10 of it as the 'y-axis' -- i.e. all y-axis values fall
+in the range 0 to 5. In log-scale a y-axis difference of 1 unit
+implies a 10x difference in relative density.
+{v
++ ../offline_tool/bin/profiler_tool.exe plot 'func:p1..px~dt[0,300ns]' time_delta -log
+ 42ns --  54ns  3.26 |----1----2----3----4----5----6----7-
+ 55ns --  67ns  4.34 |----1----2----3----4----5----6----7----8----9---
+ 68ns --  80ns  3.97 |----1----2----3----4----5----6----7----8----
+ 81ns --  93ns  2.90 |----1----2----3----4----5----6--
+ 94ns -- 106ns  2.08 |----1----2----3----4---
+107ns -- 119ns  1.85 |----1----2----3----4
+120ns -- 132ns  1.30 |----1----2----
+133ns -- 145ns  3.52 |----1----2----3----4----5----6----7----
+146ns -- 158ns  4.47 |----1----2----3----4----5----6----7----8----9----|
+159ns -- 171ns  4.04 |----1----2----3----4----5----6----7----8----9
+172ns -- 184ns  3.64 |----1----2----3----4----5----6----7----8
+185ns -- 197ns  3.39 |----1----2----3----4----5----6----7--
+198ns -- 210ns  3.56 |----1----2----3----4----5----6----7----
+211ns -- 223ns  3.72 |----1----2----3----4----5----6----7----8-
+224ns -- 236ns  3.49 |----1----2----3----4----5----6----7----
+237ns -- 249ns  3.23 |----1----2----3----4----5----6----7-
+250ns -- 262ns  2.88 |----1----2----3----4----5----6--
+263ns -- 275ns  2.74 |----1----2----3----4----5----6
+276ns -- 288ns  2.56 |----1----2----3----4----5---
+289ns -- 300ns  2.40 |----1----2----3----4----5-
+(each '-' is approximately 0.089 units.)
+v}
+Here are two more examples of the same:
+{v
++ ../offline_tool/bin/profiler_tool.exe plot 'func:p1..px~dt[0,15us]' time_delta
+   42ns --   786ns 99.94 |----1----2----3----4----5----6----7----8----9----|
+  787ns --  1.53us  0.00 |
+ 1.53us --  2.28us  0.00 |
+ 2.28us --  3.02us  0.00 |
+ 3.02us --  3.77us  0.00 |
+ 3.77us --  4.51us  0.00 |
+ 4.51us --  5.25us  0.00 |
+ 5.26us --     6us  0.00 |
+    6us --  6.75us  0.00 |
+ 6.75us --  7.49us  0.00 |
+ 7.49us --  8.23us  0.02 |
+ 8.24us --  8.98us  0.00 |
+ 8.98us --  9.72us  0.03 |
+ 9.73us -- 10.47us  0.00 |
+10.47us -- 11.21us  0.00 |
+11.21us -- 11.96us  0.01 |
+11.96us --  12.7us  0.00 |
+12.71us -- 13.45us  0.00 |
+13.45us -- 14.19us  0.00 |
+ 14.2us -- 14.94us  0.00 |
+(each '-' is approximately 1.999 units.)
+v}
+
+{v
++ ../offline_tool/bin/profiler_tool.exe plot 'func:p1..px~dt[0,15us]' time_delta -log
+   42ns --   786ns  5.00 |----1----2----3----4----5----6----7----8----9----|
+  787ns --  1.53us  0.00 |
+ 1.53us --  2.28us  0.00 |
+ 2.28us --  3.02us  0.00 |
+ 3.02us --  3.77us  0.00 |
+ 3.77us --  4.51us  0.00 |
+ 4.51us --  5.25us  0.00 |
+ 5.26us --     6us  0.00 |
+    6us --  6.75us  0.00 |
+ 6.75us --  7.49us  0.00 |
+ 7.49us --  8.23us  1.30 |----1----2---
+ 8.24us --  8.98us  0.00 |
+ 8.98us --  9.72us  1.48 |----1----2----
+ 9.73us -- 10.47us  0.00 |
+10.47us -- 11.21us  0.00 |
+11.21us -- 11.96us  1.00 |----1----2
+11.96us --  12.7us  0.00 |
+12.71us -- 13.45us  0.00 |
+13.45us -- 14.19us  0.00 |
+ 14.2us -- 14.94us  0.00 |
+(each '-' is approximately 0.100 units.)
+v}
+
+{2 Viewing the time series}
+
+One can also look at the entire time series of events recorded using
+the log command. This is sometimes useful in figuring out what
+happened in a particular instance -- maybe a specific outlier.
+
+Typically dumping out the whole time series is too much
+information. The log command can be filtered such that one can find
+one event and show a few metrics (a context) around the interesting
+metric. For example, in the above data we could ask to see the time
+series near cases when going from p1 to px took somewhere between 11.9
+and 12 micro secs. In the output below each such instance in the
+dataset is demarcated by [---].
+
+{v
++ ../offline_tool/bin/profiler_tool.exe log -near 'func:p1,px~dt[11.9us,12us]'
+14:24:12.883846430  func:p1     v   22.37Mw
+14:24:12.883846504  func:px     v   22.37Mw
+14:24:12.883846504  func:p1,px  dt     74ns  dv       0w  v  22.37Mw
+14:24:12.883846543  func:p1     v   22.37Mw
+14:24:12.883846678  func:p2     v   22.37Mw
+14:24:12.883846678  func:p1,p2  dt    135ns  dv     101w  v  22.37Mw
+14:24:12.883846702  func:px     v   22.37Mw
+14:24:12.883846702  func:p2,px  dt     24ns  dv       0w  v  22.37Mw
+14:24:12.883846745  func:p1     v   22.37Mw
+14:24:12.883858695  func:px     v   22.37Mw
+14:24:12.883858695  func:p1,px  dt  11.95us  dv       0w  v  22.37Mw <----
+14:24:12.883858947  func:p1     v   22.37Mw
+14:24:12.883859186  func:p2     v   22.37Mw
+14:24:12.883859186  func:p1,p2  dt    239ns  dv     101w  v  22.37Mw
+14:24:12.883859202  func:px     v   22.37Mw
+14:24:12.883859202  func:p2,px  dt     16ns  dv       0w  v  22.37Mw
+14:24:12.883859253  func:p1     v   22.37Mw
+14:24:12.883859390  func:p2     v   22.37Mw
+14:24:12.883859390  func:p1,p2  dt    137ns  dv     101w  v  22.37Mw
+14:24:12.883859414  func:px     v   22.37Mw
+14:24:12.883859414  func:p2,px  dt     24ns  dv       0w  v  22.37Mw
+ ---
+14:24:13.066214700  func:px     v   81.91Mw
+14:24:13.066214700  func:p2,px  dt     18ns  dv       0w  v  81.91Mw
+14:24:13.066214757  func:p1     v   81.91Mw
+14:24:13.066214833  func:px     v   81.91Mw
+14:24:13.066214833  func:p1,px  dt     76ns  dv       0w  v  81.91Mw
+14:24:13.066214873  func:p1     v   81.91Mw
+14:24:13.066214942  func:px     v   81.91Mw
+14:24:13.066214942  func:p1,px  dt     69ns  dv       0w  v  81.91Mw
+14:24:13.066214980  func:p1     v   81.91Mw
+14:24:13.066226966  func:px     v   81.91Mw
+14:24:13.066226966  func:p1,px  dt  11.99us  dv       0w  v  81.91Mw <-----
+14:24:13.066227279  func:p1     v   81.91Mw
+14:24:13.066227515  func:px     v   81.91Mw
+14:24:13.066227515  func:p1,px  dt    236ns  dv       0w  v  81.91Mw
+14:24:13.066227553  func:p1     v   81.91Mw
+14:24:13.066227614  func:px     v   81.91Mw
+14:24:13.066227614  func:p1,px  dt     61ns  dv       0w  v  81.91Mw
+14:24:13.066227651  func:p1     v   81.91Mw
+14:24:13.066227720  func:px     v   81.91Mw
+14:24:13.066227720  func:p1,px  dt     69ns  dv       0w  v  81.91Mw
+14:24:13.066227756  func:p1     v   81.91Mw
+ ---
+v}
