@@ -1,0 +1,74 @@
+2.3.1
+-----
+
+* jbuilder integration
+
+2.3.0
+-----
+
+* Ported to Ast_405
+
+2.2.0
+-----
+
+* Polymorphic variant result types are replaced by the normal variant result type
+
+2.1.0
+-----
+
+* Removed things depending on the current compierlibs.
+
+2.0.0
+-----
+
+* Ported to ocaml-migrate-parsetree
+* OCaml related options are now removed from the default command line argument.  If you need them, you have to add Ppxx.Ppx.compiler_libs_options explicitly.
+* Ppxx.Ppx.run no longer has its initialization function.  You must perform initialization inside the mapper maker function of type 'unit -> mapper'
+* Ppxx.Ppx.register is now added for ocaml-migrate-parsetree framework
+
+
+1.4.0
+-----
+
+* Ppx.run now takes a function to create a mapper, instead of a mapper itself.
+  This is required to restore the parent process tool names and some command line
+  options in the PPX process. 
+- Added Helper.ocaml_warning to create [@@ocaml.warning <string>]
+- Added Helper.Exp.list
+- Fixed the interface of SCCS
+- Added Compilerlib.Location.merge
+
+1.3.2
+-----
+
+- Updated build scripts
+
+1.3.0
+-----
+* Port to OCaml 4.03.0
+* Removed Utils.errorf. Use Compierlib.raise_errorf instead.
+* Location.loc is now exposed in Compilerlib
+- Moved typed parts of Ppxx.Compilerlib to Typpx.Compilerlib
+
+1.2.1
+-----
+
+- Command arguments with .cm* extensions are dyn-linked as plugins.
+- Added Helper.Exp.lident
+- Added Utils.List.partition_map Utils.List.from_to and Utils.Filename.split_extension
+
+1.2.0
+-----
+
+* Renamed Compilerlib.Parsetree to Compilerlib.XParsetree. We got issues of it since the original Parsetree is mli only module.
+* override_flag arguments are now all optional ?(override=false).
+
+1.1.0
+-----
+
+- Ppxx.Helper module is now a conservative extension of Ast_helper
+
+1.0.0
+-----
+
+- Initial release
