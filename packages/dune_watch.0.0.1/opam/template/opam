@@ -1,0 +1,8 @@
+depends: [
+  "jbuilder" {build}
+  "lwt"
+  "ppx_monadic"
+]
+available: [
+  ocaml-version >= "4.04.0"
+]

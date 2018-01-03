@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executables
+ ((public_names (dune_watch))
+  (names (dune_watch))
+  (preprocess (pps (ppx_monadic)))
+  (libraries (lwt lwt.unix))))
+
+
+
+

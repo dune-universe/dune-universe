@@ -33,6 +33,9 @@ exception Oid of oid
 
 let invalid_oid = 0
 
+module Error_field = Error_field
+module Error_code = Error_code
+
 module FFormat = struct
   type t =
     | TEXT
@@ -383,6 +386,9 @@ module Stub = struct
 
   external result_error : result -> string = "PQresultErrorMessage_stub"
 
+  external result_error_field :
+    result -> Error_field.t -> string = "PQresultErrorField_stub"
+
   external make_empty_res :
     connection -> result_status -> result = "PQmakeEmptyPGresult_stub"
 
@@ -617,6 +623,12 @@ class result res =
 object
   method status = Stub.result_status res
   method error = Stub.result_error res
+
+  method error_field field_name = Stub.result_error_field res field_name
+
+  method error_code =
+    Error_code.of_sqlstate (Stub.result_error_field res Error_field.SQLSTATE)
+
   method ntuples = ntuples
   method nparams = Lazy.force nparams
   method nfields = nfields

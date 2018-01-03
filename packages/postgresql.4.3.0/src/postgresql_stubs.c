@@ -178,6 +178,35 @@ CAMLprim intnat oid_of_ftype_stub(value v_ftype)
 CAMLprim value oid_of_ftype_stub_bc(value v_ftype)
 { return Val_int(oid_of_ftype_stub(v_ftype)); }
 
+/* Error field conversions */
+
+#define PG_DIAG_SEVERITY              'S'
+#define PG_DIAG_SEVERITY_NONLOCALIZED 'V'
+#define PG_DIAG_SQLSTATE              'C'
+#define PG_DIAG_MESSAGE_PRIMARY       'M'
+#define PG_DIAG_MESSAGE_DETAIL        'D'
+#define PG_DIAG_MESSAGE_HINT          'H'
+#define PG_DIAG_STATEMENT_POSITION    'P'
+#define PG_DIAG_INTERNAL_POSITION     'p'
+#define PG_DIAG_INTERNAL_QUERY        'q'
+#define PG_DIAG_CONTEXT               'W'
+#define PG_DIAG_SCHEMA_NAME           's'
+#define PG_DIAG_TABLE_NAME            't'
+#define PG_DIAG_COLUMN_NAME           'c'
+#define PG_DIAG_DATATYPE_NAME         'd'
+#define PG_DIAG_CONSTRAINT_NAME       'n'
+#define PG_DIAG_SOURCE_FILE           'F'
+#define PG_DIAG_SOURCE_LINE           'L'
+#define PG_DIAG_SOURCE_FUNCTION       'R'
+
+static char error_field_tbl[] = {
+  PG_DIAG_SEVERITY, PG_DIAG_SEVERITY_NONLOCALIZED, PG_DIAG_SQLSTATE,
+  PG_DIAG_MESSAGE_PRIMARY, PG_DIAG_MESSAGE_DETAIL, PG_DIAG_MESSAGE_HINT,
+  PG_DIAG_STATEMENT_POSITION, PG_DIAG_INTERNAL_POSITION, PG_DIAG_INTERNAL_QUERY,
+  PG_DIAG_CONTEXT, PG_DIAG_SCHEMA_NAME, PG_DIAG_TABLE_NAME, PG_DIAG_COLUMN_NAME,
+  PG_DIAG_DATATYPE_NAME, PG_DIAG_CONSTRAINT_NAME, PG_DIAG_SOURCE_FILE,
+  PG_DIAG_SOURCE_LINE, PG_DIAG_SOURCE_FUNCTION
+};
 
 /* Management of notice_processor callbacks */
 
@@ -712,6 +741,13 @@ noalloc_res_info_intnat(PQntuples)
 noalloc_res_info_intnat(PQnfields)
 noalloc_res_info(PQbinaryTuples, Val_bool)
 fieldnum_info(PQfname, make_string)
+
+CAMLprim value PQresultErrorField_stub(value v_res, value v_field_name)
+{
+  CAMLparam1(v_res);
+  int field_code = error_field_tbl[Int_val(v_field_name)];
+  CAMLreturn(make_string(PQresultErrorField(get_res(v_res), field_code)));
+}
 
 #ifdef PG_OCAML_8_2
 noalloc_res_info_intnat(PQnparams)

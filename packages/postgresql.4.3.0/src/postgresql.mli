@@ -108,6 +108,8 @@ type ftype =
   | ANYELEMENT
   | JSONB
 
+module Error_field = Error_field
+module Error_code = Error_code
 
 (** Status of command/query results *)
 type result_status =
@@ -221,6 +223,12 @@ class type result = object
   method error : string
   (** [#error] @return error string of a result. *)
 
+  method error_field : Error_field.t -> string
+  (** [#error_field] @return message of given error field in a result. *)
+
+  method error_code : Error_code.t
+  (** [#error_code] @return the error code of the error condition
+      as stored in the SQLSTATE field. *)
 
   (** Retrieving SELECT Result Information *)
 
