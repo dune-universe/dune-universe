@@ -1,0 +1,13 @@
+# -*- makefile -*-
+
+setup.exe: _oasis
+	@oasis setup > /dev/null
+	@ocamlopt.opt -o $@ setup.ml || ocamlopt -o $@ setup.ml || ocamlc -o $@ setup.ml
+	@for f in setup.*; do [ $$f = $@ -o $$f = setup.ml ] || rm -f $$f; done
+
+.PHONY: test
+test: setup.exe
+	@./setup.exe -configure --enable-tests > build-log
+	@./setup.exe -build >> build-log
+	@( ./setup.exe -quiet -test; echo "[$$?]" ) &> actual-test-output
+	@diff -u expected-test-output actual-test-output

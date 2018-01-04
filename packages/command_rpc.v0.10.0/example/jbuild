@@ -1,0 +1,12 @@
+(executables
+ ((names (command_rpc_example command_rpc_expert_example))
+(flags (:standard -safe-string))
+  (libraries (
+    async
+    core
+    command_rpc
+    ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+
+(jbuild_version 1)

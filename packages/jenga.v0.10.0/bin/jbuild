@@ -1,0 +1,12 @@
+
+(executables
+ ((names (jenga))
+  (flags (:standard -safe-string))
+  (libraries (async core jenga_lib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(install
+ ((section bin)
+  (files ((jenga.exe as jenga)))))
+
+(jbuild_version 1)

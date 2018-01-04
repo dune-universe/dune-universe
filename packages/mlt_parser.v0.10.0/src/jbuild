@@ -1,0 +1,14 @@
+(library
+ ((name mlt_parser)
+  (public_name mlt_parser)
+  (libraries (
+    core_kernel
+    ppx_expect.matcher
+    ppx_expect.payload
+    ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+
+
+
+(jbuild_version 1)

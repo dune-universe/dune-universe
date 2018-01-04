@@ -1,0 +1,24 @@
+(library
+ ((name jenga_lib)
+  (public_name jenga)
+  (flags (:standard -safe-string))
+  (libraries (async
+              async_inotify
+              command_rpc
+              core
+              fieldslib
+              ocaml_plugin
+              sexplib
+              str
+              tenacious_lib))
+  (c_names (batched_mtimes_stubs))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+  ))
+
+;; Embed the API into the library as a string
+(rule
+ ((targets (cat_api.ml))
+  (deps (api.mli))
+  (action (bash "{ echo -n 'let string = {cat_api|'; cat api.mli; echo -n '|cat_api}'; } > ${@}"))))
+
+(jbuild_version 1)

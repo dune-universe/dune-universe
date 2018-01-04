@@ -1,6 +1,0 @@
-(executables
- ((names (compare_sexplib_and_parsexp))
-  (libraries (core sexplib parsexp_io))
-  (preprocess (pps (ppx_jane ppx_driver.runner)))))
-
-(jbuild_version 1)

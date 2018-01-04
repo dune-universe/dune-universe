@@ -1,0 +1,10 @@
+(library
+ ((name tenacious_lib)
+  (public_name jenga.tenacious)
+  (flags (:standard -safe-string))
+  (libraries (core async))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+;(alias ((name lib_artifacts) (deps ((alias runtest)))))
+
+(jbuild_version 1)

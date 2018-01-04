@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executable
+  ((name main)
+   (libraries (
+     hostnet cmdliner alcotest logs.fmt protocol-9p
+     mirage-dns uwt.preemptive mirage-clock-unix
+     charrua-client-mirage
+   ))
+   (preprocess no_preprocessing)))

@@ -1,8 +1,0 @@
-(library
- ((name incr_select)
-  (public_name incr_select)
-  (preprocess (pps (async_js.ppx ppx_jane ppx_driver.runner)))
-  (libraries (core_kernel incremental_kernel))))
-
-
-(jbuild_version 1)

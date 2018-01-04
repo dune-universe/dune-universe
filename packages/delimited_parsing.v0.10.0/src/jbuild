@@ -1,0 +1,14 @@
+(library (
+  (name delimited_parsing)
+  (public_name delimited_parsing)
+  (flags (:standard -safe-string))
+  (libraries (
+    async
+    core
+    core_extended
+    expect_test_helpers
+    ))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))
+  ))
+
+(jbuild_version 1)

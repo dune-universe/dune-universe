@@ -1,0 +1,2 @@
+This packages only exposes findlib_top.cma as the library findlib_top,
+so that we can use it without fiddling with predicates.

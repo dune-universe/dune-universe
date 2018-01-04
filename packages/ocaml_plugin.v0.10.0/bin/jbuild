@@ -1,0 +1,18 @@
+(executables
+ ((names (ocaml_embed_compiler))
+  (flags (:standard -safe-string))
+  (libraries
+   (async
+    core
+    ocaml_plugin
+    sexplib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(install
+ ((section bin)
+  (files
+   ((ocaml_embed_compiler.exe as ocaml-embed-compiler)))))
+
+
+
+(jbuild_version 1)

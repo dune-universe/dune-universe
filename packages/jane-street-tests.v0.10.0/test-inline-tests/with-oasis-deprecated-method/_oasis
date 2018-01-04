@@ -1,0 +1,26 @@
+OASISFormat:    0.4
+# This constraint on the version of OCaml is important otherwise oasis
+# uses an old method to pass package options to ocamlfind
+OCamlVersion:   >= 4.02.3
+Name:           blah
+Version:        1.0
+License:        Apache-2.0
+Authors:        Jane Street Group, LLC <opensource@janestreet.com>
+Synopsis:       Example of use of inline tests with oasis
+BuildTools:     ocamlbuild
+
+Library blah
+  Path:         src
+  Modules:      Foo
+  BuildDepends: ppx_jane
+
+Executable test_runner
+  Path:         test-runner
+  MainIs:       test_runner.ml
+  BuildDepends: blah, ppx_expect.evaluator, ppx_inline_test.runner.lib
+
+# We use a -diff-cmd only to make the output deterministic, you don't
+# need to do that in a real project
+Test test
+  Command:   $test_runner inline-test-runner blah -diff-cmd "diff -u --label actual --label expected"
+  TestTools: test_runner

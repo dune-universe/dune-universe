@@ -1,0 +1,8 @@
+# This is to prevent the implicit addition of -ppx arguments
+<**/*>: predicate(custom_ppx)
+<src/*.ml{,i}>: pp(ppx-jane -dump-ast -inline-test-lib blah)
+# Force all modules to be linked, this is necessary as the tests
+# runner uses nothing itself
+<test-runner/*>: linkall, custom
+# OASIS_START
+# OASIS_STOP

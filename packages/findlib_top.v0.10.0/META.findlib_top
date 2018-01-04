@@ -1,0 +1,4 @@
+description = "Toplevel support for findlib"
+directory = "../findlib"
+requires = "findlib"
+archive(byte) = "findlib_top.cma"

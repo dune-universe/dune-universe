@@ -1,0 +1,10 @@
+(library
+ ((name ocaml_plugin_user_with_unit_tests)
+  (flags (:standard -safe-string))
+  (libraries
+   (core
+    ocaml_plugin))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,12 @@
+File "src/foo.ml", line 2, characters 0-24: test2 is false.
+
+FAILED 1 / 4 tests
+--- actual
++++ expected
+@@ -7,4 +7,4 @@
+ 
+ let%expect_test "expect test2" =
+   print_string "bar";
+-  [%expect {|XXX|}]
++  [%expect {|bar|}]
+[1]
