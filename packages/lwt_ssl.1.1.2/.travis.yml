@@ -1,0 +1,27 @@
+sudo: required
+
+language: generic
+
+matrix:
+  include:
+    - os: linux
+      env: COMPILER=system    # 4.02.3 from ppa/avsm.
+    - os: linux
+      env: COMPILER=4.03.0
+    - os: linux
+      env: COMPILER=4.04.2
+    - os: linux
+      env: COMPILER=4.05.0
+    - os: linux
+      env: COMPILER=4.06.0
+    - os: osx
+      env: COMPILER=system    # Whatever Homebrew installs.
+
+script: bash -e src/travis.sh
+
+notifications:
+  email:
+    recipients:
+      - antonbachin@yahoo.com
+    on_success: always
+    on_failure: always
