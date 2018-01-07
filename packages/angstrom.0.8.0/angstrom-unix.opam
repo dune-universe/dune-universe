@@ -1,4 +1,4 @@
-version: "0.7.0"
+version: "0.8.0"
 opam-version: "1.2"
 maintainer: "Spiros Eliopoulos <spiros@inhabitedtype.com>"
 authors: [ "Spiros Eliopoulos <spiros@inhabitedtype.com>" ]
@@ -16,7 +16,6 @@ build-test: [
 depends: [
   "jbuilder" {build & >= "1.0+beta10"}
   "angstrom"
-  "lwt"
   "base-unix"
 ]
 available: [ ocaml-version >= "4.03.0" ]
