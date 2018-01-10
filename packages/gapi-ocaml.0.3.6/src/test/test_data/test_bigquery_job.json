@@ -1,0 +1,98 @@
+{
+  "configuration": {
+    "copy": {
+      "createDisposition": "string",
+      "destinationTable": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      },
+      "sourceTable": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      },
+      "writeDisposition": "string"
+    },
+    "extract": {
+      "destinationUri": "string",
+      "sourceTable": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      }
+    },
+    "load": {
+      "createDisposition": "string",
+      "destinationTable": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      },
+      "encoding": "string",
+      "fieldDelimiter": "string",
+      "maxBadRecords": 100,
+      "schema": {
+        "fields": [
+          {
+            "mode": "string",
+            "name": "f1",
+            "type": "STRING"
+          },
+          {
+            "mode": "string",
+            "name": "f2",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      "skipLeadingRows": 1,
+      "sourceUris": [
+        "string"
+      ],
+      "writeDisposition": "string"
+    },
+    "query": {
+      "createDisposition": "string",
+      "defaultDataset": {
+        "datasetId": "string",
+        "projectId": "string"
+      },
+      "destinationTable": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      },
+      "query": "string",
+      "writeDisposition": "string"
+    }
+  },
+  "etag": "etag",
+  "id": "string",
+  "jobReference": {
+    "jobId": "string",
+    "projectId": "string"
+  },
+  "kind": "bigquery#job",
+  "selfLink": "string",
+  "statistics": {
+    "endTime": "12345678901",
+    "startTime": "12345678901",
+    "totalBytesProcessed": "12345678901"
+  },
+  "status": {
+    "errorResult": {
+      "location": "string",
+      "message": "string",
+      "reason": "string"
+    },
+    "errors": [
+      {
+        "location": "string",
+        "message": "string",
+        "reason": "string"
+      }
+    ],
+    "state": "string"
+  }
+}

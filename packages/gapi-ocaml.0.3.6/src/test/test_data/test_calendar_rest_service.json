@@ -1,0 +1,1759 @@
+{
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/calendar": {
+          "description": "Manage your calendars"
+        },
+        "https://www.googleapis.com/auth/calendar.readonly": {
+          "description": "View your calendars"
+        }
+      }
+    }
+  },
+  "basePath": "/calendar/v3/",
+  "description": "Lets you manipulate events and other calendar data.",
+  "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
+  "icons": {
+    "x16": "http://www.google.com/images/icons/product/calendar-16.png",
+    "x32": "http://www.google.com/images/icons/product/calendar-32.png"
+  },
+  "id": "calendar:v3",
+  "kind": "discovery#restDescription",
+  "labels": [ "labs" ],
+  "name": "calendar",
+  "parameters": {
+    "alt": {
+      "default": "json",
+      "description": "Data format for the response.",
+      "enum": [ "json" ],
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json"
+      ],
+      "location": "query",
+      "type": "string"
+    },
+    "fields": {
+      "description":
+        "Selector specifying which fields to include in a partial response.",
+      "location": "query",
+      "type": "string"
+    },
+    "key": {
+      "description":
+        "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "location": "query",
+      "type": "string"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "location": "query",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "default": "true",
+      "description": "Returns response with indentations and line breaks.",
+      "location": "query",
+      "type": "boolean"
+    },
+    "quotaUser": {
+      "description":
+        "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+      "location": "query",
+      "type": "string"
+    },
+    "userIp": {
+      "description":
+        "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+      "location": "query",
+      "type": "string"
+    }
+  },
+  "protocol": "rest",
+  "resources": {
+    "acl": {
+      "methods": {
+        "delete": {
+          "description": "Deletes an access control rule.",
+          "httpMethod": "DELETE",
+          "id": "calendar.acl.delete",
+          "parameterOrder": [ "calendarId", "ruleId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "ruleId": {
+              "description": "ACL rule identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl/{ruleId}",
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "get": {
+          "description": "Returns an access control rule.",
+          "httpMethod": "GET",
+          "id": "calendar.acl.get",
+          "parameterOrder": [ "calendarId", "ruleId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "ruleId": {
+              "description": "ACL rule identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl/{ruleId}",
+          "response": { "$ref": "AclRule" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates an access control rule.",
+          "httpMethod": "POST",
+          "id": "calendar.acl.insert",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl",
+          "request": { "$ref": "AclRule" },
+          "response": { "$ref": "AclRule" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "list": {
+          "description":
+            "Returns the rules in the access control list for the calendar.",
+          "httpMethod": "GET",
+          "id": "calendar.acl.list",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl",
+          "response": { "$ref": "Acl" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "patch": {
+          "description":
+            "Updates an access control rule. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "calendar.acl.patch",
+          "parameterOrder": [ "calendarId", "ruleId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "ruleId": {
+              "description": "ACL rule identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl/{ruleId}",
+          "request": { "$ref": "AclRule" },
+          "response": { "$ref": "AclRule" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "update": {
+          "description": "Updates an access control rule.",
+          "httpMethod": "PUT",
+          "id": "calendar.acl.update",
+          "parameterOrder": [ "calendarId", "ruleId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "ruleId": {
+              "description": "ACL rule identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/acl/{ruleId}",
+          "request": { "$ref": "AclRule" },
+          "response": { "$ref": "AclRule" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        }
+      }
+    },
+    "calendarList": {
+      "methods": {
+        "delete": {
+          "description": "Deletes an entry on the user's calendar list.",
+          "httpMethod": "DELETE",
+          "id": "calendar.calendarList.delete",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "users/me/calendarList/{calendarId}",
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "get": {
+          "description": "Returns an entry on the user's calendar list.",
+          "httpMethod": "GET",
+          "id": "calendar.calendarList.get",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "users/me/calendarList/{calendarId}",
+          "response": { "$ref": "CalendarListEntry" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Adds an entry to the user's calendar list.",
+          "httpMethod": "POST",
+          "id": "calendar.calendarList.insert",
+          "path": "users/me/calendarList",
+          "request": { "$ref": "CalendarListEntry" },
+          "response": { "$ref": "CalendarListEntry" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "list": {
+          "description": "Returns entries on the user's calendar list.",
+          "httpMethod": "GET",
+          "id": "calendar.calendarList.list",
+          "parameters": {
+            "maxResults": {
+              "description":
+                "Maximum number of entries returned on one result page. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "minAccessRole": {
+              "description":
+                "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+              "enum": [ "freeBusyReader", "owner", "reader", "writer" ],
+              "enumDescriptions": [
+                "The user can read free/busy information.",
+                "The user can read and modify events and access control lists.",
+                "The user can read events that are not private.",
+                "The user can read and modify events."
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description":
+                "Token specifying which result page to return. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "showHidden": {
+              "description":
+                "Whether to show hidden entries. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "users/me/calendarList",
+          "response": { "$ref": "CalendarList" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "patch": {
+          "description":
+            "Updates an entry on the user's calendar list. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "calendar.calendarList.patch",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "users/me/calendarList/{calendarId}",
+          "request": { "$ref": "CalendarListEntry" },
+          "response": { "$ref": "CalendarListEntry" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "update": {
+          "description": "Updates an entry on the user's calendar list.",
+          "httpMethod": "PUT",
+          "id": "calendar.calendarList.update",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "users/me/calendarList/{calendarId}",
+          "request": { "$ref": "CalendarListEntry" },
+          "response": { "$ref": "CalendarListEntry" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        }
+      }
+    },
+    "calendars": {
+      "methods": {
+        "clear": {
+          "description":
+            "Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.",
+          "httpMethod": "POST",
+          "id": "calendar.calendars.clear",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/clear",
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "delete": {
+          "description": "Deletes a secondary calendar.",
+          "httpMethod": "DELETE",
+          "id": "calendar.calendars.delete",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}",
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "get": {
+          "description": "Returns metadata for a calendar.",
+          "httpMethod": "GET",
+          "id": "calendar.calendars.get",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}",
+          "response": { "$ref": "Calendar" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a secondary calendar.",
+          "httpMethod": "POST",
+          "id": "calendar.calendars.insert",
+          "path": "calendars",
+          "request": { "$ref": "Calendar" },
+          "response": { "$ref": "Calendar" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "patch": {
+          "description":
+            "Updates metadata for a calendar. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "calendar.calendars.patch",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}",
+          "request": { "$ref": "Calendar" },
+          "response": { "$ref": "Calendar" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "update": {
+          "description": "Updates metadata for a calendar.",
+          "httpMethod": "PUT",
+          "id": "calendar.calendars.update",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}",
+          "request": { "$ref": "Calendar" },
+          "response": { "$ref": "Calendar" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        }
+      }
+    },
+    "colors": {
+      "methods": {
+        "get": {
+          "description":
+            "Returns the color definitions for calendars and events.",
+          "httpMethod": "GET",
+          "id": "calendar.colors.get",
+          "path": "colors",
+          "response": { "$ref": "Colors" }
+        }
+      }
+    },
+    "events": {
+      "methods": {
+        "delete": {
+          "description": "Deletes an event.",
+          "httpMethod": "DELETE",
+          "id": "calendar.events.delete",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the deletion of the event. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}",
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "get": {
+          "description": "Returns an event.",
+          "httpMethod": "GET",
+          "id": "calendar.events.get",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "maxAttendees": {
+              "description":
+                "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "timeZone": {
+              "description":
+                "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}",
+          "response": { "$ref": "Event" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "import": {
+          "description": "Imports an event.",
+          "httpMethod": "POST",
+          "id": "calendar.events.import",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/events/import",
+          "request": { "$ref": "Event" },
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "insert": {
+          "description": "Creates an event.",
+          "httpMethod": "POST",
+          "id": "calendar.events.insert",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the creation of the new event. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events",
+          "request": { "$ref": "Event" },
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "instances": {
+          "description":
+            "Returns instances of the specified recurring event.",
+          "httpMethod": "GET",
+          "id": "calendar.events.instances",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Recurring event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "maxAttendees": {
+              "description":
+                "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "maxResults": {
+              "description":
+                "Maximum number of events returned on one result page. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "originalStart": {
+              "description":
+                "The original start time of the instance in the result. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description":
+                "Token specifying which result page to return. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "showDeleted": {
+              "description":
+                "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "timeZone": {
+              "description":
+                "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}/instances",
+          "response": { "$ref": "Events" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "list": {
+          "description": "Returns events on the specified calendar.",
+          "httpMethod": "GET",
+          "id": "calendar.events.list",
+          "parameterOrder": [ "calendarId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "iCalUID": {
+              "description":
+                "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "maxAttendees": {
+              "description":
+                "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "maxResults": {
+              "description":
+                "Maximum number of events returned on one result page. Optional.",
+              "format": "int32",
+              "location": "query",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description":
+                "The order of the events returned in the result. Optional. The default is an unspecified, stable order.",
+              "enum": [ "startTime", "updated" ],
+              "enumDescriptions": [
+                "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+                "Order by last modification time (ascending)."
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description":
+                "Token specifying which result page to return. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "q": {
+              "description":
+                "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+              "location": "query",
+              "type": "string"
+            },
+            "showDeleted": {
+              "description":
+                "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "showHiddenInvitations": {
+              "description":
+                "Whether to include hidden invitations in the result. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "singleEvents": {
+              "description":
+                "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "timeMax": {
+              "description":
+                "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+              "location": "query",
+              "type": "string"
+            },
+            "timeMin": {
+              "description":
+                "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+              "location": "query",
+              "type": "string"
+            },
+            "timeZone": {
+              "description":
+                "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+              "location": "query",
+              "type": "string"
+            },
+            "updatedMin": {
+              "description":
+                "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/events",
+          "response": { "$ref": "Events" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "move": {
+          "description":
+            "Moves an event to another calendar, i.e. changes an event's organizer.",
+          "httpMethod": "POST",
+          "id": "calendar.events.move",
+          "parameterOrder": [ "calendarId", "eventId", "destination" ],
+          "parameters": {
+            "calendarId": {
+              "description":
+                "Calendar identifier of the source calendar where the event currently is on.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "destination": {
+              "description":
+                "Calendar identifier of the target calendar where the event is to be moved to.",
+              "location": "query",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the change of the event's organizer. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}/move",
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "patch": {
+          "description":
+            "Updates an event. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "calendar.events.patch",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}",
+          "request": { "$ref": "Event" },
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "quickAdd": {
+          "description": "Creates an event based on a simple text string.",
+          "httpMethod": "POST",
+          "id": "calendar.events.quickAdd",
+          "parameterOrder": [ "calendarId", "text" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the creation of the event. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "text": {
+              "description": "The text describing the event to be created.",
+              "location": "query",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "calendars/{calendarId}/events/quickAdd",
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "reset": {
+          "description":
+            "Resets a specialized instance of a recurring event to its original state.",
+          "httpMethod": "POST",
+          "id": "calendar.events.reset",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the event update. Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}/reset",
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        },
+        "update": {
+          "description": "Updates an event.",
+          "httpMethod": "PUT",
+          "id": "calendar.events.update",
+          "parameterOrder": [ "calendarId", "eventId" ],
+          "parameters": {
+            "calendarId": {
+              "description": "Calendar identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "eventId": {
+              "description": "Event identifier.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "sendNotifications": {
+              "description":
+                "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "calendars/{calendarId}/events/{eventId}",
+          "request": { "$ref": "Event" },
+          "response": { "$ref": "Event" },
+          "scopes": [ "https://www.googleapis.com/auth/calendar" ]
+        }
+      }
+    },
+    "freebusy": {
+      "methods": {
+        "query": {
+          "description":
+            "Returns free/busy information for a set of calendars.",
+          "httpMethod": "POST",
+          "id": "calendar.freebusy.query",
+          "path": "freeBusy",
+          "request": { "$ref": "FreeBusyRequest" },
+          "response": { "$ref": "FreeBusyResponse" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        }
+      }
+    },
+    "settings": {
+      "methods": {
+        "get": {
+          "description": "Returns a single user setting.",
+          "httpMethod": "GET",
+          "id": "calendar.settings.get",
+          "parameterOrder": [ "setting" ],
+          "parameters": {
+            "setting": {
+              "description": "Name of the user setting.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "users/me/settings/{setting}",
+          "response": { "$ref": "Setting" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        },
+        "list": {
+          "description":
+            "Returns all user settings for the authenticated user.",
+          "httpMethod": "GET",
+          "id": "calendar.settings.list",
+          "path": "users/me/settings",
+          "response": { "$ref": "Settings" },
+          "scopes": [
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.readonly"
+          ]
+        }
+      }
+    }
+  },
+  "schemas": {
+    "Acl": {
+      "id": "Acl",
+      "properties": {
+        "etag": {
+          "description": "ETag of the collection.",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of rules on the access control list.",
+          "items": { "$ref": "AclRule" },
+          "type": "array"
+        },
+        "kind": {
+          "default": "calendar#acl",
+          "description": "Type of the collection (\"calendar#acl\").",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description":
+            "Token used to access the next page of this result. Omitted if no further results are available.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AclRule": {
+      "id": "AclRule",
+      "properties": {
+        "etag": { "description": "ETag of the resource.", "type": "string" },
+        "id": {
+          "description": "Identifier of the ACL rule.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "calendar#aclRule",
+          "description": "Type of the resource (\"calendar#aclRule\").",
+          "type": "string"
+        },
+        "role": {
+          "description":
+            "The role assigned to the scope. Possible values are: \n- \"none\" - Provides no access. \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.",
+          "type": "string"
+        },
+        "scope": {
+          "description": "The scope of the rule.",
+          "properties": {
+            "type": {
+              "description":
+                "The type of the scope. Possible values are: \n- \"default\" - The public scope. This is the default value. \n- \"user\" - Limits the scope to a single user. \n- \"group\" - Limits the scope to a group. \n- \"domain\" - Limits the scope to a domain. Note: The permissions granted to the \"default\", or public, scope apply to any user, authenticated or not.",
+              "type": "string"
+            },
+            "value": {
+              "description":
+                "The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type \"default\".",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Calendar": {
+      "id": "Calendar",
+      "properties": {
+        "description": {
+          "description": "Description of the calendar. Optional.",
+          "type": "string"
+        },
+        "etag": { "description": "ETag of the resource.", "type": "string" },
+        "id": {
+          "description": "Identifier of the calendar.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "calendar#calendar",
+          "description": "Type of the resource (\"calendar#calendar\").",
+          "type": "string"
+        },
+        "location": {
+          "description":
+            "Geographic location of the calendar as free-form text. Optional.",
+          "type": "string"
+        },
+        "summary": {
+          "description": "Title of the calendar.",
+          "type": "string"
+        },
+        "timeZone": {
+          "description": "The time zone of the calendar. Optional.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CalendarList": {
+      "id": "CalendarList",
+      "properties": {
+        "etag": {
+          "description": "ETag of the collection.",
+          "type": "string"
+        },
+        "items": {
+          "description":
+            "Calendars that are present on the user's calendar list.",
+          "items": { "$ref": "CalendarListEntry" },
+          "type": "array"
+        },
+        "kind": {
+          "default": "calendar#calendarList",
+          "description":
+            "Type of the collection (\"calendar#calendarList\").",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "Token used to access the next page of this result.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CalendarListEntry": {
+      "id": "CalendarListEntry",
+      "properties": {
+        "accessRole": {
+          "description":
+            "The effective access role that the authenticated user has on the calendar. Read-only. Possible values are: \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.",
+          "type": "string"
+        },
+        "colorId": {
+          "description":
+            "The color of the calendar. This is an ID referring to an entry in the \"calendar\" section of the colors definition (see the \"colors\" endpoint). Optional.",
+          "type": "string"
+        },
+        "defaultReminders": {
+          "description":
+            "The default reminders that the authenticated user has for this calendar.",
+          "items": { "$ref": "EventReminder" },
+          "type": "array"
+        },
+        "description": {
+          "description": "Description of the calendar. Optional. Read-only.",
+          "type": "string"
+        },
+        "etag": { "description": "ETag of the resource.", "type": "string" },
+        "hidden": {
+          "description":
+            "Whether the calendar has been hidden from the list. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Identifier of the calendar.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "calendar#calendarListEntry",
+          "description":
+            "Type of the resource (\"calendar#calendarListEntry\").",
+          "type": "string"
+        },
+        "location": {
+          "description":
+            "Geographic location of the calendar as free-form text. Optional. Read-only.",
+          "type": "string"
+        },
+        "selected": {
+          "description":
+            "Whether the calendar content shows up in the calendar UI. Optional. The default is True.",
+          "type": "boolean"
+        },
+        "summary": {
+          "description": "Title of the calendar. Read-only.",
+          "type": "string"
+        },
+        "summaryOverride": {
+          "description":
+            "The summary that the authenticated user has set for this calendar. Optional.",
+          "type": "string"
+        },
+        "timeZone": {
+          "description":
+            "The time zone of the calendar. Optional. Read-only.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ColorDefinition": {
+      "id": "ColorDefinition",
+      "properties": {
+        "background": {
+          "description":
+            "The background color associated with this color definition.",
+          "type": "string"
+        },
+        "foreground": {
+          "description":
+            "The foreground color that can be used to write on top of a background with 'background' color.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Colors": {
+      "id": "Colors",
+      "properties": {
+        "calendar": {
+          "additionalProperties": { "$ref": "ColorDefinition" },
+          "description":
+            "Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only.",
+          "type": "object"
+        },
+        "event": {
+          "additionalProperties": { "$ref": "ColorDefinition" },
+          "description":
+            "Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only.",
+          "type": "object"
+        },
+        "kind": {
+          "default": "calendar#colors",
+          "description": "Type of the resource (\"calendar#colors\").",
+          "type": "string"
+        },
+        "updated": {
+          "description":
+            "Last modification time of the color palette (as a RFC 3339 timestamp). Read-only.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Error": {
+      "id": "Error",
+      "properties": {
+        "domain": {
+          "description": "Domain, or broad category, of the error.",
+          "type": "string"
+        },
+        "reason": {
+          "description":
+            "Specific reason for the error. Some of the possible values are: \n- \"groupTooBig\" - The group of users requested is too large for a single query. \n- \"tooManyCalendarsRequested\" - The number of calendars requested is too large for a single query. \n- \"notFound\" - The requested resource was not found. \n- \"internalError\" - The API service has encountered an internal error. Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Event": {
+      "id": "Event",
+      "properties": {
+        "anyoneCanAddSelf": {
+          "description":
+            "Whether anyone can invite themselves to the event. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "attendees": {
+          "description": "The attendees of the event.",
+          "items": { "$ref": "EventAttendee" },
+          "type": "array"
+        },
+        "attendeesOmitted": {
+          "description":
+            "Whether attendees have been omitted from the event's representation. When retrieving an event, this is due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "colorId": {
+          "description":
+            "The color of the event. This is an ID referring to an entry in the \"event\" section of the colors definition (see the \"colors\" endpoint). Optional.",
+          "type": "string"
+        },
+        "created": {
+          "description":
+            "Creation time of the event (as a RFC 3339 timestamp). Read-only.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "creator": {
+          "description": "The creator of the event. Read-only.",
+          "properties": {
+            "displayName": {
+              "description": "The creator's name, if available.",
+              "type": "string"
+            },
+            "email": {
+              "description": "The creator's email address, if available.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "description": {
+          "description": "Description of the event. Optional.",
+          "type": "string"
+        },
+        "end": {
+          "$ref": "EventDateTime",
+          "description":
+            "The end time of the event. For a recurring event, this is the end time of the first instance."
+        },
+        "etag": { "description": "ETag of the resource.", "type": "string" },
+        "extendedProperties": {
+          "description": "Extended properties of the event.",
+          "properties": {
+            "private": {
+              "additionalProperties": { "type": "string" },
+              "description":
+                "Properties that are private to the copy of the event that appears on this calendar.",
+              "type": "object"
+            },
+            "shared": {
+              "additionalProperties": { "type": "string" },
+              "description":
+                "Properties that are shared between copies of the event on other attendees' calendars.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "gadget": {
+          "description": "A gadget that extends this event.",
+          "properties": {
+            "display": {
+              "description":
+                "The gadget's display mode. Optional. Possible values are: \n- \"icon\" - The gadget displays next to the event's title in the calendar view. \n- \"chip\" - The gadget displays when the event is clicked.",
+              "type": "string"
+            },
+            "height": {
+              "description": "The gadget's height in pixels. Optional.",
+              "format": "int32",
+              "type": "integer"
+            },
+            "iconLink": {
+              "description": "The gadget's icon URL.",
+              "type": "string"
+            },
+            "link": { "description": "The gadget's URL.", "type": "string" },
+            "preferences": {
+              "additionalProperties": { "type": "string" },
+              "description": "Preferences.",
+              "type": "object"
+            },
+            "title": {
+              "description": "The gadget's title.",
+              "type": "string"
+            },
+            "type": { "description": "The gadget's type.", "type": "string" },
+            "width": {
+              "description": "The gadget's width in pixels. Optional.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "guestsCanInviteOthers": {
+          "description":
+            "Whether attendees other than the organizer can invite others to the event. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "guestsCanModify": {
+          "description":
+            "Whether attendees other than the organizer can modify the event. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "guestsCanSeeOtherGuests": {
+          "description":
+            "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "htmlLink": {
+          "description":
+            "An absolute link to this event in the Google Calendar Web UI. Read-only.",
+          "type": "string"
+        },
+        "iCalUID": {
+          "description": "Event ID in the iCalendar format.",
+          "type": "string"
+        },
+        "id": { "description": "Identifier of the event.", "type": "string" },
+        "kind": {
+          "default": "calendar#event",
+          "description": "Type of the resource (\"calendar#event\").",
+          "type": "string"
+        },
+        "location": {
+          "description":
+            "Geographic location of the event as free-form text. Optional.",
+          "type": "string"
+        },
+        "organizer": {
+          "description":
+            "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True.",
+          "properties": {
+            "displayName": {
+              "description": "The organizer's name, if available.",
+              "type": "string"
+            },
+            "email": {
+              "description": "The organizer's email address, if available.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "originalStartTime": {
+          "$ref": "EventDateTime",
+          "description":
+            "For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable."
+        },
+        "privateCopy": {
+          "description":
+            "Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable.",
+          "type": "boolean"
+        },
+        "recurrence": {
+          "description":
+            "List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events.",
+          "items": { "type": "string" },
+          "type": "array"
+        },
+        "recurringEventId": {
+          "description":
+            "For an instance of a recurring event, this is the event ID of the recurring event itself. Immutable.",
+          "type": "string"
+        },
+        "reminders": {
+          "description":
+            "Information about the event's reminders for the authenticated user.",
+          "properties": {
+            "overrides": {
+              "description":
+                "If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event.",
+              "items": { "$ref": "EventReminder" },
+              "type": "array"
+            },
+            "useDefault": {
+              "description":
+                "Whether the default reminders of the calendar apply to the event.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "sequence": {
+          "description": "Sequence number as per iCalendar.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "start": {
+          "$ref": "EventDateTime",
+          "description":
+            "The start time of the event. For a recurring event, this is the start time of the first instance."
+        },
+        "status": {
+          "description":
+            "Status of the event. Optional. Possible values are: \n- \"confirmed\" - The event is confirmed. This is the default status. \n- \"tentative\" - The event is tentatively confirmed. \n- \"cancelled\" - The event is cancelled.",
+          "type": "string"
+        },
+        "summary": { "description": "Title of the event.", "type": "string" },
+        "transparency": {
+          "description":
+            "Whether the event blocks time on the calendar. Optional. Possible values are: \n- \"opaque\" - The event blocks time on the calendar. This is the default value. \n- \"transparent\" - The event does not block time on the calendar.",
+          "type": "string"
+        },
+        "updated": {
+          "description":
+            "Last modification time of the event (as a RFC 3339 timestamp). Read-only.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "visibility": {
+          "description":
+            "Visibility of the event. Optional. Possible values are: \n- \"default\" - Uses the default visibility for events on the calendar. This is the default value. \n- \"public\" - The event is public and event details are visible to all readers of the calendar. \n- \"private\" - The event is private and only event attendees may view event details. \n- \"confidential\" - The event is private. This value is provided for compatibility reasons.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EventAttendee": {
+      "id": "EventAttendee",
+      "properties": {
+        "additionalGuests": {
+          "description":
+            "Number of additional guests. Optional. The default is 0.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "comment": {
+          "description": "The attendee's response comment. Optional.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The attendee's name, if available. Optional.",
+          "type": "string"
+        },
+        "email": {
+          "description":
+            "The attendee's email address, if available. This field must be present when adding an attendee.",
+          "type": "string"
+        },
+        "optional": {
+          "description":
+            "Whether this is an optional attendee. Optional. The default is False.",
+          "type": "boolean"
+        },
+        "organizer": {
+          "description":
+            "Whether the attendee is the organizer of the event. Read-only. The default is False.",
+          "type": "boolean"
+        },
+        "resource": {
+          "description":
+            "Whether the attendee is a resource. Read-only. The default is False.",
+          "type": "boolean"
+        },
+        "responseStatus": {
+          "description":
+            "The attendee's response status. Possible values are: \n- \"needsAction\" - The attendee has not responded to the invitation. \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.",
+          "type": "string"
+        },
+        "self": {
+          "description":
+            "Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "EventDateTime": {
+      "id": "EventDateTime",
+      "properties": {
+        "date": {
+          "description":
+            "The date, in the format \"yyyy-mm-dd\", if this is an all-day event.",
+          "format": "date",
+          "type": "string"
+        },
+        "dateTime": {
+          "description":
+            "The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in 'timeZone'.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeZone": {
+          "description":
+            "The name of the time zone in which the time is specified (e.g. \"Europe/Zurich\"). Optional. The default is the time zone of the calendar.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EventReminder": {
+      "id": "EventReminder",
+      "properties": {
+        "method": {
+          "description":
+            "The method used by this reminder. Possible values are: \n- \"email\" - Reminders are sent via email. \n- \"sms\" - Reminders are sent via SMS. \n- \"popup\" - Reminders are sent via a UI popup.",
+          "type": "string"
+        },
+        "minutes": {
+          "description":
+            "Number of minutes before the start of the event when the reminder should trigger.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Events": {
+      "id": "Events",
+      "properties": {
+        "accessRole": {
+          "description":
+            "The user's access role for this calendar. Read-only. Possible values are: \n- \"none\" - The user has no access. \n- \"freeBusyReader\" - The user has read access to free/busy information. \n- \"reader\" - The user has read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - The user has read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - The user has ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.",
+          "type": "string"
+        },
+        "defaultReminders": {
+          "description":
+            "The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have 'reminders.useDefault' set to 'true').",
+          "items": { "$ref": "EventReminder" },
+          "type": "array"
+        },
+        "description": {
+          "description": "Description of the calendar. Read-only.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "ETag of the collection.",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of events on the calendar.",
+          "items": { "$ref": "Event" },
+          "type": "array"
+        },
+        "kind": {
+          "default": "calendar#events",
+          "description": "Type of the collection (\"calendar#events\").",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description":
+            "Token used to access the next page of this result. Omitted if no further results are available.",
+          "type": "string"
+        },
+        "summary": {
+          "description": "Title of the calendar. Read-only.",
+          "type": "string"
+        },
+        "timeZone": {
+          "description": "The time zone of the calendar. Read-only.",
+          "type": "string"
+        },
+        "updated": {
+          "description":
+            "Last modification time of the calendar (as a RFC 3339 timestamp). Read-only.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FreeBusyCalendar": {
+      "id": "FreeBusyCalendar",
+      "properties": {
+        "busy": {
+          "description":
+            "List of time ranges during which this calendar should be regarded as busy.",
+          "items": { "$ref": "TimePeriod" },
+          "type": "array"
+        },
+        "errors": {
+          "description":
+            "Optional error(s) (if computation for the calendar failed).",
+          "items": { "$ref": "Error" },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "FreeBusyGroup": {
+      "id": "FreeBusyGroup",
+      "properties": {
+        "calendars": {
+          "description": "List of calendars' identifiers within a group.",
+          "items": { "type": "string" },
+          "type": "array"
+        },
+        "errors": {
+          "description":
+            "Optional error(s) (if computation for the group failed).",
+          "items": { "$ref": "Error" },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "FreeBusyRequest": {
+      "id": "FreeBusyRequest",
+      "properties": {
+        "calendarExpansionMax": {
+          "description":
+            "Maximal number of calendars for which FreeBusy information is to be provided. Optional.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "groupExpansionMax": {
+          "description":
+            "Maximal number of calendar identifiers to be provided for a single group. Optional. An error will be returned for a group with more members than this value.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "List of calendars and/or groups to query.",
+          "items": { "$ref": "FreeBusyRequestItem" },
+          "type": "array"
+        },
+        "timeMax": {
+          "description": "The end of the interval for the query.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeMin": {
+          "description": "The start of the interval for the query.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeZone": {
+          "description":
+            "Time zone used in the response. Optional. The default is UTC.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FreeBusyRequestItem": {
+      "id": "FreeBusyRequestItem",
+      "properties": {
+        "id": {
+          "description": "The identifier of a calendar or a group.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FreeBusyResponse": {
+      "id": "FreeBusyResponse",
+      "properties": {
+        "calendars": {
+          "additionalProperties": { "$ref": "FreeBusyCalendar" },
+          "description": "List of free/busy information for calendars.",
+          "type": "object"
+        },
+        "groups": {
+          "additionalProperties": { "$ref": "FreeBusyGroup" },
+          "description": "Expansion of groups.",
+          "type": "object"
+        },
+        "kind": {
+          "default": "calendar#freeBusy",
+          "description": "Type of the resource (\"calendar#freeBusy\").",
+          "type": "string"
+        },
+        "timeMax": {
+          "description": "The end of the interval.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeMin": {
+          "description": "The start of the interval.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Setting": {
+      "id": "Setting",
+      "properties": {
+        "etag": { "description": "ETag of the resource.", "type": "string" },
+        "id": {
+          "description": "Name of the user setting.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "calendar#setting",
+          "description": "Type of the resource (\"calendar#setting\").",
+          "type": "string"
+        },
+        "value": {
+          "description":
+            "Value of the user setting. The format of the value depends on the ID of the setting.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Settings": {
+      "id": "Settings",
+      "properties": {
+        "etag": {
+          "description": "Etag of the collection.",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of user settings.",
+          "items": { "$ref": "Setting" },
+          "type": "array"
+        },
+        "kind": {
+          "default": "calendar#settings",
+          "description": "Type of the collection (\"calendar#settings\").",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TimePeriod": {
+      "id": "TimePeriod",
+      "properties": {
+        "end": {
+          "description": "The end of the time period.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "start": {
+          "description": "The start of the time period.",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "Calendar API",
+  "version": "v3"
+}
+

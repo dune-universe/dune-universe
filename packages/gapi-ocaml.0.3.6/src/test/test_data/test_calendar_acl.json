@@ -1,0 +1,25 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "rule1Id",
+      "kind": "calendar#aclRule",
+      "role": "owner",
+      "scope": {
+        "type": "user",
+        "value": "userEmail"
+      }
+    },
+    {
+      "id": "rule2Id",
+      "kind": "calendar#aclRule",
+      "role": "reader",
+      "scope": {
+        "type": "domain",
+        "value": "domainName"
+      }
+    }
+  ],
+  "kind": "calendar#acl"
+}
+

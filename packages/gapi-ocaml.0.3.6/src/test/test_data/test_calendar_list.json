@@ -1,0 +1,30 @@
+{
+  "etag": "calendarListEtag",
+  "items": [
+    {
+      "accessRole": "reader",
+      "colorId": "1",
+      "description": "Week numbers displayed weekly",
+      "id": "e_2_en#weeknum@group.v.calendar.google.com",
+      "kind": "calendar#calendarListEntry",
+      "summary": "Week Numbers",
+      "timeZone": "America/Los_Angeles"
+    },
+    {
+      "accessRole": "owner",
+      "colorId": "calendarListEntryColorId",
+      "defaultReminders": [
+        {
+          "method": "popup",
+          "minutes": 10
+        }
+      ],
+      "id": "calendarListEntryId",
+      "kind": "calendar#calendarListEntry",
+      "summary": "calendarListEntrySummary",
+      "timeZone": "America/Los_Angeles"
+    }
+  ],
+  "kind": "calendar#calendarList",
+  "nextPageToken": "nextPageToken"
+}

@@ -1,0 +1,51 @@
+{
+  "aboutMe": "string",
+  "birthday": "string",
+  "currentLocation": "string",
+  "displayName": "string",
+  "gender": "string",
+  "id": "string",
+  "image": {
+    "url": "string"
+  },
+  "kind": "plus#person",
+  "name": {
+    "familyName": "string",
+    "formatted": "string",
+    "givenName": "string",
+    "honorificPrefix": "string",
+    "honorificSuffix": "string",
+    "middleName": "string"
+  },
+  "nickname": "string",
+  "objectType": "string",
+  "organizations": [
+    {
+      "department": "string",
+      "description": "string",
+      "endDate": "string",
+      "location": "string",
+      "name": "string",
+      "primary": true,
+      "startDate": "string",
+      "title": "string",
+      "type": "string"
+    }
+  ],
+  "placesLived": [
+    {
+      "primary": true,
+      "value": "string"
+    }
+  ],
+  "relationshipStatus": "string",
+  "tagline": "string",
+  "url": "string",
+  "urls": [
+    {
+      "type": "string",
+      "value": "string"
+    }
+  ]
+}
+

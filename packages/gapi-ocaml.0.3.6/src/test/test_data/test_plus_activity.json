@@ -1,0 +1,90 @@
+{
+  "access": {
+    "description": "string",
+    "items": [
+      {
+        "id": "string",
+        "type": "string"
+      }
+    ],
+    "kind": "plus#acl"
+  },
+  "actor": {
+    "displayName": "string",
+    "id": "string",
+    "image": {
+      "url": "string"
+    },
+    "url": "string"
+  },
+  "address": "string",
+  "annotation": "string",
+  "crosspostSource": "string",
+  "geocode": "string",
+  "id": "string",
+  "kind": "plus#activity",
+  "object": {
+    "actor": {
+      "displayName": "string",
+      "id": "string",
+      "image": {
+        "url": "string"
+      },
+      "url": "string"
+    },
+    "attachments": [
+      {
+        "content": "string",
+        "displayName": "string",
+        "embed": {
+          "type": "string",
+          "url": "string"
+        },
+        "fullImage": {
+          "height": 2,
+          "type": "string",
+          "url": "string",
+          "width": 2
+        },
+        "id": "string",
+        "image": {
+          "height": 2,
+          "type": "string",
+          "url": "string",
+          "width": 2
+        },
+        "objectType": "string",
+        "url": "string"
+      }
+    ],
+    "content": "string",
+    "id": "string",
+    "objectType": "string",
+    "originalContent": "string",
+    "plusoners": {
+      "selfLink": "string",
+      "totalItems": 2
+    },
+    "replies": {
+      "selfLink": "string",
+      "totalItems": 2
+    },
+    "resharers": {
+      "selfLink": "string",
+      "totalItems": 2
+    },
+    "url": "string"
+  },
+  "placeId": "string",
+  "placeName": "string",
+  "provider": {
+    "title": "string"
+  },
+  "published": "2011-12-01T00:00:00.000Z",
+  "radius": "string",
+  "title": "string",
+  "updated": "2011-12-01T00:00:00.000Z",
+  "url": "string",
+  "verb": "string"
+}
+

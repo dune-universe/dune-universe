@@ -1,0 +1,8 @@
+{
+  "etag": "calendarEtag",
+  "id": "calendarId",
+  "kind": "calendar#calendar",
+  "summary": "calendarSummary",
+  "timeZone": "America/Los_Angeles"
+}
+
