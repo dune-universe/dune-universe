@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name bip32)
+  (public_name bip32)
+  (libraries (hex cstruct secp256k1))))

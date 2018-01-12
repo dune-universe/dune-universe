@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+  ((name socialpeek)
+   (public_name socialpeek)
+   (libraries (base cohttp-lwt-unix lambdasoup))))

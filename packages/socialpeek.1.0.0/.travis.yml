@@ -1,0 +1,16 @@
+language: generic
+
+before_script:
+  - set -e
+  - sudo add-apt-repository -y ppa:avsm/ocaml42+opam12
+  - sudo apt-get update
+  - sudo apt-get install ocaml-nox opam
+  - opam init -y --compiler 4.05.0
+  - eval `opam config env`
+  - ocaml -version
+
+script:
+  - opam pin add -y --no-action socialpeek .
+  - opam install -y --deps-only socialpeek
+  - opam install -y ounit
+  - make test
