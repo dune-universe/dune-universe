@@ -1,0 +1,89 @@
+1.5.3
+------------------
+
+- jbuilder transition
+
+1.5.2
+------------------
+
+- Ported to AST_405 and ppxx.2.3.0
+
+1.5.1
+------------------
+
+- Ported to ppxx.2.2.0
+
+1.5.0
+------------------
+
+* Ported to ppxx.2.0.0
+* Ported to ocaml-migrate-parsetree
+
+1.4.2
+------------------
+
+- Ported to new ppxx.1.4.0
+
+1.4.1
+------------------
+
+- Build script updates
+
+1.4.0
+------------------
+
+* Tests are now all "go" by default.  If you want to test only specific tests, then you have to first --test-skip ".*" to disable everything then --test-go <pattern> to enable what you want.
+- Port to OCaml 4.03.0
+
+
+1.3.1
+------------------
+
+* Backport of 1.4.0 to 1.3.0 for OCaml 4.02.3
+
+1.3.0
+------------------
+
+- Now supports [%%TEST let n1 = e1;; let n2 = e2;; e;; ] which can carry multiple tests.
+- Introduced failure tests `xxx_fail`, which must raise exceptions.
+- Tests are now listed and executed more natural order. (Still you should not rely on it.)
+- Duped test names are warned, but it is turned off by default. Use -warn-dupes.
+- Test driver API type has been changed.
+- Test.TestTool.must_raise is added. Test.TestTool is automatically opened in test codes.
+
+1.2.1
+------------------
+
+* fixed setup.ml for MinGW
+
+1.2.0
+------------------
+
+* Removed `_with_location_` and `_module_path_` since OCaml has `Pervasives.__POS_OF__` and `Pervasives.__MODULE__` already.
+* `_for_package_` is renamed to `__FOR_PACKAGE__` to match with `Pervasives.__POS_OF__`, `__MODULE__` and other location related pseudo values.
+
+1.1.0
+------------------
+
+ppx:
+
+* Package names by -for-package is automatically prefixed as the test names
+- Added _for_package_ : string option which has the package name specified by -for-package option.
+* Test names by string constant like `let %TEST "string" = ...` are now prefixed by the module names.
+
+sample test engine:
+
+* Total revise
+- Exposed Lower APIs for test integrated applications.
+* Changes regexp engine from pcre to re.
+- Print backtrace when a test raises an exception.
+
+1.0.1
+-----
+
+* Findlib ppx support
+
+0.0.1
+-----
+
+* Initial release
