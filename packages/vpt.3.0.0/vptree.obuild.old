@@ -1,0 +1,17 @@
+Name: minivpt
+Version: 1.0
+Authors: Francois BERENGER
+License: BSD-3
+Synopsis: Vantage point tree implementation
+obuild-ver: 1
+
+Library minivpt
+  oflags: -warn-error PU -g
+  src-dir: .
+  modules: Vp_tree
+
+Executable test
+  oflags: -warn-error PU -g
+  src-dir: .
+  main-is: test.ml
+  build-deps: unix

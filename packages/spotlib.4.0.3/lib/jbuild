@@ -1,0 +1,7 @@
+(ocamllex (temporal_lexer))
+
+(library
+ ((name spotlib)
+  (public_name spotlib)
+  (preprocess (pps (ppx_test.ppx)))
+  (libraries ( unix str ppx_test.runtime ))))

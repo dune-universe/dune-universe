@@ -1,0 +1,9 @@
+(executable
+ ((name test)
+  (link_flags (-linkall))
+  (libraries ( spotlib unix str ppx_test.runtime ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))

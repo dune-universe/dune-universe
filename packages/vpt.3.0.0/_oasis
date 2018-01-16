@@ -1,0 +1,23 @@
+OASISFormat: 0.4
+Name:        minivpt
+Version:     1.0
+Synopsis:    Minimalist vantage point tree implementation
+Authors:     Francois BERENGER
+License:     BSD-3-clause
+Plugins:     META (0.4)
+
+Library minivpt
+  Path:       .
+  BuildTools: ocamlbuild
+  Modules:    Vp_tree
+
+Executable test
+  Path:           .
+  BuildTools:     ocamlbuild
+  CompiledObject: best
+  Install:        false
+  mainIs:         test.ml
+  buildDepends:   minivpt, unix
+
+Test test
+  Command: ./test
