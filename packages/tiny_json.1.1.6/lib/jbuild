@@ -1,0 +1,5 @@
+(library
+ ((name tiny_json)
+  (public_name tiny_json)
+  (synopsis "A small Json library from OCAMLTTER")
+  (libraries ())))

@@ -1,0 +1,49 @@
+1.1.6
+-----
+
+- jbuilder port
+
+1.1.5
+-----
+
+- Port to OCaml 4.06.0
+- Changed the build system to jbuilder
+
+1.1.4
+-----
+
+- Using an updated OMyMakefile
+
+1.1.3
+-----
+
+- Build file updates
+
+1.1.2
+-----
+
+- Improved parser tolerance little bit
+- Exposed ParserMonad.ParseError
+- OMyMakefile update
+
+1.1.1
+-----
+
+- Fixed Json.format, which outputed wrong JSON
+
+1.1.0
+------
+
+* Number now takes string, instead of float, so that int64 number string cannot be wrongly translated.
+
+1.0.1
+------------
+
+- Fixed the author's name
+- Added Json.format
+- Cleaned away non-used functions and warnings
+
+1.0.0
+------------
+
+- Initial release.

@@ -1,0 +1,10 @@
+{
+  "policies": [ 
+    { "type": "mod", "header":"location", "value": { "type":"pipe", "name":"pipe" }  }
+  ],
+  "switch": 843509872345, 
+  "payload":  { 
+    "type": "buffered", 
+    "bufferid": 8192374 
+  }
+}  

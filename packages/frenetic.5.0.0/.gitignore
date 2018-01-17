@@ -1,0 +1,39 @@
+_build
+*.d.byte
+*.byte
+*.native
+*.out
+*.cmi
+*.cma
+*.ignore
+*.pyc
+*.bak
+*.ba[0-9]
+.DS_Store
+setup.data
+setup.log
+*~
+.*.sw[po]
+*.docdir
+*.log
+*.dot
+*.png
+*.svg
+*.mldylib
+*.mllib
+.merlin
+*.install
+*.pdf
+
+# ppx/test
+ppx/test/_tags
+ppx/test/configure
+ppx/test/myocamlbuild.ml
+ppx/test/setup.ml
+
+# Emacs Temp Files
+[#]*
+*[#]
+
+# Python Build directory
+build

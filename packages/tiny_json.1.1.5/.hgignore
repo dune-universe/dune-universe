@@ -1,5 +1,0 @@
-.*~$
-.*\.(cm.*|o|a|exe|annot|omc)$
-setup\.data$
-opam/generated
-_build
