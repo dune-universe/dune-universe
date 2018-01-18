@@ -1,0 +1,5 @@
+(library
+ ((name levenshtein)
+  (public_name levenshtein)
+  (preprocess (pps (ppx_test.ppx)))
+  (libraries ( ppx_test.runtime ))))

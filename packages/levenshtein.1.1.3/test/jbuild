@@ -1,0 +1,9 @@
+(executable
+ ((name test)
+  (link_flags (-linkall))
+  (libraries ( levenshtein unix ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))

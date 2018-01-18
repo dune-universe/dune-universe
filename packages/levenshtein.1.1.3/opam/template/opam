@@ -1,0 +1,8 @@
+homepage: "https://bitbucket.org/camlspotter/ocaml_levenshtein/"
+bug-reports: "https://bitbucket.org/camlspotter/ocaml_levenshtein/issues?status=new&status=open"
+dev-repo: "hg://https://bitbucket.org/camlspotter/ocaml_levenshtein"
+depends: [ 
+  "jbuilder"
+  "ppx_test" {>="1.6.0"}
+]
+ocaml-version: [>= "4.02.1"]

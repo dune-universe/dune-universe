@@ -1,0 +1,24 @@
+1.1.3
+--------
+
+- jbuilder port
+
+1.1.2
+--------
+
+- Build file updates
+
+1.1.1
+--------
+
+* Fixed OMyMakefile for omake.0.10.1
+
+1.1.0
+--------
+
+* moved from pa_ounit to ppx_test
+
+1.0.0
+--------
+
+* initial release

@@ -802,7 +802,10 @@ let process_file (kind : Kind.t) fn ~input_name ~output_mode ~embed_errors ~outp
          ~input_filename:fn ~input_name ~target:(Output mode) ?styler:!styler
          ~kind);
 
-    if mismatches_found then begin
+    if mismatches_found &&
+       (match !diff_command with
+        | Some  "-" -> false
+        | _ -> true) then begin
       Print_diff.print () ~file1:fn ~file2:corrected ~use_color:!use_color
         ?diff_command:!diff_command;
       Caml.exit 1
@@ -996,7 +999,7 @@ let standalone_args =
   ; "-no-color", Arg.Clear use_color,
     " Don't use colors when printing errors"
   ; "-diff-cmd", Arg.String (fun s -> diff_command := Some s),
-    " Diff command when using code expectations"
+    " Diff command when using code expectations (use - to disable diffing)"
   ; "-pretty", Arg.Set pretty,
     " Instruct code generators to improve the prettiness of the generated code"
   ; "-styler", Arg.String (fun s -> styler := Some s),

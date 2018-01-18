@@ -1,3 +1,8 @@
+## v0.10.2
+
+- `-diff-cmd -` disables the diffing, to allow
+  `[@@deriving_inline ...]` to work properly with jbuilder
+
 ## v0.10.1
 
 - Disable checks by default

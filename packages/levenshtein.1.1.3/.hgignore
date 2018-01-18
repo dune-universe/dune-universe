@@ -1,0 +1,8 @@
+.*~$
+.*\.(cm.*|o|annot|run|opt|a|omc|log)$
+ounittest_.*
+\.omakedb.*
+opam/generated
+_build
+\.merlin$
+.*\.install$
