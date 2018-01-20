@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name prettiest)
+  (public_name prettiest)
+  (libraries (base))
+  (preprocess (pps (ppx_compare)))))
