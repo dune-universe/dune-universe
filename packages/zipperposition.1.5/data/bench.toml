@@ -1,0 +1,69 @@
+
+provers = [ "zipperposition", "zipperposition-thf", "zipperposition-check", "read-tptp", "leo2", "satallax" ]
+
+[test]
+
+timeout = 30 # in s
+memory = 2000 # in MB
+provers = [ "zipperposition", "zipperposition-check" ]
+problems = ".*(\\+|-).*\\.p"
+dir = [ "tptp" ]
+
+expect = "program:read-tptp"
+default_expect = "unknown"
+
+[thf]
+
+timeout = 30 # in s
+memory = 2000 # in MB
+provers = [ "zipperposition-thf", "zipperposition", "leo2", "satallax" ]
+problems = ".*\\^.*.p"
+dir = [ "tptp" ]
+expect = "program:read-tptp"
+
+[zipperposition]
+
+binary = "./zipperposition.native"
+cmd = "./zipperposition.native $file --timeout $timeout --mem-limit $memory --output none"
+unsat = "SZS status (Theorem|Unsatisfiable)"
+sat = "SZS status (CounterSatisfiable|Satisfiable)"
+timeout = "SZS status ResourceOut"
+version = "git:."
+
+[zipperposition-check]
+
+binary = "./zipperposition.native"
+cmd = "./zipperposition.native $file --timeout $timeout --mem-limit $memory --output none --check"
+unsat = "SZS status (Theorem|Unsatisfiable)"
+sat = "SZS status (CounterSatisfiable|Satisfiable)"
+timeout = "SZS status ResourceOut"
+version = "git:."
+
+[zipperposition-thf]
+
+binary = "./zipperposition.native"
+cmd = "./zipperposition.native $file --timeout $timeout --mem-limit $memory --output none --tptp-def-as-rewrite"
+unsat = "SZS status (Theorem|Unsatisfiable)"
+sat = "SZS status (CounterSatisfiable|Satisfiable)"
+timeout = "SZS status ResourceOut"
+version = "git:."
+
+[satallax]
+
+cmd = "~/bin/satallax -t $timeout $file"
+unsat = "SZS status (Theorem|Unsatisfiable)"
+sat = "SZS status CounterSatisfiable"
+
+[leo2]
+
+cmd = "leo -t $timeout $file"
+unsat = "SZS status (Theorem|Unsatisfiable)"
+sat = "SZS status CounterSatisfiable"
+
+[read-tptp]
+
+# parse "expected" result
+binary = "grep"
+cmd = "grep Status $file"
+unsat = "(Theorem|Unsatisfiable)"
+sat = "(CounterSatisfiable|Satisfiable)"

@@ -1,0 +1,85 @@
+4.0.0
+-----------
+
+- ported to jbuilder
+* OCamlFind package renames. Now ppx_meta_conv.ppx is for syntax extension, and ppx_meta_conv.runtime to link the runtime library.  The other driver packages such as ppx_meta_conv.ocaml are same as before.
+
+3.0.0
+-----------
+
+- ported to AST_405 and ppxx.2.3.0
+* XXX_conv has now a module XXX_conv.Default which provides default encoders and decoders for the basic types.  Now XXX_conv.Default must be opened if you want to use these default coders.
+- Suppressed Warning 32 for generated but unused encoder and decoers
+- Slightly better location reporting of errors around generated code
+
+2.8.0
+-----------
+
+- Ported to ocaml-migrate-parsetree, ppx_tools_versioned and ppxx.1.5.0
+- OMyMakefile is updated
+
+2.7.0
+-----
+
+* Using the normal variant result type, instead of the polymorphic variant one
+
+2.6.0
+-----
+
+- camlon is splitted as an independent package
+- Port to ppxx.1.4.0
+
+2.5.1
+-----
+
+- Build script updates
+
+2.5.0
+-----
+
+* Ported to OCaml 4.04.0
+- Support of variants with record fields
+
+2.4.1
+-------------
+
+* Port to ppx_derving.4.0
+
+2.4.0
+-------------
+
+* Port to OCaml 4.03.0
+
+2.3.0
+-------------
+
+- ppx_meta_conv ocamlfind package is now a plugin of ppx_deriving.
+- ppx_meta_conv.standalone ocamlfind package provides the classical standalone preprocessor
+- Added support of inlined [%derive.xxx_of: ty], [%derive.of_xxx: ty] and [%derive.of_xxx_exn: ty]
+- Ocaml_conv: Added Escaped of string to Ocaml.t, to carry data outside of OCaml values such as printed Parsetree.expression.
+
+2.2.0
+-------------
+
+- GADT encoding support
+- Renamed ppx_tiny_json_conv, ppx_sexp_conv and ppx_ocaml_conv are renamed as ppx_meta_conv_tiny_json, ppx_meta_conv_sexp and ppx_meta_conv_ocaml, since Jane Street released a library with the same name "ppx_sexp_conv". Thanks!
+
+2.1.0
+-------------
+
+- ppx_tiny_json_conv and ppx_sexp_conv are now optional 
+
+2.0.2
+-------------
+
+- Added alias for Sexp.t = Sexplib.Sexp.t
+
+2.0.1
+-------------
+
+- Port from ppx_deriving.1.1 to ppx_deriving.2.0 
+
+2.0.0
+-------------
+
+- Port from meta_conv for CamlP4 to ppx

@@ -1,0 +1,56 @@
+1.3.0
+-----
+
+- Port to jbuilder
+* OCamlFind package renames.  Now the syntax extension is ppx_poly_record.ppx, and the runtime is ppx_poly_record.runtime.
+
+1.2.2
+-----
+
+- Ported to AST_405 and ppxx.2.3.0
+
+1.2.1
+-----
+
+- Port to ppxx.2.2.0
+
+1.2.0
+-----
+
+- Fixed a bug of ppx invocation (0887d2b95894)
+* Ported to ppxx.2.0.0
+* Ported to ocaml-migrate-parsetree
+* Ported to new OMyMakefile
+
+1.1.3
+-----
+
+- Ported to ppxx.1.4.0
+
+1.1.2
+-----
+
+- Build file updates
+
+1.1.1
+-----
+
+* Use of ppxx
+* Port to OCaml 4.03.0
+ 
+1.1.0
+-----
+
+* Functions for internal uses are moved to Poly_record.Internal
+* Added !{ l = e; ..} and r#!l syntax sugar
+
+1.0.1
+-----
+
++ findlib ppx support
+* cleanups
+
+1.0.0
+-----
+
+* Initial release

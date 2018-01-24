@@ -1,0 +1,12 @@
+OCAMLPACKS[]=
+
+OCAMLINCLUDES += ..
+OCAML_LIBS[]=
+    ../camlon
+
+FILES[]=
+    test
+
+MyOCamlTestProgram(test_, $(FILES))
+
+WithMerlin()

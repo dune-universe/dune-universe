@@ -1,0 +1,8 @@
+(* OASIS_START *)
+(* DO NOT EDIT (digest: 09e41174b5f1037059f36afe19a89b90) *)
+
+Authors of ppx_orakuda:
+
+* Jun FURUSE
+
+(* OASIS_STOP *)

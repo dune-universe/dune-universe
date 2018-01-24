@@ -1,0 +1,5 @@
+(library
+ ((name ppx_poly_record)
+  (public_name ppx_poly_record.runtime)
+  (libraries ( compiler-libs.common ))))
+

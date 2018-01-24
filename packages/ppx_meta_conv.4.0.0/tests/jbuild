@@ -1,0 +1,10 @@
+(executable
+ ((name test)
+  (link_flags (-linkall))
+  (preprocess (pps (ppx_meta_conv.ppx)))
+  (libraries ( ppx_meta_conv.runtime ppx_meta_conv.ocaml camlon ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))

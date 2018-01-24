@@ -1,0 +1,7 @@
+name = "@name@"
+version = "@version@"
+description = "PPX for polymorphic record"
+
+requires="ppx_poly_record.ppx_driver,ppx_poly_record.runtime"
+
+# JBUILDER_GEN

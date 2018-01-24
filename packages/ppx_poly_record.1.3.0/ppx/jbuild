@@ -1,0 +1,5 @@
+(library
+ ((kind ppx_rewriter)
+  (name ppx_poly_record_plugin)
+  (public_name ppx_poly_record.ppx)
+  (libraries ( compiler-libs.common ocaml-migrate-parsetree ppxx ))))

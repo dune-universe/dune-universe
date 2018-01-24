@@ -1,0 +1,10 @@
+(executables
+ ((names (test))
+  (link_flags (-linkall))
+  (preprocess (pps (ppx_orakuda.ppx)))
+  (libraries ( ppx_orakuda.runtime ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))

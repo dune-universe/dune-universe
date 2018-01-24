@@ -1,0 +1,15 @@
+(executables
+ ((names (test test_copy test_mutate test_new))
+  (link_flags (-linkall))
+  (preprocess (pps (ppx_poly_record.ppx)))
+  (libraries ( ppx_poly_record.runtime ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe test_copy.exe test_mutate.exe test_new.exe))
+  (action (progn
+	    (run ${SCOPE_ROOT}/test/test.exe)
+	    (run ${SCOPE_ROOT}/test/test_copy.exe)
+	    (run ${SCOPE_ROOT}/test/test_mutate.exe)
+	    (run ${SCOPE_ROOT}/test/test_new.exe)
+	    ))))

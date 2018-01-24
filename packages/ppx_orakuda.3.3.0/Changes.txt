@@ -1,0 +1,95 @@
+3.3.0
+-----------
+
+- jbuilder port
+- OCamlFind package renames.  The syntax extension is now ppx_orakuda.ppx.  The runtime is now ppx_orakuda.runtime.
+
+3.2.1
+-----------
+
+- Port to OCaml 4.06.0
+
+3.2.0
+-----------
+
+- ported to AST_405 and ppxx.2.3.0
+- Fixed readme
+
+3.1.1
+-----------
+
+- Small fix for the ocaml-migrate-parsetree port
+
+3.1.0
+-----------
+
+- Ported to ocaml-migrate-parsetree, ppx_tools_versioned and ppxx.1.5.0
+- OMyMakefile is updated
+
+3.0.3
+-----------
+
+- Ported to ppxx.1.4.0
+
+3.0.2
+-----------
+
+- Build file updates
+
+3.0.1
+-----------
+
+- Tolerant with extension points unknown to ppx_orakuda
+
+3.0.0
+-----------
+
+- Re PCRE regexp supprot as [Ppx_orakuda.Regexp.Re_pcre]
+- The library is now compiled with -no-alias-deps.
+* [Ppx_orakuda.Std] is removed.
+* [Ppx_orakuda.Regexp] is renamed to [Ppx_orakuda.Regexp.Pcre]
+* [open Ppx_orakuda.Regexp.Pcre.Literal] is now required to use [{m|...|m}] and [{s|...|s}] notations for [Pcre]'s regexp operations
+* [open Ppx_orakuda.Regexp.Re_pcre.Literal] is now required to use [{m|...|m}] and [{s|...|s}] notations for [Re_pcre]'s regexp operations
+
+2.0.2
+-----------
+
+- Minor changes
+
+2.0.1
+-----------
+
+- Minor changes
+
+2.0.0
+-----------
+
+* (INCOMPATIBLE) Ported to PPX framework and renamed the package name to ppx_orakuda.
+
+1.2.2
+-----------
+
+* OCaml 4.02.x update
+
+1.2.1
+-----------
+
+* OMyMakefile update
+
+1.2.0
+-----------
+
+* (INCOMPATIBLE) Changed behaviour of <:qx<...>>. Now the result string is executed by Spotlib.Spot.Unix.Command.shell_command directly.
+
+1.1.0 
+-----------
+
+* (INCOMPATIBLE) Regexp.Infix.(=~) now returns 'a option instead of 'a, and it is not exported to Orakuda.Std.
+- Bug fix of parsing of e <- e'.
+- Fixed Regexp string preprocessing.
+- Fixed issue of unintentional regexp value override by open M
+
+1.0.2
+-----------
+
+- Fixed regexp replacement flag parsing (s/.../.../g) and other special char handling

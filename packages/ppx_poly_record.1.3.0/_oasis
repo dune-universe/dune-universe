@@ -1,0 +1,14 @@
+OASISFormat: 0.4
+Name:        ppx_poly_record
+Version:     1.2.2
+Synopsis:    ppx for polymorphic records
+Authors:     Jun FURUSE
+License:     LGPL-2.0 with OCaml linking exception
+Plugins:     StdFiles (0.2)
+BuildType:   Custom (0.2)
+InstallType: Custom (0.2)
+XCustomBuild:      sh -c "cp OMakeroot.in OMakeroot; unset OCAMLPARAM; omake"
+XCustomInstall:    sh -c "cp OMakeroot.in OMakeroot; unset OCAMLPARAM; omake install"
+XCustomUninstall:  sh -c "cp OMakeroot.in OMakeroot; unset OCAMLPARAM; omake uninstall"
+XCustomBuildClean: sh -c "cp OMakeroot.in OMakeroot; unset OCAMLPARAM; omake clean"
+BuildTools: omake

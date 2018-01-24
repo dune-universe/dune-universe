@@ -1,0 +1,10 @@
+(executables
+  ((names (test_beginm test_combination test_comprehension test_do_ test_letm_multi test_matchm test_pattern_guard test_warning))
+   (link_flags (-linkall))
+   (preprocess (pps (ppx_test.ppx ppx_monadic)))
+   (libraries ( ppx_test.runtime ))))
+
+(alias
+ ((name runtest)
+  (deps (test_beginm.exe test_combination.exe test_comprehension.exe test_do_.exe test_letm_multi.exe test_matchm.exe test_pattern_guard.exe test_warning.exe))
+  (action (progn  (run ${SCOPE_ROOT}/tests/test_beginm.exe) (run ${SCOPE_ROOT}/tests/test_combination.exe) (run ${SCOPE_ROOT}/tests/test_comprehension.exe) (run ${SCOPE_ROOT}/tests/test_do_.exe) (run ${SCOPE_ROOT}/tests/test_letm_multi.exe) (run ${SCOPE_ROOT}/tests/test_matchm.exe) (run ${SCOPE_ROOT}/tests/test_pattern_guard.exe) (run ${SCOPE_ROOT}/tests/test_warning.exe)))))

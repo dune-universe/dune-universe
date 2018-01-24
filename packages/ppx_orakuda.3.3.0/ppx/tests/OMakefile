@@ -1,0 +1,18 @@
+PPX=$(file ../ppx_orakuda_migrate$(EXE))
+OCamlRequire($(PPX))
+
+FILES[] =
+    test_cformat
+    test_command
+    test_regexp
+    test_sprintf
+    test_top
+
+%.out.ml: %.ml $(PPX)
+    $(PPX) $< > $@
+
+.PHONY: test
+test: $(addsuffix .out.ml, $(FILES))
+
+clean:
+	rm -f *.out.ml

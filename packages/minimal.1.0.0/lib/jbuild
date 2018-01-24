@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(install
+ ((section lib)
+  (files ((list.l as list.l)
+          (unit.l as unit.l)
+))))

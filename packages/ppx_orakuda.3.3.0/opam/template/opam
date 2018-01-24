@@ -1,0 +1,14 @@
+homepage: "https://bitbucket.org/camlspotter/orakuda/"
+bug-reports: "https://bitbucket.org/camlspotter/orakuda/issues?status=new&status=open"
+dev-repo: "hg://https://bitbucket.org/camlspotter/orakuda"
+depends: [
+  "jbuilder"
+  "spotlib" { >= "4.0.0" & < "4.1.0" }
+  "pcre"
+  "ppx_tools_versioned" { >= "5.0" }
+  "ppxx" { >= "2.3.0" & < "2.4.0" }
+  "re" { >= "1.6.0" }
+]
+available: [
+  ocaml-version >= "4.04.0"
+]

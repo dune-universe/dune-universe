@@ -1,0 +1,6 @@
+(library
+ ((kind ppx_rewriter)
+  (name ppx_monaidc)
+  (public_name ppx_monadic)
+  (preprocess (pps (ppx_tools_versioned.metaquot_405)))
+  (libraries ( compiler-libs.common ocaml-migrate-parsetree ppxx))))

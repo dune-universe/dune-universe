@@ -1,0 +1,8 @@
+(library
+ ((kind ppx_rewriter)
+  (name ppx_orakuda_plugin)
+  (public_name ppx_orakuda.ppx)
+  (preprocess (pps (ppx_tools_versioned.metaquot_405)))
+  (libraries ( re compiler-libs.common ppx_orakuda.runtime ocaml-migrate-parsetree pcre spotlib ppx_tools_versioned ppxx))))
+
+(ocamllex (lexformat lexrex))

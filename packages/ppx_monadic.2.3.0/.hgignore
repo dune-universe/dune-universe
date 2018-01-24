@@ -1,0 +1,10 @@
+^.*~$
+^.*\.(cm.*|o|omc|annot|run|exe|opt)$
+^\.omakedb.*
+^OMakeroot$
+^\.omakedb.*
+opam/generated
+ppx/migrate\.ml$
+ppx/migrate_register\.ml$
+ppx/legacy\.ml$
+_build

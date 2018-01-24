@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(executable
+ ((name        mnml)
+  (flags       (-g))
+  (modules     (mnml))
+  (public_name mnml)
+  (libraries   (machine functions))
+  ))

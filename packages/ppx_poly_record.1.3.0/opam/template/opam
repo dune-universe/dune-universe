@@ -1,0 +1,6 @@
+depends: [
+  "jbuilder"
+  "ppxx" { >= "2.3.0" & < "2.4.0" }
+]
+available: [ocaml-version >= "4.03.0" ]
+homepage: "https://bitbucket.org/camlspotter/ppx_poly_record"

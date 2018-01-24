@@ -1,0 +1,5 @@
+(library
+ ((name ppx_orakuda)
+  (public_name ppx_orakuda.runtime)
+  (libraries ( re.pcre spotlib pcre ))))
+
