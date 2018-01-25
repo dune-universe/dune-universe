@@ -1,0 +1,8 @@
+(library
+ ((name unmagic)
+  (public_name unmagic)
+  (wrapped false)
+  (preprocess (pps (ppx_typerep_conv)))
+  (libraries ( spotlib typerep ))))
+
+

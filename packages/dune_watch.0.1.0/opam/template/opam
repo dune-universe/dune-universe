@@ -1,0 +1,10 @@
+depends: [
+  "jbuilder"
+  "lwt"
+  "ppx_monadic" { >= "2.3.0" }
+  "ppx_meta_conv" { >= "4.0.0" }
+  "camlon" { >= "2.0.0" }
+]
+available: [
+  ocaml-version >= "4.04.0"
+]

@@ -1,0 +1,11 @@
+# 0.1.0
+
+* Works also with Linux + inotifywait.
+* _dune_watch config file for the configurable exclusion list
+* dune-mode.el to run dune_watch in Emacs
+
+# 0.0.1
+
+* Initial release
+* Works only with Mac OS X + fswatch.
+

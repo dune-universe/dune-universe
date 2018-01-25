@@ -1,0 +1,9 @@
+^.*\.(cm.*|exe|annot|o|opt|run|omc|lock|a)$
+^lexer\.ml$
+^parser\.ml$
+^.*~$
+^\.omakedb$
+^_build$
+opam/generated
+\.merlin
+.*\.install$

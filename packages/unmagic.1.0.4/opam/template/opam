@@ -1,0 +1,7 @@
+depends: [
+  "jbuilder"
+  "spotlib"
+  "typerep" { >= "v0.10.0" }
+  "ppx_typerep_conv" {build}
+]
+available: [ ocaml-version >= "4.06.0"]

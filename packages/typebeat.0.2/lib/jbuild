@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name        TypeBeat)
+  (public_name typebeat)
+  (libraries   (angstrom))
+))

@@ -1,0 +1,10 @@
+(executables
+ ((names (test))
+  (link_flags (-linkall))
+  (preprocess (pps (ppx_typerep_conv)))
+  (libraries ( unmagic ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))
