@@ -1,0 +1,12 @@
+*** typemod.ml	Sat Dec 23 19:47:46 2017
+--- my_typemod.ml	Sat Dec 23 19:15:15 2017
+***************
+*** 1,3 ****
+--- 1,7 ----
++ [@@@warning "-27-32-41"]
++ module Typecore = My_typecore
++ module Typeclass = My_typeclass
++ 
+  (**************************************************************************)
+  (*                                                                        *)
+  (*                                 OCaml                                  *)

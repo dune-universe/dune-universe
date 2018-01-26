@@ -1,0 +1,85 @@
+1.4.3
+-----
+
+- jbuilder port
+
+1.4.2
+-----
+
+- Ported to OCaml 4.06.0
+
+1.4.1
+-----
+
+- Ported to OCaml-4.05.0, AST_405 and ppxx.2.3.0
+- Type errors in Typpx are now reported with the original AST.  An error is reported
+  in two ways: one is a warning embeded at the head of the original AST and the other
+  is an error embeded at the end of the original AST.  This should improve usability of
+  IDE tools using *.annot and *.cmt and Merlin.
+- Ported ppx_overload from https://bitbucket.org/camlspotter/compiler-libs-hack
+- -debug option added to ppx commands to run Migrate_parsetree.Driver.run_main, instead of Driver.run_as_ppx_rewriter
+
+1.4.0
+-----
+
+- Compiler version dependency BACK to 4.04.2.  I cannot move my environment to 4.05.0 fully yet.
+* Changed the interface of Make.F() to match with the new APIs of ppxx.2
+
+1.3.0
+-----
+
+- Port to ocaml.4.05.0 and ppxx.2.1.0
+- Added Typpx.Options for command line options for compiler internals
+
+1.2.2
+-----
+
+- Port to ppxx.1.4.0
+* Typpx now exists with status 2 at an error instead of properly returns 
+  an error in AST, in order to prevent the parent process from overwriting 
+  cmt/cmti files created by the Typpx process.
+
+1.2.1
+-----
+
+- Build file updates
+
+1.2.0
+-----
+
+* Port to OCaml 4.04.0
+
+1.1.3
+-----
+
+* Port to OCaml 4.03.0
+
+1.1.2
+-----
+
+* Moved typed part of Ppxx.Compilerlib to Typpx.Compilerlib
+* A bug fix of untypeast.ml (https://bitbucket.org/camlspotter/typpx/issues/1/show-cannot-be-derived-for-int-for-records)
+
+1.1.1
+------
+
+* ident, fun_, tuple, with_env, none, some, list, mark, and partition_marks are added to Forge.Exp
+* Forge.Typ.arrow is added
+- EXPERIMENTAL: Added -ppx option to add extra PPX processing at the final stage of TyPPX.
+
+1.1.0
+------
+
+- Option fixes
+- Use of PPXX
+- General bug fixes
+
+1.0.1
+------
+
+- Fix for Cygwin OPAM + MinGW OCaml
+
+1.0.0
+------
+
+- Initial relase

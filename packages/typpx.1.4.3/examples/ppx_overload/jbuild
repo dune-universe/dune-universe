@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((kind ppx_rewriter)
+  (name ppx_overload)
+  (public_name ppx_overload)
+  (libraries ( compiler-libs.common ocaml-migrate-parsetree ppxx typpx ))))

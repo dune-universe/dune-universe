@@ -1,0 +1,33 @@
+2.2.0
+---------
+
+- jbuilder port
+
+2.1.1
+---------
+
+- Build file updates
+
+2.1.0
+---------
+
+* Removed the dependency over PPX and ppx_meta_conv
+* Removed redundant module Aprinter
+* Cleaned up printer.mli
+* Combinators with automatic parenthese wrapping now take parenthese strings as optional parameters
+
+2.0.0
+---------
+
+* Moved from P4 to PPX
+
+1.0.3
+---------
+
+- Added more OCaml related operators
+
+1.0.2
+---------
+
+- OMyMakefile update
+- META fix

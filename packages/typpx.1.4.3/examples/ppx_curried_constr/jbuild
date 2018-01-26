@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((kind ppx_rewriter)
+  (name ppx_curried_constr)
+  (public_name ppx_curried_constr)
+  (libraries ( compiler-libs.common ocaml-migrate-parsetree ppxx typpx ))))

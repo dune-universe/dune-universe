@@ -1,0 +1,9 @@
+(executables
+ ((names (test))
+  (link_flags (-linkall))
+  (libraries ( treeprint ))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))

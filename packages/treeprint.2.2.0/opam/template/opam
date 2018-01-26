@@ -1,0 +1,7 @@
+depends: [
+  "jbuilder"
+  "spotlib" { >= "3.0.0" }
+  "ppx_meta_conv" { >= "4.0.0" }
+]
+available: [ ocaml-version >= "4.02.1" ]
+homepage: "https://bitbucket.org/camlspotter/treeprint/"

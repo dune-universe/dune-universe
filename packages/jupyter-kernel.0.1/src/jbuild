@@ -1,0 +1,20 @@
+
+(library
+  ((name jupyter_kernel)
+   (public_name jupyter-kernel)
+   (libraries (result atdgen yojson uuidm ZMQ lwt-zmq
+               nocrypto hex lwt lwt.unix lwt.preemptive threads
+               lwt.ppx bytes ISO8601))
+   (flags (:standard -safe-string))
+   (preprocess (pps (lwt.ppx)))
+  ))
+
+(rule
+ ((targets (Protocol_j.ml Protocol_j.mli))
+  (deps    (Protocol.atd))
+  (action  (run atdgen -j -j-std ${^}))))
+
+(rule
+ ((targets (Protocol_t.ml Protocol_t.mli))
+  (deps    (Protocol.atd))
+  (action  (run atdgen -t -j-std ${^}))))

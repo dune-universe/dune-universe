@@ -1,0 +1,9 @@
+.*\.cm[a-z]+$
+.*~$
+\.(sp[io]t|annot|o|cm[a-z]+|orig|omc|lock|opt|byt|run|obj|sig|a)$
+\.omakedb$
+lib/test
+opam/generated
+_build
+\.merlin$
+.*\.install$

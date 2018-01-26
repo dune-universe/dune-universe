@@ -1,0 +1,6 @@
+depends: [
+  "jbuilder"
+  "ppxx" { >= "2.3.0" & < "2.4.0" }
+]
+available: [ ocaml-version >= "4.06.0" & ocaml-version < "4.07.0" ]
+homepage: "http://bitbucket.org/camlspotter/typpx"

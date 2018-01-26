@@ -1,0 +1,5 @@
+(library
+ ((name treeprint)
+  (public_name treeprint)
+  (preprocess (pps (ppx_meta_conv.ppx)))
+  (libraries ( spotlib ppx_meta_conv.runtime ))))
