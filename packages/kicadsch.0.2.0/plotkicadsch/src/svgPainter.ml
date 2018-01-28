@@ -1,10 +1,9 @@
-
 open Tyxml.Svg
-open KicadSch_sigs
+open Kicadsch.Sigs
 
 type content = [ `Polyline | `Text | `Svg | `Rect | `Circle |`Path | `Image ]
 type dim = int*int
-type t =  { d: dim ; c : content elt list}
+type t =  { d: dim  ; c : content elt list} [@@inline]
 
 let style_attr_of_style = function
   | Italic -> [a_font_style "italic"]
@@ -68,20 +67,39 @@ let paint_arc ?(fill=NoColor) (Coord(x1, y1)) (Coord (x2, y2)) radius ({c; _} as
   ( path ~a:[a_d (Printf.sprintf "M%d,%d A%d,%d 0 0,%d %d,%d" x1 y1 radius radius sweepflag x2 y2); a_fill (color_of_kolor fill); a_stroke_width (1., Some`Px); a_stroke (color_of_kolor Black)] []
   ) :: c}
 
-let paint_image (Coord (x,y)) scale b ({c; _} as ctxt) =
-  Printf.printf "painting image! %f %d %d\n" scale x y;
-  {ctxt with c = (image ~a:[ a_height ((100.), Some `Percent); a_width ((100.), Some `Percent); a_xlink_href @@ "data:image/png;base64," ^ (B64.encode (Buffer.contents b));a_transform [ `Scale (scale /. 4., None) ] ] [])
+let get_png_dims b =
+  if Buffer.sub b 1 3 = "PNG" then begin
+    let belong str =
+      int_of_char str.[0] lsl 24 +
+      int_of_char str.[1] lsl 16 +
+      int_of_char str.[2] lsl 8 +
+      int_of_char str.[3] in
+    let w = belong (Buffer.sub b 16 4) in
+    let h = belong (Buffer.sub b 20 4) in
+    (w,h)
+  end
+  else
+    (0,0)
+
+let paint_image (Coord (x, y)) scale b ({c; _} as ctxt) =
+  let s = scale /. 0.3 in
+  let w, h = get_png_dims b in
+  {ctxt with c = (image ~a:[
+       a_x ((float(x) -. float(w/2)*.s), None);
+       a_y ((float(y)-.float(h/2)*.s),None);
+       a_height (float(h)*.s, None);
+       a_width (float(w)*.s, None);
+       a_xlink_href @@ "data:image/png;base64," ^ (B64.encode (Buffer.contents b))] [])
   :: c }
 
 let get_context () = {d=(0,0) ; c=[]}
 
 let set_canevas_size x y ctxt = {ctxt with d = (x,y)}
 
-let write oc {d= (x,y); c} =
+let write ?(op=true) {d= (x,y); c}  =
   let fx = float x in
   let fy = float y in
-  let svg_doc = svg  ~a:[a_width (fx *. 0.00254, Some `Cm); a_height (fy *. 0.00254, Some `Cm); a_viewBox (0.,0., float x, float y)] c in
-  let s = Format.asprintf "%a" (Tyxml.Svg.pp ()) svg_doc in
-(*  let fmt = Format.formatter_of_out_channel oc in
-  Tyxml.Svg.pp () fmt svg_doc *)
-  Lwt_io.write oc s
+  let o = (if op then  1.0 else 0.8) in
+  let opacity = a_style @@ Printf.sprintf "stroke-opacity:%f;fill-opacity:%f;" o o  in
+  let svg_doc = svg  ~a:[a_width (fx *. 0.00254, Some `Cm); a_height (fy *. 0.00254, Some `Cm); a_viewBox (0.,0., float x, float y); a_font_family "Verdana, sans-serif";opacity] c in
+  Format.asprintf "%a" (Tyxml.Svg.pp ()) svg_doc

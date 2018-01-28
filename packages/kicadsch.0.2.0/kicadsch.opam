@@ -1,4 +1,4 @@
-version: "0.1.4"
+version: "0.2.0"
 opam-version: "1.2"
 maintainer: "Jean-Noel Avila <jn.avila@free.fr>"
 author: "Jean-Noel Avila <jn.avila@free.fr>"
@@ -7,18 +7,12 @@ bug-reports: "https://github.com/jnavila/plotkicadsch/issues"
 license: "ISC"
 dev-repo: "https://github.com/jnavila/plotkicadsch.git"
 build: [
-  [ "jbuilder" "subst"] {pinned}
+  [ "jbuilder" "subst" "-n" "kicadsch" ] {pinned}
   [ "jbuilder" "build" "-p" name "-j" jobs ]
 ]
+build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 depends: [
-  "ocamlfind" {build}
   "jbuilder" {build}
- "pcre"
- "tyxml" {>= "4.0.0"}
- "lwt"
- "base64"
- "sha"
- "git"
- "git-unix"
+  "ounit" {test}
 ]
 available: [ ocaml-version >= "4.03" ]

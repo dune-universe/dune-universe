@@ -1,26 +1,30 @@
 (jbuild_version 1)
 
-
 (executables
  ((names        (plotgitsch plotkicadsch))
   (public_names (plotgitsch plotkicadsch))
   (package plotkicadsch)
+  (preprocess (pps (lwt.ppx)))
  (libraries
   (
+   kicadsch
+   tyxml
    git-unix
    lwt
    lwt.unix
+   lwt.ppx
    sha
-   pcre
-   tyxml
    base64
-   str
-   )
+   patience_diff
+   core_kernel
+   cmdliner
   )
- (flags (:standard -w -3 -safe-string))
- ))
+  )
+  (flags (:standard -w -3 -safe-string))
+))
 
 (install
-  ((section bin)
+ ((package plotkicadsch)
+  (section bin)
    (files   (git-imgdiff))
   ))
