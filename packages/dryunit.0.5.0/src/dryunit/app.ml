@@ -58,6 +58,8 @@ let get_suites ~nocache ~framework ~cache_dir ~ignore ~only ~targets ~ignore_pat
     ( if Core_util.starts_with cache_dir Filename.dir_sep then
         let () = mkdir_p cache_dir in
         Some cache_dir
+      else if not !Core_runtime.running_ppx then
+        Some cache_dir
       else
         throw ("Cache directory must be \".dryunit\" or a full custom path. Current value is `" ^ cache_dir ^ "`");
     ) in
@@ -73,13 +75,12 @@ let get_suites ~nocache ~framework ~cache_dir ~ignore ~only ~targets ~ignore_pat
   )
   |> apply_filters ~only ~ignore
 
-
-let gen_executable framework suites path =
-  let oc = open_out path in
+let gen_executable framework suites oc =
+  (* let oc = open_out path in *)
   let f =
     ( match framework with
       | TestFramework.Alcotest -> Core_serializer.boot_alcotest
       | TestFramework.OUnit ->  Core_serializer.boot_ounit
     ) in
-    f oc suites;
-    close_out oc
+    f oc suites
+    (* close_out oc *)

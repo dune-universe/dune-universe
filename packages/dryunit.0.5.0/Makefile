@@ -26,13 +26,13 @@ run_alcotest:
 run_ounit: dryunit
 	@jbuilder build $(TEST_OUNIT).exe && $(BUILD)/$(TEST_OUNIT).exe
 
-run_args: clean
+run_args:
 	@jbuilder build $(TEST_ARGS).exe && $(BUILD)/$(TEST_ARGS).exe
 
-build_args: clean
+build_args:
 	@jbuilder build $(EXE_ARGS)
 
-test: clean default
+test: default
 	@jbuilder runtest
 
 install:

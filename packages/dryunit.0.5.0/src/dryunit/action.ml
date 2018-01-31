@@ -62,20 +62,28 @@ let gen_extension { nocache; framework; cache_dir; ignore; only; ignore_path; ta
       App.gen_extension ~nocache ~framework ~cache_dir ~ignore ~only ~ignore_path ~targets
     ) ()
 
-let gen_executable { nocache; framework; cache_dir; ignore; only; ignore_path; targets} =
+let gen_executable { nocache; framework; cache_dir; ignore; only; ignore_path; targets } =
   let cache_dir = unwrap_or "_build/.dryunit" cache_dir in
   let ignore = unwrap_or "" ignore in
   let only = unwrap_or "" only in
   let ignore_path = unwrap_or "" ignore_path in
   let framework = TestFramework.of_string (unwrap_or "alcotest" framework) in
-  let targets = if List.length targets == 0 then [ "main.ml" ] else targets in
-  List.iter
-    ( fun target ->
-        let suites = App.get_suites ~nocache ~framework ~cache_dir ~ignore ~only ~targets
-          ~ignore_path ~detection:"dir" ~main:target in
-        App.gen_executable framework suites target
+  (* let targets = if List.length targets == 0 then [ "main.ml" ] else targets in *)
+  if List.length targets == 0 then
+    ( let suites = App.get_suites ~nocache ~framework ~cache_dir ~ignore ~only ~targets
+        ~ignore_path ~detection:"dir" ~main:"main.ml" in
+      App.gen_executable framework suites stdout
     )
-    targets;
+  else
+    List.iter
+      ( fun target ->
+          let suites = App.get_suites ~nocache ~framework ~cache_dir ~ignore ~only ~targets
+            ~ignore_path ~detection:"dir" ~main:target in
+          let oc = open_out target in
+          App.gen_executable framework suites oc;
+          close_out oc
+      )
+      targets;
   `Ok ()
 
 let init_executable { framework; } =

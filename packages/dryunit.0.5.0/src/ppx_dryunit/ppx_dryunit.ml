@@ -25,9 +25,9 @@ open Printf
 
 module Core_capitalize = struct
 #if OCAML_VERSION < (4, 03, 0)
-  let capitalize_ascii = String.capitalize
+  let capitalize_ascii = Bytes.capitalize
 #else
-  let capitalize_ascii = String.capitalize_ascii
+  let capitalize_ascii = Bytes.capitalize_ascii
 #endif
 end
 
@@ -131,6 +131,7 @@ let bootstrap_ounit suites =
 
 
 let boot ~loc ~cache_dir ~cache_active ~framework ~ignore ~only ~detection ~ignore_path =
+  Core_runtime.running_ppx := true;
   let throw = throw ~loc in
   let f =
     ( match framework with

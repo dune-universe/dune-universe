@@ -43,7 +43,7 @@ This is the output of the command `dryunit init`:
 
 (rule
  ((targets (main.ml))
-  (deps ( (glob_files *tests.ml) (glob_files *Tests.ml) ))
+  (deps ( (glob_files tests.ml) (glob_files *tests.ml) (glob_files *Tests.ml) ))
   (action  (with-stdout-to ${@} (run dryunit gen
     --framework alcotest
     ;; --filter "space separated list"
@@ -52,12 +52,12 @@ This is the output of the command `dryunit init`:
   )))))
 ```
 
-As you see, this is the place to customize to customize your test executable. The definitions in the comments provide a template for common filters, but you can find more information about customizations using `dryunit help` or `dryunit COMMAND - - help`.
+As you see, this is the place to customize your test executable. The definitions in the comments provide a template for common filters, but you can find more information about customizations using `dryunit help` or `dryunit COMMAND - - help`.
 
 
 ## About the extension
 
-This project was originated as a PPX. It turns out this setup introduces the unnecessary preprocess of every test file, is more expensive to setup incremental compilation, and that's not what most users need.
+This project was originated as a PPX. It turns out this setup introduces the unnecessary preprocess of every test file, needs to be randomly modified at every build to bypass jbuilder cache, and overall, that's not even what most users need.
 
 It is still available as the optional package `ppx_dryunit`. Currently the extension provides roughly the same functionality as the command line, plus the possibility to detect tests only in the current file, which is its recommended setup.
 

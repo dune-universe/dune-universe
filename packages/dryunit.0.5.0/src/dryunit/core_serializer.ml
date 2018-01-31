@@ -52,7 +52,7 @@ let init_extension () =
 ;; This rule generates the bootstrapping
 (rule
  ((targets (main.ml))
-  (deps ( (glob_files *_tests.ml) (glob_files *_Tests.ml) ))
+  (deps ( (glob_files tests.ml) (glob_files *tests.ml) (glob_files *Tests.ml) ))
   ;;
   (action  (with-stdout-to ${@} (run dryunit ext
     --framework alcotest
@@ -70,7 +70,7 @@ let init_default framework =
 
 (rule
  ((targets (main.ml))
-  (deps ( (glob_files *tests.ml) (glob_files *Tests.ml) ))
+  (deps ( (glob_files tests.ml) (glob_files *tests.ml) (glob_files *Tests.ml) ))
   (action  (with-stdout-to ${@} (run dryunit gen
     --framework " ^ TestFramework.to_string framework ^ "
     ;; --filter \"space separated list\"

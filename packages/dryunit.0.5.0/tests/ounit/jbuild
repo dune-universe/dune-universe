@@ -4,7 +4,7 @@
 
 (rule
  ((targets (main.ml))
-  (deps ( (glob_files *tests.ml) (glob_files *Tests.ml) ))
+  (deps ( (glob_files tests.ml) (glob_files *tests.ml) (glob_files *Tests.ml) ))
   (action  (with-stdout-to ${@} (run dryunit gen
     --framework ounit
     ;;
