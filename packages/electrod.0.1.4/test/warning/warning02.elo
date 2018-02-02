@@ -1,0 +1,3 @@
+univ : { a  a$1 .. a$4 b a$3 .. a$5 c };
+run
+true

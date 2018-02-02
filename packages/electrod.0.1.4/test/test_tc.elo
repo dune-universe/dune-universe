@@ -1,0 +1,32 @@
+
+
+univ : { a b c };
+
+const a : {a};
+const b : {b};
+const c : {c};
+const r : {} { (a b) (b c)};(* (c d) (d e) (e f) (f g) (g h)  } ;*)
+(*s : {} {c d e f g h i };
+
+const r2 : {(a b)} { (a b) (b c) (c d) (d e) (e f) (f g)  (g h) (h i) (i j) (j k) (k l)  (l m)  (n o) (p q) (r s )} ;
+const s2 : {} {c d e f g h i j};
+*)
+
+
+run
+{
+one x,y:a, z:b | x in y implies z in x;
+(*all a:univ, b: s | a in b.r;*)
+all x:univ, y: x.(^r) | x = y;
+a in b.r and a in c.r and b in c.r
+
+(*all a:univ,b:a.(((r+r.r)+(r+r.r).(r+r.r))+((r+r.r)+(r+r.r).(r+r.r)).((r+r.r)+(r+r.r).(r+r.r)))
+| a in b.r ;
+*)
+(*all a:univ, b: (^r2).s2 | a in b.r2 ;*)
+(* all a:univ, b : a.((((r+r.r)+(r+r.r).(r+r.r))+((r+r.r)+(r+r.r).(r+r.r)).((r+r.r)+(r+r.r).(r+r.r)))+(((r+r.r)+(r+r.r).(r+r.r))+((r+r.r)+(r+r.r).(r+r.r)).((r+r.r)+(r+r.r).(r+r.r))).(((r+r.r)+(r+r.r).(r+r.r))+((r+r.r)+(r+r.r).(r+r.r)).((r+r.r)+(r+r.r).(r+r.r)))
+)| a in b.r ; *)
+
+(*some x:univ | x in x.(^r);*)
+
+}

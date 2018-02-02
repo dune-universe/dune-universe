@@ -1,0 +1,55 @@
+(jbuild_version 1)
+
+(executable
+ ((name electrod)
+	(public_name electrod)
+	(package electrod)
+	(modules (Main electrod))
+	(libraries
+	 (electrod.libelectrod cmdliner fmt fmt.cli fmt.tty logs.cli logs.fmt))
+	))
+
+(library
+ ((name libelectrod)
+	(public_name electrod.libelectrod)
+	(wrapped false)
+	(modules (:standard \ (Main electrod)))
+	(libraries
+	 (cmdliner containers containers.data containers.unix fmt fmt.tty gen
+		hashcons logs.fmt mtime.clock.os ppx_deriving.runtime printbox
+		sequence visitors.runtime))
+	(flags
+	 (:standard
+		(-w "-33-58" ; -33 unused open -58 missing cmx file
+				-g -safe-string -strict-formats -strict-sequence -short-paths)))
+	(preprocess
+	 (action
+		(run ppxfind -legacy visitors.ppx,ppx_deriving.std,ppx_blob --as-pp ${<})))
+	(preprocessor_deps 
+	 ("../res/nusmv-default-script.txt"
+		"../res/nuxmv-default-script.txt"))
+	))
+
+;;(alias
+;; ((name    runtest)
+;;  (deps    (run_tests.exe))
+;;  (action  (run ${<}))))
+
+;;; first parser
+
+(menhir ((modules (Parser))))
+
+(ocamllex (Scanner))
+
+;;; other parser
+
+(ocamllex (SMV_trace_scanner))
+
+(menhir
+ ((flags   (--only-tokens))
+  (modules (SMV_trace_tokens))))
+
+(menhir
+ ((merge_into SMV_trace_parser)
+  (flags      (--external-tokens SMV_trace_tokens))
+  (modules    (SMV_trace_parser SMV_trace_tokens))))

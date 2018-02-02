@@ -1,0 +1,45 @@
+(library
+ ((name caqti_driver_postgresql)
+  (public_name caqti-driver-postgresql)
+  (wrapped false)
+  (modules (Caqti_driver_postgresql))
+  (libraries (caqti postgresql))))
+
+(library
+ ((name caqti_driver_mariadb)
+  (public_name caqti-driver-mariadb)
+  (wrapped false)
+  (modules (Caqti_driver_mariadb))
+  (libraries (caqti mariadb))))
+
+(library
+ ((name caqti_driver_sqlite3)
+  (public_name caqti-driver-sqlite3)
+  (wrapped false)
+  (flags (-thread))
+  (modules (Caqti_driver_sqlite3))
+  (libraries (caqti sqlite3))))
+
+; V1
+
+(library
+ ((name caqti_driver_postgresql_v1)
+  (public_name caqti-driver-postgresql.v1)
+  (wrapped false)
+  (modules (Caqti1_driver_postgresql))
+  (libraries (caqti.v1 postgresql))))
+
+(library
+ ((name caqti_driver_mariadb_v1)
+  (public_name caqti-driver-mariadb.v1)
+  (wrapped false)
+  (modules (Caqti1_driver_mariadb))
+  (libraries (caqti.v1 mariadb))))
+
+(library
+ ((name caqti_driver_sqlite3_v1)
+  (public_name caqti-driver-sqlite3.v1)
+  (wrapped false)
+  (flags (-thread))
+  (modules (Caqti1_driver_sqlite3))
+  (libraries (caqti.v1 sqlite3))))

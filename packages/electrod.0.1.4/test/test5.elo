@@ -1,0 +1,4 @@
+univ : {p$1 .. p$3 };
+run 
+all p : univ | p in univ
+

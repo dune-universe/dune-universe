@@ -1,0 +1,4 @@
+univ : { a  a$1 .. a$4 b c };
+const r : { b } { b c b }
+run
+true

@@ -1,0 +1,10 @@
+univ : {a b c d e}
+
+const s :1 {a b} {a b c}
+
+const r :2 { (a b) (b c) (a c) (a d) } { (a b) (b c) (a c) (a d) (b d) (b e)} 
+
+
+run
+
+some {x : s, y : x.r | true }

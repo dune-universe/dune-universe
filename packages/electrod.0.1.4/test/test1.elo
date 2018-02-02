@@ -1,0 +1,32 @@
+
+(* univ declaration (* nested comment *) *)
+univ : { a b c  e$2 .. e$4 };
+
+-- one line comment
+-- other relations
+const r : univ; -- this one is "exact" (same lower and upper bounds)
+const t : { (a a) (a b) (c e$2)} (univ -> (univ + r)); -- outer parentheses not needed, but + < ->
+
+const f : {} {a}; -- 'const' keyword is optional
+
+const foo : { a b } {a b c}; 	 -- this one is inexact
+var u : {} foo;  -- as 'foo' is on upper bound position, we use foo's upper bound, i.e. {a b c}
+const u2 : foo { a b c e$2}; -- here, we only use foo's lower bound, i.e. {a b}
+const u4 : foo foo; -- here we use both bounds of foo, which gives { a b } {a b c}
+
+-- exact bound at first state, then other bounds:
+var w : {} then { a } { (a) b }; -- last semicolon optional. +Optional parentheses around 1-tuples
+
+----------------
+-- 1
+run
+{lone r  ; 
+some r  ;
+some disj x,y : r, disj s: x | true;
+{ disj a,b : univ | a->b in t } not in u->u;
+all x : r { true ; false; }; -- optional last semicolon
+
+some r;
+all x, y : univ | #x < #y implies (some r implies true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true or true) else univ in none;
+#r > 1
+}

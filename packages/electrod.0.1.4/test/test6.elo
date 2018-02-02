@@ -1,0 +1,8 @@
+univ : { a b c  e$2  };
+const r : univ; 
+const t : { (a a) (a b) (c e$2)} (univ -> (univ + r));
+const foo : { a b } {a b c}; 	 
+var u : {} foo;  
+run
+{ disj a : univ, c,d : t.a, disj e, f, g : { disj x, y : univ | some univ }.foo | true  } in none
+

@@ -1,0 +1,12 @@
+univ : { a b c d e f g };
+
+const r : {} { (a a) (a b) (a c) };
+
+const s : { (a a) (a b) };
+
+const t : { a}
+
+run
+
+r in s
+

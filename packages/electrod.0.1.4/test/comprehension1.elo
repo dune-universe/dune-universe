@@ -1,0 +1,14 @@
+univ : {a b c d };
+
+const s : { a b };
+
+const r : { (a b) (b c) (a c) (a d) };
+
+run
+{
+-- sup = {(a b) (a c) (a d) (b c)}
+some { x : s, y : x.r | true };
+
+-- sup = {(a b b) (a b c) (a b d) (b a c)}
+some { disj x, y : s, y : x.r | true };
+}

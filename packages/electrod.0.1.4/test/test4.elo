@@ -1,0 +1,36 @@
+
+
+univ : { a b c d e f g };
+
+const r : {} { (a a) (a b) (a c) };
+
+const s : {} { (b c) (c d) (c e) };
+
+const t : {} { a}
+
+run
+{
+some r[univ.r];
+
+some s.r[univ];
+
+some (none -> none) + (univ->univ);
+
+some r ++ none;
+
+no none ++ r;
+
+some t - none;
+
+no none - r;
+
+some t <: s;
+
+some s :> t;
+
+some t + none;
+
+some { disj x, y : t, u1, u2 : univ, disj z : t | true };
+
+all disj x, y, z : t, u, v : t | some univ
+}

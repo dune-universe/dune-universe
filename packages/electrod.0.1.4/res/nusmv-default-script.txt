@@ -1,0 +1,8 @@
+set default_trace_plugin 1;
+set on_failure_script_quits 1;
+read_model;
+flatten_hierarchy;
+encode_variables;
+build_model;
+check_ltlspec;
+quit -x

@@ -1,0 +1,19 @@
+univ : { a b c d e f g };
+
+const r : {} { (a a) (a b) (a c) };
+
+const E : { (a)  c  };
+
+const F : {a b} { a b e};
+
+const G : {d} {d f};
+
+run
+{
+lone { x, y : E, disj z, t : F, u : G | true};
+
+
+some r[F] + r[r[r[E]]];
+
+lone E->E->F->F->G;
+}

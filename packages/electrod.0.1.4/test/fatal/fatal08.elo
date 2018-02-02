@@ -1,0 +1,6 @@
+univ : { a  a$1 .. a$2 a$3 .. a$12 };
+const r : { (a a$4)   };
+const s   : {} { a};
+const v : t;
+run
+true

@@ -1,0 +1,12 @@
+
+univ : { a b c  e$2 .. e$4 };
+
+const r1 :1 {} ;
+const r2 :1 {} {} ;
+var r3 :2 {} then {};
+var r4 :1 {} {} then {};
+var r5 :2 {} then {} {};
+var r6 : {} { (a b c) } then { } { (a b c) };
+
+run
+r3 in r5;

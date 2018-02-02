@@ -1,0 +1,27 @@
+-- ~15s with 20
+univ : { M$1 .. M$3 W$1 .. W$3 }
+
+const Man :{} { M$1 .. M$3 }
+const Woman : {} { W$1 .. W$3  }
+
+var wife : {} Man->Woman
+var husband : {} Woman->Man
+
+
+invariant
+-- husband in Woman -> lone Man
+husband in Woman->Man
+all w : Woman | lone w.husband
+
+
+-- wife in Man -> lone Woman
+wife in Man->Woman
+all m : Man | lone m.wife
+
+husband = ~wife
+
+some { disj x, y : wife, m : Man, w : m.wife | m->w in Man->Woman}
+
+run
+no husband;
+sometime some husband

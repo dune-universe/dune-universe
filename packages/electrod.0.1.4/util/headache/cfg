@@ -1,0 +1,3 @@
+# Objective Caml source 
+  ".*\\.ml[il]?" -> lines open:"(*" line:"*" close:"*)" width:80 begin:" * " last:" "
+| ".*\\.ml[y]?" -> lines open:"/*" line:"*" close:"*/" width:80 begin:" * " last:" "

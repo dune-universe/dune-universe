@@ -1,0 +1,58 @@
+univ : { a b c d e f g  l };
+
+const reflexive :  { (a a) (b b) (c c) };
+
+const t :  { (a a) (a g) (b b) (c c) };
+
+const symmetric : { (a b) (b a) (c d) (d c) (b c) (c b)};
+
+const r :  { (a b) (a c) (b d) (c e) (e f)};
+
+const tc_r :  { (a b) (a c) (b d) (c e) (e f) (a d) (a e) (a f) (c f)};
+
+const iden_plus_tc_r :  { (a b) (a c) (b d) (c e) (e f) (a d) (a e) (a f) (c f)
+ (a a) (b b) (c c) (d d) (e e) (f f) (g g) (l l)
+};
+
+const s_proj_tc :  { (a b) (a c) (c e) (a d) (a e) (a f) (c f) };
+
+const r_overriden_by_t : { (a a) (a g) (b b) (c c)  (e f)}  ;
+
+const s :  { a c };
+
+const m : { (a b b) (a b c) (e a d) (e a f) (e b g)};
+
+const n : { (a f f) (b b b)};
+
+const m_plusplus_n : { (a f f) (b b b) (e a d) (e a f) (e b g)};
+
+
+var z : {} { l };
+
+run
+
+no reflexive - iden;
+
+symmetric = ~symmetric;
+
+tc_r = ^r;
+
+s.( *r) = s.(iden + ^r);
+
+*r = iden_plus_tc_r ;
+
+iden_plus_tc_r = iden + ^r;
+
+s.r = ~r.s;
+
+^ (~r) = ~ ( ^ r);
+
+s <: ^r = s_proj_tc;
+
+r ++ t = r_overriden_by_t;
+
+m ++ n = m_plusplus_n;
+
+s.r = r[s];
+
+eventually some z;

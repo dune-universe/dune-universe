@@ -1,0 +1,324 @@
+univ : { Node$0 Node$1 Node$2 Node$3 Dummy$0 join$0 fail$0 rectify$0 stabilizeNonMemberFst$0 stabilizeBetterFst$0 stabilizeSnd$0 skip$0 E$0 Ord$0 };
+
+const stabilizeNonMemberFst :1 { ( stabilizeNonMemberFst$0 ) };
+const E :1 { ( E$0 ) };
+const skip :1 { ( skip$0 ) };
+const join :1 { ( join$0 ) };
+const Node :1 { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+const Dummy :1 { ( Dummy$0 ) };
+const stabilizeSnd :1 { ( stabilizeSnd$0 ) };
+var core :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+const stabilizeBetterFst :1 { ( stabilizeBetterFst$0 ) };
+const Ord#Next :3 { ( Ord$0 Node$1 Node$2 ) ( Ord$0 Node$2 Node$0 ) ( Ord$0 Node$3 Node$1 ) };
+var network :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+const Ord#First :2 { ( Ord$0 Node$3 ) };
+const rectify :1 { ( rectify$0 ) };
+const Ord :1 { ( Ord$0 ) };
+const fail :1 { ( fail$0 ) };
+
+
+var Node#fst :2  {} Node -> lone Node;
+var Node#snd :2  {} Node -> lone Node;
+var Node#prdc :2 {} Node -> lone Node;
+
+var E#event :5 {} E->Dummy-> one (
+				join->Node->Node
+				+ fail->Node->Dummy
+				+ stabilizeNonMemberFst->Node->Dummy 
+				+ stabilizeBetterFst->Node->Dummy 
+				+ stabilizeSnd->Node->Dummy 
+				+ rectify->Node->Node
+				+ skip->Dummy->Dummy);
+
+
+sym
+[ ( core Node$0 ) ( network Node$0 ) ( Node#fst Node$0 Node$0 ) ( Node#fst Node$0 Node$1 ) ( Node#fst Node$0 Node$2 ) ( Node#fst Node$0 Node$3 ) ( Node#fst Node$2 Node$0 ) ( Node#fst Node$3 Node$0 ) ( Node#prdc Node$0 Node$0 ) ( Node#prdc Node$0 Node$1 ) ( Node#prdc Node$0 Node$2 ) ( Node#prdc Node$0 Node$3 ) ( Node#prdc Node$2 Node$0 ) ( Node#prdc Node$3 Node$0 ) ( Node#snd Node$0 Node$0 ) ( Node#snd Node$0 Node$1 ) ( Node#snd Node$0 Node$2 ) ( Node#snd Node$0 Node$3 ) ( Node#snd Node$2 Node$0 ) ( Node#snd Node$3 Node$0 )  <=  ( core Node$1 ) ( network Node$1 ) ( Node#fst Node$1 Node$1 ) ( Node#fst Node$1 Node$0 ) ( Node#fst Node$1 Node$2 ) ( Node#fst Node$1 Node$3 ) ( Node#fst Node$2 Node$1 ) ( Node#fst Node$3 Node$1 ) ( Node#prdc Node$1 Node$1 ) ( Node#prdc Node$1 Node$0 ) ( Node#prdc Node$1 Node$2 ) ( Node#prdc Node$1 Node$3 ) ( Node#prdc Node$2 Node$1 ) ( Node#prdc Node$3 Node$1 ) ( Node#snd Node$1 Node$1 ) ( Node#snd Node$1 Node$0 ) ( Node#snd Node$1 Node$2 ) ( Node#snd Node$1 Node$3 ) ( Node#snd Node$2 Node$1 ) ( Node#snd Node$3 Node$1 ) ];
+[ ( core Node$1 ) ( network Node$1 ) ( Node#fst Node$0 Node$1 ) ( Node#fst Node$1 Node$0 ) ( Node#fst Node$1 Node$1 ) ( Node#fst Node$1 Node$2 ) ( Node#fst Node$1 Node$3 ) ( Node#fst Node$3 Node$1 ) ( Node#prdc Node$0 Node$1 ) ( Node#prdc Node$1 Node$0 ) ( Node#prdc Node$1 Node$1 ) ( Node#prdc Node$1 Node$2 ) ( Node#prdc Node$1 Node$3 ) ( Node#prdc Node$3 Node$1 ) ( Node#snd Node$0 Node$1 ) ( Node#snd Node$1 Node$0 ) ( Node#snd Node$1 Node$1 ) ( Node#snd Node$1 Node$2 ) ( Node#snd Node$1 Node$3 ) ( Node#snd Node$3 Node$1 )  <=  ( core Node$2 ) ( network Node$2 ) ( Node#fst Node$0 Node$2 ) ( Node#fst Node$2 Node$0 ) ( Node#fst Node$2 Node$2 ) ( Node#fst Node$2 Node$1 ) ( Node#fst Node$2 Node$3 ) ( Node#fst Node$3 Node$2 ) ( Node#prdc Node$0 Node$2 ) ( Node#prdc Node$2 Node$0 ) ( Node#prdc Node$2 Node$2 ) ( Node#prdc Node$2 Node$1 ) ( Node#prdc Node$2 Node$3 ) ( Node#prdc Node$3 Node$2 ) ( Node#snd Node$0 Node$2 ) ( Node#snd Node$2 Node$0 ) ( Node#snd Node$2 Node$2 ) ( Node#snd Node$2 Node$1 ) ( Node#snd Node$2 Node$3 ) ( Node#snd Node$3 Node$2 ) ];
+[ ( core Node$2 ) ( network Node$2 ) ( Node#fst Node$0 Node$2 ) ( Node#fst Node$1 Node$2 ) ( Node#fst Node$2 Node$0 ) ( Node#fst Node$2 Node$1 ) ( Node#fst Node$2 Node$2 ) ( Node#fst Node$2 Node$3 ) ( Node#prdc Node$0 Node$2 ) ( Node#prdc Node$1 Node$2 ) ( Node#prdc Node$2 Node$0 ) ( Node#prdc Node$2 Node$1 ) ( Node#prdc Node$2 Node$2 ) ( Node#prdc Node$2 Node$3 ) ( Node#snd Node$0 Node$2 ) ( Node#snd Node$1 Node$2 ) ( Node#snd Node$2 Node$0 ) ( Node#snd Node$2 Node$1 ) ( Node#snd Node$2 Node$2 ) ( Node#snd Node$2 Node$3 )  <=  ( core Node$3 ) ( network Node$3 ) ( Node#fst Node$0 Node$3 ) ( Node#fst Node$1 Node$3 ) ( Node#fst Node$3 Node$0 ) ( Node#fst Node$3 Node$1 ) ( Node#fst Node$3 Node$3 ) ( Node#fst Node$3 Node$2 ) ( Node#prdc Node$0 Node$3 ) ( Node#prdc Node$1 Node$3 ) ( Node#prdc Node$3 Node$0 ) ( Node#prdc Node$3 Node$1 ) ( Node#prdc Node$3 Node$3 ) ( Node#prdc Node$3 Node$2 ) ( Node#snd Node$0 Node$3 ) ( Node#snd Node$1 Node$3 ) ( Node#snd Node$3 Node$0 ) ( Node#snd Node$3 Node$1 ) ( Node#snd Node$3 Node$3 ) ( Node#snd Node$3 Node$2 ) ];
+
+run
+always (one Dummy);
+always (one join);
+always (one fail);
+always (no (join & fail));
+always (one rectify);
+always (no ((join + fail) & rectify));
+always (one stabilizeNonMemberFst);
+always (no ((join + fail + rectify) & 
+ stabilizeNonMemberFst));
+always (one stabilizeBetterFst);
+always (no ((join + fail + rectify + 
+ stabilizeNonMemberFst) & stabilizeBetterFst));
+always (one stabilizeSnd);
+always (no ((join + fail + rectify + 
+ stabilizeNonMemberFst + stabilizeBetterFst) & stabilizeSnd));
+always (one skip);
+always (no ((join + fail + rectify + 
+ stabilizeNonMemberFst + stabilizeBetterFst + stabilizeSnd) & 
+ skip));
+always (((join + fail + rectify + stabilizeNonMemberFst + 
+ stabilizeBetterFst + stabilizeSnd + skip)' ) = (join + 
+ fail + rectify + stabilizeNonMemberFst + 
+ stabilizeBetterFst + stabilizeSnd + skip));
+always (one E);
+always (one Ord);
+always (network in Node);
+always (core in network);
+always (Node#fst in (Node -> Node));
+always (all correctness_this: Node | 
+  lone (correctness_this . Node#fst));
+always (Node#snd in (Node -> Node));
+always (all correctness_this: Node | 
+  lone (correctness_this . Node#snd));
+always (no (Node#fst & Node#snd));
+always (Node#prdc in (Node -> Node));
+always (all correctness_this: Node | 
+  lone (correctness_this . Node#prdc));
+always (all correctness_this: Node | 
+  !((correctness_this . Node#fst) = correctness_this) and 
+  !((correctness_this . Node#snd) = correctness_this) and 
+  (correctness_this in network or 
+   (no (correctness_this . (Node#snd ++ Node#fst)) and 
+    no (correctness_this . Node#prdc))));
+always (E#event in (E -> Dummy -> ((join -> Node -> 
+ Node) + (fail -> Node -> Dummy) + (
+ stabilizeNonMemberFst -> Node -> Dummy) + (
+ stabilizeBetterFst -> Node -> Dummy) + (stabilizeSnd -> 
+ Node -> Dummy) + (rectify -> Node -> Node) + (
+ skip -> Dummy -> Dummy))));
+always (all correctness_this: E | 
+  all v0: Dummy | 
+   one (v0 . (correctness_this . E#event)));
+always (Ord#First in (Ord -> Node));
+always (Ord#Next in (Ord -> Node -> Node));
+always ((all v4: Node | 
+   (v4 = (Ord . Ord#First) or 
+    one ((Ord . Ord#Next) . v4)) and 
+   (v4 = (Node - ((Ord . Ord#Next) . Node)) or 
+    one (v4 . (Ord . Ord#Next))) and 
+   !(v4 in (v4 . ^(Ord . Ord#Next)))) and 
+ Node in ((Ord . Ord#First) . *(Ord . 
+ Ord#Next)) and 
+ no ((Ord . Ord#Next) . (Ord . Ord#First
+ )));
+always (all correctness_this: network | 
+  some (correctness_this . Node#fst) and 
+  some (correctness_this . Node#snd));
+always ((all correctness_n: core | 
+   (correctness_n . (Node#snd ++ Node#fst)) in core) and 
+ (all correctness_n: core, correctness_m: core | 
+   correctness_n in (correctness_m . ^(Node#snd ++ Node#fst))) and 
+ (all correctness_n: network - core | 
+   some correctness_m: core | 
+    correctness_m in (correctness_n . ^(Node#snd ++ Node#fst))) and 
+ (all correctness_m1: core, correctness_m2: core, correctness_mb: 
+  core | 
+   (no ((correctness_m1 + correctness_m2) & correctness_mb) and 
+    no (correctness_m1 & correctness_m2)) implies 
+   (correctness_m2 = (correctness_m1 . (Node#snd ++ Node#fst)) implies 
+    !((correctness_m1 in (correctness_m2 . ^(~(Ord . 
+       Ord#Next))) implies 
+       (correctness_m1 in (correctness_mb . ^(~(Ord . 
+        Ord#Next))) and 
+        correctness_mb in (correctness_m2 . ^(~(Ord . 
+        Ord#Next))))) and 
+      (!(correctness_m1 in (correctness_m2 . ^(~(Ord . 
+         Ord#Next)))) implies 
+       (correctness_m1 in (correctness_mb . ^(~(Ord . 
+        Ord#Next))) or 
+        correctness_mb in (correctness_m2 . ^(~(Ord . 
+        Ord#Next)))))))));
+all correctness_n: Node | 
+ (always (eventually (correctness_n in network and 
+    !((correctness_n . Node#fst) in network))) implies 
+  always (eventually ((correctness_n . (Node#fst)' ) = (correctness_n . 
+    Node#snd) and 
+    (correctness_n . (Node#snd)' ) = ((correctness_n . Node#snd) . (
+    Ord . Ord#Next))))) and 
+ (always (eventually (correctness_n in network and 
+    some (((correctness_n . Node#fst) . Node#prdc) & network) and 
+    (correctness_n in ((correctness_n . Node#fst) . ^(~(Ord . 
+     Ord#Next))) implies 
+     (correctness_n in (((correctness_n . Node#fst) . Node#prdc) . ^
+      (~(Ord . Ord#Next))) and 
+      ((correctness_n . Node#fst) . Node#prdc) in ((correctness_n . 
+      Node#fst) . ^(~(Ord . Ord#Next))))) and 
+    (!(correctness_n in ((correctness_n . Node#fst) . ^(~(Ord . 
+       Ord#Next)))) implies 
+     (correctness_n in (((correctness_n . Node#fst) . Node#prdc) . ^
+      (~(Ord . Ord#Next))) or 
+      ((correctness_n . Node#fst) . Node#prdc) in ((correctness_n . 
+      Node#fst) . ^(~(Ord . Ord#Next))))))) implies 
+  always (eventually ((correctness_n . (Node#fst)' ) = ((correctness_n . 
+    Node#fst) . Node#prdc) and 
+    (correctness_n . (Node#snd)' ) = (((correctness_n . Node#fst) . 
+    Node#prdc) . Node#fst)))) and 
+ (always (eventually (correctness_n in network and 
+    !((correctness_n . Node#snd) = ((correctness_n . Node#fst) . 
+      Node#fst)))) implies 
+  always (eventually ((correctness_n . (Node#snd)' ) = ((correctness_n . 
+    Node#fst) . Node#fst))));
+all correctness_n: Node, correctness_m: Node | 
+ always (eventually ((correctness_n + correctness_m) in network and 
+   (!((correctness_n . Node#prdc) in network) or 
+    (((correctness_n . Node#prdc) in (correctness_n . ^(~(Ord . 
+      Ord#Next))) implies 
+      ((correctness_n . Node#prdc) in (correctness_m . ^(~(Ord . 
+       Ord#Next))) and 
+       correctness_m in (correctness_n . ^(~(Ord . Ord#Next)
+       )))) and 
+     (!((correctness_n . Node#prdc) in (correctness_n . ^(~(Ord . 
+        Ord#Next)))) implies 
+      ((correctness_n . Node#prdc) in (correctness_m . ^(~(Ord . 
+       Ord#Next))) or 
+       correctness_m in (correctness_n . ^(~(Ord . Ord#Next)
+       )))))))) implies 
+ always (eventually ((correctness_n . (Node#prdc)' ) = correctness_m));
+some core;
+(all cycle_x: core, cycle_y: core | 
+  (cycle_x -> cycle_y) in Node#prdc iff 
+  (cycle_y -> cycle_x) in (Node#snd ++ Node#fst));
+Node#snd = (Node#fst . Node#fst);
+Node#fst in (core -> core);
+always (all correctness_arg1: Node, correctness_arg2: Node | 
+  (Dummy -> join -> correctness_arg1 -> correctness_arg2) in (
+  E . E#event) implies 
+  (no (correctness_arg1 . (Node#snd ++ Node#fst)) and 
+   no (correctness_arg1 . Node#prdc) and 
+   correctness_arg2 in network and 
+   (correctness_arg2 in ((correctness_arg2 . (Node#snd ++ Node#fst)) . 
+    ^(~(Ord . Ord#Next))) implies 
+    (correctness_arg2 in (correctness_arg1 . ^(~(Ord . 
+     Ord#Next))) and 
+     correctness_arg1 in ((correctness_arg2 . (Node#snd ++ Node#fst)
+     ) . ^(~(Ord . Ord#Next))))) and 
+   (!(correctness_arg2 in ((correctness_arg2 . (Node#snd ++ Node#fst
+      )) . ^(~(Ord . Ord#Next)))) implies 
+    (correctness_arg2 in (correctness_arg1 . ^(~(Ord . 
+     Ord#Next))) or 
+     correctness_arg1 in ((correctness_arg2 . (Node#snd ++ Node#fst)
+     ) . ^(~(Ord . Ord#Next))))) and 
+   (correctness_arg1 . (Node#fst)' ) = (correctness_arg2 . Node#fst) and 
+   (correctness_arg1 . (Node#snd)' ) = (correctness_arg2 . Node#snd) and 
+   (correctness_arg1 . (Node#prdc)' ) = correctness_arg2));
+always (all correctness_arg1: Node, correctness_arg2: Dummy | 
+  (Dummy -> fail -> correctness_arg1 -> correctness_arg2) in (
+  E . E#event) implies 
+  (correctness_arg1 in network and 
+   (all preFail_n: network | 
+     correctness_arg1 in (preFail_n . (Node#snd ++ Node#fst)) implies 
+     (((preFail_n . Node#fst) + (preFail_n . Node#snd)) - 
+     correctness_arg1) in network) and 
+   (correctness_arg1 . (Node#fst)' ) = none and 
+   (correctness_arg1 . (Node#snd)' ) = none and 
+   (correctness_arg1 . (Node#prdc)' ) = none));
+always (all correctness_arg1: Node, correctness_arg2: Dummy | 
+  (Dummy -> stabilizeNonMemberFst -> correctness_arg1 -> 
+  correctness_arg2) in (E . E#event) implies 
+  (correctness_arg1 in network and 
+   !((correctness_arg1 . Node#fst) in network) and 
+   (correctness_arg1 . (Node#fst)' ) = (correctness_arg1 . Node#snd) and 
+   (correctness_arg1 . (Node#snd)' ) = ((correctness_arg1 . Node#snd
+   ) . (Ord . Ord#Next))));
+always (all correctness_arg1: Node, correctness_arg2: Dummy | 
+  (Dummy -> stabilizeBetterFst -> correctness_arg1 -> 
+  correctness_arg2) in (E . E#event) implies 
+  (correctness_arg1 in network and 
+   some (((correctness_arg1 . Node#fst) . Node#prdc) & network
+   ) and 
+   (correctness_arg1 in ((correctness_arg1 . Node#fst) . ^(~(Ord . 
+    Ord#Next))) implies 
+    (correctness_arg1 in (((correctness_arg1 . Node#fst) . Node#prdc
+     ) . ^(~(Ord . Ord#Next))) and 
+     ((correctness_arg1 . Node#fst) . Node#prdc) in ((
+     correctness_arg1 . Node#fst) . ^(~(Ord . Ord#Next
+     ))))) and 
+   (!(correctness_arg1 in ((correctness_arg1 . Node#fst) . ^(~(
+      Ord . Ord#Next)))) implies 
+    (correctness_arg1 in (((correctness_arg1 . Node#fst) . Node#prdc
+     ) . ^(~(Ord . Ord#Next))) or 
+     ((correctness_arg1 . Node#fst) . Node#prdc) in ((
+     correctness_arg1 . Node#fst) . ^(~(Ord . Ord#Next
+     ))))) and 
+   (correctness_arg1 . (Node#fst)' ) = ((correctness_arg1 . Node#fst
+   ) . Node#prdc) and 
+   (correctness_arg1 . (Node#snd)' ) = (((correctness_arg1 . 
+   Node#fst) . Node#prdc) . Node#fst)));
+always (all correctness_arg1: Node, correctness_arg2: Dummy | 
+  (Dummy -> stabilizeSnd -> correctness_arg1 -> correctness_arg2) in 
+  (E . E#event) implies 
+  (correctness_arg1 in network and 
+   !((correctness_arg1 . Node#snd) = ((correctness_arg1 . Node#fst) . 
+     Node#fst)) and 
+   (correctness_arg1 . (Node#snd)' ) = ((correctness_arg1 . Node#fst
+   ) . Node#fst)));
+always (all correctness_arg1: Node, correctness_arg2: Node | 
+  (Dummy -> rectify -> correctness_arg1 -> correctness_arg2) in (
+  E . E#event) implies 
+  ((correctness_arg1 + correctness_arg2) in network and 
+   (!((correctness_arg1 . Node#prdc) in network) or 
+    (((correctness_arg1 . Node#prdc) in (correctness_arg1 . ^(~(
+      Ord . Ord#Next))) implies 
+      ((correctness_arg1 . Node#prdc) in (correctness_arg2 . ^(~(
+       Ord . Ord#Next))) and 
+       correctness_arg2 in (correctness_arg1 . ^(~(Ord . 
+       Ord#Next))))) and 
+     (!((correctness_arg1 . Node#prdc) in (correctness_arg1 . ^(~(
+        Ord . Ord#Next)))) implies 
+      ((correctness_arg1 . Node#prdc) in (correctness_arg2 . ^(~(
+       Ord . Ord#Next))) or 
+       correctness_arg2 in (correctness_arg1 . ^(~(Ord . 
+       Ord#Next))))))) and 
+   (correctness_arg1 . (Node#prdc)' ) = correctness_arg2));
+always (all correctness_arg1: Dummy, correctness_arg2: Dummy | 
+  (Dummy -> skip -> correctness_arg1 -> correctness_arg2) in (
+  E . E#event) implies 
+  (true and 
+   true));
+always (all correctness_n: Node | 
+  !((correctness_n . (Node#fst)' ) = (correctness_n . Node#fst)) implies 
+  ((some correctness_n2: Node | 
+     (Dummy -> join -> correctness_n -> correctness_n2) in (E . 
+     E#event)) or 
+   (Dummy -> fail -> correctness_n -> Dummy) in (E . 
+   E#event) or 
+   (Dummy -> stabilizeBetterFst -> correctness_n -> Dummy) in 
+   (E . E#event) or 
+   (Dummy -> stabilizeNonMemberFst -> correctness_n -> Dummy) in 
+   (E . E#event)));
+always (all correctness_n: Node | 
+  !((correctness_n . (Node#snd)' ) = (correctness_n . Node#snd)) implies 
+  ((some correctness_n2: Node | 
+     (Dummy -> join -> correctness_n -> correctness_n2) in (E . 
+     E#event)) or 
+   (Dummy -> fail -> correctness_n -> Dummy) in (E . 
+   E#event) or 
+   (Dummy -> stabilizeBetterFst -> correctness_n -> Dummy) in 
+   (E . E#event) or 
+   (Dummy -> stabilizeSnd -> correctness_n -> Dummy) in (
+   E . E#event) or 
+   (Dummy -> stabilizeNonMemberFst -> correctness_n -> Dummy) in 
+   (E . E#event)));
+always (all correctness_n: Node | 
+  !((correctness_n . (Node#prdc)' ) = (correctness_n . Node#prdc)) implies 
+  ((some correctness_n2: Node | 
+     (Dummy -> join -> correctness_n -> correctness_n2) in (E . 
+     E#event)) or 
+   (Dummy -> fail -> correctness_n -> Dummy) in (E . 
+   E#event) or 
+   (some correctness_n2: Node | 
+     (Dummy -> rectify -> correctness_n -> correctness_n2) in (
+     E . E#event))));
+!(eventually (always (!(({happen_a: join + fail + rectify + 
+      stabilizeNonMemberFst + stabilizeBetterFst + 
+      stabilizeSnd + skip | some happen_arg1: Node + 
+      Dummy, happen_arg2: Node + Dummy | 
+       (Dummy -> happen_a -> happen_arg1 -> happen_arg2) in (E . 
+       E#event)}) in (join + fail)))) implies 
+  eventually (always (some core and 
+    (all cycle_x: core, cycle_y: core | 
+      (cycle_x -> cycle_y) in Node#prdc iff 
+      (cycle_y -> cycle_x) in (Node#snd ++ Node#fst)) and 
+    Node#snd = (Node#fst . Node#fst) and 
+    Node#fst in (core -> core) and 
+    no (network - core))));

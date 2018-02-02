@@ -1,0 +1,100 @@
+univ : { Key0 Key1 Key2 Room0 Room1 Room2 Guest0 Guest1 Guest2 };
+
+const Room#keys :2 { ( Room2 Key0 ) ( Room2 Key1 ) ( Room2 Key2 ) };
+const ordering##Ord#First :1 { ( Key0 ) };
+const Key :1 { ( Key0 ) ( Key1 ) ( Key2 ) };
+const ordering##Ord#Last :1 { ( Key2 ) };
+const ordering##Ord#Next :2 { ( Key0 Key1 ) ( Key1 Key2 ) };
+const Guest :1 { };
+const Room :1 { ( Room2 ) };
+var Room#currentKey :2 { } { ( Room0 Key0 ) ( Room0 Key1 ) ( Room0 Key2 ) ( Room1 Key0 ) ( Room1 Key1 ) ( Room1 Key2 ) ( Room2 Key0 ) ( Room2 Key1 ) ( Room2 Key2 ) };
+var Guest#gkeys :2 { } { ( Guest0 Key0 ) ( Guest0 Key1 ) ( Guest0 Key2 ) ( Guest1 Key0 ) ( Guest1 Key1 ) ( Guest1 Key2 ) ( Guest2 Key0 ) ( Guest2 Key1 ) ( Guest2 Key2 ) };
+var FrontDesk#occupant :2 { } { ( Room0 Guest0 ) ( Room0 Guest1 ) ( Room0 Guest2 ) ( Room1 Guest0 ) ( Room1 Guest1 ) ( Room1 Guest2 ) ( Room2 Guest0 ) ( Room2 Guest1 ) ( Room2 Guest2 ) };
+var FrontDesk#lastKey :2 { } { ( Room0 Key0 ) ( Room0 Key1 ) ( Room0 Key2 ) ( Room1 Key0 ) ( Room1 Key1 ) ( Room1 Key2 ) ( Room2 Key0 ) ( Room2 Key1 ) ( Room2 Key2 ) };
+ints :1 { };
+
+inst
+Room#keys = { ( Room2 Key0 ) ( Room2 Key1 ) ( Room2 Key2 ) };
+ordering##Ord#First = { ( Key0 ) };
+Key = { ( Key0 ) ( Key1 ) ( Key2 ) };
+ordering##Ord#Last = { ( Key2 ) };
+ordering##Ord#Next = { ( Key0 Key1 ) ( Key1 Key2 ) };
+Guest = { };
+Room = { ( Room2 ) };
+
+sym
+[ FrontDesk#lastKey Room0 Key0 ][ FrontDesk#lastKey Room0 Key1 ][ FrontDesk#lastKey Room0 Key2 ][ FrontDesk#occupant Room0 Guest0 ][ FrontDesk#occupant Room0 Guest1 ][ FrontDesk#occupant Room0 Guest2 ][ Room#currentKey Room0 Key0 ][ Room#currentKey Room0 Key1 ][ Room#currentKey Room0 Key2 ] <= [ FrontDesk#lastKey Room1 Key0 ][ FrontDesk#lastKey Room1 Key1 ][ FrontDesk#lastKey Room1 Key2 ][ FrontDesk#occupant Room1 Guest0 ][ FrontDesk#occupant Room1 Guest1 ][ FrontDesk#occupant Room1 Guest2 ][ Room#currentKey Room1 Key0 ][ Room#currentKey Room1 Key1 ][ Room#currentKey Room1 Key2 ];
+[ FrontDesk#lastKey Room1 Key0 ][ FrontDesk#lastKey Room1 Key1 ][ FrontDesk#lastKey Room1 Key2 ][ FrontDesk#occupant Room1 Guest0 ][ FrontDesk#occupant Room1 Guest1 ][ FrontDesk#occupant Room1 Guest2 ][ Room#currentKey Room1 Key0 ][ Room#currentKey Room1 Key1 ][ Room#currentKey Room1 Key2 ] <= [ FrontDesk#lastKey Room2 Key0 ][ FrontDesk#lastKey Room2 Key1 ][ FrontDesk#lastKey Room2 Key2 ][ FrontDesk#occupant Room2 Guest0 ][ FrontDesk#occupant Room2 Guest1 ][ FrontDesk#occupant Room2 Guest2 ][ Room#currentKey Room2 Key0 ][ Room#currentKey Room2 Key1 ][ Room#currentKey Room2 Key2 ];
+[ FrontDesk#occupant Room0 Guest0 ][ FrontDesk#occupant Room1 Guest0 ][ FrontDesk#occupant Room2 Guest0 ][ Guest#gkeys Guest0 Key0 ][ Guest#gkeys Guest0 Key1 ][ Guest#gkeys Guest0 Key2 ] <= [ FrontDesk#occupant Room0 Guest1 ][ FrontDesk#occupant Room1 Guest1 ][ FrontDesk#occupant Room2 Guest1 ][ Guest#gkeys Guest1 Key0 ][ Guest#gkeys Guest1 Key1 ][ Guest#gkeys Guest1 Key2 ];
+[ FrontDesk#occupant Room0 Guest1 ][ FrontDesk#occupant Room1 Guest1 ][ FrontDesk#occupant Room2 Guest1 ][ Guest#gkeys Guest1 Key0 ][ Guest#gkeys Guest1 Key1 ][ Guest#gkeys Guest1 Key2 ] <= [ FrontDesk#occupant Room0 Guest2 ][ FrontDesk#occupant Room1 Guest2 ][ FrontDesk#occupant Room2 Guest2 ][ Guest#gkeys Guest2 Key0 ][ Guest#gkeys Guest2 Key1 ][ Guest#gkeys Guest2 Key2 ];
+[ FrontDesk#lastKey Room0 Key0 ][ FrontDesk#lastKey Room1 Key0 ][ FrontDesk#lastKey Room2 Key0 ][ Guest#gkeys Guest0 Key0 ][ Guest#gkeys Guest1 Key0 ][ Guest#gkeys Guest2 Key0 ][ Room#currentKey Room0 Key0 ][ Room#currentKey Room1 Key0 ][ Room#currentKey Room2 Key0 ] <= [ FrontDesk#lastKey Room0 Key1 ][ FrontDesk#lastKey Room1 Key1 ][ FrontDesk#lastKey Room2 Key1 ][ Guest#gkeys Guest0 Key1 ][ Guest#gkeys Guest1 Key1 ][ Guest#gkeys Guest2 Key1 ][ Room#currentKey Room0 Key1 ][ Room#currentKey Room1 Key1 ][ Room#currentKey Room2 Key1 ];
+[ FrontDesk#lastKey Room0 Key1 ][ FrontDesk#lastKey Room1 Key1 ][ FrontDesk#lastKey Room2 Key1 ][ Guest#gkeys Guest0 Key1 ][ Guest#gkeys Guest1 Key1 ][ Guest#gkeys Guest2 Key1 ][ Room#currentKey Room0 Key1 ][ Room#currentKey Room1 Key1 ][ Room#currentKey Room2 Key1 ] <= [ FrontDesk#lastKey Room0 Key2 ][ FrontDesk#lastKey Room1 Key2 ][ FrontDesk#lastKey Room2 Key2 ][ Guest#gkeys Guest0 Key2 ][ Guest#gkeys Guest1 Key2 ][ Guest#gkeys Guest2 Key2 ][ Room#currentKey Room0 Key2 ][ Room#currentKey Room1 Key2 ][ Room#currentKey Room2 Key2 ];
+
+sat
+Room#keys in (Room -> Key);
+one ordering##Ord#First;
+one ordering##Ord#Last;
+ordering##Ord#Last in Key;
+Key = (ordering##Ord#First . *ordering##Ord#Next);
+no (ordering##Ord#Next . ordering##Ord#First);
+no (ordering##Ord#Last . ordering##Ord#Next);
+(all eordering##Ord#Next: Key - ordering##Ord#Last | 
+  one (eordering##Ord#Next . ordering##Ord#Next));
+(all v5: Key | 
+  one (Room#keys . v5));
+Guest = Guest;
+(all v5: Room | 
+  some (v5 . Room#keys));
+always (FrontDesk#lastKey in (Room -> Key));
+always (FrontDesk#occupant in (Room -> Guest));
+always (Guest#gkeys in (Guest -> Key));
+always (Room#currentKey in (Room -> Key));
+always (all r: Room | 
+ lone (r . FrontDesk#lastKey) and 
+ one (r . Room#currentKey) and 
+ (r . Room#currentKey) in (r . Room#keys));
+(all r: Room | 
+  (r . FrontDesk#lastKey) = (r . Room#currentKey));
+no (Guest . Guest#gkeys);
+no FrontDesk#occupant;
+always (some g: Guest, r: Room, k: Key | 
+ k in (g . Guest#gkeys) and 
+ (k = (r . Room#currentKey) or 
+  k = ((((r . Room#currentKey) . ^ordering##Ord#Next) & (r . Room#keys)) - ((((r . 
+  Room#currentKey) . ^ordering##Ord#Next) & (r . Room#keys)) . ^
+  ordering##Ord#Next))) and 
+ Guest#gkeys = (Guest#gkeys)'  and 
+ FrontDesk#lastKey = (FrontDesk#lastKey)'  and 
+ (all r1: Room - r | 
+   (r1 . Room#currentKey) = (r1 . (Room#currentKey)' )) and 
+ FrontDesk#occupant = (FrontDesk#occupant)'  and 
+ (r . (Room#currentKey)' ) = k or 
+ (some (FrontDesk#occupant . g) and 
+  (FrontDesk#occupant)'  = (FrontDesk#occupant - (Room -> g)) and 
+  Room#currentKey = (Room#currentKey)'  and 
+  Guest#gkeys = (Guest#gkeys)'  and 
+  FrontDesk#lastKey = (FrontDesk#lastKey)' ) or 
+ (g . (Guest#gkeys)' ) = ((g . Guest#gkeys) + k) and 
+ no (r . FrontDesk#occupant) and 
+ (FrontDesk#lastKey)'  = (FrontDesk#lastKey ++ (r -> k)) and 
+ k = ((((r . FrontDesk#lastKey) . ^ordering##Ord#Next) & (r . Room#keys)) - ((((
+ r . FrontDesk#lastKey) . ^ordering##Ord#Next) & (r . Room#keys)) . ^
+ ordering##Ord#Next)) and 
+ (FrontDesk#occupant)'  = (FrontDesk#occupant + (r -> g)) and 
+ Room#currentKey = (Room#currentKey)'  and 
+ (all g1: Guest - g | 
+   (g1 . Guest#gkeys) = (g1 . (Guest#gkeys)' )));
+!(always (all r: Room, g: Guest, k: Key | 
+   (k in (g . Guest#gkeys) and 
+    (k = (r . Room#currentKey) or 
+     k = ((((r . Room#currentKey) . ^ordering##Ord#Next) & (r . Room#keys)) - ((
+     ((r . Room#currentKey) . ^ordering##Ord#Next) & (r . Room#keys)) . ^
+     ordering##Ord#Next))) and 
+    Guest#gkeys = (Guest#gkeys)'  and 
+    FrontDesk#lastKey = (FrontDesk#lastKey)'  and 
+    (all r1: Room - r | 
+      (r1 . Room#currentKey) = (r1 . (Room#currentKey)' )) and 
+    FrontDesk#occupant = (FrontDesk#occupant)'  and 
+    (r . (Room#currentKey)' ) = k and 
+    some (r . FrontDesk#occupant)) implies 
+   g in (r . FrontDesk#occupant)));

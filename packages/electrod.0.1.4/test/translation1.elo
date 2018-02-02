@@ -1,0 +1,35 @@
+univ : { a b c d e f g h };
+
+const exact : { a b c d};
+
+const inexact1 : {} { a};
+
+const inexact2 : { a b } { a b c d };
+
+const r : { (a b) } { (a b) (a c) (b d)}
+
+invariant
+
+no exact;
+
+lone exact;
+
+one exact;
+
+some exact;
+
+
+no inexact1;
+
+one inexact1;
+
+lone inexact1;
+
+some inexact1;
+
+(some one0 : inexact1 {({true} and (all one1 : inexact1 {((true and true) implies (((one0 = one1) and true) and true))}))});
+
+all x : inexact2 | x.r in inexact2;
+
+run
+some ^r;

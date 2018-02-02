@@ -1,0 +1,23 @@
+
+
+univ : { a b c };
+
+const ra : {a};
+const rb : {b};
+const rc : {c};
+var r : {} { (a b) (b c)};
+
+run
+
+always all x:univ, y: x.(^r) | x = y;
+
+always r in r;
+
+always some x: ra | x.r = rb ;
+
+(*sometime (r in rb->rc); *)
+always  (r = ra -> rb) ;
+
+(*ra in rb.r and ra in rc.r and rb in rc.r
+*)
+

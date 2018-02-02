@@ -1,0 +1,16 @@
+univ : { a b c d e };
+
+const s : {a} {a b c};
+
+const r : { (a a) (a b)} { (a a) (a b) (b c) (b e)};
+
+run
+{
+all disj x, y : s | let s = s.^r {
+		x + s in univ
+};
+---
+let s = s.^r | all disj x, y : s {
+		x + s in univ
+};
+}

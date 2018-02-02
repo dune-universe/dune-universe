@@ -1,0 +1,7 @@
+univ : { a b c  e$2 .. e$4 };
+const r : univ; 
+const t : { (a a) (a b) (c e$2)} (univ -> (univ + r));
+const foo : { a b } {a b c}; 	 
+var u : {} foo;  
+run
+one x : t | true

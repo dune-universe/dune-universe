@@ -1,0 +1,54 @@
+univ : {a a1 a2 a3};
+
+var rel : {} { a1 a2 a3 };
+
+const e1 : { a1};
+const e2 : { a2};
+const e3 : { a3};
+
+var s : { } {a };
+
+var r : {} { a1 a2 a3};
+
+run
+
+-- right assoc
+always { e1 in rel implies e2 in rel implies some s };
+
+-- and binds tighter than else so:
+always { e1 in rel implies no s else e2 in rel and some s };
+-- <=>
+always { e1 in rel implies no s else (e2 in rel and some s) };
+--<=/=>
+always { (e1 in rel implies no s else e2 in rel) and some s };
+
+-- else binds tighter than iff so:
+always { e1 in rel implies no s else e2 in rel iff some s };
+-- <=>
+always { (e1 in rel implies no s else e2 in rel) iff some s };
+--<=/=>
+always { e1 in rel implies no s else (e2 in rel iff some s) };
+
+-- else: it depends on the relative precedence with implies.
+-- if same prec then:
+always { e1 in rel implies no s else e2 in rel implies some s };
+-- <=>
+always { e1 in rel implies no s else (e2 in rel implies some s) };
+--<=/=>
+always { (e1 in rel implies no s else e2 in rel) implies some s };
+
+-- hence this is the same:
+always {e1 in rel implies no s else e2 in rel implies some s else e3 in rel implies some s  };
+always {e1 in rel implies no s else (e2 in rel implies some s else (e3 in rel implies (some s)))  };
+
+
+
+-- further tests
+always {
+             rel = e1 => e1 in r' else
+             rel = e2 => e2 in r' else
+             rel = e3 => e3 in r';
+};
+
+
+sometime some s
