@@ -1,0 +1,12 @@
+.*.swp
+.*.swo
+_build
+*.native
+.session
+TAGS
+*.docdir
+man
+qcheck.install
+*.tar.gz
+*.byte
+.merlin

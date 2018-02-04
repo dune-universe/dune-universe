@@ -1,0 +1,9 @@
+#directory "_build/src";;
+#use "topfind";;
+#require "oUnit";;
+#require "unix";;
+#require "bytes";;
+#load "qcheck.cma";;
+open QCheck;;
+(* vim: syntax=ocaml:
+*)
