@@ -1,0 +1,6 @@
+(library
+ ((name json_derivers)
+  (public_name json-derivers)
+  (flags (-open Base))
+  (libraries (base))
+  (lint (pps (ppx_compare ppx_hash ppx_sexp_conv ppx_driver.runner)))))
