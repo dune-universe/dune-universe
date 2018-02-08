@@ -1,0 +1,22 @@
+#								-*-conf-*-
+[gammu]
+device = /dev/ttyUSB0
+connection = at 
+logformat = textall
+logfile = gammu.log
+
+# gammurc with dummy phone driver for testing purposes.
+# In order to use the dummy driver, make sure to create a folder the same name
+# as the device ("dummy_phone" here), in the cwd where you'll start the test.
+# e.g (unix) : in ml-gammu root :
+# mkdir dummy_phone
+# ./tests/demo_infos.exe --gammurc tests/gammurc --section 42
+[gammu42]
+model = dummy
+connection = none
+device = dummy_phone
+# "device" is an alias for "port" only since 1.27.95.
+# Uncomment the following line if you're using a version prior to 1.27.95.
+# port = dummy_phone
+logformat = textall
+logfile = gammu.log

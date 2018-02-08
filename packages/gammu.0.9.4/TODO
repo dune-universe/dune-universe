@@ -1,0 +1,13 @@
+- Handle SMS sending.
+- Make ml-gammu feature complete.
+- Check for ocamlfind presence.
+- Add INSTALL.
+- Rewrite not used code in comment in UNUSED macro.
+- Put static prototypes out of the header file.
+
+Write tests for :
+=================
+  - Add/Set SMS.
+  - Delete SMS.
+  - Exceptions (bad get/set sms locations...).
+  - Handling of different encodings.

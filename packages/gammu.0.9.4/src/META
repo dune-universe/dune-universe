@@ -1,0 +1,11 @@
+# OASIS_START
+# DO NOT EDIT (digest: 979ec1e515e07dcf388bd239b5e73d77)
+version = "0.9"
+description = "Cell phone and SIM card access."
+archive(byte) = "gammu.cma"
+archive(byte, plugin) = "gammu.cma"
+archive(native) = "gammu.cmxa"
+archive(native, plugin) = "gammu.cmxs"
+exists_if = "gammu.cma"
+# OASIS_STOP
+

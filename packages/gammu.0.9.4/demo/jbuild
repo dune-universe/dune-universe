@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executables
+ ((names        (incoming_events infos readallsms read1sms sms_to_email))
+  (libraries    (gammu unix))))
+
+(alias
+ ((name demo)
+  (deps (incoming_events.exe infos.exe readallsms.exe read1sms.exe
+         sms_to_email.exe))))

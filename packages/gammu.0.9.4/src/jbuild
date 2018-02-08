@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library
+ ((name        gammu)
+  (public_name gammu)
+  (synopsis  "Cell phone and SIM card access")
+  (c_names (gammu_stubs))
+  (c_flags ((:include c_flags.sexp)
+            -O3 -fPIC -DPIC))
+  (c_library_flags (:include c_library_flags.sexp))))
+
+(rule
+ ((targets (c_flags.sexp c_library_flags.sexp))
+  (deps    (../config/discover.exe))
+  (action  (run ${<} -ocamlc ${OCAMLC}))))
