@@ -1,0 +1,20 @@
+opam-version: "1.2"
+version: "0.2"
+maintainer: "Didier Wenzek <didier.wenzek@acidalie.com>"
+authors: ["Didier Wenzek <didier.wenzek@acidalie.com>"]
+homepage: "https://github.com/didier-wenzek/ocaml-kyotocabinet"
+bug-reports: "https://github.com/didier-wenzek/ocaml-kyotocabinet/issues"
+dev-repo: "https://github.com/didier-wenzek/ocaml-kyotocabinet.git"
+license: "GPL"
+build: [["jbuilder" "build" "-p" name "-j" jobs]]
+build-test: [ "jbuilder" "runtest" "-p" name ]
+depends: [
+  "jbuilder" {build}
+]
+depexts: [
+  [[ "ubuntu"] ["libkyotocabinet-dev"]]
+  [[ "debian"] ["libkyotocabinet-dev"]]
+  [[ "fedora"] ["kyotocabinet-devel"]]
+  [[ "osx" "homebrew"] ["kyoto-cabinet"]]
+  [[ "osx" "macports"] ["kyotocabinet"]]
+]

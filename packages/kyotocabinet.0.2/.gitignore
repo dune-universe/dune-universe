@@ -11,3 +11,4 @@
 *.exe
 _build
 .merlin
+*.install

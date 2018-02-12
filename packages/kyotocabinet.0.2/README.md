@@ -12,9 +12,19 @@ GNU General Public License.
 
 Install
 -------
-    $ make         # use jbuilder
-    $ make test
-    $ make install
+
+Using OPAM:
+```sh
+$ opam install kyotocabinet
+```
+
+Or from source:
+
+```sh
+$ make         # use jbuilder
+$ make test
+$ make install
+```
 
 Documentation
 ----------
