@@ -1,0 +1,93 @@
+(jbuild_version 1)
+
+(library
+ ((name caqti)
+  (public_name caqti)
+  (wrapped false)
+  (modules
+   (Caqti_connect
+    Caqti_connect_sig
+    Caqti_connection_sig
+    Caqti_driver_lib
+    Caqti_driver_info
+    Caqti_error
+    Caqti_driver_sig
+    Caqti_driver_info
+    Caqti_mult
+    Caqti_pool
+    Caqti_pool_sig
+    Caqti_request
+    Caqti_response_sig
+    Caqti_sql
+    Caqti_sql_io
+    Caqti_system_sig
+    Caqti_type
+    ; internal
+    Caqti_heap
+    Caqti_prereq))
+  (library_flags (:standard -linkall))
+  (libraries (ptime uri))))
+
+(rule
+ ((targets (caqti_connect_sig.ml))
+  (deps (caqti_connect_sig.mli))
+  (action (copy ${<} ${@}))))
+
+(rule
+ ((targets (caqti_connection_sig.ml))
+  (deps (caqti_connection_sig.mli))
+  (action (copy ${<} ${@}))))
+
+(rule
+ ((targets (caqti_response_sig.ml))
+  (deps (caqti_response_sig.mli))
+  (action (copy ${<} ${@}))))
+
+(rule
+ ((targets (caqti_driver_sig.ml))
+  (deps (caqti_driver_sig.mli))
+  (action (copy ${<} ${@}))))
+(rule
+ ((targets (caqti_pool_sig.ml))
+  (deps (caqti_pool_sig.mli))
+  (action (copy ${<} ${@}))))
+(rule
+ ((targets (caqti_system_sig.ml))
+  (deps (caqti_system_sig.mli))
+  (action (copy ${<} ${@}))))
+
+; API v1. Not to be used for new code.
+(library
+ ((name caqti_v1)
+  (public_name caqti.v1)
+  (wrapped false)
+  (modules
+   (Caqti1_connect
+    Caqti1_driver_sig
+    Caqti1_describe
+    Caqti1_errors
+    Caqti1_pool
+    Caqti1_pool_sig
+    Caqti1_query
+    Caqti1_system_sig
+    Caqti1_sigs
+    ; internal
+    Caqti1_plugin))
+  (library_flags (:standard -linkall))
+  (libraries (calendar caqti))))
+(rule
+ ((targets (caqti1_driver_sig.ml))
+  (deps (caqti1_driver_sig.mli))
+  (action (copy ${<} ${@}))))
+(rule
+ ((targets (caqti1_pool_sig.ml))
+  (deps (caqti1_pool_sig.mli))
+  (action (copy ${<} ${@}))))
+(rule
+ ((targets (caqti1_sigs.ml))
+  (deps (caqti1_sigs.mli))
+  (action (copy ${<} ${@}))))
+(rule
+ ((targets (caqti1_system_sig.ml))
+  (deps (caqti1_system_sig.mli))
+  (action (copy ${<} ${@}))))
