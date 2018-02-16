@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library
+ ((name TrailDB)
+  (public_name traildb)
+  (libraries (uuidm))
+  (c_names (ocaml_traildb))
+  (c_library_flags (-ltraildb))))

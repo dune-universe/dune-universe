@@ -1,0 +1,18 @@
+opam-version: "1.2"
+version: "0.1"
+maintainer: "Didier Wenzek <didier.wenzek@acidalie.com>"
+authors: ["Didier Wenzek <didier.wenzek@acidalie.com>"]
+homepage: "https://github.com/didier-wenzek/ocaml-traildb"
+bug-reports: "https://github.com/didier-wenzek/ocaml-traildb/issues"
+dev-repo: "https://github.com/didier-wenzek/ocaml-traildb.git"
+license: "MIT"
+build: [["jbuilder" "build" "-p" name "-j" jobs]]
+build-test: [["jbuilder" "runtest" "-j" jobs]]
+depends: [
+  "uuidm"
+  "jbuilder" {build}
+  "oUnit"  {test}
+]
+depexts: [
+  [[ "debian"] ["libtraildb-dev"]]
+]

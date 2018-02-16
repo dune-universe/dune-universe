@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name        orandforest)
+  (public_name orandforest)
+  (libraries (oc45 parmap))))
