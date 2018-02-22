@@ -85,13 +85,14 @@ let rec main_loop connection_info kernel =
     >>= function
     | C.Run_stop ->
       Log.log "Done.\n";
-      Lwt.return_unit
+      Sockets.close_sockets sockets
     | C.Run_restart ->
-      main_loop connection_info kernel
+      Log.log "Done (restart).\n";
+      Sockets.close_sockets sockets
   with e ->
     Log.log (Printf.sprintf "Exception: %s\n" (Printexc.to_string e));
     Log.log "Dying.\n";
-    exit 0
+    Lwt.fail Exit
 
 let main ?(args=[]) ~usage kernel =
   let args = mk_args ~args () in
@@ -102,4 +103,5 @@ let main ?(args=[]) ~usage kernel =
   let connection_info = mk_connection_info () in
   let%lwt() = Lwt_io.printf "Starting kernel for `%s`\n" kernel.C.Kernel.language in
   Log.log "start main...\n";
-  main_loop connection_info kernel
+  main_loop connection_info kernel >|= fun () ->
+  Log.log "client_main: exiting\n"

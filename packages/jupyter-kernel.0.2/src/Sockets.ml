@@ -26,6 +26,10 @@ let open_socket typ conn port =
   Log.log ("open and bind socket " ^ addr ^ "\n");
   Lwt_zmq.Socket.of_socket socket
 
+let close_socket s =
+  let s = Lwt_zmq.Socket.to_socket s in
+  ZMQ.Socket.close s
+
 type t = {
   shell : [`Router] Lwt_zmq.Socket.t;
   control : [`Router] Lwt_zmq.Socket.t;
@@ -43,6 +47,14 @@ let open_sockets conn =
     iopub = open_socket ZMQ.Socket.pub conn conn.iopub_port;
     heartbeat = open_socket ZMQ.Socket.rep conn conn.hb_port;
   }
+
+let close_sockets (t:t) : unit Lwt.t =
+  close_socket t.shell;
+  close_socket t.control;
+  close_socket t.stdin;
+  close_socket t.iopub;
+  close_socket t.heartbeat;
+  Lwt.return_unit
 
 let heartbeat (t:t) =
   Log.log "listening for hearbeat requests\n";

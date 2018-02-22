@@ -3,6 +3,7 @@
 
 (** {1 Main Kernel Loop} *)
 
+open Result
 open Lwt.Infix
 open Protocol_j
 
@@ -12,7 +13,7 @@ exception Restart
 
 (** {2 Prelude} *)
 
-type 'a or_error = ('a, string) Result.result
+type 'a or_error = ('a, string) result
 
 type json = Yojson.Safe.json
 
@@ -84,12 +85,13 @@ module Kernel = struct
       ?(file_extension=".txt")
       ?mime_type
       ?(init=fun () -> Lwt.return_unit)
+      ?(is_complete=fun _ -> Lwt.return Is_complete)
+      ?(complete=fun ~pos i->
+        Lwt.return {completion_matches=[]; completion_start=pos;completion_end=pos})
+      ?(inspect=fun _ -> Lwt.return (Error "no inspection implemented"))
+      ?(history=fun _ -> Lwt.return [])
       ~language_version
       ~language
-      ~is_complete
-      ~complete
-      ~inspect
-      ~history
       ~exec
       () : t =
     { banner; file_extension; mime_type; language; language_version;
@@ -229,7 +231,7 @@ let execute_request (t:t) ~parent e : unit Lwt.t =
     | Kernel.Mime l -> send_iopub t ~parent (Iopub_send_mime l)
   in
   let%lwt () = match status with
-    | Result.Ok ok ->
+    | Ok ok ->
       let%lwt () =
         send_shell t ~parent
           (M.Execute_reply {
@@ -242,7 +244,7 @@ let execute_request (t:t) ~parent e : unit Lwt.t =
       let%lwt _ = reply_status_ok ok.Kernel.msg in
       (* send mime type in the background *)
       Lwt_list.iter_p side_action ok.Kernel.actions
-    | Result.Error err_msg ->
+    | Error err_msg ->
       let content =
         M.Execute_reply {
             status = "error";
@@ -294,7 +296,11 @@ let kernel_info_request (t:t) ~parent =
 let shutdown_request (t:t) ~parent (r:shutdown) : 'a Lwt.t =
   Log.log "received shutdown request...\n";
   let%lwt () =
-    send_shell t ~parent (M.Shutdown_reply r)
+    Lwt.catch
+      (fun () -> send_shell t ~parent (M.Shutdown_reply r))
+      (fun e ->
+         Log.logf "exn %s when replying to shutdown request" (Printexc.to_string e);
+         Lwt.return_unit)
   in
   Lwt.fail (if r.restart then Restart else Exit)
 
@@ -324,7 +330,7 @@ let is_complete_request t ~parent (r:is_complete_request): unit Lwt.t =
 let inspect_request (t:t) ~parent (r:Kernel.inspect_request) =
   let%lwt res = t.kernel.Kernel.inspect r in
   let content = match res with
-    | Result.Ok r ->
+    | Ok r ->
       {
         ir_status = "ok";
         ir_found = Some r.Kernel.iro_found;
@@ -332,7 +338,7 @@ let inspect_request (t:t) ~parent (r:Kernel.inspect_request) =
         ir_metadata=None; (* TODO *)
         ir_ename =None; ir_evalue=None; ir_traceback=None;
       }
-    | Result.Error err_msg ->
+    | Error err_msg ->
       {
         ir_status = "error";
         ir_found=None; ir_data=None; ir_metadata=None;
@@ -408,17 +414,21 @@ let run (t:t) : run_result Lwt.t =
     end
   in
   let rec run () =
-    try%lwt
-      handle_message() >>= run
-    with
-      | Sys.Break ->
-        Log.log "Sys.Break\n";
-        run ()
-      | Restart ->
-        Log.log "Restart\n";
-        Lwt.return Run_restart
-      | Exit ->
-        Log.log "Exiting, as requested\n";
-        Lwt.return Run_stop
+    begin
+      try%lwt
+        handle_message() >|= fun _ -> Ok ()
+      with
+        | Sys.Break ->
+          Log.log "Sys.Break\n";
+          Lwt.return_ok ()
+        | Restart ->
+          Log.log "Restart\n";
+          Lwt.return_error Run_restart
+        | Exit ->
+          Log.log "Exiting, as requested\n";
+          Lwt.return_error Run_stop
+    end >>= function
+    | Ok () -> run()
+    | Error e -> Lwt.return e
   in
   Lwt.pick [run (); heartbeat]

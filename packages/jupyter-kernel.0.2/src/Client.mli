@@ -21,6 +21,12 @@ module Kernel : sig
   type exec_action =
     | Mime of mime_data_bundle
 
+  (* TODO:
+     make the [exec] return type be asynchronous
+     - return [Ok str] as a future
+     - return a stream of actions
+  *)
+
   type exec_status_ok = {
     msg: string option;
     (* main message *)
@@ -75,12 +81,12 @@ module Kernel : sig
     ?file_extension:string ->
     ?mime_type:string ->
     ?init:(unit -> unit Lwt.t) ->
+    ?is_complete:(string -> is_complete_reply Lwt.t) ->
+    ?complete:(pos:int -> string -> completion_status Lwt.t) ->
+    ?inspect: (inspect_request -> inspect_reply_ok or_error Lwt.t) ->
+    ?history:(history_request -> string list Lwt.t) ->
     language_version:int list ->
     language:string ->
-    is_complete:(string -> is_complete_reply Lwt.t) ->
-    complete:(pos:int -> string -> completion_status Lwt.t) ->
-    inspect: (inspect_request -> inspect_reply_ok or_error Lwt.t) ->
-    history:(history_request -> string list Lwt.t) ->
     exec:(count:int -> string -> exec_status_ok or_error Lwt.t) ->
     unit ->
     t

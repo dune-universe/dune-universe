@@ -22,6 +22,8 @@ type t = {
 
 val open_sockets : Protocol_t.connection_info -> t
 
+val close_sockets : t -> unit Lwt.t
+
 val heartbeat : t -> unit Lwt.t
 
 val dump : string -> [`Router] Lwt_zmq.Socket.t -> unit Lwt.t
