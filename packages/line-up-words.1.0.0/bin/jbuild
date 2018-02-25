@@ -1,0 +1,7 @@
+(executables
+ ((names (line_up_words))
+  (public_names (line-up-words))
+  (libraries (core line_up_words_lib))
+  (preprocess (pps (ppx_jane ppx_driver.runner)))))
+
+(jbuild_version 1)
