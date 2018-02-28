@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------
+(*----------------------------------------------------------------------------
     Copyright (c) 2017 Inhabited Type LLC.
 
     All rights reserved.
@@ -29,22 +29,25 @@
     STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
-  ----------------------------------------------------------------------------*/
+  ----------------------------------------------------------------------------*)
 
-function angstrom_bigstring_blit_to_bytes(src, src_off, dst, dst_off, len) {
-  for (var i = 0; i < len; i++) {
-    string_unsafe_set(dst, dst_off + i, caml_ba_unsafe_ref_1(src, src_off + i));
-  }
-}
+type t
 
-function angstrom_bigstring_blit_to_bigstring(src, src_off, dst, dst_off, len) {
-  for (var i = 0; i < len; i++) {
-    caml_ba_unsafe_set_1(dst, dst_off + i, caml_ba_unsafe_ref_1(src, src_off + i));
-  }
-}
+val create : Bigstring.t -> off:int -> len:int -> committed_bytes:int -> t
 
-function angstrom_bigstring_blit_from_bytes(src, src_off, dst, dst_off, len) {
-  for (var i = 0; i < len; i++) {
-    caml_ba_unsafe_set_1(dst, dstoff + i, string_unsafe_get(src, src_off + i));
-  }
-}
+val length : t -> int
+
+val client_committed_bytes   : t -> int
+val parser_committed_bytes   : t -> int
+val parser_uncommitted_bytes : t -> int
+
+val bytes_for_client_to_commit : t -> int
+
+val get_char    : t -> int -> char
+val count_while : t -> int -> f:(char -> bool) -> int
+
+val apply : t -> int -> int -> f:(Bigstring.t -> off:int -> len:int -> 'a) -> 'a
+
+val commit : t -> int -> unit
+
+val invariant : t -> unit
