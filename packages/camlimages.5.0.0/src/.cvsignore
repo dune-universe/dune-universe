@@ -1,0 +1,6 @@
+Makefile
+Makefile.in
+*.spot
+*.spit
+camlimages.ml
+META

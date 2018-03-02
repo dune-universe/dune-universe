@@ -1,0 +1,11 @@
+# OASIS_START
+# DO NOT EDIT (digest: e298657fdc2143059327f7c8b4ea30d8)
+version = "1.0.0"
+description = "OCaml SRS library"
+archive(byte) = "srs.cma"
+archive(byte, plugin) = "srs.cma"
+archive(native) = "srs.cmxa"
+archive(native, plugin) = "srs.cmxs"
+exists_if = "srs.cma"
+# OASIS_STOP
+

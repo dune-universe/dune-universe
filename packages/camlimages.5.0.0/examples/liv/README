@@ -1,0 +1,39 @@
+This is an LablGtk2 application.
+You need to install the library with lablgtk2 support.
+
+LV -- Labl image Viewer
+
+	This is camlimages+lablgtk2 image viewer, like `xv', but much
+	limited. It works just with True or Direct colormodels.
+	No PseudoColor support. And more, it is UNDER CONSTRUCTION.
+
+Usage:
+
+	lv imagefiles
+
+Options:
+
+	-random
+		Images are displayed randomly. Use with -wait.
+
+	-wait sec
+		Automatically display next image after waiting [sec] seconds.
+		Useful for image slideshow. 
+
+	-root [center|random]
+		Display images on root. [center] puts the images in 
+		the center of the screen. [random] puts them at random 
+		position.
+
+	-transition [myst|transparent]	
+		Use with -root. You can see some funny transition 
+		animations.		
+
+	-size [w]x[h]
+		Set the maximum size of images upto [w]x[h].
+
+LV shell (like Visual schnauzer of xv)
+
+	Copy iconcap and the xpm files in this directory in 
+	$HOME/.lv and type 'v' key in the image window of lv...
+	You will have something fancy, but still under development.

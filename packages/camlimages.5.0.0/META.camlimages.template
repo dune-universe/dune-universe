@@ -1,0 +1,15 @@
+name = "CamlImages"
+version = "4.2.6"
+description = "Objective Caml image processing library"
+
+package "all_formats" (
+  requires = "camlimages.core, unix, camlimages.exif camlimages.gif camlimages.jpeg camlimages.png camlimages.tiff camlimages.xpm"
+  version = "4.2.6"
+)
+
+package "all" (
+  requires = "camlimages.all_formats, camlimages.freetype, camlimages.graphics, camlimages.lablgtk2"
+  version = "4.2.6"
+)
+
+# JBUILDER_GEN

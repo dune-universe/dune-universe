@@ -1,0 +1,14 @@
+opam-version: "1.2"
+version: "2.0.0"
+maintainer: "Andre Nathan <andre@hostnet.com.br>"
+authors: ["Andre Nathan <andre@hostnet.com.br>"]
+license: "MIT"
+homepage: "https://github.com/andrenth/ocaml-srs"
+dev-repo: "https://github.com/andrenth/ocaml-srs.git"
+bug-reports: "https://github.com/andrenth/ocaml-srs/issues"
+build: [
+  ["jbuilder" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "jbuilder" {build}
+]

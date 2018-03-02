@@ -1,0 +1,22 @@
+# This is a sample "iconcap" file for lv.
+# place this file in your $HOME/.lv directory
+
+#audio/mod; /usr/bin/mikmod %s
+# audio/*; /usr/bin/play %s
+
+text/*; 	File.xpm
+audio/*; 	sound.xpm
+image/*; 	Monalisa.xpm
+video/*;
+
+special/dir; 	Folder.xpm
+special/lnkdir; FolderLink.xpm
+special/lnk; 	FilesLink.xpm
+special/*; 	BulletHole.xpm
+
+application/postscript; /usr/share/WindowMaker/Icons/ps.tiff
+application/pdf; /usr/share/WindowMaker/Icons/pdf.tiff
+application/x-dvi;	/usr/share/WindowMaker/Icons/xdvi.xpm
+
+encoding/gzip; /usr/share/icons/filez.tif
+encoding/compress; /usr/share/icons/filez.tif

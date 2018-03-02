@@ -1,0 +1,6 @@
+Resize images
+
+% resize -scaie <scale> <file>
+
+creates an image file "out.<file>", scaled image of <file> by <scale>.
+Just works with Rgb24 image classes.

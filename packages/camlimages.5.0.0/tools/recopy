@@ -1,0 +1,7 @@
+for i in `find . -type f -name '*.ml*' | grep -v bak | grep -v CVS`
+do
+  echo $i
+  sed -e 's/.*Copyright 1999.*/(*  Copyright 1999,2000,2001,2002,2001,2002                            *)/' < $i > tmp.tmp
+  mv $i $i.bak	
+  mv tmp.tmp $i
+done

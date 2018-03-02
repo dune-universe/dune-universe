@@ -1,0 +1,29 @@
+(jbuild_version 1)
+
+(executable
+ ((name ciconfig)
+  (flags (:standard -w -6))
+  (libraries ( configurator findlib ))))
+	   
+(rule
+ ((targets (
+	    config.h
+	    all_c_flags.sexp
+	    all_c_library_flags.sexp
+	    jpeg_c_flags.sexp
+	    jpeg_c_library_flags.sexp
+	    gif_c_flags.sexp
+	    gif_c_library_flags.sexp
+	    tiff_c_flags.sexp
+	    tiff_c_library_flags.sexp
+	    png_c_flags.sexp
+	    png_c_library_flags.sexp
+	    freetype_c_flags.sexp
+	    freetype_c_library_flags.sexp
+	    exif_c_flags.sexp
+	    exif_c_library_flags.sexp
+	    xpm_c_flags.sexp
+	    xpm_c_library_flags.sexp
+	    ))
+  (deps (ciconfig.exe))
+  (action (run ${<}))))

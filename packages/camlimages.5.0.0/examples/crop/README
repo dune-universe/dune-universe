@@ -1,0 +1,24 @@
+crop images
+
+	Utility for autocropping images. [crop body.ext] crops the border
+	of the image [body.ext] and save the result in [body.crop.ext].
+
+
+	For example,
+
+		+------------------+
+		|                  |
+		|    /\ An image   |
+		|   /  \----+      |
+		|  /    \   |      |
+		|                  |
+		+------------------+ 
+
+	becomes
+
+		+-------------+
+		|  /\ An image|
+		| /  \----+   |
+		|/    \   |   |
+		+-------------+ 
+

@@ -1,0 +1,4 @@
+edge detection
+
+	[edge body.ext] creates the edge-detected image of [body.ext] in
+	[body.edge.jpg].

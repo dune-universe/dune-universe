@@ -1,0 +1,21 @@
+Tiffps is a filter from a tiff (and jpeg) file to postscript.
+
+Usage:
+	tiffps infile
+
+	infile must be a tiff (or jpeg), and the program outputs
+	a postscript file to the standard output.
+
+Command line options:
+	There are many options. Try tiffps -help to print
+	help message. I hope it explains enough.
+
+Note:		
+	Do not try tiffps for jpeg files. It works, but the result is
+	in Postscript level 1 (without compression). For jpeg files
+	you should use jpeg2ps, a wrapper for Postscript level 2
+	found at:
+
+		http://www.pdflib.com/jpeg2ps/index.html
+
+	This is much smaller and faster.
