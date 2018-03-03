@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name            milter)
+  (public_name     milter)
+  (synopsis        "OCaml bindings to libmilter")
+  (c_names         (milter_stubs))
+  (c_flags         (-Wall -Werror))
+  (c_library_flags (-L/usr/lib/libmilter -lmilter))
+  (libraries       (threads))))

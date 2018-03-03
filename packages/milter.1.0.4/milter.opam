@@ -1,0 +1,18 @@
+opam-version: "1.2"
+version: "1.0.4"
+maintainer: "Andre Nathan <andre@hostnet.com.br>"
+authors: ["Andre Nathan <andre@hostnet.com.br>"]
+license: "MIT"
+homepage: "https://github.com/andrenth/ocaml-milter"
+dev-repo: "https://github.com/andrenth/ocaml-milter.git"
+bug-reports: "https://github.com/andrenth/ocaml-milter/issues"
+build: [
+  ["jbuilder" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "jbuilder" {build}
+]
+depexts: [
+  [["debian"] ["libmilter-dev"]]
+  [["ubuntu"] ["libmilter-dev"]]
+]
