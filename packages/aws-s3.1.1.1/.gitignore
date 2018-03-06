@@ -1,4 +1,0 @@
-_build
-.merlin
-aws-s3.install
-aws-s3.[0-9].*

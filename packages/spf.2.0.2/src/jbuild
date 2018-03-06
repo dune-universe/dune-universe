@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+ ((name            spf)
+  (public_name     spf)
+  (synopsis        "OCaml bindings to libspf2")
+  (c_names         (spf_stubs))
+  (c_flags         (-Wall -Werror))
+  (c_library_flags (-lspf2))))
