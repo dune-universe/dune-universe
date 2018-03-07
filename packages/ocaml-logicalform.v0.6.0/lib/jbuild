@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library
+  ((name LogicalForm)
+   (public_name ocaml-logicalform)
+   (ocamlopt_flags (:standard -linkall -O3 -rounds 12))
+   (libraries (base))
+   (preprocess (pps (ppx_sexp_conv)))))
