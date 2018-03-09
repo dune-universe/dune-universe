@@ -1,0 +1,125 @@
+#
+# This file has been copied from _build/default/META.lwt then
+# modified to add exists_if clauses to support optional
+# compilation and the camlp4 syntax extension packages have
+# been given appropriate predicates.
+#
+
+version = "3.3.0"
+description = "Monadic promises and concurrent I/O"
+requires = "bytes result"
+archive(byte) = "lwt.cma"
+archive(native) = "lwt.cmxa"
+plugin(byte) = "lwt.cma"
+plugin(native) = "lwt.cmxs"
+
+package "log" (
+  #directory = "log"
+  version = "3.3.0"
+  description = "Logger for Lwt (deprecated; use lwt_log)"
+  requires = "bytes lwt result"
+  archive(byte) = "lwt_log.cma"
+  archive(native) = "lwt_log.cmxa"
+  plugin(byte) = "lwt_log.cma"
+  plugin(native) = "lwt_log.cmxs"
+  exists_if = "lwt_log.cma"
+)
+
+package "ppx" (
+  #directory = "ppx"
+  version = "3.3.0"
+  description = "Lwt PPX syntax extension (deprecated; use lwt_ppx)"
+  requires(ppx_driver) = "lwt.omp"
+  requires(-ppx_driver) = "bytes lwt result"
+  ppx(-ppx_driver,-custom_ppx) = "./ppx.exe --as-ppx"
+)
+
+package "omp" (
+  version = "3.3.0"
+  description = "Lwt ocaml-migrate-parsetree PPX (internal)"
+  requires = "compiler-libs
+              compiler-libs.common
+              ocaml-migrate-parsetree
+              ppx_tools_versioned"
+  ppx_runtime_deps = "bytes lwt result"
+  exists_if = "ppx_lwt.cma"
+  archive(byte) = "ppx_lwt.cma"
+  archive(native) = "ppx_lwt.cmxa"
+  plugin(byte) = "ppx_lwt.cma"
+  plugin(native) = "ppx_lwt.cmxs"
+)
+
+package "preemptive" (
+  #directory = "preemptive"
+  version = "3.3.0"
+  description = "Preemptive thread support for Lwt (deprecated; use lwt.unix)"
+  requires = "lwt.unix"
+)
+
+package "simple-top" (
+  #directory = "simple-top"
+  version = "3.3.0"
+  description = "Lwt-OCaml top level integration (deprecated; use utop)"
+  requires = "bigarray
+              bytes
+              compiler-libs
+              compiler-libs.common
+              lwt
+              lwt.log
+              lwt.unix
+              result
+              unix"
+  archive(byte) = "lwt_simple_top.cma"
+  archive(native) = "lwt_simple_top.cmxa"
+  plugin(byte) = "lwt_simple_top.cma"
+  plugin(native) = "lwt_simple_top.cmxs"
+  exists_if = "lwt_simple_top.cma"
+)
+
+package "syntax" (
+  #directory = "syntax"
+  version = "3.3.0"
+  description = "Camlp4 syntax for Lwt (deprecated; use lwt_ppx)"
+  requires = "camlp4 lwt.syntax.options"
+  archive(syntax, preprocessor) = "lwt_syntax.cma"
+  archive(syntax, toploop) = "lwt_syntax.cma"
+  archive(syntax, preprocessor, native) = "lwt_syntax.cmxa"
+  archive(syntax, preprocessor, native, plugin) = "lwt_syntax.cmxs"
+  exists_if = "lwt_syntax.cma"
+
+  package "log" (
+    #directory = "log"
+    version = "3.3.0"
+    description = "Camlp4 syntax for Lwt logging (deprecated; use lwt_ppx)"
+    requires = "camlp4 lwt.syntax.options"
+    archive(syntax, preprocessor) = "lwt_syntax_log.cma"
+    archive(syntax, toploop) = "lwt_syntax_log.cma"
+    archive(syntax, preprocessor, native) = "lwt_syntax_log.cmxa"
+    archive(syntax, preprocessor, native, plugin) = "lwt_syntax_log.cmxs"
+    exists_if = "lwt_syntax_log.cma"
+  )
+
+  package "options" (
+    #directory = "options"
+    version = "3.3.0"
+    description = "Options for Lwt Camlp4 syntax extension (deprecated; use lwt_ppx)"
+    requires = "camlp4"
+    archive(syntax, preprocessor) = "lwt_syntax_options.cma"
+    archive(syntax, toploop) = "lwt_syntax_options.cma"
+    archive(syntax, preprocessor, native) = "lwt_syntax_options.cmxa"
+    archive(syntax, preprocessor, native, plugin) = "lwt_syntax_options.cmxs"
+    exists_if = "lwt_syntax_options.cma"
+  )
+)
+
+package "unix" (
+  #directory = "unix"
+  version = "3.3.0"
+  description = "Unix support for Lwt"
+  requires = "bigarray bytes lwt lwt.log result threads unix"
+  archive(byte) = "lwt_unix.cma"
+  archive(native) = "lwt_unix.cmxa"
+  plugin(byte) = "lwt_unix.cma"
+  plugin(native) = "lwt_unix.cmxs"
+  exists_if = "lwt_unix.cma"
+)
