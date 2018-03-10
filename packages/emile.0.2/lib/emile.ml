@@ -13,7 +13,8 @@ and local = word list
 and group =
   { group     : phrase
   ; mailboxes : mailbox list }
-and t = [ `Mailbox of mailbox | `Group of group ]
+and address = local * (domain * domain list)
+and set = [ `Mailbox of mailbox | `Group of group ]
 
 (* Pretty-printer *)
 
@@ -80,7 +81,12 @@ let pp_group ppf { group; mailboxes; } =
     (Fmt.hvbox pp_phrase) group
     Fmt.(Dump.list pp_mailbox) mailboxes
 
-let pp ppf = function
+let pp_address ppf (local, domain) =
+  pp_mailbox ppf { name = None
+                 ; local = local
+                 ; domain = domain }
+
+let pp_set ppf = function
   | `Mailbox mailbox -> pp_mailbox ppf mailbox
   | `Group group -> pp_group ppf group
 
@@ -341,18 +347,28 @@ let equal_group a b =
       if res then go ar br else res in
   equal_phrase a.group b.group && go (List.sort compare_mailbox a.mailboxes) (List.sort compare_mailbox b.mailboxes)
 
-let equal a b = match a, b with
+let compare_address a b =
+  compare_mailbox
+    { name = None; local = (fst a); domain = (snd a); }
+    { name = None; local = (fst b); domain = (snd b); }
+
+let equal_address a b =
+  equal_mailbox
+    { name = None; local = (fst a); domain = (snd a); }
+    { name = None; local = (fst b); domain = (snd b); }
+
+let equal_set a b = match a, b with
   | `Group _, `Mailbox _ | `Mailbox _, `Group _ -> false
   | `Group a, `Group b -> equal_group a b
   | `Mailbox a, `Mailbox b -> equal_mailbox a b
 
-let compare a b = match a, b with
+let compare_set a b = match a, b with
   | `Group _, `Mailbox _ -> 1
   | `Mailbox _, `Group _ -> (-1)
   | `Group a, `Group b -> compare_group a b
   | `Mailbox a, `Mailbox b -> compare_mailbox a b
 
-let strictly_equal a b = a = b
+let strictly_equal_set a b = a = b
 
 module Parser =
 struct
@@ -2271,36 +2287,54 @@ let of_string_with_crlf p s =
   for i = 0 to String.length s - 1
   do Bigarray.Array1.set ba i (String.get s i) done;
 
-  let rec go second_time = function
+  let rec go state = function
     | Fail (_, path, err) ->
       Error (`Invalid (err, path))
     | Partial { continue; _ } ->
-      if second_time
+      if state = `Third
       then Error `Incomplete
-      else go true @@ continue ba Complete (* XXX(dinosaure): avoid the CFWS token. *)
+      else
+        let state, off, len, more =
+          let x = Bigarray.Array1.dim ba in
+          match state with
+          | `First -> `Second, 0, x, Complete
+          | `Second -> `Third, x, x, Complete
+          | `Third -> assert false in
+        go state @@ continue ba ~off ~len more (* XXX(dinosaure): avoid the CFWS token. *)
     | Done (_, v) -> Ok v in
-  go false @@ parse ~input:ba Angstrom.(p <* Parser.crlf <* commit)
+  go `First @@ parse Angstrom.(p <* Parser.crlf <* commit)
 
 let of_string p s = of_string_with_crlf p (s ^ "\r\n")
 
 let of_string_raw p s off len =
   let s = String.sub s off len in
+  let l = String.length s in
 
-  let ba = Bigarray.Array1.create Bigarray.Char Bigarray.c_layout (String.length s) in
+  let ba = Bigarray.Array1.create Bigarray.Char Bigarray.c_layout (l + 2) in
 
   for i = 0 to String.length s - 1
   do Bigarray.Array1.set ba i (String.get s i) done;
+  Bigarray.Array1.set ba l '\r';
+  Bigarray.Array1.set ba (l + 1) '\n';
 
-  let rec go second_time = function
+  let rec go state = function
     | Fail (_, path, err) -> Error (`Invalid (err, path))
     | Partial {  continue; _ } ->
-      if second_time
+      if state = `Third
       then Error `Incomplete
-      else go true @@ continue ba Complete (* XXX(dinosaure): avoid the CFWS token. *)
-    | Done (committed, v) -> Ok (v, committed)
+      else
+        let state, off, len, more =
+          let x = Bigarray.Array1.dim ba in
+          match state with
+          | `First -> `Second, 0, x, Complete
+          | `Second -> `Third, x, x, Complete
+          | `Third -> assert false in
+        go state @@ continue ba ~off ~len more (* XXX(dinosaure): avoid the CFWS token. *)
+    | Done (committed, v) -> Ok (v, committed - 2)
+    (* XXX(dinosaure): uncout CRLF. *)
   in
 
-  go false @@ parse ~input:ba Angstrom.(p <* Parser.crlf <* commit)
+  go `First @@ parse Angstrom.(p <* Parser.crlf <* commit)
 
 module List =
 struct
@@ -2308,6 +2342,22 @@ struct
   let of_string = of_string Parser.address_list
   let of_string_raw = of_string_raw Parser.address_list
 end
+
+let compose f g = fun x -> f (g x)
+let (<.>) g f = compose f g
+
+let map_result f = function
+  | Ok v -> Ok (f v)
+  | Error _ as err -> err
+let (>>=) a f = map_result f a
+
+let address_of_string_with_crlf s = of_string_with_crlf Parser.addr_spec s >>= fun { local; domain; _ } -> (local, domain)
+let address_of_string s = of_string Parser.addr_spec s >>= fun { local; domain; _ } -> (local, domain)
+let address_of_string_raw s off len = of_string_raw Parser.addr_spec s off len >>= fun ({ local; domain; _ }, consumed) -> ((local, domain), consumed)
+
+let set_of_string_with_crlf = of_string_with_crlf Parser.address
+let set_of_string = of_string Parser.address
+let set_of_string_raw = of_string_raw Parser.address
 
 let of_string_with_crlf = of_string_with_crlf Parser.mailbox
 let of_string = of_string Parser.mailbox
