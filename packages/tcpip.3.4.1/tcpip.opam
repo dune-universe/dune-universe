@@ -1,4 +1,4 @@
-version: "3.4.0"
+version: "3.4.1"
 opam-version: "1.2"
 maintainer:   "anil@recoil.org"
 homepage:     "https://github.com/mirage/mirage-tcpip"
@@ -23,7 +23,7 @@ build-test: [
 depends: [
   "jbuilder"     {build & >="1.0+beta10"}
   "configurator" {build}
-  "rresult"
+  "rresult" {>= "0.5.0"}
   "cstruct" {>= "3.0.2"}
   "cstruct-lwt"
   "mirage-net" {>= "1.0.0"}
