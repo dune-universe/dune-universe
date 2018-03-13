@@ -1,0 +1,19 @@
+(jbuild_version 1)
+
+(executable
+  ((name llopt)
+   (public_name llopt)
+   (flags (:standard -w A-44 -safe-string))
+   (libraries
+     (cmdliner
+      llvm
+      llvm.irreader
+      llvm.passmgr_builder
+      llvm.target
+      llvm.all_backends))))
+
+(rule
+  (with-stdout-to config.ml
+    (progn
+      (echo "let name = {|llopt|}\n")
+      (echo "let version = {|${version:llopt}|}\n"))))
