@@ -1,5 +1,0 @@
-(jbuild_version 1)
-(library
- ((name toplevel_expect_test)
-  (libraries ( compiler-libs.common compiler-libs.toplevel))
-  ))
