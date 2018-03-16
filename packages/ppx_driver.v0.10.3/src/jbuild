@@ -1,0 +1,25 @@
+(library
+ ((name ppx_driver)
+  (public_name ppx_driver)
+  (flags (:standard -safe-string))
+  (libraries (compiler-libs.common
+              ppx_core
+              ppx_optcomp
+              print_diff
+              ocaml-migrate-parsetree))
+  (preprocess no_preprocessing)
+  (ppx.driver
+   ((main       Ppx_driver.standalone)
+    (replaces   (ocaml-migrate-parsetree))
+    (flags      (-corrected-suffix ${corrected-suffix} -diff-cmd - -dump-ast))
+    (lint_flags (-corrected-suffix ${corrected-suffix} -diff-cmd - -null    ))))
+  ))
+
+(alias
+ ((name DEFAULT)
+  (deps (../../ppx_core/src/cinaps_helpers
+         (glob_files *.ml)
+         (glob_files *.mli)))
+  (action (bash "${bin:cinaps} *.ml *.mli"))))
+
+(jbuild_version 1)
