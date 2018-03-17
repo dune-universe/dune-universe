@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name mock)
+  (public_name mock)
+  )
+)

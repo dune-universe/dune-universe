@@ -95,7 +95,11 @@ module Fd = struct
           fail e
         | End_of_file as e ->
           Printf.fprintf stderr "really_read offset = %Ld len = %d: End_of_file\n%!" offset (Cstruct.len buf);
-          fail e 
+          fail e
+        | e ->
+          Printf.fprintf stderr "really_read offset = %Ld len = %d: %s\n%!"
+            offset (Cstruct.len buf) (Printexc.to_string e);
+          fail e
         )
       )
 
@@ -116,7 +120,11 @@ module Fd = struct
           fail e
         | End_of_file as e ->
           Printf.fprintf stderr "really_write offset = %Ld len = %d: End_of_file\n%!" offset (Cstruct.len buf);
-          fail e 
+          fail e
+        | e ->
+          Printf.fprintf stderr "really_write offset = %Ld len = %d: %s\n%!"
+            offset (Cstruct.len buf) (Printexc.to_string e);
+          fail e
         )
       )
 

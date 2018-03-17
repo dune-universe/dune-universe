@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name mock_ounit)
+  (public_name mock-ounit)
+  (libraries
+   (mock
+    oUnit
+    )))
+)

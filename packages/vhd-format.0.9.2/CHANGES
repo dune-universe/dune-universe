@@ -1,3 +1,7 @@
+0.9.2 (2018-02-27)
+* Fix exception handling in lwt really_{read,write}
+* Add missing jbuilder build dependency in the opam file
+
 0.9.1 (2017-12-11)
 * Fix build of vhd-format-lwt package
 

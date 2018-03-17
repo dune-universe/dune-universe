@@ -1,0 +1,12 @@
+(alias
+  ((name    runtest)
+   (deps    (test_suite.exe))
+(action (run ${<}))))
+
+(executable
+ ((name test_suite)
+(libraries (oUnit mock mock-ounit))
+(preprocess
+(pps (ppx_deriving.std))
+)
+))

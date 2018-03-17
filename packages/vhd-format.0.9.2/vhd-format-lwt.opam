@@ -18,6 +18,7 @@ depends: [
   "ounit"
   "vhd-format"
   "io-page-unix" {test}
+  "jbuilder" {build}
 ]
 depexts: [
  [["alpine"]["linux-headers"]]
