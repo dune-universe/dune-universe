@@ -1,8 +1,0 @@
-(library
- ((name parsexp_io_test)
-  (flags (:standard -safe-string))
-  (libraries (core expect_test_helpers_kernel parsexp_io))
-  (preprocess (pps (ppx_jane ppx_driver.runner)))
-  ))
-
-(jbuild_version 1)
