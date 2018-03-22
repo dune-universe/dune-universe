@@ -959,8 +959,8 @@ let set_cookie s =
       ; pos_cnum  = 0
       };
     let expr = Parse.expression lexbuf in
-    Ocaml_common.Ast_mapper.set_cookie name
-      (Ppx_ast.Selected_ast.to_ocaml Expression expr)
+    Migrate_parsetree.Driver.set_global_cookie name
+      (module Ppx_ast.Selected_ast) expr
 
 let shared_args =
   [ "-loc-filename", Arg.String (fun s -> loc_fname := Some s),
@@ -1054,6 +1054,20 @@ let standalone_args =
   ]
 ;;
 
+let get_args ?(standalone_args=standalone_args) () =
+  let args = standalone_args @ List.rev !args in
+  let my_arg_names =
+    List.rev_map args ~f:(fun (name, _, _) -> name)
+    |> Set.of_list (module String)
+  in
+  let omp_args =
+    (* Filter out arguments that we override *)
+    List.filter (Migrate_parsetree.Driver.registered_args ())
+      ~f:(fun (name, _, _) ->
+          not (Set.mem my_arg_names name))
+  in
+  args @ omp_args
+
 module Optcomp = Ppx_optcomp.Make(struct
     let lexer = Lexer.token
     let env = Ppx_optcomp.Env.init
@@ -1063,13 +1077,7 @@ let standalone_main () =
   let usage =
     Printf.sprintf "%s [extra_args] [<files>]" exe_name
   in
-  let args =
-    List.concat
-      [ List.rev !args
-      ; Migrate_parsetree.Driver.registered_args ()
-      ; standalone_args
-      ]
-  in
+  let args = get_args () in
   Migrate_parsetree.Driver.reset_args ();
   Arg.parse (Arg.align args) set_input usage;
   interpret_mask ();
@@ -1123,13 +1131,7 @@ let standalone_run_as_ppx_rewriter () =
     List.map standalone_args ~f:(fun (arg, spec, _doc) ->
       (arg, spec, " Unused with -as-ppx"))
   in
-  let args =
-    List.concat
-      [ List.rev !args
-      ; Migrate_parsetree.Driver.registered_args ()
-      ; standalone_args
-      ]
-  in
+  let args = get_args () ~standalone_args in
   Migrate_parsetree.Driver.reset_args ();
   match
     Arg.parse_argv argv (Arg.align args)

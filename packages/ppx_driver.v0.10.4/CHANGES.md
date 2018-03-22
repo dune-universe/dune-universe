@@ -1,3 +1,8 @@
+## v0.10.4
+
+- Fix an issue where cookies set from the command line sometimes
+  disappeared
+
 ## v0.10.3
 
 - Add a mechanism for ppx rewriters to pass informations to the build
