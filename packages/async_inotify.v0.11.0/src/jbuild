@@ -1,0 +1,12 @@
+(library
+ ((name async_inotify)
+  (public_name async_inotify)
+  (flags (:standard -safe-string))
+  (libraries (async
+              async_find
+              core
+              inotify))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

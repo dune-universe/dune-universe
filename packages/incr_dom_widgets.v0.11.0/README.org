@@ -1,0 +1,36 @@
+#+TITLE: ~Incr_dom_widgets~: shared abstractions for ~Incr_dom~ applications
+#+PARENT: ../../doc/webdev/index.org
+
+A library of libraries and widgets for ~Incr_dom~ applications.
+
+For the moment, most of the libraries contained here are about
+efficient rendering of tabular data, in particular supporting /partial
+rendering/, /i.e./, only rendering a subset of the widgets that are
+logically in the view, depending on what is expected to be visible to
+the end user.
+
+* Mesa
+
+  Mesa provides an /easy/ way of creating functional web
+  tables. The user supplies a ~row~ type and "actions" to be run on
+  those ~rows~ (along with some other funtionality) and the user gets
+  back a table capable of:
+  - Partial rendering
+  - Navigating the table with the arrow keys and the mouse
+  - Sorting the table on a column
+  - Editing the table-cells' values and communicating those changes
+    back to a server
+  - Searching the table for a row
+
+  (see ./src/mesa_intf.ml from more details)
+
+* Keybard_event_handler, Variable_keyboard_event_hander, Help_text and Grouped_help_text
+
+  The Keyboard_event_handler and Help_text modules provide a way of
+  creating a keyboard event handler and generating help text for it.
+  Variable_keyboard_event_handler provides some additional
+  functionality on top of Keyboard_event_handler, and similarly
+  Grouped_help_text provides some additional functionality on top of
+  Help_text.
+
+

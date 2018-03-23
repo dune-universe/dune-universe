@@ -1,0 +1,18 @@
+(executables
+ ((names (patdiff))
+(flags (:standard -safe-string))
+  (libraries (
+    core
+    core_extended
+    patdiff_lib
+    pcre
+    sexplib))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+(install
+ ((section bin)
+  (files ((patdiff.exe as patdiff)
+          patdiff-git-wrapper))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,10 @@
+This directory contains a few examples of how the =incr_dom= library
+can be used.
+
+To run any of these examples, follow the steps below:
+
+- =opam install incr_dom=
+
+- =jbuilder build example/incr_decr/{main.bc.js,index.html}=
+
+- Open =_build/default/example/incr_decr/index.html=

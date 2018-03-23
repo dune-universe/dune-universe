@@ -1,0 +1,14 @@
+(library
+ ((name        expect_test_helpers_kernel)
+  (public_name expect_test_helpers_kernel)
+  (libraries (
+    core_kernel
+    re.pcre
+    sexp_pretty
+    ))
+  (flags (:standard -safe-string))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+  ))
+
+
+(jbuild_version 1)

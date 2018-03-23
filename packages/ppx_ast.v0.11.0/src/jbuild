@@ -1,0 +1,8 @@
+(library
+ ((name        ppx_ast)
+  (public_name ppx_ast)
+  (libraries   (ppxlib.ast))
+  (preprocess no_preprocessing)
+))
+
+(jbuild_version 1)

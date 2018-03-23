@@ -1,0 +1,280 @@
+open! Core
+open! Async
+
+(** Ocaml plugin loader, from ocaml source file.  Wrapper around Dynlink module, including
+    on the fly async ocaml compilation.
+
+    This is a low level module, casual user should rather use [Compiler] apart from
+    Make to create a dedicated Plugin loader. *)
+
+(** See the labelled argument [custom_warnings_spec] for what these are for. *)
+val default_disabled_warnings : int list
+val warnings_spec : disabled_warnings:int list -> string
+val default_warnings_spec : string
+
+(** Mutable type for loading ocaml modules. *)
+type t
+type dynloader = t
+
+type 'a create_arguments =
+  ?in_dir:string
+  (** The pathname has to be absolute. If not, the behavior is unspecified.
+
+      This is the location where the ocaml compilation will take place. A fresh directory
+      will be created inside that directory. The default value is
+      [Filename.temp_dir_name], so the default behavior is to create a fresh directory in
+      the temp_dir_name, like /tmp/ocaml_plugin.1464h45 .
+
+      Plugins are copied into that directory, and compiled there. Cf function [clean].
+
+      This should preferably be a local disk location not using NFS networking
+      (compilation will be faster). *)
+
+  -> ?in_dir_perm:Unix.file_perm
+  (** The permissions with which [in_dir] will be created.  Defaults to [0o700]. *)
+
+  -> ?include_directories:string list
+  (** If you do not use the Auto_embed mode, you want to use some cmi files installed in
+      some shared places. You need then to add these directories to the ocamlopt
+      compilation, using -I option. Each directory of this list will be added in the
+      command, this module will add the -I flag.
+
+      These should rather be absolute directories. If not, they would be concatenated with
+      the cwd at the time the function [create] is executed.  *)
+
+  -> ?custom_warnings_spec:string
+  (** Defaults to [default_warnings_spec].
+
+      When one uses this library, warnings are always triggered as errors. This flag
+      allows one to change the warnings enabled and is passed to the compiler this way:
+      [-w $(custom_warnings_spec) -warn-error +a]
+
+      Custom warnings specifications can be built with [default_ignored_warnings] and
+      [warnings_spec]. *)
+
+  -> ?strict_sequence:bool
+  (** Use or don't use -strict-sequence during compilation.  Set to [true] by default, so
+      that it is consistent with the policy used in core, async, etc. *)
+
+  -> ?cmx_flags:string list
+  (** Add some flags to the compilation producing the cmx file.  No check are done, the
+      option are passed 'as they are' to ocamlopt *)
+
+  -> ?cmxs_flags:string list
+  (** Same thing for cmxs compilation. *)
+
+  -> ?trigger_unused_value_warnings_despite_mli:bool
+  (** When the files of a plugin export values in some mli but no one is using them,
+      unused value warnings are not triggered.  However, by explicitly setting this
+      parameter to [true] they will be triggered. This might come in handy to detect dead
+      code in a large plugin that uses multiple files. *)
+
+  -> ?use_cache:Plugin_cache.Config.t
+  (** By default, there is no cache. If a config is given, cmxs files may be used from an
+      execution to an other. *)
+
+  -> 'a
+
+module Ppx : sig
+  (** [ppx_exe] is a custom ppx binary built to include all the syntax extensions required
+      to compile the plugins. *)
+  type t =
+    { ppx_exe : string
+    }
+end
+
+module Preprocessor : sig
+  type t =
+    | No_preprocessing
+    | Ppx    of Ppx.t
+end
+
+module Compilation_config : sig
+  type t =
+    { preprocessor : Preprocessor.t
+    }
+
+  (** The specified preprocessor will be used to build the source files.  By default no
+      preprocessing is applied. *)
+  val default : t
+end
+
+(** Currently this library works with native code only.  The function [create] will
+    raise if called in bytecode. *)
+val create : (
+  ?initialize:(directory:string -> unit Deferred.Or_error.t)
+  (** In case we do not use the cache of cmxs, and the compilation will actually takes
+      place, we offer a way via this call back to perform some computation before the
+      first compilation. This is typically when [Compiler] will extract its tar
+      file. *)
+
+  -> ?compilation_config:Compilation_config.t
+  (** This defaults to using [Compilation_config.default]. Typically, this flag is
+      provided by Compiler from the metadata embedded in the executable. *)
+
+  -> ?ocamlopt_opt:string
+  -> ?ocamldep_opt:string
+  (** ocamlopt, and ocamldep should be for the same version of ocaml as the current
+      executable and the provided or embedded ocaml files (interfaces, preprocessors).  If
+      this is not specified, ocaml_plugin will assume that the correct ocamlopt.opt and
+      ocamldep.opt are present in the path of the current executable, which is most likely
+      a naive hope. *)
+
+  -> unit -> t Deferred.Or_error.t
+
+) create_arguments
+
+(** Cleaning the files generated by this Dynloader.t from the begining of his life,
+    and try to remove the directory if it is empty once the files have been removed.
+    Doesn't fail if the directory contains other files, keep them and keep the directory
+    in that case. Once cleaned, you cannot use a dynloader anymore, you should just leave
+    it alone and let it be collected by the GC at some point. Using a cleaned dynloader
+    will result in an error. *)
+val clean : t -> unit Deferred.Or_error.t
+
+module Univ_constr : sig
+  type 'a t
+  val create : unit -> 'a t
+end
+
+module type Module_type =
+sig
+  (** The type [t] is the type of a first level module you want to load.  This is
+      typically the type of your expected config file, as a top level ocaml module.
+
+      The field [t_repr] is the concrete OCaml syntax for this module type.
+
+      The field [univ_constr] is used to constr and match_ values of type t, embedded
+      in a value of type Univ.t.
+
+      The field [univ_constr_repr] is the concrete OCaml syntax for the field
+      [univ_constr].
+
+      Example :
+      {module M : A.S} defined in the library "mylib.cmxa".
+
+      {[
+        module My_config_loader = Ocaml_plugin.Dynloader.Make (
+        struct
+          type t = (module A.S)
+          let t_repr = "Mylib.A.S"
+          let univ_constr = A.univ_constr
+          let univ_constr_repr = "Mylib.A.univ_constr"
+        end)
+      ]}
+
+      [t_repr] and [univ_constr_repr] should be complete paths, as it would be used by an
+      ocaml file to link with the shared cmi files, in particular be aware that
+      if you have some 'open' statements in your file, you might have different t and
+      t_repr, which is a bad practice.
+
+      If the module type [A.M_intf] is defined in a package, you would need to add it in
+      the t_repr, as it is part of the complete path of the module type ("Mylib" in the
+      example). *)
+  type t
+  val t_repr : string
+  val univ_constr : t Univ_constr.t
+  val univ_constr_repr : string
+
+  (** This implementation is type safe. Some properties should be verified so that
+      the library would work properly:
+
+      -the type [t] and its representation '[t_repr]' should match,
+      -the plugin implementation doesn't override the module type sig
+      represented by the string [t_repr]:
+      -the plugin implementation doesn't override the univ_constr scope name
+      represented by the string [univ_constr_repr]
+      -the value [univ_constr] and its representation [univ_constr_repr] should match. *)
+end
+
+(** [find_dependencies t file] uses ocamldep to compute the list of .ml and .mli files
+    that [file] depends on transitively, which you can then pass to
+    [load_ocaml_src_files].  [file] must be an .ml file, and all the files it depend on
+    must be in the same folder. *)
+val find_dependencies : t -> string -> string list Deferred.Or_error.t
+
+module type S = sig
+  type t
+
+  (** Load a bunch of ocaml files source files (.ml + .mli). The last module's signature
+      should be compatible with the signature [X.repr]. If the type does not match, there
+      will be an error during OCaml compilation. The files are copied into the compilation
+      directory, and compiled versus a generated mli file including the relevant module
+      signature. This generated file is then dynlinked with the current executable.
+
+      The compilation happens using [Dynlink.loadfile_private], meaning that
+      the toplevel definition defined in these files are hidden
+      (cannot be referenced) from other modules dynamically loaded afterwards *)
+  val load_ocaml_src_files :
+    dynloader -> string list -> t Deferred.Or_error.t
+
+  (** Loads the given source files, same as [load_ocaml_src_files], but instead of running
+      their toplevel, you are given a closure that will run the toplevel. You can use this
+      to run the toplevel multiple times, or lazily, or outside the async thread, or get
+      precise control over the raised exceptions. *)
+  val load_ocaml_src_files_without_running_them :
+    dynloader -> string list -> (unit -> t) Deferred.Or_error.t
+
+  (** Similar to [load_ocaml_src_files], but does not execute the plugin toplevel, just
+      checks that compilation and dynamic linking work. *)
+  val check_ocaml_src_files :
+    dynloader -> string list -> unit Deferred.Or_error.t
+
+  module Expert : sig
+    (** The following functions are exposed for expert users only, not for the casual
+        user, because they are much more error prone. Prefer [load_ocaml_src_files] if
+        possible.
+
+        The complexity is due to the following unexpected or unpredictable behavior of
+        [Dynlink]: dynlinking a file with a given filename only works properly the first
+        time.  Further dynlinks with the same filename (even if the contents of the file
+        has changed in the meantime) will not load the new module but instead execute the
+        initial module.  Some even says that the behavior upon reload depends on the
+        platform.  Long story short: don't do that.  Dynlink files at most once.
+
+        To work around this, you may automatically copy the given file to a temporary and
+        unique name before dynlinking it.
+
+        It is worth noting too that the [*load_cmxs_file] functions below only work with
+        cmxs files produced by ocaml_plugin's [compile_ocaml_src_files_into_cmxs_file].
+        They expect the code to perform some internal library calls, thus it cannot be
+        used with any arbitrary cmxs compiled in some other way.  Furthermore those
+        functions would return an error even though the cmxs was built with ocaml_plugin
+        when built under a different context (compiler version used, cmi dependencies
+        version, etc.)  The intended usage is to have the compilation and loading done
+        using the same executable. *)
+
+    (** This compiles the source files into cmxs file, but does not execute the plugin
+        toplevel.  The resulting cmxs file can be loaded by the [*load_cmxs_file] function
+        below either from within the same process or other processes which share the same
+        executable.  If compile succeeds, it returns [Ok] and write the compiled cmxs file
+        into [output_file] (may override existing file), otherwise it returns [Error] and
+        won't write to [output_file] at all. *)
+    val compile_ocaml_src_files_into_cmxs_file
+      :  dynloader
+      -> string list
+      -> output_file:string (** like -o option of gcc *)
+      -> unit Deferred.Or_error.t
+
+    val load_cmxs_file : string -> t Or_error.t Deferred.t
+
+    (** [blocking_load_cmxs_file] will return an error if called after the async scheduler
+        has been started. *)
+    val blocking_load_cmxs_file : string -> t Or_error.t
+  end
+end
+
+module Make : functor (X : Module_type) -> S with type t := X.t
+
+(** In some cases, we are only interested by the toplevel side effects of dynlinked
+    modules. *)
+module Side_effect : S with type t := unit
+
+(* =============================================================== *)
+(* The following section is for internal use only*)
+module type Side_effect = sig
+end
+val side_effect_univ_constr : (module Side_effect) Univ_constr.t
+val return_plugin : 'a Univ_constr.t -> (unit -> 'a) -> unit
+(* =============================================================== *)
+

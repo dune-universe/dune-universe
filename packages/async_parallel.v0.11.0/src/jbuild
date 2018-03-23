@@ -1,0 +1,11 @@
+(library
+ ((name async_parallel_deprecated)
+  (public_name async_parallel)
+  (flags (:standard -safe-string))
+  (libraries (async
+              core
+              sexplib))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

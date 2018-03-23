@@ -1,0 +1,10 @@
+
+(library
+ ((name ppx_core)
+  (libraries (ppxlib ))
+  (public_name ppx_core)
+  (flags (:standard ))
+  (preprocess no_preprocessing)
+))
+
+(jbuild_version 1)

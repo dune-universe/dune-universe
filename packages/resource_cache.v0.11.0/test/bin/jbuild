@@ -1,0 +1,10 @@
+(executables
+ ((names
+   (cache_speed_test))
+  (flags (:standard -safe-string))
+  (libraries
+   (core test_resource_cache))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,14 @@
+(library
+ ((name        csvfields)
+  (public_name csvfields)
+  (flags (:standard -safe-string))
+  (libraries
+   (core
+    csvlib
+    sexplib
+    xml_light
+    num))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,11 @@
+(library
+ ((name core_profiler_offline_tool)
+  (public_name core_profiler.offline_tool)
+  (flags (:standard -safe-string))
+  (libraries (core
+              re2
+              core_profiler))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

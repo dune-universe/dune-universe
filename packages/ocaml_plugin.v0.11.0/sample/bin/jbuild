@@ -1,0 +1,15 @@
+
+(executables
+ ((names (run))
+  (flags (:standard -safe-string))
+  (libraries
+   (async
+    core
+    core_kernel
+    ocaml_plugin
+    ocaml_plugin_sample
+    sexplib))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

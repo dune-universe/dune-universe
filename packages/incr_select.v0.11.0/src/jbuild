@@ -1,0 +1,10 @@
+(library
+ ((name incr_select)
+  (public_name incr_select)
+  (preprocess (pps (js_of_ocaml-ppx ppx_jane ppxlib.runner)))
+  (flags (:standard -safe-string))
+  (libraries (core_kernel incremental_kernel))))
+
+
+
+(jbuild_version 1)

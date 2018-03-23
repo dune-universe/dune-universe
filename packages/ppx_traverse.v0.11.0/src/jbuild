@@ -1,0 +1,9 @@
+(library
+ ((name        ppx_traverse)
+  (public_name ppx_traverse)
+  (flags (:standard -safe-string))
+  (libraries  (ppxlib.traverse))
+  (preprocess no_preprocessing)
+  ))
+
+(jbuild_version 1)

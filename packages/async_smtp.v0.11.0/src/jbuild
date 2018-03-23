@@ -1,0 +1,22 @@
+(library
+ ((name async_smtp)
+  (public_name async_smtp)
+  (flags (:standard -safe-string))
+  (libraries
+   (async
+    async_inotify
+    async_ssl
+    async_sendfile
+    core_extended.base64
+    core
+    textutils
+    email_message
+    re2
+    async_smtp_types
+    resource_cache
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+  ))
+
+
+(jbuild_version 1)

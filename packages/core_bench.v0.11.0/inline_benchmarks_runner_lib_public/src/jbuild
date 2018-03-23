@@ -1,0 +1,16 @@
+(library
+ ((name inline_benchmarks_public)
+  (public_name core_bench.inline_benchmarks)
+  (flags (:standard -safe-string))
+  (libraries (
+    core
+    core_bench
+    core_extended
+    textutils
+    re
+    re.perl
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

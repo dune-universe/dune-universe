@@ -1,0 +1,9 @@
+(library
+ ((name ppx_driver)
+  (public_name ppx_driver)
+  (flags (:standard -safe-string))
+  (libraries (ppxlib))
+  (preprocess no_preprocessing)
+))
+
+(jbuild_version 1)

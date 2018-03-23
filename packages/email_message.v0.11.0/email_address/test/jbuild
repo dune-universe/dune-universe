@@ -1,0 +1,13 @@
+(library (
+  (name email_address_test)
+  (libraries (
+    async_kernel
+    core_kernel
+    email_address
+    expect_test_helpers
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+  ))
+
+
+(jbuild_version 1)

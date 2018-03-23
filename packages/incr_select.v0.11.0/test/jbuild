@@ -1,0 +1,16 @@
+(library
+ ((name incr_select_test)
+  (flags (:standard -safe-string))
+  (libraries (
+    core_kernel
+    incremental_kernel
+    incr_select
+    expect_test_helpers_kernel
+    incremental_kernel_debug
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+))
+
+
+
+(jbuild_version 1)

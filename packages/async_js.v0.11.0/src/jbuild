@@ -1,0 +1,13 @@
+(library
+ ((name async_js)
+  (public_name async_js)
+  (flags (:standard -safe-string))
+  (libraries (js_of_ocaml
+              async_kernel
+              async_rpc_kernel
+              uri
+              ))
+  (preprocess (pps (ppx_jane js_of_ocaml-ppx ppxlib.runner)))))
+
+
+(jbuild_version 1)

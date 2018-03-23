@@ -1,0 +1,18 @@
+(rule
+ ((targets (header_protocol.ml header_protocol.mli))
+  (deps (../protogen/header_protocol_dsl.exe))
+  (action (bash "../protogen/header_protocol_dsl.exe"))
+  (fallback)))
+
+
+(library
+  ((name core_profiler)
+   (public_name core_profiler)
+  (flags (:standard -safe-string))
+   (libraries (core
+               textutils
+               core_profiler_disabled))
+   (preprocess (pps (ppx_jane -check-doc-comments ppxlib.runner)))))
+
+
+(jbuild_version 1)

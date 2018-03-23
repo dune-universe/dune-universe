@@ -1,0 +1,14 @@
+(executables
+ ((names (main))
+  (link_flags (-linkall))
+  (flags (:standard -safe-string))
+  (libraries (toplevel_expect_test))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(install
+ ((section bin)
+  (files ((main.bc as ocaml-expect)))))
+
+
+(jbuild_version 1)

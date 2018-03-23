@@ -1,7 +1,0 @@
-(library
- ((name ppx_assert_bench_lib)
-  (flags (:standard -safe-string))
-  (libraries (ppx_compare.runtime-lib sexplib))
-  (preprocess (pps (ppx_assert ppx_bench ppx_driver.runner)))))
-
-(jbuild_version 1)

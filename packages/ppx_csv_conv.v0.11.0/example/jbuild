@@ -1,0 +1,12 @@
+(library
+ ((name ppx_csv_conv_test)
+  (flags (:standard -safe-string))
+  (libraries (core csvfields))
+  (preprocess (pps (ppx_jane ppx_csv_conv ppxlib.runner)))
+)
+)
+
+(alias ((name DEFAULT) (deps (example.ml.pp example.mli.pp))))
+
+
+(jbuild_version 1)

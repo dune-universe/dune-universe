@@ -1,0 +1,17 @@
+(executables
+  ((names (dump_metrics profiler_tool))
+   (libraries (core
+               core_extended
+               textutils
+               core_profiler
+               core_profiler_offline_tool))
+   (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+(install
+ ((section bin)
+  (files
+   ((dump_metrics.exe  as core-profiler-dump-metrics)
+    (profiler_tool.exe as core-profiler-tool)))))
+
+
+(jbuild_version 1)

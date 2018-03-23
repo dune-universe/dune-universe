@@ -1,0 +1,12 @@
+(executables
+ ((names (find ltl zcat run_in_fork csv_example))
+  (flags (:standard -safe-string))
+  (libraries (
+    async
+    async_extended
+    core
+    pcre))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

@@ -1,0 +1,11 @@
+(library
+ ((name async_sendfile)
+  (public_name async_sendfile)
+  (libraries (
+    async_unix
+    core
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+  ))
+
+(jbuild_version 1)

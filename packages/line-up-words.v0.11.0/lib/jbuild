@@ -1,0 +1,6 @@
+(library ((name line_up_words_lib)
+          (libraries (core_extended patience_diff pcre re2))
+          (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

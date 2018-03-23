@@ -1,0 +1,10 @@
+(library
+ ((name splay_tree)
+  (public_name splay_tree)
+  
+  (flags (:standard -safe-string))
+  (libraries (core_kernel))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

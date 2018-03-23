@@ -1,0 +1,12 @@
+(library
+ ((name async_sendfile_test)
+  (libraries (
+    async
+    async_sendfile
+    core
+    expect_test_helpers
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+  ))
+
+(jbuild_version 1)

@@ -1,0 +1,13 @@
+(library
+ ((name test_resource_cache)
+  (flags (:standard -safe-string))
+  (libraries
+   (core
+    async
+    expect_test_helpers
+    resource_cache
+    ))
+  (preprocess (pps (ppx_jane ppxlib.runner)))))
+
+
+(jbuild_version 1)

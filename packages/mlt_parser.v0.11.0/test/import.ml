@@ -1,0 +1,3 @@
+include Expect_test_helpers
+include Expect_test_patdiff.Std
+include Migrate_parsetree
