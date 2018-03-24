@@ -33,3 +33,15 @@ outlined on that page and do not file a public issue.
 ## License
 By contributing to ocaml-vlq, you agree that your contributions will be licensed
 under the LICENSE file in the root directory of this source tree.
+
+## Release Process
+
+1. Install `topkg-care`: `opam install topkg-care`
+2. Review the changes since last version: `topkg status`
+3. Write the release notes: `topkg log edit`
+4. Commit the release notes: `topkg log commit`
+5. Tag the distribution with a version: `topkg tag`
+6. Create the distribution archive: `topkg distrib`
+7. Upload the archive to GitHub: `topkg publish distrib`
+8. Create an opam package: `topkg opam pkg`
+9. Submit it to OCaml's opam repository: `topkg opam submit`
