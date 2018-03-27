@@ -1,0 +1,16 @@
+.*.swp
+.*.swo
+_build
+*.native
+*.byte
+.session
+TAGS
+*.docdir
+setup.*
+qtest*
+*.html
+*_j.*
+*_t.*
+.merlin
+*.install
+*.json

@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name test_distributed)  
+  (wrapped false)  
+  (libraries (distributed)))) 
