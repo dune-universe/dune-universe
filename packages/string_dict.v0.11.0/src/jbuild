@@ -1,0 +1,9 @@
+(library
+ ((name string_dict)
+  (public_name string_dict)
+  (libraries (base))
+  (c_names (string_dict_stubs))
+  (preprocess (pps (ppx_compare ppx_hash ppxlib.runner)))
+  (js_of_ocaml ((javascript_files (string_dict.js))))))
+
+(jbuild_version 1)

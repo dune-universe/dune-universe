@@ -1,0 +1,11 @@
+(library
+ ((name string_dict_test)
+  (libraries (base
+              core_kernel
+              expect_test_helpers_kernel
+              string_dict))
+  (flags (:standard -safe-string))
+  (preprocess (pps (ppx_jane ppxlib.runner)))
+))
+
+(jbuild_version 1)
