@@ -1,0 +1,8 @@
+description = "FAT filesystem manipulation"
+version = "0.12.3"
+requires =
+"cstruct cstruct.ppx re re.str mirage-types mirage-block-lwt mirage-fs-lwt lwt result rresult"
+archive(byte)   = "fat.cma"
+plugin(byte)    = "fat.cma"
+archive(native) = "fat.cmxa"
+plugin(native)  = "fat.cmxs"
