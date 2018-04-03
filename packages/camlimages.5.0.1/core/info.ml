@@ -19,7 +19,7 @@
 (* File header informations *)
 
 type colormodel =
-   | Gray | RGB | Index | GrayA | RGBA
+   | Gray | RGB | Index | GrayA | RGBA | YCbCr | CMYK
 
 (* Infos attached to bitmaps *)
 type info =

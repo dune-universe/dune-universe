@@ -1,3 +1,7 @@
+5.0.1
+        - Added colormodel to `header_infos` when a jpeg file is loaded (Ken Sakayori <kensakayori@gmail.com>)
+        - Added YCbCr and CMYK color models (Ken Sakayori <kensakayori@gmail.com>)
+
 5.0.0
 	- dune port
 	

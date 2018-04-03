@@ -223,7 +223,7 @@ let save_cmyk_sample name opts =
   done;
   close_out oc
 
-let find_jpeg_size ic =
+let find_jpeg_size_and_colormodel ic =
   (* jump to the next 0xff *)
   let rec loop () =
     let rec jump_to_0xff () =
@@ -235,14 +235,23 @@ let find_jpeg_size ic =
       else ch in
     jump_to_0xff ();
     let ch = jump_to_non_0xff () in
-    let str = Bytes.create 4 in
+    let str = Bytes.create 5 in
     match ch with
-    | 0xda -> raise Not_found
-    | _ when ch >= 0xc0 && ch <= 0xc3 ->
-      really_input ic str 0 3;
-      really_input ic str 0 4;
+    | 0xda (* SOS *) -> raise Not_found
+    | _ when ch >= 0xc0 (* SOF0 *) && ch <= 0xc3 (* SOF3 *) ->
+      really_input ic str 0 3; (* Lf and P *)
+      really_input ic str 0 5; (* Y, X, and Nf *)
+      let colormodel =
+        (* Number of components *)
+        match str @% 4 with
+        | 1 -> Some (Info_ColorModel Gray)
+        | 3 -> Some (Info_ColorModel YCbCr)
+        | 4 -> Some (Info_ColorModel CMYK)
+        | _ -> None
+      in
       (str @% 2) lsl 8 + (str @% 3), (* width *)
-      (str @% 0) lsl 8 + (str @% 1)  (* height *)
+      (str @% 0) lsl 8 + (str @% 1), (* height *)
+      colormodel
     | _ ->
       (* skip this block *)
       let blocklen =
@@ -266,13 +275,18 @@ let check_header filename =
          int_of_char str.[1] lor 0x80 = 0xd8 *)
       (str @% 0) = 0xff && (str @% 1) = 0xd8
       (* && String.sub str 6 4 = "JFIF" --- JFIF standard *) then begin
-      let w, h =
-        try find_jpeg_size ic with
-        | Not_found -> -1, -1 in
+      let w, h, infos =
+        try
+          let w, h, colormodel = find_jpeg_size_and_colormodel ic in
+          w, h, 
+          match colormodel with Some x -> [x] | None -> []
+        with
+        | Not_found -> -1, -1, [] 
+      in
       Pervasives.close_in ic;
       { header_width = w;
         header_height = h;
-        header_infos = []; }
+        header_infos = infos; }
     end else
       raise Wrong_file_type
   with

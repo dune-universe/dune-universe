@@ -216,11 +216,13 @@ module Make(A : sig val name : string end) = struct
     let b = match o with Some _ -> true | None -> false in
     !% "HAS_%s" k, Switch b
 
+  (* Configurator does not have #define X code... *)
   let path k o =
     [ bool k o;  has k o ] @ 
     match o with 
-    | Some p -> [ !% "PATH_%s" k, String p ]
-    | None -> []
+    | Some p -> [ !% "PATH_%s" k, String p
+                (* ; !% "PATH_OPTION_%s" k, String (!% "(Some %s)" p) *) ]
+    | None -> [ (* !% "PATH_OPTION_%s" k, String "None" *) ]
 
   let library k o =
     [ bool k o;  has k o ] @ 

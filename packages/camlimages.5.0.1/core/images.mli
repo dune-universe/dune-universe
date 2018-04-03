@@ -97,7 +97,7 @@ val guess_extension : string -> format
 (******************************************** Image file header informations *)
 
 type colormodel = Info.colormodel =
-   | Gray | RGB | Index | GrayA | RGBA
+   | Gray | RGB | Index | GrayA | RGBA | YCbCr | CMYK
 
 (** Infos attached to bitmaps *)
 type info = Info.info =
