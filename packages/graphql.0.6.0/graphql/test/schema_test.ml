@@ -106,4 +106,132 @@ let suite = [
       ]
     ])
   );
+  ("fragments cannot form cycles", `Quick, fun () ->
+    let query = "
+      fragment F1 on Foo {
+        ... on Bar {
+          baz {
+            ... F2
+          }
+        }
+      }
+
+      fragment F2 on Qux {
+        ... F1
+      }
+
+      {
+        ... F1
+      }
+    " in
+    test_query query (`Assoc [
+      "errors", `List [
+        `Assoc [
+          "message", `String "Fragment cycle detected: F1, F2"
+        ]
+      ]
+    ])
+  );
+  ("introspection query should be accepted", `Quick, fun () ->
+    let query = "
+      query IntrospectionQuery {
+        __schema {
+          queryType { name }
+          mutationType { name }
+          subscriptionType { name }
+          types {
+            ...FullType
+          }
+          directives {
+            name
+            description
+            locations
+            args {
+              ...InputValue
+            }
+          }
+        }
+      }
+
+      fragment FullType on __Type {
+        kind
+        name
+        description
+        fields(includeDeprecated: true) {
+          name
+          description
+          args {
+            ...InputValue
+          }
+          type {
+            ...TypeRef
+          }
+          isDeprecated
+          deprecationReason
+        }
+        inputFields {
+          ...InputValue
+        }
+        interfaces {
+          ...TypeRef
+        }
+        enumValues(includeDeprecated: true) {
+          name
+          description
+          isDeprecated
+          deprecationReason
+        }
+        possibleTypes {
+          ...TypeRef
+        }
+      }
+
+      fragment InputValue on __InputValue {
+        name
+        description
+        type { ...TypeRef }
+        defaultValue
+      }
+
+      fragment TypeRef on __Type {
+        kind
+        name
+        ofType {
+          kind
+          name
+          ofType {
+            kind
+            name
+            ofType {
+              kind
+              name
+              ofType {
+                kind
+                name
+                ofType {
+                  kind
+                  name
+                  ofType {
+                    kind
+                    name
+                    ofType {
+                      kind
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    " in
+    match Graphql_parser.parse query with
+    | Error err -> failwith err
+    | Ok doc ->
+        begin match Graphql.Schema.execute Test_schema.schema () doc with
+        | Ok _ -> ()
+        | Error err -> failwith (Yojson.Basic.pretty_to_string err)
+        end
+  );
 ]

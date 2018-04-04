@@ -118,16 +118,22 @@ let of_string_with_crlf s =
   for i = 0 to String.length s - 1
   do Bigarray.Array1.set bs i (String.get s i) done;
 
-  let rec aux second_time = function
+  let rec aux state = function
     | Fail (_, path, err) -> Error (`Invalid (err, path))
     | Partial { continue; _ } ->
-      if second_time
+      if state = `third
       then Error `Incomplete
-      else aux true @@ continue bs Complete (* avoid the CFWS token *)
+      else
+        let x = Bigarray.Array1.dim bs in
+        let off, len, state = match state with
+          | `first -> 0, x, `second
+          | `second -> x, x, `third
+          | `third -> assert false in
+        aux state @@ continue ~off ~len bs Complete (* avoid the CFWS token *)
     | Done (_, v) -> Ok v
   in
 
-  aux false @@ parse ~input:bs Angstrom.(Rfc2045.content <* option () Rfc822.cfws <* Rfc822.crlf <* commit)
+  aux `first @@ parse Angstrom.(Rfc2045.content <* option () Rfc822.cfws <* Rfc822.crlf <* commit)
 
   (* XXX(dinosaure): the last CFWS was due to: 'Content-Type: CFWS content-value
                      CFWS CRLF'. the [content] handles the CFWS token inside the
@@ -147,13 +153,19 @@ let of_string_raw s off len =
   for i = 0 to String.length s - 1
   do Bigarray.Array1.set bs i (String.get s i) done;
 
-  let rec aux second_time = function
+  let rec aux state = function
     | Fail (_, path, err) -> Error (`Invalid (err, path))
     | Partial {  continue; _ } ->
-      if second_time
+      if state = `third
       then Error `Incomplete
-      else aux true @@ continue bs Complete (* avoid the CFWS token *)
+      else
+        let x = Bigarray.Array1.dim bs in
+        let off, len, state = match state with
+          | `first -> 0, x, `second
+          | `second -> x, x, `third
+          | `third -> assert false in
+        aux state @@ continue ~off ~len bs Complete (* avoid the CFWS token *)
     | Done (committed, v) -> Ok (v, committed)
   in
 
-  aux false @@ parse ~input:bs Angstrom.(Rfc2045.content <* option () Rfc822.cfws <* Rfc822.crlf <* commit)
+  aux `first @@ parse Angstrom.(Rfc2045.content <* option () Rfc822.cfws <* Rfc822.crlf <* commit)

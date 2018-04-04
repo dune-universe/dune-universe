@@ -1,3 +1,8 @@
+v0.3 2013-03-31 Paris (France)
+------------------------------
+
+- Update library with new API of `angstrom.0.9.0``
+
 v0.2 2017-01-22 Hô Chi Minh (Vietnam)
 ---------------------------------
 

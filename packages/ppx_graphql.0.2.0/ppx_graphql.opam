@@ -1,4 +1,4 @@
-version: "0.1.0"
+version: "0.2.0"
 opam-version: "1.2"
 maintainer: "Andreas Garnaes <andreas.garnaes@gmail.com>"
 authors: "Andreas Garnaes <andreas.garnaes@gmail.com>"
@@ -12,5 +12,6 @@ depends: [
   "jbuilder" {build}
   "graphql"
   "yojson"
+  "ppx_metaquot"
   "alcotest" {test & >= "0.4.5"}
 ]

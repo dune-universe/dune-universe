@@ -90,3 +90,34 @@ For use with jbuilder, use the `preprocess`- and `preprocessor_deps`-stanza:
   ...
 )
 ```
+
+### Unions
+
+When a field of type union is part of your GraphQL query, you must select `__typename` on that field, otherwise you will get a runtime error! This limitation is intended to be solved in the future.
+
+Example:
+
+```ocaml
+let _ = [%graphql {|
+  query SearchRepositories($query: String!) {
+    search(query: $query, type: REPOSITORY, first: 5) {
+      nodes {
+        __typename
+        ...on Repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+|}]
+```
+
+### Limitations and Future Work
+
+- No support for input objects
+- No support for interfaces
+- No support for custom scalar types
+- Poor error handling
+- Error reporting should be improved
+- Path to JSON introspection query result is hardcoded to "schema.json"
+- Assumes the query has already been validated
