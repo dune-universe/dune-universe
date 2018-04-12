@@ -1,0 +1,6 @@
+_build/
+.merlin
+*.install
+jbuild-workspace
+_coverage/
+bisect*.out

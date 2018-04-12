@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(alias
+    ((name runtest)
+    (package cuid)
+    (deps (lib_test/cuids.exe))
+    (action (run ${<}))))

@@ -1,0 +1,20 @@
+(jbuild_version 1)
+
+;; preprocessing using cppo
+(rule
+ ((targets (Ppx_parser.mly))
+  (deps    (../lib/netkat/Parser.cppo.mly))
+  (action  (run ${bin:cppo} ${<} -D MAKE_PPX -n -o ${@}))))
+
+;; generate parser
+(menhir
+ ((flags (--external-tokens Frenetic_netkat.Lexer))
+  (modules (Ppx_parser))))
+
+(library
+ ((name frenetic_ppx)
+  (public_name frenetic.ppx)
+  (kind ppx_rewriter)
+  (libraries (ppxlib base frenetic.netkat))
+  (ppx_runtime_libraries (frenetic.netkat))
+  (preprocess (pps (ppxlib.metaquot)))))
