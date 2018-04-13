@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executable
+ ((name graphviz)
+  (libraries (open core))))
+
+(alias
+ ((name graphviz)
+  (deps (
+    graphviz.exe
+    ${ROOT}/examples/graphviz/unix.dot
+  ))
+  (action (run ${<}))
+))

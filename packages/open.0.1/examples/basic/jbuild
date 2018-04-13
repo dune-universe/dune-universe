@@ -1,0 +1,16 @@
+(jbuild_version 1)
+
+(executable
+ ((name basic)
+  (libraries (open unix))))
+
+(alias
+ ((name runtest)
+  (deps (
+    basic.exe 
+    ${ROOT}/examples/basic/ocaml.pdf
+    ${ROOT}/examples/basic/ocaml.png
+    ${ROOT}/examples/basic/ocaml.svg
+  ))
+  (action (run ${<}))
+))
