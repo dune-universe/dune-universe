@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+    ((name resp_server)
+     (public_name resp-server)
+     (wrapped false)
+     (libraries (conduit-lwt-unix hiredis))))
