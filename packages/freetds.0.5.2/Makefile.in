@@ -1,0 +1,53 @@
+ROOT=.
+PACKAGE_NAME = @PACKAGE_NAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+
+TARBALL = $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz
+
+FORGE_DOC=shell.forge.ocamlcore.org:/home/groups/ocaml-freetds/htdocs
+
+# The number after https://forge.ocamlcore.org/frs/download.php/
+OCAMLFORGE_FILE_NO = 1127
+
+
+SOURCES = $(shell git ls-tree -r --name-only HEAD) \
+  configure aclocal.m4
+
+.PHONY: all opt byte native install uninstall update htdoc doc examples tests
+OCAML_ALL = byte $(filter-out byte, @OCAMLBEST@)
+all: byte $(OCAML_ALL)
+opt: native
+htdoc: doc
+byte native install uninstall update doc: configure
+	$(MAKE) -C src $@
+examples tests: all
+	$(MAKE) -C $@ $(OCAML_ALL)
+
+configure aclocal.m4: configure.ac
+	./autogen.sh
+
+.PHONY: tar dist
+tar dist: configure aclocal.m4
+	mkdir $(PACKAGE_NAME)-$(PACKAGE_VERSION)/
+	cp -a --parents $(SOURCES) $(PACKAGE_NAME)-$(PACKAGE_VERSION)/
+	tar -zcf $(TARBALL) $(PACKAGE_NAME)-$(PACKAGE_VERSION)/
+	$(RM) -rf $(PACKAGE_NAME)-$(PACKAGE_VERSION)/
+
+.PHONY: web web-html tutorial
+web-html: doc
+	$(MAKE) -C doc $@
+web tutorial: doc examples
+	$(MAKE) -C doc $@
+
+
+.PHONY: clean distclean dist-clean
+clean:
+	$(RM) $(wildcard *~ *.pdf *.ps *.png *.svg *.tex *.log *.tar.gz)
+	$(RM) -rf aclocal.m4 auto/ autom4te.cache/ config.status
+	$(MAKE) -C src $@
+#	$(MAKE) -C tests $@
+#	$(MAKE) -C examples $@
+#	$(MAKE) -C doc $@
+
+distclean dist-clean:: clean
+	$(RM) -r aclocal.m4 autom4te.cache config.log config.status

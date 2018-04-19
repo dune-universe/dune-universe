@@ -8,9 +8,9 @@
  ((name runtest)
   (deps (
     basic.exe 
-    ${ROOT}/examples/basic/ocaml.pdf
-    ${ROOT}/examples/basic/ocaml.png
-    ${ROOT}/examples/basic/ocaml.svg
+    "${ROOT}/examples/basic/ocaml logo.pdf"
+    "${ROOT}/examples/basic/ocaml logo.png"
+    "${ROOT}/examples/basic/ocaml logo.svg"
   ))
   (action (run ${<}))
 ))

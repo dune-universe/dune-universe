@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name freetds)
+  (public_name freetds)
+  (c_names (ct_c dblib_stubs))
+  (c_library_flags (-lct -lsybdb))))

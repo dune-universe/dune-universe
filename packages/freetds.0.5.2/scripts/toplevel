@@ -1,0 +1,2 @@
+#!/bin/bash
+./freetds.top -I +dbi "$@"

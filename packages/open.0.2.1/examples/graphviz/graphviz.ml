@@ -13,4 +13,5 @@ let compile_dot ?(format="pdf") ?(engine="dot") ?(title=engine) data : string =
 In_channel.read_all "unix.dot"
 |> compile_dot
 |> Open.in_default_app
+|> Format.printf "file opened successfully: %b\n"
 ;;
