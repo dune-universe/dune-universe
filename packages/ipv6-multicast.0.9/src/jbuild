@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(library
+ ((name            ipv6_multicast)
+  (public_name     ipv6-multicast)
+  (libraries       (rresult cstruct ipaddr.unix))
+  (modules         (ipv6_multicast))
+  (c_names         (ipv6_multicast_stubs))))
+
+(library
+ ((name            ipv6_multicast_lwt)
+  (public_name     ipv6-multicast-lwt)
+  (modules         (ipv6_multicast_lwt))
+  (libraries       (ipv6-multicast lwt.unix))))

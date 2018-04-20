@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executable
+ ((name test)
+  (modules (Test))
+  (libraries (rresult ipv6-multicast-lwt alcotest))))
+
+(alias
+ ((name    runtest)
+  (deps    (test.exe))
+  (action  (run ${<}))))
