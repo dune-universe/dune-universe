@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library
+ ((name        cpm)
+  (public_name cpm)
+  (modules (MakeROC TopKeeper))
+  (libraries (batteries))))
+
+(executable
+  ((name test)
+   (modules (test))
+   (libraries (cpm))))

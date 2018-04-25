@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(executable (
-  (name cfstream_test)
-  (public_name cfstream-test)
-  (libraries (cfstream oUnit))
-  (package cfstream)
-  (modules cfstream_test)
-))

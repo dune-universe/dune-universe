@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+  <Product Name='OCaml-Top' Id='*'
+           UpgradeCode='6b5569c2-58f9-4555-bd4c-13ce398afaa2'
+           Language='1033' Codepage='1252' Version='1.1.5'
+           Manufacturer='OCamlPro'>
+
+    <Package Id='*' Keywords='OCaml toplevel development IDE'
+             Description="Simple OCaml code editor centered on the toplevel"
+             Manufacturer='OCamlPro'
+             InstallerVersion='100' Languages='1033' Compressed='yes'
+             SummaryCodepage='1252' />
+
+    <Media Id='1' Cabinet='One.cab' EmbedCab='yes' />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='INSTALLDIR' Name='ocaml-top'>
+          <Directory Id="DATADIR" Name="data" />
+          <Component Id='MainExecutable'
+                     Guid='0245f0cb-63b7-40ac-8030-bc369e261f32'>
+            <File Id='icon.ico' Name='icon.ico' DiskId='1'
+                  Source='ocaml-top/data/logo.ico' />
+            <File Id='ocaml_top.exe' Name='ocaml-top.exe' DiskId='1'
+                  Source='ocaml-top/ocaml-top.exe' KeyPath='yes'>
+              <Shortcut Id="inst_ocamltop.exe" Directory="INSTALLDIR"
+                        Name="OCaml-Top"
+                        WorkingDirectory='INSTALLDIR' Icon="icon.ico" />
+              <Shortcut Id="startmenu_ocamltop.exe" Directory="ProgramMenuDir"
+                        Name="OCaml-Top"
+                        WorkingDirectory='INSTALLDIR' Icon="icon.ico"
+                        Advertise="yes" />
+              <Shortcut Id="desktop_ocamltop.exe" Directory="DesktopFolder"
+                        Name="OCaml-Top"
+                        WorkingDirectory='INSTALLDIR' Icon="icon.ico"
+                        Advertise="yes" />
+            </File>
+            <ProgId Id='ocaml_top.mlfile' Description="OCaml source file" Icon='icon.ico'
+                    Advertise="yes">
+              <Extension Id='ml' ContentType='text/x-ml-source' Advertise="yes">
+                <Verb Id='open' Command='Open' Argument='"%1"' />
+              </Extension>
+            </ProgId>
+            <ProgId Id='ocaml_top.mlifile' Description="OCaml interface file" Icon='icon.ico'
+                    Advertise="yes">
+              <Extension Id='mli' ContentType='text/x-ml-interface' Advertise="yes">
+                <Verb Id='open' Command='Open' Argument='"%1"' />
+              </Extension>
+            </ProgId>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="ocaml-top">
+          <Component Id="ProgramMenuDir"
+                     Guid="3c5b787e-b25e-4716-b8dd-4097c3b2d6ae">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="WINSYSDIR" />
+    </Directory>
+
+    <SetDirectory Id="WINSYSDIR" Value="[SystemFolder]"/>
+
+    <!--Feature Id='Complete' Level='1'-->
+    <Feature Id='Complete' Title='OCaml-Top 0.1' Description='OCaml-Top complete install.'
+      Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+      <ComponentRef Id='MainExecutable' />
+      <ComponentRef Id='ProgramMenuDir' />
+      <Feature Id='data_feat' Title='data files' Level='1'>
+        <ComponentGroupRef Id='data' />
+      </Feature>
+      <Feature Id='dlls_feat' Title='required dlls' Level='1'>
+        <ComponentGroupRef Id='dlls' />
+      </Feature>
+    </Feature>
+    <Icon Id='icon.ico' SourceFile="ocaml-top\data\logo.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+
+    <!-- UI definition -->
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\windows\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\windows\dlgbmp.bmp" />
+
+    <UI Id="WixUI_InstallDir_NoLicense">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="InstallDir" />
+
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">NOT Installed</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="EndDialog" Value="Return" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1">NOT Installed</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+      <Property Id="ARPNOMODIFY" Value="1" />
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+
+  </Product>
+</Wix>

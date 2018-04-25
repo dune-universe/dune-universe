@@ -1,0 +1,9 @@
+version = "2.2"
+description = "qTest: inline unit tests extractor, from Batteries."
+requires = "oUnit unix bytes"
+archive(byte) = "qcheck.cma"
+archive(byte, plugin) = "qcheck.cma"
+archive(native) = "qcheck.cmxa"
+archive(native, plugin) = "qcheck.cmxs"
+exists_if = "qcheck.cma"
+

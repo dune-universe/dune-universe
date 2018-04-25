@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(executables
+ ((names        (get_line))
+  (public_names (get_line))
+  (flags (:standard -g))
+  (libraries (batteries))))

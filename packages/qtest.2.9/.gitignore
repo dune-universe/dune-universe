@@ -1,0 +1,17 @@
+*.cmi
+*.cmx
+*.cmo
+*.byte
+*.opt
+*.log
+*.a
+*.cma
+*.cmxa
+*.cmxs
+qtest
+qtest.ml
+*.native
+_build
+tests/footest.ml
+.merlin
+*.install

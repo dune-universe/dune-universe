@@ -1,0 +1,32 @@
+## 1.1.5
+* Fixes for -safe-string and OCaml 4.06.0
+
+## 1.1.4
+* Change build system to jbuilder (and fix linking on recent OCaml)
+* Fixed GTK warnings and a segfault
+
+## 1.1.3
+* Fixed warnings on init (removed Format redirection code)
+* Updated Makefiles for newer ocp-build
+* Load .ocamlinit, following ocaml's default behaviour
+* Fixed issue with `ocamlrun ocaml` on some distributions
+
+## 1.1.2
+* Fixed dependency to the new ocp-indent/index install format
+* Install through opam-installer
+
+## 1.1.1
+* Updated for latest ocp-index
+* Status bar and completion now understand above opens
+
+## 1.1.0
+* UI cleanup
+* New color themes (dark and light)
+* Added a few keyboard shortcuts (fullscreen, switch theme, select font)
+* Added automatic library type display in a status-line (using ocp-index)
+* A few fixes (OSX font, command-line arguments on Windows, 3.12 compatibility)
+
+## 1.0.1
+* Fixed issues #24, #36, #37, #38, #39, mainly related to UI
+* Enhanced phrase boundary handling
+* Fixed ocaml message coloration
