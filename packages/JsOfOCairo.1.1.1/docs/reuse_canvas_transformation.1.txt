@@ -1,0 +1,5 @@
+<pre>
+move_to ~x:10.00 ~y:10.00
+line_to ~x:40.00 ~y:10.00
+stroke
+</pre>

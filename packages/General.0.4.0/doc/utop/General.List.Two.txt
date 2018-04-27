@@ -1,3 +1,0 @@
-module Two: sig
-  val to_pair_list: 'a list -> 'b list -> ('a * 'b) list
-end

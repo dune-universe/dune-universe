@@ -1,0 +1,3 @@
+<pre>
+text_extents "Hello" -> {x_bearing=0.00; y_bearing=-8.00; width=26.00; height=8.00; x_advance=26.00; y_advance=0.00}
+</pre>

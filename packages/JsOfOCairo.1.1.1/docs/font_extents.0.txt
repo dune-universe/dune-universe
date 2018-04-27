@@ -1,0 +1,3 @@
+<pre>
+font_extents -> {ascent=10.00; descent=3.00; baseline=12.00; max_x_advance=19.00; max_y_advance=0.00}
+</pre>

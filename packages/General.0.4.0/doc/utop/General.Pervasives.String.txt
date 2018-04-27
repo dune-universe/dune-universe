@@ -1,4 +1,0 @@
-module String: sig
-  val get: string -> int -> char
-  val set: string -> int -> char -> unit
-end

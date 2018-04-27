@@ -1,0 +1,44 @@
+module String: sig
+  type t = string
+  val of_char: char -> t
+  val of_list: char list -> t
+  val to_list: t -> char list
+  val size: t -> int
+  val get: t -> int -> char
+  val set: bytes -> int -> char -> unit
+  val of_bytes: bytes -> t
+  val to_bytes: t -> bytes
+  module O
+  val to_string: t -> t
+  val try_of_string: t -> t option
+  val of_string: t -> t
+  val equal: t -> t -> bool
+  val different: t -> t -> bool
+  val repr: t -> t
+  val compare: t -> t -> General.Compare.t
+  val less_than: t -> t -> bool
+  val less_or_equal: t -> t -> bool
+  val greater_than: t -> t -> bool
+  val greater_or_equal: t -> t -> bool
+  val between: t -> low:t -> high:t -> bool
+  val between_or_equal: t -> low:t -> high:t -> bool
+  val min: t -> t -> t
+  val max: t -> t -> t
+  val min_max: t -> t -> t * t
+  val concat: t -> t -> t
+  val substring: t -> pos:int -> len:int -> t
+  val prefix: t -> len:int -> t
+  val suffix: t -> len:int -> t
+  val has_prefix: t -> pre:t -> bool
+  val try_drop_prefix: t -> pre:t -> t option
+  val drop_prefix: t -> pre:t -> t
+  val drop_prefix': t -> len:int -> t
+  val has_suffix: t -> suf:t -> bool
+  val try_drop_suffix: t -> suf:t -> t option
+  val drop_suffix: t -> suf:t -> t
+  val drop_suffix': t -> len:int -> t
+  val split: t -> sep:t -> t list
+  val split': t -> seps:char list -> t list
+  val fold: init:'a -> t -> f:('a -> char -> 'a) -> 'a
+  val filter: t -> f:(char -> bool) -> t
+end

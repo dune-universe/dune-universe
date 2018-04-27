@@ -1,3 +1,0 @@
-module Result: sig
-  type t
-end

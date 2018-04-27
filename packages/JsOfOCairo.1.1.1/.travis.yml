@@ -1,0 +1,33 @@
+language: c
+dist: trusty
+sudo: false
+addons:
+  apt:
+    sources:
+    - avsm
+    packages:
+    - aspcud
+    - opam
+    - libcairo2-dev
+    - libjpeg8-dev
+    - libpango1.0-dev
+    - libgif-dev
+install:
+  - opam init --yes
+  - opam update --yes
+  - opam switch --yes $OCAML_VERSION
+  - eval `opam config env`
+  - opam switch
+  - opam pin add --yes --no-action General --dev-repo
+  - opam install --yes jbuilder js_of_ocaml-ppx js_of_ocaml-compiler conf-npm cairo2 General
+  - opam upgrade --yes
+  - opam list
+script:
+  - jbuilder runtest
+env:
+  - OCAML_VERSION=4.02.3
+  - OCAML_VERSION=4.06.0
+  - OCAML_VERSION=4.06.0+flambda
+cache:
+  directories:
+  - $HOME/.opam
