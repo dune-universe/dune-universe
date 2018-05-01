@@ -1,7 +1,0 @@
-.merlin
-/_build
-/jbuild-workspace
-/ocamlformat.install
-/ocamlformat_reason.install
-/src/mod_dep.dot
-/test/code
