@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(library
+ ((name junit_ounit)
+  (public_name junit_ounit)
+  (wrapped false)
+  (synopsis "JUnit XML reports generation for OUnit tests")
+  (libraries (junit oUnit))
+  (flags (:standard -safe-string -short-paths))
+ ))
