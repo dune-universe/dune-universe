@@ -1,0 +1,6 @@
+type t = {
+  year : int;
+  month : int;
+  day : int;
+  data: string;
+}

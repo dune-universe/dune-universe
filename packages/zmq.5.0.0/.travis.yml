@@ -1,0 +1,23 @@
+language: c
+sudo: required
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-opam.sh
+script: bash -ex .travis-opam.sh
+env:
+  global:
+    - DEPOPTS="*"
+    - TESTS=true
+  matrix:
+    - OCAML_VERSION=4.03 PACKAGE="zmq"       PINS="zmq:."
+    - OCAML_VERSION=4.03 PACKAGE="zmq-async" PINS="zmq:. zmq-async:."
+    - OCAML_VERSION=4.03 PACKAGE="zmq-lwt"   PINS="zmq:. zmq-lwt:."
+    - OCAML_VERSION=4.04 PACKAGE="zmq"       PINS="zmq:."
+    - OCAML_VERSION=4.04 PACKAGE="zmq-async" PINS="zmq:. zmq-async:."
+    - OCAML_VERSION=4.04 PACKAGE="zmq-lwt"   PINS="zmq:. zmq-lwt:."
+    - OCAML_VERSION=4.05 PACKAGE="zmq"       PINS="zmq:."
+    - OCAML_VERSION=4.05 PACKAGE="zmq-async" PINS="zmq:. zmq-async:."
+    - OCAML_VERSION=4.05 PACKAGE="zmq-lwt"   PINS="zmq:. zmq-lwt:."
+    - OCAML_VERSION=4.06 PACKAGE="zmq"       PINS="zmq:."
+    - OCAML_VERSION=4.06 PACKAGE="zmq-async" PINS="zmq:. zmq-async:."
+    - OCAML_VERSION=4.06 PACKAGE="zmq-lwt"   PINS="zmq:. zmq-lwt:."
+os:
+  - linux
