@@ -1,0 +1,15 @@
+_build
+*.docdir
+
+history.txt
+*.cmi
+*.cmt
+*.cmo
+*.cma
+*.cmx
+*.o
+T
+setup.data
+setup.log
+*.install
+.merlin
