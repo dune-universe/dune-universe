@@ -1,0 +1,12 @@
+opam-version: "1.2"
+name: "phashtbl"
+authors: "Francois BERENGER <ligand@free.fr>"
+maintainer: "Francois BERENGER <ligand@free.fr>"
+homepage: "https://github.com/UnixJunkie/phashtbl"
+bug-reports: "https://github.com/UnixJunkie/phashtbl/issues"
+dev-repo: "https://github.com/UnixJunkie/phashtbl.git"
+license: "LGPL"
+build: ["jbuilder" "build" "-p" name "-j" jobs]
+depends: [
+  "jbuilder" {build}
+]

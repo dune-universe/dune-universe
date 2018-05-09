@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executable (
+  (name all)
+  (libraries (phantom_algebra))
+  (preprocess (action (run ${bin:cppo} -V OCAML:${ocaml_version} ${<})))
+))
+
+
+(alias
+ ((name    runtest)
+  (deps    (all.exe))
+  (action  (run ${<}))
+))

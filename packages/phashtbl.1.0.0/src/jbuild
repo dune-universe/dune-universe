@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library
+ ((name        phashtbl)
+  (public_name phashtbl)
+  (modules (phashtbl))
+  (libraries (dbm))))
+
+(executable
+  ((name test)
+   (modules (test))
+   (libraries (phashtbl))))
