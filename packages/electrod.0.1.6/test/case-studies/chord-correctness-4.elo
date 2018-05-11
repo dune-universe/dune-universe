@@ -1,0 +1,610 @@
+univ : { Stabilizing$0 Rectifying$0 Node$0 Node$1 Node$2 Node$3 _skip$0 _fail$0 _join$0 _stabilizeFromFst$0 _stabilizeFromFstPrdc$0 _rectify$0 _RectifyWithNullPredecesor$0 _Dummy$0 _E$0 ring##Ord$0 };
+
+var this##_E#_event :3 { } { ( _skip$0 _Dummy$0 _Dummy$0 ) ( _fail$0 Node$0 _Dummy$0 ) ( _fail$0 Node$1 _Dummy$0 ) ( _fail$0 Node$2 _Dummy$0 ) ( _fail$0 Node$3 _Dummy$0 ) ( _join$0 Node$0 _Dummy$0 ) ( _join$0 Node$1 _Dummy$0 ) ( _join$0 Node$2 _Dummy$0 ) ( _join$0 Node$3 _Dummy$0 ) ( _stabilizeFromFst$0 Node$0 _Dummy$0 ) ( _stabilizeFromFst$0 Node$1 _Dummy$0 ) ( _stabilizeFromFst$0 Node$2 _Dummy$0 ) ( _stabilizeFromFst$0 Node$3 _Dummy$0 ) ( _stabilizeFromFstPrdc$0 Node$0 Node$0 ) ( _stabilizeFromFstPrdc$0 Node$0 Node$1 ) ( _stabilizeFromFstPrdc$0 Node$0 Node$2 ) ( _stabilizeFromFstPrdc$0 Node$0 Node$3 ) ( _stabilizeFromFstPrdc$0 Node$1 Node$0 ) ( _stabilizeFromFstPrdc$0 Node$1 Node$1 ) ( _stabilizeFromFstPrdc$0 Node$1 Node$2 ) ( _stabilizeFromFstPrdc$0 Node$1 Node$3 ) ( _stabilizeFromFstPrdc$0 Node$2 Node$0 ) ( _stabilizeFromFstPrdc$0 Node$2 Node$1 ) ( _stabilizeFromFstPrdc$0 Node$2 Node$2 ) ( _stabilizeFromFstPrdc$0 Node$2 Node$3 ) ( _stabilizeFromFstPrdc$0 Node$3 Node$0 ) ( _stabilizeFromFstPrdc$0 Node$3 Node$1 ) ( _stabilizeFromFstPrdc$0 Node$3 Node$2 ) ( _stabilizeFromFstPrdc$0 Node$3 Node$3 ) ( _rectify$0 Node$0 Node$0 ) ( _rectify$0 Node$0 Node$1 ) ( _rectify$0 Node$0 Node$2 ) ( _rectify$0 Node$0 Node$3 ) ( _rectify$0 Node$1 Node$0 ) ( _rectify$0 Node$1 Node$1 ) ( _rectify$0 Node$1 Node$2 ) ( _rectify$0 Node$1 Node$3 ) ( _rectify$0 Node$2 Node$0 ) ( _rectify$0 Node$2 Node$1 ) ( _rectify$0 Node$2 Node$2 ) ( _rectify$0 Node$2 Node$3 ) ( _rectify$0 Node$3 Node$0 ) ( _rectify$0 Node$3 Node$1 ) ( _rectify$0 Node$3 Node$2 ) ( _rectify$0 Node$3 Node$3 ) ( _RectifyWithNullPredecesor$0 Node$0 _Dummy$0 ) ( _RectifyWithNullPredecesor$0 Node$1 _Dummy$0 ) ( _RectifyWithNullPredecesor$0 Node$2 _Dummy$0 ) ( _RectifyWithNullPredecesor$0 Node$3 _Dummy$0 ) };
+const this##_stabilizeFromFst :1 { ( _stabilizeFromFst$0 ) };
+const ring##Ord#First :1 { ( Node$0 ) };
+const String :1 { };
+const this##_E :1 { ( _E$0 ) };
+const this##Stabilizing :1 { ( Stabilizing$0 ) };
+const seq##Int :1 { };
+var this##members :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+const this##_fail :1 { ( _fail$0 ) };
+const ring##Ord#Last :1 { ( Node$3 ) };
+const Int##next :2 { };
+const this##_stabilizeFromFstPrdc :1 { ( _stabilizeFromFstPrdc$0 ) };
+const ring##Ord#Next :2 { ( Node$0 Node$1 ) ( Node$1 Node$2 ) ( Node$2 Node$3 ) };
+var this##Node#todo :3 { } { ( Node$0 Stabilizing$0 Node$0 ) ( Node$0 Stabilizing$0 Node$1 ) ( Node$0 Stabilizing$0 Node$2 ) ( Node$0 Stabilizing$0 Node$3 ) ( Node$0 Rectifying$0 Node$0 ) ( Node$0 Rectifying$0 Node$1 ) ( Node$0 Rectifying$0 Node$2 ) ( Node$0 Rectifying$0 Node$3 ) ( Node$1 Stabilizing$0 Node$0 ) ( Node$1 Stabilizing$0 Node$1 ) ( Node$1 Stabilizing$0 Node$2 ) ( Node$1 Stabilizing$0 Node$3 ) ( Node$1 Rectifying$0 Node$0 ) ( Node$1 Rectifying$0 Node$1 ) ( Node$1 Rectifying$0 Node$2 ) ( Node$1 Rectifying$0 Node$3 ) ( Node$2 Stabilizing$0 Node$0 ) ( Node$2 Stabilizing$0 Node$1 ) ( Node$2 Stabilizing$0 Node$2 ) ( Node$2 Stabilizing$0 Node$3 ) ( Node$2 Rectifying$0 Node$0 ) ( Node$2 Rectifying$0 Node$1 ) ( Node$2 Rectifying$0 Node$2 ) ( Node$2 Rectifying$0 Node$3 ) ( Node$3 Stabilizing$0 Node$0 ) ( Node$3 Stabilizing$0 Node$1 ) ( Node$3 Stabilizing$0 Node$2 ) ( Node$3 Stabilizing$0 Node$3 ) ( Node$3 Rectifying$0 Node$0 ) ( Node$3 Rectifying$0 Node$1 ) ( Node$3 Rectifying$0 Node$2 ) ( Node$3 Rectifying$0 Node$3 ) };
+const this##_skip :1 { ( _skip$0 ) };
+var this##Node#fst :2 { } { ( Node$0 Node$0 ) ( Node$0 Node$1 ) ( Node$0 Node$2 ) ( Node$0 Node$3 ) ( Node$1 Node$0 ) ( Node$1 Node$1 ) ( Node$1 Node$2 ) ( Node$1 Node$3 ) ( Node$2 Node$0 ) ( Node$2 Node$1 ) ( Node$2 Node$2 ) ( Node$2 Node$3 ) ( Node$3 Node$0 ) ( Node$3 Node$1 ) ( Node$3 Node$2 ) ( Node$3 Node$3 ) };
+const this##_join :1 { ( _join$0 ) };
+const this##Node :1 { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+const this##Rectifying :1 { ( Rectifying$0 ) };
+const this##_rectify :1 { ( _rectify$0 ) };
+const this##_RectifyWithNullPredecesor :1 { ( _RectifyWithNullPredecesor$0 ) };
+const ring##Ord :1 { ( ring##Ord$0 ) };
+const this##_Dummy :1 { ( _Dummy$0 ) };
+var this##Node#prdc :2 { } { ( Node$0 Node$0 ) ( Node$0 Node$1 ) ( Node$0 Node$2 ) ( Node$0 Node$3 ) ( Node$1 Node$0 ) ( Node$1 Node$1 ) ( Node$1 Node$2 ) ( Node$1 Node$3 ) ( Node$2 Node$0 ) ( Node$2 Node$1 ) ( Node$2 Node$2 ) ( Node$2 Node$3 ) ( Node$3 Node$0 ) ( Node$3 Node$1 ) ( Node$3 Node$2 ) ( Node$3 Node$3 ) };
+var this##ringMembers :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) ( Node$3 ) };
+var this##Node#snd :2 { } { ( Node$0 Node$0 ) ( Node$0 Node$1 ) ( Node$0 Node$2 ) ( Node$0 Node$3 ) ( Node$1 Node$0 ) ( Node$1 Node$1 ) ( Node$1 Node$2 ) ( Node$1 Node$3 ) ( Node$2 Node$0 ) ( Node$2 Node$1 ) ( Node$2 Node$2 ) ( Node$2 Node$3 ) ( Node$3 Node$0 ) ( Node$3 Node$1 ) ( Node$3 Node$2 ) ( Node$3 Node$3 ) };
+const ints :1 { };
+
+run
+always (one this##Stabilizing);
+always (one this##Rectifying);
+always (no (this##Stabilizing & this##Rectifying));
+always (((this##Stabilizing + this##Rectifying)' ) = (this##Stabilizing + 
+ this##Rectifying));
+always (one this##_skip);
+always (one this##_fail);
+always (no (this##_skip & this##_fail));
+always (one this##_join);
+always (no ((this##_skip + this##_fail) & this##_join));
+always (one this##_stabilizeFromFst);
+always (no ((this##_skip + this##_fail + this##_join) & this##_stabilizeFromFst)
+ );
+always (one this##_stabilizeFromFstPrdc);
+always (no ((this##_skip + this##_fail + this##_join + this##_stabilizeFromFst) & 
+ this##_stabilizeFromFstPrdc));
+always (one this##_rectify);
+always (no ((this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc) & this##_rectify));
+always (one this##_RectifyWithNullPredecesor);
+always (no ((this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc + this##_rectify) & 
+ this##_RectifyWithNullPredecesor));
+always (((this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc + this##_rectify + this##_RectifyWithNullPredecesor
+ )' ) = (this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc + this##_rectify + this##_RectifyWithNullPredecesor
+ ));
+always (one this##_Dummy);
+always (one this##_E);
+always (one ring##Ord);
+always (this##members in this##Node);
+always (this##ringMembers in this##members);
+always (all correctness_this: this##Node { 
+  lone (correctness_this . this##Node#fst) and 
+  (correctness_this . this##Node#fst) in this##Node
+  });
+always ((this##Node#fst . univ) in this##Node);
+always (all correctness_this: this##Node { 
+  lone (correctness_this . this##Node#snd) and 
+  (correctness_this . this##Node#snd) in this##Node
+  });
+always ((this##Node#snd . univ) in this##Node);
+always (all correctness_this: this##Node { 
+  lone (correctness_this . this##Node#prdc) and 
+  (correctness_this . this##Node#prdc) in this##Node
+  });
+always ((this##Node#prdc . univ) in this##Node);
+always (all correctness_this: this##Node { 
+  (correctness_this . this##Node#todo) in ((this##Stabilizing + this##Rectifying
+  ) -> this##Node)
+  });
+always (((this##Node#todo . univ) . univ) in this##Node);
+always ((this##_E . (this##_E -> this##_E#_event)) in ((none -> none -> none) + 
+ (this##_fail -> this##Node -> this##_Dummy) + (this##_rectify -> this##Node -> 
+ this##Node) + (this##_stabilizeFromFstPrdc -> this##Node -> this##Node) + (
+ this##_stabilizeFromFst -> this##Node -> this##_Dummy) + (this##_skip -> 
+ this##_Dummy -> this##_Dummy) + (this##_join -> this##Node -> this##_Dummy) + (
+ this##_RectifyWithNullPredecesor -> this##Node -> this##_Dummy)));
+always ((ring##Ord . (ring##Ord -> ring##Ord#First)) in this##Node);
+always ((ring##Ord . (ring##Ord -> ring##Ord#Next)) in (this##Node -> this##Node
+ ));
+one ring##Ord#First;
+one ring##Ord#Last;
+ring##Ord#Last in this##Node;
+this##Node = (ring##Ord#First . *ring##Ord#Next);
+no (ring##Ord#Next . ring##Ord#First);
+no (ring##Ord#Last . ring##Ord#Next);
+(all ering##Ord#Next: this##Node - ring##Ord#Last { 
+  one (ering##Ord#Next . ring##Ord#Next)
+  });
+always (all correctness_n: this##Node { 
+  correctness_n in this##members iff 
+  (some (correctness_n . this##Node#fst) and 
+   some (correctness_n . this##Node#snd) and 
+   some (correctness_n . this##Node#prdc))
+  });
+always (all correctness_m: this##members { 
+  correctness_m in this##ringMembers iff 
+  correctness_m in (correctness_m . ^({succ_m1: this##members, succ_m2: 
+  this##members { 
+   ((succ_m1 . this##Node#fst) in this##members implies 
+    succ_m2 = (succ_m1 . this##Node#fst)) and 
+   (!((succ_m1 . this##Node#fst) in this##members) implies 
+    succ_m2 = (succ_m1 . this##Node#snd))
+  }}))
+  });
+always (all correctness_m: this##members { 
+  !(correctness_m in (correctness_m . (this##Node#fst + this##Node#snd))) and 
+  !((correctness_m . this##Node#fst) = (correctness_m . this##Node#snd))
+  });
+no this##Node#todo;
+all correctness_n: this##Node - this##members { 
+ no (correctness_n . this##Node#prdc)
+ };
+some this##ringMembers;
+(all atMostOneRing_m1: this##ringMembers, atMostOneRing_m2: this##ringMembers { 
+  atMostOneRing_m1 in (atMostOneRing_m2 . ^({succ_m1: this##members, succ_m2: 
+  this##members { 
+   ((succ_m1 . this##Node#fst) in this##members implies 
+    succ_m2 = (succ_m1 . this##Node#fst)) and 
+   (!((succ_m1 . this##Node#fst) in this##members) implies 
+    succ_m2 = (succ_m1 . this##Node#snd))
+  }}))
+  });
+(all connectedAppendages_m1: this##members - this##ringMembers { 
+  some connectedAppendages_m2: this##ringMembers { 
+   connectedAppendages_m2 in (connectedAppendages_m1 . ^({succ_m1: this##members, 
+   succ_m2: this##members { 
+    ((succ_m1 . this##Node#fst) in this##members implies 
+     succ_m2 = (succ_m1 . this##Node#fst)) and 
+    (!((succ_m1 . this##Node#fst) in this##members) implies 
+     succ_m2 = (succ_m1 . this##Node#snd))
+   }}))
+   }
+  });
+(all orderedSuccessors_m: this##members { 
+  (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#snd) . ^(~
+   ring##Ord#Next)) implies 
+   (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#fst) . ^(~
+    ring##Ord#Next)) and 
+    (orderedSuccessors_m . this##Node#fst) in ((orderedSuccessors_m . 
+    this##Node#snd) . ^(~ring##Ord#Next)))) and 
+  (!(orderedSuccessors_m in ((orderedSuccessors_m . this##Node#snd) . ^(~
+     ring##Ord#Next))) implies 
+   (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#fst) . ^(~
+    ring##Ord#Next)) or 
+    (orderedSuccessors_m . this##Node#fst) in ((orderedSuccessors_m . 
+    this##Node#snd) . ^(~ring##Ord#Next))))
+  });
+(all orderedRing_m1: this##ringMembers, orderedRing_m2: this##ringMembers, 
+ orderedRing_mb: this##ringMembers { 
+  (no ((orderedRing_m1 + orderedRing_m2) & orderedRing_mb) and 
+   no (orderedRing_m1 & orderedRing_m2)) implies 
+  (orderedRing_m2 = (orderedRing_m1 . {succ_m1: this##members, succ_m2: 
+   this##members { 
+    ((succ_m1 . this##Node#fst) in this##members implies 
+     succ_m2 = (succ_m1 . this##Node#fst)) and 
+    (!((succ_m1 . this##Node#fst) in this##members) implies 
+     succ_m2 = (succ_m1 . this##Node#snd))
+   }}) implies 
+   !((orderedRing_m1 in (orderedRing_m2 . ^(~ring##Ord#Next)) implies 
+      (orderedRing_m1 in (orderedRing_mb . ^(~ring##Ord#Next)) and 
+       orderedRing_mb in (orderedRing_m2 . ^(~ring##Ord#Next)))) and 
+     (!(orderedRing_m1 in (orderedRing_m2 . ^(~ring##Ord#Next))) implies 
+      (orderedRing_m1 in (orderedRing_mb . ^(~ring##Ord#Next)) or 
+       orderedRing_mb in (orderedRing_m2 . ^(~ring##Ord#Next))))))
+  });
+no (this##members - this##ringMembers);
+(all ideal_m: this##members { 
+  (ideal_m . this##Node#snd) = ((ideal_m . this##Node#fst) . this##Node#fst) and 
+  ((ideal_m . this##Node#snd) + (ideal_m . this##Node#fst)) in this##members
+  });
+(all ideal_m1: this##members, ideal_m2: this##members { 
+  (ideal_m1 -> ideal_m2) in this##Node#fst iff 
+  (ideal_m2 -> ideal_m1) in this##Node#prdc
+  });
+all correctness_n: this##Node, correctness_m: this##Node { 
+ (always (eventually (correctness_n in this##members and 
+    !((correctness_n . this##Node#prdc) in this##members))) implies 
+  always (eventually ((this##_RectifyWithNullPredecesor -> correctness_n -> 
+    this##_Dummy) in this##_E#_event))) and 
+ (always (eventually (correctness_n in this##members and 
+    no ((correctness_n . this##Node#todo) . this##Node) and 
+    (!((correctness_n . this##Node#fst) in this##members) or 
+     ((correctness_n . this##Node#fst) in this##members and 
+      !((correctness_n . this##Node#snd) = ((correctness_n . this##Node#fst) . 
+        this##Node#fst))) or 
+     !(((correctness_n . this##Node#fst) . this##Node#prdc) = correctness_n)))) implies 
+  always (eventually ((this##_stabilizeFromFst -> correctness_n -> this##_Dummy) in 
+    this##_E#_event))) and 
+ (always (eventually (correctness_n in this##members and 
+    (correctness_n -> this##Rectifying -> correctness_m) in this##Node#todo)) implies 
+  always (eventually ((this##_rectify -> correctness_n -> correctness_m) in 
+    this##_E#_event))) and 
+ (always (eventually ((correctness_n -> this##Stabilizing -> correctness_m) in 
+    this##Node#todo)) implies 
+  always (eventually ((this##_stabilizeFromFstPrdc -> correctness_n -> 
+    correctness_m) in this##_E#_event)))
+ };
+always (one this##_E#_event);
+always (all correctness_f: this##Node { 
+  (this##_fail -> correctness_f -> this##_Dummy) in this##_E#_event implies 
+  (correctness_f in this##members and 
+   (all pre_fail_m: {succ_m1: this##members, succ_m2: this##members { 
+     ((succ_m1 . this##Node#fst) in this##members implies 
+      succ_m2 = (succ_m1 . this##Node#fst)) and 
+     (!((succ_m1 . this##Node#fst) in this##members) implies 
+      succ_m2 = (succ_m1 . this##Node#snd))
+    }} . correctness_f { 
+     (((pre_fail_m . this##Node#fst) + (pre_fail_m . this##Node#snd)) - 
+     correctness_f) in this##members
+     }) and 
+   no none and 
+   ((this##Node#fst)' ) = (this##Node#fst - (correctness_f -> this##Node)) and 
+   ((this##Node#snd)' ) = (this##Node#snd - (correctness_f -> this##Node)) and 
+   ((this##Node#todo)' ) = (this##Node#todo - (correctness_f -> (
+   this##Stabilizing + this##Rectifying) -> this##Node)) and 
+   no none and 
+   ((this##Node#prdc)' ) = (this##Node#prdc - (correctness_f -> this##Node)))
+  });
+always (all correctness_m: this##Node, correctness_newPrdc: this##Node { 
+  (this##_rectify -> correctness_m -> correctness_newPrdc) in this##_E#_event implies 
+  (correctness_m in this##members and 
+   (correctness_m -> this##Rectifying -> correctness_newPrdc) in this##Node#todo and 
+   no none and 
+   ((this##Node#todo)' ) = (this##Node#todo - (correctness_m -> this##Rectifying -> 
+   correctness_newPrdc)) and 
+   ((((correctness_m . this##Node#prdc) in (correctness_m . ^(~ring##Ord#Next)) implies 
+      ((correctness_m . this##Node#prdc) in (correctness_newPrdc . ^(~
+       ring##Ord#Next)) and 
+       correctness_newPrdc in (correctness_m . ^(~ring##Ord#Next)))) and 
+     (!((correctness_m . this##Node#prdc) in (correctness_m . ^(~ring##Ord#Next)
+        )) implies 
+      ((correctness_m . this##Node#prdc) in (correctness_newPrdc . ^(~
+       ring##Ord#Next)) or 
+       correctness_newPrdc in (correctness_m . ^(~ring##Ord#Next))))) implies 
+    ((this##Node#prdc)' ) = (this##Node#prdc ++ (correctness_m -> 
+    correctness_newPrdc))) and 
+   (!(((correctness_m . this##Node#prdc) in (correctness_m . ^(~ring##Ord#Next)) implies 
+       ((correctness_m . this##Node#prdc) in (correctness_newPrdc . ^(~
+        ring##Ord#Next)) and 
+        correctness_newPrdc in (correctness_m . ^(~ring##Ord#Next)))) and 
+      (!((correctness_m . this##Node#prdc) in (correctness_m . ^(~ring##Ord#Next
+         ))) implies 
+       ((correctness_m . this##Node#prdc) in (correctness_newPrdc . ^(~
+        ring##Ord#Next)) or 
+        correctness_newPrdc in (correctness_m . ^(~ring##Ord#Next))))) implies 
+    (((correctness_m . this##Node#prdc) in this##members implies 
+      ((this##Node#prdc)' ) = this##Node#prdc) and 
+     (!((correctness_m . this##Node#prdc) in this##members) implies 
+      ((this##Node#prdc)' ) = (this##Node#prdc ++ (correctness_m -> 
+      correctness_newPrdc))))) and 
+   no none)
+  });
+always (all correctness_m: this##Node, correctness_newFst: this##Node { 
+  (this##_stabilizeFromFstPrdc -> correctness_m -> correctness_newFst) in 
+  this##_E#_event implies 
+  (correctness_m in this##members and 
+   (correctness_m -> this##Stabilizing -> correctness_newFst) in this##Node#todo and 
+   no none and 
+   (correctness_m in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next)) implies 
+    (correctness_m in (correctness_newFst . ^(~ring##Ord#Next)) and 
+     correctness_newFst in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next
+     )))) and 
+   (!(correctness_m in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next))) implies 
+    (correctness_m in (correctness_newFst . ^(~ring##Ord#Next)) or 
+     correctness_newFst in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next
+     )))) and 
+   (!(correctness_newFst in this##members) implies 
+    (((this##Node#todo)' ) = (this##Node#todo - (correctness_m -> 
+     this##Stabilizing -> correctness_newFst)) and 
+     ((this##Node#fst)' ) = this##Node#fst and 
+     ((this##Node#snd)' ) = this##Node#snd)) and 
+   (!(!(correctness_newFst in this##members)) implies 
+    (((this##Node#fst)' ) = (this##Node#fst ++ (correctness_m -> 
+     correctness_newFst)) and 
+     ((this##Node#snd)' ) = (this##Node#snd ++ (correctness_m -> (
+     correctness_newFst . this##Node#fst))) and 
+     ((this##Node#todo)' ) = ((this##Node#todo - (correctness_m -> 
+     this##Stabilizing -> correctness_newFst)) + (correctness_newFst -> 
+     this##Rectifying -> correctness_m)))) and 
+   no none)
+  });
+always (all correctness_m: this##Node { 
+  (this##_stabilizeFromFst -> correctness_m -> this##_Dummy) in this##_E#_event implies 
+  (correctness_m in this##members and 
+   no ((correctness_m . this##Node#todo) . this##Node) and 
+   no none and 
+   (!((correctness_m . this##Node#fst) in this##members) implies 
+    (((this##Node#fst)' ) = (this##Node#fst ++ (correctness_m -> (correctness_m . 
+     this##Node#snd))) and 
+     ((this##Node#snd)' ) = (this##Node#snd ++ (correctness_m -> ((correctness_m . 
+     this##Node#snd) . {nextNode_n: this##Node, nextNode_m: this##Node { 
+      (no (nextNode_n . ring##Ord#Next) implies 
+       nextNode_m = ring##Ord#First) and 
+      (!(no (nextNode_n . ring##Ord#Next)) implies 
+       nextNode_m = (nextNode_n . ring##Ord#Next))
+     }}))) and 
+     ((this##Node#todo)' ) = this##Node#todo)) and 
+   (!(!((correctness_m . this##Node#fst) in this##members)) implies 
+    (((this##Node#fst)' ) = this##Node#fst and 
+     ((this##Node#snd)' ) = (this##Node#snd ++ (correctness_m -> ((correctness_m . 
+     this##Node#fst) . this##Node#fst))) and 
+     ((some ((correctness_m . this##Node#fst) . this##Node#prdc) and 
+       (correctness_m in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next)) implies 
+        (correctness_m in (((correctness_m . this##Node#fst) . this##Node#prdc) . 
+         ^(~ring##Ord#Next)) and 
+         ((correctness_m . this##Node#fst) . this##Node#prdc) in ((correctness_m . 
+         this##Node#fst) . ^(~ring##Ord#Next)))) and 
+       (!(correctness_m in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next
+          ))) implies 
+        (correctness_m in (((correctness_m . this##Node#fst) . this##Node#prdc) . 
+         ^(~ring##Ord#Next)) or 
+         ((correctness_m . this##Node#fst) . this##Node#prdc) in ((correctness_m . 
+         this##Node#fst) . ^(~ring##Ord#Next))))) implies 
+      ((this##Node#todo)' ) = (this##Node#todo + (correctness_m -> 
+      this##Stabilizing -> ((correctness_m . this##Node#fst) . this##Node#prdc))
+      )) and 
+     (!(some ((correctness_m . this##Node#fst) . this##Node#prdc) and 
+        (correctness_m in ((correctness_m . this##Node#fst) . ^(~ring##Ord#Next)
+         ) implies 
+         (correctness_m in (((correctness_m . this##Node#fst) . this##Node#prdc) . 
+          ^(~ring##Ord#Next)) and 
+          ((correctness_m . this##Node#fst) . this##Node#prdc) in ((
+          correctness_m . this##Node#fst) . ^(~ring##Ord#Next)))) and 
+        (!(correctness_m in ((correctness_m . this##Node#fst) . ^(~
+           ring##Ord#Next))) implies 
+         (correctness_m in (((correctness_m . this##Node#fst) . this##Node#prdc) . 
+          ^(~ring##Ord#Next)) or 
+          ((correctness_m . this##Node#fst) . this##Node#prdc) in ((
+          correctness_m . this##Node#fst) . ^(~ring##Ord#Next))))) implies 
+      ((this##Node#todo)' ) = (this##Node#todo + ((correctness_m . 
+      this##Node#fst) -> this##Rectifying -> correctness_m))))) and 
+   no none)
+  });
+always ((this##_skip -> this##_Dummy -> this##_Dummy) in this##_E#_event implies 
+ (no none and 
+  no none));
+always (all correctness_new: this##Node { 
+  (this##_join -> correctness_new -> this##_Dummy) in this##_E#_event implies 
+  (!(correctness_new in this##members) and 
+   no none and 
+   (some post_join_m: this##members { 
+     (post_join_m in ((post_join_m . this##Node#fst) . ^(~ring##Ord#Next)) implies 
+      (post_join_m in (correctness_new . ^(~ring##Ord#Next)) and 
+       correctness_new in ((post_join_m . this##Node#fst) . ^(~ring##Ord#Next)))
+      ) and 
+     (!(post_join_m in ((post_join_m . this##Node#fst) . ^(~ring##Ord#Next))) implies 
+      (post_join_m in (correctness_new . ^(~ring##Ord#Next)) or 
+       correctness_new in ((post_join_m . this##Node#fst) . ^(~ring##Ord#Next)))
+      ) and 
+     ((this##Node#fst)' ) = (this##Node#fst ++ (correctness_new -> (post_join_m . 
+     this##Node#fst))) and 
+     ((this##Node#prdc)' ) = (this##Node#prdc ++ (correctness_new -> post_join_m
+     )) and 
+     ((this##Node#snd)' ) = (this##Node#snd ++ (correctness_new -> (post_join_m . 
+     this##Node#snd)))
+     }) and 
+   no none)
+  });
+always (all correctness_rs: this##Node { 
+  (this##_RectifyWithNullPredecesor -> correctness_rs -> this##_Dummy) in 
+  this##_E#_event implies 
+  (correctness_rs in this##members and 
+   !((correctness_rs . this##Node#prdc) in this##members) and 
+   no none and 
+   ((this##Node#prdc)' ) = (this##Node#prdc ++ (correctness_rs -> correctness_rs
+   )) and 
+   ((this##Node#todo)' ) = (this##Node#todo + (correctness_rs -> 
+   this##Rectifying -> (correctness_rs . {succ_m1: this##members, succ_m2: 
+   this##members { 
+    ((succ_m1 . this##Node#fst) in this##members implies 
+     succ_m2 = (succ_m1 . this##Node#fst)) and 
+    (!((succ_m1 . this##Node#fst) in this##members) implies 
+     succ_m2 = (succ_m1 . this##Node#snd))
+   }}))) and 
+   no none)
+  });
+always ((!(this##Node#todo = ((this##Node#todo)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFst_m: this##Node { 
+     (this##_stabilizeFromFst -> stabilizeFromFst_m -> this##_Dummy) in 
+     this##_E#_event
+     }) or 
+   (some rectify_m: this##Node, rectify_newPrdc: this##Node { 
+     (this##_rectify -> rectify_m -> rectify_newPrdc) in this##_E#_event
+     }) or 
+   (some RectifyWithNullPredecesor_rs: this##Node { 
+     (this##_RectifyWithNullPredecesor -> RectifyWithNullPredecesor_rs -> 
+     this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFstPrdc_m: this##Node, stabilizeFromFstPrdc_newFst: 
+    this##Node { 
+     (this##_stabilizeFromFstPrdc -> stabilizeFromFstPrdc_m -> 
+     stabilizeFromFstPrdc_newFst) in this##_E#_event
+     }))) and 
+ (!(this##Node#prdc = ((this##Node#prdc)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some join_new: this##Node { 
+     (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some RectifyWithNullPredecesor_rs: this##Node { 
+     (this##_RectifyWithNullPredecesor -> RectifyWithNullPredecesor_rs -> 
+     this##_Dummy) in this##_E#_event
+     }) or 
+   (some rectify_m: this##Node, rectify_newPrdc: this##Node { 
+     (this##_rectify -> rectify_m -> rectify_newPrdc) in this##_E#_event
+     }))) and 
+ (!(this##ringMembers = ((this##ringMembers)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some join_new: this##Node { 
+     (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFstPrdc_m: this##Node, stabilizeFromFstPrdc_newFst: 
+    this##Node { 
+     (this##_stabilizeFromFstPrdc -> stabilizeFromFstPrdc_m -> 
+     stabilizeFromFstPrdc_newFst) in this##_E#_event
+     }) or 
+   (some rectify_m: this##Node, rectify_newPrdc: this##Node { 
+     (this##_rectify -> rectify_m -> rectify_newPrdc) in this##_E#_event
+     }) or 
+   (some stabilizeFromFst_m: this##Node { 
+     (this##_stabilizeFromFst -> stabilizeFromFst_m -> this##_Dummy) in 
+     this##_E#_event
+     }))) and 
+ this##Stabilizing = ((this##Stabilizing)' ) and 
+ this##_rectify = ((this##_rectify)' ) and 
+ this##_RectifyWithNullPredecesor = ((this##_RectifyWithNullPredecesor)' ) and 
+ this##Rectifying = ((this##Rectifying)' ) and 
+ (this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc + this##_rectify + this##_RectifyWithNullPredecesor
+ ) = ((this##_skip + this##_fail + this##_join + this##_stabilizeFromFst + 
+ this##_stabilizeFromFstPrdc + this##_rectify + this##_RectifyWithNullPredecesor
+ )' ) and 
+ this##_Dummy = ((this##_Dummy)' ) and 
+ (!(this##members = ((this##members)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some join_new: this##Node { 
+     (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFstPrdc_m: this##Node, stabilizeFromFstPrdc_newFst: 
+    this##Node { 
+     (this##_stabilizeFromFstPrdc -> stabilizeFromFstPrdc_m -> 
+     stabilizeFromFstPrdc_newFst) in this##_E#_event
+     }) or 
+   (some rectify_m: this##Node, rectify_newPrdc: this##Node { 
+     (this##_rectify -> rectify_m -> rectify_newPrdc) in this##_E#_event
+     }) or 
+   (some stabilizeFromFst_m: this##Node { 
+     (this##_stabilizeFromFst -> stabilizeFromFst_m -> this##_Dummy) in 
+     this##_E#_event
+     }))) and 
+ this##Node = ((this##Node)' ) and 
+ (this##_Dummy + this##Node) = ((this##_Dummy + this##Node)' ) and 
+ this##_E = ((this##_E)' ) and 
+ this##_skip = ((this##_skip)' ) and 
+ (!(this##Node#fst = ((this##Node#fst)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some join_new: this##Node { 
+     (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFstPrdc_m: this##Node, stabilizeFromFstPrdc_newFst: 
+    this##Node { 
+     (this##_stabilizeFromFstPrdc -> stabilizeFromFstPrdc_m -> 
+     stabilizeFromFstPrdc_newFst) in this##_E#_event
+     }) or 
+   (some stabilizeFromFst_m: this##Node { 
+     (this##_stabilizeFromFst -> stabilizeFromFst_m -> this##_Dummy) in 
+     this##_E#_event
+     }))) and 
+ (!(this##Node#snd = ((this##Node#snd)' )) implies 
+  ((some fail_f: this##Node { 
+     (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some join_new: this##Node { 
+     (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+     }) or 
+   (some stabilizeFromFstPrdc_m: this##Node, stabilizeFromFstPrdc_newFst: 
+    this##Node { 
+     (this##_stabilizeFromFstPrdc -> stabilizeFromFstPrdc_m -> 
+     stabilizeFromFstPrdc_newFst) in this##_E#_event
+     }) or 
+   (some stabilizeFromFst_m: this##Node { 
+     (this##_stabilizeFromFst -> stabilizeFromFst_m -> this##_Dummy) in 
+     this##_E#_event
+     }))) and 
+ this##_fail = ((this##_fail)' ) and 
+ this##_join = ((this##_join)' ) and 
+ (this##Stabilizing + this##Rectifying) = ((this##Stabilizing + this##Rectifying
+ )' ) and 
+ this##_stabilizeFromFst = ((this##_stabilizeFromFst)' ) and 
+ this##_stabilizeFromFstPrdc = ((this##_stabilizeFromFstPrdc)' ));
+!(eventually (always (!((some join_new: this##Node { 
+        (this##_join -> join_new -> this##_Dummy) in this##_E#_event
+        }) or 
+      (some fail_f: this##Node { 
+        (this##_fail -> fail_f -> this##_Dummy) in this##_E#_event
+        })))) implies 
+  eventually (always (some this##ringMembers and 
+    (all atMostOneRing_m1: this##ringMembers, atMostOneRing_m2: 
+     this##ringMembers { 
+      atMostOneRing_m1 in (atMostOneRing_m2 . ^({succ_m1: this##members, succ_m2: 
+      this##members { 
+       ((succ_m1 . this##Node#fst) in this##members implies 
+        succ_m2 = (succ_m1 . this##Node#fst)) and 
+       (!((succ_m1 . this##Node#fst) in this##members) implies 
+        succ_m2 = (succ_m1 . this##Node#snd))
+      }}))
+      }) and 
+    (all connectedAppendages_m1: this##members - this##ringMembers { 
+      some connectedAppendages_m2: this##ringMembers { 
+       connectedAppendages_m2 in (connectedAppendages_m1 . ^({succ_m1: 
+       this##members, succ_m2: this##members { 
+        ((succ_m1 . this##Node#fst) in this##members implies 
+         succ_m2 = (succ_m1 . this##Node#fst)) and 
+        (!((succ_m1 . this##Node#fst) in this##members) implies 
+         succ_m2 = (succ_m1 . this##Node#snd))
+       }}))
+       }
+      }) and 
+    (all orderedSuccessors_m: this##members { 
+      (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#snd) . ^(~
+       ring##Ord#Next)) implies 
+       (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#fst) . ^(~
+        ring##Ord#Next)) and 
+        (orderedSuccessors_m . this##Node#fst) in ((orderedSuccessors_m . 
+        this##Node#snd) . ^(~ring##Ord#Next)))) and 
+      (!(orderedSuccessors_m in ((orderedSuccessors_m . this##Node#snd) . ^(~
+         ring##Ord#Next))) implies 
+       (orderedSuccessors_m in ((orderedSuccessors_m . this##Node#fst) . ^(~
+        ring##Ord#Next)) or 
+        (orderedSuccessors_m . this##Node#fst) in ((orderedSuccessors_m . 
+        this##Node#snd) . ^(~ring##Ord#Next))))
+      }) and 
+    (all orderedRing_m1: this##ringMembers, orderedRing_m2: this##ringMembers, 
+     orderedRing_mb: this##ringMembers { 
+      (no ((orderedRing_m1 + orderedRing_m2) & orderedRing_mb) and 
+       no (orderedRing_m1 & orderedRing_m2)) implies 
+      (orderedRing_m2 = (orderedRing_m1 . {succ_m1: this##members, succ_m2: 
+       this##members { 
+        ((succ_m1 . this##Node#fst) in this##members implies 
+         succ_m2 = (succ_m1 . this##Node#fst)) and 
+        (!((succ_m1 . this##Node#fst) in this##members) implies 
+         succ_m2 = (succ_m1 . this##Node#snd))
+       }}) implies 
+       !((orderedRing_m1 in (orderedRing_m2 . ^(~ring##Ord#Next)) implies 
+          (orderedRing_m1 in (orderedRing_mb . ^(~ring##Ord#Next)) and 
+           orderedRing_mb in (orderedRing_m2 . ^(~ring##Ord#Next)))) and 
+         (!(orderedRing_m1 in (orderedRing_m2 . ^(~ring##Ord#Next))) implies 
+          (orderedRing_m1 in (orderedRing_mb . ^(~ring##Ord#Next)) or 
+           orderedRing_mb in (orderedRing_m2 . ^(~ring##Ord#Next))))))
+      }) and 
+    no (this##members - this##ringMembers) and 
+    (all ideal_m: this##members { 
+      (ideal_m . this##Node#snd) = ((ideal_m . this##Node#fst) . this##Node#fst) and 
+      ((ideal_m . this##Node#snd) + (ideal_m . this##Node#fst)) in this##members
+      }) and 
+    (all ideal_m1: this##members, ideal_m2: this##members { 
+      (ideal_m1 -> ideal_m2) in this##Node#fst iff 
+      (ideal_m2 -> ideal_m1) in this##Node#prdc
+      }))));
+this##_E#_event = this##_E#_event;
+this##_stabilizeFromFst = this##_stabilizeFromFst;
+ring##Ord#First = ring##Ord#First;
+String = String;
+this##_E = this##_E;
+this##Stabilizing = this##Stabilizing;
+seq##Int = seq##Int;
+this##members = this##members;
+this##_fail = this##_fail;
+ring##Ord#Last = ring##Ord#Last;
+Int##next = Int##next;
+this##_stabilizeFromFstPrdc = this##_stabilizeFromFstPrdc;
+ring##Ord#Next = ring##Ord#Next;
+this##Node#todo = this##Node#todo;
+this##_skip = this##_skip;
+this##Node#fst = this##Node#fst;
+this##_join = this##_join;
+this##Node = this##Node;
+this##Rectifying = this##Rectifying;
+this##_rectify = this##_rectify;
+this##_RectifyWithNullPredecesor = this##_RectifyWithNullPredecesor;
+ring##Ord = ring##Ord;
+this##_Dummy = this##_Dummy;
+this##Node#prdc = this##Node#prdc;
+this##ringMembers = this##ringMembers;
+this##Node#snd = this##Node#snd;
+

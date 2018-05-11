@@ -1,0 +1,9 @@
+univ : { a b c d };
+
+const r : {} { (a a) (a b )};
+
+const s : {}{ a b c };
+
+run
+r in { disj x, y : s | x.r in univ };
+some r

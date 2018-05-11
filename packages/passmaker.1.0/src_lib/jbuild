@@ -1,0 +1,7 @@
+(library
+    (
+    (name passmaker)
+    (public_name passmaker)
+    (preprocess (pps (ppx_blob)))
+    (preprocessor_deps ((glob_files ../resources/*.txt)))
+    ))

@@ -1,0 +1,8 @@
+(executable
+    (
+    (name passmakercmd)
+    (package passmakercmd)
+    (public_name passmakercmd)
+    (libraries (cmdliner passmaker rresult))
+    ))
+

@@ -1,0 +1,235 @@
+univ : { Key$0 Key$1 Key$2 Room$0 Room$1 Room$2 Desk$0 Guest$0 Guest$1 Guest$2 _checkin$0 _entryWithRecoding$0 _entryWithoutRecoding$0 _checkout$0 _Dummy$0 _E$0 ordering##Ord$0 };
+
+var this##Desk#lastKey :2 { } { ( Room$0 Key$0 ) ( Room$0 Key$1 ) ( Room$0 Key$2 ) ( Room$1 Key$0 ) ( Room$1 Key$1 ) ( Room$1 Key$2 ) ( Room$2 Key$0 ) ( Room$2 Key$1 ) ( Room$2 Key$2 ) };
+const this##_entryWithRecoding :1 { ( _entryWithRecoding$0 ) };
+const this##_entryWithoutRecoding :1 { ( _entryWithoutRecoding$0 ) };
+const seq##Int :1 { };
+const String :1 { };
+const this##_Dummy :1 { ( _Dummy$0 ) };
+var this##Guest#gkeys :2 { } { ( Guest$0 Key$0 ) ( Guest$0 Key$1 ) ( Guest$0 Key$2 ) ( Guest$1 Key$0 ) ( Guest$1 Key$1 ) ( Guest$1 Key$2 ) ( Guest$2 Key$0 ) ( Guest$2 Key$1 ) ( Guest$2 Key$2 ) };
+const this##_checkin :1 { ( _checkin$0 ) };
+const this##Key :1 { ( Key$0 ) ( Key$1 ) ( Key$2 ) };
+const this##Guest :1 { } { ( Guest$0 ) ( Guest$1 ) ( Guest$2 ) };
+const Int##next :2 { };
+const this##Room :1 { } { ( Room$0 ) ( Room$1 ) ( Room$2 ) };
+const ordering##Ord :1 { ( ordering##Ord$0 ) };
+const this##_checkout :1 { ( _checkout$0 ) };
+var this##Room#current :2 { } { ( Room$0 Key$0 ) ( Room$0 Key$1 ) ( Room$0 Key$2 ) ( Room$1 Key$0 ) ( Room$1 Key$1 ) ( Room$1 Key$2 ) ( Room$2 Key$0 ) ( Room$2 Key$1 ) ( Room$2 Key$2 ) };
+var this##Desk#occupant :2 { } { ( Room$0 Guest$0 ) ( Room$0 Guest$1 ) ( Room$0 Guest$2 ) ( Room$1 Guest$0 ) ( Room$1 Guest$1 ) ( Room$1 Guest$2 ) ( Room$2 Guest$0 ) ( Room$2 Guest$1 ) ( Room$2 Guest$2 ) };
+const this##_E :1 { ( _E$0 ) };
+const this##Room#keys :2 { } { ( Room$0 Key$0 ) ( Room$0 Key$1 ) ( Room$0 Key$2 ) ( Room$1 Key$0 ) ( Room$1 Key$1 ) ( Room$1 Key$2 ) ( Room$2 Key$0 ) ( Room$2 Key$1 ) ( Room$2 Key$2 ) };
+const ordering##Ord#Next :2 { ( Key$0 Key$1 ) ( Key$1 Key$2 ) };
+const ordering##Ord#Last :1 { ( Key$2 ) };
+const this##Desk :1 { ( Desk$0 ) };
+const ordering##Ord#First :1 { ( Key$0 ) };
+var this##_E#_event :4 { } { ( _checkin$0 Guest$0 Room$0 Key$0 ) ( _checkin$0 Guest$0 Room$0 Key$1 ) ( _checkin$0 Guest$0 Room$0 Key$2 ) ( _checkin$0 Guest$0 Room$1 Key$0 ) ( _checkin$0 Guest$0 Room$1 Key$1 ) ( _checkin$0 Guest$0 Room$1 Key$2 ) ( _checkin$0 Guest$0 Room$2 Key$0 ) ( _checkin$0 Guest$0 Room$2 Key$1 ) ( _checkin$0 Guest$0 Room$2 Key$2 ) ( _checkin$0 Guest$1 Room$0 Key$0 ) ( _checkin$0 Guest$1 Room$0 Key$1 ) ( _checkin$0 Guest$1 Room$0 Key$2 ) ( _checkin$0 Guest$1 Room$1 Key$0 ) ( _checkin$0 Guest$1 Room$1 Key$1 ) ( _checkin$0 Guest$1 Room$1 Key$2 ) ( _checkin$0 Guest$1 Room$2 Key$0 ) ( _checkin$0 Guest$1 Room$2 Key$1 ) ( _checkin$0 Guest$1 Room$2 Key$2 ) ( _checkin$0 Guest$2 Room$0 Key$0 ) ( _checkin$0 Guest$2 Room$0 Key$1 ) ( _checkin$0 Guest$2 Room$0 Key$2 ) ( _checkin$0 Guest$2 Room$1 Key$0 ) ( _checkin$0 Guest$2 Room$1 Key$1 ) ( _checkin$0 Guest$2 Room$1 Key$2 ) ( _checkin$0 Guest$2 Room$2 Key$0 ) ( _checkin$0 Guest$2 Room$2 Key$1 ) ( _checkin$0 Guest$2 Room$2 Key$2 ) ( _entryWithRecoding$0 Guest$0 Room$0 Key$0 ) ( _entryWithRecoding$0 Guest$0 Room$0 Key$1 ) ( _entryWithRecoding$0 Guest$0 Room$0 Key$2 ) ( _entryWithRecoding$0 Guest$0 Room$1 Key$0 ) ( _entryWithRecoding$0 Guest$0 Room$1 Key$1 ) ( _entryWithRecoding$0 Guest$0 Room$1 Key$2 ) ( _entryWithRecoding$0 Guest$0 Room$2 Key$0 ) ( _entryWithRecoding$0 Guest$0 Room$2 Key$1 ) ( _entryWithRecoding$0 Guest$0 Room$2 Key$2 ) ( _entryWithRecoding$0 Guest$1 Room$0 Key$0 ) ( _entryWithRecoding$0 Guest$1 Room$0 Key$1 ) ( _entryWithRecoding$0 Guest$1 Room$0 Key$2 ) ( _entryWithRecoding$0 Guest$1 Room$1 Key$0 ) ( _entryWithRecoding$0 Guest$1 Room$1 Key$1 ) ( _entryWithRecoding$0 Guest$1 Room$1 Key$2 ) ( _entryWithRecoding$0 Guest$1 Room$2 Key$0 ) ( _entryWithRecoding$0 Guest$1 Room$2 Key$1 ) ( _entryWithRecoding$0 Guest$1 Room$2 Key$2 ) ( _entryWithRecoding$0 Guest$2 Room$0 Key$0 ) ( _entryWithRecoding$0 Guest$2 Room$0 Key$1 ) ( _entryWithRecoding$0 Guest$2 Room$0 Key$2 ) ( _entryWithRecoding$0 Guest$2 Room$1 Key$0 ) ( _entryWithRecoding$0 Guest$2 Room$1 Key$1 ) ( _entryWithRecoding$0 Guest$2 Room$1 Key$2 ) ( _entryWithRecoding$0 Guest$2 Room$2 Key$0 ) ( _entryWithRecoding$0 Guest$2 Room$2 Key$1 ) ( _entryWithRecoding$0 Guest$2 Room$2 Key$2 ) ( _entryWithoutRecoding$0 Guest$0 Room$0 Key$0 ) ( _entryWithoutRecoding$0 Guest$0 Room$0 Key$1 ) ( _entryWithoutRecoding$0 Guest$0 Room$0 Key$2 ) ( _entryWithoutRecoding$0 Guest$0 Room$1 Key$0 ) ( _entryWithoutRecoding$0 Guest$0 Room$1 Key$1 ) ( _entryWithoutRecoding$0 Guest$0 Room$1 Key$2 ) ( _entryWithoutRecoding$0 Guest$0 Room$2 Key$0 ) ( _entryWithoutRecoding$0 Guest$0 Room$2 Key$1 ) ( _entryWithoutRecoding$0 Guest$0 Room$2 Key$2 ) ( _entryWithoutRecoding$0 Guest$1 Room$0 Key$0 ) ( _entryWithoutRecoding$0 Guest$1 Room$0 Key$1 ) ( _entryWithoutRecoding$0 Guest$1 Room$0 Key$2 ) ( _entryWithoutRecoding$0 Guest$1 Room$1 Key$0 ) ( _entryWithoutRecoding$0 Guest$1 Room$1 Key$1 ) ( _entryWithoutRecoding$0 Guest$1 Room$1 Key$2 ) ( _entryWithoutRecoding$0 Guest$1 Room$2 Key$0 ) ( _entryWithoutRecoding$0 Guest$1 Room$2 Key$1 ) ( _entryWithoutRecoding$0 Guest$1 Room$2 Key$2 ) ( _entryWithoutRecoding$0 Guest$2 Room$0 Key$0 ) ( _entryWithoutRecoding$0 Guest$2 Room$0 Key$1 ) ( _entryWithoutRecoding$0 Guest$2 Room$0 Key$2 ) ( _entryWithoutRecoding$0 Guest$2 Room$1 Key$0 ) ( _entryWithoutRecoding$0 Guest$2 Room$1 Key$1 ) ( _entryWithoutRecoding$0 Guest$2 Room$1 Key$2 ) ( _entryWithoutRecoding$0 Guest$2 Room$2 Key$0 ) ( _entryWithoutRecoding$0 Guest$2 Room$2 Key$1 ) ( _entryWithoutRecoding$0 Guest$2 Room$2 Key$2 ) ( _checkout$0 Guest$0 _Dummy$0 _Dummy$0 ) ( _checkout$0 Guest$1 _Dummy$0 _Dummy$0 ) ( _checkout$0 Guest$2 _Dummy$0 _Dummy$0 ) };
+const ints :1 { };
+
+sym
+[ ( this##Room Room$0 ) ( this##Desk#lastKey Room$0 Key$0 ) ( this##Desk#lastKey Room$0 Key$1 ) ( this##Desk#lastKey Room$0 Key$2 ) ( this##Desk#occupant Room$0 Guest$0 ) ( this##Desk#occupant Room$0 Guest$1 ) ( this##Desk#occupant Room$0 Guest$2 ) ( this##Room#current Room$0 Key$0 ) ( this##Room#current Room$0 Key$1 ) ( this##Room#current Room$0 Key$2 ) ( this##Room#keys Room$0 Key$0 ) ( this##Room#keys Room$0 Key$1 ) ( this##Room#keys Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$2 )  <=  ( this##Room Room$1 ) ( this##Desk#lastKey Room$1 Key$0 ) ( this##Desk#lastKey Room$1 Key$1 ) ( this##Desk#lastKey Room$1 Key$2 ) ( this##Desk#occupant Room$1 Guest$0 ) ( this##Desk#occupant Room$1 Guest$1 ) ( this##Desk#occupant Room$1 Guest$2 ) ( this##Room#current Room$1 Key$0 ) ( this##Room#current Room$1 Key$1 ) ( this##Room#current Room$1 Key$2 ) ( this##Room#keys Room$1 Key$0 ) ( this##Room#keys Room$1 Key$1 ) ( this##Room#keys Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$2 ) ];
+[ ( this##Room Room$1 ) ( this##Desk#lastKey Room$1 Key$0 ) ( this##Desk#lastKey Room$1 Key$1 ) ( this##Desk#lastKey Room$1 Key$2 ) ( this##Desk#occupant Room$1 Guest$0 ) ( this##Desk#occupant Room$1 Guest$1 ) ( this##Desk#occupant Room$1 Guest$2 ) ( this##Room#current Room$1 Key$0 ) ( this##Room#current Room$1 Key$1 ) ( this##Room#current Room$1 Key$2 ) ( this##Room#keys Room$1 Key$0 ) ( this##Room#keys Room$1 Key$1 ) ( this##Room#keys Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$2 )  <=  ( this##Room Room$2 ) ( this##Desk#lastKey Room$2 Key$0 ) ( this##Desk#lastKey Room$2 Key$1 ) ( this##Desk#lastKey Room$2 Key$2 ) ( this##Desk#occupant Room$2 Guest$0 ) ( this##Desk#occupant Room$2 Guest$1 ) ( this##Desk#occupant Room$2 Guest$2 ) ( this##Room#current Room$2 Key$0 ) ( this##Room#current Room$2 Key$1 ) ( this##Room#current Room$2 Key$2 ) ( this##Room#keys Room$2 Key$0 ) ( this##Room#keys Room$2 Key$1 ) ( this##Room#keys Room$2 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$2 ) ];
+[ ( this##Guest Guest$0 ) ( this##Desk#occupant Room$0 Guest$0 ) ( this##Desk#occupant Room$1 Guest$0 ) ( this##Desk#occupant Room$2 Guest$0 ) ( this##Guest#gkeys Guest$0 Key$0 ) ( this##Guest#gkeys Guest$0 Key$1 ) ( this##Guest#gkeys Guest$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$0 Room$2 Key$2 ) ( this##_E#_event _checkout$0 Guest$0 _Dummy$0 _Dummy$0 )  <=  ( this##Guest Guest$1 ) ( this##Desk#occupant Room$0 Guest$1 ) ( this##Desk#occupant Room$1 Guest$1 ) ( this##Desk#occupant Room$2 Guest$1 ) ( this##Guest#gkeys Guest$1 Key$0 ) ( this##Guest#gkeys Guest$1 Key$1 ) ( this##Guest#gkeys Guest$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _checkout$0 Guest$1 _Dummy$0 _Dummy$0 ) ];
+[ ( this##Guest Guest$1 ) ( this##Desk#occupant Room$0 Guest$1 ) ( this##Desk#occupant Room$1 Guest$1 ) ( this##Desk#occupant Room$2 Guest$1 ) ( this##Guest#gkeys Guest$1 Key$0 ) ( this##Guest#gkeys Guest$1 Key$1 ) ( this##Guest#gkeys Guest$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$1 Room$2 Key$2 ) ( this##_E#_event _checkout$0 Guest$1 _Dummy$0 _Dummy$0 )  <=  ( this##Guest Guest$2 ) ( this##Desk#occupant Room$0 Guest$2 ) ( this##Desk#occupant Room$1 Guest$2 ) ( this##Desk#occupant Room$2 Guest$2 ) ( this##Guest#gkeys Guest$2 Key$0 ) ( this##Guest#gkeys Guest$2 Key$1 ) ( this##Guest#gkeys Guest$2 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$0 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _checkin$0 Guest$2 Room$2 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$0 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _entryWithRecoding$0 Guest$2 Room$2 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$0 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$1 Key$2 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$0 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$1 ) ( this##_E#_event _entryWithoutRecoding$0 Guest$2 Room$2 Key$2 ) ( this##_E#_event _checkout$0 Guest$2 _Dummy$0 _Dummy$0 ) ];
+
+run
+always (one this##Desk);
+always (one this##_checkin);
+always (one this##_entryWithRecoding);
+always (no (this##_checkin & this##_entryWithRecoding));
+always (one this##_entryWithoutRecoding);
+always (no ((this##_checkin + this##_entryWithRecoding) & 
+ this##_entryWithoutRecoding));
+always (one this##_checkout);
+always (no ((this##_checkin + this##_entryWithRecoding + 
+ this##_entryWithoutRecoding) & this##_checkout));
+always (((this##_checkin + this##_entryWithRecoding + 
+ this##_entryWithoutRecoding + this##_checkout)' ) = (this##_checkin + 
+ this##_entryWithRecoding + this##_entryWithoutRecoding + this##_checkout));
+always (one this##_Dummy);
+always (one this##_E);
+always (one ordering##Ord);
+always (all GoodSafety_this: this##Room { 
+  (GoodSafety_this . this##Room#keys) in this##Key
+  });
+always ((this##Room#keys . univ) in this##Room);
+always (all GoodSafety_this: this##Room { 
+  one (GoodSafety_this . this##Room#current) and 
+  (GoodSafety_this . this##Room#current) in (GoodSafety_this . this##Room#keys)
+  });
+always ((this##Room#current . univ) in this##Room);
+always ((this##Desk . (this##Desk -> this##Desk#lastKey)) in (this##Room -> 
+ this##Key) and 
+ (all v0: this##Room { 
+   lone (v0 . (this##Desk . (this##Desk -> this##Desk#lastKey))) and 
+   (v0 . (this##Desk . (this##Desk -> this##Desk#lastKey))) in this##Key
+   }) and 
+ (all v1: this##Key { 
+   ((this##Desk . (this##Desk -> this##Desk#lastKey)) . v1) in this##Room
+   }));
+always ((this##Desk . (this##Desk -> this##Desk#occupant)) in (this##Room -> 
+ this##Guest));
+always (all GoodSafety_this: this##Guest { 
+  (GoodSafety_this . this##Guest#gkeys) in this##Key
+  });
+always ((this##Guest#gkeys . univ) in this##Guest);
+always ((this##_E . (this##_E -> this##_E#_event)) in ((none -> none -> none -> 
+ none) + (this##_checkin -> this##Guest -> this##Room -> this##Key) + (
+ this##_entryWithoutRecoding -> this##Guest -> this##Room -> this##Key) + (
+ this##_entryWithRecoding -> this##Guest -> this##Room -> this##Key) + (
+ this##_checkout -> this##Guest -> this##_Dummy -> this##_Dummy)));
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#First)) in this##Key);
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#Next)) in (this##Key -> 
+ this##Key));
+one ordering##Ord#First;
+one ordering##Ord#Last;
+ordering##Ord#Last in this##Key;
+this##Key = (ordering##Ord#First . *ordering##Ord#Next);
+no (ordering##Ord#Next . ordering##Ord#First);
+no (ordering##Ord#Last . ordering##Ord#Next);
+(all eordering##Ord#Next: this##Key - ordering##Ord#Last { 
+  one (eordering##Ord#Next . ordering##Ord#Next)
+  });
+this##Room#keys in (this##Room -> this##Key);
+(all v2: this##Room { 
+  (v2 . this##Room#keys) in this##Key
+  });
+(all v3: this##Key { 
+  lone (this##Room#keys . v3) and 
+  (this##Room#keys . v3) in this##Room
+  });
+no (this##Guest . this##Guest#gkeys);
+no this##Desk#occupant;
+all GoodSafety_r: this##Room { 
+ (GoodSafety_r . this##Desk#lastKey) = (GoodSafety_r . this##Room#current)
+ };
+always (one this##_E#_event);
+always (all GoodSafety_g: this##Guest, GoodSafety_r: this##Room, GoodSafety_k: 
+ this##Key { 
+  (this##_checkin -> GoodSafety_g -> GoodSafety_r -> GoodSafety_k) in 
+  this##_E#_event implies 
+  (no (GoodSafety_r . this##Desk#occupant) and 
+   GoodSafety_k = ((((GoodSafety_r . this##Desk#lastKey) . ^ordering##Ord#Next) & 
+   (GoodSafety_r . this##Room#keys)) - ((((GoodSafety_r . this##Desk#lastKey) . 
+   ^ordering##Ord#Next) & (GoodSafety_r . this##Room#keys)) . ^
+   ordering##Ord#Next)) and 
+   no none and 
+   ((this##Guest#gkeys)' ) = (this##Guest#gkeys + (GoodSafety_g -> GoodSafety_k)
+   ) and 
+   ((this##Desk -> this##Desk#occupant)' ) = ((this##Desk -> this##Desk#occupant
+   ) + (this##Desk -> GoodSafety_r -> GoodSafety_g)) and 
+   no none and 
+   ((this##Desk -> this##Desk#lastKey)' ) = ((this##Desk -> this##Desk#lastKey) ++ 
+   (this##Desk -> GoodSafety_r -> GoodSafety_k)))
+  });
+always (all GoodSafety_g: this##Guest, GoodSafety_r: this##Room, GoodSafety_k: 
+ this##Key { 
+  (this##_entryWithoutRecoding -> GoodSafety_g -> GoodSafety_r -> GoodSafety_k) in 
+  this##_E#_event implies 
+  (GoodSafety_k in (GoodSafety_g . this##Guest#gkeys) and 
+   GoodSafety_k = (GoodSafety_r . this##Room#current) and 
+   no none and 
+   no none)
+  });
+always (all GoodSafety_g: this##Guest, GoodSafety_r: this##Room, GoodSafety_k: 
+ this##Key { 
+  (this##_entryWithRecoding -> GoodSafety_g -> GoodSafety_r -> GoodSafety_k) in 
+  this##_E#_event implies 
+  (GoodSafety_k in (GoodSafety_g . this##Guest#gkeys) and 
+   GoodSafety_k = ((((GoodSafety_r . this##Room#current) . ^ordering##Ord#Next) & 
+   (GoodSafety_r . this##Room#keys)) - ((((GoodSafety_r . this##Room#current) . 
+   ^ordering##Ord#Next) & (GoodSafety_r . this##Room#keys)) . ^
+   ordering##Ord#Next)) and 
+   no none and 
+   ((this##Room#current)' ) = (this##Room#current ++ (GoodSafety_r -> 
+   GoodSafety_k)) and 
+   no none)
+  });
+always (all GoodSafety_g: this##Guest { 
+  (this##_checkout -> GoodSafety_g -> this##_Dummy -> this##_Dummy) in 
+  this##_E#_event implies 
+  (some (this##Desk#occupant . GoodSafety_g) and 
+   no none and 
+   ((this##Desk -> this##Desk#occupant)' ) = ((this##Desk -> this##Desk#occupant
+   ) - (this##Desk -> this##Room -> GoodSafety_g)) and 
+   no none)
+  });
+always ((!(this##Room#current = ((this##Room#current)' )) implies 
+  (some entryWithRecoding_g: this##Guest, entryWithRecoding_r: this##Room, 
+   entryWithRecoding_k: this##Key { 
+    (this##_entryWithRecoding -> entryWithRecoding_g -> entryWithRecoding_r -> 
+    entryWithRecoding_k) in this##_E#_event
+    })) and 
+ (!(this##Guest#gkeys = ((this##Guest#gkeys)' )) implies 
+  (some checkin_g: this##Guest, checkin_r: this##Room, checkin_k: this##Key { 
+    (this##_checkin -> checkin_g -> checkin_r -> checkin_k) in this##_E#_event
+    })) and 
+ (!((this##Desk -> this##Desk#occupant) = ((this##Desk -> this##Desk#occupant)' 
+    )) implies 
+  ((some checkin_g: this##Guest, checkin_r: this##Room, checkin_k: this##Key { 
+     (this##_checkin -> checkin_g -> checkin_r -> checkin_k) in this##_E#_event
+     }) or 
+   (some checkout_g: this##Guest { 
+     (this##_checkout -> checkout_g -> this##_Dummy -> this##_Dummy) in 
+     this##_E#_event
+     }))) and 
+ this##Guest = ((this##Guest)' ) and 
+ this##_E = ((this##_E)' ) and 
+ this##_checkin = ((this##_checkin)' ) and 
+ this##Key = ((this##Key)' ) and 
+ this##_entryWithRecoding = ((this##_entryWithRecoding)' ) and 
+ this##_entryWithoutRecoding = ((this##_entryWithoutRecoding)' ) and 
+ (!((this##Desk -> this##Desk#lastKey) = ((this##Desk -> this##Desk#lastKey)' )) implies 
+  (some checkin_g: this##Guest, checkin_r: this##Room, checkin_k: this##Key { 
+    (this##_checkin -> checkin_g -> checkin_r -> checkin_k) in this##_E#_event
+    })) and 
+ this##Room = ((this##Room)' ) and 
+ this##_checkout = ((this##_checkout)' ) and 
+ (this##_checkin + this##_entryWithRecoding + this##_entryWithoutRecoding + 
+ this##_checkout) = ((this##_checkin + this##_entryWithRecoding + 
+ this##_entryWithoutRecoding + this##_checkout)' ) and 
+ this##Desk = ((this##Desk)' ) and 
+ this##_Dummy = ((this##_Dummy)' ) and 
+ (this##_Dummy + this##Guest + this##Room + this##Key) = ((this##_Dummy + 
+ this##Guest + this##Room + this##Key)' ));
+!(always (all NoIntervening_g: this##Guest, NoIntervening_r: this##Room, 
+   NoIntervening_k: this##Key { 
+    (this##_checkin -> NoIntervening_g -> NoIntervening_r -> NoIntervening_k) in 
+    this##_E#_event implies 
+    next ((this##_entryWithRecoding -> NoIntervening_g -> NoIntervening_r -> 
+     NoIntervening_k) in this##_E#_event or 
+     (this##_entryWithoutRecoding -> NoIntervening_g -> NoIntervening_r -> 
+     NoIntervening_k) in this##_E#_event)
+    }) implies 
+  always (all NoBadEntry_r: this##Room, NoBadEntry_g: this##Guest, NoBadEntry_k: 
+   this##Key { 
+    (((this##_entryWithRecoding -> NoBadEntry_g -> NoBadEntry_r -> NoBadEntry_k) in 
+      this##_E#_event or 
+      (this##_entryWithoutRecoding -> NoBadEntry_g -> NoBadEntry_r -> 
+      NoBadEntry_k) in this##_E#_event) and 
+     some (NoBadEntry_r . this##Desk#occupant)) implies 
+    NoBadEntry_g in (NoBadEntry_r . this##Desk#occupant)
+    }));
+this##Desk#lastKey = this##Desk#lastKey;
+this##_entryWithRecoding = this##_entryWithRecoding;
+this##_entryWithoutRecoding = this##_entryWithoutRecoding;
+seq##Int = seq##Int;
+String = String;
+this##_Dummy = this##_Dummy;
+this##Guest#gkeys = this##Guest#gkeys;
+this##_checkin = this##_checkin;
+this##Key = this##Key;
+this##Guest = this##Guest;
+Int##next = Int##next;
+this##Room = this##Room;
+ordering##Ord = ordering##Ord;
+this##_checkout = this##_checkout;
+this##Room#current = this##Room#current;
+this##Desk#occupant = this##Desk#occupant;
+this##_E = this##_E;
+this##Room#keys = this##Room#keys;
+ordering##Ord#Next = ordering##Ord#Next;
+ordering##Ord#Last = ordering##Ord#Last;
+this##Desk = this##Desk;
+ordering##Ord#First = ordering##Ord#First;
+this##_E#_event = this##_E#_event;
+

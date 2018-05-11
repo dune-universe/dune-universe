@@ -1,0 +1,491 @@
+univ : { Node$0 Node$1 Node$2 Req$0 Ack$0 Queue$0 Queue$1 Queue$2 Link$0 Link$1 Link$2 Tree$0 _Stutter$0 _AssignParent$0 _ReadReqOrAck_AtoC$0 _ReadReqOrAck_CtoA$0 _ReadReqOrAck_AtoA$0 _ReadReqOrAck_CtoC$0 _Elect$0 _WriteReqOrAck$0 _ResolveContention$0 _Dummy$0 _E$0 };
+
+const this##_E :1 { ( _E$0 ) };
+const this##_ReadReqOrAck_CtoC :1 { ( _ReadReqOrAck_CtoC$0 ) };
+const this##Ack :1 { ( Ack$0 ) };
+const String :1 { };
+const this##_Dummy :1 { ( _Dummy$0 ) };
+const this##_WriteReqOrAck :1 { ( _WriteReqOrAck$0 ) };
+var this##Contending :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) };
+var this##Queue#overflow :2 { } { ( Queue$0 Req$0 ) ( Queue$0 Ack$0 ) ( Queue$1 Req$0 ) ( Queue$1 Ack$0 ) ( Queue$2 Req$0 ) ( Queue$2 Ack$0 ) };
+const this##Link#queue :2 { } { ( Link$0 Queue$0 ) ( Link$0 Queue$1 ) ( Link$0 Queue$2 ) ( Link$1 Queue$0 ) ( Link$1 Queue$1 ) ( Link$1 Queue$2 ) ( Link$2 Queue$0 ) ( Link$2 Queue$1 ) ( Link$2 Queue$2 ) };
+const this##_ReadReqOrAck_AtoA :1 { ( _ReadReqOrAck_AtoA$0 ) };
+var this##Elected :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) };
+var this##_E#_event :2 { } { ( _Stutter$0 _Dummy$0 ) ( _AssignParent$0 Link$0 ) ( _AssignParent$0 Link$1 ) ( _AssignParent$0 Link$2 ) ( _ReadReqOrAck_AtoC$0 Link$0 ) ( _ReadReqOrAck_AtoC$0 Link$1 ) ( _ReadReqOrAck_AtoC$0 Link$2 ) ( _ReadReqOrAck_CtoA$0 Link$0 ) ( _ReadReqOrAck_CtoA$0 Link$1 ) ( _ReadReqOrAck_CtoA$0 Link$2 ) ( _ReadReqOrAck_AtoA$0 Link$0 ) ( _ReadReqOrAck_AtoA$0 Link$1 ) ( _ReadReqOrAck_AtoA$0 Link$2 ) ( _ReadReqOrAck_CtoC$0 Link$0 ) ( _ReadReqOrAck_CtoC$0 Link$1 ) ( _ReadReqOrAck_CtoC$0 Link$2 ) ( _Elect$0 Node$0 ) ( _Elect$0 Node$1 ) ( _Elect$0 Node$2 ) ( _WriteReqOrAck$0 Node$0 ) ( _WriteReqOrAck$0 Node$1 ) ( _WriteReqOrAck$0 Node$2 ) ( _ResolveContention$0 Link$0 ) ( _ResolveContention$0 Link$1 ) ( _ResolveContention$0 Link$2 ) };
+const this##_Elect :1 { ( _Elect$0 ) };
+var this##Active :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) };
+const this##Link :1 { } { ( Link$0 ) ( Link$1 ) ( Link$2 ) };
+const this##Link#target :2 { } { ( Link$0 Node$0 ) ( Link$0 Node$1 ) ( Link$0 Node$2 ) ( Link$1 Node$0 ) ( Link$1 Node$1 ) ( Link$1 Node$2 ) ( Link$2 Node$0 ) ( Link$2 Node$1 ) ( Link$2 Node$2 ) };
+const this##Req :1 { ( Req$0 ) };
+var this##Queue#slot :2 { } { ( Queue$0 Req$0 ) ( Queue$0 Ack$0 ) ( Queue$1 Req$0 ) ( Queue$1 Ack$0 ) ( Queue$2 Req$0 ) ( Queue$2 Ack$0 ) };
+const Int##next :2 { };
+const this##_AssignParent :1 { ( _AssignParent$0 ) };
+const this##_ResolveContention :1 { ( _ResolveContention$0 ) };
+var this##Waiting :1 { } { ( Node$0 ) ( Node$1 ) ( Node$2 ) };
+const this##Queue :1 { } { ( Queue$0 ) ( Queue$1 ) ( Queue$2 ) };
+const this##Tree#tree :2 { } { ( Node$0 Node$0 ) ( Node$0 Node$1 ) ( Node$0 Node$2 ) ( Node$1 Node$0 ) ( Node$1 Node$1 ) ( Node$1 Node$2 ) ( Node$2 Node$0 ) ( Node$2 Node$1 ) ( Node$2 Node$2 ) };
+const this##_ReadReqOrAck_AtoC :1 { ( _ReadReqOrAck_AtoC$0 ) };
+const this##Link#source :2 { } { ( Link$0 Node$0 ) ( Link$0 Node$1 ) ( Link$0 Node$2 ) ( Link$1 Node$0 ) ( Link$1 Node$1 ) ( Link$1 Node$2 ) ( Link$2 Node$0 ) ( Link$2 Node$1 ) ( Link$2 Node$2 ) };
+const seq##Int :1 { };
+const this##_Stutter :1 { ( _Stutter$0 ) };
+var this##ParentLinks :1 { } { ( Link$0 ) ( Link$1 ) ( Link$2 ) };
+const this##_ReadReqOrAck_CtoA :1 { ( _ReadReqOrAck_CtoA$0 ) };
+const this##Tree :1 { ( Tree$0 ) };
+const ints :1 { };
+
+sym
+[ ( this##Queue Queue$0 ) ( this##Link#queue Link$0 Queue$0 ) ( this##Link#queue Link$1 Queue$0 ) ( this##Link#queue Link$2 Queue$0 ) ( this##Queue#overflow Queue$0 Req$0 ) ( this##Queue#overflow Queue$0 Ack$0 ) ( this##Queue#slot Queue$0 Req$0 ) ( this##Queue#slot Queue$0 Ack$0 )  <=  ( this##Queue Queue$1 ) ( this##Link#queue Link$0 Queue$1 ) ( this##Link#queue Link$1 Queue$1 ) ( this##Link#queue Link$2 Queue$1 ) ( this##Queue#overflow Queue$1 Req$0 ) ( this##Queue#overflow Queue$1 Ack$0 ) ( this##Queue#slot Queue$1 Req$0 ) ( this##Queue#slot Queue$1 Ack$0 ) ];
+[ ( this##Queue Queue$1 ) ( this##Link#queue Link$0 Queue$1 ) ( this##Link#queue Link$1 Queue$1 ) ( this##Link#queue Link$2 Queue$1 ) ( this##Queue#overflow Queue$1 Req$0 ) ( this##Queue#overflow Queue$1 Ack$0 ) ( this##Queue#slot Queue$1 Req$0 ) ( this##Queue#slot Queue$1 Ack$0 )  <=  ( this##Queue Queue$2 ) ( this##Link#queue Link$0 Queue$2 ) ( this##Link#queue Link$1 Queue$2 ) ( this##Link#queue Link$2 Queue$2 ) ( this##Queue#overflow Queue$2 Req$0 ) ( this##Queue#overflow Queue$2 Ack$0 ) ( this##Queue#slot Queue$2 Req$0 ) ( this##Queue#slot Queue$2 Ack$0 ) ];
+[ ( this##Link Link$0 ) ( this##ParentLinks Link$0 ) ( this##Link#queue Link$0 Queue$0 ) ( this##Link#queue Link$0 Queue$1 ) ( this##Link#queue Link$0 Queue$2 ) ( this##Link#source Link$0 Node$0 ) ( this##Link#source Link$0 Node$1 ) ( this##Link#source Link$0 Node$2 ) ( this##Link#target Link$0 Node$0 ) ( this##Link#target Link$0 Node$1 ) ( this##Link#target Link$0 Node$2 ) ( this##_E#_event _AssignParent$0 Link$0 ) ( this##_E#_event _ReadReqOrAck_AtoC$0 Link$0 ) ( this##_E#_event _ReadReqOrAck_CtoA$0 Link$0 ) ( this##_E#_event _ReadReqOrAck_AtoA$0 Link$0 ) ( this##_E#_event _ReadReqOrAck_CtoC$0 Link$0 ) ( this##_E#_event _ResolveContention$0 Link$0 )  <=  ( this##Link Link$1 ) ( this##ParentLinks Link$1 ) ( this##Link#queue Link$1 Queue$0 ) ( this##Link#queue Link$1 Queue$1 ) ( this##Link#queue Link$1 Queue$2 ) ( this##Link#source Link$1 Node$0 ) ( this##Link#source Link$1 Node$1 ) ( this##Link#source Link$1 Node$2 ) ( this##Link#target Link$1 Node$0 ) ( this##Link#target Link$1 Node$1 ) ( this##Link#target Link$1 Node$2 ) ( this##_E#_event _AssignParent$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_AtoC$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_CtoA$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_AtoA$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_CtoC$0 Link$1 ) ( this##_E#_event _ResolveContention$0 Link$1 ) ];
+[ ( this##Link Link$1 ) ( this##ParentLinks Link$1 ) ( this##Link#queue Link$1 Queue$0 ) ( this##Link#queue Link$1 Queue$1 ) ( this##Link#queue Link$1 Queue$2 ) ( this##Link#source Link$1 Node$0 ) ( this##Link#source Link$1 Node$1 ) ( this##Link#source Link$1 Node$2 ) ( this##Link#target Link$1 Node$0 ) ( this##Link#target Link$1 Node$1 ) ( this##Link#target Link$1 Node$2 ) ( this##_E#_event _AssignParent$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_AtoC$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_CtoA$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_AtoA$0 Link$1 ) ( this##_E#_event _ReadReqOrAck_CtoC$0 Link$1 ) ( this##_E#_event _ResolveContention$0 Link$1 )  <=  ( this##Link Link$2 ) ( this##ParentLinks Link$2 ) ( this##Link#queue Link$2 Queue$0 ) ( this##Link#queue Link$2 Queue$1 ) ( this##Link#queue Link$2 Queue$2 ) ( this##Link#source Link$2 Node$0 ) ( this##Link#source Link$2 Node$1 ) ( this##Link#source Link$2 Node$2 ) ( this##Link#target Link$2 Node$0 ) ( this##Link#target Link$2 Node$1 ) ( this##Link#target Link$2 Node$2 ) ( this##_E#_event _AssignParent$0 Link$2 ) ( this##_E#_event _ReadReqOrAck_AtoC$0 Link$2 ) ( this##_E#_event _ReadReqOrAck_CtoA$0 Link$2 ) ( this##_E#_event _ReadReqOrAck_AtoA$0 Link$2 ) ( this##_E#_event _ReadReqOrAck_CtoC$0 Link$2 ) ( this##_E#_event _ResolveContention$0 Link$2 ) ];
+[ ( this##Active Node$0 ) ( this##Contending Node$0 ) ( this##Elected Node$0 ) ( this##Waiting Node$0 ) ( this##Link#source Link$0 Node$0 ) ( this##Link#source Link$1 Node$0 ) ( this##Link#source Link$2 Node$0 ) ( this##Link#target Link$0 Node$0 ) ( this##Link#target Link$1 Node$0 ) ( this##Link#target Link$2 Node$0 ) ( this##Tree#tree Node$0 Node$0 ) ( this##Tree#tree Node$0 Node$1 ) ( this##Tree#tree Node$0 Node$2 ) ( this##Tree#tree Node$2 Node$0 ) ( this##_E#_event _Elect$0 Node$0 ) ( this##_E#_event _WriteReqOrAck$0 Node$0 )  <=  ( this##Active Node$1 ) ( this##Contending Node$1 ) ( this##Elected Node$1 ) ( this##Waiting Node$1 ) ( this##Link#source Link$0 Node$1 ) ( this##Link#source Link$1 Node$1 ) ( this##Link#source Link$2 Node$1 ) ( this##Link#target Link$0 Node$1 ) ( this##Link#target Link$1 Node$1 ) ( this##Link#target Link$2 Node$1 ) ( this##Tree#tree Node$1 Node$1 ) ( this##Tree#tree Node$1 Node$0 ) ( this##Tree#tree Node$1 Node$2 ) ( this##Tree#tree Node$2 Node$1 ) ( this##_E#_event _Elect$0 Node$1 ) ( this##_E#_event _WriteReqOrAck$0 Node$1 ) ];
+[ ( this##Active Node$1 ) ( this##Contending Node$1 ) ( this##Elected Node$1 ) ( this##Waiting Node$1 ) ( this##Link#source Link$0 Node$1 ) ( this##Link#source Link$1 Node$1 ) ( this##Link#source Link$2 Node$1 ) ( this##Link#target Link$0 Node$1 ) ( this##Link#target Link$1 Node$1 ) ( this##Link#target Link$2 Node$1 ) ( this##Tree#tree Node$0 Node$1 ) ( this##Tree#tree Node$1 Node$0 ) ( this##Tree#tree Node$1 Node$1 ) ( this##Tree#tree Node$1 Node$2 ) ( this##_E#_event _Elect$0 Node$1 ) ( this##_E#_event _WriteReqOrAck$0 Node$1 )  <=  ( this##Active Node$2 ) ( this##Contending Node$2 ) ( this##Elected Node$2 ) ( this##Waiting Node$2 ) ( this##Link#source Link$0 Node$2 ) ( this##Link#source Link$1 Node$2 ) ( this##Link#source Link$2 Node$2 ) ( this##Link#target Link$0 Node$2 ) ( this##Link#target Link$1 Node$2 ) ( this##Link#target Link$2 Node$2 ) ( this##Tree#tree Node$0 Node$2 ) ( this##Tree#tree Node$2 Node$0 ) ( this##Tree#tree Node$2 Node$2 ) ( this##Tree#tree Node$2 Node$1 ) ( this##_E#_event _Elect$0 Node$2 ) ( this##_E#_event _WriteReqOrAck$0 Node$2 ) ];
+
+run
+always (no (this##Waiting & this##Active));
+always (no ((this##Waiting + this##Active) & this##Contending));
+always (no ((this##Waiting + this##Active + this##Contending) & this##Elected));
+always (((this##Waiting + this##Active + this##Contending + this##Elected)' ) = 
+ (this##Waiting + this##Active + this##Contending + this##Elected));
+always (one this##Req);
+always (one this##Ack);
+always (no (this##Req & this##Ack));
+always (((this##Req + this##Ack)' ) = (this##Req + this##Ack));
+always (one this##Tree);
+always (one this##_Stutter);
+always (one this##_AssignParent);
+always (no (this##_Stutter & this##_AssignParent));
+always (one this##_ReadReqOrAck_AtoC);
+always (no ((this##_Stutter + this##_AssignParent) & this##_ReadReqOrAck_AtoC));
+always (one this##_ReadReqOrAck_CtoA);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC) & 
+ this##_ReadReqOrAck_CtoA));
+always (one this##_ReadReqOrAck_AtoA);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA) & this##_ReadReqOrAck_AtoA));
+always (one this##_ReadReqOrAck_CtoC);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA) & this##_ReadReqOrAck_CtoC
+ ));
+always (one this##_Elect);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC) & 
+ this##_Elect));
+always (one this##_WriteReqOrAck);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect) & this##_WriteReqOrAck));
+always (one this##_ResolveContention);
+always (no ((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect + this##_WriteReqOrAck) & this##_ResolveContention));
+always (((this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect + this##_WriteReqOrAck + this##_ResolveContention)' ) = (
+ this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect + this##_WriteReqOrAck + this##_ResolveContention));
+always (one this##_Dummy);
+always (one this##_E);
+always (this##ParentLinks in this##Link);
+always (all GoodSafety_this: this##Queue { 
+  lone (GoodSafety_this . this##Queue#slot) and 
+  (GoodSafety_this . this##Queue#slot) in (this##Req + this##Ack)
+  });
+always ((this##Queue#slot . univ) in this##Queue);
+always (all GoodSafety_this: this##Queue { 
+  lone (GoodSafety_this . this##Queue#overflow) and 
+  (GoodSafety_this . this##Queue#overflow) in (this##Req + this##Ack)
+  });
+always ((this##Queue#overflow . univ) in this##Queue);
+always (all GoodSafety_this: this##Link { 
+  one (GoodSafety_this . this##Link#source) and 
+  (GoodSafety_this . this##Link#source) in (this##Waiting + this##Active + 
+  this##Contending + this##Elected)
+  });
+always ((this##Link#source . univ) in this##Link);
+always (all GoodSafety_this: this##Link { 
+  one (GoodSafety_this . this##Link#target) and 
+  (GoodSafety_this . this##Link#target) in (this##Waiting + this##Active + 
+  this##Contending + this##Elected)
+  });
+always ((this##Link#target . univ) in this##Link);
+always (all GoodSafety_this: this##Link { 
+  one (GoodSafety_this . this##Link#queue) and 
+  (GoodSafety_this . this##Link#queue) in this##Queue
+  });
+always ((this##Link#queue . univ) in this##Link);
+always ((this##Tree . (this##Tree -> this##Tree#tree)) in ((this##Waiting + 
+ this##Active + this##Contending + this##Elected) -> (this##Waiting + 
+ this##Active + this##Contending + this##Elected)));
+always (some GoodSafety_root: this##Waiting + this##Active + this##Contending + 
+ this##Elected { 
+  this##Tree#tree in ((this##Waiting + this##Active + this##Contending + 
+  this##Elected) -> (this##Waiting + this##Active + this##Contending + 
+  this##Elected)) and 
+  (all v0: this##Waiting + this##Active + this##Contending + this##Elected { 
+    (v0 . this##Tree#tree) in (this##Waiting + this##Active + this##Contending + 
+    this##Elected)
+    }) and 
+  (all v1: this##Waiting + this##Active + this##Contending + this##Elected { 
+    lone (this##Tree#tree . v1) and 
+    (this##Tree#tree . v1) in (this##Waiting + this##Active + this##Contending + 
+    this##Elected)
+    }) and 
+  (this##Waiting + this##Active + this##Contending + this##Elected) in (
+  GoodSafety_root . (^this##Tree#tree + (iden & ((ints + String + this##Waiting + 
+  this##Active + this##Contending + this##Elected + this##Req + this##Ack + 
+  this##Queue + this##Link + this##Tree + this##_Stutter + this##_AssignParent + 
+  this##_ReadReqOrAck_AtoC + this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + 
+  this##_ReadReqOrAck_CtoC + this##_Elect + this##_WriteReqOrAck + 
+  this##_ResolveContention + this##_Dummy + this##_E) -> univ)))) and 
+  (this##Tree#tree + ~this##Tree#tree) = (~this##Link#source . this##Link#target
+  ) and 
+  no (^this##Tree#tree & iden & ((ints + String + this##Waiting + this##Active + 
+  this##Contending + this##Elected + this##Req + this##Ack + this##Queue + 
+  this##Link + this##Tree + this##_Stutter + this##_AssignParent + 
+  this##_ReadReqOrAck_AtoC + this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + 
+  this##_ReadReqOrAck_CtoC + this##_Elect + this##_WriteReqOrAck + 
+  this##_ResolveContention + this##_Dummy + this##_E) -> univ))
+  });
+always ((this##_E . (this##_E -> this##_E#_event)) in ((none -> none) + (
+ this##_ReadReqOrAck_AtoA -> this##Link) + (this##_ResolveContention -> 
+ this##Link) + (this##_ReadReqOrAck_CtoC -> this##Link) + (this##_Elect -> (
+ this##Waiting + this##Active + this##Contending + this##Elected)) + (
+ this##_ReadReqOrAck_CtoA -> this##Link) + (this##_AssignParent -> this##Link) + 
+ (this##_WriteReqOrAck -> (this##Waiting + this##Active + this##Contending + 
+ this##Elected)) + (this##_ReadReqOrAck_AtoC -> this##Link) + (this##_Stutter -> 
+ this##_Dummy)));
+all GoodSafety_x: this##Link { 
+ (GoodSafety_x . {reverse_x: this##Link, reverse_y: this##Link { 
+  (reverse_y . this##Link#target) = (reverse_x . this##Link#source) and 
+  (reverse_y . this##Link#source) = (reverse_x . this##Link#target)
+ }}) in this##Link
+ };
+this##Link#queue in (this##Link -> this##Queue);
+(all v2: this##Link { 
+  (v2 . this##Link#queue) in this##Queue
+  });
+(all v3: this##Queue { 
+  one (this##Link#queue . v3) and 
+  (this##Link#queue . v3) in this##Link
+  });
+all GoodSafety_x: this##Link, GoodSafety_y: this##Link { 
+ !(no (GoodSafety_x & GoodSafety_y) and 
+   (GoodSafety_x . this##Link#source) = (GoodSafety_y . this##Link#source) and 
+   (GoodSafety_x . this##Link#target) = (GoodSafety_y . this##Link#target))
+ };
+(this##Waiting + this##Active + this##Contending + this##Elected) in 
+this##Waiting;
+no this##ParentLinks;
+all GoodSafety_x: this##Link { 
+ no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+ this##Queue#overflow))
+ };
+always (one this##_E#_event);
+always (all GoodSafety_x: this##Link { 
+  (this##_ReadReqOrAck_AtoA -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . this##Link#target) in this##Active and 
+   this##Ack = ((GoodSafety_x . this##Link#queue) . this##Queue#slot) and 
+   no none and 
+   !(no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+     this##Queue#overflow))) and 
+   no ((GoodSafety_x . this##Link#queue) . ((this##Queue#slot)'  + (
+   this##Queue#overflow)' )) and 
+   (all QueuesUnchanged_x: this##Link - GoodSafety_x { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   no none)
+  });
+always (all GoodSafety_x: this##Link { 
+  (this##_ResolveContention -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . (this##Link#source + this##Link#target)) in this##Contending and 
+   no none and 
+   ((this##Contending)' ) = (this##Contending - (GoodSafety_x . (
+   this##Link#source + this##Link#target))) and 
+   ((this##Active)' ) = (this##Active + (GoodSafety_x . (this##Link#source + 
+   this##Link#target))) and 
+   no none and 
+   ((this##ParentLinks)' ) = (this##ParentLinks + GoodSafety_x))
+  });
+always (all GoodSafety_x: this##Link { 
+  (this##_ReadReqOrAck_CtoC -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . this##Link#target) in this##Contending and 
+   !(this##Ack = ((GoodSafety_x . this##Link#queue) . this##Queue#slot)) and 
+   no none and 
+   !(no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+     this##Queue#overflow))) and 
+   no ((GoodSafety_x . this##Link#queue) . ((this##Queue#slot)'  + (
+   this##Queue#overflow)' )) and 
+   (all QueuesUnchanged_x: this##Link - GoodSafety_x { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   no none)
+  });
+always (all GoodSafety_n: this##Waiting + this##Active + this##Contending + 
+ this##Elected { 
+  (this##_Elect -> GoodSafety_n) in this##_E#_event implies 
+  (GoodSafety_n in this##Active and 
+   (GoodSafety_n . {to_node_n: this##Waiting + this##Active + this##Contending + 
+   this##Elected, to_node_x: this##Link { 
+    (to_node_x . this##Link#target) = to_node_n
+   }}) in this##ParentLinks and 
+   no none and 
+   ((this##Active)' ) = (this##Active - GoodSafety_n) and 
+   ((this##Elected)' ) = (this##Elected + GoodSafety_n) and 
+   no none)
+  });
+always (all GoodSafety_x: this##Link { 
+  (this##_ReadReqOrAck_CtoA -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . this##Link#target) in this##Contending and 
+   this##Ack = ((GoodSafety_x . this##Link#queue) . this##Queue#slot) and 
+   no none and 
+   !(no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+     this##Queue#overflow))) and 
+   no ((GoodSafety_x . this##Link#queue) . ((this##Queue#slot)'  + (
+   this##Queue#overflow)' )) and 
+   (all QueuesUnchanged_x: this##Link - GoodSafety_x { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   ((this##Contending)' ) = (this##Contending - (GoodSafety_x . 
+   this##Link#target)) and 
+   no none and 
+   ((this##Active)' ) = (this##Active + (GoodSafety_x . this##Link#target)))
+  });
+always (all GoodSafety_x: this##Link { 
+  (this##_AssignParent -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . this##Link#target) in this##Waiting and 
+   !(no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+     this##Queue#overflow))) and 
+   no none and 
+   no ((GoodSafety_x . this##Link#queue) . ((this##Queue#slot)'  + (
+   this##Queue#overflow)' )) and 
+   (all QueuesUnchanged_x: this##Link - GoodSafety_x { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   ((this##ParentLinks)' ) = (this##ParentLinks + GoodSafety_x) and 
+   no none)
+  });
+always (all GoodSafety_n: this##Waiting + this##Active + this##Contending + 
+ this##Elected { 
+  (this##_WriteReqOrAck -> GoodSafety_n) in this##_E#_event implies 
+  (GoodSafety_n in this##Waiting and 
+   lone ((GoodSafety_n . {to_node_n: this##Waiting + this##Active + 
+   this##Contending + this##Elected, to_node_x: this##Link { 
+    (to_node_x . this##Link#target) = to_node_n
+   }}) - this##ParentLinks) and 
+   no none and 
+   (all post_WriteReqOrAck_x: GoodSafety_n . {from_node_n: this##Waiting + 
+    this##Active + this##Contending + this##Elected, from_node_x: this##Link { 
+     (from_node_x . this##Link#source) = from_node_n
+    }} { 
+     (no ((post_WriteReqOrAck_x . this##Link#queue) . this##Queue#slot) implies 
+      (((post_WriteReqOrAck_x . this##Link#queue) . (this##Queue#slot)' ) = (((
+       post_WriteReqOrAck_x . {reverse_x: this##Link, reverse_y: this##Link { 
+        (reverse_y . this##Link#target) = (reverse_x . this##Link#source) and 
+        (reverse_y . this##Link#source) = (reverse_x . this##Link#target)
+       }}) in this##ParentLinks) => 
+        this##Ack else 
+        this##Req) and 
+       no ((post_WriteReqOrAck_x . this##Link#queue) . (this##Queue#overflow)' )
+       )) and 
+     (!(no ((post_WriteReqOrAck_x . this##Link#queue) . this##Queue#slot)) implies 
+      (((post_WriteReqOrAck_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+       post_WriteReqOrAck_x . this##Link#queue) . this##Queue#slot) and 
+       some ((post_WriteReqOrAck_x . this##Link#queue) . (this##Queue#overflow)' 
+       )))
+     }) and 
+   (all QueuesUnchanged_x: this##Link - (GoodSafety_n . {from_node_n: 
+    this##Waiting + this##Active + this##Contending + this##Elected, from_node_x: 
+    this##Link { 
+     (from_node_x . this##Link#source) = from_node_n
+    }}) { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   ((this##Active)' ) = (this##Active + GoodSafety_n) and 
+   no none and 
+   ((this##Waiting)' ) = (this##Waiting - GoodSafety_n))
+  });
+always (all GoodSafety_x: this##Link { 
+  (this##_ReadReqOrAck_AtoC -> GoodSafety_x) in this##_E#_event implies 
+  ((GoodSafety_x . this##Link#target) in this##Active and 
+   !(this##Ack = ((GoodSafety_x . this##Link#queue) . this##Queue#slot)) and 
+   no none and 
+   !(no ((GoodSafety_x . this##Link#queue) . (this##Queue#slot + 
+     this##Queue#overflow))) and 
+   no ((GoodSafety_x . this##Link#queue) . ((this##Queue#slot)'  + (
+   this##Queue#overflow)' )) and 
+   (all QueuesUnchanged_x: this##Link - GoodSafety_x { 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#slot)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#slot) and 
+     ((QueuesUnchanged_x . this##Link#queue) . (this##Queue#overflow)' ) = ((
+     QueuesUnchanged_x . this##Link#queue) . this##Queue#overflow)
+     }) and 
+   ((this##Active)' ) = (this##Active - (GoodSafety_x . this##Link#target)) and 
+   no none and 
+   ((this##Contending)' ) = (this##Contending + (GoodSafety_x . 
+   this##Link#target)))
+  });
+always ((this##_Stutter -> this##_Dummy) in this##_E#_event implies 
+ (no none and 
+  no none));
+always ((!(this##Active = ((this##Active)' )) implies 
+  ((some ReadReqOrAck_AtoC_x: this##Link { 
+     (this##_ReadReqOrAck_AtoC -> ReadReqOrAck_AtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoA_x: this##Link { 
+     (this##_ReadReqOrAck_CtoA -> ReadReqOrAck_CtoA_x) in this##_E#_event
+     }) or 
+   (some WriteReqOrAck_n: this##Waiting + this##Active + this##Contending + 
+    this##Elected { 
+     (this##_WriteReqOrAck -> WriteReqOrAck_n) in this##_E#_event
+     }) or 
+   (some ResolveContention_x: this##Link { 
+     (this##_ResolveContention -> ResolveContention_x) in this##_E#_event
+     }) or 
+   (some Elect_n: this##Waiting + this##Active + this##Contending + 
+    this##Elected { 
+     (this##_Elect -> Elect_n) in this##_E#_event
+     }))) and 
+ (!(this##Queue#overflow = ((this##Queue#overflow)' )) implies 
+  ((some AssignParent_x: this##Link { 
+     (this##_AssignParent -> AssignParent_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_AtoC_x: this##Link { 
+     (this##_ReadReqOrAck_AtoC -> ReadReqOrAck_AtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_AtoA_x: this##Link { 
+     (this##_ReadReqOrAck_AtoA -> ReadReqOrAck_AtoA_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoC_x: this##Link { 
+     (this##_ReadReqOrAck_CtoC -> ReadReqOrAck_CtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoA_x: this##Link { 
+     (this##_ReadReqOrAck_CtoA -> ReadReqOrAck_CtoA_x) in this##_E#_event
+     }) or 
+   (some WriteReqOrAck_n: this##Waiting + this##Active + this##Contending + 
+    this##Elected { 
+     (this##_WriteReqOrAck -> WriteReqOrAck_n) in this##_E#_event
+     }))) and 
+ (!(this##Contending = ((this##Contending)' )) implies 
+  ((some ReadReqOrAck_AtoC_x: this##Link { 
+     (this##_ReadReqOrAck_AtoC -> ReadReqOrAck_AtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoA_x: this##Link { 
+     (this##_ReadReqOrAck_CtoA -> ReadReqOrAck_CtoA_x) in this##_E#_event
+     }) or 
+   (some ResolveContention_x: this##Link { 
+     (this##_ResolveContention -> ResolveContention_x) in this##_E#_event
+     }))) and 
+ (this##Waiting + this##Active + this##Contending + this##Elected) = ((
+ this##Waiting + this##Active + this##Contending + this##Elected)' ) and 
+ this##_AssignParent = ((this##_AssignParent)' ) and 
+ this##_ReadReqOrAck_AtoC = ((this##_ReadReqOrAck_AtoC)' ) and 
+ (this##Req + this##Ack) = ((this##Req + this##Ack)' ) and 
+ this##_ReadReqOrAck_CtoA = ((this##_ReadReqOrAck_CtoA)' ) and 
+ this##_ReadReqOrAck_AtoA = ((this##_ReadReqOrAck_AtoA)' ) and 
+ (!(this##Elected = ((this##Elected)' )) implies 
+  (some Elect_n: this##Waiting + this##Active + this##Contending + this##Elected { 
+    (this##_Elect -> Elect_n) in this##_E#_event
+    })) and 
+ this##Req = ((this##Req)' ) and 
+ this##_ReadReqOrAck_CtoC = ((this##_ReadReqOrAck_CtoC)' ) and 
+ this##_Elect = ((this##_Elect)' ) and 
+ this##Ack = ((this##Ack)' ) and 
+ this##_WriteReqOrAck = ((this##_WriteReqOrAck)' ) and 
+ this##_ResolveContention = ((this##_ResolveContention)' ) and 
+ (!(this##ParentLinks = ((this##ParentLinks)' )) implies 
+  ((some AssignParent_x: this##Link { 
+     (this##_AssignParent -> AssignParent_x) in this##_E#_event
+     }) or 
+   (some ResolveContention_x: this##Link { 
+     (this##_ResolveContention -> ResolveContention_x) in this##_E#_event
+     }))) and 
+ (!(this##Queue#slot = ((this##Queue#slot)' )) implies 
+  ((some AssignParent_x: this##Link { 
+     (this##_AssignParent -> AssignParent_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_AtoC_x: this##Link { 
+     (this##_ReadReqOrAck_AtoC -> ReadReqOrAck_AtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_AtoA_x: this##Link { 
+     (this##_ReadReqOrAck_AtoA -> ReadReqOrAck_AtoA_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoC_x: this##Link { 
+     (this##_ReadReqOrAck_CtoC -> ReadReqOrAck_CtoC_x) in this##_E#_event
+     }) or 
+   (some ReadReqOrAck_CtoA_x: this##Link { 
+     (this##_ReadReqOrAck_CtoA -> ReadReqOrAck_CtoA_x) in this##_E#_event
+     }) or 
+   (some WriteReqOrAck_n: this##Waiting + this##Active + this##Contending + 
+    this##Elected { 
+     (this##_WriteReqOrAck -> WriteReqOrAck_n) in this##_E#_event
+     }))) and 
+ this##Queue = ((this##Queue)' ) and 
+ (this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect + this##_WriteReqOrAck + this##_ResolveContention) = ((
+ this##_Stutter + this##_AssignParent + this##_ReadReqOrAck_AtoC + 
+ this##_ReadReqOrAck_CtoA + this##_ReadReqOrAck_AtoA + this##_ReadReqOrAck_CtoC + 
+ this##_Elect + this##_WriteReqOrAck + this##_ResolveContention)' ) and 
+ this##_Dummy = ((this##_Dummy)' ) and 
+ this##Link = ((this##Link)' ) and 
+ (this##_Dummy + this##Link + this##Waiting + this##Active + this##Contending + 
+ this##Elected) = ((this##_Dummy + this##Link + this##Waiting + this##Active + 
+ this##Contending + this##Elected)' ) and 
+ this##_E = ((this##_E)' ) and 
+ (!(this##Waiting = ((this##Waiting)' )) implies 
+  (some WriteReqOrAck_n: this##Waiting + this##Active + this##Contending + 
+   this##Elected { 
+    (this##_WriteReqOrAck -> WriteReqOrAck_n) in this##_E#_event
+    })) and 
+ this##Tree = ((this##Tree)' ) and 
+ this##_Stutter = ((this##_Stutter)' ));
+!(always (lone this##Elected));
+this##_E = this##_E;
+this##_ReadReqOrAck_CtoC = this##_ReadReqOrAck_CtoC;
+this##Ack = this##Ack;
+String = String;
+this##_Dummy = this##_Dummy;
+this##_WriteReqOrAck = this##_WriteReqOrAck;
+this##Contending = this##Contending;
+this##Queue#overflow = this##Queue#overflow;
+this##Link#queue = this##Link#queue;
+this##_ReadReqOrAck_AtoA = this##_ReadReqOrAck_AtoA;
+this##Elected = this##Elected;
+this##_E#_event = this##_E#_event;
+this##_Elect = this##_Elect;
+this##Active = this##Active;
+this##Link = this##Link;
+this##Link#target = this##Link#target;
+this##Req = this##Req;
+this##Queue#slot = this##Queue#slot;
+Int##next = Int##next;
+this##_AssignParent = this##_AssignParent;
+this##_ResolveContention = this##_ResolveContention;
+this##Waiting = this##Waiting;
+this##Queue = this##Queue;
+this##Tree#tree = this##Tree#tree;
+this##_ReadReqOrAck_AtoC = this##_ReadReqOrAck_AtoC;
+this##Link#source = this##Link#source;
+seq##Int = seq##Int;
+this##_Stutter = this##_Stutter;
+this##ParentLinks = this##ParentLinks;
+this##_ReadReqOrAck_CtoA = this##_ReadReqOrAck_CtoA;
+this##Tree = this##Tree;
+

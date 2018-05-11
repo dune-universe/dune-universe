@@ -1,0 +1,29 @@
+(jbuild_version 1)
+
+(executables
+    (
+    (names (test_prelude test_phrase test_word))
+    (libraries (alcotest hex passmaker rresult))
+    (preprocess (pps (ppx_deriving.show ppx_deriving.eq)))
+    ))
+
+(alias
+    (
+    (name runtest)
+    (deps (test_prelude.exe))
+    (action (run ${<}))
+    ))
+
+(alias
+    (
+    (name runtest)
+    (deps (test_word.exe))
+    (action (run ${<}))
+    ))
+
+(alias
+    (
+    (name runtest)
+    (deps (test_phrase.exe))
+    (action (run ${<}))
+    ))

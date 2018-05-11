@@ -1,0 +1,159 @@
+univ : { Lvl$0 Lvl$1 Lvl$2 Process$0 Process$1 Process$2 _Nop$0 _ActRoot$0 _ActNotRoot$0 _Dummy$0 _E$0 ordering##Ord$0 };
+
+const Int##next :2 { };
+const this##_ActNotRoot :1 { ( _ActNotRoot$0 ) };
+const ordering##Ord :1 { ( ordering##Ord$0 ) };
+const this##_Nop :1 { ( _Nop$0 ) };
+const ordering##Ord#First :1 { ( Lvl$0 ) };
+const this##_E :1 { ( _E$0 ) };
+const String :1 { };
+const ordering##Ord#Next :2 { ( Lvl$0 Lvl$1 ) ( Lvl$1 Lvl$2 ) };
+var this##Process#lvl :2 { } { ( Process$0 Lvl$0 ) ( Process$0 Lvl$1 ) ( Process$0 Lvl$2 ) ( Process$1 Lvl$0 ) ( Process$1 Lvl$1 ) ( Process$1 Lvl$2 ) ( Process$2 Lvl$0 ) ( Process$2 Lvl$1 ) ( Process$2 Lvl$2 ) };
+const this##_ActRoot :1 { ( _ActRoot$0 ) };
+const this##_Dummy :1 { ( _Dummy$0 ) };
+var this##_E#_event :2 { } { ( _Nop$0 _Dummy$0 ) ( _ActRoot$0 Process$0 ) ( _ActRoot$0 Process$1 ) ( _ActRoot$0 Process$2 ) ( _ActNotRoot$0 Process$0 ) ( _ActNotRoot$0 Process$1 ) ( _ActNotRoot$0 Process$2 ) };
+const this##Root :1 { } { ( Process$0 ) ( Process$1 ) ( Process$2 ) };
+const this##Process :1 { } { ( Process$0 ) ( Process$1 ) ( Process$2 ) };
+const this##Lvl :1 { ( Lvl$0 ) ( Lvl$1 ) ( Lvl$2 ) };
+var this##Process#parent :2 { } { ( Process$0 Process$0 ) ( Process$0 Process$1 ) ( Process$0 Process$2 ) ( Process$1 Process$0 ) ( Process$1 Process$1 ) ( Process$1 Process$2 ) ( Process$2 Process$0 ) ( Process$2 Process$1 ) ( Process$2 Process$2 ) };
+const ordering##Ord#Last :1 { ( Lvl$2 ) };
+const this##Process#adj :2 { } { ( Process$0 Process$0 ) ( Process$0 Process$1 ) ( Process$0 Process$2 ) ( Process$1 Process$0 ) ( Process$1 Process$1 ) ( Process$1 Process$2 ) ( Process$2 Process$0 ) ( Process$2 Process$1 ) ( Process$2 Process$2 ) };
+const seq##Int :1 { };
+const ints :1 { };
+
+sym
+[ ( this##Process Process$0 ) ( this##Root Process$0 ) ( this##Process#adj Process$0 Process$0 ) ( this##Process#adj Process$0 Process$1 ) ( this##Process#adj Process$0 Process$2 ) ( this##Process#adj Process$2 Process$0 ) ( this##Process#lvl Process$0 Lvl$0 ) ( this##Process#lvl Process$0 Lvl$1 ) ( this##Process#lvl Process$0 Lvl$2 ) ( this##Process#parent Process$0 Process$0 ) ( this##Process#parent Process$0 Process$1 ) ( this##Process#parent Process$0 Process$2 ) ( this##Process#parent Process$2 Process$0 ) ( this##_E#_event _ActRoot$0 Process$0 ) ( this##_E#_event _ActNotRoot$0 Process$0 )  <=  ( this##Process Process$1 ) ( this##Root Process$1 ) ( this##Process#adj Process$1 Process$1 ) ( this##Process#adj Process$1 Process$0 ) ( this##Process#adj Process$1 Process$2 ) ( this##Process#adj Process$2 Process$1 ) ( this##Process#lvl Process$1 Lvl$0 ) ( this##Process#lvl Process$1 Lvl$1 ) ( this##Process#lvl Process$1 Lvl$2 ) ( this##Process#parent Process$1 Process$1 ) ( this##Process#parent Process$1 Process$0 ) ( this##Process#parent Process$1 Process$2 ) ( this##Process#parent Process$2 Process$1 ) ( this##_E#_event _ActRoot$0 Process$1 ) ( this##_E#_event _ActNotRoot$0 Process$1 ) ];
+[ ( this##Process Process$1 ) ( this##Root Process$1 ) ( this##Process#adj Process$0 Process$1 ) ( this##Process#adj Process$1 Process$0 ) ( this##Process#adj Process$1 Process$1 ) ( this##Process#adj Process$1 Process$2 ) ( this##Process#lvl Process$1 Lvl$0 ) ( this##Process#lvl Process$1 Lvl$1 ) ( this##Process#lvl Process$1 Lvl$2 ) ( this##Process#parent Process$0 Process$1 ) ( this##Process#parent Process$1 Process$0 ) ( this##Process#parent Process$1 Process$1 ) ( this##Process#parent Process$1 Process$2 ) ( this##_E#_event _ActRoot$0 Process$1 ) ( this##_E#_event _ActNotRoot$0 Process$1 )  <=  ( this##Process Process$2 ) ( this##Root Process$2 ) ( this##Process#adj Process$0 Process$2 ) ( this##Process#adj Process$2 Process$0 ) ( this##Process#adj Process$2 Process$2 ) ( this##Process#adj Process$2 Process$1 ) ( this##Process#lvl Process$2 Lvl$0 ) ( this##Process#lvl Process$2 Lvl$1 ) ( this##Process#lvl Process$2 Lvl$2 ) ( this##Process#parent Process$0 Process$2 ) ( this##Process#parent Process$2 Process$0 ) ( this##Process#parent Process$2 Process$2 ) ( this##Process#parent Process$2 Process$1 ) ( this##_E#_event _ActRoot$0 Process$2 ) ( this##_E#_event _ActNotRoot$0 Process$2 ) ];
+
+run
+always (one this##_Nop);
+always (one this##_ActRoot);
+always (no (this##_Nop & this##_ActRoot));
+always (one this##_ActNotRoot);
+always (no ((this##_Nop + this##_ActRoot) & this##_ActNotRoot));
+always (((this##_Nop + this##_ActRoot + this##_ActNotRoot)' ) = (this##_Nop + 
+ this##_ActRoot + this##_ActNotRoot));
+always (one this##_Dummy);
+always (one this##_E);
+always (one ordering##Ord);
+always (this##Root in this##Process);
+always (one this##Root);
+always (all BadLiveness_this: this##Process { 
+  (BadLiveness_this . this##Process#adj) in this##Process
+  });
+always ((this##Process#adj . univ) in this##Process);
+always (all BadLiveness_this: this##Process { 
+  lone (BadLiveness_this . this##Process#lvl) and 
+  (BadLiveness_this . this##Process#lvl) in this##Lvl
+  });
+always ((this##Process#lvl . univ) in this##Process);
+always (all BadLiveness_this: this##Process { 
+  lone (BadLiveness_this . this##Process#parent) and 
+  (BadLiveness_this . this##Process#parent) in this##Process
+  });
+always ((this##Process#parent . univ) in this##Process);
+always ((this##_E . (this##_E -> this##_E#_event)) in ((none -> none) + (
+ this##_ActRoot -> this##Process) + (this##_ActNotRoot -> this##Process) + (
+ this##_Nop -> this##_Dummy)));
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#First)) in this##Lvl);
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#Next)) in (this##Lvl -> 
+ this##Lvl));
+one ordering##Ord#First;
+one ordering##Ord#Last;
+ordering##Ord#Last in this##Lvl;
+this##Lvl = (ordering##Ord#First . *ordering##Ord#Next);
+no (ordering##Ord#Next . ordering##Ord#First);
+no (ordering##Ord#Last . ordering##Ord#Next);
+(all eordering##Ord#Next: this##Lvl - ordering##Ord#Last { 
+  one (eordering##Ord#Next . ordering##Ord#Next)
+  });
+no (iden & ((ints + String + this##Lvl + this##Process + this##_Nop + 
+this##_ActRoot + this##_ActNotRoot + this##_Dummy + this##_E + ordering##Ord) -> 
+univ) & this##Process#adj);
+(~this##Process#adj) in this##Process#adj;
+all weaklyConnected_n1: this##Process, weaklyConnected_n2: this##Process { 
+ weaklyConnected_n1 in (weaklyConnected_n2 . (^(this##Process#adj + ~
+ this##Process#adj) + (iden & ((ints + String + this##Lvl + this##Process + 
+ this##_Nop + this##_ActRoot + this##_ActNotRoot + this##_Dummy + this##_E + 
+ ordering##Ord) -> univ))))
+ };
+no this##Process#lvl;
+no this##Process#parent;
+always (one this##_E#_event);
+always (all BadLiveness_p: this##Process { 
+  (this##_ActRoot -> BadLiveness_p) in this##_E#_event implies 
+  (BadLiveness_p = this##Root and 
+   no (BadLiveness_p . this##Process#lvl) and 
+   no none and 
+   ((this##Process#lvl)' ) = (this##Process#lvl + (BadLiveness_p -> 
+   ordering##Ord#First)) and 
+   no none)
+  });
+always (all BadLiveness_p: this##Process { 
+  (this##_ActNotRoot -> BadLiveness_p) in this##_E#_event implies 
+  (!(BadLiveness_p = this##Root) and 
+   no (BadLiveness_p . this##Process#lvl) and 
+   no none and 
+   (some post_ActNotRoot_adjProc: BadLiveness_p . this##Process#adj { 
+     some (post_ActNotRoot_adjProc . this##Process#lvl) and 
+     ((this##Process#lvl)' ) = (this##Process#lvl + (BadLiveness_p -> ((
+     post_ActNotRoot_adjProc . this##Process#lvl) . ordering##Ord#Next))) and 
+     ((this##Process#parent)' ) = (this##Process#parent + (BadLiveness_p -> 
+     post_ActNotRoot_adjProc))
+     }) and 
+   no none)
+  });
+always ((this##_Nop -> this##_Dummy) in this##_E#_event implies 
+ (no none and 
+  no none));
+always ((!(this##Process#parent = ((this##Process#parent)' )) implies 
+  (some ActNotRoot_p: this##Process { 
+    (this##_ActNotRoot -> ActNotRoot_p) in this##_E#_event
+    })) and 
+ (!(this##Process#lvl = ((this##Process#lvl)' )) implies 
+  ((some ActRoot_p: this##Process { 
+     (this##_ActRoot -> ActRoot_p) in this##_E#_event
+     }) or 
+   (some ActNotRoot_p: this##Process { 
+     (this##_ActNotRoot -> ActNotRoot_p) in this##_E#_event
+     }))) and 
+ this##Process = ((this##Process)' ) and 
+ this##_ActNotRoot = ((this##_ActNotRoot)' ) and 
+ (this##_Nop + this##_ActRoot + this##_ActNotRoot) = ((this##_Nop + 
+ this##_ActRoot + this##_ActNotRoot)' ) and 
+ this##Root = ((this##Root)' ) and 
+ this##_Dummy = ((this##_Dummy)' ) and 
+ (this##_Dummy + this##Process) = ((this##_Dummy + this##Process)' ) and 
+ this##Lvl = ((this##Lvl)' ) and 
+ this##_Nop = ((this##_Nop)' ) and 
+ this##_E = ((this##_E)' ) and 
+ this##_ActRoot = ((this##_ActRoot)' ));
+!(eventually ((all acyclic_x: this##Process { 
+     !(acyclic_x in (acyclic_x . ^(~this##Process#parent)))
+     }) and 
+   (all forest_n: this##Process { 
+     lone (~this##Process#parent . forest_n)
+     }) and 
+   lone ({tree_root: this##Process { 
+    no (~this##Process#parent . tree_root)
+   }})));
+Int##next = Int##next;
+this##_ActNotRoot = this##_ActNotRoot;
+ordering##Ord = ordering##Ord;
+this##_Nop = this##_Nop;
+ordering##Ord#First = ordering##Ord#First;
+this##_E = this##_E;
+String = String;
+ordering##Ord#Next = ordering##Ord#Next;
+this##Process#lvl = this##Process#lvl;
+this##_ActRoot = this##_ActRoot;
+this##_Dummy = this##_Dummy;
+this##_E#_event = this##_E#_event;
+this##Root = this##Root;
+this##Process = this##Process;
+this##Lvl = this##Lvl;
+this##Process#parent = this##Process#parent;
+ordering##Ord#Last = ordering##Ord#Last;
+this##Process#adj = this##Process#adj;
+seq##Int = seq##Int;
+
