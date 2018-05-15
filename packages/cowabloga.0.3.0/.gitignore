@@ -1,8 +1,0 @@
-*.swp
-_build/
-dist/
-*.docdir
-*.native
-*.byte
-*.merlin
-*.install

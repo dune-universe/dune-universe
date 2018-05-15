@@ -1,0 +1,102 @@
+*** Run benchmarks for path "radis.add.10"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix: ^[[A 5.38 WALL ( 5.34 usr +  0.00 sys =  5.34 CPU) @ 503641.92/s (n=2691056)
+          5.52 WALL ( 5.41 usr +  0.03 sys =  5.44 CPU) @ 494682.59/s (n=2691056)
+          5.41 WALL ( 5.40 usr +  0.00 sys =  5.40 CPU) @ 498741.68/s (n=2691056)
+    map:  5.27 WALL ( 5.26 usr +  0.00 sys =  5.26 CPU) @ 637870.59/s (n=3356926)
+          5.40 WALL ( 5.39 usr +  0.01 sys =  5.40 CPU) @ 621637.54/s (n=3356926)
+          5.29 WALL ( 5.29 usr +  0.00 sys =  5.29 CPU) @ 634477.16/s (n=3356926)
+hashtbl:  5.28 WALL ( 5.28 usr +  0.00 sys =  5.28 CPU) @ 1192772.12/s (n=6295357)
+          5.25 WALL ( 5.24 usr +  0.00 sys =  5.24 CPU) @ 1200343.86/s (n=6295357)
+          5.33 WALL ( 5.30 usr +  0.00 sys =  5.30 CPU) @ 1186853.95/s (n=6295357)
+             Rate         radix     map hashtbl
+  radix  499022+-3480/s      --    -21%    -58%
+    map  631328+-6642/s     27%      --    -47%
+hashtbl 1193323+-5245/s    139%     89%      --
+**********************************************************************
+*** Run benchmarks for path "radis.add.100"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix:  5.21 WALL ( 5.19 usr +  0.00 sys =  5.19 CPU) @ 33630.73/s (n=174579)
+          5.22 WALL ( 5.17 usr +  0.00 sys =  5.17 CPU) @ 33740.34/s (n=174579)
+          5.14 WALL ( 5.11 usr +  0.00 sys =  5.12 CPU) @ 34122.41/s (n=174579)
+    map:  5.72 WALL ( 5.71 usr +  0.00 sys =  5.71 CPU) @ 26143.99/s (n=149303)
+          5.30 WALL ( 5.27 usr +  0.02 sys =  5.29 CPU) @ 28246.10/s (n=149303)
+          5.21 WALL ( 5.18 usr +  0.00 sys =  5.18 CPU) @ 28831.35/s (n=149303)
+hashtbl:  5.41 WALL ( 5.40 usr +  0.00 sys =  5.41 CPU) @ 134752.28/s (n=728447)
+          5.36 WALL ( 5.35 usr +  0.00 sys =  5.35 CPU) @ 136188.79/s (n=728447)
+          5.45 WALL ( 5.44 usr +  0.00 sys =  5.44 CPU) @ 133907.54/s (n=728447)
+            Rate           map   radix hashtbl
+    map  27740+-1096/s      --    -18%    -79%
+  radix  33831+- 200/s     22%      --    -75%
+hashtbl 134950+- 895/s    386%    299%      --
+**********************************************************************
+*** Run benchmarks for path "radis.add.1000"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix:  5.37 WALL ( 5.37 usr +  0.00 sys =  5.37 CPU) @ 2226.09/s (n=11948)
+          5.58 WALL ( 5.56 usr +  0.00 sys =  5.56 CPU) @ 2147.13/s (n=11948)
+          5.51 WALL ( 5.50 usr +  0.00 sys =  5.50 CPU) @ 2172.07/s (n=11948)
+    map:  5.35 WALL ( 5.34 usr +  0.00 sys =  5.34 CPU) @ 1615.81/s (n=8628)
+          5.38 WALL ( 5.37 usr +  0.00 sys =  5.37 CPU) @ 1607.27/s (n=8628)
+          5.34 WALL ( 5.33 usr +  0.00 sys =  5.34 CPU) @ 1616.27/s (n=8628)
+hashtbl:  5.27 WALL ( 5.01 usr +  0.26 sys =  5.27 CPU) @ 4394.94/s (n=23144)
+          5.45 WALL ( 5.16 usr +  0.28 sys =  5.44 CPU) @ 4255.60/s (n=23144)
+          5.64 WALL ( 5.32 usr +  0.30 sys =  5.61 CPU) @ 4121.82/s (n=23144)
+          Rate          map   radix hashtbl
+    map 1613+-  4/s      --    -26%    -62%
+  radix 2182+- 31/s     35%      --    -49%
+hashtbl 4257+-106/s    164%     95%      --
+**********************************************************************
+*** Run benchmarks for path "radis.lookup_all.10"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix:  5.27 WALL ( 5.24 usr +  0.00 sys =  5.25 CPU) @ 839249.71/s (n=4402114)
+          5.20 WALL ( 5.16 usr +  0.01 sys =  5.17 CPU) @ 851779.99/s (n=4402114)
+          5.21 WALL ( 5.18 usr +  0.01 sys =  5.20 CPU) @ 847303.73/s (n=4402114)
+    map:  5.24 WALL ( 5.24 usr +  0.00 sys =  5.24 CPU) @ 763426.73/s (n=3996742)
+          5.33 WALL ( 5.33 usr +  0.00 sys =  5.33 CPU) @ 750116.88/s (n=3996742)
+          5.32 WALL ( 5.31 usr +  0.00 sys =  5.31 CPU) @ 752070.68/s (n=3996742)
+hashtbl:  5.37 WALL ( 5.36 usr +  0.00 sys =  5.36 CPU) @ 1257653.61/s (n=6745898)
+          5.38 WALL ( 5.37 usr +  0.00 sys =  5.37 CPU) @ 1257098.87/s (n=6745898)
+          5.60 WALL ( 5.57 usr +  0.02 sys =  5.59 CPU) @ 1207804.40/s (n=6745898)
+             Rate            map   radix hashtbl
+    map  755205+- 5575/s      --    -11%    -39%
+  radix  846111+- 4925/s     12%      --    -32%
+hashtbl 1240852+-22201/s     64%     47%      --
+**********************************************************************
+*** Run benchmarks for path "radis.lookup_all.100"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix:  5.53 WALL ( 5.52 usr +  0.00 sys =  5.52 CPU) @ 54158.00/s (n=299152)
+          5.45 WALL ( 5.45 usr +  0.00 sys =  5.45 CPU) @ 54926.97/s (n=299152)
+          5.48 WALL ( 5.48 usr +  0.00 sys =  5.48 CPU) @ 54548.44/s (n=299152)
+    map:  5.29 WALL ( 5.29 usr +  0.00 sys =  5.29 CPU) @ 34672.77/s (n=183477)
+          5.34 WALL ( 5.33 usr +  0.00 sys =  5.34 CPU) @ 34374.44/s (n=183477)
+          5.30 WALL ( 5.30 usr +  0.00 sys =  5.30 CPU) @ 34605.48/s (n=183477)
+hashtbl:  5.19 WALL ( 5.18 usr +  0.01 sys =  5.19 CPU) @ 89873.23/s (n=466076)
+          5.23 WALL ( 5.19 usr +  0.01 sys =  5.20 CPU) @ 89565.96/s (n=466076)
+          5.33 WALL ( 5.32 usr +  0.01 sys =  5.33 CPU) @ 87404.19/s (n=466076)
+           Rate           map   radix hashtbl
+    map 34551+- 121/s      --    -37%    -61%
+  radix 54544+- 298/s     58%      --    -39%
+hashtbl 88948+-1044/s    157%     63%      --
+**********************************************************************
+*** Run benchmarks for path "radis.lookup_all.1000"
+
+Throughputs for "radix", "map", "hashtbl" each running 3 times for at least 5 CPU seconds:
+  radix:  5.61 WALL ( 5.60 usr +  0.00 sys =  5.60 CPU) @ 3386.33/s (n=18975)
+          5.48 WALL ( 5.48 usr +  0.00 sys =  5.48 CPU) @ 3463.10/s (n=18975)
+          5.43 WALL ( 5.42 usr +  0.00 sys =  5.43 CPU) @ 3496.48/s (n=18975)
+    map:  5.30 WALL ( 5.26 usr +  0.01 sys =  5.27 CPU) @ 2077.19/s (n=10945)
+          5.12 WALL ( 5.12 usr +  0.00 sys =  5.12 CPU) @ 2139.73/s (n=10945)
+          5.18 WALL ( 5.17 usr +  0.00 sys =  5.18 CPU) @ 2113.47/s (n=10945)
+hashtbl:  5.16 WALL ( 5.15 usr +  0.00 sys =  5.16 CPU) @ 6243.76/s (n=32188)
+          5.01 WALL ( 5.00 usr +  0.00 sys =  5.00 CPU) @ 6273.01/s (n=31369)
+          5.17 WALL ( 5.15 usr +  0.00 sys =  5.15 CPU) @ 6222.90/s (n=32063)
+          Rate         map   radix hashtbl
+    map 2110+-24/s      --    -39%    -66%
+  radix 3449+-44/s     63%      --    -45%
+hashtbl 6247+-20/s    196%     81%      --
+

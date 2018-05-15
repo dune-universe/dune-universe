@@ -1,0 +1,8 @@
+(executables
+ ((names (test))
+  (libraries (radis alcotest fmt))))
+
+(alias
+ ((name runtest)
+  (deps (test.exe))
+  (action (run ${<}))))
