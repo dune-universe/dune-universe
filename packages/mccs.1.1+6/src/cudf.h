@@ -5,8 +5,6 @@
 /* (c) Claude Michel I3S (UNSA-CNRS) 2009,2010,2011    */
 /*******************************************************/
 
-#define USEGLPK
-
 // main CUDF include file
 
 #ifndef _CUDF_H

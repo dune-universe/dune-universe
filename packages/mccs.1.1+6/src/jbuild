@@ -8,6 +8,7 @@
                     cudf_reductions
                     cudf_tools
                     glpk_solver
+                    lp_solver
                     lexagregate_combiner
                     new_criteria
                     notuptodate_criteria
@@ -20,21 +21,12 @@
   (c_library_flags (:standard (:include clibs.sexp)))
   (library_flags   (:standard (:include flags.sexp)))
   (wrapped         false)
-  (libraries       (cudf (select _ from (mccs.glpk.internal -> _) (mccs.glpk.shared -> _) (mccs.glpk.static -> _))))))
+  (libraries       (cudf (select _ from (mccs.glpk.internal -> _) (mccs.glpk.shared -> _) (mccs.glpk.static -> _) (-> _))
+))))
 
 (copy_files# glpk/glpk.h)
 
 (rule
- ((targets (cxxflags.sexp))
-  (deps (context_flags.ml))
-  (action (with-stdout-to ${@} (run ocaml ${^} cxxflags)))))
-
-(rule
- ((targets (clibs.sexp))
-  (deps (context_flags.ml))
-  (action (with-stdout-to ${@} (run ocaml ${^} clibs)))))
-
-(rule
- ((targets (flags.sexp))
-  (deps (context_flags.ml))
-  (action (with-stdout-to ${@} (run ocaml ${^} flags)))))
+ ((targets (cxxflags.sexp clibs.sexp flags.sexp))
+  (deps (context_flags.ml (universe)))
+  (action (run ocaml ${^}))))

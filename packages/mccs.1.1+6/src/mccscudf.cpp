@@ -18,7 +18,7 @@
 
 // underlying solver declaration
 // allows using solvers withour having to include the whole solver classes
-//extern abstract_solver *new_lp_solver(char *lpsolver);
+extern abstract_solver *new_lp_solver(char *lpsolver);
 /* extern abstract_solver *new_pblib_solver(char *pbsolver); */
 //extern abstract_solver *new_ampl_solver(char *amplsolver);
 #ifdef USECPLEX 
@@ -32,6 +32,19 @@ extern abstract_solver *new_lpsolve_solver();
 #endif
 #ifdef USEGLPK
 extern abstract_solver *new_glpk_solver(bool use_exact);
+#endif
+
+#ifdef USECOIN
+  #include <osi_solver.h>
+  #ifdef USECLP
+    #include <coin/OsiClpSolverInterface.hpp>
+  #endif
+  #ifdef USECBC
+    #include <coin/OsiCbcSolverInterface.hpp>
+  #endif
+  #ifdef USESYM
+    #include <coin/OsiSymSolverInterface.hpp>
+  #endif
 #endif
 
 bool criteria_opt_var = false;
@@ -283,7 +296,6 @@ Solver_return call_mccs(Solver solver_arg, char *criteria_arg, int timeout, CUDF
   CriteriaList *criteria = get_criteria(criteria_arg, false, &criteria_with_property);
   abstract_solver *solver = (abstract_solver *)NULL;
   abstract_combiner *combiner = (abstract_combiner *)NULL;
-  stringstream solution;
   Solver_return ret = { 0, "", NULL, NULL };
   bool no_solution = false;
 
@@ -293,7 +305,8 @@ Solver_return call_mccs(Solver solver_arg, char *criteria_arg, int timeout, CUDF
   }
   combiner = new lexagregate_combiner(criteria);
 
-  switch (solver_arg) {
+  switch (solver_arg.backend) {
+  case LP: solver = new_lp_solver(solver_arg.lp_solver); break;
 #ifdef USECPLEX
   case CPLEX: solver = new_cplex_solver(); break;
 #else
@@ -313,6 +326,26 @@ Solver_return call_mccs(Solver solver_arg, char *criteria_arg, int timeout, CUDF
   case GLPK: solver = new_glpk_solver(false); break;
 #else
   case GLPK: ret.error = "This mccs is built without glpk support"; return ret;
+#endif
+#ifdef USECOIN
+#ifdef USECLP
+  case CLP: solver = new osi_solver<OsiClpSolverInterface>(); break;
+#else
+  case CLP: ret.error = "This mccs is built without COIN/CLP support"; return ret;
+#endif
+#ifdef USECBC
+  case CBC: solver = new osi_solver<OsiCbcSolverInterface>(); break;
+#else
+  case CBC: ret.error = "This mccs is built without COIN/CBC support"; return ret;
+#endif
+#ifdef USESYM
+  case SYMPHONY: solver = new osi_solver<OsiSymSolverInterface>(); break;
+#else
+  case SYMPHONY: ret.error = "This mccs is built without COIN/SYMPHONY support"; return ret;
+#endif
+#else
+  case CLP: case CBC: case SYMPHONY:
+    ret.error = "This mccs is built without COIN support"; return ret;
 #endif
   default: ret.error = "Unrecognised solver specified"; return ret;
   }
@@ -391,4 +424,53 @@ Solver_return call_mccs(Solver solver_arg, char *criteria_arg, int timeout, CUDF
   ret.success = 1;
   ret.solution = solver;
   return ret;
+}
+
+int has_backend (Solver_backend backend) {
+  switch(backend) {
+  case LP:
+    return 1;
+  case CPLEX:
+#ifdef USECPLEX
+    return 1;
+#else
+    return 0;
+#endif
+  case GUROBI:
+#ifdef USEGUROBI
+    return 1;
+#else
+    return 0;
+#endif
+  case LPSOLVE:
+#ifdef USELPSOLVE
+    return 1;
+#else
+    return 0;
+#endif
+  case GLPK:
+#ifdef USEGLPK
+    return 1;
+#else
+    return 0;
+#endif
+  case CLP:
+#ifdef USECLP
+    return 1;
+#else
+    return 0;
+#endif
+  case CBC:
+#ifdef USECBC
+    return 1;
+#else
+    return 0;
+#endif
+  case SYMPHONY:
+#ifdef USESYM
+    return 1;
+#else
+    return 0;
+#endif
+  }
 }
