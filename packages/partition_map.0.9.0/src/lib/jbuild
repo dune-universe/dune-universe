@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library (
+  (name partition_map)
+  (public_name partition_map)
+  (synopsis "Partition maps.")
+  (preprocess (pps (bisect_ppx -conditional)))
+  (ocamlopt_flags -O3)
+  ))

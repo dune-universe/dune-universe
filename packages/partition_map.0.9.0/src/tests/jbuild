@@ -1,0 +1,23 @@
+; TODO: Figure out a better story for how to both isolate partition maps
+; so that we can test just that and at the same time now have to specify
+; how to build them.
+(jbuild_version 1)
+
+(executables (
+  (names (test))
+  (libraries (nonstd sosa ppx_deriving.std ppx_deriving_yojson.runtime qcheck))
+  (preprocess (pps (ppx_deriving.std ppx_deriving_yojson bisect_ppx -conditional)))
+  ))
+
+(rule (
+  (targets (test.ml))
+  (action (with-stdout-to test.ml
+    (progn
+      (echo "# 1 src/lib/partition_map.ml\n")
+      (cat ../lib/partition_map.ml)
+      (echo "# 1 src/tests/individual/pm.ml\n")
+      (cat pm.ml))))))
+
+(alias
+  ((name   runtest)
+   (action (run ${exe:test.exe}))))

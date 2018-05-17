@@ -1,0 +1,8 @@
+(jbuild_version 1)
+
+(library (
+  (name lib08)
+  (synopsis "Deprecated version.")
+  (preprocess (pps (bisect_ppx -conditional)))
+  (ocamlopt_flags -O3)
+  ))

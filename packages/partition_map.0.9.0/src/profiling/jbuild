@@ -1,0 +1,16 @@
+(jbuild_version 1)
+
+(executable (
+  (name bench )
+  (modules (bench))
+  (libraries (profiling_lib core_bench))
+  (preprocess (pps (bisect_ppx -conditional)))
+  (ocamlopt_flags -O3)))
+
+(executable (
+  (name compare )
+  (modules (compare))
+  (libraries (profiling_lib core_bench))
+  (preprocess (pps (bisect_ppx -conditional)))
+  (ocamlopt_flags -O3)))
+

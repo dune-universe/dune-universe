@@ -1,0 +1,195 @@
+┌──────────────────────────────────────────────────────────────────────────────────────┬─────────────────┬────────────────────┬─────────────────┬─────────────────┬────────────┐
+│ Name                                                                                 │        Time/Run │            mWd/Run │        mjWd/Run │        Prom/Run │ Percentage │
+├──────────────────────────────────────────────────────────────────────────────────────┼─────────────────┼────────────────────┼─────────────────┼─────────────────┼────────────┤
+│ Naive lists into array of Integer values ( 100, 100, 1.500000, 1.000000 )            │         52.38us │            807.05w │                 │                 │            │
+│ Naive two array of Integer values ( 100, 100, 1.500000, 1.000000 )                   │         55.94us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 100, 100, 1.500000, 1.000000 )          │        311.58us │        220_185.08w │         305.96w │         305.96w │            │
+│ Naive lists into array of Integer values ( 100, 500, 1.500000, 1.000000 )            │        263.68us │          4_007.24w │           0.12w │           0.12w │            │
+│ Naive two array of Integer values ( 100, 500, 1.500000, 1.000000 )                   │        278.77us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 100, 500, 1.500000, 1.000000 )          │      7_231.66us │      4_334_034.93w │      11_309.77w │      11_309.77w │      0.01% │
+│ Naive lists into array of Integer values ( 100, 1000, 1.500000, 1.000000 )           │        529.36us │          8_007.49w │           0.19w │           0.19w │            │
+│ Naive two array of Integer values ( 100, 1000, 1.500000, 1.000000 )                  │        557.67us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 100, 1000, 1.500000, 1.000000 )         │     18_006.40us │     10_627_837.58w │      30_233.72w │      30_233.72w │      0.03% │
+│ Naive lists into array of Integer values ( 100, 5000, 1.500000, 1.000000 )           │      2_675.65us │         40_009.45w │           0.68w │           0.68w │            │
+│ Naive two array of Integer values ( 100, 5000, 1.500000, 1.000000 )                  │      3_168.65us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 100, 5000, 1.500000, 1.000000 )         │    110_430.89us │     63_443_365.44w │     192_500.60w │     192_500.60w │      0.16% │
+│ Naive lists into array of Integer values ( 100, 1000, 1.500000, 1.000000 )           │        535.48us │          8_007.49w │           0.21w │           0.21w │            │
+│ Naive two array of Integer values ( 100, 1000, 1.500000, 1.000000 )                  │        557.83us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 100, 1000, 1.500000, 1.000000 )         │     18_435.89us │     10_904_576.98w │      31_284.51w │      31_284.51w │      0.03% │
+
+│ Naive lists into array of Integer values ( 500, 100, 1.500000, 1.000000 )            │        252.46us │            807.05w │                 │                 │            │
+│ Naive two array of Integer values ( 500, 100, 1.500000, 1.000000 )                   │        274.78us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 500, 100, 1.500000, 1.000000 )          │        563.89us │        374_828.48w │         776.57w │         776.57w │            │
+│ Naive lists into array of Integer values ( 500, 500, 1.500000, 1.000000 )            │      1_252.06us │          4_007.25w │           0.30w │           0.30w │            │
+│ Naive two array of Integer values ( 500, 500, 1.500000, 1.000000 )                   │      1_375.98us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 500, 500, 1.500000, 1.000000 )          │     34_811.01us │     18_192_961.60w │     131_181.59w │     131_181.59w │      0.05% │
+│ Naive lists into array of Integer values ( 500, 1000, 1.500000, 1.000000 )           │      2_518.31us │          8_007.49w │           0.40w │           0.40w │            │
+│ Naive two array of Integer values ( 500, 1000, 1.500000, 1.000000 )                  │      2_794.54us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 500, 1000, 1.500000, 1.000000 )         │    159_870.60us │     79_131_081.26w │     785_198.03w │     785_198.03w │      0.23% │
+│ Naive lists into array of Integer values ( 500, 5000, 1.500000, 1.000000 )           │     12_618.23us │         40_009.46w │           0.93w │           0.93w │      0.02% │
+│ Naive two array of Integer values ( 500, 5000, 1.500000, 1.000000 )                  │     14_369.37us │              7.99w │          -0.12w │          -0.12w │      0.02% │
+│ Ascending partition maps of Integer values ( 500, 5000, 1.500000, 1.000000 )         │  2_166_632.29us │  1_019_802_901.20w │  12_054_708.40w │  12_054_708.40w │      3.05% │
+│ Naive lists into array of Integer values ( 500, 1000, 1.500000, 1.000000 )           │      2_511.50us │          8_007.50w │           0.41w │           0.41w │            │
+│ Naive two array of Integer values ( 500, 1000, 1.500000, 1.000000 )                  │      2_831.69us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 500, 1000, 1.500000, 1.000000 )         │    180_097.52us │     88_736_882.83w │     905_797.05w │     905_797.05w │      0.25% │
+
+│ Naive lists into array of Integer values ( 1000, 100, 1.500000, 1.000000 )           │        497.99us │            807.05w │                 │                 │            │
+│ Naive two array of Integer values ( 1000, 100, 1.500000, 1.000000 )                  │        549.92us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 1000, 100, 1.500000, 1.000000 )         │        711.83us │        464_118.23w │       1_165.57w │       1_165.57w │            │
+│ Naive lists into array of Integer values ( 1000, 500, 1.500000, 1.000000 )           │      2_501.84us │          4_007.25w │           0.40w │           0.40w │            │
+│ Naive two array of Integer values ( 1000, 500, 1.500000, 1.000000 )                  │      2_779.87us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 1000, 500, 1.500000, 1.000000 )         │     48_700.62us │     24_935_253.82w │     228_208.55w │     228_208.55w │      0.07% │
+│ Naive lists into array of Integer values ( 1000, 1000, 1.500000, 1.000000 )          │      4_996.49us │          8_007.49w │           0.58w │           0.58w │            │
+│ Naive two array of Integer values ( 1000, 1000, 1.500000, 1.000000 )                 │      5_639.77us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 1000, 1000, 1.500000, 1.000000 )        │    298_911.27us │    142_722_564.32w │   1_736_931.93w │   1_736_931.93w │      0.42% │
+│ Naive lists into array of Integer values ( 1000, 5000, 1.500000, 1.000000 )          │     24_986.19us │         40_009.47w │           1.17w │           1.17w │      0.04% │
+│ Naive two array of Integer values ( 1000, 5000, 1.500000, 1.000000 )                 │     28_205.92us │              7.98w │          -0.23w │          -0.23w │      0.04% │
+│ Ascending partition maps of Integer values ( 1000, 5000, 1.500000, 1.000000 )        │  6_759_870.82us │  3_106_175_919.00w │  31_721_651.50w │  31_721_651.50w │      9.53% │
+│ Naive lists into array of Integer values ( 1000, 1000, 1.500000, 1.000000 )          │      4_985.95us │          8_007.50w │           0.58w │           0.58w │            │
+│ Naive two array of Integer values ( 1000, 1000, 1.500000, 1.000000 )                 │      5_641.38us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 1000, 1000, 1.500000, 1.000000 )        │    245_364.48us │    118_903_217.98w │   1_460_770.25w │   1_460_770.25w │      0.35% │
+
+│ Naive lists into array of Integer values ( 5000, 100, 1.500000, 1.000000 )           │      2_486.12us │            807.05w │                 │                 │            │
+│ Naive two array of Integer values ( 5000, 100, 1.500000, 1.000000 )                  │      2_754.87us │              8.00w │                 │                 │            │
+│ Ascending partition maps of Integer values ( 5000, 100, 1.500000, 1.000000 )         │        651.51us │        435_035.32w │       1_085.76w │       1_085.76w │            │
+│ Naive lists into array of Integer values ( 5000, 500, 1.500000, 1.000000 )           │     12_533.28us │          4_007.25w │           0.42w │           0.42w │      0.02% │
+│ Naive two array of Integer values ( 5000, 500, 1.500000, 1.000000 )                  │     13_957.62us │              7.99w │          -0.12w │          -0.12w │      0.02% │
+│ Ascending partition maps of Integer values ( 5000, 500, 1.500000, 1.000000 )         │     63_273.39us │     31_809_800.02w │     376_071.98w │     376_071.98w │      0.09% │
+│ Naive lists into array of Integer values ( 5000, 1000, 1.500000, 1.000000 )          │     25_119.79us │          8_007.51w │           0.65w │           0.65w │      0.04% │
+│ Naive two array of Integer values ( 5000, 1000, 1.500000, 1.000000 )                 │     27_825.10us │              7.98w │          -0.21w │          -0.21w │      0.04% │
+│ Ascending partition maps of Integer values ( 5000, 1000, 1.500000, 1.000000 )        │    428_614.49us │    201_104_383.68w │   2_820_732.46w │   2_820_732.46w │      0.60% │
+│ Naive lists into array of Integer values ( 5000, 5000, 1.500000, 1.000000 )          │    125_627.93us │         40_009.66w │           2.64w │           2.64w │      0.18% │
+│ Naive two array of Integer values ( 5000, 5000, 1.500000, 1.000000 )                 │    139_040.42us │              7.92w │          -0.88w │          -0.88w │      0.20% │
+│ Ascending partition maps of Integer values ( 5000, 5000, 1.500000, 1.000000 )        │ 34_793_301.82us │ 15_044_306_342.00w │ 173_338_204.00w │ 173_338_204.00w │     49.06% │
+│ Naive lists into array of Integer values ( 5000, 1000, 1.500000, 1.000000 )          │     25_341.55us │          8_007.54w │           0.72w │           0.72w │      0.04% │
+│ Naive two array of Integer values ( 5000, 1000, 1.500000, 1.000000 )                 │     27_870.65us │              7.98w │          -0.21w │          -0.21w │      0.04% │
+│ Ascending partition maps of Integer values ( 5000, 1000, 1.500000, 1.000000 )        │    507_640.17us │    233_814_746.43w │   3_105_479.39w │   3_105_479.39w │      0.72% │
+
+│ Naive lists into array of Float values addition ( 100, 100, 1.500000, 1.000000 )     │         17.45us │            807.05w │                 │                 │            │
+│ Naive two array of Float values addition ( 100, 100, 1.500000, 1.000000 )            │         25.54us │         20_008.31w │           0.38w │           0.38w │            │
+│ Ascending partition maps of Float values addition ( 100, 100, 1.500000, 1.000000 )   │        513.91us │        332_733.11w │         642.86w │         642.86w │            │
+│ Naive lists into array of Float values addition ( 100, 500, 1.500000, 1.000000 )     │         90.24us │          4_007.24w │                 │                 │            │
+│ Naive two array of Float values addition ( 100, 500, 1.500000, 1.000000 )            │        128.37us │        100_009.53w │           1.91w │           1.91w │            │
+│ Ascending partition maps of Float values addition ( 100, 500, 1.500000, 1.000000 )   │      7_803.76us │      4_360_113.16w │      13_995.92w │      13_995.92w │      0.01% │
+│ Naive lists into array of Float values addition ( 100, 1000, 1.500000, 1.000000 )    │        181.75us │          8_007.49w │           0.14w │           0.14w │            │
+│ Naive two array of Float values addition ( 100, 1000, 1.500000, 1.000000 )           │        258.86us │        200_011.05w │           3.82w │           3.82w │            │
+│ Ascending partition maps of Float values addition ( 100, 1000, 1.500000, 1.000000 )  │     19_798.84us │     11_078_422.62w │      39_699.26w │      39_699.26w │      0.03% │
+│ Naive lists into array of Float values addition ( 100, 5000, 1.500000, 1.000000 )    │        888.19us │         40_009.44w │           0.63w │           0.63w │            │
+│ Naive two array of Float values addition ( 100, 5000, 1.500000, 1.000000 )           │      1_624.87us │      1_000_023.26w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 100, 5000, 1.500000, 1.000000 )  │    113_925.56us │     62_947_195.08w │     235_689.59w │     235_689.59w │      0.16% │
+│ Naive lists into array of Float values addition ( 100, 1000, 1.500000, 1.000000 )    │        179.48us │          8_007.49w │           0.14w │           0.14w │            │
+│ Naive two array of Float values addition ( 100, 1000, 1.500000, 1.000000 )           │        259.65us │        200_011.05w │           3.82w │           3.82w │            │
+│ Ascending partition maps of Float values addition ( 100, 1000, 1.500000, 1.000000 )  │     18_939.15us │     10_611_630.58w │      37_197.49w │      37_197.49w │      0.03% │
+
+│ Naive lists into array of Float values addition ( 500, 100, 1.500000, 1.000000 )     │         72.90us │            807.05w │                 │                 │            │
+│ Naive two array of Float values addition ( 500, 100, 1.500000, 1.000000 )            │        124.63us │        100_009.53w │           1.91w │           1.91w │            │
+│ Ascending partition maps of Float values addition ( 500, 100, 1.500000, 1.000000 )   │        594.92us │        377_787.47w │         939.87w │         939.87w │            │
+│ Naive lists into array of Float values addition ( 500, 500, 1.500000, 1.000000 )     │        366.16us │          4_007.24w │           0.14w │           0.14w │            │
+│ Naive two array of Float values addition ( 500, 500, 1.500000, 1.000000 )            │        666.80us │        500_015.63w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 500, 500, 1.500000, 1.000000 )   │     42_461.58us │     20_802_118.01w │     187_491.36w │     187_491.36w │      0.06% │
+│ Naive lists into array of Float values addition ( 500, 1000, 1.500000, 1.000000 )    │        732.36us │          8_007.49w │           0.21w │           0.21w │            │
+│ Naive two array of Float values addition ( 500, 1000, 1.500000, 1.000000 )           │      1_394.03us │      1_000_023.26w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 500, 1000, 1.500000, 1.000000 )  │    186_490.33us │     83_770_313.23w │   1_030_639.25w │   1_030_639.25w │      0.26% │
+│ Naive lists into array of Float values addition ( 500, 5000, 1.500000, 1.000000 )    │      3_637.80us │         40_009.45w │           0.70w │           0.70w │            │
+│ Naive two array of Float values addition ( 500, 5000, 1.500000, 1.000000 )           │      6_991.44us │      5_000_084.29w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 500, 5000, 1.500000, 1.000000 )  │  2_430_795.11us │  1_054_099_825.50w │  15_423_728.50w │  15_423_728.50w │      3.43% │
+│ Naive lists into array of Float values addition ( 500, 1000, 1.500000, 1.000000 )    │        748.16us │          8_007.49w │           0.21w │           0.21w │            │
+│ Naive two array of Float values addition ( 500, 1000, 1.500000, 1.000000 )           │      1_395.94us │      1_000_023.26w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 500, 1000, 1.500000, 1.000000 )  │    183_410.83us │     82_452_087.76w │   1_006_241.86w │   1_006_241.86w │      0.26% │
+
+│ Naive lists into array of Float values addition ( 1000, 100, 1.500000, 1.000000 )    │        141.07us │            807.05w │                 │                 │            │
+│ Naive two array of Float values addition ( 1000, 100, 1.500000, 1.000000 )           │        248.54us │        200_011.05w │           3.82w │           3.82w │            │
+│ Ascending partition maps of Float values addition ( 1000, 100, 1.500000, 1.000000 )  │        873.59us │        525_259.57w │       1_619.41w │       1_619.41w │            │
+│ Naive lists into array of Float values addition ( 1000, 500, 1.500000, 1.000000 )    │        711.47us │          4_007.24w │           0.21w │           0.21w │            │
+│ Naive two array of Float values addition ( 1000, 500, 1.500000, 1.000000 )           │      1_343.00us │      1_000_023.26w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 1000, 500, 1.500000, 1.000000 )  │     60_072.44us │     28_193_347.71w │     315_472.31w │     315_472.31w │      0.08% │
+│ Naive lists into array of Float values addition ( 1000, 1000, 1.500000, 1.000000 )   │      1_434.99us │          8_007.49w │           0.28w │           0.28w │            │
+│ Naive two array of Float values addition ( 1000, 1000, 1.500000, 1.000000 )          │      2_708.34us │      2_000_038.52w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 1000, 1000, 1.500000, 1.000000 ) │    279_621.73us │    121_708_915.12w │   1_823_796.95w │   1_823_796.95w │      0.39% │
+│ Naive lists into array of Float values addition ( 1000, 5000, 1.500000, 1.000000 )   │      7_009.80us │         40_009.45w │           0.78w │           0.78w │            │
+│ Naive two array of Float values addition ( 1000, 5000, 1.500000, 1.000000 )          │     13_596.90us │     10_000_160.59w │           5.01w │           5.01w │      0.02% │
+│ Ascending partition maps of Float values addition ( 1000, 5000, 1.500000, 1.000000 ) │  7_395_737.36us │  3_150_797_746.00w │  37_744_264.00w │  37_744_264.00w │     10.43% │
+│ Naive lists into array of Float values addition ( 1000, 1000, 1.500000, 1.000000 )   │      1_413.44us │          8_007.49w │           0.28w │           0.28w │            │
+│ Naive two array of Float values addition ( 1000, 1000, 1.500000, 1.000000 )          │      2_707.61us │      2_000_038.52w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 1000, 1000, 1.500000, 1.000000 ) │    337_396.10us │    145_643_230.49w │   2_129_887.56w │   2_129_887.56w │      0.48% │
+
+│ Naive lists into array of Float values addition ( 5000, 100, 1.500000, 1.000000 )    │        677.22us │            807.05w │                 │                 │            │
+│ Naive two array of Float values addition ( 5000, 100, 1.500000, 1.000000 )           │      1_315.57us │      1_000_023.26w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 5000, 100, 1.500000, 1.000000 )  │        924.37us │        568_869.01w │       1_839.09w │       1_839.09w │            │
+│ Naive lists into array of Float values addition ( 5000, 500, 1.500000, 1.000000 )    │      3_395.63us │          4_007.25w │           0.42w │           0.42w │            │
+│ Naive two array of Float values addition ( 5000, 500, 1.500000, 1.000000 )           │      6_610.82us │      5_000_084.29w │           5.00w │           5.00w │            │
+│ Ascending partition maps of Float values addition ( 5000, 500, 1.500000, 1.000000 )  │     72_169.38us │     32_318_671.86w │     457_765.38w │     457_765.38w │      0.10% │
+│ Naive lists into array of Float values addition ( 5000, 1000, 1.500000, 1.000000 )   │      6_778.73us │          8_007.50w │           0.65w │           0.65w │            │
+│ Naive two array of Float values addition ( 5000, 1000, 1.500000, 1.000000 )          │     13_134.74us │     10_000_160.60w │           5.01w │           5.01w │      0.02% │
+│ Ascending partition maps of Float values addition ( 5000, 1000, 1.500000, 1.000000 ) │    451_891.09us │    192_993_898.93w │   3_174_650.82w │   3_174_650.82w │      0.64% │
+│ Naive lists into array of Float values addition ( 5000, 5000, 1.500000, 1.000000 )   │     33_794.89us │         40_009.55w │           1.31w │           1.31w │      0.05% │
+│ Naive two array of Float values addition ( 5000, 5000, 1.500000, 1.000000 )          │     65_702.33us │     50_000_770.96w │           5.04w │           5.04w │      0.09% │
+│ Ascending partition maps of Float values addition ( 5000, 5000, 1.500000, 1.000000 ) │ 38_953_473.09us │ 15_174_218_465.00w │ 187_494_345.00w │ 187_494_345.00w │     54.92% │
+│ Naive lists into array of Float values addition ( 5000, 1000, 1.500000, 1.000000 )   │      6_885.07us │          8_007.48w │           0.65w │           0.65w │            │
+│ Naive two array of Float values addition ( 5000, 1000, 1.500000, 1.000000 )          │     13_241.98us │     10_000_160.60w │           5.01w │           5.01w │      0.02% │
+│ Ascending partition maps of Float values addition ( 5000, 1000, 1.500000, 1.000000 ) │    538_110.78us │    224_224_062.25w │   3_547_784.54w │   3_547_784.54w │      0.76% │
+
+│ Naive lists into array of Float vector ( 100, 100, 1.500000, 1.000000 )              │         75.03us │         40_808.27w │          64.10w │          64.10w │            │
+│ Naive two array of Float vector ( 100, 100, 1.500000, 1.000000 )                     │         80.75us │         40_009.22w │          61.82w │          61.82w │            │
+│ Ascending partition maps of Float vector ( 100, 100, 1.500000, 1.000000 )            │        659.12us │        413_027.43w │       1_080.49w │       1_080.49w │            │
+│ Naive lists into array of Float vector ( 100, 500, 1.500000, 1.000000 )              │        371.94us │        204_013.32w │         320.62w │         320.62w │            │
+│ Naive two array of Float vector ( 100, 500, 1.500000, 1.000000 )                     │        403.00us │        200_014.10w │         309.02w │         309.02w │            │
+│ Ascending partition maps of Float vector ( 100, 500, 1.500000, 1.000000 )            │      8_755.75us │      5_064_046.64w │      20_674.08w │      20_674.08w │      0.01% │
+│ Naive lists into array of Float vector ( 100, 1000, 1.500000, 1.000000 )             │        737.28us │        408_019.73w │         638.79w │         638.79w │            │
+│ Naive two array of Float vector ( 100, 1000, 1.500000, 1.000000 )                    │        804.23us │        400_020.21w │         615.40w │         615.40w │            │
+│ Ascending partition maps of Float vector ( 100, 1000, 1.500000, 1.000000 )           │     19_485.72us │     11_183_729.08w │      48_279.93w │      48_279.93w │      0.03% │
+│ Naive lists into array of Float vector ( 100, 5000, 1.500000, 1.000000 )             │      3_713.54us │      2_040_070.03w │       3_178.01w │       3_178.01w │            │
+│ Naive two array of Float vector ( 100, 5000, 1.500000, 1.000000 )                    │      4_358.75us │      2_000_069.04w │       3_057.28w │       3_057.28w │            │
+│ Ascending partition maps of Float vector ( 100, 5000, 1.500000, 1.000000 )           │    117_886.88us │     65_154_569.31w │     294_766.95w │     294_766.95w │      0.17% │
+│ Naive lists into array of Float vector ( 100, 1000, 1.500000, 1.000000 )             │        741.21us │        408_019.73w │         638.79w │         638.79w │            │
+│ Naive two array of Float vector ( 100, 1000, 1.500000, 1.000000 )                    │        816.80us │        400_020.21w │         615.49w │         615.49w │            │
+│ Ascending partition maps of Float vector ( 100, 1000, 1.500000, 1.000000 )           │     20_271.95us │     11_658_708.41w │      50_530.35w │      50_530.35w │      0.03% │
+
+│ Naive lists into array of Float vector ( 500, 100, 1.500000, 1.000000 )              │        376.60us │        200_813.15w │       1_541.45w │       1_541.45w │            │
+│ Naive two array of Float vector ( 500, 100, 1.500000, 1.000000 )                     │        421.19us │        200_014.10w │       1_530.12w │       1_530.12w │            │
+│ Ascending partition maps of Float vector ( 500, 100, 1.500000, 1.000000 )            │      1_491.01us │        824_106.31w │       3_622.70w │       3_622.70w │            │
+│ Naive lists into array of Float vector ( 500, 500, 1.500000, 1.000000 )              │      1_930.09us │      1_004_037.79w │       7_695.74w │       7_695.74w │            │
+│ Naive two array of Float vector ( 500, 500, 1.500000, 1.000000 )                     │      2_142.73us │      1_000_038.52w │       7_635.61w │       7_635.61w │            │
+│ Ascending partition maps of Float vector ( 500, 500, 1.500000, 1.000000 )            │     65_976.61us │     29_990_218.47w │     366_301.07w │     366_301.07w │      0.09% │
+│ Naive lists into array of Float vector ( 500, 1000, 1.500000, 1.000000 )             │      3_759.07us │      2_008_068.49w │      15_388.37w │      15_388.37w │            │
+│ Naive two array of Float vector ( 500, 1000, 1.500000, 1.000000 )                    │      4_320.63us │      2_000_069.04w │      15_266.13w │      15_266.13w │            │
+│ Ascending partition maps of Float vector ( 500, 1000, 1.500000, 1.000000 )           │    236_989.32us │    102_787_634.67w │   1_621_938.77w │   1_621_938.77w │      0.33% │
+│ Naive lists into array of Float vector ( 500, 5000, 1.500000, 1.000000 )             │     18_920.86us │     10_040_314.82w │      76_923.88w │      76_923.88w │      0.03% │
+│ Naive two array of Float vector ( 500, 5000, 1.500000, 1.000000 )                    │     21_878.12us │     10_000_313.19w │      76_310.43w │      76_310.43w │      0.03% │
+│ Ascending partition maps of Float vector ( 500, 5000, 1.500000, 1.000000 )           │  2_860_175.61us │  1_184_856_170.80w │  20_283_549.00w │  20_283_549.00w │      4.03% │
+│ Naive lists into array of Float vector ( 500, 1000, 1.500000, 1.000000 )             │      3_764.67us │      2_008_068.50w │      15_388.17w │      15_388.17w │            │
+│ Naive two array of Float vector ( 500, 1000, 1.500000, 1.000000 )                    │      4_351.44us │      2_000_069.04w │      15_265.95w │      15_265.95w │            │
+│ Ascending partition maps of Float vector ( 500, 1000, 1.500000, 1.000000 )           │    272_833.49us │    116_970_701.00w │   1_905_411.72w │   1_905_411.72w │      0.38% │
+
+│ Naive lists into array of Float vector ( 1000, 100, 1.500000, 1.000000 )             │        789.25us │        400_819.28w │       6_133.05w │       6_133.05w │            │
+│ Naive two array of Float vector ( 1000, 100, 1.500000, 1.000000 )                    │        900.17us │        400_020.21w │       6_110.18w │       6_110.18w │            │
+│ Ascending partition maps of Float vector ( 1000, 100, 1.500000, 1.000000 )           │      1_461.03us │        816_492.36w │       3_751.38w │       3_751.38w │            │
+│ Naive lists into array of Float vector ( 1000, 500, 1.500000, 1.000000 )             │      4_006.33us │      2_004_068.27w │      30_652.03w │      30_652.03w │            │
+│ Naive two array of Float vector ( 1000, 500, 1.500000, 1.000000 )                    │      4_668.22us │      2_000_069.04w │      30_529.54w │      30_529.54w │            │
+│ Ascending partition maps of Float vector ( 1000, 500, 1.500000, 1.000000 )           │    100_400.78us │     43_130_236.41w │     667_122.36w │     667_122.36w │      0.14% │
+│ Naive lists into array of Float vector ( 1000, 1000, 1.500000, 1.000000 )            │      7_874.41us │      4_008_129.61w │      61_292.18w │      61_292.18w │      0.01% │
+│ Naive two array of Float vector ( 1000, 1000, 1.500000, 1.000000 )                   │      9_138.20us │      4_000_130.09w │      61_053.75w │      61_053.75w │      0.01% │
+│ Ascending partition maps of Float vector ( 1000, 1000, 1.500000, 1.000000 )          │    533_160.16us │    223_495_898.29w │   3_654_029.07w │   3_654_029.07w │      0.75% │
+│ Naive lists into array of Float vector ( 1000, 5000, 1.500000, 1.000000 )            │     39_479.79us │     20_040_619.53w │     306_439.26w │     306_439.26w │      0.06% │
+│ Naive two array of Float vector ( 1000, 5000, 1.500000, 1.000000 )                   │     45_312.47us │     20_000_618.39w │     305_210.22w │     305_210.22w │      0.06% │
+│ Ascending partition maps of Float vector ( 1000, 5000, 1.500000, 1.000000 )          │  9_257_429.12us │  3_846_080_482.00w │  51_229_540.00w │  51_229_540.00w │     13.05% │
+│ Naive lists into array of Float vector ( 1000, 1000, 1.500000, 1.000000 )            │      7_844.62us │      4_008_129.70w │      61_301.48w │      61_301.48w │      0.01% │
+│ Naive two array of Float vector ( 1000, 1000, 1.500000, 1.000000 )                   │      9_092.43us │      4_000_130.08w │      61_051.65w │      61_051.65w │      0.01% │
+│ Ascending partition maps of Float vector ( 1000, 1000, 1.500000, 1.000000 )          │    495_479.05us │    208_120_769.86w │   3_407_507.39w │   3_407_507.39w │      0.70% │
+
+│ Naive lists into array of Float vector ( 5000, 100, 1.500000, 1.000000 )             │      5_945.44us │      2_000_868.10w │     152_790.91w │     152_790.91w │            │
+│ Naive two array of Float vector ( 5000, 100, 1.500000, 1.000000 )                    │      6_377.72us │      2_000_069.07w │     152_700.26w │     152_700.26w │            │
+│ Ascending partition maps of Float vector ( 5000, 100, 1.500000, 1.000000 )           │      2_153.99us │      1_124_572.04w │       6_145.83w │       6_145.83w │            │
+│ Naive lists into array of Float vector ( 5000, 500, 1.500000, 1.000000 )             │     29_826.85us │     10_004_312.62w │     764_017.05w │     764_017.05w │      0.04% │
+│ Naive two array of Float vector ( 5000, 500, 1.500000, 1.000000 )                    │     32_159.63us │     10_000_313.31w │     763_328.10w │     763_328.10w │      0.05% │
+│ Ascending partition maps of Float vector ( 5000, 500, 1.500000, 1.000000 )           │    169_624.75us │     70_803_645.07w │   1_205_557.25w │   1_205_557.25w │      0.24% │
+│ Naive lists into array of Float vector ( 5000, 1000, 1.500000, 1.000000 )            │     59_866.24us │     20_008_618.56w │   1_527_962.39w │   1_527_962.39w │      0.08% │
+│ Naive two array of Float vector ( 5000, 1000, 1.500000, 1.000000 )                   │     65_056.68us │     20_000_618.70w │   1_526_965.82w │   1_526_965.82w │      0.09% │
+│ Ascending partition maps of Float vector ( 5000, 1000, 1.500000, 1.000000 )          │  1_230_407.83us │    508_841_714.40w │   7_189_673.00w │   7_189_673.00w │      1.73% │
+│ Naive lists into array of Float vector ( 5000, 5000, 1.500000, 1.000000 )            │    300_854.05us │    100_043_063.00w │   7_641_058.00w │   7_641_058.00w │      0.42% │
+│ Naive two array of Float vector ( 5000, 5000, 1.500000, 1.000000 )                   │    322_606.46us │    100_003_061.53w │   7_634_005.13w │   7_634_005.13w │      0.45% │
+│ Ascending partition maps of Float vector ( 5000, 5000, 1.500000, 1.000000 )          │ 70_921_942.00us │ 26_178_494_550.00w │ 366_537_509.00w │ 366_537_509.00w │    100.00% │
+│ Naive lists into array of Float vector ( 5000, 1000, 1.500000, 1.000000 )            │     59_135.84us │     20_008_619.44w │   1_529_807.92w │   1_529_807.92w │      0.08% │
+│ Naive two array of Float vector ( 5000, 1000, 1.500000, 1.000000 )                   │     63_834.92us │     20_000_619.37w │   1_528_653.13w │   1_528_653.13w │      0.09% │
+│ Ascending partition maps of Float vector ( 5000, 1000, 1.500000, 1.000000 )          │  1_363_293.40us │    561_227_117.40w │   7_813_210.90w │   7_813_210.90w │      1.92% │
+└──────────────────────────────────────────────────────────────────────────────────────┴─────────────────┴────────────────────┴─────────────────┴─────────────────┴────────────┘
