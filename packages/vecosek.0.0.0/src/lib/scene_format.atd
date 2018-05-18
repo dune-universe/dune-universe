@@ -1,0 +1,55 @@
+
+type midi_event = {
+  port: int;
+  status: int;
+  channel: int;
+  data1: int;
+  data2: int option;
+}
+
+type id = string
+
+type event = [
+  | Track_ends of id
+  | Track_starts of id
+  | Midi_input of midi_event
+] <ocaml repr="classic">
+
+
+type bpm_operation =
+  [ Set of int | Incr of int | Decr of int | Mul of float ]
+type event_handler = {
+  name: string;
+  events: event list;
+  actions: action list;
+}
+type action = [
+  | Raw_midi of midi_event
+  | Track_on of (id * int) (* Track-id × Offset *)
+  | Track_off of id
+  | Bpm_operation of bpm_operation
+  | Add_event_handler of event_handler
+  | Remove_event_handler of event_handler
+  | Remove_event_handler_by_event of event
+  | All_tracks_off
+  | Stop
+] <ocaml repr="classic">
+
+type ticked_action = {
+  tick: int;
+  action: action;
+}
+type track = {
+  id: id;
+  events: ticked_action list;
+  length: int;
+  name: string; (** Display name *)
+}
+
+type scene = {
+  active: id list;
+  handlers: event_handler list;
+  bpm: int;
+  ppqn: int; (** Pulses Per Quarter Note. *)
+  tracks: track list;
+}

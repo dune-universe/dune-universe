@@ -1,0 +1,46 @@
+
+variables:
+    BUILD_SCRIPT: >
+      sudo apt-get update -qq &&
+      opam config exec -- opam remote add --priority 100 mothership https://github.com/ocaml/opam-repository.git &&
+      opam config exec -- opam update --yes &&
+      opam config exec -- opam upgrade --yes &&
+      opam config exec -- opam pin --yes -n add vecosek-scene . &&
+      opam config exec -- opam pin --yes -n add vecosek-engine . &&
+      opam config exec -- opam pin --yes -n add vecosek . &&
+      opam config exec -- opam depext --yes vecosek &&
+      opam config exec -- opam install --yes vecosek &&
+      opam config exec -- vecosek --version
+    BUILD_DOC: >
+      sudo apt-get install -y pandoc &&
+      opam config exec -- opam install --yes odoc &&
+      opam config exec -- sh tools/build-doc.sh master &&
+      opam config exec -- sh tools/build-doc.sh &&
+      mkdir -p public &&
+      cp -r _build/doc/html/* public/
+
+ocaml:4030:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.03.0
+  script:
+     - bash -c "$BUILD_SCRIPT"
+
+ocaml:4042:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.04.2
+  script:
+     - bash -c "$BUILD_SCRIPT"
+
+ocaml:4050:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.05.0
+  script:
+     - bash -c "$BUILD_SCRIPT"
+
+pages:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.05.0
+  script:
+     - bash -c "$BUILD_SCRIPT"
+     - bash -c "$BUILD_DOC"
+  artifacts:
+     paths:
+     - public
+  only:
+  - master

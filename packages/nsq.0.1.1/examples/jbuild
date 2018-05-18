@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(executables
- ((names (example))
-  (libraries (nsq))))
-
-(alias
-  ((name DEFAULT)
-   (deps (example.exe))))
