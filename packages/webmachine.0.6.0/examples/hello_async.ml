@@ -1,23 +1,25 @@
-open Lwt.Infix
-open Cohttp_lwt
-open Cohttp_lwt_unix
-open Cohttp_lwt_unix_io
+open Core
+open Async
 
-(* Apply the [Webmachine.Make] functor to the Lwt_unix-based IO module
- * exported by cohttp. For added convenience, include the [Rd] module
- * as well so you don't have to go reaching into multiple modules to
- * access request-related information. *)
+open Cohttp_async
+
+(* Apply the [Webmachine.Make] functor to the Async-based IO module exported by
+ * cohttp. For added convenience, include the [Rd] module as well so you don't
+ * have to go reaching into multiple modules to access request-related
+ * information. *)
 module Wm = struct
   module Rd = Webmachine.Rd
-  include Webmachine.Make(Cohttp_lwt_unix_io)
+  module UnixClock = struct
+    let now = fun () -> int_of_float (Unix.gettimeofday ())
+  end
+  include Webmachine.Make(Cohttp_async.Io)(UnixClock)
 end
 
 (* Create a new class that inherits from [Wm.resource] and provides
- * implementations for its two virtual methods, and overrides some of
- * its default methods.
+ * implementations for its two virtual methods, and overrides some of its default methods.
  *)
 class hello = object(self)
-  inherit [Cohttp_lwt_body.t] Wm.resource
+  inherit [Body.t] Wm.resource
 
   (* Only allow GET requests to this resource *)
   method allowed_methods rd =
@@ -28,7 +30,7 @@ class hello = object(self)
    *
    *   https://tools.ietf.org/html/rfc7231#section-5.3.2
    *
-   * Content negotiation can be a complex process. However for simple Accept
+   * Content negotiation can be a complex process. Hoever for simple Accept
    * headers its fairly straightforward. Here's what content negotiation will
    * produce in some of these simple cases:
    *
@@ -59,13 +61,13 @@ class hello = object(self)
    * called ["what"] was introduced by a route, it will use whatever string in
    * that position. Otherwise, it defaults to the string ["world"]. *)
   method private what rd =
-    try Wm.Rd.lookup_path_info_exn "what" rd with Not_found -> "world"
+    try Wm.Rd.lookup_path_info_exn "what" rd with Caml.Not_found -> "world"
 
   (* Returns an html-based representation of the resource *)
   method private to_html rd =
     let body =
       Printf.sprintf
-        "<html><body><h1>Hello, %s!</h1></body></html>\n"
+        "<html><body><h1>Hello, %s!</h1></body></html>"
         (self#what rd)
     in
     Wm.continue (`String body) rd
@@ -87,7 +89,7 @@ let main () =
   (* Listen on port 8080 *)
   let port = 8080 in
   (* The route table. Both routes use the [hello] resource defined above.
-   * However, the second one contains the [:what] wildcard in the path. The
+   * However, the second one containes the [:what] wildcard in the path. The
    * value of that wildcard can be accessed in the resource by calling
    *
    *   [Wm.Rd.lookup_path_info "what" rd]
@@ -96,36 +98,36 @@ let main () =
     ("/"           , fun () -> new hello);
     ("/hello/:what", fun () -> new hello);
   ] in
-  let callback (ch,conn) request body =
+  let handler ~body _ request =
     let open Cohttp in
     (* Perform route dispatch. If [None] is returned, then the URI path did not
      * match any of the route patterns. In this case the server should return a
      * 404 [`Not_found]. *)
     Wm.dispatch' routes ~body ~request
-    >|= begin function
+    >>| begin function
       | None        -> (`Not_found, Header.init (), `String "Not found", [])
       | Some result -> result
     end
-    >>= fun (status, headers, body, path) ->
+    >>= fun (status_code, headers, body, path) ->
       (* If you'd like to see the path that the request took through the
        * decision diagram, then run this example with the [DEBUG_PATH]
        * environment variable set. This should suffice:
        *
-       *  [$ DEBUG_PATH= ./hello_lwt.native]
+       *  [$ DEBUG_PATH= ./hello_async.native]
        *
        *)
       let path =
         match Sys.getenv "DEBUG_PATH" with
-        | _ -> Printf.sprintf " - %s" (String.concat ", " path)
-        | exception Not_found   -> ""
+        | None   -> ""
+        | Some _ -> sprintf " - %s" (String.concat ~sep:", " path)
       in
-      Printf.eprintf "%d - %s %s%s"
-        (Code.code_of_status status)
-        (Code.string_of_method (Request.meth request))
-        (Uri.path (Request.uri request))
-        path;
+      Log.Global.info "%d - %s %s%s"
+          (Code.code_of_status status_code)
+          (Code.string_of_method (Request.meth request))
+          (Uri.path (Request.uri request))
+          path;
       (* Finally, send the response to the client *)
-      Server.respond ~headers ~body ~status ()
+      Server.respond ~headers ~body status_code
   in
   (* Create the server and handle requests with the function defined above. Try
    * it out with some of these curl commands:
@@ -133,13 +135,10 @@ let main () =
    *   [curl -H"Accept:text/html" "http://localhost:8080"]
    *   [curl -H"Accept:text/plain" "http://localhost:8080"]
    *   [curl -H"Accept:application/json" "http://localhost:8080"]
-  *)
-  let conn_closed (ch,conn) =
-    Printf.printf "connection %s closed\n%!"
-      (Sexplib.Sexp.to_string_hum (Conduit_lwt_unix.sexp_of_flow ch))
-  in
-  let config = Server.make ~callback ~conn_closed () in
-  Server.create  ~mode:(`TCP(`Port port)) config >|= fun () ->
-    Printf.eprintf "hello_lwt: listening on 0.0.0.0:%d%!" port
+   *)
+  Server.create ~on_handler_error:`Raise (Tcp.Where_to_listen.of_port port) handler
+  >>> (fun server ->
+    Log.Global.info "hello_async: listening on 0.0.0.0:%d%!" port)
+;;
 
-let () =  Lwt_main.run (main ())
+Scheduler.go_main ~main ()
