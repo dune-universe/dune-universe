@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+  ((name mod_arith)
+   (public_name modular-arithmetic)
+   (modules (mod_arith))))
