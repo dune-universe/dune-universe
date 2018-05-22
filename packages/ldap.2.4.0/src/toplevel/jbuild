@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name toplevel)
+  (public_name ldap.toplevel)
+  (wrapped false)
+  (libraries (ldif compiler-libs))))

@@ -1,0 +1,24 @@
+opam-version: "1.2"
+
+name: "ppx_deriving_madcast"
+version: "0.1"
+tags: [ "syntax" ]
+
+maintainer: "Niols <niols@niols.fr>"
+authors: [ "Niols <niols@niols.fr>" "Kerl <kerl@wkerl.me>" ]
+license: "LGPL3"
+
+homepage: "https://github.com/Niols/ppx_deriving_madcast"
+bug-reports: "https://github.com/Niols/ppx_deriving_madcast/issues"
+dev-repo: "git://github.com/Niols/ppx_deriving_madcast.git"
+
+available: [ ocaml-version >= "4.04" ]
+depends: [
+    "ppx_deriving"
+    "ppx_tools"
+    "ppxfind"
+    "jbuilder" {build}
+]
+
+build: [ make ]
+build-test: [ make "test" ]

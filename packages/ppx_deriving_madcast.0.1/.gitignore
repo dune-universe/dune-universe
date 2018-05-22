@@ -1,0 +1,13 @@
+
+## Dune
+_build
+*.install
+.merlin
+
+## Emacs
+*~
+*#
+.#*
+
+## Project-specific
+ppx_deriving_madcast.[0-9]*
