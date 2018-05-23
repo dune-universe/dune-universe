@@ -28,6 +28,7 @@ type t =
   | Tuple of t list
   | Unit
   | Escaped of string (** Something outside of OCaml values *)
+  | IntGen of string * char
 
 type ocaml = t
 
@@ -73,7 +74,7 @@ module Parser : sig
   exception Error of error
 
   val loc_of_error : error -> Location.t
-  (** Returns the location of the error.  [Loaction.none] is returned when
+  (** Returns the location of the error.  [Location.none] is returned when
       the location is unknown. *)
     
   val format_error : Format.formatter -> error -> unit

@@ -1,0 +1,6 @@
+opam/generated
+_build
+.*/\.merlin$
+.*~$
+.*\.orig$
+.*\.install$

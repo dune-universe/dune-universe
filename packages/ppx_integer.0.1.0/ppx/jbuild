@@ -1,0 +1,7 @@
+(library
+ ((kind ppx_rewriter)
+  (name ppx_integer)
+  (public_name ppx_integer)
+  (flags (-w -9))
+  (preprocess (pps (ppx_tools_versioned.metaquot_405)))
+  (libraries ( compiler-libs.common ocaml-migrate-parsetree ppxx ))))

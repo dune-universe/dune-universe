@@ -18,6 +18,7 @@ type t =
   | Tuple of t list
   | Unit
   | Escaped of string
+  | IntGen of string * char
 (*
   | Let_rec of string * t * t
   | Var of string
@@ -92,6 +93,7 @@ let gen_format no_poly ppf v =
     | Tuple ts -> f ppf "(@[<hv>%a@])" (format_list ",@ " format) ts
     | Unit -> f ppf "()"
     | Escaped s -> pp_print_string ppf s
+    | IntGen (s, c) -> f ppf "%s%c" s c
 (*
     | Var s -> pp_print_string ppf s
     | Let_rec (s, t1, t2) -> f ppf "@[@[<2>let rec %s = %a in@]@ %a@]" s format t1 format t2

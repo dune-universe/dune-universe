@@ -1,0 +1,8 @@
+homepage: "https://bitbucket.org/camlspotter/ppx_monadic"
+depends: [
+  "jbuilder"
+  "ppx_tools_versioned" { >= "5.0" }
+  "ppxx" { >= "2.3.0" & < "2.4.0" }
+]
+homepage: "https://bitbucket.org/camlspotter/ppx_monadic"
+available: [ ocaml-version >= "4.03.0" ]
