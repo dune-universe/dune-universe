@@ -1,4 +1,4 @@
-(* Copyright (c) 2017 Anil Madhavapeddy <anil@recoil.org>
+(* Copyright (c) 2017-2018 Anil Madhavapeddy <anil@recoil.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,8 +19,6 @@
     These are of the form [major.minor.patch+extra], where the
     [patch] and [extra] fields are optional.  *)
 
-(** {2 Core types and parsers and serializers} *)
-
 type t
 (** Type of an OCaml version string *)
 
@@ -30,6 +28,8 @@ val v : ?patch:int -> ?extra:string -> int -> int -> t
     [patch] and [extra] indicators are optional, but it is
     conventional to include a [patch] value of 0 for most
     recent OCaml releases. *)
+
+(** {2 Parsers and serializers} *)
 
 val to_string : ?sep:char -> t -> string
 (** [to_string ?sep t] will convert the version [t] into
@@ -60,7 +60,7 @@ val pp : Format.formatter -> t -> unit
 (** [pp fmt t] will output a human-readable version string of
     [t] to the [fmt] formatter. *)
 
-(** {3 Architecture Support }
+(** {2 Architecture Support }
     These definitions cover the CPU architectures that OCaml
     runs and is supported on. *)
 
@@ -116,8 +116,20 @@ val extra : t -> string option
 
 val with_variant : t -> string option -> t
 (** [with_variant t extra] will return a fresh value with
-    the extra version information in the OCaml string to
+    the extra version information in [t] to
     [extra], and remove it if [None] is supplied. *)
+
+val with_patch : t -> int option -> t
+(** [with_patch t patch] will return a fresh value with
+    the patch number in [t] to [patch], and remove it if [None]
+    is supplied. *)
+
+val without_patch : t -> t
+(** [without_patch t] is as {!with_patch} [t None]. It removes
+    the least significant number from the version string.
+    This is useful for the Docker OCaml containers, which are
+    all named without a patch number and compiled using the
+    latest patch release (e.g. [4.06] instead of [4.06.1]). *)
 
 (** {2 Constants } *)
  
@@ -183,6 +195,9 @@ module Releases : sig
   val v4_06_0 : t
   (** Version 4.06.0 *)
 
+  val v4_06_1 : t
+  (** Version 4.06.1 *)
+
   val v4_06 : t
   (** Latest release in the 4.06.x series *)
 
@@ -239,20 +254,6 @@ end
     These are available from the public {{:https://github.com/ocaml/opam-repository}opam-repository}. *)
 module Opam : sig
 
-  val switches : t -> t list
-  (** [switches t] lists all the available opam switches for compiler version [t].
-    This list includes the default compiler, and any available variants such as
-    [flambda]. *)
-
-  val default_switch : t -> t
-  (** [default_switch t] is the name of the switch of the stock version of [t].
-    This is normally just the version number, but can include an extra version
-    string such as [trunk] for development versions of the compiler. *)
-
-  val variant_switches : t -> t list
-  (** [variant_switches t] lists all the non-default switch versions available
-    for compiler version [t].  This filters out the default variant of the compiler. *)
-
   val variants : t -> string list
   (** [variants t] lists the compiler variants that are available in
     opam for [t] strings. This is returned as a string that can be passed to
@@ -260,9 +261,28 @@ module Opam : sig
 
   val default_variant : t -> string option
   (** [default_variant t] returns [Some v] if a variant exists by
-   default for version [t].  This is typically true for development
-   versions of the compiler that have a branch name such as [trunk]
-   appended to their switch name.  {!default_switch} combines this into a
-   full OCaml version. *)
+    default for version [t].  This is typically true for development
+    versions of the compiler that have a branch name such as [trunk]
+    appended to their switch name.  {!default_switch} combines this into a
+    full OCaml version. *)
 
+  val default_switch : t -> t
+  (** [default_switch t] is the name of the switch of the stock version of [t].
+    This is normally just the version number, but can include an extra version
+    string such as [trunk] for development versions of the compiler. *)
+
+  val switches : t -> t list
+  (** [switches t] lists all the available opam switches for compiler version [t].
+    This list includes the default compiler, and any available variants such as
+    [flambda]. *)
+
+  val variant_switches : t -> t list
+  (** [variant_switches t] lists all the non-default switch versions available
+    for compiler version [t].  This filters out the default variant of the compiler. *)
+
+  (** Opam 2.0 functions *)
+  module V2 : sig
+    val package : t -> string
+    (** [package t] returns the opam2 package for that compiler version. *)
+  end
 end
