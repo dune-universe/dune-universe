@@ -84,7 +84,7 @@ let main style_renderer verbosity tool file scriptfile keep_files no_analysis
     (fun m ->
        m "%a"
          Fmtc.(styled `Bold string)
-         "electrod (C) 2016-2018 ONERA (0.1.6)");
+         "electrod (C) 2016-2018 ONERA (0.1.7)");
 
   Msg.debug (fun m -> m "CWD = %s" (Sys.getcwd ()));
   Msg.debug (fun m -> m "PATH = %s" (Sys.getenv "PATH"));

@@ -1,6 +1,6 @@
 # electrod - Formal analysis for the Electrod formal specification language
 
-0.1.6
+0.1.7
 
 Electrod is a model finder inspired by Kodkod. It takes as input a
 model expressed in a mixture of relational first-order logic (RFOL)

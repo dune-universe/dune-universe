@@ -498,8 +498,20 @@ module Make_SMV_file_format (Ltl : Solver.LTL)
         IO.with_out tgt (fun out -> IO.write_line out default);
         tgt
 
+  (* Taken from nunchaku-inria/logitest/src/Misc.ml (BSD licence).
+     Make sure that we are a session leader; that is, our children die if we die *)
+  let ensure_session_leader : unit -> unit =
+    let thunk = lazy (
+      if not Sys.win32 && not Sys.cygwin
+      then ignore (Unix.setsid ())
+    ) in
+    fun () -> Lazy.force thunk
+
+
   let analyze ~conversion_time ~cmd ~script ~keep_files
-        ~no_analysis ~elo ~file model : Outcome.t=
+        ~no_analysis ~elo ~file model : Outcome.t =
+    ensure_session_leader ();
+
     let keep_or_remove_files scr smv =
       if keep_files then
         begin

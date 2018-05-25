@@ -1,3 +1,7 @@
+### 0.1.7 (2018-05-23)
+- remove ocamlfind from dependencies
+- handle child termination
+
 ### 0.1.6 (2018-05-09)
 - fix opam problems... (sigh!)
 
