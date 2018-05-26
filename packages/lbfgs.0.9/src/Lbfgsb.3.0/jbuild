@@ -1,0 +1,25 @@
+(jbuild_version 1)
+
+; Need to have a separate sub-package to compile the FORTRAN code.
+(library
+ ((name        lbfgs_fortran)
+  (public_name lbfgs.fortran)
+  (c_flags    ((:include c_flags.sexp)))
+  (c_library_flags (:standard (:include c_library_flags.sexp)))
+  (self_build_stubs_archive (lbfgs_fortran))
+  (synopsis "Original FORTRAN code of lbfgs")))
+
+(rule
+ ((targets (liblbfgs_fortran_stubs.a dlllbfgs_fortran_stubs.so))
+  (deps    (blas.o lbfgsb.o linpack.o timer.o))
+  (action  (run ocamlmklib -o lbfgs_fortran_stubs ${^}))))
+
+(rule
+ ((targets (blas.o lbfgsb.o linpack.o timer.o))
+  (deps    (blas.f lbfgsb.f linpack.f timer.f))
+  (action  (run ${read:fortranc.txt} -c -fPIC -O3 ${^}))))
+
+(rule
+ ((targets (c_flags.sexp c_library_flags.sexp fortranc.txt))
+  (deps (../../config/discover.exe))
+  (action (run ${<}))))

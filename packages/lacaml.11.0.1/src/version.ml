@@ -21,4 +21,4 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *)
 
-let version = "11.0.0"
+let version = "11.0.1"

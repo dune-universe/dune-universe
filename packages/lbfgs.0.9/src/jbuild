@@ -1,0 +1,15 @@
+(jbuild_version 1)
+
+(library
+ ((name        lbfgs)
+  (public_name lbfgs)
+  (libraries  (bigarray bytes lbfgs.fortran))
+  (flags      (:standard -w -9 -safe-string))
+  (c_names    (lbfgs_stubs))
+  (synopsis "Bound-constrainted optimization in many variables")))
+
+(rule
+ ((targets (lbfgs.ml))
+  (deps    (lbfgs.p4.ml lbfgs_FC.p4.ml))
+  (action  (run ocamlrun camlp4o -parser Camlp4MacroParser -DLBFGS3
+            -printer Camlp4OCamlPrinter ${<} -o ${@}))))

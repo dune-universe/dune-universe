@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executable
+ ((name      discover)
+  (modules   (discover))
+  (libraries (configurator base stdio))))
+
+(executable
+ ((name      rename_c_prims)
+  (modules   (rename_c_prims))
+  (libraries (str bytes))))
+
