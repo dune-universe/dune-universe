@@ -1,6 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name        nsq)
-  (preprocess (pps (ppx_deriving_yojson)))
-  (libraries (lwt containers ocplib-endian integers lwt.unix cohttp-lwt-unix yojson ppx_deriving_yojson.runtime))))

@@ -1,7 +1,0 @@
-(jbuild_version 1)
-
-(executables
- ((names (atdcat))
-  (public_names (atdcat))
-  (libraries (atd))
-  (package atd)))
