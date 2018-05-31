@@ -1,0 +1,6 @@
+#+TITLE: An Async driver for notty
+
+An [[https://github.com/janestreet/async][Async]] driver for the [[https://github.com/pqwy/notty][Notty]] terminal graphics library. This is
+modeled after the Lwt driver included in the Notty package.  It comes
+with as simple example of how to use the library in a functional style
+to build a simple user interface.

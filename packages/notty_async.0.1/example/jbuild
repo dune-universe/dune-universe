@@ -1,0 +1,6 @@
+(executable
+ ((name        test)
+  (libraries  (core async notty_async notty))
+  (preprocess (pps (ppx_jane)))
+  (flags (:standard -short-paths))
+))
