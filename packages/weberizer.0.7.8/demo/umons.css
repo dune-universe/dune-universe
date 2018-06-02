@@ -1,0 +1,541 @@
+/* Author: Christophe Troestler <Christophe.Troestler@umons.ac.be> */
+
+html {
+  /* Always show a vertical scroll-bar in firefox (à la IE) so the
+     100% width is always the same pixel width */
+  overflow-y: scroll;
+}
+
+body {
+  padding: 20px;
+  color: #000;
+  background: #FFFFFF;
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+@media print {
+  body {
+    padding-top: 0;
+    font-size: 12px;
+  }
+}
+
+div.horizontal-line {
+  clear: both;
+  padding: 0;
+  margin: 0;
+}
+
+.horizontal-line span.left {
+  background-color: rgb(204,0,51);
+  width: 22%;
+  height: 5px;
+  float: left;
+}
+
+.horizontal-line span.right {
+  background-color: rgb(0, 171, 204);
+  width: 78%;
+  height: 5px;
+  float: right;
+}
+
+@media print {
+  .horizontal-line span.left {
+    border-top: 3px solid rgb(204,0,51);
+  }
+  .horizontal-line span.right {
+    border-top: 3px solid rgb(0, 171, 204);
+  }
+}
+
+/* Column for the menu ****************************************************/
+
+#menucol {
+  width: 21%;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 1ex;
+  /* border: 1px dashed; */
+}
+
+@media print {
+  #menucol { display: none; }
+}
+
+/* Logo UMons dans le coin supérieur gauche */
+#menucol .logo img {
+  width: 85%;
+  padding-top: 10px;
+  border: 0;
+}
+
+a.logo, a.logo:hover {
+  border: 0;
+  background: #fff;
+}
+
+/* Menu *******************************************************************/
+/* http://www.seoconsultants.com/css/menus/tutorial/ */
+div.umons-menu {
+  width: 72%;
+  float: left;
+  margin-top: 13ex;
+}
+
+.umons-menu ul { /* remove bullets and list indents */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* style, color and size links and headings */
+.umons-menu a, .umons-menu h2 {
+  font: 83% arial, helvetica, sans-serif;
+  text-decoration: none;
+  display: block;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 13px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom: solid 1px #909090;
+}
+
+.umons-menu h2 {
+  color: rgb(204,0,51);
+  /* background: #000; */
+  /* background: #bb022c; */
+  /* text-transform: uppercase; */
+  font-weight: bold;
+  font-size: 85%;
+}
+
+.umons-menu a {
+  color: #505050;
+  text-decoration: none;
+  border: 0;
+  border-left: 0.4ex solid #FFF;
+  padding-left: 0.2ex;
+}
+
+.umons-menu a.submenu {
+  background: #FFF url(images/right_arrow.png) no-repeat center right;
+}
+
+.umons-menu a:hover {
+  /* font-weight: bold; */
+  border-left: 0.4ex solid rgb(0, 171, 204);
+  padding-left: 0.2ex;
+}
+
+.umons-menu a.submenu:hover {
+  background: #ededed url(images/right_arrow.png) no-repeat center right;
+}
+
+.umons-menu li {
+  /* make the list elements a containing block for the nested lists */
+  position: relative;
+  padding-top:0ex
+}
+
+.umons-menu ul ul ul {
+  position: absolute;
+  top: 0;
+  left: 100%; /* to position them to the right of their containing block */
+  width: 100%; /* width is based on the containing block */
+}
+
+.umons-menu ul ul ul a {
+  border-left: 0.4ex solid #ededed;
+  padding-left: 0.2ex;
+  background: #ededed;
+}
+
+.umons-menu ul ul ul,
+.umons-menu ul ul li:hover ul ul {
+  display: none;
+}
+
+.umons-menu ul ul li:hover ul,
+.umons-menu ul ul ul li:hover ul {
+  display: block;
+}
+
+.umons-menu img {
+  border: 0;
+}
+
+.promotion {
+  clear: both;
+  float: left;
+}
+
+.banner a {
+  border: 0;
+}
+
+
+.banner img {
+  width: 100%;
+  border: 0;
+}
+
+/* Footer *****************************************************************/
+
+#footer {
+  width: 100%;
+  clear: both;
+  padding-top: 1ex;
+  padding-bottom: 3ex; /* => one can scroll a bit past the footer */
+}
+
+#footer div.left {
+  width: 21%;
+  height: 3ex;
+  float: left;
+  text-align: right;
+}
+
+#footer div.left img {
+  padding-right: 1ex;
+  padding-top: 0.1ex;
+  border: 0;
+}
+
+#footer div.right {
+  width: 77.8%;
+  height: 3ex;
+  float: right;
+}
+
+#footer div.right img {
+  padding-right: 0;
+  float: right;
+  border: 0;
+}
+
+#footer a {
+  border: 0;
+}
+
+@media print {
+  /* Work around Firefox bug, sometimes chopping floating elements at end
+     so at least the address appears (do not care so much about the logo) */
+  #footer div.left { float: left }
+  #footer div.right { float: none;  display: inline }
+  #footer div.right img { display: none }
+}
+
+/* Horizontal toolbar *****************************************************/
+
+.horizontal-toolbar {
+  margin-top: 7px;
+  margin-bottom: 10px;
+  padding: 0;
+  text-align: left;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: .7em;
+  font-style: normal;
+  color: #808080;
+}
+.horizontal-toolbar a:link, .horizontal-toolbar a:visited {
+  color: #a9a9a9;
+  font-weight: bold;
+  text-decoration: none;
+  border: 0;
+}
+
+.horizontal-toolbar a:hover {
+  color: rgb(204,0,51);
+  background: #FFF;
+  text-decoration: underline;
+}
+span.separation-bar {
+  padding-left: 3px;
+  padding-right: 3px;
+  color: rgb(204,0,51);
+  /* font-weight: bold; */
+}
+
+@media print {
+  /* Also for the address at the bottom of the page */
+  .horizontal-toolbar { font-size: 8px; }
+}
+
+/* Main column ************************************************************/
+
+@media screen {
+  #maincol {
+    width: 77.8%;
+    float: right;
+    /* border: 1px; border-style: dashed; */
+  }
+}
+@media print {
+  #maincol {
+    width: 100%;
+    float: none; /* => footer stays at the bottom */
+  }
+  #maincol div.horizontal-toolbar { display: none }
+}
+
+form.search-box {
+  padding: 0;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+.search-box input, .search-box button, .search-box select {
+  font-size: 75%;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  /* height: 4ex; */
+}
+
+@media print {
+  form.search-box { display: none }
+}
+
+@media screen {
+  #language { float: right; }
+}
+@media print {
+  #language { display: none; }
+}
+
+.navigation-bar {
+  font: 83% arial, helvetica, sans-serif; /* as the menu */
+}
+
+.navigation-bar a {
+  border: 0;
+  margin: 0;
+}
+
+.navigation-bar a:hover {
+  background-color: transparent;
+  border: 0;
+  text-decoration: underline;
+}
+
+#main {
+  padding-top: 0;
+  padding-bottom: 1ex;
+  padding-right: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  text-decoration: none;
+  border: 0;
+}
+
+h1, h1 a { color: rgb(204,0,51) }
+h1 {
+  font-weight: normal;
+  font-size: 160%;
+  margin-bottom: 10px;
+}
+
+h2, h2 a { color: rgb(0, 171, 204) }
+h2 {
+  font-weight: normal;
+  font-size: 140%;
+}
+
+h3, h3 a { color: black }
+h3 {
+  font-weight: bold;
+  font-size: 120%;
+  margin-bottom: 0.4ex;
+}
+
+h4, h4 a { color: black }
+h4 {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 110%;
+  margin-top: 0.5ex;
+  margin-bottom: 0.5ex;
+}
+
+ul {
+  list-style: square;
+  padding-top: 0;
+  margin-top: 0px;
+  padding-left: 1.5em;
+}
+
+ul ul {
+  list-style: circle;
+}
+
+li {
+  padding-top: 0.2ex;
+}
+
+a {
+  color: rgb(0, 171, 204);
+  text-decoration: none;
+  border-bottom: dotted 1px rgb(0, 171, 204);
+}
+
+a:hover {
+  /* color: #000; */
+  background: #ededed;
+}
+
+/* Box to the right of the main text for "advertisements" */
+#advertisements {
+  display: block;
+  float: right;
+  width: 30%;
+  padding: 0;
+  margin-left: 1em;
+  margin-bottom: 10px;
+}
+
+#advertisements p {
+  margin: 0px;
+}
+
+div.news {
+  background: #c5def1;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 1px;
+  padding-bottom: 4px;
+  margin-bottom: 1ex;
+}
+
+@media print {
+  div.news {
+    border: 1px solid rgb(0, 171, 204);
+  }  
+}
+
+#advertisements div.news a {
+  clear: both;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: black;
+  border: 0;
+}
+
+div.news img {
+  width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+div.news img.news_p {
+  display: inline;
+  width: 16px;
+  height: 14px;
+  margin-left: -5px;
+  margin-right: 3px;
+}
+
+.news em {
+  font-style: italic;
+}
+
+.news span.know-more {
+  display: block;
+  text-align: right;  
+  font-size: 80%;
+  /* font-style: italic; */
+  font-weight: bold;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+.actions {
+  display: block;
+  background: rgb(176,11,58);
+  color: #fff;
+  padding: 10px;
+}
+
+.actions a {
+  color: rgb(151,198,204);
+  border-bottom: dotted 1px rgb(151,198,204);
+}
+
+.actions a:hover {
+  background: #fffea8;
+  color: rgb(176,11,58);
+  border-bottom: solid 1px #fffea8;
+}
+
+@media print {
+  .actions {
+    background: white;
+    color: #000;
+    border: 1px solid rgb(176,11,58);
+  }
+  .actions a { color: #000 }
+}
+
+
+/* Quotations */
+blockquote {
+  float: right;
+  clear: both;
+  width: 70%;
+  font-style: italic;
+  text-align: right;
+  font-size: 90%;
+}
+
+blockquote p {
+  margin-top: 0;
+}
+
+/* Table */
+tr.even {
+  background-color: #d8d8d8;
+}
+
+tr.even td {
+  padding-top: 0.3ex;
+  padding-bottom: 0.5ex;
+  padding-left: 0.4ex;
+  padding-right: 0.3ex;
+}
+
+tr.odd td {
+  padding-top: 0.1ex;
+  padding-bottom: 0.4ex;
+  padding-left: 0.4ex;
+  padding-right: 0.3ex;
+}
+
+/* Liens vers les fiches ECTS, typiquement dans les titres contenant
+le nom du cours.  */
+.ects {
+  font-size: x-small;
+  font-weight: bold;
+  color: #a9a9a9;
+  white-space: nowrap;
+}
+h1 .ects {
+  float: right;
+  padding-top: 1ex; /* help center with title */  
+}
+.ects a, .ects a:visited {
+  color: #a9a9a9;
+  /* In headers, the bottom border is suppressed.  Make sure it is present. */
+  border-bottom: dotted 1px #6f6f6f;
+}
+.ects a:hover {
+  /* Use a same style similar to the horizontal toolbar. */
+  color: rgb(204,0,51);
+  background: #FFF;
+  border-bottom: dotted 1px rgb(204,0,51);
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <!-- Set document compatibility mode to IE8Mode. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title >UMONS | ${title}</title>
+    <meta name="author" content="Christophe Troestler" />
+    <meta name="description" content="${description}" />
+    <meta name="keywords" content="${keywords}" />
+    <meta name="generator" content="OCaml" />
+
+    <link rel="shortcut icon"
+	  href="${shortcut_icon}" />
+    <link rel="stylesheet" type="text/css" media="all"
+	  href="${url_base}umons.css" />
+    <link ml:replace="stylesheet" />
+    <script ml:replace="javascript" ></script>
+
+    <meta property="og:title" content="${title}"/>
+    <meta property="og:type"  content="university" />
+    <meta property="og:image"
+	  content="http://math.umons.ac.be/an/fr/images/lorenz-square.png" /> 
+
+    <meta name="geo.placename" content="Mons, Hainaut, Belgium" />
+    <meta name="geo.position" content="52;6" />
+    <meta name="geo.region" content="BE-WHT" />
+    <meta name="robots" content="all" />
+  </head>
+  <body>
+    <div class="horizontal-line">
+      <span class="left"></span><span class="right"></span>
+    </div>
+    <div id="menucol">
+      <!-- Conditionally include UMONS+txt.svg if the browser supports it? -->
+      <a href="http://portail.umons.ac.be/${lang}" class="logo"
+	 ><img src="${url_base}images/UMONS+txt.png" alt="UMONS" /></a>
+
+      <div class="umons-menu" ml:content="menu" >
+	<ul></ul>
+      </div>
+      <div class="promotion" ml:content="promotion" >
+	Links/images to promotions of the Institute on other sites.
+      </div>
+    </div>
+
+    <div id="maincol">
+      <div class="horizontal-toolbar" ml:content="toolbar">
+      </div>
+      <div id="language">
+	<div class="horizontal-toolbar" ml:content="languages">
+	  Fr<span class="separation-bar">|</span
+          ><a href="#">En</a>
+	</div>
+      </div>
+
+      <form class="search-box" method="get"
+	    action="http://www.google.com/search">
+	<div>
+	  <input type="text" name="q" value="${search_name}..."
+		 onblur="if(this.value=='') this.value='${search_name}...';"
+		 onfocus="if(this.value=='${search_name}...') this.value='';"
+		 />
+	  <button type="submit"
+		  ><img src="${url_base}images/gosearch.gif"
+			alt="Search" ></button>
+	  <select name="as_sitesearch">
+	    <option>${web_host}</option>
+	    <option>portail.umons.ac.be</option>
+	  </select>
+	</div>
+      </form>
+      <span class="banner">
+	<a href="${url_base}"><img src="${url_banner}" alt="${title}"/></a>
+      </span>
+      <span class="navigation-bar">
+	<a href="http://portail.umons.ac.be/${lang}">UMONS</a
+        ><span ml:replace="navigation_bar">links</span>
+      </span>
+
+      <div id="main">
+
+	<div id="advertisements" ml:content="advertisements"
+	     ml:strip="if empty">
+	  Advertisements (if any).
+	  <div class="news">news</div>
+	  <div class="actions">actions</div>
+	</div>
+
+	<span ml:replace="main">Main text area.</span>
+      </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="horizontal-line">
+      <span class="left"></span><span class="right"></span>
+    </div>
+    <div id="footer">
+      <div class="left">
+	<a href="http://www.umons.ac.be"
+	   ><img src="${url_base}images/UMONS.jpg" alt="UMons" /></a>
+      </div>
+      <div class="right">
+	<a href="http://www.academiewb.be/"
+	   ><img src="${url_base}images/Academie.png"
+		 alt="Académie Wallonie-Bruxelles" /></a>
+
+	<address class="horizontal-toolbar">
+	  Place du parc 20<span class="separation-bar">|</span
+	  >7000 Mons<span class="separation-bar">|</span
+	  ><span ml:replace="country">Belgium</span
+          ><span class="separation-bar">|</span
+          ><span ml:replace="email">math@umons.ac.be</span
+          ><span class="separation-bar">|</span
+          ><a href="http://${web_host}">${web_host}</a>
+	</address>
+      </div>
+    </div>
+    <span ml:replace="web_counter"></span>
+  </body>
+</html>
