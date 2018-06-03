@@ -64,7 +64,7 @@ let _ = ul |> previous_siblings |> elements in
     {{:https://github.com/aantron/lambda-soup/blob/master/LICENSE.md} BSD
     license}.
 
-    This documentation page is for version 0.6.2 of the library. Documentation
+    This documentation page is for version 0.6.3 of the library. Documentation
     for other versions can be downloaded from the
     {{:https://github.com/aantron/lambda-soup/releases} releases page}. *)
 
@@ -240,6 +240,9 @@ val fold_attributes : ('a -> string -> string -> 'a) -> 'a -> element node -> 'a
 (** [fold_attributes f init element] applies [f] successively to the names and
     values of the attributes of [element]. The first [string] argument to [f] is
     the attribute name, and the second is the value. *)
+
+val coerce : (_ node) -> general node
+(** [coerce node] evaluates to [node], but with type [general node]. *)
 
 val element : (_ node) -> element node option
 (** Given any node, asserts that it is an element [e]. If so, evaluates to
@@ -592,9 +595,15 @@ val clear : (_ node) -> unit
 (** Unlinks all children of the given node. *)
 
 val replace : (_ node) -> (_ node) -> unit
-(** [replace node node'] replaces [node] with [node'] in [node]'s parent's child
-    list. All descendants of [node] are implicitly deleted by this operation,
-    because they become unreachable from [node]'s parent. *)
+(** [replace target other] mutably replaces [target] with [other]. [target] and
+    [other] are both deleted from their respective document trees. Then, [other]
+    is inserted where [target] used to be in its document tree.
+
+    Note that you cannot replace multiple targets with [other]: [replace] will
+    work as expected for the first target, but for the second target, it will
+    {e remove} [other] from where the first target was, and insert it where the
+    second target is. To replace multiple targets, you need multiple copies of
+    [other]. *)
 
 val swap : element node -> element node -> unit
 (** [swap element element'] replaces [element] with [element'] in [element]'s

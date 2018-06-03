@@ -1,0 +1,22 @@
+opam-version: "1.2"
+name: "bigstring-unix"
+version: "0.2"
+authors: "Simon Cruanes <simon.cruanes.2007@m4x.org>"
+maintainer: "Simon Cruanes <simon.cruanes.2007@m4x.org>"
+tags: [ "bigstring" "bigarray" ]
+homepage: "https://github.com/c-cube/ocaml-bigstring/"
+bug-reports: "https://github.com/c-cube/ocaml-bigstring/issues"
+dev-repo: "git://github.com/c-cube/ocaml-bigstring"
+
+available: [ ocaml-version >= "4.03.0" ]
+
+build: [ "jbuilder" "build" "-j" jobs "-p" name "@install" ]
+build-test: [ "jbuilder" "runtest" "-p" name "-j" jobs ]
+depends: [
+  "jbuilder" {build & >= "1.0+beta19.1"}
+  "bigstring"
+  "base-bigarray"
+  "base-bytes"
+  "base-unix"
+]
+

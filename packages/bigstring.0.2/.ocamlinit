@@ -1,0 +1,5 @@
+#use "topfind";;
+#require "bigarray";;
+#directory "_build/src";;
+#load "bigstring.cma";;
+#install_printer Bigstring.print;;
