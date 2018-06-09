@@ -1,0 +1,26 @@
+{
+	"name": "reason",
+	"version": "3.1.0",
+	"description": "Simple, fast & type safe code that leverages the JavaScript & OCaml ecosystems",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/facebook/reason.git"
+	},
+	"main": "refmt.js",
+	"keywords": [
+		"reason",
+		"ocaml",
+		"react",
+		"javascript",
+		"won't you look at all these nice types"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/facebook/reason",
+	"dependencies": {},
+	"devDependencies": {
+		"bs-platform": "1.9.3"
+	},
+	"scripts": {
+		"prepublishOnly": "./bspacks/downloadSomeDependencies.sh && ./bspacks/reason_bspack.sh"
+	}
+}
