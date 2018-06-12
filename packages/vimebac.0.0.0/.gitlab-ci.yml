@@ -1,0 +1,30 @@
+
+# opam pin tsdl 0.9.1 is because Ubuntu does not have an SDL recent enough.
+variables:
+    BUILD_SCRIPT: >
+      sudo apt-get update -qq && 
+      opam config exec -- opam remote add --priority 100 mothership https://github.com/ocaml/opam-repository.git &&
+      opam config exec -- opam update --yes &&
+      opam config exec -- opam upgrade --yes &&
+      opam config exec -- opam pin --yes -n add wall 'https://github.com/let-def/wall.git' &&
+      opam config exec -- opam pin --yes -n add vimebac . &&
+      opam config exec -- opam pin --yes -n add tsdl 0.9.1 &&
+      opam config exec -- opam depext --yes vimebac &&
+      opam config exec -- opam install --yes vimebac &&
+      opam config exec -- vimebac --help=plain
+
+ocaml:4030:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.03.0
+  script:
+     - bash -c "$BUILD_SCRIPT"
+
+ocaml:4042:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.04.2
+  script:
+     - bash -c "$BUILD_SCRIPT"
+
+ocaml:4050:
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.05.0
+  script:
+     - bash -c "$BUILD_SCRIPT"
+  

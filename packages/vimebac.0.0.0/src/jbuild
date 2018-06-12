@@ -1,0 +1,20 @@
+(jbuild_version 1)
+
+;; Getting the version from the `opam` file:
+(rule (
+       (targets (meta.ml))
+       (deps (../vimebac.opam))
+       (action (progn
+                (run sh -c "printf '(** Meta-information from the build *)\n\n\
+                            (** Version string *)\nlet version = ' > meta.ml")
+                (run sh -c "grep ^version: ../vimebac.opam | sed 's/version: //' >> meta.ml")
+                (run sh -c "printf '\n' >> meta.ml")
+                ))))
+
+(executable
+ ((name vimebac)
+  (libraries (grenier.binpacking tgls.tgles2 stb_truetype wall nonstd sosa
+                                 cmdliner misuja tsdl rresult))))
+
+(install ((section bin) (files ((vimebac.exe as vimebac)))))
+

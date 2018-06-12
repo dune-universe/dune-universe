@@ -1,9 +1,0 @@
-(executables
- ((names (benchmark test))
-  (libraries   (lwt cstruct.lwt mirage-block-unix cstruct io-page io-page.unix logs logs.fmt oUnit))
-))
-
-(alias
- ((name    runtest)
-  (deps    (test.exe))
-  (action  (run ${<} -runner sequential))))
