@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(executables
+  ((names (simple reporter))
+   (libraries   (eventlog))
+   (preprocess  no_preprocessing)))

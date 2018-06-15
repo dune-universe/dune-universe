@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(library
+  ((name        win_eventlog)
+   (public_name win-eventlog)
+   (libraries (
+    result logs unix
+   ))
+   (c_names (eventlog_stubs))
+   (wrapped false)))
+
