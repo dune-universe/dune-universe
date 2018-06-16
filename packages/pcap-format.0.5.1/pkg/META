@@ -1,0 +1,8 @@
+version = "%%VERSION_NUM%%"
+description = "PCAP tools"
+requires = "cstruct"
+archive(byte) = "pcap.cma"
+plugin(byte) = "pcap.cma"
+archive(native) = "pcap.cmxa"
+plugin(native) = "pcap.cmxs"
+
