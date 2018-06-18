@@ -1,0 +1,65 @@
+v0.4.0 2018-06-16 Lyon
+----------------------
+
+- ppx syntax extension to write workflow steps as regular OCaml functions
+- new workflow type, that maps a command on all files of a directory in //
+- use class types for phantom typing
+- started a documentation!
+- dry-run execution mode
+- new docker files
+
+v0.3.0 2017-06-21 Lyon
+----------------------
+
+- Compilation via jbuilder
+- more docker images and wrappers
+- various bug fixes
+
+
+v0.2.0 2017-05-10 Lyon
+----------------------
+
+Major rewrite:
+- new execution engine
+  + generic notion of task graph (DAG)
+  + compilation of workflow representation to a task DAG
+  + logging facilities
+  + transparent execution of commands through docker container
+  + removal of intermediate targets during execution
+  + notion of precious workflow (that should be kept no matter what)
+- call of regular ocaml function as new type of workflow
+- applicative term to express an action that should be performed after a
+  set of workflows has been successfully executed
+- text logging
+- logging as HTML report
+- added a collection of Dockerfile scripts
+- new bioinfomatics wrappers (many contributed by Sylvere Bastien)
+
+and many bug fixes.
+
+
+v0.1.0 2016-05-19 Lyon
+----------------------
+
+Many minor changes in API.
+
+Installation scripts for tools are no longer considered part of
+analysis workflow. Installing programs should be dealt with outside
+bistro.
+
+Features:
+- heredoc for shell EDSL
+- new np and mem tokens for scripts, as a way to use only the
+  resources that were allocated to a run
+
+Bug fixes:
+- bistro execution hangs on utop (f4f932f)
+- don't save workflow in database statistics, just its id (issue #4)
+
+
+v0.0.0 2016-01-21 Lyon
+----------------------
+
+First release on OPAM
+
+
