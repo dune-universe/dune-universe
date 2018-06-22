@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(library
+    ((name hiredis)
+     (public_name hiredis)
+     (c_names (hiredis_stubs hiredis_core async dict net read sds))
+     (libraries (lwt hiredis-value))))
+
+(copy_files hiredis/*)

@@ -1,0 +1,9 @@
+*.swp
+
+_build
+oUnit-anon.cache
+
+travis-coveralls.sh
+.coverage/
+*.merlin
+*.install

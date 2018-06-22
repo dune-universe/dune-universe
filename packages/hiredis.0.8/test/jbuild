@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executables
+    ((libraries (hiredis))
+     (names (test))
+     (modules (test hiredis_test))))
+
+(alias
+    ((name runtest)
+     (package hiredis)
+     (deps (test.exe))
+     (action (run ${<}))))

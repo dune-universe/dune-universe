@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+    ((name hiredis_value)
+     (public_name hiredis-value)
+     (libraries ())))
