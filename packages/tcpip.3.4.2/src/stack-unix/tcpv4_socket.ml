@@ -1,6 +1,5 @@
 (*
  * Copyright (c) 2014 Anil Madhavapeddy <anil@recoil.org>
- * Copyright (c) 2014 Nicolas Ojeda Bar <n.oje.bar@gmail.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,21 +18,23 @@ open Lwt
 open Result
 
 type buffer = Cstruct.t
-type ipaddr = Ipaddr.V6.t
+type ipaddr = Ipaddr.V4.t
 type flow = Lwt_unix.file_descr
 type +'a io = 'a Lwt.t
-type ip = Ipaddr.V6.t option (* interface *)
+type ip = Ipaddr.V4.t option (* interface *)
 type ipinput = unit io
 
 type t = {
   interface: Unix.inet_addr option;    (* source ip to bind to *)
 }
 
-let connect addr =
+include Tcp_socket
+
+let connect id =
   let t =
-    match addr with
+    match id with
     | None -> { interface=None }
-    | Some ip -> { interface=Some (Ipaddr_unix.V6.to_inet_addr ip) }
+    | Some ip -> { interface=Some (Ipaddr_unix.V4.to_inet_addr ip) }
   in
   return t
 
@@ -42,22 +43,22 @@ let dst fd =
   | Unix.ADDR_UNIX _ ->
     raise (Failure "unexpected: got a unix instead of tcp sock")
   | Unix.ADDR_INET (ia,port) -> begin
-      match Ipaddr_unix.V6.of_inet_addr ia with
-      | None -> raise (Failure "got a ipv4 sock instead of a tcpv6 one")
+      match Ipaddr_unix.V4.of_inet_addr ia with
+      | None -> raise (Failure "got a ipv6 sock instead of a tcpv4 one")
       | Some ip -> ip,port
     end
 
 let create_connection ?keepalive _t (dst,dst_port) =
-  let fd = Lwt_unix.socket Lwt_unix.PF_INET6 Lwt_unix.SOCK_STREAM 0 in
+  let fd = Lwt_unix.socket Lwt_unix.PF_INET Lwt_unix.SOCK_STREAM 0 in
   Lwt.catch (fun () ->
       Lwt_unix.connect fd
-        (Lwt_unix.ADDR_INET ((Ipaddr_unix.V6.to_inet_addr dst), dst_port))
+        (Lwt_unix.ADDR_INET ((Ipaddr_unix.V4.to_inet_addr dst), dst_port))
       >>= fun () ->
       ( match keepalive with
-      | None -> ()
-      | Some { Mirage_protocols.Keepalive.after; interval; probes } ->
-        Tcp_socket_options.enable_keepalive ~fd ~after ~interval ~probes );
+        | None -> ()
+        | Some { Mirage_protocols.Keepalive.after; interval; probes } ->
+          Tcp_socket_options.enable_keepalive ~fd ~after ~interval ~probes );
       return (Ok fd))
-    (fun exn -> return (Error (`Exn exn)))
-
-include Tcp_socket
+    (fun exn ->
+       Lwt.catch (fun () -> Lwt_unix.close fd) (fun _ -> Lwt.return_unit) >>= fun () ->
+       return (Error (`Exn exn)))

@@ -1,6 +1,5 @@
 (*
  * Copyright (c) 2014 Anil Madhavapeddy <anil@recoil.org>
- * Copyright (c) 2014 Nicolas Ojeda Bar <n.oje.bar@gmail.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,9 +14,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-include Mirage_protocols_lwt.TCP with type ip = Ipaddr.V6.t option
-                    and type ipaddr = Ipaddr.V6.t
-                    and type ipinput = unit Lwt.t
-                    and type flow = Lwt_unix.file_descr
+include Mirage_protocols_lwt.TCP
+  with type ip = Ipaddr.V4.t option
+   and type ipaddr = Ipaddr.V4.t
+   and type ipinput = unit Lwt.t
+   and type flow = Lwt_unix.file_descr
+   and type error = [ Mirage_protocols.Tcp.error | `Exn of exn ]
+   and type write_error = [ Mirage_protocols.Tcp.write_error | `Exn of exn ]
 
-val connect : ip -> t io
+val connect : ip -> t Lwt.t
