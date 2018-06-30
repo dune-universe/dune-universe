@@ -4,10 +4,10 @@ A tool to relaunch `jbuilder build` when a file modification is detected via `fs
 
 # Requirements
 
-Of course, we need `jbuilder` (or `dune`).  In addition,
+Of course, we need `jbuilder` (or `dune`).  In addition, the following file system monitor command is required:
 
-* Mac OS X: `fswatch` command is required.
-* Linux: `inodewait` command is required.
+* Mac OS X: `fswatch`
+* Linux: `inotifywait`
 
 In Linux, there is a limit of number of file monitorings per user,
 and `inotifywait` command fails if there are too many files under
@@ -27,7 +27,7 @@ At the top of your project,
 $ dune_watch
 ```
 
-then it executes `jbuilder build` build command.
+then it executes `jbuilder build --dev` build command.
 Once the command finishes, `dune_watch` monitors file modification
 under the directory where it is launched and relaunches the build command
 when necessary.

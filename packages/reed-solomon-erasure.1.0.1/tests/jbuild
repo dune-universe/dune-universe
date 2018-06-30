@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+(executable
+ ((name      run_all_tests)
+  (libraries (reed-solomon-erasure
+              oUnit
+              qcheck))
+))
+
+(alias
+ ((name   runtest)
+  (deps   (run_all_tests.exe))
+  (action (run ${<}))))

@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(executables
+ ((names     (doc_shardbyshard
+              readme_reedsolomon))
+  (libraries (reed-solomon-erasure))
+))

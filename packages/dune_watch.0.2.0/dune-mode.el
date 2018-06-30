@@ -79,7 +79,7 @@
 ; (defconst dune-progress-regexp "\\(\\[\\([= ]+\\|saved \\.dunedb[= ]*\\)\\] [0-9]+ / [0-9]+\\)")
 (defconst dune-progress-regexp "\\(\\[\\([= ]+\\|saved \\.dunedb[= ]*\\)\\] [0-9]+ / [0-9]+\\)")
 
-(defconst dune-directory-regexp "- exit \\([^ ]+\\)")
+(defconst dune-directory-regexp "Entering directory '\\(.*\\)'")
 
 (defconst dune-report-regexp "dune_watch:")
 
@@ -200,8 +200,9 @@
     (setq last-line-was-end-of-build nil)
     (make-local-variable 'no-error)
     (setq no-error t)
-    (make-local-variable 'root-dir)
-    (setq root-dir dir)
+; The directory dune running may not the root directory
+;    (make-local-variable 'root-dir)
+;    (setq root-dir dir)
     buffer-name))
 
 (defun dune-insert-line (string)
@@ -277,9 +278,9 @@
               ;; and print 
               (dune-insert-line line)
 	      
-              ;; root
-              (if (string-match dune-root-regexp line)
-                  (setq root-dir (match-string 1 line)))
+;              ;; root
+;              (if (string-match dune-root-regexp line)
+;                  (setq root-dir (match-string 1 line)))
 
               ;; error lines
               (if (string-match dune-error-regexp line)
@@ -327,7 +328,8 @@
 
 (defun dune-display-error (dir file line char-start char-end)
   (let 
-      ((path (concat (file-name-as-directory (concat (file-name-as-directory root-dir) dir)) file)))
+;      ((path (concat (file-name-as-directory (concat (file-name-as-directory root-dir) dir)) file)))
+      ((path (concat (file-name-as-directory dir) file)))
     (message path)
     (setq target-buffer (dune-find-file-existing path))
     (if target-buffer
@@ -376,10 +378,10 @@
                       (setq char-end (string-to-int (match-string 4)))
                       (set-window-point window (if next found-end found-start))
                       (save-excursion
-;                        (if (re-search-backward "Entering directory `\\(.*\\)'" nil t)
-                        (if (re-search-forward dune-directory-regexp nil t)
+;                        (if (re-search-forward dune-directory-regexp nil t)
                             (progn 
                               (setq dir (match-string 1))
+			      (message "Build root directory is %s" dir)
                               t)
                           (progn 
                             (message "Error message found but no directory info")

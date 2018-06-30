@@ -1,0 +1,22 @@
+# 0.2.0
+
+- The builder and fs-watcher now prerr stderr messages, in addition to the stdout messages.
+- dune-mode.el: better build root detection.
+
+# 0.1.1
+
+- fix typo, inodewait -> inotifywait (DoYe ZAN <zandoye@gmail.com>)
+- Linux: inotifywait now runs with -q option
+- jbuilder build is now executed with --dev option
+
+# 0.1.0
+
+* Works also with Linux + inotifywait.
+* _dune_watch config file for the configurable exclusion list
+* dune-mode.el to run dune_watch in Emacs
+
+# 0.0.1
+
+* Initial release
+* Works only with Mac OS X + fswatch.
+
