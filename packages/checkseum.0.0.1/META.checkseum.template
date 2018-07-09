@@ -1,0 +1,4 @@
+# JBUILDER_GEN
+
+xen_linkopts = "-l:xen/liblaolao_xen_stubs.a"
+freestanding_linkopts = "-l:freestanding/liblaolao_freestanding_stubs.a"

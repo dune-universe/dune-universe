@@ -1,0 +1,17 @@
+(library
+ ((name laolao_freestanding)
+  (public_name checkseum.laolao.freestanding)
+  (optional)
+  (libraries (mirage-solo5))
+  (c_names (stubs adler32 crc32c))
+  (c_library_flags (-lpthread))
+  (c_flags (:include cflags.sexp))))
+
+(rule (copy# ../stubs.c stubs.c))
+(rule (copy# ../adler32.c adler32.c))
+(rule (copy# ../crc32c.c crc32c.c))
+
+(rule
+ ((targets (cflags.sexp))
+  (deps (cflags.sh))
+  (action (bash "./${<} > ${@}"))))
