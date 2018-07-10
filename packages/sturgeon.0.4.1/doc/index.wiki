@@ -1,0 +1,153 @@
+= Basics =
+
+Sturgeon is a library implementing an untyped session-based protocol.
+
+It is implemented in OCaml and Emacs.  Data is serialized into the emacs
+dialect of s-expression.
+
+== Session protocol ==
+
+The session protocol implements the primitives needed to encode higher-order
+protocol.  It is used to establish the communication but doesn't do anything
+more by itself.
+
+To make something useful out of it, one has to provide two programs: an emitter
+and a receiver.  If the emitter sends an A, a compatible receiver should accept
+an A -- it is the dual session.  Then Sturgeon will take care of the plumbing
+between the two.
+
+In this sense, it is like an RPC library. However the primitives are
+lower-level, and an RPC library could be implemented on top of it.
+
+== S-expression: communication primitives ==
+
+The data exchanged by sturgeon is made from S-expressions:
+
+* text, integer or float atoms:
+
+    "hello"
+    42
+    42.0
+
+* symbol atoms, prefixed by a quote:
+  
+    'nil
+    'foo
+  
+* pairs and lists of S-expressions:
+  
+    (a . b)
+    (a b c)
+    (a b c . d)
+  
+  pairs are also known as cons cells.
+  lists are a shorter syntax for nested pairs, and implicitly terminate with a
+  'nil symbol.
+
+* emacs properties:
+
+    #(another s-exp)
+
+This is implemented in the [[Sturgeon_sexp]] library.  You will see that this
+library provides a placeholder for extensions that is disabled by default.
+We will see how to make use of this placeholder. 
+
+=== Enter the session: encoding higher-order control ===
+
+The S-expression dialect is extended with control primitives.  There are
+currently two of them.  They do not contain any data but can receive data.
+
+The *once* cell can receive only one value.  The *sink* cell can receive a
+possibly infinite stream of values.
+
+These "magic" values can be composed like any other S-expressions, but since
+they are not data they cannot be represented textually.  We will use <once> and
+<sink> to represent these abstract values.
+
+    ('just "another" 'sexp <once>)
+    ('menu . (("file" . <sink>) ("edit" . <sink>) ("help" . <sink>)))
+    
+*once* and *sink* cells allow to invert the control flow, swapping the role of
+the emitter and the receiver.
+
+A _promise_ or _future_ can simply be represented by a *once* cell. The
+receiver retrieve it and when it sends one value, some code from the emitter
+can be resumed.
+
+A _function_ is encoded as a <sink> accepting pairs (argument . <once>).
+When receiving the pair, the sink look at the argument and fill the once, which
+contains the return value.
+
+Sessions are implemented in [[Sturgeon_session]].
+
+== Rendez-vous point ==
+
+With sessions, processes are free to exchange complex data and control.  But
+communication has to be established.
+
+[[Sturgeon_recipes]] collect standard ways to start sessions.  
+
+When getting connected, each side as an opportunity to send an initial session
+known as *greetings*.  It should also be able to handle the initial session
+sent by the remote side,  known as *cogreetings*.
+
+The connection remains active as long as at least one session exists.  It is
+closed when all sessions, the initial ones plus all <once> and <sink> cells,
+are closed.
+
+In an UNIX environment,  standard construct for exchanging sessions are *commands* and *servers*.  Implemented by [[Sturgeon_recipes_command]] and [[Sturgeon_recipes_server]].
+
+Command
+:: Commands behave like normal unix binaries.  Instead of communicating with
+raw text on stdin/stdout, they exchange sessions.  The parent process of the
+command is responsible for interpreting these sessions.
+
+Server
+:: Servers are persistent unix processes to which one can connect.  When
+started, these processes open a unix socket in
+/tmp/sturgeon.$$UID/<name>.$$PID.socket. The
+[[Sturgeon_connector|sturgeon-connector]] helper process can be used to deal
+with these.
+
+= Practical use = 
+
+To get started: an [[Inuit_example|example]] in which we make an OCaml
+controlled user interface from A-to-Z in emacs.
+
+[[Sturgeon_stui|Sturgeon_stui/Inuit]] is an already implemented session.  It is
+a backend for text-based user-interface.
+
+[[Emacs_mode|sturgeon.el]] is the Emacs mode.  It provides the integration for
+implementing sessions in Emacs as well as a Stui/Inuit frontend.
+
+== Corner cases ==
+
+Dealing with the real world requires more work and some compromises, but
+Sturgeon make it possible to limit damages.
+
+The first thing to know is that connection can get lost and implementors can
+get session-protocol wrong.  As such, a <once>/<sink> might never get
+fulfilled.
+
+Normally, <once>/<sink> receive a session (via a _feed_ message).  They also
+accept _quit_ messages. _quit_ messages represent a few things:
+
+* A <sink> reached end of stream, remote receives a _quit_ message without
+  argument.
+  
+* A <once> or <sink> got garbage collected, remote receives a _quit_ message
+  with 'finalize argument.
+  
+* An exception was raised when handling an expressions containing a <once> or
+  <sink>, for instance because session was ill-formed. Remote will receive a
+  _quit_ message with 'cancal argument.
+
+= Implementation =
+
+See [[implementation]].
+
+= Future work =
+
+== Typed API ==
+
+== Typed sessions ==

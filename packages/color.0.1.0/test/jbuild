@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(executable
+  ((name color_tests)
+   (libraries (alcotest color))
+   ))
+
+(alias
+  ((name runtest)
+   (deps (color_tests.exe))
+   (action (run ${<} -q --color=always))
+   ))

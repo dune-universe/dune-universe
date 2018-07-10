@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(executables
+ ((names (alg_test band_iter contour sanity warptut1 warptut))
+  (libraries (gdal))))
+
+(alias
+ ((name examples)
+  (deps (alg_test.exe band_iter.exe contour.exe sanity.exe warptut1.exe warptut.exe))))

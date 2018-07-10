@@ -1,0 +1,21 @@
+(* A toplevel script which opens a sturgeon server (using OCaml threads for
+   running event loop).
+
+   It binds a cursor reference named k.
+   When a client connects, a buffer is created and it's main cursor is assigned
+   to k.
+ *)
+#require "sturgeon.recipes_server";;
+#require "threads.posix";;
+let shell, k =
+  let k = ref Inuit.Cursor.null in
+  let shell = ref None in
+  let _ = Thread.create (fun () ->
+    let module S = Sturgeon_recipes_server in
+    ignore (Sys.signal Sys.sigpipe Sys.Signal_ignore);
+    S.main_loop (S.text_server "ocaml-toplevel"
+      (fun ~args shell' ->
+        shell := Some shell';
+        k := Sturgeon.Stui.create_cursor shell' ~name:"ocaml-toplevel"))) ()
+  in
+  shell, k;;

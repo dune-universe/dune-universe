@@ -1,0 +1,6 @@
+(jbuild_version 1)
+
+(library
+ ((name gdal)
+  (public_name gdal)
+  (libraries (ctypes ctypes.foreign))))

@@ -1,0 +1,22 @@
+== Wire format ==
+
+== GC consideration ==
+
+Remote values are seen as root in the local GC.  When the values are collected
+remotely, they will become collectable in the next pass of the local GC.
+
+Thus, a chain of $2*n$ values where value $2*i+0$ refers to remote value
+$2*i+1$ which refers to local value $2*i+2$ and so on, will require $n$ local
+and remote GC passes.
+
+Worst, a cycle between remote and local values will never be collectable.
+
+OCaml integration::
+::Each remote <sink>/<once> value receives a finalizer to track collection
+time. 
+
+Emacs integration::
+::Implementation relies on weak tables to detect when values are collected.  It
+maintains to tables: a weak one with the abstract <once>s and <sink>s, and a
+strong one of addresses.  An address is collectable when it appears in the
+strong one and no longer in the weak one.
