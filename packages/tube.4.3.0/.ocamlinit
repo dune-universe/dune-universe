@@ -1,9 +1,0 @@
-#require "core";;
-#require "core.top";;
-#require "tube";;
-
-let () =
-  Filename.concat (Sys.getenv "HOME") ".ocamlinit" |> Topdirs.dir_use Format.std_formatter;;
-
-open Core;;
-open Tube;;
