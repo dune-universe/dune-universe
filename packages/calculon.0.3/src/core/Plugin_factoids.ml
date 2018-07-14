@@ -15,6 +15,7 @@ type op =
   | Set of factoid
   | Set_force of factoid
   | Append of factoid
+  | Remove of factoid
   | Incr of key
   | Decr of key
 
@@ -32,6 +33,7 @@ let string_of_op = function
   | Set {key;value} -> "set " ^ key ^ " = " ^ string_of_value value
   | Set_force {key;value} -> "set_force " ^ key ^ " := " ^ string_of_value value
   | Append {key;value} -> "append " ^ key ^ " += " ^ string_of_value value
+  | Remove {key;value} -> "remove " ^ key ^ " -= " ^ string_of_value value
   | Incr k -> "incr " ^ k
   | Decr k -> "decr " ^ k
 
@@ -59,8 +61,8 @@ let group_join list =
     | [] -> Buffer.contents buf
   in aux list
 
-let re_split_pat = Re_perl.compile_pat "(^!)|([+:]?=)|(\\+\\+)|(--)"
-let re_factoid = Re_perl.compile_pat "^[ ]*[a-zA-Z0-9\\-+_]+[ ]*$"
+let re_split_pat = Re.Perl.compile_pat "(^!)|([+-:]?=)|(\\+\\+)|(--)"
+let re_factoid = Re.Perl.compile_pat "^[ ]*[^ \n\t]+[ ]*$"
 
 let parse_op msg : (op * string option) option =
   let msg, hl = match Command.extract_hl msg with
@@ -72,6 +74,7 @@ let parse_op msg : (op * string option) option =
   let mk_set k v = Set (mk_factoid k v) in
   let mk_set_force k v = Set_force (mk_factoid k v) in
   let mk_append k v = Append (mk_factoid k v) in
+  let mk_remove k v = Remove (mk_factoid k v) in
   let mk_incr k = Incr (mk_key k) in
   let mk_decr k = Decr (mk_key k) in
   let is_command prefix =
@@ -98,6 +101,7 @@ let parse_op msg : (op * string option) option =
         ) >>= (function
           | ("=",  factoid, fact) -> mk_set factoid fact |> return
           | ("+=", factoid, fact) -> mk_append factoid fact |> return
+          | ("-=", factoid, fact) -> mk_remove factoid fact |> return
           | (":=", factoid, fact) -> mk_set_force factoid fact |> return
           | ("++", factoid, "" )  -> mk_incr factoid |> return
           | ("--", factoid, "" )  -> mk_decr factoid |> return
@@ -112,6 +116,8 @@ let () =
   assert (test_ok "!foo2 = bar ");
   assert (test_ok "!foo2 += bar");
   assert (test_ok "!foo2 += bar hello world");
+  assert (test_ok "!foo2 -= bar");
+  assert (test_ok "!foo2 -= bar hello world");
   assert (test_ok "!foo ++");
   assert (test_ok "!foo ++ ");
   assert (test_ok "!foo --");
@@ -149,6 +155,23 @@ let append {key;value} (fcs:t): t =
     | None, _ -> value
   in
   StrMap.add key {key; value = value'} fcs
+
+let remove {key;value} (fcs:t): t =
+  let value' =
+    match try Some (StrMap.find key fcs).value, value with Not_found -> None, value with
+    | Some (Int i), Int j -> Int (i-j)
+    | Some (StrList l), StrList l' ->
+      StrList (List.filter (fun s -> not (List.exists (String.equal s) l')) l)
+    | Some (StrList l), Int j ->
+      StrList (List.filter (fun s -> not (String.equal (string_of_int j) s)) l)
+    | Some (Int _), StrList _ ->
+      Printf.printf "Hé non, on enlève pas des strings à une valeur entière !"; value
+    | None, Int j -> Int (-j)
+    | None, _ -> value
+  in
+  match value' with
+    | StrList [] | Int 0 -> StrMap.remove key fcs
+    | _ -> StrMap.add key {key; value = value'} fcs
 
 let as_int v = match v with
   | Int i -> Some i
@@ -290,7 +313,7 @@ let insert_noresult = function
 (* tokenize message into search tokens *)
 let search_tokenize s =
   String.trim s
-  |> Re.split (Re_perl.compile_pat "[ \t]+")
+  |> Re.split (Re.Perl.compile_pat "[ \t]+")
 
 let cmd_search state =
   Command.make_simple_l ~descr:"search in factoids" ~prefix:"search" ~prio:10
@@ -401,6 +424,9 @@ let cmd_factoids state =
       | Some (Append f, _) ->
         state.st_cur <- append f state.st_cur;
         (save state >>= fun () -> C.talk ~target Talk.Ack) |> matched
+      | Some (Remove f, _) ->
+        state.st_cur <- remove f state.st_cur;
+        (save state >>= fun () -> C.talk ~target Talk.Ack) |> matched
       | Some (Incr k, _) ->
         let count, state' = incr k state.st_cur in
         state.st_cur <- state';
@@ -419,7 +445,10 @@ let cmd_factoids state =
     - `!foo` will retrieve one of the factoids associated with `foo`, if any
     - `!foo = bar` maps `foo` to `bar`, unless `foo` is mapped yet
       (in which case it fails)
-    - `!foo += bar` adds `bar` to the mappings of `foo`
+    - `!foo += bar` adds `bar` to the mappings of `foo`, or adds integer value bar to the integer value foo
+    - `!foo -= bar` removes `bar` from the mappings of `foo`, or subtracts bar to the integer value foo
+    - `!foo++` adds 1 to the integer value foo
+    - `!foo--` subtracts 1 to the integer value foo
     - `!foo := bar` maps `foo` to `bar` even if `foo` is already mapped
     - `!search term` looks up `term` in the database
     - `!search_all` looks up all terms in the database

@@ -113,14 +113,14 @@ let cmd_tell_inner ~at state =
            then (
              let d, m, t =
                split_3 ~msg:"tell_at: expected <date> <nick> <msg>"
-                 (Re_perl.compile_pat "[ \t]+") s
+                 (Re.Perl.compile_pat "[ \t]+") s
              in
              let t = ISO8601.Permissive.datetime ~reqtime:false t in
              d, m, Some t
            ) else (
              let d, m =
                split_2 ~msg:"tell: expected <nick> <msg>"
-                 (Re_perl.compile_pat "[ \t]+") s
+                 (Re.Perl.compile_pat "[ \t]+") s
              in
              d, m, None
            )
@@ -197,7 +197,7 @@ let cmd_last (state:state) =
          let now = Unix.time () in
          let user_times =
            StrMap.fold (fun key contact acc ->
-               if key != msg.Core.nick && contact.ignore_user |> not then
+               if Pervasives.(<>) key msg.Core.nick && contact.ignore_user |> not then
                  (key, contact.last_seen) :: acc
                else
                  acc

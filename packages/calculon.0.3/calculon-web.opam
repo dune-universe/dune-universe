@@ -1,28 +1,17 @@
 opam-version: "1.2"
-name: "calculon"
-version: "0.2"
+name: "calculon-web"
+version: "0.3"
 authors: ["Armael" "Enjolras" "c-cube"]
 maintainer: "c-cube"
 build: [
   ["jbuilder" "build" "-p" name]
 ]
-build-doc: [ "jbuilder" "build" "@doc" ]
-build-test: [ "jbuilder" "runtest" ]
+build-doc: [ "jbuilder" "build" "@doc" "-p" name ]
+build-test: [ "jbuilder" "runtest" "-p" name ]
 depends: [
   "jbuilder" {build}
-  "base-bytes"
-  "base-unix"
-  "result"
-  "lwt"
-  "irc-client" { >= "0.4.0" }
-  "tls"
-  "yojson"
-  "containers" { >= "1.0" }
-  "ISO8601"
-  "stringext"
-  "re"
-]
-depopts: [
+  "calculon" { >= "0.3" }
+  "re" { >= "1.7.2" }
   "uri"
   "cohttp"
   "cohttp-lwt"
@@ -30,6 +19,7 @@ depopts: [
   "atdgen"
   "lambdasoup"
   "sequence"
+  "odoc" {doc}
 ]
 tags: [ "irc" "bot" "factoids" ]
 homepage: "https://github.com/c-cube/calculon"
