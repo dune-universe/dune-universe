@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(executable
- ((name bench)
-  (libraries (reed-solomon-erasure
-              unix
-              core_kernel))
-))
