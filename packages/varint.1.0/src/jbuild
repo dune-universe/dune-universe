@@ -1,0 +1,6 @@
+(jbuild_version 1)
+(library
+ ((name varint)
+  (public_name varint)
+  (libraries  (mstruct) )
+  (synopsis "A simple library for protobuf style varint encoding")))
