@@ -1,1 +1,0 @@
-include Amqp_client_async

@@ -1,4 +1,0 @@
-[submodule "html"]
-	path = html
-	url = git@github.com:andersfugmann/ocaml-amqp.git
-	branch = gh-pages
