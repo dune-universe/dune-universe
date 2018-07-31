@@ -1,0 +1,6 @@
+(executable
+  (name bench)
+  (libraries reed-solomon-erasure
+              unix
+              core_kernel)
+)

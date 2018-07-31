@@ -1,0 +1,5 @@
+(executables
+  (names     doc_shardbyshard
+             readme_reedsolomon)
+  (libraries reed-solomon-erasure)
+)

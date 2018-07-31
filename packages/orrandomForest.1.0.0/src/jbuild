@@ -1,0 +1,12 @@
+(jbuild_version 1)
+
+(library
+ ((name        orrandomForest)
+  (public_name orrandomForest)
+  (modules (result utls rf))
+  (libraries (dolog))))
+
+(executables
+ ((names     (test))
+  (modules (test))
+  (libraries (dolog batteries cpm orrandomForest))))

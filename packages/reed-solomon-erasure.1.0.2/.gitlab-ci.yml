@@ -1,0 +1,48 @@
+image: ocaml/opam:ubuntu-17.04_ocaml-4.06.0
+
+before_script:
+  - opam repo add online https://opam.ocaml.org
+  - sudo apt-get install libffi-dev
+  - opam update
+  - opam upgrade
+  - opam install dune
+  - opam install cppo
+  - opam install core_kernel
+  - opam install ctypes
+  - opam install ctypes-foreign
+  - opam install bisect_ppx
+
+stages:
+  - build
+  - test
+  - doc
+
+build:
+  only:
+    - master
+  stage: build
+  script:
+    - dune build
+
+test:
+  only:
+    - master
+  stage: test
+  script:
+    - opam install ounit
+    - opam install qcheck
+    - dune runtest
+
+pages:
+  only:
+    - master
+  stage: doc
+  script:
+    - opam install odoc
+    - make doc
+    - rm -rf public
+    - mkdir public
+    - cp -r _doc/_html/* public/
+  artifacts:
+    paths:
+      - public

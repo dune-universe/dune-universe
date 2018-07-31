@@ -1,0 +1,24 @@
+(library
+  (name            reed_solomon_erasure)
+  (public_name     reed-solomon-erasure)
+  (libraries       ctypes
+                   ctypes.foreign
+                   core_kernel)
+  (flags           (-w "+a-4-29-37-40-42-44-48-50"))
+  (library_flags   (-a src/reedsolomon.o))
+  (preprocess      (pps bisect_ppx -conditional))
+  (c_names         reedsolomon)
+  (c_flags         (-march=native -std=c11 -O3 -fPIC))
+  (c_library_flags ()))
+
+(rule
+  (targets tables.ml)
+  (deps    ../generators/gen_tables.exe)
+  (action  (run %{deps})))
+
+(rule
+  (targets reed_solomon_erasure.ml)
+  (deps    (:main_src reed_solomon_erasure.cppo.ml)
+           reed_solomon_erasure_templates.cppo.ml)
+  (action
+   (chdir %{workspace_root} (run %{bin:cppo} -V OCAML:%{ocaml_version} %{main_src} -o %{targets}))))

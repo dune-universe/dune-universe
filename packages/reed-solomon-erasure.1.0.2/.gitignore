@@ -1,0 +1,14 @@
+_build/*
+*/_build/*
+*/.merlin
+tables.ml
+*/tables.ml
+gmon.out
+profile.txt
+doc/*
+*.install
+_coverage/*
+*/_coverage/*
+bisect*.out
+_doc/*
+*/_doc/*

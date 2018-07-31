@@ -1,0 +1,10 @@
+(executable
+ (name       test)
+ (modules    test)
+ (libraries  oUnit ppx_bigarray.runtime)
+ (preprocess (pps ppx_bigarray)))
+
+(alias
+ (name   runtest)
+ (deps   test.exe)
+ (action (run %{deps})))

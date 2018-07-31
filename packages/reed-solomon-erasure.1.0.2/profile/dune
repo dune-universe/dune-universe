@@ -1,0 +1,7 @@
+(executable
+  (name bench)
+  (ocamlopt_flags (-p))
+  (libraries reed-solomon-erasure
+              unix
+              core_kernel)
+)

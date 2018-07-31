@@ -1,0 +1,22 @@
+opam-version: "1.2"
+name: "tube"
+version: "4.4.0"
+maintainer: "alin.popa@gmail.com"
+authors: ["Alin Popa"]
+homepage: "https://github.com/alinpopa/tube"
+bug-reports: "https://github.com/alinpopa/tube/issues"
+dev-repo: "https://github.com/alinpopa/tube.git"
+license: "LGPL-3 with OCaml linking exception"
+available: [
+  ocaml-version >= "4.04.0"
+]
+build: [
+  ["dune" "build" "-p" "tube"]
+]
+depends: [
+  "dune" {build & >= "1.0"}
+  "lwt"
+]
+descr: "
+Almost transparently slim type safe abstraction on top of Lwt_io channels.
+"

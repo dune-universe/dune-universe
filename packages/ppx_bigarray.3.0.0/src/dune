@@ -1,0 +1,30 @@
+;;
+;; PPX
+;;
+(library
+ (name                  ppx_bigarray)
+ (public_name           ppx_bigarray)
+ (kind                  ppx_rewriter)
+ (modules               ppx_bigarray nestedMatrix extAst error compat)
+ (libraries             ocaml-migrate-parsetree)
+ (ppx_runtime_libraries ppx_bigarray_runtime)
+ (preprocess            no_preprocessing))
+
+;;
+;; Runtime library
+;;
+(library
+ (name        ppx_bigarray_runtime)
+ (public_name ppx_bigarray.runtime)
+ (modules     ppx_bigarray_runtime)
+ (synopsis    "Runtime components of [%bigarray]")
+ (libraries   bigarray)
+ (flags       (:standard
+               -w A-4-31-33-34-39-41-42-43-44-45-48-49-50-58
+               -safe-string -strict-sequence -strict-formats
+               -short-paths)))
+
+(rule
+ (targets compat.ml)
+ (deps    compat.cppo.ml)
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))

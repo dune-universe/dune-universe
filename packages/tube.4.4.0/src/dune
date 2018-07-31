@@ -1,0 +1,5 @@
+(library
+  (name tube)
+  (public_name tube)
+  (flags (:standard -warn-error A))
+  (libraries lwt lwt.unix))
