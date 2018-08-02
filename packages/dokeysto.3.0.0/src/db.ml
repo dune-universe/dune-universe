@@ -1,4 +1,6 @@
 
+open Printf
+
 module Ht = Hashtbl
 
 type filename = string
@@ -72,7 +74,14 @@ module Internal = struct
     let off = Unix.(lseek db.data 0 SEEK_END) in
     let len = String.length str in
     let written = Unix.write_substring db.data str 0 len in
-    assert(written = len);
+    begin
+      if written <> len then
+        let err_msg =
+          sprintf
+            "Db.Internal.add: db: %s k: %s str: %s written: %d len: %d"
+            db.data_fn k str written len in
+        failwith err_msg
+    end;
     Ht.add db.index k { off; len }
 
   let replace db k str =
@@ -80,7 +89,14 @@ module Internal = struct
     let off = Unix.(lseek db.data 0 SEEK_END) in
     let len = String.length str in
     let written = Unix.write_substring db.data str 0 len in
-    assert(written = len);
+    begin
+      if written <> len then
+        let err_msg =
+          sprintf
+            "Db.Internal.replace: db: %s k: %s str: %s written: %d len: %d"
+            db.data_fn k str written len in
+        failwith err_msg
+    end;
     Ht.replace db.index k { off; len }
 
   let remove db k =
@@ -92,9 +108,21 @@ module Internal = struct
     let len = pos.len in
     let buff = Bytes.create len in
     let off' = Unix.(lseek db.data off SEEK_SET) in
-    assert(off' = off);
+    begin
+      if off' <> off then
+        let err_msg =
+          sprintf "Db.Internal.raw_read: db: %s off: %d len: %d off': %d"
+            db.data_fn off len off' in
+        failwith err_msg
+    end;
     let read = Unix.read db.data buff 0 len in
-    assert(read = len);
+    begin
+      if read <> len then
+        let err_msg =
+          sprintf "Db.Internal.raw_read: db: %s off: %d len: %d read: %d"
+            db.data_fn off len read in
+        failwith err_msg
+    end;
     Bytes.unsafe_to_string buff
 
   let find db k =

@@ -1,4 +1,4 @@
-.PHONY: build clean install uninstall reinstall doc test test_lz4
+.PHONY: build clean install uninstall reinstall doc test test_lz4 test_camltc
 
 build:
 	jbuilder build @install -j 16
@@ -30,3 +30,8 @@ test_lz4:
 	\rm -f rwdb_lz4 rwdb_lz4.idx
 	jbuilder build _build/default/src/test_lz4.exe
 	_build/default/src/test_lz4.exe
+
+test_camltc:
+	\rm -f rwdb_camltc rwdb_camltc.idx
+	jbuilder build _build/default/src/test_camltc.exe
+	_build/default/src/test_camltc.exe

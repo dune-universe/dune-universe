@@ -1,17 +1,21 @@
 
+(** {4 Read-only persistent string key to string value hash table
+       using tokyocabinet as backend.} *)
+
 type filename = string
 
-(** {4 Read-only persistent string key to string value hash table
-    (values are compressed on disk using LZ4)} *)
-
-module ROZ: sig
+module RO: sig
 
   type t
 
   (** [open_existing fn] open in read-only mode the persistent
-      hashtbl whose data are stored compressed in file [fn] and whose
+      hashtbl whose data are stored in file [fn] and whose
       index is stored in [fn ^ ".idx"]. *)
   val open_existing: filename -> t
+
+  (** [dummy ()] create a value of type [t].
+      Do not do anything with this value. *)
+  val dummy: unit -> t
 
   (** [close db] close the previously opened [db]. *)
   val close: t -> unit
@@ -19,38 +23,40 @@ module ROZ: sig
   (** [mem db k] check if [k] is bound in [db]. *)
   val mem: t -> string -> bool
 
-  (** [find db k] get and uncompress the current binding of [k] in [db]
+  (** [find db k] get the current binding of [k] in [db]
       or raise [Not_found]. *)
   val find: t -> string -> string
 
   (** [iter f db] apply [f] to all key-value pairs in [db].
-      Values are uncompressed on the fly.
       Cf. Hashtbl.iter for details. *)
   val iter: (string -> string -> unit) -> t -> unit
 
   (** [fold f db init] fold [f] over all key-value pairs in [db].
-      Values are uncompressed on the fly.
       Cf. Hashtbl.fold for details. *)
   val fold: (string -> string -> 'a -> 'a) -> t -> 'a -> 'a
 
 end
 
 (** {4 Read-write persistent string key to string value hash table
-    (values are compressed on disk using LZ4)} *)
+       using tokyocabinet as backend.} *)
 
-module RWZ: sig
+module RW: sig
 
   type t
 
   (** [create fn] create in read-write mode the persistent
-      hashtbl whose data are stored compressed in file [fn] and whose
+      hashtbl whose data are stored in file [fn] and whose
       index is stored in [fn ^ ".idx"]. *)
   val create: filename -> t
 
   (** [open_existing fn] open in read-write mode the persistent
-      hashtbl whose data are stored compressed in file [fn] and whose
+      hashtbl whose data are stored in file [fn] and whose
       index is stored in [fn ^ ".idx"]. *)
   val open_existing: filename -> t
+
+  (** [dummy ()] create a value of type [t].
+      Do not do anything with this value. *)
+  val dummy: unit -> t
 
   (** [close db] close the previously opened [db]. *)
   val close: t -> unit
@@ -65,31 +71,27 @@ module RWZ: sig
   (** [mem db k] check if [k] is bound in [db]. *)
   val mem: t -> string -> bool
 
-  (** [add db k v] add the key-value binding [(k,v)] to [db].
-      [v] is compressed on the fly. *)
+  (** [add db k v] add the key-value binding [(k,v)] to [db]. *)
   val add: t -> string -> string -> unit
 
   (** [replace db k v] replace the current binding for [k] in [db]
       by a binding from [k] to [v].
-      [v] is compressed on the fly.
       Cf. Hashtbl.replace for details. *)
   val replace: t -> string -> string -> unit
 
   (** [remove tbl k] remove the current binding for [k] in [db].
-      Cf. Hashtbl.remove for details. *)
+      Cf. Hashtbl.replace for details. *)
   val remove: t -> string -> unit
 
-  (** [find db k] get and uncompress the current binding of [k] in [db]
+  (** [find db k] get the current binding of [k] in [db]
       or raise [Not_found]. *)
   val find: t -> string -> string
 
   (** [iter f db] apply [f] to all key-value pairs in [db].
-      Values are uncompressed on the fly.
       Cf. Hashtbl.iter for details. *)
   val iter: (string -> string -> unit) -> t -> unit
 
   (** [fold f db init] fold [f] over all key-value pairs in [db].
-      Values are uncompressed on the fly.
       Cf. Hashtbl.fold for details. *)
   val fold: (string -> string -> 'a -> 'a) -> t -> 'a -> 'a
 

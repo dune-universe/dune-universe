@@ -39,6 +39,9 @@ module ROZ = struct
   let open_existing fn =
     RO.open_existing fn
 
+  let dummy () =
+    RO.dummy ()
+
   let close db =
     RO.close db
 
@@ -47,6 +50,9 @@ module ROZ = struct
 
   let find db k =
     uncompress (RO.find db k)
+
+  let raw_read db pos =
+    uncompress (RO.raw_read db pos)
 
   let iter f db =
     RO.iter (fun k z ->
@@ -72,6 +78,9 @@ module RWZ = struct
   let open_existing fn =
     RW.open_existing fn
 
+  let dummy () =
+    RW.dummy ()
+
   let close db =
     RW.close db
 
@@ -95,6 +104,9 @@ module RWZ = struct
 
   let find db k =
     uncompress (RW.find db k)
+
+  let raw_read db pos =
+    uncompress (RW.raw_read db pos)
 
   let iter f db =
     RW.iter (fun k z ->
