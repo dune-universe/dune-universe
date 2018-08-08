@@ -1,0 +1,90 @@
+checksum.cmo :
+checksum.cmx :
+cmt.cmo : utils.cmi pathmap.cmi cmt.cmi
+cmt.cmx : utils.cmx pathmap.cmx cmt.cmi
+cmt.cmi :
+command.cmo : command.cmi
+command.cmx : command.cmi
+command.cmi :
+compdir.cmo : utils.cmi filepath.cmi dotfile.cmi compdir.cmi
+compdir.cmx : utils.cmx filepath.cmx dotfile.cmx compdir.cmi
+compdir.cmi : filepath.cmi
+copiedfilename.cmo :
+copiedfilename.cmx :
+dotfile.cmo : utils.cmi dotfile.cmi
+dotfile.cmx : utils.cmx dotfile.cmi
+dotfile.cmi :
+ext.cmo : xprinttyp.cmi xpath.cmi xlongident.cmi xident.cmi
+ext.cmx : xprinttyp.cmx xpath.cmx xlongident.cmx xident.cmx
+fileident.cmo : utils.cmi fileident.cmi
+fileident.cmx : utils.cmx fileident.cmi
+fileident.cmi :
+filepath.cmo : utils.cmi copiedfilename.cmo filepath.cmi
+filepath.cmx : utils.cmx copiedfilename.cmx filepath.cmi
+filepath.cmi :
+locident.cmo : locident.cmi
+locident.cmx : locident.cmi
+locident.cmi :
+name.cmo : name.cmi
+name.cmx : name.cmi
+name.cmi :
+ocamlspot.cmo : utils.cmi typeexpand.cmi test.cmo spotfile.cmi spoteval.cmi \
+    spotconfig.cmi spot.cmi filepath.cmi ext.cmo compdir.cmi command.cmi \
+    cmt.cmi
+ocamlspot.cmx : utils.cmx typeexpand.cmx test.cmx spotfile.cmx spoteval.cmx \
+    spotconfig.cmx spot.cmx filepath.cmx ext.cmx compdir.cmx command.cmx \
+    cmt.cmx
+pathmap.cmo : utils.cmi filepath.cmi dotfile.cmi pathmap.cmi
+pathmap.cmx : utils.cmx filepath.cmx dotfile.cmx pathmap.cmi
+pathmap.cmi : filepath.cmi dotfile.cmi
+pathreparse.cmo : utils.cmi spot.cmi locident.cmi ext.cmo pathreparse.cmi
+pathreparse.cmx : utils.cmx spot.cmx locident.cmx ext.cmx pathreparse.cmi
+pathreparse.cmi : spot.cmi
+spot.cmo : utils.cmi treeset.cmi ext.cmo cmt.cmi spot.cmi
+spot.cmx : utils.cmx treeset.cmx ext.cmx cmt.cmx spot.cmi
+spot.cmi :
+spotconfig.cmo : utils.cmi spot.cmi ext.cmo spotconfig.cmi
+spotconfig.cmx : utils.cmx spot.cmx ext.cmx spotconfig.cmi
+spotconfig.cmi : spotconfig_intf.cmo
+spotconfig_intf.cmo : spot.cmi ext.cmo
+spotconfig_intf.cmx : spot.cmx ext.cmx
+spoteval.cmo : utils.cmi spot.cmi ext.cmo spoteval.cmi
+spoteval.cmx : utils.cmx spot.cmx ext.cmx spoteval.cmi
+spoteval.cmi : utils.cmi spot.cmi
+spotfile.cmo : utils.cmi spoteval.cmi spotconfig.cmi spot.cmi dotfile.cmi \
+    cmt.cmi spotfile.cmi
+spotfile.cmx : utils.cmx spoteval.cmx spotconfig.cmx spot.cmx dotfile.cmx \
+    cmt.cmx spotfile.cmi
+spotfile.cmi : spoteval.cmi spot.cmi
+test.cmo :
+test.cmx :
+treeset.cmo : xset.cmi treeset.cmi
+treeset.cmx : xset.cmx treeset.cmi
+treeset.cmi : xset.cmi
+typeFix.cmo : utils.cmi name.cmi typeFix.cmi
+typeFix.cmx : utils.cmx name.cmx typeFix.cmi
+typeFix.cmi :
+typeexpand.cmo : utils.cmi typeexpand.cmi
+typeexpand.cmx : utils.cmx typeexpand.cmi
+typeexpand.cmi :
+utils.cmo : utils.cmi
+utils.cmx : utils.cmi
+utils.cmi :
+xident.cmo : name.cmi xident.cmi
+xident.cmx : name.cmx xident.cmi
+xident.cmi : name.cmi
+xlongident.cmo : xlongident.cmi
+xlongident.cmx : xlongident.cmi
+xlongident.cmi :
+xmain.cmo : spot.cmi xmain.cmi
+xmain.cmx : spot.cmx xmain.cmi
+xmain.cmi :
+xpath.cmo : xident.cmi name.cmi xpath.cmi
+xpath.cmx : xident.cmx name.cmx xpath.cmi
+xpath.cmi : name.cmi
+xprinttyp.cmo : typeFix.cmi xprinttyp.cmi
+xprinttyp.cmx : typeFix.cmx xprinttyp.cmi
+xprinttyp.cmi :
+xset.cmo : xset.cmi
+xset.cmx : xset.cmi
+xset.cmi :

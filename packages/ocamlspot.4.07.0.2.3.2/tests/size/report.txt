@@ -1,0 +1,19 @@
+.cmt / .spot
+=================
+
+In the almost cases, spot is -5% to 15% smaller than cmt.
+
+There are small number of modules whose spot is >10 times smaller than cmt: packed cmo's:
+
+modulename                      cmt     spot    cmt/spot
+otherlibs/dynlink/dynlinkaux	200499	4153	48.27
+_build/camlp4/Camlp4/Struct	364921	2420	150.79
+_build/camlp4/Camlp4/Printers	346783	1025	338.32
+
+.cmti / .spit
+=================
+
+In average, the size of spit is 1/13 of the corresponding cmti.
+
+[open M] enlarges the size of cmti when [M] is a big module,
+while spit uses a constant size for opens.

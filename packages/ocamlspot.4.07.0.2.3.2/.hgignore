@@ -1,0 +1,10 @@
+.*\.(cm.*|annot|o|opt|orig|byt)$
+.*~$
+ocamlspot$
+tests/ocamlbuild/_build
+tests/a\.out$
+tests/ocamlbuild/hello\.native$
+opam/generated
+_build
+\.merlin$
+.*\.install$

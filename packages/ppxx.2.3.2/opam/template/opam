@@ -1,0 +1,8 @@
+depends: [
+  "ocamlfind" { build }
+  "jbuilder"  { build }
+  "ppx_tools_versioned" { >= "5.0" }
+  "ocaml-migrate-parsetree"
+]
+available: [ ocaml-version >= "4.07.0" ]
+homepage: "http://bitbucket.org/camlspotter/ppxx"

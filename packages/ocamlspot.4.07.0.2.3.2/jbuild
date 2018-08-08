@@ -1,0 +1,20 @@
+(jbuild_version 1)
+
+(executable
+ ((name ocamlspot)
+  (flags (:standard -w -9))
+  (libraries (compiler-libs.common unix))))
+
+(install
+ ((section bin)
+  (files ((ocamlspot.exe as ocamlspot)))))
+(install
+ ((section share_root)
+  (files ((ocamlspot.el as emacs/site-lisp/ocamlspot.el)
+          (ocamlspot.elc as emacs/site-lisp/ocamlspot.elc)))))
+
+(rule
+ ((targets (ocamlspot.elc))
+  (deps (ocamlspot.el))
+  (action (run emacs --batch -f batch-byte-compile ${<}))))
+

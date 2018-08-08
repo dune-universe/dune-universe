@@ -1,0 +1,5 @@
+depends: [
+  "jbuilder" { build }
+]
+available: [ ocaml-version = "4.07.0" ]
+homepage: "https://bitbucket.org/camlspotter/ocamlspot"

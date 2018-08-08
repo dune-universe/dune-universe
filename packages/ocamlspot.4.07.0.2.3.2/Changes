@@ -1,0 +1,227 @@
+4.04.0.2.3.2
+--------------
+
+- Port to OCaml 4.04.0
+
+4.03.0.2.3.1
+--------------
+
+- Port to OCaml 4.03.0
+
+4.02.1.2.3.0
+--------------
+
+- Port to OCaml 4.02.0
+- ocamlspot.el now has a boolean config ocamlspot-use-cygpath for Cygwin Emacs + MinGW/VC OCaml
+
+4.01.0.2.2.1
+--------------
+
+- Bug fix for Win32
+
+4.01.0.2.2.0
+--------------
+
+- Big clean up of cmt file traversal, by removing quick hacks introduced in porting OCamlSpot from OCaml 3 to OCaml 4.
+- Bug fixes of build dir (_build and those specified by .ocamlspot) support
+
+4.01.0.2.1.3
+--------------
+
+- Quick port to OCaml 4.01.
+- Further bugfix around .ocamlspot file
+
+4.00.1.2.1.4 (not yet)
+--------------
+
+- Spot results now points to the real source files, not copied one to build directories like _build and those specified by .ocamlspot
+
+4.00.1.2.1.3
+--------------
+
+- Further bugfix around .ocamlspot file
+
+2.1.2
+--------------
+
+- Clean up
+- Some bug fixes around .ocamlspot file
+
+2.1.1
+--------------
+
+- Bug fix of _build dir support.
+
+2.1.0
+--------------
+
+- OCamlBuild _build dir support
+- Fixed OPAM installation of elisp file (Issue #20)
+- Fixed too much open files issue of cm* files (Issue #12)
+- Fixed strange Camlp4 path location issue (Issue #22)
+- Fixed memory cache bug (Issue #18)
+
+2.0.2
+--------------
+
+- ocamlspot-samewindow: default is now nil. (The author prefers nil!)
+- Cmt.recover_env used too much memory sometimes.
+- File identification in Mingw now uses md5sum instead of useless dev+inode
+- .ocamlspot tweak is now dropped, since it is not working.
+- ocamlbuild's _build dir tweak is introduced and now working correctly.
+
+2.0.1
+--------------
+
+- Several elisp bug fixes
+- ocamlspot-samewindow custom elisp var not to split windows at spotting
+
+2.0.0
+--------------
+
+For OCaml 4.00.0.
+
+- Now OCamlSpotter no longer requires compier patching. It is a standalone application.
+- Use -bin-annot compiler option to produce .cmt and .cmti files for OCamlSpotter.
+
+1.4.0
+--------------
+
+For OCaml 3.12.1.
+
+ocamlspot:
+- -i and --info options are now obsolete. Use ``ocamlspot info <filename>'' instead.
+- --type-expand option is added for type-directed expansion of expressions and patterns. 
+  Experimental.
+
+ocamlspot.el:
+- ocamlspot-path is removed. Use ocamlspot-command custom variable.
+- ocamlspot-expand for type-directed expansion of expressions and patterns. Experimental.
+
+Compiler modifications:
+- If OCAML_ANNOT environment variable exists, ocamlc/ocamlopt create .annot, .spot 
+  and .spit files even without -annot option.
+- Lazy thunks in Env.t are replaced by non-functional values.
+
+1.3.1
+--------------
+
+ocamlspot.el:
+- ocamlspot-pop-jump-stack for going back to the latest query position. Experimental.
+
+1.3.0
+--------------
+
+- For OCaml 3.12.1 and rcs
+- Refactoring
+- Use query (ocamlspot use)
+- Standalone type checks (ocamlspot typecheck and ocamlspot recheck)
+- elisp function ocamlspot-xtype for querying types of values
+- elisp function ocamlspot-use for use query
+- bug fixes and more spot support
+
+1.2.0
+--------------
+
+- For OCaml 3.12.0
+- Code cleanups
+
+1.1
+-----
+
+Bug fix
+
+- if x.spot file was obsolete, ocamlspot searched x.spit file instead, 
+  which was not a correct behavior.
+- exceptions in pattern were not browsable.
+- ocamldoc recorded top structures.
+- fix for predefined exception
+
+New feature
+
+- added -n option which does not analyze definition position.
+- ocamlspot-type function is added for type query in ocamlspot.el
+- ocamlspot-use function is added for use query in ocamlspot.el
+- supports a new position format l<line>c<column in bytes> 
+- supports a new query file:kind:path
+- more spots are saved
+- Work around for ocamlbuild. If .ocamlspot file with the text build_dir=dirname
+  is placed in a directory $DIR, then spot files of source files under $DIR 
+  ex. $DIR/subdir/source.ml is searched in $DIR/dirname/subdir/. See an example
+  at camlp4/.ocamlspot
+
+
+ocamlspot.el
+* ocamlspot-path is now ocamlspot-command. Please fix your .emacs.
+- defcustom'ed and code clean-ups (thanks to Sam Steingold) 
+- various elisp bug fixes
+- multi-byte character support in emacs
+
+1.0
+---
+
+Complete rewrite.
+
+beta3
+-----
+
+Clean-ups:
+- Annotation data type simplification
+
+Features:
+- Spot file version number is introduced
+- New browsables:
+    - Data type names to their type defs
+    - Module names to their defs (preliminary support)
+
+beta2p1
+-------
+
+Features:
+- New browsables: variants and record labels to their type defs
+
+beta2:
+------
+
+Complete rewrite.
+
+Features:
+- Enhanced spot file search: if ocamlspot finds no .spot in the load paths 
+  but the corresponding symlinked .cmi, it also searches the .spot file 
+  in the linked directory. 
+
+beta1:
+------
+
+Clean-up and announce.
+
+alpha3:
+-------
+
+Features:
+- File time stamp check
+- .spot file versioning
+
+alpha2:
+-------
+
+Features:
+- Support spotting externals.
+- Enhanced elisp display
+- ocamlopt creates .annot and .spot too
+
+Performance:
+- Things are evaluated more lazily.
+
+Clean-up:
+- Less verbose messages.
+- Removed unnecessary files
+
+Bug-fixes:
+- Location order was mis-defined.
+
+alpha1:
+-------
+
+The first release
+

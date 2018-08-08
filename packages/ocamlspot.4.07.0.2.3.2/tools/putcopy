@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+
+# exec in camlimages directory
+
+open(IN, "find . -name '*.ml' -o -name '*.mli' -o -name '*.ml.in' -o -name '*.mli.in' -o -name '*.c' | grep -v \.hg | grep -v tests/ |");
+
+while(<IN>){
+    chop;
+    $file= $_;
+    open(IN2, "$file");
+    $_ = <IN2>;
+    if ( /\(\*{10}\**\)/ ||
+	 /\/\*{10}\**\//
+	){
+	# long comment, should be copyright notice
+	print STDERR "Find a copyright in $file";
+	open(OUT, "> $file.out");
+	print STDERR "\n";
+	open(COPY, "tools/COPY");
+	if( $file =~ /\.c$/ ){  
+	    while(<COPY>){ 
+		s/[\(\)]/\//g;
+		print OUT $_; 
+	    }
+	} else {
+	    while(<COPY>){ print OUT $_; }
+	}
+	close COPY;
+	while(<IN2>){
+	    if ( /\(\*{10}\**\)/ ||
+		 /\/\*{10}\**\//
+		){
+		last;
+	    }
+	}
+
+	while(<IN2>){
+	    if ( ! /^\s*[\r\n]+$/ ){ last; }
+	}
+	print OUT "\n";
+	print OUT "$_";
+
+	while(<IN2>){ print OUT $_; }
+	close IN2;
+	close OUT;
+	# `mv $file $file.bak`;
+	`mv $file.out $file`;
+    } else {
+	# we have no copyright notice
+	$org = $_;
+	print STDERR "Newly put a copyright in $file\n";
+	open(OUT, "> $file.out");
+	open(COPY, "tools/COPY");
+	if( $file =~ /\.c$/ ){  
+	    while(<COPY>){ 
+		s/[\(\)]/\//g;
+		print OUT $_; 
+	    }
+	} else {
+	    while(<COPY>){ print OUT $_; }
+	}
+	close COPY;
+	print OUT $org;
+
+	while(<IN2>){
+	    if ( ! /^\s*[\r\n]+$/ ){ last; }
+	}
+	print OUT "\n";
+	print OUT "$_";
+
+	while(<IN2>){ print OUT $_; }
+	close IN2;
+	close OUT;
+	# `mv $file $file.bak`;
+	`mv $file.out $file`;
+    }
+}
+

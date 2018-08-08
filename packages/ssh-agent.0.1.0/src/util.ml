@@ -1,0 +1,34 @@
+let cstruct_of_array arr =
+  let r = Cstruct.create (Array.length arr) in
+  Array.iteri (fun idx v -> Cstruct.set_uint8 r idx v) arr;
+  r
+
+let id_sha1 = [|
+  0x30; 0x21; (* type Sequence, length 0x21 (33) *)
+  0x30; 0x09; (* type Sequence, length 0x09 *)
+  0x06; 0x05; (* type OID, length 0x05 *)
+  0x2b; 0x0e; 0x03; 0x02; 0x1a; (* id-sha1 OID *)
+  0x05; 0x00; (* NULL *)
+  0x04; 0x14  (* Octet string, length 0x14 (20), followed by sha1 hash *)
+|] |> cstruct_of_array
+
+let id_sha256 = [|
+  0x30; 0x31; (* type Sequence, length 0x31 (49) *)
+  0x30; 0x0d; (* type Sequence, length 0x0d (13) *)
+  0x06; 0x09; (* type OID, length 0x09 *)
+  0x60; 0x86; 0x48; 0x01; 0x65; 0x03; 0x04; 0x02; 0x01; (* id-sha256 *)
+  0x05; 0x00; (* NULL *)
+  0x04; 0x20  (* Octet string, length 0x20 (32), followed by sha256 hash *)
+|] |> cstruct_of_array
+
+let id_sha512 = [|
+  0x30; 0x51; (* type Sequence, length 0x51 (81) *)
+  0x30; 0x0d; (* type Sequence, length 0x0d (13) *)
+  0x06; 0x09; (* type OID, length 0x09 *)
+  0x60; 0x86; 0x48; 0x01; 0x65; 0x03; 0x04; 0x02; 0x03; (* id-sha512 *)
+  0x05; 0x00; (* NULL *)
+  0x04; 0x40  (* Octet string, length 0x40 (64), followed by sha512 hash *)
+|] |> cstruct_of_array
+
+let cstruct_is_prefix prefix other =
+  Cstruct.equal prefix (Cstruct.sub other 0 (Cstruct.len prefix))
