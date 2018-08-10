@@ -1,0 +1,120 @@
+== 0.2 ==
+
+* Implement System Fcω
+  * Forbid CAbs if App (any computation) is after ?
+    * That would allow us to remove coercion abstractions at runtime
+  * What about a new kind for type coercions ?
+  * Translate « type alias T = Unit -> T » into « type T : * » and « axiom T : T ~ (Unit -> T) »
+  * Translate « exception Fail Int Float » into « type Fail : ^ » and « Fail : Int -> Float -> [^Fail^] »
+* How to prevent « C : forall a, a -> T » then « match C [Int] 1 with C [String] x -> x » ?
+  * Answer: Forbid any constructors to have a forall construct on the first level (i.e. « forall a, a -> T » but not « (forall a, a) -> T ») that is not referenced in the resulting type
+  * Or ?! Deconstruct as « C {a} x »
+    * Test: « Cons : forall a, a -> List a -> List a » deconstructed as « Cons {a} (co : a ~ Int) ... »
+
+
+== 0.3 ==
+
+* (Re)-implement typeclasses:
+  * Write semantics with typeclasses
+    * http://okmij.org/ftp/Computation/typeclass.html
+    * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.53.3952&rep=rep1&type=pdf
+    * https://www.haskell.org/tutorial/classes.html
+    * https://stackoverflow.com/questions/9602176/why-were-type-classes-difficult-to-implement
+    * http://andrew.gibiansky.com/blog/haskell/haskell-typeclasses/
+  * Add a new kind for typeclasses (?)
+
+
+== Short term ==
+
+* Mark functions arrity in csfw files and implement the optimization
+* Forbid parameters of the type « [E] T » in applications « f x » where « x » has an effect (monadic style)
+* Have a real custom GC
+* Prove type soundness of Fcω (see tapl p.86 or software fundation)
+  * See sf solutions to Stlc
+* Write the Labrys complete semantics (pretyped-tree)
+* Create a new compilation phase: FirstOrderTree
+  * Abs (name * {fv} * t) --> Value (fresh, Abs (name * {fv} * t))
+  * Datatype [c1 .. cn] --> ConstAlloc [c1 .. cn]
+  * PatternMatching --> branches + jmp + simple patterns
+  * In the backend:
+    * Preload all parameters/variables taken by the closure
+    * Remove the gamma type
+    * If fv is empty then make it constant
+* Remove arrow at desugaring
+  * What about typeclasses and coercion arrow ?
+* UntypedTree --> LambdaTree
+* lambda --> naming/NamedTree
+* LambdaTree.LetRec --> Let (replace Rec by first order functions)
+* Abstract k --> Datatype (k, [])
+* Clean Printers
+  * Use the new printers as a replacement to the to_string function
+* Write a decision procedure to automatically find coercion proofs
+* Check if we should get rid of Sum (ty)
+* Use Sedlex ?
+* Export covariance/contravariance (App)
+* Unite similar printers
+* Prove the soundness of System Fcω using Coq
+* Improve the FFI
+  * Allow to pass and return abstract types
+* Records
+  * Mixing instances & records ?
+  * Accessors ?:
+    type Lol a = Lol {x : a; y : Unit}
+    let lol = Lol [Unit] {x = Unit, y = Unit}
+    let f () () = Unit
+    let lol = f Lol#lol#x Lol#lol#y
+    map (Lol#x) l
+* Split parsers (Interfaces, Common, Implementation, FFI, …)
+* Clean error the handling system: extend an error type (+= ..) for each module that can raise errors and print them in ErrorPrinter
+* Add a builtin « fmt » operator that binds sprintf such as « fmt "%s" » has type « {Show a} => a -> String »
+* Typeclasses
+  * Allow tyclass constraints in classes & instances (inheritance)
+* Remove PatternMatching if List.length args = 1
+
+
+== Medium term ==
+
+* Implement « if x then y end » as « if x = True then y end »
+* Extensible records & extensible variants
+* Clean:
+  * Add more explicit type names (like « type name = string » instead of just use a string)
+* Handle dynamic exceptions (allocation failures, …)
+    let main try with
+      | CannotAllocate -> ()
+    end =
+      dosomething ()
+  * List of dynamic exceptions (divided in categories):
+    * Explicitly put exceptions by users (critical cases):
+      - Assert String
+      - TODO
+    * Can be explicit but do we want to ?
+      - DivByZero
+      - NumberOverflow
+    * Cannot be determined:
+      - StackOverflow
+      - CannotAllocate
+      - Signal Int  --> We will need to remove the third argument in functions and load/store jmp-handler from a thread_local global
+                        Do we really want that ? (see the OCaml interface on signals in Sys)
+* Exceptions
+  * Check if the exception is actually raised
+* Dynamically create a wrapper when partially apply a function instead of creating a lambda for each arguments (needs an analysis)
+* Add « type private T = … » to not have the getters (records) or the constructors (variants) into the environment
+
+
+== Long term ==
+
+* Pattern-matching over types
+  * We could have builtin types that would tell us the current architecture for example
+  * To implement that nicely we could add a new kind "Range" that we allow some types to return a range of types
+* Type inference
+* Parallelism
+* Concurrency
+* Implement an escape analysis
+  * Avoid some dynamic allocations
+  * Allow to have a fine grained effect system for references
+    * Local refs don't count as IO
+    * Introduce a new effect: Ref (for refs, arrays, …)
+* Mutually recursive functions
+* Document the different passes and optimizations
+* Use LLD (still experimental) as library to avoid relying on an external tool (Clang & implicitly LD)
+* Create a test tool to create correct (or incorrect) terms and check them

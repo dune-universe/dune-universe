@@ -1,0 +1,60 @@
+type Nat =
+  | O
+  | S Nat
+
+foreign "GC_malloc" alloc : Int -[IO]-> String
+
+foreign "sprintf" fmt : String -> String -> Int -[IO]-> Unit
+
+foreign "puts" println : String -[IO]-> Unit
+
+foreign ".labrys.add" add : Int -> Int -[IO]-> Int
+
+let natToInt =
+  let rec aux (acc : Int) (n : Nat) : IO # Int =
+    match n with
+    | O -> acc
+    | S n -> aux (add 1 acc) n
+    end
+  in
+  aux 0
+
+let printNat (n : Nat) =
+  let n' = natToInt n in
+  let buf = alloc 512 in
+  fmt buf "%d" n';
+  println buf;
+  n
+
+let id {x} (x:x) (x:x) = x
+
+let test = id [Nat]
+
+let testdeux (x : Nat) = printNat (test O O)
+
+type alias Id = λx, x
+
+type alias I = Id
+
+type alias Ip = Id
+
+type alias II = Ip Nat
+
+type Pair x y = Pair x y
+
+let test = Pair [Nat] [Nat] O O
+
+let test = match test with
+  | Pair O O -> Unit
+  | x -> Unit
+  end
+
+--type alias Test = λx, λx, x
+
+let rec recursiveFun (x : Nat) (y : Nat) : IO # Nat =
+  recursiveFun y (printNat x)
+
+let main =
+  let testdeux = testdeux O in
+  let testa = recursiveFun O (S O) in
+  Unit

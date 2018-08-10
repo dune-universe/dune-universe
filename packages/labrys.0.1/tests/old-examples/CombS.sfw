@@ -1,0 +1,7 @@
+type Nat =
+  | O
+  | S Nat
+
+let s (x:Nat->Nat->Nat) (y:Nat->Nat) (z:Nat) = x z (y z)
+
+let main = Unit

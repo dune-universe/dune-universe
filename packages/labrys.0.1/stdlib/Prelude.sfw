@@ -1,0 +1,13 @@
+type IO : !
+type Exn : !
+
+type Unit = Unit
+
+type Int
+type Float
+type Char
+type String
+
+--notation-expr () = Unit
+--notation-param () = (_ : Unit)
+--notation-pattern () = Unit

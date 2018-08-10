@@ -1,0 +1,5 @@
+type Nat =
+  | O
+  | S Nat
+
+let id : (Nat -[]-> Nat) -> Nat -> Nat

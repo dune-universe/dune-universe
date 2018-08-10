@@ -1,0 +1,34 @@
+type Nat =
+  | O
+  | S Nat
+  | D Nat Nat
+
+foreign "puts" println : String -[IO]-> Unit
+
+let printZero () = println "0"
+let printOne () = println "1"
+let printTwo () = println "2"
+let printOther () = println "other"
+
+let rec f (x : Nat) : IO # Nat =
+  match x with
+  | O -> let lol = printZero Unit in O
+  | S O -> let lol = printOne Unit in O
+  | S (S O) -> let lol = printTwo Unit in O
+  | S (S (S O)) -> let lol = printZero Unit in O
+  | S (S (S a)) -> let lol = printOther Unit in a
+  | D a b -> f b
+  | a -> a
+  end
+
+let main =
+  let test = f O in
+  let test = f (S O) in
+  let test = f (S (S O)) in
+  let test = f (S (S (S O))) in
+  let test = f (S (S (S (S O)))) in
+  let test = f (S (S (S (S (S O))))) in
+  let test = f (S (S (S (S (S (S O)))))) in
+  let test = f (D (S O) O) in
+  let test = f (D O (S O)) in
+  Unit

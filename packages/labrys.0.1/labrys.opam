@@ -1,0 +1,33 @@
+opam-version: "1.2"
+name: "labrys"
+version: "0.1"
+license: "MIT"
+maintainer: "Kate <kit.ty.kate@disroot.org>"
+authors: "Kate <kit.ty.kate@disroot.org>"
+homepage: "https://github.com/kit-ty-kate/labrys"
+dev-repo: "https://github.com/kit-ty-kate/labrys.git"
+bug-reports: "https://github.com/kit-ty-kate/labrys/issues"
+build: ["dune" "build" "-p" name "-j" jobs]
+build-test: ["dune" "runtest" "-p" name "-j" jobs]
+depends: [
+  "dune" {build}
+  "menhir"
+  "base-unix"
+  "cmdliner"
+  "pprint"
+  "re"
+  "msgpack"
+  "uutf" {>= "1.0.0"}
+  "llvm" {>= "3.8"}
+  "containers" {>= "2.0"}
+  "craml" {test}
+]
+tags: [
+  "compiler"
+  "System F"
+  "System Fω"
+  "llvm"
+  "type-system"
+  "language"
+]
+available: [ocaml-version >= "4.04"]

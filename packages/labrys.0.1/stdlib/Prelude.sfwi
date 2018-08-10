@@ -1,0 +1,9 @@
+type IO : !
+type Exn : ^ -> !
+
+type Unit = Unit
+
+type Int
+type Float
+type Char
+type String

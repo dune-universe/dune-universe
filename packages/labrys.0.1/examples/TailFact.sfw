@@ -1,0 +1,43 @@
+import Nat
+
+open Nat
+
+type alias Nat = Nat.T
+
+exception Lol
+
+let rec plus (n : Nat) (m : Nat) : Nat =
+  match n with
+  | O -> m
+  | S p -> plus p (S m)
+  end
+
+let rec mult (s : Nat) (m : Nat) (n : Nat) : Nat =
+  match n with
+  | O -> s
+  | S p -> mult (plus m s) m p
+  end
+
+let mult (a : Nat) (b : Nat) = mult O a b
+
+let rec fact (acc : Nat) (n : Nat) : Nat =
+  match n with
+  | O -> acc
+  | S x -> fact (mult n acc) x
+  end
+
+let fact = fact (S O)
+
+let main =
+  Nat.print (fact O); -- 1
+  Nat.print (fact (S O)); -- 1
+  Nat.print (fact (S (S O))); -- 2
+  Nat.print (fact (S (S (S O)))); -- 6
+  Nat.print (fact (S (S (S (S O))))); -- 24
+  Nat.print (fact (S (S (S (S (S O)))))); -- 120
+  Nat.print (fact (S (S (S (S (S (S O))))))); -- 720
+  Nat.print (fact (S (S (S (S (S (S (S O)))))))); -- 5040
+  Nat.print (fact (S (S (S (S (S (S (S (S O))))))))); -- 40320
+  Nat.print (fact (S (S (S (S (S (S (S (S (S O)))))))))); -- 362880
+  Nat.print (fact (S (S (S (S (S (S (S (S (S (S O))))))))))) -- 3628800
+--  Nat.print (fact (S (S (S (S (S (S (S (S (S (S (S O)))))))))))) -- 29916800 (Too much RAM but works)

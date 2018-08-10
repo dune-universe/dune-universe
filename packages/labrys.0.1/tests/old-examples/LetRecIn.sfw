@@ -1,0 +1,38 @@
+type Nat =
+  | O
+  | S Nat
+
+foreign "GC_malloc" alloc : Int -[IO]-> String
+
+foreign "sprintf" fmt : String -> String -> Int -[IO]-> Unit
+
+foreign "puts" println : String -[IO]-> Unit
+
+foreign ".labrys.add" add : Int -> Int -[IO]-> Int
+
+let natToInt =
+  let rec aux (acc : Int) (n : Nat) : IO # Int =
+    match n with
+    | O -> acc
+    | S n -> aux (add 1 acc) n
+    end
+  in
+  aux 0
+
+let printNat (n : Nat) =
+  let n = natToInt n in
+  let buf = alloc 512 in
+  fmt buf "%d" n;
+  println buf
+
+let id (f:Unit -> Unit) = f Unit
+
+let f =
+  let rec g (x : Nat) (y : Nat) (k : Unit -[IO]-> Unit) : Unit =
+    g y x (λ(u : Unit) -> let unused = printNat x in k Unit)
+  in
+  g
+
+let main =
+  let test = f O (S O) (λ(x:Unit) -> Unit) in
+  Unit

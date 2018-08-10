@@ -1,0 +1,11 @@
+exception A
+exception B
+
+let test (_ : Unit) = fail [Unit] A
+
+let lol (_ : Unit -[Prelude.Exn A]-> Unit) = Unit
+let lolp = lol test
+
+let test = test Unit
+
+let main = Unit

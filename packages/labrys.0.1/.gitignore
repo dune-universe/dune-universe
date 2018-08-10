@@ -1,0 +1,10 @@
+/_build
+/labrys.install
+.merlin
+
+/a.out
+/dest
+/stdlib/Prelude.bc
+/stdlib/Prelude.csfw
+
+/tests/*/*.t.corrected

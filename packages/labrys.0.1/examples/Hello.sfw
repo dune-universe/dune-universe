@@ -1,0 +1,3 @@
+foreign "puts" println : String -[IO]-> Unit -- TODO: Handle IOError (runtime errors)
+
+let main = println "Hello World !"

@@ -1,0 +1,13 @@
+type Nat =
+  | O
+  | S Nat
+
+type alias Id = Nat -[]-> Nat
+
+let id (x:Id) = x
+
+let val = id (λ(x:Nat) -> x)
+
+let idprime = id
+
+let main = Unit
