@@ -1,0 +1,8 @@
+(library
+ (name exenum_lwt)
+ (public_name exenum.lwt) 
+ (libraries lwt exenum)
+ (modules lwt_tester)
+ (optional)
+ (synopsis "Lwt-compatible tester."))
+

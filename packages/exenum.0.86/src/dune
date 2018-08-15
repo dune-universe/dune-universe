@@ -1,0 +1,12 @@
+(library
+ (name exenum)
+ (public_name exenum)
+
+ (modules exenum)
+ (libraries exenum_internals)
+ 
+ (synopsis "Build efficient enumerations for datatypes. Inspired by Feat for Haskell."))
+
+(documentation (mld_files index))
+
+

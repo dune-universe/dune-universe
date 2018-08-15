@@ -1,0 +1,4 @@
+(library
+ ((name yuscii)
+  (public_name yuscii)
+  (libraries (fmt))))
