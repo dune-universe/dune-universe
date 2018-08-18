@@ -23,4 +23,4 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *)
 
-let version = "2.1.0"
+let version = "2.2.1"
