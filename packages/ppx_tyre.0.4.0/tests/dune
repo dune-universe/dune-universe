@@ -1,0 +1,41 @@
+; Tests run for both packages
+
+(test
+  (name test_regexp)
+  (modules regexp test_regexp)
+  (libraries ocaml-migrate-parsetree qcheck re re.perl))
+(rule (copy ../common/regexp.mli regexp.mli))
+(rule (copy ../common/regexp.ml regexp.ml))
+
+; Tests for ppx_regexp
+
+(executable
+  (name test_ppx_regexp)
+  (modules test_ppx_regexp)
+  (libraries re re.perl)
+  (preprocess (pps ppx_regexp)))
+(alias
+  (name runtest)
+  (package ppx_regexp)
+  (deps test_ppx_regexp.exe)
+  (action (run %{deps})))
+
+; Tests for ppx_tyre
+
+(executable
+  (name test_ppx_tyre)
+  (modules test_ppx_tyre)
+  (libraries re re.perl)
+  (preprocess (pps ppx_tyre)))
+(alias
+  (name runtest)
+  (package ppx_tyre)
+  (deps test_ppx_tyre.exe)
+  (action (run %{deps})))
+
+; Combined preprocessor
+
+(executable
+  (name main)
+  (modules Main)
+  (libraries ppx_regexp ppx_tyre ocaml-migrate-parsetree))
