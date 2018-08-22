@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name        test)
-  (libraries (oUnit protocol_conv))
-  (modules (unittest testable
-            test_types test_variant test_nonrec test_lists test_record test_driver))
-  (preprocess (pps (ppx_protocol_conv ppx_driver.runner)))
-))

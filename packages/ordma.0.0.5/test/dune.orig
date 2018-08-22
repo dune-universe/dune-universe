@@ -1,0 +1,10 @@
+(executables
+  (names test lwt_test)
+  (libraries ordma cmdliner)
+  (flags -w -27)
+)
+
+(alias
+  (name test)
+  (deps test.exe lwt_test.exe)
+)

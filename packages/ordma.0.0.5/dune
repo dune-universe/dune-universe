@@ -1,0 +1,22 @@
+(library
+  (name ordma)
+  (public_name ordma)
+  (wrapped false)
+  (libraries lwt lwt.unix lwt_log)
+  (c_names ordma_accept ordma_bind ordma_close ordma_connect ordma_engine ordma_listen ordma_lwt ordma_sendrecv ordma_socket ordma_sockopt)
+  (flags :standard -w -3-27-32-39)
+  (c_flags -Wall -Wextra -Werror -ggdb3 -O2)
+  (c_library_flags -lrdmacm)
+)
+
+(rule
+  (targets ordma_version.ml)
+  (action
+    (with-stdout-to %{targets}
+      (system "echo let git_revision = \\\"$(git describe --all --long --always --dirty)\\\";
+               echo let major, minor, patch = $(git describe --tags --exact-match | sed s/[.]/,/g);
+               echo let summary = major, minor, patch, git_revision")
+    )
+  )
+  (mode fallback)
+)
