@@ -4,7 +4,6 @@
   (optional)
   (libraries (mirage-solo5))
   (c_names (stubs adler32 crc32c))
-  (c_library_flags (-lpthread))
   (c_flags (:include cflags.sexp))))
 
 (rule (copy# ../stubs.c stubs.c))

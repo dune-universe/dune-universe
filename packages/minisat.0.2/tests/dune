@@ -1,0 +1,8 @@
+
+(executable
+  (name test1)
+  (libraries minisat))
+
+(alias
+  (name runtest)
+  (action (run ./test1.exe)))

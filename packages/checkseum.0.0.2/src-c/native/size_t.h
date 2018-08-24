@@ -5,6 +5,9 @@
 typedef unsigned NO_SIZE_T size_t;
 #elif defined(STDC)
 #  include <stddef.h>
+#elif defined(WIN32)
+#  include <BaseTsd.h> /* XXX(dinosaure): see checkseum#7 */
+typedef SIZE_T size_t;
 #else
 typedef unsigned long size_t;
 #endif

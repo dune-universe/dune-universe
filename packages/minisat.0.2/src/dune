@@ -1,0 +1,8 @@
+
+(library
+  (name minisat)
+  (public_name minisat)
+  (flags :standard -safe-string)
+  ;(ocamlopt_flags :standard -O3 -bin-annot -unbox-closures -unbox-closures-factor 20)
+  (c_flags -fPIC -std=c99)
+  (c_names libminisat_stubs solver))
