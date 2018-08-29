@@ -1,0 +1,5 @@
+(tests
+ (names test)
+ (libraries lwt lwt.unix camltc oUnit)
+ (flags -w -6-27-33)
+)

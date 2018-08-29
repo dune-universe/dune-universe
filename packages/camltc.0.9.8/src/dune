@@ -1,0 +1,44 @@
+(include_subdirs unqualified)
+
+(library
+ (name        camltc)
+ (public_name camltc)
+ (synopsis  "camltc : ocaml bindings for tokyo cabinet")
+ (libraries unix lwt lwt.unix logs.lwt tc)
+ (wrapped false)
+ (flags -w -27)
+ (c_names otc_wrapper)
+ (c_flags -O2 -I 3rd-party/tokyocabinet)
+)
+
+(library
+ (name tc)
+ (public_name camltc.tc)
+ (self_build_stubs_archive (tc))
+ (modules)
+)
+
+(rule
+ (targets libtc_stubs.a dlltc_stubs.so)
+ (action
+  (bash "
+   (../../../src/3rd-party/tokyocabinet/configure --disable-bzip --disable-zlib
+   make libtokyocabinet.so libtokyocabinet.a -j $(nproc)) > /dev/null 2>&1
+   cp libtokyocabinet.so dlltc_stubs.so
+   cp libtokyocabinet.a libtc_stubs.a ")
+ )
+)
+
+
+(rule
+ (targets camltc_version.ml)
+ (action (bash "
+  (echo let compile_time = \\\"$(date)\\\"
+   echo let machine = \\\"$(uname -mo)\\\"
+   echo let git_revision = \\\"$(git describe --all --long --always --dirty)\\\"
+   echo let major, minor, patch = $(git describe --tags --abbrev=0 | sed s/[.]/,/g | sed 's/.*-//')
+ >> %{targets}
+   echo let dependencies = \\\"Incubaid\\\'s tokyocabinet fork: $(git submodule)\\\") > %{targets} ")
+ )
+ (mode fallback)
+)

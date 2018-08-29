@@ -1,0 +1,9 @@
+(executables
+ (names bdb_test)
+ (libraries logs camltc)
+)
+
+(alias
+ (name examples)
+ (deps bdb_test.exe)
+)
