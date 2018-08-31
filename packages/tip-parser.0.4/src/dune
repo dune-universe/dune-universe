@@ -1,0 +1,9 @@
+(menhir (modules Tip_parser))
+(ocamllex (modules Tip_lexer))
+
+(library
+  (name tip_parser)
+  (public_name tip-parser)
+  (wrapped false)
+  (flags :standard -safe-string -w +a-4-44@8)
+  (libraries bytes result))

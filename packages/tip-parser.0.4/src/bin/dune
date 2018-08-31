@@ -1,0 +1,5 @@
+
+; do not install
+(executable
+  (name tip_cat)
+  (libraries tip-parser))

@@ -1,0 +1,14 @@
+= Tip_parser
+:source-highlighter: pygments
+
+Parser for https://tip-org.github.io/format.html, in OCaml. It depends on menhir.
+
+== Documentation
+
+- http://c-cube.github.io/tip-parser/dev[dev]
+- http://c-cube.github.io/tip-parser/0.1[0.1]
+- http://c-cube.github.io/tip-parser/0.3[0.3]
+
+== License
+
+This code is free, under the BSD license.
