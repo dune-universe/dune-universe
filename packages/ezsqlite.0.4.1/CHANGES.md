@@ -1,3 +1,7 @@
+### 0.4.1
+
+* Fix packaging issue
+
 ### 0.4
 
 * Switch to dune
