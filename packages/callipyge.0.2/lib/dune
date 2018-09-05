@@ -1,0 +1,4 @@
+(library
+ (name callipyge)
+ (public_name callipyge)
+ (libraries fmt eqaf))

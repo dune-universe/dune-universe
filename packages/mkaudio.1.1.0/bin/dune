@@ -1,0 +1,9 @@
+(executables
+ (names mkaudio)
+ (libraries cmdliner mkaudio_libs)
+)
+
+(install
+ (section bin)
+ (files (mkaudio.exe as mkaudio))
+)

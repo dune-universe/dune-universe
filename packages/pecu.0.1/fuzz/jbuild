@@ -1,0 +1,14 @@
+(executable
+ ((name iso)
+  (modules (iso))
+  (libraries (pecu fmt astring crowbar))))
+
+(executable
+ ((name test)
+  (modules (test))
+  (libraries (pecu fmt rresult astring cmdliner))))
+
+(alias
+ ((name runtest)
+  (deps (iso.exe))
+  (action (run ${<}))))

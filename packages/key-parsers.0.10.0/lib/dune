@@ -1,0 +1,20 @@
+(library
+  (name key_parsers)
+  (public_name key-parsers)
+  (libraries
+    asn1-combinators
+    bin_prot
+    hex
+    ppx_deriving_yojson.runtime
+    result
+    str
+    zarith
+  )
+  (preprocess
+    (pps
+      ppx_bin_prot
+      ppx_deriving.std
+      ppx_deriving_yojson
+    )
+  )
+)

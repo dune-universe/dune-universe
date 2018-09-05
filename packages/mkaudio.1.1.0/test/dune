@@ -1,0 +1,4 @@
+(test
+ (name test_suite)
+ (libraries mkaudio_libs oUnit)
+)

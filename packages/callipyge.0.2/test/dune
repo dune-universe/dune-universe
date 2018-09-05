@@ -1,0 +1,16 @@
+(library
+ (name oracle)
+ (modules oracle)
+ (c_names curve25519-donna))
+
+(executable
+ (name test)
+ (modules test)
+ (libraries callipyge oracle fmt alcotest))
+
+(rule (copy# ../bench/curve25519-donna.c curve25519-donna.c))
+
+(alias
+ (name runtest)
+ (deps (:test test.exe))
+ (action (run %{test} --color=always)))

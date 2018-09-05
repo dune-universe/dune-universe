@@ -1,0 +1,4 @@
+(library
+ (name mkaudio_libs)
+ (libraries mm result)
+)

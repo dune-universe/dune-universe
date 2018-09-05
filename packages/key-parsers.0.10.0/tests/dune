@@ -1,0 +1,15 @@
+(test
+  (name test_all)
+  (deps
+    (glob_files keys/*)
+  )
+  (libraries
+    key-parsers
+    oUnit
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+    )
+  )
+)
