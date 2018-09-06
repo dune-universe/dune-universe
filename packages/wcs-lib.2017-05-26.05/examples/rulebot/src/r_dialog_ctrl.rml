@@ -1,0 +1,506 @@
+(*
+ *  This file is part of the Watson Conversation Service OCaml API project.
+ *
+ * Copyright 2016-2017 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *)
+
+open Wcs_lib
+
+open Dialog_interface_t
+open Cnl_t
+open Wcs_t
+open Dialog_util
+open Cnl_instr_t
+
+(** {6. Global state} *)
+
+let state_update,
+  state_update_rule,
+  state_reset,
+  state_get,
+  get_rule =
+  let rule = ref (Cnl_samples.rule_init ()) in
+  let previous_focus = ref 0 in
+  let state_update instr =
+    rule := Cnl_engine.cnl_instr_apply instr !rule;
+    previous_focus := focus_of_instr instr;
+  in
+  let state_update_rule new_rule =
+    rule := new_rule;
+  in
+  let state_reset () =
+    rule := Cnl_samples.rule_init ();
+    previous_focus := 0;
+  in
+  let state_get () =
+    (!rule, !previous_focus)
+  in
+  let get_rule () = !rule in
+  state_update, state_update_rule, state_reset, state_get, get_rule
+
+
+(** {6. Utils} *)
+
+let pre_rule = ref (Cnl_builder.mk_rule_undefined ())
+let emit_resp =
+  fun computer_output resp ->
+    let rule = get_rule () in
+    let r =
+      if rule <> !pre_rule then begin
+        pre_rule := rule;
+        Some rule
+      end
+      else None
+    in
+    let msg = String.concat "\n" resp.msg_rsp_output.out_text in
+    emit computer_output (r, msg)
+
+let process get_value wcs_cred
+    (workspace_id: string)
+    (user_input: string process)
+    (computer_output: (cnl_rule option * string, 'output) event)
+    (ctx_init: json)
+    (txt_init: string)
+    (matcher: message_response -> 'a option)
+    (bypass_fun: string -> (bool * 'a) option)
+    (preprocessing: message_request -> message_request)
+    (postprocessing: message_response -> message_response)
+    (* : (string * 'a) process *) =
+  let rec process loop_ ctx txt =
+    begin match bypass_fun txt with
+    | Some (skip_user_input, x) ->
+        if skip_user_input then (txt, x)
+        else ("", x)
+    | None ->
+        let req_msg =
+          preprocessing
+            { msg_req_input = { in_text = txt };
+              msg_req_alternate_intents = false;
+              msg_req_context = Some ctx;
+              msg_req_entities = None;
+              msg_req_intents = None;
+              msg_req_output = None; }
+        in
+        let resp =
+          Wcs_call.message wcs_cred workspace_id req_msg
+        in
+        (* debug_message req_msg resp; *)
+        emit_resp computer_output resp;
+        let resp = postprocessing resp in
+        let ctx = resp.msg_rsp_context in
+        let ctx, skip_user_input = Ctx.take_skip_user_input ctx in
+        begin match matcher resp with
+        | Some v ->
+            if skip_user_input then (txt, v)
+            else ("", v)
+        | None ->
+            let txt =
+              if skip_user_input then txt
+              else run user_input
+            in
+            pause;
+            run loop_ ctx txt
+        end
+    end
+  in
+  run loop_ ctx_init txt_init
+
+
+(** {6. Replace} *)
+
+let process replace_expr wcs_cred
+    ws_expr_id expr_kind
+    user_input computer_output
+    txt_init focus =
+  let txt, expr =
+    let prompt =
+      begin match  Cnl_util.rule_prompt (Some focus) (get_rule()) with
+      | None
+      | Some "" -> "kind of expression would you like to build"
+      | Some prompt -> prompt
+      end
+    in
+    let txt, expr =
+      run get_value wcs_cred ws_expr_id user_input computer_output
+        (Ctx.build_cnl (K_expr expr_kind) focus prompt) txt_init
+        (fun rsp -> Ctx.get_expr rsp.msg_rsp_context "expr")
+        bypass_expr
+        (fun req ->
+            begin match match_string req.msg_req_input.in_text with
+            | Some (txt, string) ->
+                let ctx =
+                  begin match req.msg_req_context with
+                  | Some ctx -> ctx
+                  | None -> Ctx.null
+                  end
+                in
+                let ctx = Ctx.set_string ctx "has_string" string in
+                { msg_req_input = { in_text = txt };
+                  msg_req_alternate_intents = req.msg_req_alternate_intents ;
+                  msg_req_context = Some ctx;
+                  msg_req_entities = req.msg_req_entities;
+                  msg_req_intents = req.msg_req_intents;
+                  msg_req_output = req.msg_req_output; }
+            | None -> req
+            end)
+        (fun rsp ->
+          let ctx = rsp.msg_rsp_context in
+          let ctx = fst (Ctx.take_string ctx "has_string") in
+          { msg_rsp_input = rsp.msg_rsp_input;
+            msg_rsp_alternate_intents = rsp.msg_rsp_alternate_intents;
+            msg_rsp_context = ctx;
+            msg_rsp_entities = rsp.msg_rsp_entities;
+            msg_rsp_intents = rsp.msg_rsp_intents;
+            msg_rsp_output = rsp.msg_rsp_output; })
+    in
+    begin match Cnl_util.node_desc expr.expr_node with
+    | Some expr_desc -> (txt, expr_desc)
+    | None -> assert false
+    end
+  in
+  state_update (I_repl_expr (focus, expr));
+  txt
+
+let process replace_evnt wcs_cred
+    ws_when_id
+    user_input computer_output
+    txt_init focus =
+  let txt, when_fragment =
+    run get_value wcs_cred ws_when_id
+      user_input computer_output
+      Ctx.null txt_init
+      (fun rsp -> Ctx.get_evnt_desc rsp.msg_rsp_context "evnt_desc")
+      bypass_empty
+      (fun req -> req) (fun rsp -> rsp)
+  in
+  state_update (I_repl_evnt (focus,when_fragment));
+  txt
+
+let process replace_cond wcs_cred
+    ws_ids
+    user_input computer_output
+    txt_init focus =
+  let txt, cond_fragment =
+    run get_value wcs_cred
+      ws_ids.ws_cond_id
+      user_input computer_output
+      Ctx.null txt_init
+      (fun rsp -> Ctx.get_cond_desc rsp.msg_rsp_context "cond_desc")
+      bypass_empty
+      (fun req -> req) (fun rsp -> rsp)
+  in
+  state_update (I_repl_cond (focus,cond_fragment));
+  let rec process loop_ txt =
+    let rule, previous_focus = state_get () in
+    begin match Cnl_util.cond_next_focus previous_focus rule with
+    | Some (focus, K_expr expr_kind) ->
+	let txt =
+          run replace_expr wcs_cred ws_ids.ws_expr_id
+            expr_kind user_input computer_output txt focus
+        in
+        pause;
+        run loop_ txt
+    | None ->
+	begin match Cnl_util.node_desc rule.rule_node with
+        | Some rule_desc ->
+            begin match Cnl_util.node_desc rule_desc.rule_cond.cond_node with
+            | Some (C_no_condition) -> txt
+            | _ ->
+                let txt, more_cond =
+                  run get_value wcs_cred ws_ids.ws_cond_continue_id
+                    user_input computer_output
+                    Ctx.null ""
+                    (fun rsp ->
+                      Ctx.get_bool rsp.msg_rsp_context "more_cond")
+                    bypass_empty
+                    (fun req -> req) (fun rsp -> rsp)
+                in
+                if more_cond then begin
+                  state_update_rule (Cnl_util.add_cond (get_rule ()));
+                  pause;
+                  run loop_ txt
+                end else begin
+                  txt
+                end
+            end
+        | None -> assert false
+        end
+    | Some (_, (K_actn|K_evnt|K_cond|K_actns|K_actns_closed|K_rule)) ->
+        assert false
+    end
+  in
+  run loop_ txt
+
+
+let process replace_actns wcs_cred
+    user_input  computer_output
+    txt_init focus =
+  let then_fragment =
+    Cnl_builder.mk_actns_desc_undefined ()
+  in
+  state_update (I_repl_actns (focus,then_fragment));
+  txt_init
+
+let process replace_actns_closed wcs_cred
+    ws_then_id
+    user_input computer_output
+    txt_init focus =
+  let txt, closed =
+    run get_value wcs_cred ws_then_id
+      user_input computer_output
+      Ctx.null txt_init
+      (fun rsp -> Ctx.get_bool rsp.msg_rsp_context "actns_closed")
+      bypass_empty
+      (fun req -> req) (fun rsp -> rsp)
+  in
+  state_update (I_repl_actns_closed (focus,closed));
+  txt
+
+
+let process replace_actn wcs_cred
+    ws_actn_id
+    user_input computer_output
+    txt_init focus =
+  let txt, actn_fragment =
+    run get_value wcs_cred
+      ws_actn_id
+      user_input computer_output
+      Ctx.null txt_init
+      (fun rsp -> Ctx.get_actn_desc rsp.msg_rsp_context "actn_desc")
+      bypass_empty
+        (fun req ->
+            begin match match_string req.msg_req_input.in_text with
+            | Some (txt, string) ->
+                let ctx =
+                  begin match req.msg_req_context with
+                  | Some ctx -> ctx
+                  | None -> Ctx.null
+                  end
+                in
+                let ctx = Ctx.set_string ctx "has_string" string in
+                { msg_req_input = { in_text = txt };
+                  msg_req_alternate_intents = req.msg_req_alternate_intents ;
+                  msg_req_context = Some ctx;
+                  msg_req_entities = req.msg_req_entities;
+                  msg_req_intents = req.msg_req_intents;
+                  msg_req_output = req.msg_req_output; }
+            | None -> req
+            end)
+        (fun rsp ->
+          let ctx = rsp.msg_rsp_context in
+          let ctx = fst (Ctx.take_string ctx "has_string") in
+          { msg_rsp_input = rsp.msg_rsp_input;
+            msg_rsp_alternate_intents = rsp.msg_rsp_alternate_intents;
+            msg_rsp_context = ctx;
+            msg_rsp_entities = rsp.msg_rsp_entities;
+            msg_rsp_intents = rsp.msg_rsp_intents;
+            msg_rsp_output = rsp.msg_rsp_output; })
+  in
+  state_update (I_repl_actn (focus,actn_fragment));
+  txt
+
+let process replace_rule wcs_cred user_input computer_output txt_init focus =
+  state_reset ();
+  txt_init
+
+let process replace wcs_cred
+    ws_ids
+    user_input computer_output
+    txt_init focus kind =
+  begin match kind with
+  | K_expr expr_kind ->
+      run replace_expr wcs_cred ws_ids.ws_expr_id expr_kind
+        user_input computer_output
+        txt_init focus
+  | K_actn ->
+      run replace_actn wcs_cred ws_ids.ws_actn_id
+        user_input computer_output
+        txt_init focus
+  | K_evnt ->
+      run replace_evnt wcs_cred ws_ids.ws_when_id
+        user_input computer_output
+        txt_init focus
+  | K_cond ->
+      run replace_cond wcs_cred ws_ids
+        user_input computer_output
+        txt_init focus
+  | K_actns ->
+      run replace_actns wcs_cred
+        user_input computer_output
+        txt_init focus
+  | K_actns_closed ->
+      run replace_actns_closed wcs_cred ws_ids.ws_then_id
+        user_input computer_output
+        txt_init focus
+  | K_rule ->
+      run replace_rule wcs_cred
+        user_input computer_output
+        txt_init focus
+  end
+
+
+let process rule_fill wcs_cred ws_ids user_input computer_output =
+  let rec process loop_ txt =
+    let rule, previous_focus = state_get () in
+    begin match Cnl_util.rule_next_focus previous_focus rule with
+    | Some (focus, kind) ->
+        let txt =
+          run replace wcs_cred ws_ids user_input computer_output txt focus kind
+        in
+        pause;
+        run loop_ txt
+    | None -> ()
+    end
+  in
+  run loop_ ""
+
+
+let process accept wcs_cred ws_accept
+    user_input computer_output
+    txt_init focus kind =
+  let txt, is_accepted =
+    run get_value wcs_cred ws_accept
+      user_input computer_output
+      (Ctx.build_cnl kind focus "") txt_init
+      (fun rsp -> Ctx.get_bool rsp.msg_rsp_context "accept")
+      bypass_empty
+      (fun req -> req) (fun rsp -> rsp)
+  in
+  let instr =
+    begin match kind with
+    | K_expr _ -> I_conf_expr (focus, is_accepted)
+    | K_actn -> I_conf_actn (focus, is_accepted)
+    | K_evnt -> I_conf_evnt (focus, is_accepted)
+    | K_cond -> I_conf_cond (focus, is_accepted)
+    | K_actns -> I_conf_actns (focus, is_accepted)
+    | K_actns_closed -> assert false
+    | K_rule -> I_conf_rule (focus, is_accepted)
+    end
+  in
+  state_update instr;
+  txt
+
+
+let process rule_accept wcs_cred ws_ids user_input computer_output =
+  let rec process loop_ =
+    let filled = List.rev (Cnl_util.rule_get_filled (get_rule ())) in
+    begin match filled with
+    | (Some focus, kind) :: _->
+        let _ =
+          run accept wcs_cred ws_ids
+            user_input computer_output
+            "" focus kind
+        in
+        pause;
+        run loop_
+    | [] -> ()
+    | (None, _) :: _ -> assert false
+    end
+  in
+  run loop_
+
+let process dispatch wcs_cred ws_dispatch_id user_input computer_output =
+  let txt = run user_input in
+  run get_value wcs_cred ws_dispatch_id
+    user_input computer_output
+    Ctx.null txt
+    (fun rsp -> Ctx.get_dispatch rsp.msg_rsp_context "dispatch")
+    bypass_empty
+    (fun req -> req) (fun rsp -> rsp)
+
+
+let process automaton wcs_cred ws_ids real_user_input computer_output =
+  signal ask_reset default () gather (fun () () -> ()) in
+  signal ask_replace default (None, "") gather (fun x y -> x) in
+  let process user_input =
+    let txt, dsp =
+      run dispatch wcs_cred ws_ids.ws_dispatch_id
+        real_user_input computer_output
+    in
+    if dsp.dsp_abort then emit ask_reset;
+    if dsp.dsp_replace then begin
+      let rule_desc =
+        begin match (get_rule ()).rule_node with
+        | N_filled (_, desc)
+        | N_rejected (_, desc)
+        | N_accepted desc -> desc
+        | N_undefined _ -> assert false
+        end
+      in
+      begin match dsp.dsp_number, dsp.dsp_when, dsp.dsp_cond, dsp.dsp_then with
+      | Some n, _, _, _ ->
+          emit ask_replace(Some n, txt)
+      | _, true, _, _ ->
+          begin match Cnl_util.node_id (rule_desc.rule_evnt.evnt_node) with
+          | Some (Some id) -> emit ask_replace (Some id, txt)
+          | _ -> assert false (* XXX TODO? XXX *)
+          end
+      | _, _, true, _ ->
+          begin match Cnl_util.node_id (rule_desc.rule_cond.cond_node) with
+          | Some (Some id) -> emit ask_replace (Some id, txt)
+          | _ -> assert false (* XXX TODO? XXX *)
+          end
+      | _, _, _, true ->
+          begin match Cnl_util.node_id (rule_desc.rule_actns.actns_node) with
+          | Some (Some id) -> emit ask_replace (Some id, txt)
+          | _ -> assert false (* XXX TODO? XXX *)
+          end
+      | None, false, false, false ->  emit ask_replace(None, txt)
+      end
+    end;
+    pause;
+    txt
+  in
+  let rec process main =
+    do
+      run rule_fill wcs_cred ws_ids user_input computer_output;
+      run rule_accept wcs_cred ws_ids.ws_accept_id user_input computer_output;
+      get_rule ()
+    until
+    | ask_reset ->
+        state_reset ();
+        run main
+    | ask_replace(focus, txt)  ->
+        run change focus txt
+    done
+  and process change focus txt_init =
+    do
+      let rule, previous_focus = state_get () in
+      let focus =
+        begin match focus with
+        | None -> previous_focus
+        | Some f -> f
+        end
+      in
+      begin match Cnl_util.rule_find_node_kind (Some focus) rule with
+      | Some kind ->
+          let _ =
+            run replace wcs_cred ws_ids
+              user_input computer_output
+              txt_init focus kind
+          in
+          ()
+      | None -> assert false
+      end;
+      run main
+    until
+    | ask_reset ->
+        state_reset ();
+        run main
+    done
+  in
+  state_reset ();
+  run main
+

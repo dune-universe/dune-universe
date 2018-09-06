@@ -1,0 +1,14 @@
+
+(executable
+ (name      discover)
+ (modules   discover)
+ (libraries dune.configurator))
+
+(executable
+ (name      make_prec_dep)
+ (modules   make_prec_dep)
+ (libraries str))
+
+(executable
+ (name      examples)
+ (modules   examples))

@@ -1,0 +1,9 @@
+
+(executables
+ (names     basic)
+ (libraries fftw3 bigarray))
+
+(alias
+ (name runtest)
+ (deps basic.exe)
+ (action (run %{deps})))

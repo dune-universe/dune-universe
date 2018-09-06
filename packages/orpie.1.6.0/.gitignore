@@ -1,0 +1,12 @@
+*.swp
+_build
+.merlin
+orpie.install
+doc/*.aux
+doc/*.dvi
+doc/*.haux
+doc/*.htoc
+doc/*.log
+doc/*.ps
+doc/manual.tex
+doc/*.toc

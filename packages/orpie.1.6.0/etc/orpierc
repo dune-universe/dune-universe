@@ -1,0 +1,368 @@
+# orpierc
+# default key bindings and other settings for the Orpie calculator
+
+# directory for storing Orpie data
+set datadir="~/.orpie/"
+# editor used for fullscreen viewing of stack elements
+set editor="vi"
+# whether or not to hide the help panel
+set hide_help="false"
+# whether or not to conserve memory in favor of faster rendering
+set conserve_memory="false"
+
+
+# keys for "edit" operations, which affect the data that
+# is currently being entered
+bind "n"              edit_minus
+bind "<backspace>"    edit_backspace
+bind "<return>"       edit_enter
+bind "`"              edit_scientific_notation_base
+bind "<space>"        edit_scientific_notation_base
+bind "#"              edit_begin_integer
+bind "("              edit_complex
+bind "["              edit_matrix
+bind ","              edit_separator
+bind "<"              edit_angle
+bind "_"              edit_begin_units
+
+# keys for "integer edit" operations
+bind "#"              integer_cancel
+
+# keys for "function" operations, which operate on an argument
+bind "+"              function_add
+bind "-"              function_sub
+bind "*"              function_mult
+bind "/"              function_div
+bind "n"              function_neg
+bind "i"              function_inv
+bind "^"              function_pow
+bind "s"              function_sqrt
+bind "a"              function_abs
+bind "\\Ca"           function_arg
+bind "e"              function_exp
+bind "l"              function_ln
+bind "c"              function_conj
+bind "!"              function_factorial
+bind "%"              function_mod
+bind "S"              function_store
+bind ";"              function_eval
+
+# keys for "command" operations, which do not take an argument
+bind "\\"             command_drop
+bind "|"              command_clear
+bind "<pageup>"       command_swap
+bind "<pagedown>"     command_swap
+bind "<return>"       command_dup
+bind "u"              command_undo
+bind "<up>"           command_begin_browsing
+bind "'"              command_begin_abbrev
+bind "C"              command_begin_constant
+bind "@"              command_begin_variable
+bind "r"              command_toggle_angle_mode
+bind "p"              command_toggle_complex_mode
+bind "b"              command_cycle_base
+bind "v"              command_view
+bind "\\Cl"           command_refresh
+bind "P"              command_enter_pi
+bind "E"              command_edit_input
+bind "h"              command_cycle_help
+bind "Q"              command_quit
+
+# keys for "browse" operations, which are active during
+# stack browsing mode
+bind "q"              browse_end
+bind "<left>"         browse_scroll_left
+bind "<right>"        browse_scroll_right
+bind "<up>"           browse_prev_line
+bind "<down>"         browse_next_line
+bind "r"              browse_rolldown
+bind "R"              browse_rollup
+bind "v"              browse_view
+bind "<return>"       browse_echo
+bind "\\"             browse_drop
+bind "d"              browse_drop
+bind "D"              browse_dropn
+bind "k"              browse_keep
+bind "K"              browse_keepn
+bind "E"              browse_edit
+
+# keys for abbrev mode operations
+bind "'"              abbrev_exit
+bind "<return>"       abbrev_enter
+bind "<backspace>"    abbrev_backspace
+
+# keys for variable edit mode operations
+bind "@"              variable_cancel
+bind "<return>"       variable_enter
+bind "<backspace>"    variable_backspace
+bind "<tab>"          variable_complete
+
+# autobound keys
+autobind "<f5>"
+autobind "<f6>"
+autobind "<f7>"
+autobind "<f8>"
+autobind "<f9>"
+autobind "<f10>"
+autobind "<f11>"
+autobind "<f12>"
+
+# abbrev command abbreviations
+# these should be given in the desired order of matching precedence
+abbrev "inv"               function_inv
+abbrev "pow"               function_pow
+abbrev "sq"                function_sq
+abbrev "sqrt"              function_sqrt
+abbrev "abs"               function_abs
+abbrev "arg"               function_arg
+abbrev "exp"               function_exp
+abbrev "ln"                function_ln
+abbrev "10^"               function_10_x
+abbrev "log10"             function_log10
+abbrev "conj"              function_conj
+abbrev "sin"               function_sin
+abbrev "cos"               function_cos
+abbrev "tan"               function_tan
+abbrev "sinh"              function_sinh
+abbrev "cosh"              function_cosh
+abbrev "tanh"              function_tanh
+abbrev "asinh"             function_asinh
+abbrev "acosh"             function_acosh
+abbrev "atanh"             function_atanh
+abbrev "asin"              function_asin
+abbrev "acos"              function_acos
+abbrev "atan"              function_atan
+abbrev "re"                function_re
+abbrev "im"                function_im
+abbrev "gamma"             function_gamma
+abbrev "lngamma"           function_lngamma
+abbrev "erf"               function_erf
+abbrev "erfc"              function_erfc
+abbrev "fact"              function_factorial
+abbrev "trans"             function_transpose
+abbrev "mod"               function_mod
+abbrev "floor"             function_floor
+abbrev "ceil"              function_ceiling
+abbrev "toint"             function_to_int
+abbrev "toreal"            function_to_real
+abbrev "solvelin"          function_solve_linear
+abbrev "eval"              function_eval
+abbrev "store"             function_store
+abbrev "purge"             function_purge
+abbrev "gcd"               function_gcd
+abbrev "lcm"               function_lcm
+abbrev "binom"             function_binomial_coeff
+abbrev "perm"              function_permutation
+abbrev "total"             function_total
+abbrev "mean"              function_mean
+abbrev "sumsq"             function_sumsq
+abbrev "var"               function_var_unbiased
+abbrev "varbias"           function_var_biased
+abbrev "stdev"             function_stdev_unbiased
+abbrev "stdevbias"         function_stdev_biased
+abbrev "min"               function_minimum
+abbrev "max"               function_maximum
+abbrev "utpn"              function_utpn
+abbrev "ustand"            function_standardize_units
+abbrev "uconvert"          function_convert_units
+abbrev "uvalue"            function_unit_value
+abbrev "trace"             function_trace
+abbrev "drop"              command_drop
+abbrev "clear"             command_clear
+abbrev "swap"              command_swap
+abbrev "dup"               command_dup
+abbrev "undo"              command_undo
+abbrev "quit"              command_quit
+abbrev "rad"               command_rad
+abbrev "deg"               command_deg
+abbrev "rect"              command_rect
+abbrev "polar"             command_polar
+abbrev "bin"               command_bin
+abbrev "oct"               command_oct
+abbrev "dec"               command_dec
+abbrev "hex"               command_hex
+abbrev "view"              command_view
+abbrev "refresh"           command_refresh
+abbrev "pi"                command_enter_pi
+abbrev "rand"              command_rand
+abbrev "edit"              command_edit_input
+abbrev "add"               function_add
+abbrev "sub"               function_sub
+abbrev "mult"              function_mult
+abbrev "div"               function_div
+abbrev "neg"               function_neg
+abbrev "about"             command_about
+
+
+# fundamental SI units
+base_unit   "m"   ""
+base_unit   "g"   "k"
+base_unit   "s"   ""
+base_unit   "A"   ""
+base_unit   "K"   ""
+base_unit   "mol" ""
+base_unit   "cd"  ""
+
+# derived distance units
+unit  "in"        "2.54_cm"
+unit  "ft"        "12_in"
+unit  "yd"        "3_ft"
+unit  "mi"        "1760_yd"
+unit  "pc"        "3.085678e16_m"
+unit  "AU"        "1.49598e11_m"
+unit  "Ang"       "1e-10_m"
+unit  "furlong"   "660_ft"
+unit  "point"     "0.0138888888888888_in"
+unit  "pica"      "12_point"
+unit  "nmi"       "1852_m"
+unit  "lyr"       "63239.7139591_AU"
+
+# derived mass units
+unit  "gr"        "0.06479891_g"
+unit  "oz"        "437.5_gr"
+unit  "lb"        "16_oz"
+unit  "slug"      "14593.9029_g"
+unit  "lbt"       "5760_gr"
+unit  "ton"       "2000_lb"
+unit  "tonl"      "2240_lb"
+unit  "tonm"      "1e6_g"
+unit  "ct"        "0.2_g"
+
+# derived time units
+unit  "min"       "60_s"
+unit  "hr"        "60_min"
+unit  "day"       "24_hr"
+unit  "yr"        "365.242199_day"
+
+# derived temperature units
+unit  "R"         "0.555555555555556_K"
+
+# derived force units
+unit  "N"         "1_kg*m/s^2"
+unit  "lbf"       "4.44822162_N"
+unit  "dyne"      "1e-5_N"
+unit  "kip"       "1000_lbf"
+
+# derived energy units
+unit  "J"         "1_N*m"
+unit  "erg"       "1e-7_J"
+unit  "cal"       "4.1868_J"
+unit  "BTU"       "1055.05585252_J"
+unit  "eV"        "1.602176487e-19_J"
+
+# derived frequency units
+unit  "Hz"        "1_s^-1"
+
+# derived power units
+unit  "W"         "1_J/s"
+unit  "hp"        "33000_lbf*ft/min"
+
+# derived pressure units
+unit  "Pa"        "1_N/m^2"
+unit  "bar"       "1e5_Pa"
+unit  "inHg"      "3386_Pa"
+unit  "mmHg"      "133.307086614173_Pa"
+unit  "atm"       "760_mmHg"
+
+# various derived electrical units
+unit  "C"         "1_A*s"
+unit  "V"         "1_W/A"
+unit  "Ohm"       "1_V/A"
+unit  "F"         "1_C/V"
+unit  "Wb"        "1_V*s"
+unit  "H"         "1_Wb/A"
+unit  "T"         "1_Wb/m^2"
+unit  "G"         "1e-4_T"
+unit  "Mw"        "1e-8_Wb"
+
+# derived units of luminous flux and illuminance
+# (steridian is dropped because it is dimensionless)
+unit  "lm"        "1_cd"
+unit  "lx"        "1_lm/m^2"
+
+# derived units of (fluid) volume
+unit  "L"         "0.001_m^3"
+unit  "ozfl"      "29.573529562_mL"
+unit  "cup"       "8_ozfl"
+unit  "pt"        "2_cup"
+unit  "qt"        "2_pt"
+unit  "gal"       "4_qt"
+
+
+# various physical constants
+
+# Avagadro's number
+constant "NA"     "6.0221367e23_mol^-1"
+# Boltzmann's constant
+constant "k"      "1.380658e-23_J/K"
+# molar volume
+constant "Vm"     "0.0224141_m^3/mol"
+# universal gas constant
+constant "R"      "8.31451_J/mol/K"
+# standard temperature
+constant "stdT"   "273.15_K"
+# standard pressure
+constant "stdP"   "101.325_kPa"
+# Stephan-Boltzmann constant
+constant "sigma"  "1_W/m^2/K^4"
+# speed of light
+constant "c"      "299792458.0_m/s"
+# permittivity of free space
+constant "eps0"   "8.85418781761e-12_F/m"
+# permeability of free space
+constant "u0"     "1.25663706144e-6_H/m"
+# acceleration of gravity
+constant "g"      "9.80665_m/s^2"
+# gravitational constant
+constant "G"      "6.67259e-11_m^3/s^2/kg"
+# Planck's constant
+constant "h"      "6.6260755e-34_J*s"
+# Dirac's constant
+constant "hbar"   "1.05457266e-34_J*s"
+# electronic charge
+constant "e"      "1.60217733e-19_C"
+# electronic mass
+constant "me"     "9.1093897e-31_kg"
+# proton mass
+constant "mp"     "1.6726231e-17_kg"
+# fine structure constant
+constant "alpha"  "0.00729735308"
+# magnetic flux quantum
+constant "phi"    "2.06783461e-15_Wb"
+# Faraday's constant
+constant "F"      "96485.309_C/mol"
+# "infinity" Rydberg constant
+constant "Rinf"   "10973731.534_m^-1"
+# Bohr radius
+constant "a0"     "0.0529177249_nm"
+# Bohr magneton
+constant "uB"     "9.2740154e-24_J/T"
+# nuclear magneton
+constant "uN"     "5.0507866e-27_J/T"
+# 1eV photon wavelength
+constant "lam0"   "1239.8425_nm"
+# 1eV photon frequency
+constant "f0"     "2.4179883e14_Hz"
+# Compton wavelength
+constant "lamc"   "0.00242631058_nm"
+# Wien's constant
+constant "c3"     "0.002897756_m*K"
+
+
+# base 2 logarithm
+macro "L" "l 2 l /"
+# or alternatively, using abbrev command syntax:
+#macro "L" "' l n <return> 2 <return> ' l n <return> /"
+
+# binary entropy function (makes use of the "L" macro)
+macro "H" "<return> 1 - n <return> L * <pageup> <return> L * + n"
+
+# registers
+macro "<f1>" "@ r 0 1 <return>"
+macro "<f2>" "@ r 0 2 <return>"
+macro "<f3>" "@ r 0 3 <return>"
+macro "<f4>" "@ r 0 4 <return>"
+
+
+
+# arch-tag: DO_NOT_CHANGE_bb2181f2-1288-4d0f-849b-36482daf59c5  

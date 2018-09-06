@@ -1,0 +1,17 @@
+
+(executables
+ (names     chirp delta henon mem xcorr)
+ (libraries fftw3 lacaml (select archimedes from
+                          (archimedes -> archimedes)
+                          (!archimedes -> void))))
+
+(alias
+ (name examples)
+ (deps mem.exe delta.exe henon.exe xcorr.exe chirp.exe))
+
+;; Also requires cppo but do not declare it in opam because it is for
+;; developers only.
+(rule
+ (targets chirp.ml henon.ml mem.ml)
+ (deps    (:p ../config/examples.exe) chirp.mlp henon.mlp mem.mlp)
+ (action  (run %{p})))

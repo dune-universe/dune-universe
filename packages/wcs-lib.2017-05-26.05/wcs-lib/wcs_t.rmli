@@ -1,0 +1,280 @@
+(* Auto-generated from "wcs.atd" *)
+              (* [@@@ocaml.warning "-27-32-35-39"] *)
+
+(**
+  Watson Conversation Service data structures.
+  
+  Data srcutures used in Watson Conversation Service.
+  
+  Based on the documentation available at:
+  https://www.ibm.com/watson/developercloud/conversation/api/v1/
+  
+  Version 2017-05-26.
+*)
+
+type workspace_status = 
+    Ws_non_existent | Ws_training | Ws_failed | Ws_available | Ws_unavailable
+
+
+(** Type of arbitraty JSON values. *)
+type json = Json_t.json
+
+(** A workspace metadata. *)
+type workspace_response = {
+  ws_rsp_name (*atd name *): string option;
+  ws_rsp_description (*atd description *): string option;
+  ws_rsp_language (*atd language *): string option;
+  ws_rsp_metadata (*atd metadata *): json option;
+  ws_rsp_created (*atd created *): string option;
+  ws_rsp_updated (*atd updated *): string option;
+  ws_rsp_workspace_id (*atd workspace_id *): string
+}
+
+(** Type of Spel expressions. *)
+type spel = Spel_t.expression
+
+(** Goto selector. *)
+type selector =  Goto_user_input | Goto_client | Goto_condition | Goto_body 
+
+(** Type of arbitraty JSON values with embedded Spel expressions. *)
+type json_spel = Json_spel_t.json_spel
+
+(** Type of outputs of a dialog node. *)
+type output_def = json_spel
+
+(** Type of goto definitions. *)
+type next_step = {
+  next_behavior (*atd behavior *): string;
+  next_selector (*atd selector *): selector;
+  next_dialog_node (*atd dialog_node *): string
+}
+
+(** Type of intent examples. *)
+type intent_example = {
+  ex_text (*atd text *): string;
+  ex_created (*atd created *): string option;
+  ex_updated (*atd updated *): string option
+}
+
+(** Type of intent definitions. *)
+type intent_def = {
+  i_def_intent (*atd intent *): string;
+  i_def_description (*atd description *): string option;
+  i_def_examples (*atd examples *): intent_example list;
+  i_def_created (*atd created *): string option;
+  i_def_updated (*atd updated *): string option
+}
+
+(** Type of entity values. *)
+type entity_value = {
+  e_val_value (*atd value *): string;
+  e_val_metadata (*atd metadata *): json option;
+  e_val_synonyms (*atd synonyms *): string list;
+  e_val_created (*atd created *): string option;
+  e_val_updated (*atd updated *): string option
+}
+
+(** Type of entity definitions. *)
+type entity_def = {
+  e_def_entity (*atd entity *): string;
+  e_def_description (*atd description *): string option;
+  e_def_metadata (*atd metadata *): json option;
+  e_def_source (*atd source *): string option;
+  e_def_open_list (*atd open_list *): bool option;
+  e_def_values (*atd values *): entity_value list;
+  e_def_created (*atd created *): string option;
+  e_def_updated (*atd updated *): string option;
+  e_def_fuzzy_match (*atd fuzzy_match *): bool option
+}
+
+(** Dialog node type. *)
+type dialog_node_type = 
+    Node_standard | Node_response_condition | Node_frame | Node_event_handler
+  | Node_slot
+
+
+type dialog_node_event_name = 
+    Evt_focus | Evt_input | Evt_nomatch | Evt_filled | Evt_generic
+
+
+(** Type of dialog nodes. *)
+type dialog_node = {
+  node_dialog_node (*atd dialog_node *): string;
+  node_type_ (*atd type_ *): dialog_node_type option;
+  node_description (*atd description *): string option;
+  node_conditions (*atd conditions *): spel option;
+  node_parent (*atd parent *): string option;
+  node_previous_sibling (*atd previous_sibling *): string option;
+  node_output (*atd output *): output_def option;
+  node_context (*atd context *): json_spel option;
+  node_metadata (*atd metadata *): json option;
+  node_next_step (*atd next_step *): next_step option;
+  node_child_input_kind (*atd child_input_kind *): string option;
+  node_created (*atd created *): string option;
+  node_updated (*atd updated *): string option;
+  node_event_name (*atd event_name *): dialog_node_event_name option;
+  node_variable (*atd variable *): string option
+}
+
+(** Type of workspaces *)
+type workspace = {
+  ws_name (*atd name *): string option;
+  ws_description (*atd description *): string option;
+  ws_language (*atd language *): string option;
+  ws_metadata (*atd metadata *): json option;
+  ws_counterexamples (*atd counterexamples *): intent_example list;
+  ws_dialog_nodes (*atd dialog_nodes *): dialog_node list;
+  ws_entities (*atd entities *): entity_def list;
+  ws_intents (*atd intents *): intent_def list;
+  ws_created (*atd created *): string option;
+  ws_updated (*atd updated *): string option;
+  ws_modified (*atd modified *): string option;
+  ws_created_by (*atd created_by *): string option;
+  ws_modified_by (*atd modified_by *): string option;
+  ws_workspace_id (*atd workspace_id *): string option;
+  ws_status (*atd status *): workspace_status option
+}
+
+(** Supported versions *)
+type version =  V_2017_05_26 
+
+(** Sorting criteria for list of workspaces. *)
+type sort_workspace_criteria = 
+    Sort_name_incr | Sort_modified_incr | Sort_workspace_id_incr
+  | Sort_name_decr | Sort_modified_decr | Sort_workspace_id_decr
+
+
+(** Sorting criteria for logs. *)
+type sort_logs_criteria = 
+    Sort_request_timestamp_incr | Sort_request_timestamp_decr
+
+
+(** Pagination information *)
+type pagination_response = {
+  pag_refresh_url (*atd refresh_url *): string option;
+  pag_next_url (*atd next_url *): string option;
+  pag_total (*atd total *): int option;
+  pag_matched (*atd matched *): int option
+}
+
+type log_message = {
+  log_msg__level (*atd level *): string;
+  log_msg__msg (*atd msg *): string
+}
+
+type output = {
+  out_log_messages (*atd log_messages *): log_message list;
+  out_text (*atd text *): string list;
+  out_nodes_visited (*atd nodes_visited *): string list;
+  out_error (*atd error *): string option
+}
+
+type intent = {
+  i_intent (*atd intent *): string;
+  i_confidence (*atd confidence *): float
+}
+
+type input = { in_text (*atd text *): string }
+
+type entity = {
+  e_entity (*atd entity *): string;
+  e_location (*atd location *): int list;
+  e_value (*atd value *): string;
+  e_confidence (*atd confidence *): float
+}
+
+type message_response = {
+  msg_rsp_input (*atd input *): input;
+  msg_rsp_alternate_intents (*atd alternate_intents *): bool;
+  msg_rsp_context (*atd context *): json;
+  msg_rsp_entities (*atd entities *): entity list;
+  msg_rsp_intents (*atd intents *): intent list;
+  msg_rsp_output (*atd output *): output
+}
+
+type message_request = {
+  msg_req_input (*atd input *): input;
+  msg_req_alternate_intents (*atd alternate_intents *): bool;
+  msg_req_context (*atd context *): json option;
+  msg_req_entities (*atd entities *): entity list option;
+  msg_req_intents (*atd intents *): intent list option;
+  msg_req_output (*atd output *): output option
+}
+
+type log_entry = {
+  log_request (*atd request *): message_request;
+  log_response (*atd response *): message_response;
+  log_log_id (*atd log_id *): string;
+  log_request_timestamp (*atd request_timestamp *): string;
+  log_response_timestamp (*atd response_timestamp *): string
+}
+
+type logs_response = {
+  logs_rsp_logs (*atd logs *): log_entry list;
+  logs_rsp_pagination (*atd pagination *): pagination_response
+}
+
+(** Request for the list the events from the log of a workspace. *)
+type logs_request = {
+  logs_filter (*atd filter *): string option;
+  logs_sort (*atd sort *): sort_logs_criteria option;
+  logs_page_limit (*atd page_limit *): int option;
+  logs_cursor (*atd cursor *): string option
+}
+
+(** Response to the list of workspaces request. *)
+type list_workspaces_response = {
+  list_ws_rsp_workspaces (*atd workspaces *): workspace_response list;
+  list_ws_rsp_pagination (*atd pagination *): pagination_response
+}
+
+(** Request the list of workspaces. *)
+type list_workspaces_request = {
+  list_ws_req_page_limit (*atd page_limit *): int option;
+  list_ws_req_include_count (*atd include_count *): bool option;
+  list_ws_req_sort (*atd sort *): sort_workspace_criteria option;
+  list_ws_req_cursor (*atd cursor *): string option
+}
+
+type get_workspace_request = {
+  get_ws_req_workspace_id (*atd workspace_id *): string;
+  get_ws_req_export (*atd export *): bool option
+}
+
+(** Watson Conversation Service credentials. *)
+type credential = {
+  cred_url (*atd url *): string;
+  cred_password (*atd password *): string;
+  cred_username (*atd username *): string
+}
+
+type create_response = {
+  crea_rsp_name (*atd name *): string option;
+  crea_rsp_description (*atd description *): string option;
+  crea_rsp_language (*atd language *): string option;
+  crea_rsp_metadata (*atd metadata *): json option;
+  crea_rsp_created (*atd created *): string option;
+  crea_rsp_updated (*atd updated *): string option;
+  crea_rsp_workspace_id (*atd workspace_id *): string option
+}
+
+type context = {
+  ctx_conversation_id (*atd conversation_id *): string;
+  ctx_system (*atd system *): json
+}
+
+type action_def = {
+  act_def_name (*atd name *): string;
+  act_def_agent (*atd agent *): string;
+  act_def_type_ (*atd type_ *): string;
+  act_def_parameters (*atd parameters *): json_spel;
+  act_def_result_variable (*atd result_variable *): string option
+}
+
+type action = {
+  act_name (*atd name *): string;
+  act_agent (*atd agent *): string;
+  act_type_ (*atd type_ *): string;
+  act_parameters (*atd parameters *): json;
+  act_result_variable (*atd result_variable *): string option
+}
