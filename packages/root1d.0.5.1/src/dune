@@ -1,0 +1,5 @@
+
+(library
+ (name        root1D)
+ (public_name root1d)
+ (synopsis "Find roots of 1D functions."))

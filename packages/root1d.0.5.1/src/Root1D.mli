@@ -22,7 +22,7 @@
 
 (** 1D Root finding algorithms.
 
-    @version 0.5 *)
+    @version 0.5.1 *)
 
 val brent : ?tol:float -> (float -> float) -> float -> float -> float
 (** [brent f a b] returns an approximation [x] of a root of [f] in

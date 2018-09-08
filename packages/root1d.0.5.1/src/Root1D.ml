@@ -76,7 +76,7 @@ let bisection ?eps f a b =
     else (* fb < 0. *)
       do_bisection improve f b a fb fa
 
-let newton_good x xpre fx = abs_float fx < eps
+let newton_good _x _xpre fx = abs_float fx < eps
 
 let newton ?(good_enough=newton_good) f_f' x0 =
   let x = ref x0
@@ -141,7 +141,7 @@ let illinois ?eps f a b =
     else (* fb < 0. *) do_illinois improve f b a fb fa
 
 
-let muller f a b = a
+(* let muller f a b = a *)
 
 
 
@@ -287,7 +287,7 @@ let rec brent_loop half_tol f a fa b fb c fc d e =
   )
 ;;
 
-let brent1 ?(tol=eps) f a b =
+let _brent1 ?(tol=eps) f a b =
   if tol < 0. then invalid_arg "Root1D.brent: tol < 0.";
   let fa = f a and fb = f b in
   if fa = 0. then a
@@ -356,7 +356,7 @@ let brent2 ?(tol=eps) f a b =
   if fa = 0. then a
   else if fb = 0. then b
   else if (fa < 0. && fb < 0.) || (fa > 0. && fb > 0.) then
-    invalid_arg "Root1D.brent: f(a) and f(b) must have opposite signs"
+    invalid_arg "Root1D.brent2: f(a) and f(b) must have opposite signs"
   else
     let d = b -. a in
     if (ea <= eb && ldexp (abs_float fa) (ea - eb) < abs_float fb)

@@ -1,0 +1,12 @@
+(executables
+ (names     simple difficult speed precision)
+ (libraries root1d benchmark))
+
+(alias
+ (name    runtest)
+ (deps    simple.exe difficult.exe speed.exe precision.exe)
+ (action  (progn
+           (run %{dep:simple.exe})
+           (run %{dep:difficult.exe})
+           (run %{dep:speed.exe})
+           (run %{dep:precision.exe}))))
