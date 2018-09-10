@@ -1,0 +1,26 @@
+(alias
+ (name runtest)
+ (deps (glob_files *.txt))
+ (action
+  (run ./test_vectors.exe)
+ )
+ )
+
+(executable
+ (name test_vectors)
+ (libraries
+  hex
+  noise
+  oUnit
+  ppx_deriving_yojson.runtime
+  test_helpers
+  yojson
+ )
+ (preprocess
+  (pps
+   ppx_deriving.std
+   ppx_deriving_yojson
+   ppx_let
+  ))
+ (flags :standard -w -39)
+)

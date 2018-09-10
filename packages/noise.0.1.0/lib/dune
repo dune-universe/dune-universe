@@ -1,0 +1,16 @@
+(library
+ (public_name noise)
+ (libraries
+  callipyge
+  chacha20
+  cstruct
+  digestif.ocaml
+  eqaf
+  hex
+  nocrypto
+  tweetnacl
+ )
+ (preprocess
+  (pps ppx_deriving.std ppx_let)
+ )
+)

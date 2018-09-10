@@ -1,0 +1,11 @@
+(library
+ (name tweetnacl)
+ (public_name noise._tweetnacl)
+ (libraries
+  cstruct
+ )
+ (c_names
+  tweetnacl_stubs
+  tweetnacl
+ )
+ )

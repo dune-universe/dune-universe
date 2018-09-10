@@ -1,0 +1,12 @@
+(test
+ (name test_all)
+ (libraries
+  hex
+  noise
+  oUnit
+  test_helpers
+ )
+ (preprocess
+  (pps ppx_deriving.std)
+ )
+ )

@@ -1,0 +1,10 @@
+(library
+ (name chacha20)
+ (public_name noise._chacha20)
+ (libraries
+  cstruct
+ )
+ (preprocess
+  (pps ppx_deriving.std)
+ )
+)
