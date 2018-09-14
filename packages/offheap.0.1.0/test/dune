@@ -1,0 +1,9 @@
+(executables
+  (libraries offheap)
+  (modules simple)
+  (names simple))
+
+(alias
+  (name   runtest)
+  (deps   simple.exe)
+  (action (run ./simple.exe)))
