@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(menhir ((modules (parser))))
+
+(library
+ ((name       machine)
+  (libraries  (menhirLib sedlex unix))
+  (preprocess (pps (sedlex.ppx)))
+  ))
+

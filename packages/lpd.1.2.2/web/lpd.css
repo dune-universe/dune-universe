@@ -1,0 +1,90 @@
+A:active {
+  color: #ff6600;
+}
+
+A:visited {
+  color: #999999;
+}
+
+
+/***
+   * Menu
+   */
+
+a.menu {
+  font-family: helvetica,arial,sans-serif;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+td.menu {
+  vertical-align: top;
+  width: 18%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Banner ---------------------------------------- */
+
+#banner {
+  text-align: center;
+}
+
+#banner img {
+  padding-top: 1ex;
+  clear: both;
+}
+
+
+/* Menu ---------------------------------------- */
+
+#menu {
+  Float: left;
+  width: 15%;
+  /* border: 1px dashed black; */
+  font-family: sans-serif;
+  font-weight: bolde;
+  font-size: x-large;
+  color: #981419;
+  margin-top: 2ex;
+  /* padding: 2px; */
+}
+
+#menu ul, #menu li {
+  display : inline;
+  list-style-type : none;
+  margin : 0;
+  padding : 0;
+}
+
+#menu li {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  display: block;
+}
+
+#menu li:hover {
+  background-color: rgb(225,225,225);
+}
+
+#menu a {
+  text-decoration: none;
+  width: 120px;
+}
+
+#main {
+  Float: right;
+  width: 82%;
+}
+
+
+/* General ---------------------------------------- */
+
+body {
+  color: black;
+  background-color: rgb(191, 191, 191);
+}
+
+A:link {
+  color: #ff6600;
+}

@@ -1,0 +1,13 @@
+(executable
+ (name      lpd_to_win)
+ (modules   lpd_to_win)
+ (libraries threads lpd))
+
+(executable
+ (name      page_counter)
+ (modules   page_counter)
+ (libraries threads lpd))
+
+(alias
+ (name examples)
+ (deps lpd_to_win.exe page_counter.exe))

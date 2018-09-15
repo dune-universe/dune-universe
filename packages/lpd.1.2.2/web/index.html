@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Ocaml Lpd module</title>
+  <meta content="Christophe Troestler" name="author">
+  <meta content="Module build LPD servers" name="description">
+  <link title="Lpd style" rel="stylesheet" href="lpd.css" type="text/css">
+</head>
+<body>
+
+<div id="banner">
+  <img alt="OCaml Lpd" src="OCamlLpd.jpg"
+       style="width: 642px; height: 162px;" />
+</div>
+
+<div id="menu">
+  <ul>
+    <li><a href="https://forge.ocamlcore.org/projects/lpd/"
+	   class="menu">Summary</a></li>
+    <li><a href="doc/index.html" class="menu">Interfaces</a></li>
+    <li><a href="https://forge.ocamlcore.org/frs/?group_id=102"
+	   class="menu">Download</a></li>
+    <li><a href="LICENSE.txt" class="menu">License</a></li>
+  </ul>
+</div>
+
+<div id="main">
+  <p>OCaml Lpd is a library to construct Line Printer Deamons.&nbsp;
+    It allows to define your own actions for LPD events. As an
+    example, a spooler is provided that prints jobs on win32 machines
+    (through
+      <a href="http://www.cs.wisc.edu/%7Eghost/gsview/gsprint.htm"
+	 ><span style="font-family: courier new,courier,monospace;"
+		>GSPRINT</span></a>)&emdash;very
+      useful for win32 only printers.<p />
+
+  <p>For a complete description of the functions, see the interface
+    <a href="doc/Lpd.html">Lpd</a><a href="doc/Lpd.html"></a>.&nbsp; A small
+    <a href="doc/Socket.html">Socket</a> module is included that defines
+    buffered fonctions on sockets that work even on platforms where
+    <tt>in_channel_of_descr</tt> does not work.&nbsp; Some examples are also
+    included in the
+    <a href="https://sourceforge.net/project/showfiles.php?group_id=132212"
+       >tarball</a>.
+    If you have questions, suggestions, bugs,... you can 
+    <a href="mailto:Christophe.Troestler+lpd@NOSPAMumons.ac.be?SUBJECT=OCaml%20Lpd"
+       >contact me by email</a>.</p>
+  <p>
+    The code is released under the GNU Lesser General Public License
+    (LGPL) with the same special exception as for the OCaml standard
+    library (see the file <a href="LICENSE">LICENSE</a> for more
+    details).</p>
+</div>
+
+</body>
+</html>

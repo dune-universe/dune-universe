@@ -1,0 +1,14 @@
+
+(library
+ (name        lpd)
+ (public_name lpd)
+ (modules     lpd)
+ (libraries   socket)
+ (synopsis "Line Printer Daemon (LPD) server library"))
+
+(library
+ (name        socket)
+ (public_name lpd.socket)
+ (modules     socket)
+ (libraries   unix)
+ (synopsis "Buffered sockets (working even on win98)"))

@@ -1,0 +1,13 @@
+# hosts.lpd (authorized hosts or IP addresses to print)              -*-conf-*-
+abel.swapping.umh.ac.be
+poincare.swapping.umh.ac.be poincare
+math.swapping.umh.ac.be
+math4.swapping.umh.ac.be
+euler.swapping.umh.ac.be
+mathwifi.swapping.umh.ac.be
+# Informatique
+sgl17.swapping.umh.ac.be  sgl15.swapping.umh.ac.be
+si-vero.swapping.umh.ac.be
+# Olivier
+turing turing2
+pascal.umh.ac.be
