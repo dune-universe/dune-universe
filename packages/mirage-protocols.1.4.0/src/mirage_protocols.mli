@@ -1,6 +1,6 @@
 (** MirageOS signatures for network protocols
 
-        {e v1.3.0 } *)
+        {e v1.4.0 } *)
 
 (** {1 Ethernet stack}
 
@@ -22,9 +22,6 @@ module type ETHIF = sig
 
   type buffer
   (** The type for memory buffers. *)
-
-  type netif
-  (** The type for ethernet network interfaces. *)
 
   type macaddr
   (** The type for unique MAC identifiers. *)
@@ -80,14 +77,8 @@ module type IP = sig
   type buffer
     (** The type for memory buffers. *)
 
-  type ethif
-  (** The type for ethernet devices. *)
-
   type ipaddr
   (** The type for IP addresses. *)
-
-  type prefix
-  (** The type for IP prefixes. *)
 
   include Mirage_device.S
 
@@ -277,9 +268,6 @@ module type UDP = sig
   type buffer
   (** The type for memory buffers. *)
 
-  type ip
-  (** The type for IPv4/6 stacks for this stack to connect to. *)
-
   type ipaddr
   (** The type for an IP address representations. *)
 
@@ -349,9 +337,6 @@ module type TCP = sig
 
   type buffer
   (** The type for memory buffers. *)
-
-  type ip
-  (** The type for IPv4 stacks for this stack to connect to. *)
 
   type ipaddr
   (** The type for IP address representations. *)

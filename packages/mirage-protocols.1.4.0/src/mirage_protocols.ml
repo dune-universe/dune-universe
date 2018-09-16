@@ -36,7 +36,6 @@ module type ETHIF = sig
   type error = private [> Ethif.error]
   val pp_error: error Fmt.t
   type buffer
-  type netif
   type macaddr
   include Mirage_device.S
   val write: t -> buffer -> (unit, error) result io
@@ -53,9 +52,7 @@ module type IP = sig
   type error = private [> Ip.error]
   val pp_error: error Fmt.t
   type buffer
-  type ethif
   type ipaddr
-  type prefix
   include Mirage_device.S
   type callback = src:ipaddr -> dst:ipaddr -> buffer -> unit io
   val input:
@@ -113,7 +110,6 @@ module type UDP = sig
   type error
   val pp_error: error Fmt.t
   type buffer
-  type ip
   type ipaddr
   type ipinput
   include Mirage_device.S
@@ -135,7 +131,6 @@ module type TCP = sig
   type error = private [> Tcp.error]
   type write_error = private [> Tcp.write_error]
   type buffer
-  type ip
   type ipaddr
   type ipinput
   type flow

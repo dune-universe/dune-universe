@@ -1,12 +1,4 @@
 module type V4 = sig
-  type netif
-  (** The type for network interface that is used to transmit and
-      receive traffic associated with this stack. *)
-
-  type 'netif config
-  (** The type for the collection of user configuration specified to
-      construct a stack. *)
-
   type ipv4addr
   (** The type for IPv4 addresses. *)
 
@@ -29,14 +21,12 @@ module type V4 = sig
      and type ipaddr = ipv4addr
      and type buffer = buffer
      and type t = udpv4
-     and type ip = ipv4
 
   module TCPV4: Mirage_protocols.TCP
     with type +'a io = 'a io
      and type ipaddr = ipv4addr
      and type buffer = buffer
      and type t = tcpv4
-     and type ip = ipv4
 
   module IPV4: Mirage_protocols.IPV4
     with type +'a io = 'a io

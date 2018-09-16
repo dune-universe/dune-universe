@@ -16,12 +16,10 @@ module type IP = Mirage_protocols.IP
 
 module type IPV4 = IP
   with type ipaddr = Ipaddr.V4.t
-   and type prefix = Ipaddr.V4.Prefix.t
 
 (** IPv6 stack *)
 module type IPV6 = IP
   with type ipaddr = Ipaddr.V6.t
-   and type prefix = Ipaddr.V6.Prefix.t
 
 (** ICMP module *)
 module type ICMP = Mirage_protocols.ICMP
