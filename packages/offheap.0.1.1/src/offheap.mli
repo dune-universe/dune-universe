@@ -2,8 +2,18 @@
 
 type 'a t
 
-val copy : 'a -> 'a t
-  (** [create obj] creates a deep copy of an object outside the OCaml heap.
+type alloc
+
+
+
+val malloc : alloc
+  (** [malloc] is the default memory manager.
+   *
+   * This allocator uses [malloc] to [allocate] and free to deallocate memory.
+   *)
+
+val copy : ?alloc:alloc -> 'a -> 'a t
+  (** [copy obj] creates a deep copy of an object outside the OCaml heap.
     *
     * The object cannot point to any abstract or custom objects and the copy
     * cannot be mutated to point to in-heap objects later on.
@@ -17,8 +27,8 @@ val get : 'a t -> 'a
     * @raise [Invalid_argument] if the object was already deleted.
     *)
 
-val free : 'a t -> unit
-  (** [free obj] deletes the off-heap object [obj].
+val delete : 'a t -> unit
+  (** [delete obj] deletes the off-heap object [obj].
     *
     * The object should not be accessed afterwards through other references.
     *
