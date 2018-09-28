@@ -9,7 +9,7 @@ if [ ! -d $OPAMROOT ]; then
     opam init --root $OPAMROOT
 fi
 
-eval `opam config env --root $OPAMROOT`
+eval `opam config env --set-root --root $OPAMROOT`
 
 opam update
 
@@ -18,22 +18,19 @@ trap "rm -f $PKG_LIST $PKG_LIST" EXIT
 
 # Don't use "--depends-on jbuilder" as this doesn't list packages that
 # are not available on the current OS
-opam info -f package,version,dev-repo,depends $(opam list -As) | \
-    grep -B3 '^ *depends:.*\b\(jbuilder\|dune\)\b' | grep -v '^--$' | {
+opam info --normalise -f package,dev-repo:,depends: $(opam list -As) | \
+    grep -B3 '^depends:.*\b\(jbuilder\|dune\)\b' | grep -v '^depends:' | grep -v '^--$' | {
     while read key pkg; do
-        [[ $key == "package:" ]]
-        read key ver
-        [[ $key == "version:" ]]
+        [[ $key == "package" ]]
         read key dev
         [[ $key == "dev-repo:" ]]
-        read key deps
-        [[ $key == "depends:" ]]
         case $pkg in
 	    # atdgen is replaced by atd
-	    atdgen)
+	    atdgen.*)
 		;;
 	    *)
-                echo "$pkg.$ver ${#pkg} $dev"
+                name=${pkg/.*}
+                echo "$pkg ${#name} $dev"
                 ;;
         esac
     done
