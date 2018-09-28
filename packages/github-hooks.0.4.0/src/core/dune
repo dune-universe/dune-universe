@@ -1,0 +1,4 @@
+(library
+  (name        github_hooks)
+  (public_name github-hooks)
+  (libraries   github cohttp logs fmt lwt lwt.unix cstruct nocrypto hex))

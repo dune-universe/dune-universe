@@ -1,6 +1,0 @@
-(jbuild_version 1)
-
-(library
-  ((name        github_hooks)
-   (public_name github-hooks)
-   (libraries   (github cohttp logs fmt lwt cstruct nocrypto hex))))

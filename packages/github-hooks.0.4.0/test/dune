@@ -1,0 +1,3 @@
+(executable
+  (name      test_hook_server)
+  (libraries github-hooks-unix github-unix))

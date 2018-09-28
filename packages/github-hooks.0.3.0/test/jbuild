@@ -1,5 +1,0 @@
-(jbuild_version 1)
-
-(executable
-  ((name      test_hook_server)
-   (libraries (github-hooks-unix github-unix))))

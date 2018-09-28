@@ -1,6 +1,0 @@
-(jbuild_version 1)
-
-(library
-  ((name        github_hooks_unix)
-   (public_name github-hooks-unix)
-   (libraries   (github-hooks github-unix conduit-lwt-unix lwt.unix))))

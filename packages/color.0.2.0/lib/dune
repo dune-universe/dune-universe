@@ -1,0 +1,4 @@
+(library
+  (name color)
+  (public_name color)
+  (libraries gg))

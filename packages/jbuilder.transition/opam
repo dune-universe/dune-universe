@@ -1,0 +1,13 @@
+opam-version: "2.0"
+synopsis:
+  "This is a transition package, jbuilder is now named dune. Use the dune"
+description: "package instead."
+maintainer: "opensource@janestreet.com"
+authors: "Jane Street Group, LLC <opensource@janestreet.com>"
+license: "MIT"
+homepage: "https://github.com/ocaml/dune"
+bug-reports: "https://github.com/ocaml/dune/issues"
+depends: ["ocaml" "dune"]
+post-messages:
+  "Jbuilder has been renamed and the jbuilder package is now a transition package. Use the dune package instead."
+dev-repo: "git+https://github.com/ocaml/dune.git"
