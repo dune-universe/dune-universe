@@ -1,0 +1,12 @@
+module FloatSortedSet: sig
+  type t = General.FloatSortedSet.t
+  val empty: t
+  val of_list: float list -> t
+  val to_list: t -> float list
+  val is_empty: t -> bool
+  val size: t -> int
+  val add: t -> v:float -> bool * t
+  val replace: t -> v:float -> t
+  val remove: t -> v:float -> bool * t
+  val contains: t -> v:float -> bool
+end

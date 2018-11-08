@@ -1,0 +1,3 @@
+(install
+ (section share_root)
+ (files (sturgeon.el as emacs/site-lisp/sturgeon.el)))

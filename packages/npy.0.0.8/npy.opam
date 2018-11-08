@@ -1,0 +1,25 @@
+opam-version: "2.0"
+name:         "npy"
+bug-reports:  "https://github.com/LaurentMazare/npy-ocaml/issues"
+homepage:     "https://github.com/LaurentMazare/npy-ocaml"
+dev-repo:     "git+https://github.com/LaurentMazare/npy-ocaml.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [["dune" "build" name "-j" jobs]]
+install: []
+remove:  []
+
+depends: [
+  "camlzip"
+  "dune" {build}
+  "ocaml" {>= "4.06"}
+]
+
+depopts: [
+]
+
+conflicts: [
+]

@@ -1,0 +1,12 @@
+module Traits: sig
+  module Representable
+  module Displayable
+  module Parsable
+  module Equatable
+  module Comparable
+  module Ringoid
+  module PredSucc
+  module FilterMapable
+  module Foldable
+  module Scanable
+end

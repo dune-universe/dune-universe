@@ -1,0 +1,5 @@
+(library
+ (name mirage_bootvar_unix)
+ (public_name mirage-bootvar-unix)
+ (libraries lwt parse-argv)
+ (wrapped false))

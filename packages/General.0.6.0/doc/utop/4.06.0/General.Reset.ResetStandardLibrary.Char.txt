@@ -1,0 +1,2 @@
+module Char: sig
+end

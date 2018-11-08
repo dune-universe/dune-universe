@@ -1,0 +1,9 @@
+module O: sig
+  val (=): bytes -> bytes -> bool
+  val (<>): bytes -> bytes -> bool
+  val (<): bytes -> bytes -> bool
+  val (<=): bytes -> bytes -> bool
+  val (>): bytes -> bytes -> bool
+  val (>=): bytes -> bytes -> bool
+  val (^): bytes -> bytes -> bytes
+end

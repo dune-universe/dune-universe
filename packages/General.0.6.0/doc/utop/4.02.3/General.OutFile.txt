@@ -1,0 +1,9 @@
+module OutFile: sig
+  type t
+  val with_file: bytes -> f:(t -> 'a) -> 'a
+  val with_channel: bytes -> f:(out_channel -> 'a) -> 'a
+  val channel: t -> out_channel
+  val seek: t -> pos:int64 -> unit
+  val pos: t -> int64
+  val size: t -> int64
+end

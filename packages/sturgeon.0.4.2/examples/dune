@@ -1,0 +1,19 @@
+(executable
+ (libraries sturgeon recipes_command str)
+ (name inuit_media)
+ (modules inuit_media))
+
+(executable
+ (libraries sturgeon recipes_server)
+ (name inuit_sync_buffer)
+ (modules inuit_sync_buffer))
+
+(executables
+ (libraries sturgeon recipes_command)
+ (names inuit_nav inuit_text  inuit_tree)
+ (modules (:standard \ inuit_media inuit_sync_buffer)))
+
+(alias
+ (name examples)
+ (deps inuit_media.bc inuit_nav.bc inuit_sync_buffer.bc inuit_text.bc
+       inuit_tree.bc))

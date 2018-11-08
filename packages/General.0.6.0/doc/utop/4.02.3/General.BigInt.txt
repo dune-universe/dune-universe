@@ -1,0 +1,37 @@
+module BigInt: sig
+  type t = Big_int.big_int
+  module O
+  val to_string: t -> bytes
+  val equal: t -> t -> bool
+  val different: t -> t -> bool
+  val try_of_string: bytes -> t option
+  val of_string: bytes -> t
+  val repr: t -> bytes
+  val zero: t
+  val one: t
+  val negate: t -> t
+  val add: t -> t -> t
+  val substract: t -> t -> t
+  val multiply: t -> t -> t
+  val divide: t -> t -> t
+  val square: t -> t
+  val exponentiate: t -> int -> t
+  val of_int: int -> t
+  val of_float: float -> t
+  val compare: t -> t -> General.Compare.t
+  val less_than: t -> t -> bool
+  val less_or_equal: t -> t -> bool
+  val greater_than: t -> t -> bool
+  val greater_or_equal: t -> t -> bool
+  val between: t -> low:t -> high:t -> bool
+  val between_or_equal: t -> low:t -> high:t -> bool
+  val min: t -> t -> t
+  val max: t -> t -> t
+  val min_max: t -> t -> t * t
+  val abs: t -> t
+  val modulo: t -> t -> t
+  val to_int: t -> int
+  val to_float: t -> float
+  val succ: t -> t
+  val pred: t -> t
+end

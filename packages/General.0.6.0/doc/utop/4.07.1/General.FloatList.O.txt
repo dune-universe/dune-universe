@@ -1,0 +1,3 @@
+module O: sig
+  val (@): General.FloatList.t -> General.FloatList.t -> General.FloatList.t
+end

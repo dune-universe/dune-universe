@@ -1,0 +1,9 @@
+module O: sig
+  val ref: int -> General.IntReference.t
+  val (!): General.IntReference.t -> int
+  val (:=): General.IntReference.t -> int -> unit
+  val (=+): General.IntReference.t -> int -> unit
+  val (=-): General.IntReference.t -> int -> unit
+  val (=*): General.IntReference.t -> int -> unit
+  val (=/): General.IntReference.t -> int -> unit
+end

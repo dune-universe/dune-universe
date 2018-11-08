@@ -1,0 +1,3 @@
+module Tests: sig
+  val test: General.Testing.Test.t
+end

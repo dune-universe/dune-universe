@@ -1,0 +1,33 @@
+(library
+ (name        crlibm)
+ (public_name crlibm)
+ (c_names crlibm_stubs
+          ; CRlibm — see crlibm/Makefile.am
+          crlibm_private
+          triple-double
+          exp-td exp-td-standalone expm1-standalone
+          expm1
+          log-selected
+          log1p
+          rem_pio2_accurate
+          trigo_fast trigo_accurate
+          trigpi
+          asincos
+          pow
+          atan_fast atan_accurate
+          csh_fast
+          ; scs_lib/
+  	  scs_private addition_scs
+	  division_scs print_scs
+	  double2scs zero_scs
+	  multiplication_scs scs2double)
+ (c_flags  :standard (:include c_flags.sexp))
+ (synopsis "Binding to CRlibm, correctly rounded math lib"))
+
+(copy_files# crlibm/*.{c,h})
+(copy_files# crlibm/scs_lib/*.{c,h})
+
+(rule
+ (targets log-selected.c c_flags.sexp)
+ (deps    ../config/discover.exe)
+ (action  (run %{deps})))

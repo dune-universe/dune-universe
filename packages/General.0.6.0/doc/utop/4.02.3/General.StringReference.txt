@@ -1,0 +1,7 @@
+module StringReference: sig
+  type t = bytes ref
+  module O
+  val of_contents: bytes -> t
+  val contents: t -> bytes
+  val assign: t -> bytes -> unit
+end

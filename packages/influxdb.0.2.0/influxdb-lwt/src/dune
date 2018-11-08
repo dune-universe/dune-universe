@@ -1,0 +1,4 @@
+(library
+  (name influxdb_lwt)
+  (public_name influxdb-lwt)
+  (libraries base cohttp-lwt-unix influxdb))

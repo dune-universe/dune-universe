@@ -1,0 +1,6 @@
+module Result: sig
+  module Status
+  type single = { label: string; status: Status.t; }
+  module Counts
+  type group = { name: string; children: t list; counts: Counts.t; } and t = Single of single | Group of group
+end

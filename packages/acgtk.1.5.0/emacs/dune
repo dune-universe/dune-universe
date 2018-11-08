@@ -1,0 +1,8 @@
+;; -*-lisp-*-
+
+(install
+ (package acgtk)
+ (section share_root)
+ (files (acg.el as emacs/site-lisp/acg.el))
+ )
+

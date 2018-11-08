@@ -1,0 +1,15 @@
+
+(executables
+ (names     test_fs)
+ (modules   test_fs)
+ (libraries bwrap))
+
+(alias
+ (name exe)
+ (deps test_fs.exe))
+
+(alias
+ (name runtest)
+ (deps test_fs.exe)
+ (action (run %{deps})))
+

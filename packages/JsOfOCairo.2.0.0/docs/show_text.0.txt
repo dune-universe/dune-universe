@@ -1,0 +1,43 @@
+<pre>
+set_font_size 20.00
+move_to 10.00 20.00
+select_font_face ~slant:Upright ~weight:Normal "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Italic ~weight:Normal "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Oblique ~weight:Normal "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Upright ~weight:Bold "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Italic ~weight:Bold "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Oblique ~weight:Bold "sans-serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Upright ~weight:Normal "serif"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+move_to 10.00 20.00
+select_font_face ~slant:Upright ~weight:Normal "monospace"
+show_text "He"
+show_text "llo"
+translate 0.00 30.00
+</pre>

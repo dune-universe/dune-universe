@@ -1,8 +1,0 @@
-;; -*-lisp-*-
-
-(jbuild_version 1)
-
-(install
- ((section share_root)
-  (files ((acg.el as emacs/site-lisp/acg.el)))))
-

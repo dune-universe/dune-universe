@@ -1,0 +1,8 @@
+module O: sig
+  val (=): Printexc.location -> Printexc.location -> bool
+  val (<>): Printexc.location -> Printexc.location -> bool
+  val (<): Printexc.location -> Printexc.location -> bool
+  val (<=): Printexc.location -> Printexc.location -> bool
+  val (>): Printexc.location -> Printexc.location -> bool
+  val (>=): Printexc.location -> Printexc.location -> bool
+end

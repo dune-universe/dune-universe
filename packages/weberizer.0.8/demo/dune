@@ -1,0 +1,13 @@
+(alias
+ (name demo)
+ (deps demo.exe))
+
+(executable
+ (name      demo)
+ (modules   demo UMONS)
+ (libraries weberizer))
+
+(rule
+ (targets UMONS.ml UMONS.mli)
+ (deps    (glob_files UMONS.html*))
+ (action  (run %{bin:weberizer} UMONS.html)))

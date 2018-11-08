@@ -1,0 +1,5 @@
+set default_trace_plugin 1;
+set on_failure_script_quits 1;
+go_bmc;
+check_ltlspec_bmc_inc;
+quit -x

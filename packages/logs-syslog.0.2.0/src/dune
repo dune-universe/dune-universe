@@ -1,0 +1,13 @@
+(library
+  (name        logs_syslog)
+  (public_name logs-syslog)
+  (synopsis    "Emit logs via syslog")
+  (libraries   logs syslog-message ptime)
+  (modules     logs_syslog))
+
+(library
+  (name        logs_syslog_unix)
+  (public_name logs-syslog.unix)
+  (synopsis    "Unix syslog reporter")
+  (libraries   logs-syslog ptime.clock.os unix)
+  (modules     logs_syslog_unix))

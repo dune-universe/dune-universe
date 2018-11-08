@@ -1,0 +1,4 @@
+module O: sig
+  val (=): exn -> exn -> bool
+  val (<>): exn -> exn -> bool
+end

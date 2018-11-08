@@ -1,0 +1,33 @@
+(executables
+ (names        lsoda lsodar lsodar_precision minimal pendulum closure)
+ (libraries    odepack))
+
+(alias
+ (name runtest)
+ (deps lsoda.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps lsodar.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps lsodar_precision.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps minimal.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps pendulum.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps closure.exe)
+ (action (run %{deps})))

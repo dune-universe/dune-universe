@@ -1,0 +1,6 @@
+<pre>
+set_line_width 20.00
+move_to 30.00 30.00
+line_to 70.00 30.00
+stroke
+</pre>

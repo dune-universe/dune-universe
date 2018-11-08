@@ -1,0 +1,28 @@
+opam-version: "2.0"
+name:         "tensorboard"
+bug-reports:  "https://github.com/LaurentMazare/ocaml-tensorboard/issues"
+homepage:     "https://github.com/LaurentMazare/ocaml-tensorboard"
+dev-repo:     "git+https://github.com/LaurentMazare/ocaml-tensorboard.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [["dune" "build" "--only-packages" "tensorboard" "--root" "." "-j" jobs "@install"]]
+install: []
+remove:  []
+
+depends: [
+  "base" {>= "0.11.0"}
+  "bigstringaf"
+  "stdio"
+  "ocaml" {>= "4.06"}
+  "ocamlfind" {build}
+  "dune" {build}
+]
+
+depopts: [
+]
+
+conflicts: [
+]

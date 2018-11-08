@@ -1,0 +1,4 @@
+module String: sig
+  val get: bytes -> int -> char
+  val set: bytes -> int -> char -> unit
+end

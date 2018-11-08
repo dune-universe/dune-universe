@@ -1,0 +1,19 @@
+; Copyright 2017-2018 Vincent Jacques <vincent@vincent-jacques.net>
+
+(library
+  (name Drawings)
+  (modules Drawings)
+  (libraries JsOfOCairo)
+)
+
+(executable
+  (name draw_on_command_line)
+  (modules draw_on_command_line)
+  (libraries Drawings JsOfOCairo cairo2)
+)
+
+(executable
+  (name draw_in_browser)
+  (modules draw_in_browser)
+  (libraries Drawings JsOfOCairo js_of_ocaml)
+)

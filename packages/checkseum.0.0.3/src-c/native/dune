@@ -1,0 +1,5 @@
+(library
+ (name laolao)
+ (public_name checkseum.laolao)
+ (c_names stubs adler32 crc32c crc32)
+ (c_flags (-I.)))

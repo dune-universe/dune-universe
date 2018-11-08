@@ -1,0 +1,15 @@
+module ToList: sig
+  module type S0 = sig
+    type elt
+    type t
+    val scan_short: init:'a -> t -> f:('a -> elt -> General.Shorten.t * 'a) -> 'a list
+    val scan_short_i: init:'a -> t -> f:(i:int -> 'a -> elt -> General.Shorten.t * 'a) -> 'a list
+    val scan_short_acc: acc:'acc -> init:'a -> t -> f:(acc:'acc -> 'a -> elt -> 'acc * General.Shorten.t * 'a) -> 'a list
+  end
+  module type S1 = sig
+    type 'a t
+    val scan_short: init:'b -> 'a t -> f:('b -> 'a -> General.Shorten.t * 'b) -> 'b list
+    val scan_short_i: init:'b -> 'a t -> f:(i:int -> 'b -> 'a -> General.Shorten.t * 'b) -> 'b list
+    val scan_short_acc: acc:'acc -> init:'b -> 'a t -> f:(acc:'acc -> 'b -> 'a -> 'acc * General.Shorten.t * 'b) -> 'b list
+  end
+end

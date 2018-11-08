@@ -1,0 +1,7 @@
+module Poly: sig
+  type 'a t
+  val empty: 'a t
+  val add: 'a t -> v:'a -> 'a t
+  val pop_max: 'a t -> 'a t
+  val max: 'a t -> 'a
+end

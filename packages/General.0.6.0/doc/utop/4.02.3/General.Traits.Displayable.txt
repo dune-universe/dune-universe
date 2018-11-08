@@ -1,0 +1,6 @@
+module Displayable: sig
+  module type S0 = sig
+    type t
+    val to_string: t -> bytes
+  end
+end

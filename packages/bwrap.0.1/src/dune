@@ -1,0 +1,14 @@
+
+(library
+ (name        bwrap)
+ (public_name bwrap)
+ (flags       :standard -safe-string)
+ (preprocess (action (run %{bin:cppo} -V BWRAP:%{read:bwrap_version.txt}
+                       %{input-file})))
+ (libraries   unix bytes)
+ (synopsis "Sandbox processes using bwrap"))
+
+(rule
+ (targets bwrap_version.txt)
+ (deps    ../config/discover.exe)
+ (action  (run %{deps})))

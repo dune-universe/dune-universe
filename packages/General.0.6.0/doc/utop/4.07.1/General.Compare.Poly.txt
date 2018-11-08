@@ -1,0 +1,13 @@
+module Poly: sig
+  val compare: 'a -> 'a -> General.Compare.t
+  val less_than: 'a -> 'a -> bool
+  val less_or_equal: 'a -> 'a -> bool
+  val greater_than: 'a -> 'a -> bool
+  val greater_or_equal: 'a -> 'a -> bool
+  val between: 'a -> low:'a -> high:'a -> bool
+  val between_or_equal: 'a -> low:'a -> high:'a -> bool
+  val min: 'a -> 'a -> 'a
+  val max: 'a -> 'a -> 'a
+  val min_max: 'a -> 'a -> 'a * 'a
+  module O
+end

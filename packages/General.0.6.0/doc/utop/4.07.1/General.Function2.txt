@@ -1,0 +1,6 @@
+module Function2: sig
+  type ('a, 'b, 'z) t = 'a -> 'b -> 'z
+  val flip: ('a, 'b, 'z) t -> ('b, 'a, 'z) t
+  val curry: ('a * 'b, 'z) General.Function1.t -> ('a, 'b, 'z) t
+  val uncurry: ('a, 'b, 'z) t -> ('a * 'b, 'z) General.Function1.t
+end

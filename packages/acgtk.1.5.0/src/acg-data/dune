@@ -1,0 +1,13 @@
+;; -*-lisp-*-
+
+;; This stanza declares the AcgData library
+(library
+ (name acgData)
+ (public_name acgtkLib.acgData)
+ (flags (:standard -w -58))
+ (libraries
+  logic ; internal library
+  datalogLib ; internal library
+  ))
+
+(documentation (package acgtk))

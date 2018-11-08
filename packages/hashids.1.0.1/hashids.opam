@@ -1,0 +1,20 @@
+opam-version: "2.0"
+version: "1.0.1"
+maintainer: "Vincent Jacques <vincent@vincent-jacques.net>"
+authors: "Vincent Jacques <vincent@vincent-jacques.net>"
+homepage: "https://jacquev6.github.io/hashids-ocaml/"
+bug-reports: "http://github.com/jacquev6/hashids-ocaml/issues/"
+license: "MIT"
+doc: "https://jacquev6.github.io/hashids-ocaml/"
+dev-repo: "git+https://github.com/jacquev6/hashids-ocaml.git"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.02.3"}
+  "dune" {build}
+  "General" {>= "0.6.0"}
+]
+synopsis:
+  "[hashids](http://hashids.org/): generate short, unique, non-sequential ids from numbers, that you can also decode"

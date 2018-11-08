@@ -1,0 +1,18 @@
+opam-version: "2.0"
+name: "influxdb"
+version: "0.2.0"
+synopsis: "InfluxDB client library"
+description: "A client library for writing time series data to InfluxDB"
+maintainer: "Ryan Slade <ryanslade@gmail.com>"
+authors: "Ryan Slade <ryanslade@gmail.com>"
+homepage: "https://github.com/ryanslade/influxdb-ocaml"
+bug-reports: "https://github.com/ryanslade/influxdb-ocaml/issues"
+dev-repo: "git://github.com/ryanslade/influxdb-ocaml.git"
+build: [["dune" "build" "-p" name "-j" jobs]]
+depends: [
+  "dune" {build}
+  "base"
+  "stdio"
+  "ppx_expect"
+  "ocaml" {>= "4.04.0"}
+]

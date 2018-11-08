@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+(executable
+ ((name main)
+  (libraries
+   (decoders-ezjsonm
+    oUnit))))
+
+(alias
+ ((name runtest)
+  (package decoders-ezjsonm)
+  (deps (main.exe))
+  (action (run ${<}))))

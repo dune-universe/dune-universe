@@ -1,0 +1,4 @@
+module Unit: sig
+  type t = unit
+  val ignore: 'a -> t
+end

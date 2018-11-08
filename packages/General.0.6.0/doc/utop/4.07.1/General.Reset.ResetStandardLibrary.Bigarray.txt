@@ -1,0 +1,2 @@
+module Bigarray: sig
+end

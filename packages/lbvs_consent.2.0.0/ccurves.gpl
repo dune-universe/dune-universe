@@ -1,0 +1,52 @@
+# plot cumulated curves of actives
+set key top left
+set xtics out nomirror
+set ytics out nomirror
+set xlabel 'candidate molecule rank'
+set ylabel 'cumulated #actives'
+set term postscript eps enhanced color
+
+set output '2.ccurve.eps'
+set title 'cons size 2'
+plot 'opti.2.ccurve' u 4:5 t 'opti', \
+     'pess.2.ccurve' u 4:5 t 'pess', \
+     'real.2.ccurve' u 4:5 t 'real', \
+     'sing.2.ccurve' u 4:5 t 'sing', \
+     'oppo.2.ccurve' u 4:5 t 'oppo', \
+     'kopp.2.ccurve' u 4:5 t 'kopp'
+
+set output '3.ccurve.eps'
+set title 'cons size 3'
+plot 'opti.3.ccurve' u 4:5 t 'opti', \
+     'pess.3.ccurve' u 4:5 t 'pess', \
+     'real.3.ccurve' u 4:5 t 'real', \
+     'sing.3.ccurve' u 4:5 t 'sing', \
+     'oppo.3.ccurve' u 4:5 t 'oppo', \
+     'kopp.3.ccurve' u 4:5 t 'kopp'
+
+set output '5.ccurve.eps'
+set title 'cons size 5'
+plot 'opti.5.ccurve' u 4:5 t 'opti', \
+     'pess.5.ccurve' u 4:5 t 'pess', \
+     'real.5.ccurve' u 4:5 t 'real', \
+     'sing.5.ccurve' u 4:5 t 'sing', \
+     'oppo.5.ccurve' u 4:5 t 'oppo', \
+     'kopp.5.ccurve' u 4:5 t 'kopp'
+
+set output '10.ccurve.eps'
+set title 'cons size 10'
+plot 'opti.10.ccurve' u 4:5 t 'opti', \
+     'pess.10.ccurve' u 4:5 t 'pess', \
+     'real.10.ccurve' u 4:5 t 'real', \
+     'sing.10.ccurve' u 4:5 t 'sing', \
+     'oppo.10.ccurve' u 4:5 t 'oppo', \
+     'kopp.10.ccurve' u 4:5 t 'kopp'
+
+set output '20.ccurve.eps'
+set title 'cons size 20'
+plot 'opti.20.ccurve' u 4:5 t 'opti', \
+     'pess.20.ccurve' u 4:5 t 'pess', \
+     'real.20.ccurve' u 4:5 t 'real', \
+     'sing.20.ccurve' u 4:5 t 'sing', \
+     'oppo.20.ccurve' u 4:5 t 'oppo', \
+     'kopp.20.ccurve' u 4:5 t 'kopp'

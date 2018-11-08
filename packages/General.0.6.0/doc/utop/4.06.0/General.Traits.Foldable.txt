@@ -1,0 +1,42 @@
+module Foldable: sig
+  module Basic
+  module type S0 = sig
+    type elt
+    type t
+    val fold: init:'b -> t -> f:('b -> elt -> 'b) -> 'b
+    val fold_i: init:'b -> t -> f:(i:int -> 'b -> elt -> 'b) -> 'b
+    val fold_acc: acc:'acc -> init:'b -> t -> f:(acc:'acc -> 'b -> elt -> 'acc * 'b) -> 'b
+    val reduce: t -> f:(elt -> elt -> elt) -> elt
+    val reduce_i: t -> f:(i:int -> elt -> elt -> elt) -> elt
+    val reduce_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> elt -> 'acc * elt) -> elt
+    val try_reduce: t -> f:(elt -> elt -> elt) -> elt option
+    val try_reduce_i: t -> f:(i:int -> elt -> elt -> elt) -> elt option
+    val try_reduce_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> elt -> 'acc * elt) -> elt option
+    val iter: t -> f:(elt -> unit) -> unit
+    val iter_i: t -> f:(i:int -> elt -> unit) -> unit
+    val iter_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc) -> unit
+    val count: t -> f:(elt -> bool) -> int
+    val count_i: t -> f:(i:int -> elt -> bool) -> int
+    val count_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc * bool) -> int
+  end
+  module type S1 = sig
+    type 'a t
+    val fold: init:'b -> 'a t -> f:('b -> 'a -> 'b) -> 'b
+    val fold_i: init:'b -> 'a t -> f:(i:int -> 'b -> 'a -> 'b) -> 'b
+    val fold_acc: acc:'acc -> init:'b -> 'a t -> f:(acc:'acc -> 'b -> 'a -> 'acc * 'b) -> 'b
+    val reduce: 'a t -> f:('a -> 'a -> 'a) -> 'a
+    val reduce_i: 'a t -> f:(i:int -> 'a -> 'a -> 'a) -> 'a
+    val reduce_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'a -> 'acc * 'a) -> 'a
+    val try_reduce: 'a t -> f:('a -> 'a -> 'a) -> 'a option
+    val try_reduce_i: 'a t -> f:(i:int -> 'a -> 'a -> 'a) -> 'a option
+    val try_reduce_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'a -> 'acc * 'a) -> 'a option
+    val iter: 'a t -> f:('a -> unit) -> unit
+    val iter_i: 'a t -> f:(i:int -> 'a -> unit) -> unit
+    val iter_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc) -> unit
+    val count: 'a t -> f:('a -> bool) -> int
+    val count_i: 'a t -> f:(i:int -> 'a -> bool) -> int
+    val count_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * bool) -> int
+  end
+  module Right
+  module Short
+end

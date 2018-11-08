@@ -1,0 +1,5 @@
+module Class: sig
+  type t = Normal | SubNormal | Zero | Infinite | NotANumber
+  val repr: t -> bytes
+  val of_float: float -> t
+end

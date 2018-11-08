@@ -1,0 +1,8 @@
+(executable
+ (name influxdb_lwt_test)
+ (libraries influxdb_lwt alcotest-lwt))
+
+(alias
+ (name runtest)
+ (deps influxdb_lwt_test.exe)
+ (action (run ./influxdb_lwt_test.exe)))

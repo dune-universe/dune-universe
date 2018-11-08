@@ -1,0 +1,4 @@
+module Two: sig
+  val to_pair_list: 'a list -> 'b list -> ('a * 'b) list
+  val to_pair_list_short: 'a list -> 'b list -> ('a * 'b) list
+end

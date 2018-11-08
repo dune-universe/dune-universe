@@ -1,0 +1,14 @@
+module ToList: sig
+  val map: 'a Stream.t -> f:('a -> 'b) -> 'b list
+  val map_i: 'a Stream.t -> f:(i:int -> 'a -> 'b) -> 'b list
+  val map_acc: acc:'acc -> 'a Stream.t -> f:(acc:'acc -> 'a -> 'acc * 'b) -> 'b list
+  val filter: 'a Stream.t -> f:('a -> bool) -> 'a list
+  val filter_i: 'a Stream.t -> f:(i:int -> 'a -> bool) -> 'a list
+  val filter_acc: acc:'acc -> 'a Stream.t -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a list
+  val filter_map: 'a Stream.t -> f:('a -> 'b option) -> 'b list
+  val filter_map_i: 'a Stream.t -> f:(i:int -> 'a -> 'b option) -> 'b list
+  val filter_map_acc: acc:'acc -> 'a Stream.t -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b list
+  val flat_map: 'a Stream.t -> f:('a -> 'b list) -> 'b list
+  val flat_map_i: 'a Stream.t -> f:(i:int -> 'a -> 'b list) -> 'b list
+  val flat_map_acc: acc:'acc -> 'a Stream.t -> f:(acc:'acc -> 'a -> 'acc * 'b list) -> 'b list
+end

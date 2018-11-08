@@ -1,0 +1,73 @@
+set key top left
+set xtics out nomirror
+set ytics out nomirror
+set xlabel 'AUC <= x'
+set ylabel 'probability'
+set xrange [0:1]
+set yrange [0:1]
+set size square
+# grey line to easily see who is the less random method
+set arrow from 0.5,0.0 to 0.5,1.0 nohead lc rgb 'grey'
+set term postscript eps enhanced color
+
+set output '2.CDF.eps'
+set title 'cons size 2'
+plot 'oppo.002.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'opti.002.CDF' w l lt 1 lc 3 t 'opti' , \
+     'real.002.CDF' w l lt 1 lc 5 t 'real' , \
+     'sing.002.CDF' w l lt 1 lc 8 t 'sing'
+
+set output '3.CDF.eps'
+set title 'cons size 3'
+plot 'oppo.003.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'opti.003.CDF' w l lt 1 lc 3 t 'opti' , \
+     'real.003.CDF' w l lt 1 lc 5 t 'real' , \
+     'sing.003.CDF' w l lt 1 lc 8 t 'sing'
+
+set output '5.CDF.eps'
+set title 'cons size 5'
+plot 'oppo.005.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'opti.005.CDF' w l lt 1 lc 3 t 'opti' , \
+     'real.005.CDF' w l lt 1 lc 5 t 'real' , \
+     'sing.005.CDF' w l lt 1 lc 8 t 'sing'
+
+set output '10.CDF.eps'
+set title 'cons size 10'
+plot 'oppo.010.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'opti.010.CDF' w l lt 1 lc 3 t 'opti' , \
+     'real.010.CDF' w l lt 1 lc 5 t 'real' , \
+     'sing.010.CDF' w l lt 1 lc 8 t 'sing'
+
+set output '20.CDF.eps'
+set title 'cons size 20'
+plot 'oppo.020.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'opti.020.CDF' w l lt 1 lc 3 t 'opti' , \
+     'real.020.CDF' w l lt 1 lc 5 t 'real' , \
+     'sing.020.CDF' w l lt 1 lc 8 t 'sing'
+
+set xlabel 'PM_{10%} <= x'
+set output 'pm.2.CDF.eps'
+set title 'cons size 2'
+unset arrow
+plot 'pm.oppo.002.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'pm.opti.002.CDF' w l lt 1 lc 3 t 'opti' , \
+     'pm.real.002.CDF' w l lt 1 lc 5 t 'real' , \
+     'pm.sing.002.CDF' w l lt 1 lc 8 t 'sing'
+
+set xlabel 'PM_{10%} <= x'
+set output 'pm.5.CDF.eps'
+set title 'cons size 5'
+unset arrow
+plot 'pm.oppo.005.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'pm.opti.005.CDF' w l lt 1 lc 3 t 'opti' , \
+     'pm.real.005.CDF' w l lt 1 lc 5 t 'real' , \
+     'pm.sing.005.CDF' w l lt 1 lc 8 t 'sing'
+
+set xlabel 'PM_{10%} <= x'
+set output 'pm.10.CDF.eps'
+set title 'cons size 10'
+unset arrow
+plot 'pm.oppo.010.CDF' w l lt 1 lc 2 t 'oppo' , \
+     'pm.opti.010.CDF' w l lt 1 lc 3 t 'opti' , \
+     'pm.real.010.CDF' w l lt 1 lc 5 t 'real' , \
+     'pm.sing.010.CDF' w l lt 1 lc 8 t 'sing'

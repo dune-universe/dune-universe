@@ -1,0 +1,17 @@
+I - Get opam:
+=============
+
+Cf. https://opam.ocaml.org/doc/Install.html
+
+II - Install OCaml via opam:
+============================
+
+opam init
+opam update
+opam switch 4.05.0
+eval `opam config env`
+
+III - Compile and install all dependencies:
+===========================================
+
+opam depext -i lbvs_consent

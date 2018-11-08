@@ -1,0 +1,4 @@
+(library
+  (name tensorboard_protobuf)
+  (public_name tensorboard.protobuf)
+  (libraries base))

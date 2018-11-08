@@ -1,0 +1,8 @@
+
+(library
+ (name        odepack)
+ (public_name odepack)
+ (flags       :standard -w "-37" -warn-error "-32-50")
+ (c_names     odepack_stubs)
+ (libraries   bigarray odepack.fortran)
+ (synopsis "Binding to ODEPACK"))

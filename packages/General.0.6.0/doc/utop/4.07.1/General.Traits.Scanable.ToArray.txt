@@ -1,0 +1,15 @@
+module ToArray: sig
+  module type S0 = sig
+    type elt
+    type t
+    val scan: init:'a -> t -> f:('a -> elt -> 'a) -> 'a array
+    val scan_i: init:'a -> t -> f:(i:int -> 'a -> elt -> 'a) -> 'a array
+    val scan_acc: acc:'acc -> init:'a -> t -> f:(acc:'acc -> 'a -> elt -> 'acc * 'a) -> 'a array
+  end
+  module type S1 = sig
+    type 'a t
+    val scan: init:'b -> 'a t -> f:('b -> 'a -> 'b) -> 'b array
+    val scan_i: init:'b -> 'a t -> f:(i:int -> 'b -> 'a -> 'b) -> 'b array
+    val scan_acc: acc:'acc -> init:'b -> 'a t -> f:(acc:'acc -> 'b -> 'a -> 'acc * 'b) -> 'b array
+  end
+end

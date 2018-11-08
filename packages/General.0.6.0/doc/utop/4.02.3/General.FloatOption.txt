@@ -1,0 +1,15 @@
+module FloatOption: sig
+  type t = float option
+  val some_if: bool -> float lazy_t -> t
+  val some_if': bool -> float -> t
+  val is_some: t -> bool
+  val is_none: t -> bool
+  val value_def: t -> def:float -> float
+  val value: ?exc:exn -> t -> float
+  val or_failure: ('a, unit, bytes, bytes, bytes, t -> float) format6 -> 'a
+  val map: t -> f:(float -> 'a) -> 'a option
+  val iter: t -> f:(float -> unit) -> unit
+  val filter: t -> f:(float -> bool) -> t
+  val filter_map: t -> f:(float -> 'a option) -> 'a option
+  val value_map: t -> def:'a -> f:(float -> 'a) -> 'a
+end

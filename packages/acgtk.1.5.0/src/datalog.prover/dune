@@ -1,0 +1,28 @@
+;; -*-lisp-*-
+
+(ocamllex db_lexer)
+(ocamlyacc db_parser)
+
+;; This stanza declares the DatalogLib
+(library
+ (name datalogLib)
+ (public_name acgtkLib.datalogLib)
+ (flags (:standard -w -58))
+ (modules (:standard db_parser db_lexer \ test db_test))
+ (libraries
+  str ; external libraries
+  ANSITerminal ; external libraries
+  utilsLib ; internal library
+  ))
+
+(tests
+ (names test db_test)
+  (modules test db_test)
+  (libraries
+   fmt.tty   
+   utilsLib
+   datalogLib
+   ))
+
+
+(documentation (package acgtk))

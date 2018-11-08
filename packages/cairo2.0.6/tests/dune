@@ -1,0 +1,18 @@
+
+(executables
+ (names image_create matrix_set surface_gc test_for_stream
+        test_finish test_path test_exn)
+ (libraries cairo2))
+
+(alias
+ (name runtest)
+ (deps image_create.exe matrix_set.exe surface_gc.exe test_for_stream.exe
+       test_finish.exe test_path.exe test_exn.exe)
+ (action (progn
+          (run %{dep:image_create.exe})
+          (run %{dep:matrix_set.exe})
+          (run %{dep:surface_gc.exe})
+          (run %{dep:test_for_stream.exe})
+          (run %{dep:test_finish.exe})
+          (run %{dep:test_path.exe})
+          (run %{dep:test_exn.exe}))))

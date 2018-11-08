@@ -1,0 +1,9 @@
+(library
+  (name        logs_syslog_lwt)
+  (public_name logs-syslog.lwt)
+  (synopsis    "Lwt syslog reporter")
+  (libraries   logs-syslog ptime.clock.os lwt lwt.unix)
+  (optional))
+
+(rule (copy ../logs_syslog_lwt_common.mli logs_syslog_lwt_common.mli))
+(rule (copy ../logs_syslog_lwt_common.ml logs_syslog_lwt_common.ml))

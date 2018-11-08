@@ -1,0 +1,105 @@
+main: LAMBDA IDENT DOT RPAREN 
+##
+## Ends in an error in state: 7.
+##
+## term1 -> LAMBDA nonempty_list(IDENT) DOT . term1 [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA nonempty_list(IDENT) DOT 
+##
+main: RPAREN 
+##
+## Ends in an error in state: 0.
+##
+## main' -> . main [ # ]
+##
+## The known suffix of the stack is as follows:
+## 
+##
+main: SYMBOL RPAREN 
+##
+## Ends in an error in state: 15.
+##
+## main -> term1 . EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## term1 
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 10, spurious reduction of production nonempty_list(term0) -> term0 
+## In state 12, spurious reduction of production term1 -> nonempty_list(term0) 
+##
+
+This closing parenthesis doesn't have a matching opening parenthesis
+
+
+
+main: LAMBDA IDENT SYMBOL 
+##
+## Ends in an error in state: 4.
+##
+## nonempty_list(IDENT) -> IDENT . [ DOT ]
+## nonempty_list(IDENT) -> IDENT . nonempty_list(IDENT) [ DOT ]
+##
+## The known suffix of the stack is as follows:
+## IDENT 
+##
+main: LAMBDA SYMBOL 
+##
+## Ends in an error in state: 3.
+##
+## term1 -> LAMBDA . nonempty_list(IDENT) DOT term1 [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA 
+##
+
+After a binder (e.g., "lambda"), variable names are expected.
+
+main: LPAREN RPAREN 
+##
+## Ends in an error in state: 2.
+##
+## term0 -> LPAREN . term1 RPAREN [ SYMBOL RPAREN LPAREN IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN 
+##
+
+Parenthesis should enclose correct lambda-terms.
+
+main: LPAREN SYMBOL EOI 
+##
+## Ends in an error in state: 13.
+##
+## term0 -> LPAREN term1 . RPAREN [ SYMBOL RPAREN LPAREN IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN term1 
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 10, spurious reduction of production nonempty_list(term0) -> term0 
+## In state 12, spurious reduction of production term1 -> nonempty_list(term0) 
+##
+
+This opening bracket doesn't have a matching closing bracket.
+
+main: SYMBOL LAMBDA 
+##
+## Ends in an error in state: 10.
+##
+## nonempty_list(term0) -> term0 . [ RPAREN EOI ]
+## nonempty_list(term0) -> term0 . nonempty_list(term0) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## term0 
+##
+
+A full term (constant or term within parenthesis) is expected.
+

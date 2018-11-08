@@ -1,0 +1,68 @@
+Name:       consent
+Version:    0.1
+Authors:    Francois BERENGER
+License:    BSD
+Synopsis:   Ligand-based virtual screening tool for consensus queries
+obuild-ver: 1
+
+Executable lbvs_consent
+  oflags:       -warn-error +26 -bin-annot
+  Path:         src
+  BuildDepends: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt
+  MainIs:       scons.ml
+
+Executable unit_tests
+  oflags:     -warn-error +26
+  Path:       src
+  main-is:    unit_tests.ml
+  build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+# MOP2D encoder
+Executable lbvs_consent_mop2de
+  oflags:     -warn-error +26
+  Path:       src
+  main-is:    mop2d_encoder.ml
+  build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+# MOP2D decoder
+Executable lbvs_consent_mop2di
+  oflags:     -warn-error +26
+  Path:       src
+  main-is:    mop2d_indexer.ml
+  build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+Executable sdf_rename
+  oflags:       -warn-error +26 -bin-annot
+  Path:         src
+  BuildDepends: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, minicli
+  MainIs:       sdf_rename.ml
+
+# Executable sdf_reader
+#   oflags:       -warn-error +26 -bin-annot
+#   Path:         src
+#   BuildDepends: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt
+#   MainIs:       sdf_reader.ml
+
+# Executable cpu_bound_query
+#   oflags:     -warn-error +26
+#   Path:       src
+#   main-is:    cpu_bound_query.ml
+#   build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+# Executable cons_size_effect
+#   oflags:     -warn-error +26
+#   Path:       src
+#   main-is:    cons_size_effect.ml
+#   build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+# Executable sdf_split
+#   oflags:     -warn-error +26
+#   Path:       src
+#   main-is:    sdf_split.ml
+#   build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck
+
+Executable sdf_get
+  oflags:     -warn-error +26
+  Path:       src
+  main-is:    sdf_get.ml
+  build-deps: batteries, dolog, bitv, parmap, str, zip, cpm, minivpt, oUnit, qcheck, minicli

@@ -1,0 +1,4 @@
+(library
+  (name tensorboard)
+  (public_name tensorboard)
+  (libraries base bigstringaf stdio tensorboard_protobuf unix))

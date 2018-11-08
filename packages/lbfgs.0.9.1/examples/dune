@@ -1,0 +1,23 @@
+(executables
+ (names     simple Rosenbrock error unconstrained)
+ (libraries lbfgs lacaml))
+
+(alias
+ (name runtest)
+ (deps simple.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps Rosenbrock.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps error.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps unconstrained.exe)
+ (action (run %{deps})))

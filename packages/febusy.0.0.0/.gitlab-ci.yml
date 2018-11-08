@@ -1,0 +1,38 @@
+
+ocaml403:
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.03
+ocaml404:
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.04
+
+ocaml:405:
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.05
+
+ocaml:407:
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.07
+
+testpages:
+  stage: test
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.06 public-testing/
+  artifacts:
+    paths:
+      - public-testing
+
+pages:
+  image: ocaml/opam2:ubuntu-lts
+  script:
+     - bash tools/ci-build.sh all 4.06 public
+  artifacts:
+     paths:
+     - public
+  only:
+  - master

@@ -1,0 +1,8 @@
+;; -*-lisp-*-
+
+(env
+ (release
+  (flags (:standard -w -58)))
+ (dev
+  (flags (:standard -w +42))))
+

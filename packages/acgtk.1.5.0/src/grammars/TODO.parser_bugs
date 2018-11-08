@@ -1,0 +1,15 @@
+; -*-org-*-
+
+* DONE Add an optional ";" before the "end" keyword
+* DONE Change lexers to avoid problems with keywords
+* DONE Add precedence values and management in the signature
+* DONE Add (+) notation style to prevent the infix use of +
+* DONE Add syntactic extensions to handle associativity and precedence of infix operators
+* TODO Add error (and warning) messages management to the Error module, and make a difference between "real" parsing errors and errors resulting from evaluating the parsing against some environment. The latter can be output all together (may be some limit to be set)
+* DONE Move from dypgen to menhir in scripts
+* DONE change README and INSTALL files:
++ [X] to indicate new dependencies (menhir, logs...)
++ [X] to document syntax extensions for infix operators, precedence of the latter over application. Highest precedence for prefix operators
+* DONE What about lexicon composition when one lexicon at least is non-linear?
+* TODO Add debug flag (+ flag for log sources?)
+* TODO Change command line parsing to use Cmd

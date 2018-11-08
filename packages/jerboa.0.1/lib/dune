@@ -1,0 +1,4 @@
+(library
+  (name        jerboa)
+  (public_name jerboa)
+  (libraries cohttp-lwt-unix lwt))

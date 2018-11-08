@@ -1,0 +1,19 @@
+signature Integer =
+    int : type;
+    infix [Right] + : int -> int -> int ;
+    infix [Left, < +] - : int -> int -> int ;
+    infix [Right] * : int -> int -> int ;
+    infix [NonAssoc] / : int -> int -> int;
+    infix @ : int -> int -> int ;
+    prefix | : int -> int ;
+    prefix ! : int -> int ;
+    a, b, c, d : int;
+    x, y, z : int -> int;
+    (* The following line is a valid definition, *)
+    (* as the '+' operator is surrounded by parenthesis *)
+    (* that make it lose its infix nature.*)
+    new_op = (+) : int -> int -> int;
+    (* However, the following line is NOT a valid definition, as *)
+    (* the '+' operator is infix and should be used between 2 terms*)
+(*    new_op = + : int -> int -> int;*)
+end

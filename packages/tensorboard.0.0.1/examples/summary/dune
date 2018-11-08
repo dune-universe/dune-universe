@@ -1,0 +1,3 @@
+(executables
+  (names writer)
+  (libraries tensorboard))

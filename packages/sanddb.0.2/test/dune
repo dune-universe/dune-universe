@@ -1,0 +1,9 @@
+
+(executable
+ (name run_tests)
+ (libraries base sanddb alcotest))
+
+(alias
+ (name runtest)
+ (deps run_tests.exe)
+ (action (run %{deps} -q --color=always)))

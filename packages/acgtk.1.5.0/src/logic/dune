@@ -1,0 +1,23 @@
+;; -*-lisp-*-
+
+;; This declares the Logic libreary
+(library
+ (name logic)
+ (public_name acgtkLib.logic)
+ (flags (:standard -w -58))
+ (modules (:standard \ typeInference_test))
+ (libraries
+  ANSITerminal ; external library
+  utilsLib ; internal library
+  ))
+
+(tests
+ (names typeInference_test)
+ (modules typeInference_test)
+ (libraries
+  fmt.tty
+  utilsLib
+  logic))
+
+
+(documentation (package acgtk))

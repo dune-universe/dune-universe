@@ -1,0 +1,86 @@
+# This document more or less reflects the examples that could have been
+# seen during the acgtk demo at the Forum Sciences Cognitives 2015 in
+# Nancy and other examples that were developed short after.
+
+wait;
+
+# We start with the Montague examples.
+load d montague-fr.acg;
+
+# Something to draw attention: connecting language and logic in a
+# non-trivial way.
+realisation_francais semantique realize CHAQUE HOMME (AIMER MARIE) : s;
+ 
+# Starting simple: viewing lexical items as functions.
+realisation_francais realize AIMER MARIE JEAN : s;
+
+# Deriving the semantics in parallel.
+realisation_francais semantique realize AIMER MARIE JEAN : s;
+
+# And back to our initial example with the quantifier.
+realisation_francais semantique realize CHAQUE HOMME (AIMER MARIE) : s;
+
+# Making it more complicated: two quantifiers.
+realisation_francais semantique realize CHAQUE HOMME (lambda x. UNE FEMME (lambda y. AIMER y x)) : s;
+
+# Generating a different reading of the same sentence.
+realisation_francais semantique realize UNE FEMME (lambda y. CHAQUE HOMME (lambda x. AIMER y x)) : s;
+
+# We can translate not only to the French language and to the logical
+# language, but also to the English language.
+realisation_francais semantique realisation_anglais realize CHAQUE HOMME (lambda x. UNE FEMME (lambda y. AIMER y x)) : s;
+
+# However, the translations we have seen so far have been word-to-word. We
+# can also try something more elaborate: translation on the level of
+# constructions.
+realisation_francais semantique realisation_anglais realize CHAQUE HOMME (AIMER (POSS_F MARIE MERE)) : s;
+
+# And finally, this is here to just show that thanks to compositionality,
+# we can scale up to more and more elaborate examples.
+realisation_francais semantique realisation_anglais realize CHAQUE HOMME (lambda x. UNE FEMME (lambda y. AIMER (POSS_F y MERE) x)) : s;
+
+# During the demo, we also developed control verbs such as "vouloir".
+realisation_francais semantique realize VOULOIR_CV (AIMER MARIE) JEAN : s;
+
+# "vouloir" used as a verb expecting a sentential complement.
+realisation_francais semantique realize VOULOIR_SC (QUE (AIMER MARIE JEAN)) JEAN : s;
+
+ 
+
+# Now we look at the TAG examples.
+load d tag-fr.acg;
+
+# Let's look at the TAG treatment of a simple sentence.
+tag_syntax tag_yields tag_semantics realize C_chasse I_s I_vp (C_chien C_un (C_grand (C_noir I_n))) (C_chat C_un I_n) : S;
+
+# Since TAG is 2nd-order, we can enjoy the benefits of parsing.
+tag_yields parse lambda z. un(grand(chien(noir(chasse(un(chat(z))))))) : S;
+
+# The parse also offers us an alternative syntactic structure (difference
+# in the order of adjunctions corresponding to the left adjective "grand" and
+# the right adjective "noir".
+tag_syntax tag_yields tag_semantics realize C_chasse I_s I_vp (C_chien C_un (C_noir (C_grand I_n))) (C_chat C_un I_n) : S;
+
+# Zooming into the NP "un grand chien noir" to look at details.
+tag_syntax tag_yields tag_semantics realize C_chien C_un (C_grand (C_noir I_n)) : N;
+
+
+# A bizarre dadaesque example to showcase the semantics on more complicated
+# sentences.
+
+tag_yields parse lambda z. chaque(chien(noir(affirme(que(marie(aime(francois(z)))))))) : S;
+tag_syntax tag_yields tag_semantics realize C_aime (C_affirme_que I_s I_vp (C_chien C_chaque (C_noir I_n))) I_vp C_marie C_francois : S;
+
+
+# Trying out some of the complex examples from tag-script in the French
+# grammar.
+
+tag_yields parse lambda z. qui(est(ce(que(marie(aime(z)))))) : S;
+tag_syntax tag_yields tag_semantics realize C_est_ce_que_aime I_s I_vp C_qui C_marie : S;
+
+tag_yields parse lambda z. est(ce(que(marie(croit(que(jean(aime(paul(z))))))))) : S;
+tag_syntax tag_yields tag_semantics realize C_aime (C_est_ce_que_croit_que I_s I_vp C_marie) I_vp C_jean C_paul : S;
+
+tag_yields parse lambda z. qui(est(ce(que(paul(affirme(que(jean(a(dit(que(francois(aime(z))))))))))))) : S;
+tag_syntax tag_yields tag_semantics realize C_est_ce_que_aime (C_a_dit_que (C_affirme_que I_s I_vp C_paul) I_vp C_jean) I_vp C_qui C_francois : S;
+

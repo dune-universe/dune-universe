@@ -1,0 +1,12 @@
+module StringSortedSet: sig
+  type t = General.StringSortedSet.t
+  val empty: t
+  val of_list: bytes list -> t
+  val to_list: t -> bytes list
+  val is_empty: t -> bool
+  val size: t -> int
+  val add: t -> v:bytes -> bool * t
+  val replace: t -> v:bytes -> t
+  val remove: t -> v:bytes -> bool * t
+  val contains: t -> v:bytes -> bool
+end

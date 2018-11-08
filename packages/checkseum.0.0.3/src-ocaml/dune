@@ -1,0 +1,8 @@
+(library
+ (name checkseum_ocaml)
+ (public_name checkseum.ocaml)
+ (libraries bigarray optint)
+ (wrapped false)
+ (flags (:standard -no-keep-locs)))
+
+(rule (copy# %{lib:checkseum:checkseum.mli} checkseum.mli))

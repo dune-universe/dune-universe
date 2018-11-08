@@ -1,0 +1,8 @@
+module LargeFile: sig
+  val seek_out: [ `Please_use_General__OutFile__seek ]
+  val pos_out: [ `Please_use_General__OutFile__pos ]
+  val out_channel_length: [ `Please_use_General__OutFile__size ]
+  val seek_in: [ `Please_use_General__InFile__seek ]
+  val pos_in: [ `Please_use_General__InFile__pos ]
+  val in_channel_length: [ `Please_use_General__InFile__size ]
+end

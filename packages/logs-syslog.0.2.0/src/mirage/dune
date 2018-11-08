@@ -1,0 +1,9 @@
+(library
+  (name        logs_syslog_mirage)
+  (public_name logs-syslog.mirage)
+  (synopsis    "Mirage syslog reporter")
+  (libraries   logs-syslog ipaddr lwt mirage-console-lwt mirage-clock mirage-stack-lwt cstruct)
+  (optional))
+
+(rule (copy ../logs_syslog_lwt_common.mli logs_syslog_lwt_common.mli))
+(rule (copy ../logs_syslog_lwt_common.ml logs_syslog_lwt_common.ml))

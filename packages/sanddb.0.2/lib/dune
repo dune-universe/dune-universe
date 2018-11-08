@@ -1,0 +1,19 @@
+(library
+  (name        sanddb)
+  (public_name sanddb)
+  (libraries atdgen base lwt lwt.unix uuidm))
+
+(rule
+  (targets record_t.ml record_t.mli)
+  (deps record.atd)
+  (action (run atdgen -t %{deps})))
+
+(rule
+  (targets record_j.ml record_j.mli)
+  (deps record.atd)
+  (action (run atdgen -j %{deps})))
+
+(rule
+  (targets record_b.ml record_b.mli)
+  (deps record.atd)
+  (action (run atdgen -b %{deps})))

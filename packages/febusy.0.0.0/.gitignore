@@ -1,0 +1,7 @@
+.merlin
+_build/
+febusy.install
+src/lib/.merlin
+src/lib/jbuild
+src/test/.merlin
+src/test/jbuild

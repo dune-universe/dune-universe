@@ -1,0 +1,14 @@
+module Make(K: General.Traits.Comparable.Basic.S0): sig
+  type 'a t
+  val empty: 'a t
+  val of_list_first: (K.t * 'a) list -> 'a t
+  val of_list_last: (K.t * 'a) list -> 'a t
+  val to_list: 'a t -> (K.t * 'a) list
+  val is_empty: 'a t -> bool
+  val size: 'a t -> int
+  val add: 'a t -> k:K.t -> v:'a -> bool * 'a t
+  val replace: 'a t -> k:K.t -> v:'a -> 'a t
+  val remove: 'a t -> k:K.t -> bool * 'a t
+  val try_get: 'a t -> k:K.t -> 'a option
+  val get: 'a t -> k:K.t -> 'a
+end

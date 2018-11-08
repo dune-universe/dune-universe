@@ -1,0 +1,9 @@
+module SpecializeRingoid(A: General.Traits.Ringoid.Basic.S0): sig
+  type nonrec t = A.t ref
+  module O: sig
+    val (=+): t -> A.t -> unit
+    val (=-): t -> A.t -> unit
+    val (=*): t -> A.t -> unit
+    val (=/): t -> A.t -> unit
+  end
+end

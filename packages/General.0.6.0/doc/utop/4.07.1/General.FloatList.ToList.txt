@@ -1,0 +1,20 @@
+module ToList: sig
+  val map: General.FloatList.t -> f:(float -> 'b) -> 'b list
+  val map_i: General.FloatList.t -> f:(i:int -> float -> 'b) -> 'b list
+  val map_acc: acc:'acc -> General.FloatList.t -> f:(acc:'acc -> float -> 'acc * 'b) -> 'b list
+  val filter: General.FloatList.t -> f:(float -> bool) -> float list
+  val filter_i: General.FloatList.t -> f:(i:int -> float -> bool) -> float list
+  val filter_acc: acc:'acc -> General.FloatList.t -> f:(acc:'acc -> float -> 'acc * bool) -> float list
+  val filter_map: General.FloatList.t -> f:(float -> 'b option) -> 'b list
+  val filter_map_i: General.FloatList.t -> f:(i:int -> float -> 'b option) -> 'b list
+  val filter_map_acc: acc:'acc -> General.FloatList.t -> f:(acc:'acc -> float -> 'acc * 'b option) -> 'b list
+  val flat_map: General.FloatList.t -> f:(float -> 'b list) -> 'b list
+  val flat_map_i: General.FloatList.t -> f:(i:int -> float -> 'b list) -> 'b list
+  val flat_map_acc: acc:'acc -> General.FloatList.t -> f:(acc:'acc -> float -> 'acc * 'b list) -> 'b list
+  val scan: init:'a -> General.FloatList.t -> f:('a -> float -> 'a) -> 'a list
+  val scan_i: init:'a -> General.FloatList.t -> f:(i:int -> 'a -> float -> 'a) -> 'a list
+  val scan_acc: acc:'acc -> init:'a -> General.FloatList.t -> f:(acc:'acc -> 'a -> float -> 'acc * 'a) -> 'a list
+  val scan_short: init:'a -> General.FloatList.t -> f:('a -> float -> General.Shorten.t * 'a) -> 'a list
+  val scan_short_i: init:'a -> General.FloatList.t -> f:(i:int -> 'a -> float -> General.Shorten.t * 'a) -> 'a list
+  val scan_short_acc: acc:'acc -> init:'a -> General.FloatList.t -> f:(acc:'acc -> 'a -> float -> 'acc * General.Shorten.t * 'a) -> 'a list
+end

@@ -1,0 +1,13 @@
+(executables
+ (names     test speed)
+ (libraries crlibm benchmark))
+
+(alias
+ (name runtest)
+ (deps test.exe)
+ (action (run %{deps})))
+
+(alias
+ (name speed)
+ (deps speed.exe)
+ (action (run %{deps})))

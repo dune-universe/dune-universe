@@ -1,0 +1,38 @@
+version: "1.2.0"
+opam-version: "1.2"
+maintainer: "anil@recoil.org"
+authors: [
+  "Anil Madhavapeddy"
+  "Stefano Zacchiroli"
+  "David Sheets"
+  "Thomas Gazagnaire"
+  "David Scott"
+  "Rudi Grinberg"
+  "Andy Ray"
+]
+homepage: "https://github.com/mirage/ocaml-cohttp"
+bug-reports: "https://github.com/mirage/ocaml-cohttp/issues"
+license: "ISC"
+tags: ["org:mirage" "org:xapi-project"]
+dev-repo: "https://github.com/mirage/ocaml-cohttp.git"
+doc: "https://mirage.github.io/ocaml-cohttp/"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+build-test: ["dune" "runtest" "-p" name "-j" jobs]
+depends: [
+  "dune" {build & >= "1.1.0"}
+  "re" {>= "1.7.2"}
+  "uri" {>= "2.0.0"}
+  "fieldslib"
+  "sexplib0"
+  "ppx_fields_conv" {>= "v0.9.0"}
+  "ppx_sexp_conv" {>= "v0.9.0"}
+  "stringext"
+  "base64" {>= "2.0.0"}
+  "fmt" {test}
+  "jsonm" {build}
+  "alcotest" {test}
+]
+available: [ocaml-version >= "4.04.1"]

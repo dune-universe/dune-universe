@@ -1,0 +1,6 @@
+(library
+  (name        logs_syslog_lwt_tls)
+  (public_name logs-syslog.lwt.tls)
+  (synopsis    "Lwt TLS syslog reporter")
+  (libraries   logs-syslog.lwt x509 tls tls.lwt cstruct)
+  (optional))

@@ -1,0 +1,34 @@
+module Number: sig
+  module Operators
+  module type S0 = sig
+    type t
+    module O: sig
+      val (=): t -> t -> bool
+      val (<>): t -> t -> bool
+      val (~+): t -> t
+      val (~-): t -> t
+      val (+): t -> t -> t
+      val (-): t -> t -> t
+      val (*): t -> t -> t
+      val (/): t -> t -> t
+      val (**): t -> int -> t
+    end
+    val to_string: t -> bytes
+    val equal: t -> t -> bool
+    val different: t -> t -> bool
+    val try_of_string: bytes -> t option
+    val of_string: bytes -> t
+    val repr: t -> bytes
+    val zero: t
+    val one: t
+    val negate: t -> t
+    val add: t -> t -> t
+    val substract: t -> t -> t
+    val multiply: t -> t -> t
+    val divide: t -> t -> t
+    val square: t -> t
+    val exponentiate: t -> int -> t
+    val of_int: int -> t
+    val of_float: float -> t
+  end
+end

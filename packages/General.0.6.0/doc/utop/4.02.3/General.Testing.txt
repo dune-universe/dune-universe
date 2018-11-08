@@ -1,0 +1,38 @@
+module Testing: sig
+  module Result
+  module Test
+  val command_line_main: argv:bytes list -> Test.t -> General.Exit.t
+  val (>::): bytes -> Test.t list -> Test.t
+  val (>:): bytes -> unit lazy_t -> Test.t
+  val (~:): ('a, unit, bytes, bytes, bytes, unit lazy_t -> Test.t) format6 -> 'a
+  val (~::): ('a, unit, bytes, bytes, bytes, Test.t list -> Test.t) format6 -> 'a
+  val fail: ('a, unit, bytes, bytes, bytes, 'b) format6 -> 'a
+  val expect_exception: expected:exn -> 'a lazy_t -> unit
+  val expect_exception_named: expected:bytes -> 'a lazy_t -> unit
+  val check: repr:('a -> bytes) -> equal:('a -> 'a -> bool) -> expected:'a -> 'a -> unit
+  val check_poly: repr:('a -> bytes) -> expected:'a -> 'a -> unit
+  val check_string: expected:bytes -> bytes -> unit
+  val check_bool: expected:bool -> bool -> unit
+  val check_true: bool -> unit
+  val check_false: bool -> unit
+  val check_int: expected:int -> int -> unit
+  val check_float: ?precision:float -> expected:float -> float -> unit
+  val check_float_in: low:float -> high:float -> float -> unit
+  val check_float_exact: expected:float -> float -> unit
+  val check_option: repr:('a -> bytes) -> equal:('a -> 'a -> bool) -> expected:'a option -> 'a option -> unit
+  val check_option_poly: repr:('a -> bytes) -> expected:'a option -> 'a option -> unit
+  val check_some: repr:('a -> bytes) -> equal:('a -> 'a -> bool) -> expected:'a -> 'a option -> unit
+  val check_none: repr:('a -> bytes) -> equal:('a -> 'a -> bool) -> 'a option -> unit
+  val check_some_poly: repr:('a -> bytes) -> expected:'a -> 'a option -> unit
+  val check_none_poly: repr:('a -> bytes) -> 'a option -> unit
+  val check_int_option: expected:int option -> int option -> unit
+  val check_some_int: expected:int -> int option -> unit
+  val check_none_int: int option -> unit
+  val check_string_option: expected:bytes option -> bytes option -> unit
+  val check_some_string: expected:bytes -> bytes option -> unit
+  val check_none_string: bytes option -> unit
+  val check_list: repr:('a -> bytes) -> equal:('a -> 'a -> bool) -> expected:'a list -> 'a list -> unit
+  val check_list_poly: repr:('a -> bytes) -> expected:'a list -> 'a list -> unit
+  val check_string_list: expected:bytes list -> bytes list -> unit
+  val check_int_list: expected:int list -> int list -> unit
+end

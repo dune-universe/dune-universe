@@ -1,0 +1,4 @@
+set key outside
+plot 'opti.toplot' ls 1, \
+     'pess.toplot' ls 2, \
+     'real.toplot' ls 4

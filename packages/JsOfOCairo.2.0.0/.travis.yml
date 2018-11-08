@@ -1,0 +1,31 @@
+language: c
+dist: trusty
+sudo: false
+addons:
+  apt:
+    packages:
+    - aspcud
+    - libcairo2-dev
+    - libjpeg8-dev
+    - libpango1.0-dev
+    - libgif-dev
+install:
+  - wget --output-document=$HOME/opam2 https://github.com/ocaml/opam/releases/download/2.0.1/opam-2.0.1-x86_64-linux
+  - chmod +x $HOME/opam2
+  - test -d $HOME/.opam/$OCAML_VERSION || $HOME/opam2 init --yes --disable-sandboxing --compiler=$OCAML_VERSION
+  - $HOME/opam2 update --yes
+  - eval `$HOME/opam2 config env`
+  - $HOME/opam2 switch list
+  - $HOME/opam2 pin add --yes --no-action General --dev-repo
+  - $HOME/opam2 install --yes dune js_of_ocaml-ppx js_of_ocaml-compiler conf-npm cairo2=0.5 General
+  - $HOME/opam2 upgrade --yes
+  - $HOME/opam2 list
+script:
+  - dune build @runtest-full
+env:
+  - OCAML_VERSION=4.02.3
+  - OCAML_VERSION=4.07.1
+  - OCAML_VERSION=4.07.1+flambda
+cache:
+  directories:
+  - $HOME/.opam

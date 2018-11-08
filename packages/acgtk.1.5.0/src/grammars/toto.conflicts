@@ -1,0 +1,28 @@
+
+** Conflict (shift/reduce) in state 11.
+** Token involved: IDENT
+** This state is reached from heterogenous_term_and_type after reading:
+
+IDENT 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+heterogenous_term_and_type 
+term COLON type_expression EOI 
+not_atomic_term 
+(?)
+
+** In state 11, looking ahead at IDENT, reducing production
+** atomic_type_or_term -> IDENT 
+** is permitted because of the following sub-derivation:
+
+term0 nonempty_list(term0) // lookahead token appears because nonempty_list(term0) can begin with IDENT
+atomic_type_or_term // lookahead token is inherited
+IDENT . 
+
+** In state 11, looking ahead at IDENT, shifting is permitted
+** because of the following sub-derivation:
+
+IDENT nonempty_list(IDENT) DOT term 
+      . IDENT 

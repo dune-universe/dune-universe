@@ -1,5 +1,0 @@
-(executable
- (name testOprint)
- (public_name testOprint)
- (package relit-reason)
- (libraries reason))

@@ -1,0 +1,21 @@
+load o test-fix.acgo;
+select Integer;
+check a + b + c + a +  | b + d : int;
+# Is interpreted as:
+# a + (b + (c + (a + ((| b) + d)))) : int
+
+check a + b + c + a + ! | b + d : int;
+# Is interpreted as:
+# a + (b + (c + (a + ((! (| b)) + d)))) : int
+
+check a + b * c : int;
+#Is interpreted as:
+# a + (b * c) : int
+
+check a - b - b + c : int;
+#Is interpreted as:
+# (a - b) - (b + c) : int
+
+check a / b / c : int;
+# Raises an error as "/" is defined as non-associative
+

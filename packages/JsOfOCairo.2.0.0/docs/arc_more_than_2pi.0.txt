@@ -1,0 +1,6 @@
+<pre>
+arc 50.00 50.00 ~r:40.00 ~a1:0.00 ~a2:7.00
+Path.get_current_point -> (80.16, 76.28)
+line_to 50.00 50.00
+stroke
+</pre>

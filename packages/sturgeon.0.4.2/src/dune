@@ -1,0 +1,32 @@
+(library
+ (name sturgeon)
+ (public_name sturgeon)
+ (wrapped false)
+ (synopsis "A toolkit for communicating with Emacs")
+ (modules Sturgeon_sexp Sturgeon_session Sturgeon_stui Sturgeon)
+ (libraries result unix grenier.trope inuit))
+
+(library
+ (name recipes_command)
+ (public_name sturgeon.recipes_command)
+ (wrapped false)
+ (synopsis "Entrypoints for session-based commands")
+ (modules Sturgeon_recipes_command)
+ (libraries sturgeon))
+
+(library
+ (name recipes_server)
+ (public_name sturgeon.recipes_server)
+ (wrapped false)
+ (synopsis "Entrypoints for session servers")
+ (modules Sturgeon_recipes_server)
+ (libraries sturgeon threads))
+
+(executable
+ (name sturgeon_connector)
+ (modules Sturgeon_connector)
+ (libraries sturgeon))
+
+(install
+ (section bin)
+ (files (sturgeon_connector.exe as sturgeon_connector)))

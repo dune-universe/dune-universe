@@ -1,0 +1,9 @@
+module Bitwise: sig
+  val logical_and: int -> int -> int
+  val logical_or: int -> int -> int
+  val logical_xor: int -> int -> int
+  val logical_not: int -> int
+  val logical_shift_left: int -> shift:int -> int
+  val logical_shift_right: int -> shift:int -> int
+  val arithmetic_shift_right: int -> shift:int -> int
+end

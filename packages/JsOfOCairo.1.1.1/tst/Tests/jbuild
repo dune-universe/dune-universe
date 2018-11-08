@@ -1,9 +1,0 @@
-; Copyright 2017-2018 Vincent Jacques <vincent@vincent-jacques.net>
-
-(jbuild_version 1)
-
-(library (
-  (name Tests)
-  (libraries (General JsOfOCairo))
-;  (preprocess (pps (bisect_ppx))); Uncomment for dev mode
-))

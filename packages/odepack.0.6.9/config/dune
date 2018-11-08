@@ -1,0 +1,9 @@
+(executable
+ (name        discover)
+ (modules     discover)
+ (libraries   dune.configurator))
+
+(executable
+ (name      rename_c_prims)
+ (modules   rename_c_prims)
+ (libraries str))

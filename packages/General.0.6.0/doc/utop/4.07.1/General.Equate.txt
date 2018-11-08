@@ -1,0 +1,4 @@
+module Equate: sig
+  module Poly
+  module Phys
+end

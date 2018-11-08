@@ -1,0 +1,28 @@
+opam-version: "1.2"
+name: "autoco"
+authors: "Francois BERENGER <ligand@free.fr>"
+maintainer: "ligand@free.fr"
+homepage: "www.free.fr"
+bug-reports: "www.free.fr"
+dev-repo: "HappyCrow@bitbucket.org:HappyCrow/qsar_cftr_01.git"
+license: "GPL"
+build: [
+  [make]
+]
+install: [
+  ["cp"  "_build/default/src/test.exe" "%{bin}%/cftr_qsar_test"]
+]
+remove: [
+  ["sh" "-c" "rm -f %{bin}%/cftr_qsar_test"]
+]
+depends: [
+  "dune" {build}
+  "batteries"
+  "dolog"
+  "parmap"
+  "cpm"
+  "minicli"
+  "svm"
+  "bst"
+  "get_line"
+]

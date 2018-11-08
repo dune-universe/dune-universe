@@ -1,0 +1,6 @@
+(library
+  (name        logs_syslog_mirage_tls)
+  (public_name logs-syslog.mirage.tls)
+  (synopsis    "Mirage TLS syslog reporter")
+  (libraries   logs-syslog.mirage x509 tls tls.mirage mirage-kv-lwt)
+  (optional))

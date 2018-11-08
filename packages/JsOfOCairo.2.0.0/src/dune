@@ -1,0 +1,54 @@
+; Copyright 2017-2018 Vincent Jacques <vincent@vincent-jacques.net>
+
+; Files produced by cppo have file-line directives like:
+;     # 1 "CairoMock.cppo.ml"
+; They generate errors when dune calls bisect_ppx:
+;     (cd _build/default && ./.ppx/bisect_ppx/ppx.exe --dump-ast --cookie 'library-name="CairoMock"' -o src/CairoMock.pp.ml --impl src/CairoMock.ml)
+;     File "src/CairoMock.ml", line 1:
+;     Error: I/O error: CairoMock.cppo.ml: No such file or directory
+; So we use sed to prepend the directory name to the file name, look like:
+;     # 1 "src/CairoMock.cppo.ml"
+
+(rule
+  (targets CairoMock.mli)
+  (deps (:src CairoMock.cppo.mli) S.incl.mli)
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{src} -o %{targets}))
+)
+
+(rule
+  (targets CairoMock.intermediate.ml)
+  (deps (:src CairoMock.cppo.ml) Backend.incl.ml S.incl.mli)
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{src} -o %{targets}))
+)
+(rule
+  (targets CairoMock.ml)
+  (deps (:interm CairoMock.intermediate.ml))
+  (action (with-stdout-to %{targets} (run %{bin:sed} "s|# \\([0-9]\\+\\) \"|# \\1 \"src/|" %{interm})))
+)
+
+(rule
+  (targets JsOfOCairo.intermediate.ml)
+  (deps (:src JsOfOCairo.cppo.ml) Backend.incl.ml)
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{src} -o %{targets}))
+)
+(rule
+  (targets JsOfOCairo.ml)
+  (deps (:interm JsOfOCairo.intermediate.ml))
+  (action (with-stdout-to %{targets} (run %{bin:sed} "s|# \\([0-9]\\+\\) \"|# \\1 \"src/|" %{interm})))
+)
+
+; Programs that link to js_of_ocaml cannot run as native or bytecode,
+; because js_of_ocaml provides C stubs of pure JavaScript functions that raise exceptions when called,
+; and one of them is called during initialization of js_of_ocaml.
+; We want CairoMock to be usable in native/bytecode applications.
+; So we use (wrapped false) to distribute the CairoMock module as a top-level by-product of JsOfOCairo.
+; We take care manually to not pollute the global namespace, as described in
+; https://dune.readthedocs.io/en/latest/dune-files.html#library
+(library
+  (name JsOfOCairo)
+  (public_name JsOfOCairo)
+  (preprocess (pps js_of_ocaml-ppx)); Comment for dev mode
+;  (preprocess (pps js_of_ocaml-ppx bisect_ppx)); Uncomment for dev mode
+  (libraries js_of_ocaml)
+  (wrapped false)
+)

@@ -1,0 +1,3 @@
+(executable
+ (name testOprint)
+ (libraries reason))
