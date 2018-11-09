@@ -1,0 +1,4 @@
+(library
+ (name pecu)
+ (public_name pecu)
+ (libraries fmt))

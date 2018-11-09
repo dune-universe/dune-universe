@@ -1,0 +1,14 @@
+(rule
+ (targets dune.inc.gen)
+ (deps (:gen generate/generate.ml) (glob_files maps/*.TXT))
+ (action (run %{ocaml} %{gen} --databases maps -o %{targets})))
+
+(include dune.inc)
+
+(alias
+ (name runtest)
+ (action (diff dune.inc dune.inc.gen)))
+
+(library
+ (name uuuu)
+ (public_name uuuu))

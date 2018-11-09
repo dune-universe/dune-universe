@@ -1,0 +1,7 @@
+(menhir (modules format_a_parser))
+(ocamllex format_a_lexer)
+
+(executable
+ (name generate)
+ (public_name uuuu.generate)
+ (libraries fmt bos rresult cmdliner ptmap angstrom))

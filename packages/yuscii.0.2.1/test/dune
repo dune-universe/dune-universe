@@ -1,0 +1,14 @@
+(rule
+  (targets conv7)
+  (deps (:h utf7.h utf8.h getopt.h)
+        (:c conv7.c utf7.c utf8.c))
+  (action (run gcc %{c} -o %{targets})))
+
+(executable
+ (name test)
+ (libraries alcotest uutf fmt yuscii))
+
+(alias
+ (name runtest)
+ (deps (:test test.exe) conv7)
+ (action (run %{test} --color=always)))
