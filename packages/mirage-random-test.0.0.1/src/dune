@@ -1,0 +1,4 @@
+(library
+  (name mirage_random_test)
+  (public_name mirage-random-test)
+  (libraries cstruct mirage-random))
