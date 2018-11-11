@@ -1,0 +1,71 @@
+(library
+  (name calc_common)
+  (modules common generate_calc)
+  (wrapped false)
+  (libraries earley.core earley.str))
+
+(test
+  (name test)
+  (modules test)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./test.exe --quick))))
+
+(test
+  (name blank)
+  (modules blank)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./blank.exe --quick))))
+
+(test
+  (name gamma3)
+  (modules gamma3)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./gamma3.exe 30))))
+
+(test
+  (name calc_prio_left1)
+  (modules calc_prio_left1)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left1.exe --quick))))
+
+(test
+  (name calc_prio_left2)
+  (modules calc_prio_left2)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left2.exe --quick))))
+
+(test
+  (name calc_prio_left3)
+  (modules calc_prio_left3)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left3.exe --quick))))
+
+(test
+  (name calc_prio_left5)
+  (modules calc_prio_left5)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left5.exe --quick))))
+
+(test
+  (name calc_prio_left6)
+  (modules calc_prio_left6)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left6.exe --quick))))
+
+(test
+  (name calc_prio_left7)
+  (modules calc_prio_left7)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left7.exe --quick))))
+
+(test
+  (name calc_prio_left8)
+  (modules calc_prio_left8)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left8.exe --quick))))
+
+(test
+  (name calc_prio_left9)
+  (modules calc_prio_left9)
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left9.exe --quick))))

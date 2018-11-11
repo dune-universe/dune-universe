@@ -1,0 +1,38 @@
+(executable
+  (name pa_default)
+  (public_name pa_ocaml.boot)
+  (package earley)
+  (modules :standard)
+  (libraries compiler-libs.common earley.core earley.str))
+
+(rule
+  (targets
+    astextra.ml
+    astextra.mli
+    compare.ml
+    helper.ml
+    helper.mli
+    iter.ml
+    pa_ast.ml
+    pa_default.ml
+    pa_lexing.ml
+    pa_main.ml
+    pa_ocaml.ml
+    pa_ocaml_prelude.ml
+    pa_parser.ml
+    quote.ml)
+  (action (progn
+    (copy ../static/boot/%{ocaml_version}/astextra.ml astextra.ml)
+    (copy ../static/boot/%{ocaml_version}/astextra.mli astextra.mli)
+    (copy ../static/boot/%{ocaml_version}/compare.ml compare.ml)
+    (copy ../static/boot/%{ocaml_version}/helper.ml helper.ml)
+    (copy ../static/boot/%{ocaml_version}/helper.mli helper.mli)
+    (copy ../static/boot/%{ocaml_version}/iter.ml iter.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_ast.ml pa_ast.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_default.ml pa_default.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_lexing.ml pa_lexing.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_main.ml pa_main.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_ocaml.ml pa_ocaml.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_ocaml_prelude.ml pa_ocaml_prelude.ml)
+    (copy ../static/boot/%{ocaml_version}/pa_parser.ml pa_parser.ml)
+    (copy ../static/boot/%{ocaml_version}/quote.ml quote.ml))))

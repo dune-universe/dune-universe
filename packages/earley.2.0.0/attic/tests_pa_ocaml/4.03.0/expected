@@ -1,0 +1,101 @@
+long.ml: 
+long_mod.ml: 
+vlong_mod.ml: 
+bibi.ml: 
+diff size with pos: 24 56 ./tests_pa_ocaml/bibi.ml.fulldiff
+UTF16.ml: 
+diff size with pos: 8 20 ./tests_pa_ocaml/UTF16.ml.fulldiff
+test_offset.ml: 
+diff size with pos: 4 8 ./tests_pa_ocaml/test_offset.ml.fulldiff
+imageGIF.ml: 
+imageJPG.ml: 
+diff size with pos: 4 8 ./tests_pa_ocaml/imageJPG.ml.fulldiff
+image.ml: 
+diff size with pos: 16 32 ./tests_pa_ocaml/image.ml.fulldiff
+imagePNG.ml: 
+diff size with pos: 64 128 ./tests_pa_ocaml/imagePNG.ml.fulldiff
+imagePPM.ml: 
+diff size with pos: 32 64 ./tests_pa_ocaml/imagePPM.ml.fulldiff
+imageUtil.ml: 
+diff size with pos: 12 24 ./tests_pa_ocaml/imageUtil.ml.fulldiff
+imageXCF.ml: 
+decap.ml: 
+diff size with pos: 152 368 ./tests_pa_ocaml/decap.ml.fulldiff
+pa_byt_main.ml: 
+pa_ocaml.ml: 
+diff size with pos: 20 50 ./tests_pa_ocaml/pa_ocaml.ml.fulldiff
+pa_ocaml_prelude.ml: 
+diff size with pos: 84 210 ./tests_pa_ocaml/pa_ocaml_prelude.ml.fulldiff
+pa_parser.ml: 
+test.ml: 
+diff size with pos: 4 10 ./tests_pa_ocaml/test.ml.fulldiff
+objects.ml: 
+variants.ml: 
+diff size with pos: 12 30 ./tests_pa_ocaml/variants.ml.fulldiff
+prefix.ml: 
+mixin2.ml: 
+mixev.ml: 
+mixev2.ml: 
+mixmod.ml: 
+mixmod5.ml: 
+mixobj.ml: 
+pervasives.ml: 
+pervasives.mli: 
+list.ml: 
+list.mli: 
+stack.ml: 
+stack.mli: 
+set.ml: 
+set.mli: 
+map.ml: 
+map.mli: 
+bigarray.ml: 
+bigarray.mli: 
+diff size: 48 882 ./tests_pa_ocaml/bigarray.mli.diff
+diff size with pos: 48 894 ./tests_pa_ocaml/bigarray.mli.fulldiff
+string.ml: 
+string.mli: 
+array.ml: 
+diff size with pos: 52 104 ./tests_pa_ocaml/array.ml.fulldiff
+array.mli: 
+char.ml: 
+char.mli: 
+arg.ml: 
+diff size with pos: 76 152 ./tests_pa_ocaml/arg.ml.fulldiff
+arg.mli: 
+arrayLabels.ml: 
+arrayLabels.mli: 
+buffer.ml: 
+buffer.mli: 
+complex.ml: 
+complex.mli: 
+digest.ml: 
+diff size with pos: 8 16 ./tests_pa_ocaml/digest.ml.fulldiff
+digest.mli: 
+dynlink.mli: 
+filename.ml: 
+diff size with pos: 28 56 ./tests_pa_ocaml/filename.ml.fulldiff
+filename.mli: 
+format.ml: 
+diff size with pos: 76 152 ./tests_pa_ocaml/format.ml.fulldiff
+gc.ml: 
+diff size with pos: 4 8 ./tests_pa_ocaml/gc.ml.fulldiff
+gc.mli: 
+genlex.ml: 
+genlex.mli: 
+hashtbl.ml: 
+hashtbl.mli: 
+lexing.ml: 
+diff size with pos: 12 24 ./tests_pa_ocaml/lexing.ml.fulldiff
+lexing.mli: 
+listLabels.ml: 
+listLabels.mli: 
+moreLabels.ml: 
+moreLabels.mli: 
+test4.ml: 
+********************************************
+TOTAL diff size:
+  48  882 total
+TOTAL diff size with pos:
+  740  2414 total
+********************************************

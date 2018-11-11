@@ -1,0 +1,3 @@
+"ab?c*" ⇒ Seq([Chr('a');Opt(Chr('b'));Str(Chr('c'))])
+"[ab]+" ⇒ Pls(Set(ab))
+"a*" ⇒ Str(Chr('a'))

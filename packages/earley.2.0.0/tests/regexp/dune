@@ -1,0 +1,14 @@
+(test
+  (name test_regexp)
+  (modules test_regexp)
+  (libraries earley.core earley.str)
+  (action (ignore-outputs (run ./test_regexp.exe))))
+
+(test
+  (name test_regexp_parser)
+  (modules test_regexp_parser)
+  (libraries earley.core earley.str)
+  (action (progn
+    (run ./test_regexp_parser.exe "ab?c*")
+    (run ./test_regexp_parser.exe "[ab]+")
+    (run ./test_regexp_parser.exe "a*"))))

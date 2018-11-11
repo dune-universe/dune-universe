@@ -1,0 +1,14 @@
+(library
+ (name earley_core)
+ (public_name earley.core)
+ (synopsis "Earley parser combinator library")
+ (modules :standard \ earley_str)
+ (private_modules internals container)
+ (libraries unix))
+
+(library
+ (name earley_str)
+ (public_name earley.str)
+ (modules earley_str)
+ (wrapped false)
+ (libraries earley_core str))

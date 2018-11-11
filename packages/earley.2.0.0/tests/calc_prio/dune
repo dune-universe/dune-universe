@@ -1,0 +1,69 @@
+(test
+  (name blank)
+  (modules blank)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./blank.exe --quick))))
+
+(test
+  (name gamma3)
+  (modules gamma3)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./gamma3.exe 30))))
+
+(test
+  (name calc_prio_left1)
+  (modules calc_prio_left1)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left1.exe --quick))))
+
+(test
+  (name calc_prio_left2)
+  (modules calc_prio_left2)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left2.exe --quick))))
+
+(test
+  (name calc_prio_left3)
+  (modules calc_prio_left3)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left3.exe --quick))))
+
+(test
+  (name calc_prio_left5)
+  (modules calc_prio_left5)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left5.exe --quick))))
+
+(test
+  (name calc_prio_left6)
+  (modules calc_prio_left6)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left6.exe --quick))))
+
+(test
+  (name calc_prio_left7)
+  (modules calc_prio_left7)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left7.exe --quick))))
+
+(test
+  (name calc_prio_left8)
+  (modules calc_prio_left8)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left8.exe --quick))))
+
+(test
+  (name calc_prio_left9)
+  (modules calc_prio_left9)
+  (preprocess (action (run pa_ocaml %{input-file})))
+  (libraries earley.core earley.str calc_common)
+  (action (ignore-outputs (run ./calc_prio_left9.exe --quick))))

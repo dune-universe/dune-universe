@@ -1,0 +1,4 @@
+(library
+ (name rosetta)
+ (public_name rosetta)
+ (libraries uuuu yuscii coin))
