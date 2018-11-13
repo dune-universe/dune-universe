@@ -20,7 +20,7 @@
 
     This module define random-related devices for MirageOS.
 
-    {e Release v1.1.0 } *)
+    {e Release v1.2.0 } *)
 
 (** {1 Operations to generate random numbers} *)
 module type S = sig

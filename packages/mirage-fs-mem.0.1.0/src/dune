@@ -1,0 +1,4 @@
+(library
+  (name mirage_fs_mem)
+  (public_name mirage-fs-mem)
+  (libraries mirage-fs-lwt rresult fpath fmt))

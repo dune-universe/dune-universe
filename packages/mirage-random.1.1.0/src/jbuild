@@ -1,7 +1,0 @@
-(library
- ((name       stdlibrandom)
-  (synopsis "Random-related devices for MirageOS")
-  (public_name mirage-random)
-  (libraries   (cstruct))
-  (wrapped false)
-))

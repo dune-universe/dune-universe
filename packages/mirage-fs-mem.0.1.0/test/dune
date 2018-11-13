@@ -1,0 +1,6 @@
+(test
+ (name      test_pure)
+ (modules   test_pure)
+ (libraries alcotest mirage-fs-mem)
+ (package   mirage-fs-mem)
+)
