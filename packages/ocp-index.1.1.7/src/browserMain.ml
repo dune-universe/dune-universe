@@ -1,7 +1,6 @@
+open Lwt.Infix
 open Lwt_react
 open CamomileLibraryDyn.Camomile
-
-let (>>=) = Lwt.(>>=)
 
 (* LibIndex.info contains lazy values, we need a specialized equality. *)
 let rec eq l1 l2 = match l1, l2 with
@@ -173,6 +172,7 @@ let load_bindings () =
 
 
 (** Line editor *)
+
 (* Delicate mix between LTerm_read_line.engine and LTerm_edit.edit *)
 (* Should go into lambda-term. *)
 let newline = UChar.of_char '\n'
@@ -453,6 +453,35 @@ let index_of_biggest_prefix s l =
       end
   in loop 0 min_int None l
 
+(* Filter out module names of the form "Foo__bar" when Foo exists. *)
+module SSet = Set.Make(String)
+let filter_completion l =
+  let re_double_undescore = Re.(compile @@ str "__") in
+  let aux (s,l) ({LibIndex. name ; kind } as h) =
+    match kind with
+    | Module ->
+        begin match Re.split re_double_undescore name with
+          | base_name :: _ when SSet.mem base_name s -> (s, l)
+          | _ -> (SSet.add name s, h::l)
+          | exception Not_found -> (SSet.add name s, h::l)
+        end
+    | _ ->
+        (s, h::l)
+  in
+  List.rev @@ snd @@ List.fold_left aux (SSet.empty, []) l
+
+(* Sort the list of completions. *)
+let sort_completion l =
+  let cmp
+      {LibIndex. file = f1; loc_impl = lazy {loc_start = l1}}
+      {LibIndex. file = f2; loc_impl = lazy {loc_start = l2}} =
+    let name_of_file (LibIndex.Cmi s | Cmt s | Cmti s) = s in
+    let i = String.compare (name_of_file f1) (name_of_file f2) in
+    if i <> 0 then i
+    else compare l1 l2
+  in
+  List.sort cmp l
+
 (** Mono line input with completion for a LibIndex.path. *)
 class completion_box options exit =
 
@@ -500,6 +529,8 @@ class completion_box options exit =
           options.IndexOptions.lib_info
           ~filter:(IndexOptions.filter options)
           (Zed_rope.to_string content)
+        |> sort_completion
+        |> filter_completion
       in
       set_completion_info response ;
       let completions =
@@ -537,7 +568,7 @@ class completion_box options exit =
   end
 
 
-(** Count the size took by a text. *)
+(* Count the size took by a text. *)
 let size (str : LTerm_text.t) =
   let last = Array.length str - 1 in
   let rows = ref 0 in
@@ -556,7 +587,7 @@ let size (str : LTerm_text.t) =
   if fst str.(last) <> newline then incr rows ;
   {LTerm_geom. rows = !rows ; cols = !cols }
 
-(* * The show box shows the result of a research.
+(** The show box shows the result of a research.
 
     [content] is a list zipper positioned at the focused element.
     Left and right lists are elements before and after the focus.
@@ -589,7 +620,7 @@ class show_box color = object (self)
   val mutable printed_entries = (0,0)
   method printed_entries = printed_entries
 
-  val mutable extra_info = false
+  val mutable extra_info = true
   method toogle_extra_info =
     extra_info <- not extra_info
 
@@ -597,7 +628,7 @@ class show_box color = object (self)
     let {LTerm_geom. rows ; cols } =
       LTerm_geom.size_of_rect self#allocation
     in
-    let cols = cols - 2 in
+    let cols = cols - 3 in
     match content with
     | _, [] -> ()
     | left, focus :: right -> begin
@@ -641,13 +672,13 @@ class show_box color = object (self)
         let rec draw_left pos = function
           | [] -> ()
           | (text, size) :: t ->
-              LTerm_draw.draw_styled ctx (pos-size) 2 text ;
+              LTerm_draw.draw_styled ctx (pos-size) 3 text ;
               draw_left (pos-size) t
         in
         let rec draw_right pos = function
           | [] -> ()
           | (text, size) :: t ->
-              LTerm_draw.draw_styled ctx pos 2 text ;
+              LTerm_draw.draw_styled ctx pos 3 text ;
               draw_right (pos + size) t
         in
 
@@ -660,8 +691,13 @@ class show_box color = object (self)
         in
 
         draw_left start formatted_left ;
-        LTerm_draw.draw_styled ctx start 2 text_focus ;
-        LTerm_draw.draw_char ctx start 0 @@ CamomileLibrary.UChar.of_char '>' ;
+        LTerm_draw.draw_styled ctx start 3 text_focus ;
+        (* XXX: This will force all .LibIndex.doc that the cursor passes ! *)
+        let doc_hint_char = match Lazy.force focus.LibIndex.doc with
+          | Some _ -> if extra_info then '-' else '+'
+          | None -> ' ' in
+        LTerm_draw.draw_char ctx start 0 @@ CamomileLibrary.UChar.of_char doc_hint_char ;
+        LTerm_draw.draw_char ctx start 1 @@ CamomileLibrary.UChar.of_char '>' ;
         draw_right (start + size_focus) formatted_right
       end
 
@@ -713,13 +749,13 @@ class frame_info options = object
 end
 
 
-(** The list of non-modules kinds. *)
+(* The list of non-modules kinds. *)
 let value_kind_char_list = List.map UChar.of_char ['t';'e';'c';'k';'v']
 
-(** The list of modules kinds. *)
+(* The list of modules kinds. *)
 let modules_kind_char_list = List.map UChar.of_char ['m';'s']
 
-(** The list of all kinds. *)
+(* The list of all kinds. *)
 let kind_char_list = value_kind_char_list @ modules_kind_char_list
 
 let event_handler (cbox : #completion_box) (sbox:#show_box) options show_help =

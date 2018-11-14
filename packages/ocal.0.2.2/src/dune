@@ -1,0 +1,14 @@
+(executable
+ (public_name ocal)
+ (package     ocal)
+ (name        main)
+
+ (libraries
+  astring
+  calendar
+  cmdliner
+  notty
+  notty.unix
+  )
+ (flags (:standard -w "A-44-48-52" -safe-string))
+ )
