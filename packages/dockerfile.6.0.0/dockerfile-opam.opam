@@ -1,0 +1,21 @@
+opam-version: "1.2"
+maintainer: "Anil Madhavapeddy <anil@recoil.org>"
+authors: ["Anil Madhavapeddy <anil@recoil.org>"]
+homepage: "https://github.com/avsm/ocaml-dockerfile"
+doc: "https://avsm.github.io/ocaml-dockerfile/doc"
+license: "ISC"
+dev-repo: "https://github.com/avsm/ocaml-dockerfile.git"
+bug-reports: "https://github.com/avsm/ocaml-dockerfile/issues"
+tags: ["org:mirage" "org:ocamllabs"]
+available: [ ocaml-version >= "4.02.3"]
+depends: [
+  "dune" {build}
+  "dockerfile" {>="3.0.0"}
+  "ocaml-version" {>="1.0.0"}
+  "cmdliner"
+  "astring"
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
