@@ -1,7 +1,12 @@
+### v3.5.1 (2018-11-16)
+
+* socket stack (tcp/udp): catch exception in recv_from and accept (#376 @hannesm)
+* use mirage-random-test for testing (Stdlibrandom got removed from mirage-random>1.2.0, #377 @hannesm)
+
 ### v3.5.0 (2018-09-16)
 
 * Ipv4: require Mirage_random.C, used for generating IPv4 identifier instead of using OCaml's stdlib Random directly (#371 @hannesm)
-* Tcp: use entire 32 bits at random for the initial sequence number, thanks to NCC group for reporting (#371 @hannesm)
+* Tcp: use entire 32 bits at random for the initial sequence number, thanks to Spencer Michaels and Jeff Dileo of NCC Group for reporting (#371 @hannesm)
 * adjust to mirage-protocols 1.4.0 and mirage-stack 1.3.0 changes (#371 @hannesm)
   Arp no longer contains the type alias ethif
   Ethif no longer contains the type alias netif
