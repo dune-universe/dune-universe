@@ -1,0 +1,11 @@
+(executable
+ (name read_beam)
+ (libraries obeam))
+
+(alias
+ (name    runtest)
+ (package obeam)
+ (deps    read_beam.exe))
+
+(env
+ (dev (flags (:standard -w +42-9))))
