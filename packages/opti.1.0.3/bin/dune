@@ -1,0 +1,4 @@
+(executable
+ (public_name opti)
+ (name opti_main)
+ (libraries opti))

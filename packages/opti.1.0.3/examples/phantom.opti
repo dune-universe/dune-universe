@@ -1,0 +1,11 @@
+phantom x unit 1;
+
+public y unit 1 = 2 * x;
+
+phantom z unit 1 = 3 * x;
+
+public w unit 1 = 4 * z;
+
+phantom v unit 1 = 5 * w;
+
+proc increment_x increments x;

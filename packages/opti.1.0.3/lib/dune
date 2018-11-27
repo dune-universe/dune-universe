@@ -1,0 +1,3 @@
+(library (name opti))
+(ocamllex lexer)
+(ocamlyacc parser)

@@ -1,0 +1,4 @@
+To install, add the following lines to your ~/.emacs file:
+
+    (load "PATH/TO/opti-mode/opti-mode.el")
+    (add-to-list 'auto-mode-alist '("\\.opti$" . opti-mode))

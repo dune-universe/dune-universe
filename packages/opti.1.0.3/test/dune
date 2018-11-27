@@ -1,0 +1,3 @@
+(test
+ (name opti_test)
+ (libraries opti oUnit))

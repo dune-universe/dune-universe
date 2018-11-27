@@ -1,0 +1,5 @@
+public float32 value32 unit 1 = min(abs(1),max(2,3));
+public float64 value64 unit 1 = min(abs(1),max(2,3));
+
+proc recompute_value32 recomputes value32;
+proc recompute_value64 recomputes value64;

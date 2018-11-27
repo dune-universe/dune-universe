@@ -1,0 +1,6 @@
+public a unit 1;
+public b unit 1 = a;
+public c unit 1 = a * b;
+public d unit 1 = b * c;
+
+proc handle_a_delta propagates delta a;

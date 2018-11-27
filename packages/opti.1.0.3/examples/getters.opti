@@ -1,0 +1,21 @@
+range frob cname NUM_FROBS;
+range grob cname NUM_GROBS;
+
+private a[f frob][g grob] unit u;
+private b[f frob][g grob] unit v;
+
+private c1[f frob] unit u * v = sum(g grob) a[f][g] * b[f][g];
+
+phantom c2[f frob] unit u * v = sum(g grob) a[f][g] * b[f][g];
+
+phantom d unit u * v  = sum(f frob) c1[f] + c2[f];
+
+proc get_a gets a;
+proc get_b gets b;
+
+proc get_c1 gets c1;
+proc recompute_c1 recomputes c1;
+
+proc get_c2 gets c2;
+
+proc get_d gets d;

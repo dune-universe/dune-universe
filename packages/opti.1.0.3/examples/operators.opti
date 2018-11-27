@@ -1,0 +1,25 @@
+public a unit u;
+public b unit u;
+
+public c unit u = max(a,b);
+public d unit u = min(a,b);
+public e unit u = abs(a);
+
+public f unit 1 = a < b;
+public g unit 1 = a > b;
+public h unit 1 = a <= b;
+public i unit 1 = a >= b;
+
+public j unit u = a < b ? a : b;
+public k unit u = a < b ? a :
+                  c < d ? c : e;
+
+proc recompute_c recomputes c;
+proc recompute_d recomputes d;
+proc recompute_e recomputes e;
+proc recompute_f recomputes f;
+proc recompute_g recomputes g;
+proc recompute_h recomputes h;
+proc recompute_i recomputes i;
+proc recompute_j recomputes j;
+proc recompute_k recomputes k;

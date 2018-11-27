@@ -1,0 +1,12 @@
+Opti is a DSL and compiler to generate fast incremental C code from declarative specifications.
+
+To build the ocaml code, do:
+
+    dune build @runtest @install
+
+The opti main program can then be invoked as follows:
+
+    opti -i opti_code.opti -o generated_c_code.c -h generated_c_code.h
+
+There are emacs and vim modes for Opti that provide rudimentary syntax
+highlighting. See the emacs/ and vim/ subdirectories respectively.

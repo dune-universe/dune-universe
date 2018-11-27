@@ -1,0 +1,9 @@
+public a unit 1 = 0;
+public b unit x = 0;
+public c unit x = 0 + 0;
+
+public mul_right_0 unit y = b * 0;
+public mul_left_0  unit y = 0 * b;
+
+public add_right_0 unit x = b + 0;
+public add_left_0 unit x = 0 + b;

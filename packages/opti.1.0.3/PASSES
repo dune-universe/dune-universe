@@ -1,0 +1,50 @@
+The compiler is divided into passes that are run in order:
+
+* Lexing
+* Parsing
+* Semantic Checking
+* Code Generation
+* Unused Locals Removal
+* C Backend
+
+
+Lexing Pass (lexer.mll)
+-----------------------
+
+Reads .opti file and produces a stream of tokens.
+
+
+
+Parsing Pass (parser.mly)
+-------------------------
+
+Takes stream of tokens and produces an AST of type "Syntax_tree.specification".
+
+
+
+Semantic Checking Pass (semantic_checking.ml)
+---------------------------------------------
+
+Checks the "Syntax_tree.specification" for obvious problems (recursive
+definitions, multiple definitions of the same variable, etc).  This
+helps both the user and subsequent stages which may be confused by
+such errors.
+
+
+
+Code Generation Pass (opti.ml)
+------------------------------
+
+Takes a specification and produces an idealized imperative code AST of type "Imperative.module".
+
+
+
+Unused Locals Removal (unused_locals_removal.ml)
+------------------------------------------------
+Removes unused locals from the generated imperative code.
+
+
+C Backend (c_backend.ml)
+------------------------
+
+Takes idealized imperative code and pretty-prints C code.

@@ -1,0 +1,82 @@
+A warning to the reader: This file is a bit out of date. It does however still give a sense of what Opti is and how it works.
+
+
+The Opti Language
+-----------------
+
+The Opti language is used to describe incremental computations.
+
+<TODO elaborate, add example>
+
+
+Algorithm for propagating deltas
+--------------------------------
+
+The basic algorithm is: when a delta is applied to a variable, then the delta of dependent variables are computed and applied recursively. 
+
+
+This works well in practice in most cases, but there is a special case that merits attention for correctness:
+
+var A;
+var B = A;
+var C = A * B;
+
+      A -> B -> C
+       \________^
+
+Depending on whether we propagate A's delta to B first or C first, the result will differ.
+
+Case 1: A->B->C first, then A->C:
+
+     a+= delta_a;
+
+     // A->B->C
+     double delta_b = delta_a;
+     b += delta_b;
+     double delta_c = a * delta_b;  // <- error! a has changed, so this delta is not correct.
+     c += delta_c;
+
+     // A->C
+     double delta_c_2 = delta_a * b;
+     c += delta_c_2;
+
+
+Case 2: A->C first, then A->B->C:
+
+     a += delta_a;
+
+     // A->C
+     double delta_c = delta_a * b;
+     c += delta_c;
+
+     // A->B->C
+     double delta_b = delta_a;
+     b += delta_b;
+     double delta_c = a * delta_b;  // <- OK, c already reflects the cange in a.
+     c += delta_c;
+
+
+The solution employed is to rank variables and propagate deltas to the variable as far down in the dependency chain as possible at each step.
+
+In the above example, the ranks would be:
+
+    A: rank 2
+    B: rank 1
+    C: rank 0
+
+Since C has lower rank than B, A will recurse into C first.
+
+
+This solution works not just for this example, but for all possible DAGs. Here is an informal proof:
+
+1) For a delta to be applied correctly, the variable the delta is applied to must be up-to-date with respect to all variables except the variable that just changed.
+   Corollary: Every variable must have an "outdated" count of at most one.
+
+   We will show that this invariant holds at all times.
+
+2) Deltas are applied through a DFS traversal. At any point in the process, there is a path defined by the backtracking links (the "DFS chain").
+3) Nodes can only be outdated ("dirty") with respect to nodes in the DFS chain.
+4) Each recursion step decrements the outdated count of the entered node by 1, and increments the outdated count of the entered node's direct dependents by 1.
+5) At every point in time, there is a set of "dirty" nodes that have a outdated count of 1. All other nodes have outdated count 0, and are said to be "clean".
+6) The dirty node with the lowest rank has no direct dependents that are already in the dirty set.
+7) By recursing into the lowest rank dirty node first, we guarantee not to increment the outdated count of any other dirty node, so outdated count does not exceed 1 for any node.

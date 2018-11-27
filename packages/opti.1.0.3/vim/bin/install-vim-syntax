@@ -1,0 +1,3 @@
+#!/bin/bash
+mkdir -p ~/.vim/syntax/
+cp vim/syntax/opti.vim ~/.vim/syntax

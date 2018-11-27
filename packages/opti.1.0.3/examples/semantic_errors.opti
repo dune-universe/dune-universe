@@ -1,0 +1,33 @@
+range index cname NUM_INDICES;
+
+range multiply_defined_range cname NUM_INDICES;
+range multiply_defined_range cname NUM_INDICES;
+
+public multiply_defined_variable unit 1;
+public multiply_defined_variable unit 1;
+
+public refers_to_undefined_variable unit 1 = undefined_variable;
+
+public self_recursive unit 1 = self_recursive;
+
+public mutually_recursive_1 unit 1 = mutually_recursive_2;
+public mutually_recursive_2 unit 1 = mutually_recursive_1;
+
+public normal[i index] unit 1;
+
+public multiply_defined_subscripts_1[i index][i index] unit 1 = normal[i];
+public multiply_defined_subscripts_2[i index] unit 1 = sum(i index) normal[i];
+public multiply_defined_subscripts_3 unit 1 = sum(i index) sum(i index) normal[i];
+
+public refers_to_undefined_range_1[i undefined_range] unit 1 = normal[i];
+public refers_to_undefined_range_2 unit 1 = sum(i undefined_range) normal[i];
+
+public subscript_not_used_1[i index] unit 1 = 0.0;
+public subscript_not_used_2 unit 1 = sum(i index) 0.0;
+
+range range1 cname NUM_RANGE_1;
+range range2 cname NUM_RANGE_2;
+
+proc x scales unit unused_base_unit;
+
+public div_by_zero unit 1 = 1 / 0;
