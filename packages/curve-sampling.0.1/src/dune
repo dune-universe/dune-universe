@@ -1,0 +1,7 @@
+(library
+ (name        curve_sampling)
+ (public_name curve-sampling)
+ (flags     :standard -safe-string)
+ (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries gg)
+ (synopsis  "Sampling of parametric and implicit curves"))

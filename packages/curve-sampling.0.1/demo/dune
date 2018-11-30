@@ -1,0 +1,13 @@
+(executables
+ (names     graphs)
+ (libraries curve_sampling))
+
+(rule
+ (targets graphs.gp graph1.dat graph2.dat)
+ (action  (run %{exe:graphs.exe})))
+
+(alias
+ (name demo)
+ (deps graphs.gp)
+ (action (run gnuplot %{deps})))
+

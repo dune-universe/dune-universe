@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{tikzpicture}[x=30mm, y=30mm]
+  \draw[->] (-1.2, 0) -- (1.7, 0);
+  \draw[->] (0, -0.7) -- (0, 1.7);
+  \foreach \x in {-1, -0.5, 0.5, 1, 1.5}{
+    \draw (\x, 3pt) -- (\x, -3pt) node[below]{$\scriptstyle \x$};
+  }
+  \foreach \y in {-0.5, 0.5, 1, 1.5}{
+    \draw (3pt, \y) -- (-3pt, \y) node[left]{$\scriptstyle \y$};
+  }
+  \draw[dashed] (0,0) rectangle (1,1);
+  \begin{scope}[color=red, line width=3pt]
+    \input{clip1.tex}
+  \end{scope}
+  \begin{scope}[color=blue]
+    \input{clip0.tex}
+  \end{scope}
+\end{tikzpicture}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

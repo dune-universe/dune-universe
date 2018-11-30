@@ -1,0 +1,13 @@
+Range Library
+
+This small library has two goals :
+   * enable to fold a sequence of integers like a list
+   * split a range, making distributed computing easy
+
+Example of usage
+
+    (* print numbers between 100 and 200 *)
+     Range.(from 100 200 |> iter (Printf.printf "%d\n"));;
+
+     (* print sum of all values between 1 and 50 *)
+     Range.(from 1 50 |> fold (+) 0 |> print_int);;
