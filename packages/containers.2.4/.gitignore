@@ -1,0 +1,13 @@
+.*.swp
+.*.swo
+_build
+*.native
+*.byte
+.session
+TAGS
+*.docdir
+setup.*
+*.html
+.merlin
+*.install
+.ignore

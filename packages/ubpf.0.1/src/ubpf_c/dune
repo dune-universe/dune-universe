@@ -1,0 +1,16 @@
+(library
+  (name ubpf_c)
+  (public_name ubpf.c)
+  (c_library_flags (:standard -lstdc++))
+  (self_build_stubs_archive (ubpf_c)))
+
+(ignored_subdirs (ubpf))
+
+(rule
+  (deps (source_tree ubpf))
+  (targets libubpf_c_stubs.a dllubpf_c_stubs.so)
+  (action (progn
+            (chdir ubpf/vm (run make))
+            (bash "cp ubpf/vm/libubpf.a libubpf_c_stubs.a")
+            (bash "cp ubpf/vm/dllubpf.so dllubpf_c_stubs.so")
+)))
