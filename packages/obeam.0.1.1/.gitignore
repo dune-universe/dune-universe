@@ -1,0 +1,9 @@
+_build/
+
+.merlin
+*.install
+
+*.beam
+!test/*.beam
+
+/tags
