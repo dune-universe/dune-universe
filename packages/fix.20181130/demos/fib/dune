@@ -1,5 +1,0 @@
-(executable
-  (name Fib)
-  (libraries unix fix)
-  (flags "-w" "A")
-)

@@ -1,5 +1,0 @@
-(executable
-  (name Bench)
-  (libraries fix)
-  (flags "-w" "A")
-)

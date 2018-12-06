@@ -1,5 +1,0 @@
-(executable
-  (name CFG)
-  (libraries fix)
-  (flags "-w" "A")
-)

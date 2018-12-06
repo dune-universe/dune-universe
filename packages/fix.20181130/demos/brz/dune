@@ -1,5 +1,0 @@
-(executable
-  (name Main)
-  (libraries fix)
-  (flags "-w" "A-4-44")
-)

@@ -1,8 +1,0 @@
-.merlin
-_build
-dune-project
-*.install
-*.cmi
-*.cmx
-*.o
-*.s

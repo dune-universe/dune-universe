@@ -1,2 +1,0 @@
-# JBUILDER_GEN
-linkopts(javascript) = "+js_of_ocaml-compiler/toplevel.js"
