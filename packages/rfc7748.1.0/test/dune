@@ -1,0 +1,10 @@
+(test
+  (name test_rfc7748)
+  (libraries rfc7748 oUnit)
+  (modules test_rfc7748)
+)
+(test
+  (name test_misc)
+  (libraries rfc7748 oUnit)
+  (modules test_misc)
+)

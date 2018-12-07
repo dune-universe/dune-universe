@@ -1,0 +1,13 @@
+_build
+.build
+*.native
+*.out
+*.install
+
+# editors
+.DS_Store
+*.swp
+*~
+
+# jbuilder
+.merlin

@@ -1,0 +1,5 @@
+(library
+  (name opencc0)
+  (public_name opencc0)
+  (libraries ctypes.foreign)
+  (flags (:standard -safe-string)))

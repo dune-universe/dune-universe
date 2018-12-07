@@ -1,7 +1,16 @@
-let version_major = 3
-let version_minor = 2
-let version_revision = 1
+(** OCaml binding for GLFW 3.2.1 *)
 
+(** GLFW-OCaml version numbers. *)
+val version_major : int
+val version_minor : int
+val version_revision : int
+
+(** Exceptions raised by the various functions of this module.
+
+    @see <http://www.glfw.org/docs/latest/group__errors.html>
+
+    If you ever get an InvalidEnum exception and are not using unsafe features
+    that would be a bug in GLFW-OCaml. Please fill an issue on GitHub. *)
 exception NotInitialized of string
 exception NoCurrentContext of string
 exception InvalidEnum of string
@@ -13,11 +22,17 @@ exception PlatformError of string
 exception FormatUnavailable of string
 exception NoWindowContext of string
 
+(** Key actions.
+
+    @see <http://www.glfw.org/docs/latest/group__input.html> *)
 type key_action =
   | Release
   | Press
   | Repeat
 
+(** Keyboard keys.
+
+    @see <http://www.glfw.org/docs/latest/group__keys.html> *)
 type key =
   | Unknown
   | Space
@@ -141,42 +156,65 @@ type key =
   | RightSuper
   | Menu
 
+(** Keyboard key and mouse button modifiers.
+
+    @see <http://www.glfw.org/docs/latest/group__mods.html> *)
 type key_mod =
   | Shift
   | Control
   | Alt
   | Super
 
-let mouse_button_max_count = 8
+(** Maximum number of buttons handled for a mouse. *)
+val mouse_button_max_count : int
 
-let joystick_max_count = 16
+(** Values of common mouse buttons. *)
+val mouse_button_left : int
+val mouse_button_right : int
+val mouse_button_middle : int
 
+(** Maximum number of joysticks connected. *)
+val joystick_max_count : int
+
+(** Client OpenGL API hint *)
 type client_api =
   | NoApi
   | OpenGLApi
   | OpenGLESApi
 
+(** Context robustness hint *)
 type context_robustness =
   | NoRobustness
   | NoResetNotification
   | LoseContextOnReset
 
+(** OpenGL profile hint *)
 type opengl_profile =
   | AnyProfile
   | CoreProfile
   | CompatProfile
 
+(** Context release behavior hint *)
 type context_release_behavior =
   | AnyReleaseBehavior
   | ReleaseBehaviorFlush
   | ReleaseBehaviorNone
 
+(** Context creation API hint *)
 type context_creation_api =
   | NativeContextApi
   | EGLContextApi
 
-module WindowHint =
-  struct
+(** Window hints. Use with windowHint like this:
+
+    windowHint ~hint:WindowHint.Maximized ~value:true
+    windowHint ~hint:WindowHint.OpenGLProfile ~value:CoreProfile
+    windowHint ~hint:WindowHint.RefreshRate ~value:(Some 60)
+    windowHint ~hint:WindowHint.DepthBits ~value:None
+
+    @see <http://www.glfw.org/docs/latest/window_guide.html#window_hints> *)
+module WindowHint :
+  sig
     type _ t =
       | Focused : bool t
       | Resizable : bool t
@@ -213,8 +251,12 @@ module WindowHint =
       | ContextCreationApi : context_creation_api t
   end
 
-module WindowAttribute =
-  struct
+(** Windows attributes. Use with getWindowAttrib in a similar manner as with
+    window hints.
+
+    @see <http://www.glfw.org/docs/latest/window_guide.html#window_attribs> *)
+module WindowAttribute :
+  sig
     type _ t =
       | Focused : bool t
       | Iconified : bool t
@@ -234,16 +276,22 @@ module WindowAttribute =
       | ContextCreationApi : context_creation_api t
   end
 
+(** Mouse cursor input mode. *)
 type cursor_mode =
   | Normal
   | Hidden
   | Disabled
 
+(** Input modes. Use with setInputMode and getInputMode in a similar manner as
+    with window hints.
+
+    @see <http://www.glfw.org/docs/latest/group__input.html#gaa92336e173da9c8834558b54ee80563b> *)
 type _ input_mode =
   | Cursor : cursor_mode input_mode
   | StickyKeys : bool input_mode
   | StickyMouseButtons : bool input_mode
 
+(** Standard cursor shapes. *)
 type cursor_shape =
   | ArrowCursor
   | IBeamCursor
@@ -252,17 +300,21 @@ type cursor_shape =
   | HResizeCursor
   | VResizeCursor
 
+(** Joystick connection event. *)
 type connection_event =
   | Connected
   | Disconnected
 
+(** Video mode description as returned by getVideoMode(s).
+
+    @see <http://www.glfw.org/docs/latest/structGLFWvidmode.html> *)
 type video_mode = {
     width : int;
     height : int;
     red_bits : int;
     green_bits : int;
     blue_bits : int;
-    refresh_rate : int
+    refresh_rate : int;
   }
 
 type monitor
@@ -271,28 +323,59 @@ type window
 
 type cursor
 
-module GammaRamp =
-  struct
-    open Bigarray
-    type channel = (int, int16_unsigned_elt, c_layout) Array1.t
-    type t = { red : channel; green : channel; blue : channel }
-    let create ~red ~green ~blue =
-      let red_dim = Array1.dim red in
-      if red_dim = Array1.dim green && red_dim = Array1.dim blue
-      then { red; green; blue }
-      else invalid_arg "GammaRamp.make: inconstitent channel dimension."
-    let make ~size = {
-        red = Array1.create Int16_unsigned C_layout size;
-        green = Array1.create Int16_unsigned C_layout size;
-        blue = Array1.create Int16_unsigned C_layout size;
-      }
+(** GammaRamp module. Describes the gamma ramp for a monitor.
+
+    @see <http://www.glfw.org/docs/latest/structGLFWgammaramp.html> *)
+module GammaRamp :
+  sig
+    type channel =
+      (int, Bigarray.int16_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t
+    type t = private { red : channel; green : channel; blue : channel }
+
+    (** Create a gamma ramp from three user-supplied channels.
+
+        @raise Invalid_argument if the supplied channels are of different
+        lengths. *)
+    val create : red:channel -> green:channel -> blue:channel -> t
+
+    (** Create an empty gamma ramp with three channels of the given size. *)
+    val make : size:int -> t
   end
 
-type image = {
-    width : int;
-    height : int;
-    pixels : bytes
-  }
+(** Image data for creating custom cursors and window icons.
+
+    @see <http://www.glfw.org/docs/latest/structGLFWimage.html> *)
+module Image :
+  sig
+    type t
+
+    (** Create an image from the supplied pixel data with the specified width
+        and height.
+
+        @raise Invalid_argument if a dimension is negative or if there is not
+        enough data to make an image with the specified dimensions. *)
+    val create : width:int -> height:int -> pixels:bytes -> t
+  end
+
+(** Module functions. These are mostly identical to their original GLFW
+    counterparts.
+
+    There are no bindings for the glfwSetWindowUserPointer and
+    glfwGetWindowUserPointer functions because you would have to use unsafe
+    features to set the correct type for your data. If you need to make user
+    data accessible inside a callback you can instead capture it in a closure
+    and use that closure as your callback function.
+
+    There is no binding for the glfwGetProcAddress function because it would
+    basicaly require to write an entire OpenGL wrapper to make the functions
+    returned by GLFW usable from OCaml. Incidentaly the glfwExtensionSupported
+    function is not provided either. There are numerous OpenGL bindings
+    available for OCaml that you can use instead.
+
+    The Vulkan related functions are not supported as of now but we might look
+    into it at some point.
+
+    @see <http://www.glfw.org/docs/latest/glfw3_8h.html#func-members> *)
 
 external init : unit -> unit = "caml_glfwInit"
 external terminate : unit -> unit = "caml_glfwTerminate"
@@ -329,7 +412,7 @@ external setWindowShouldClose : window:window -> b:bool -> unit
   = "caml_glfwSetWindowShouldClose"
 external setWindowTitle : window:window -> title:string -> unit
   = "caml_glfwSetWindowTitle"
-external setWindowIcon : window:window -> images:image list -> unit
+external setWindowIcon : window:window -> images:Image.t list -> unit
   = "caml_glfwSetWindowIcon"
 external getWindowPos : window:window -> int * int = "caml_glfwGetWindowPos"
 external setWindowPos : window:window -> xpos:int -> ypos:int -> unit
@@ -404,7 +487,7 @@ external getMouseButton : window:window -> button:int -> bool
 external getCursorPos : window:window -> float * float = "caml_glfwGetCursorPos"
 external setCursorPos : window:window -> xpos:float -> ypos:float -> unit
   = "caml_glfwSetCursorPos"
-external createCursor : image:image -> xhot:int -> yhot:int -> cursor
+external createCursor : image:Image.t -> xhot:int -> yhot:int -> cursor
   = "caml_glfwCreateCursor"
 external createStandardCursor : shape:cursor_shape -> cursor
   = "caml_glfwCreateStandardCursor"
@@ -467,18 +550,3 @@ external getCurrentContext : unit -> window option
   = "caml_glfwGetCurrentContext"
 external swapBuffers : window:window -> unit = "caml_glfwSwapBuffers"
 external swapInterval : interval:int -> unit = "caml_glfwSwapInterval"
-
-external init_stub : unit -> unit = "init_stub" [@@noalloc]
-
-let () =
-  Callback.register_exception "GLFW.NotInitialized" (NotInitialized "");
-  Callback.register_exception "GLFW.NoCurrentContext" (NoCurrentContext "");
-  Callback.register_exception "GLFW.InvalidEnum" (InvalidEnum "");
-  Callback.register_exception "GLFW.InvalidValue" (InvalidValue "");
-  Callback.register_exception "GLFW.OutOfMemory" (OutOfMemory "");
-  Callback.register_exception "GLFW.ApiUnavailable" (ApiUnavailable "");
-  Callback.register_exception "GLFW.VersionUnavailable" (VersionUnavailable "");
-  Callback.register_exception "GLFW.PlatformError" (PlatformError "");
-  Callback.register_exception "GLFW.FormatUnavailable" (FormatUnavailable "");
-  Callback.register_exception "GLFW.NoWindowContext" (NoWindowContext "");
-  init_stub ()

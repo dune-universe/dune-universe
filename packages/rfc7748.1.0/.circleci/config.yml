@@ -1,0 +1,19 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+    - image: ocaml/opam2:alpine-3.8-ocaml-4.03
+    working_directory: /tmp/rfc7748
+    steps:
+    - run:
+        name: "conf-deps"
+        command: sudo apk add --no-cache m4 perl gmp-dev
+    - checkout
+    - run:
+        name: "opam-install"
+        command: opam install --with-test .
+workflows:
+  version: 2
+  push_validation:
+    jobs:
+      - build

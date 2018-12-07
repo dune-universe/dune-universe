@@ -1,0 +1,5 @@
+(test
+  (name quickstart)
+  (libraries rfc7748)
+  (modules quickstart)
+)
