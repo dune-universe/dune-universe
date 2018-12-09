@@ -1,0 +1,5 @@
+(library
+ (name graphql_lwt)
+ (public_name graphql-lwt)
+ (wrapped false)
+ (libraries graphql lwt))
