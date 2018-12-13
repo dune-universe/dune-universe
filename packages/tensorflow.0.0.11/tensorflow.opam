@@ -1,0 +1,49 @@
+opam-version: "2.0"
+name:         "tensorflow"
+bug-reports:  "https://github.com/LaurentMazare/tensorflow-ocaml/issues"
+homepage:     "https://github.com/LaurentMazare/tensorflow-ocaml"
+dev-repo:     "git+https://github.com/LaurentMazare/tensorflow-ocaml.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [
+  ["dune" "build" "-j" jobs "@install"]
+]
+install: []
+remove:  []
+
+depends: [
+  "base" {>= "0.11.0"}
+  "cmdliner"
+  "conf-wget" {build}
+  "ctypes" {>= "0.5"}
+  "ctypes-foreign"
+  "dune" {>= "1.3.0" build}
+  "libtensorflow"
+  "ocaml" {>= "4.06"}
+  "ocamlfind" {build}
+  "stdio"
+]
+
+depopts: [
+  "camlimages"
+  "gnuplot"
+  "npy"
+]
+
+conflicts: [
+]
+
+available: [ os != "macos" ]
+
+synopsis: "TensorFlow bindings for OCaml"
+description: """
+The tensorflow-ocaml project provides some OCaml bindings for TensorFlow, a
+machine learning framework. These bindings are in an early stage of their
+development. Some operators are not supported and the API is likely to change
+in the future. You may also encounter some segfaults. That being said they
+already contain the necessary to train a convolution network using various
+optimizers.
+"""

@@ -1,0 +1,3 @@
+(executable
+ (name         stelnet)
+ (libraries    osx-secure-transport ctypes ctypes.foreign))

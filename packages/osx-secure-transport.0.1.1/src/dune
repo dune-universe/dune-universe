@@ -1,0 +1,5 @@
+(library
+ (name         SecureTransport)
+ (public_name  osx-secure-transport)
+ (synopsis     "macos/ios SecureTransport TLS OSX implementation API for OCaml")
+ (libraries    ctypes ctypes.foreign))
