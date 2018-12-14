@@ -1,4 +1,0 @@
-(executables
- ((names (xencat))
-  (libraries (cmdliner lwt vchan vchan-unix))
-))

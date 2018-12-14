@@ -1,0 +1,19 @@
+{0:top Travesty}
+
+[Travesty] is a library for defining containers with monadic traversals,
+inspired by Haskell's
+Traversable typeclass.  It sits on top of Jane Street's
+Core library ecosystem.
+
+Travesty's main contribution is the {{!Traversable}Traversable} module, which
+implements monadic traversal.  It also includes a {{!Mappable}Mappable} module,
+which adds various bits of support for mappable containers (what Haskell would
+call 'functors').
+
+Travesty also contains several other bits of Haskell-style monad functionality:
+
+- state monads ({{!State}State});
+- state transformers ({{!State_transform}State_transform});
+- miscellaneous extensions on monads
+  ({{!T_monad}T_monad}), containers ({{!T_containers}T_containers}),
+  and functions ({{!T_fn}T_fn}).

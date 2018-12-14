@@ -1,0 +1,4 @@
+Monadically traversable containers
+'Travesty' is a library for defining containers with monadic traversals,
+   inspired by Haskell's Traversable typeclass.  It sits on top of Jane Street's
+   Core library ecosystem.
