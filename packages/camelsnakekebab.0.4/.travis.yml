@@ -1,0 +1,14 @@
+language: c
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+services:
+- docker
+env:
+  global:
+  - EXTRA_REMOTES="https://github.com/mirage/mirage-dev.git"
+  - PINS="camelsnakekebab:."
+  matrix:
+  - PACKAGE="camelsnakekebab" DISTRO="ubuntu-16.04" OCAML_VERSION="4.04"
+  - PACKAGE="camelsnakekebab" DISTRO="ubuntu-16.04" OCAML_VERSION="4.05"
+  - PACKAGE="camelsnakekebab" DISTRO="ubuntu-16.04" OCAML_VERSION="4.06"
+  - PACKAGE="camelsnakekebab" DISTRO="ubuntu-16.04" OCAML_VERSION="4.07"

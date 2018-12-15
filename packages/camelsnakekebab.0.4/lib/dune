@@ -1,0 +1,8 @@
+(library
+  (name  camelsnakekebab)
+  (public_name  camelsnakekebab)
+  (libraries pcre base)
+  (synopsis "A Ocaml library for word case conversion")
+ )
+
+

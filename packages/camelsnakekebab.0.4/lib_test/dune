@@ -1,0 +1,11 @@
+(executables
+  (names basic)
+  (libraries camelsnakekebab oUnit)
+)
+
+(alias
+ (name    runtest)
+  (deps    basic.exe)
+  (action  (run ./basic.exe))
+)
+
