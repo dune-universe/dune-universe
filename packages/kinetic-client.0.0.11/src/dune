@@ -1,0 +1,13 @@
+(library
+  (name kinetic_client)
+  (public_name kinetic-client)
+  (wrapped false)
+  (libraries lwt lwt.unix lwt_ssl cryptokit lwt_log ocaml-protoc)
+  (preprocess  (pps ppx_deriving.show))
+  (flags :standard -w -3-27-32-33-39)
+)
+
+(rule
+ (targets kinetic_types.ml kinetic_types.mli kinetic_pb.ml kinetic_pb.mli)
+ (deps kinetic.proto)
+ (action (run %{bin:ocaml-protoc} -ml_out . %{deps})))

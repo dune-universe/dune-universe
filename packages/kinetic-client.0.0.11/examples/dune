@@ -1,0 +1,9 @@
+(executable
+  (name test_it)
+  (flags :standard -w -3-27-32-33-34-39)
+  (libraries kinetic-client cmdliner)
+)
+(alias
+  (name examples)
+  (deps test_it.exe)
+)

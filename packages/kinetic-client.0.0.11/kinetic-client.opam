@@ -1,0 +1,25 @@
+opam-version: "1.2"
+name: "kinetic-client"
+version: "0.0.11"
+maintainer: "Romain Slootmaekers <romain.slootmaekers@openvstorage.com>"
+authors: "Romain Slootmaekers <romain.slootmaekers@openvstorage.com>"
+homepage: "https://github.com/openvstorage/kinetic-ocaml-client"
+bug-reports: "https://github.com/openvstorage/kinetic-ocaml-client"
+dev-repo: "https://github.com/openvstorage/kinetic-ocaml-client.git"
+license: "LGPL"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+build-test: [["dune" "build" "@examples" "-j" jobs]]
+depends: [
+  "dune" {build & >= "1.1.0"}
+  "ocaml-protoc" {>= "1.2.0"}
+  "lwt" {>= "3.2.0"}
+  "lwt_log"
+  "lwt_ssl"
+  "cryptokit"
+  "ppx_deriving"
+  "cmdliner" {test}
+]
+available: [ ocaml-version >= "4.02.1" ]
