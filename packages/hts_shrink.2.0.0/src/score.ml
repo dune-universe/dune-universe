@@ -41,23 +41,16 @@ let array_tanimoto_dist xs ys =
 (* a SFP encoded molecule is an intmap: atom_env (feature index) to count
    of this feature *)
 let intmap_tanimoto m1 m2 =
-  let int_equal (i: int) (j: int): bool =
-    i = j in
-  (* like x2s in tanimoto_et_al *)
-  let intmap_sum_of_squared_values m =
-    IntMap.fold (fun _k v acc ->
-        acc + v * v
-      ) m 0 in
-  (* like xys in tanimoto_et_al *)
-  let intmap_sum_of_value_products m1 m2 =
-    IntMap.fold (fun k1 v1 acc ->
-        let v2 = IntMap.find_default 0 k1 m2 in
-        acc + v1 * v2
-      ) m1 0 in
-  let xys = float (intmap_sum_of_value_products m1 m2) in
-  let x2s = float (intmap_sum_of_squared_values m1) in
-  let y2s = float (intmap_sum_of_squared_values m2) in
-  if IntMap.equal int_equal m1 m2
-  then 1.0 (* needed _before_ NaN protection *)
-  else if xys = 0.0 then 0.0 (* avoid NaN *)
-  else xys /. (x2s +. y2s -. xys) (* regular formula *)
+  let rec loop (icard, ucard) l1 l2 = match l1, l2 with
+    | [], [] -> (float icard) /. (float ucard)
+    | [], (_k2, v2) :: kvs2 -> loop (icard, ucard + v2) [] kvs2
+    | (_k1, v1) :: kvs1, [] -> loop (icard, ucard + v1) kvs1 []
+    | (k1, v1) :: kvs1, (k2, v2) :: kvs2 ->
+      (* process keys in increasing order *)
+      if k1 < k2 then
+        loop (icard, ucard + v1) kvs1 l2
+      else if k2 < k1 then
+        loop (icard, ucard + v2) l1 kvs2
+      else (* k1 = k2 *)
+        loop (icard + (min v1 v2), ucard + (max v1 v2)) kvs1 kvs2 in
+  loop (0, 0) (IntMap.bindings m1) (IntMap.bindings m2)

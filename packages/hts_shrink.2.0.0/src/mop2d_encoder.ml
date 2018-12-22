@@ -11,6 +11,7 @@
 open Printf
 
 module A = Array
+module CLI = Minicli.CLI
 module Fp = Fingerprint
 module L = MyList
 module Ht = BatHashtbl

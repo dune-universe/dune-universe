@@ -11,6 +11,7 @@
 
 open Printf
 
+module CLI = Minicli.CLI
 module A = MyArray
 module Ht = BatHashtbl
 module L = MyList
