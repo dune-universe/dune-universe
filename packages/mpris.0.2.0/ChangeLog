@@ -1,0 +1,9 @@
+0.1.2 (23-Dec-2018):
+ * Convert build to dune
+
+0.1.1 (10-Dec-2017):
+ * Add opam file
+ * Fix build for OCaml 4.06
+
+0.1.0 (27-Oct-2014):
+ * first public release

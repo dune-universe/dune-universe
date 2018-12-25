@@ -1,0 +1,4 @@
+(executable
+  (name demo_spotify)
+  (libraries obus lwt mpris_clients)
+  (preprocess (pps lwt_ppx)))

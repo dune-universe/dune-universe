@@ -1,0 +1,7 @@
+(library
+  (name mpris)
+  (public_name mpris)
+  (libraries lwt obus)
+  (modules mpris_client_generic mpris_interfaces)
+  (wrapped false)
+  (preprocess (pps lwt_ppx)))
