@@ -1,0 +1,45 @@
+opam-version: "2.0"
+name: "vocal"
+synopsis: "VOCaL -- The Verified OCaml Library"
+description: "VOCaL -- The Verified OCaml Library"
+version: "0.1"
+maintainer: "Mário Pereira <mpereira@lri.fr>"
+authors: [
+"Arthur Charguéraud"
+"Martin Clochard"
+"Marc Coiffier"
+"Pierre Corbineau"
+"Julien Cretin"
+"Pascal Cuoq"
+"Jacques-Pascal Deplaix"
+"Jean-Christophe Filliâtre"
+"Léon Gondelman"
+"Armaël Guéneau"
+"Mohamed Iguernelala"
+"Fabrice Le Fessant"
+"Xavier Leroy"
+"Cláudio Lourenço"
+"David Maison"
+"Simão Melo de Sousa"
+"Benjamin Monate"
+"Jean-Francois Monin"
+"David Monniaux"
+"Andrei Paskevich"
+"Mário Pereira"
+"François Pottier"
+"Michael Rainey"
+"Jean-Louis Roch"
+"Léo Testard"
+]
+license: "MIT"
+homepage: "https://vocal.lri.fr/"
+dev-repo: "git://github.com/vocal-project/vocal"
+bug-reports: "https://github.com/vocal-project/vocal/issues"
+doc: "https://github.com/vocal-project/vocal/blob/master/README.md"
+build: [
+  [ "dune" "build" "-p" name ]
+]
+depends: [
+  "dune" {build}
+  "seq"
+]
