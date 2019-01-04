@@ -1,0 +1,19 @@
+(library
+ (name        vmnet)
+ (public_name vmnet)
+ (libraries   bigarray unix cstruct-unix sexplib ipaddr threads)
+ (modules     Vmnet)
+ (c_names     vmnet_stubs)
+ (c_library_flags (-framework vmnet))
+ (wrapped     false)
+ (preprocess (pps ppx_sexp_conv))
+)
+
+(library
+ (name        vmnet_lwt)
+ (public_name vmnet.lwt)
+ (libraries   vmnet lwt lwt.unix)
+ (modules     Lwt_vmnet)
+ (wrapped     false)
+ (preprocess  (pps ppx_sexp_conv))
+)

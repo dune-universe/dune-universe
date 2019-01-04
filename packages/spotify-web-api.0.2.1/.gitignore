@@ -1,0 +1,6 @@
+lib/*_j.ml*
+lib/*_t.ml*
+*.swp
+_build
+*.merlin
+*.install

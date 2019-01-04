@@ -1,0 +1,5 @@
+(library
+  (name        lwt_launchd)
+  (public_name launchd.lwt)
+  (c_names     launchd_stubs)
+  (libraries   launchd lwt lwt.unix cstruct cstruct-lwt))

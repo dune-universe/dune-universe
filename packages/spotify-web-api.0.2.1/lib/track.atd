@@ -1,0 +1,41 @@
+type album_simplified <ocaml from="Album"> = abstract
+type artist_simplified <ocaml from="Artist"> = abstract
+type external_ids <ocaml from="External_ids"> = abstract
+type external_urls <ocaml from="External_urls"> = abstract
+type 'a paging <ocaml from="Paging"> = abstract
+
+type track = {
+  album: album_simplified;
+  artists: artist_simplified list;
+  available_markets: string list;
+  disc_number: int;
+  duration_ms: int;
+  explicit: bool;
+  external_ids: external_ids;
+  external_urls: external_urls;
+  href: string;
+  id: string;
+  name: string;
+  popularity: int;
+  preview_url: string;
+  track_number: int;
+  uri: string;
+}
+
+type track_simplified = {
+  artists: artist_simplified list;
+  available_markets: string list;
+  disc_number: int;
+  duration_ms: int;
+  explicit: bool;
+  href: string;
+  id: string;
+  name: string;
+  preview_url: string;
+  track_number: int;
+  uri: string;
+}
+
+type search_wrapper = {
+  tracks: track paging;
+}

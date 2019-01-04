@@ -1,0 +1,35 @@
+{
+  "albums" : {
+    "href" : "https://api.spotify.com/v1/search?query=cavalcade+of+dadaist&offset=0&limit=20&type=album",
+    "items" : [ {
+      "album_type" : "album",
+      "available_markets" : [ "AR", "BO", "BR", "CA", "CL", "CO", "CR", "DO", "EC", "GT", "HN", "MX", "NI", "PA", "PE", "PY", "SV", "US", "UY" ],
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/5v4vDmq8pNO3TbegZmK5bL"
+      },
+      "href" : "https://api.spotify.com/v1/albums/5v4vDmq8pNO3TbegZmK5bL",
+      "id" : "5v4vDmq8pNO3TbegZmK5bL",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://i.scdn.co/image/d2c396974cd76ab68e95deb6c996eb2c34033341",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://i.scdn.co/image/2e4646f11b710bae7802d1dd85c634c6aa5f5ff0",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://i.scdn.co/image/a389ad01fe08f0d1d994f55ac28d8a417c047158",
+        "width" : 64
+      } ],
+      "name" : "Cavalcade Of Glee & Dadaist Happy Hardcore Pom Poms",
+      "type" : "album",
+      "uri" : "spotify:album:5v4vDmq8pNO3TbegZmK5bL"
+    } ],
+    "limit" : 20,
+    "next" : null,
+    "offset" : 0,
+    "previous" : null,
+    "total" : 1
+  }
+}

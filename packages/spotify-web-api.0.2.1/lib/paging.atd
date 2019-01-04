@@ -1,0 +1,7 @@
+type 'a paging = {
+  href: string;
+  items: 'a list;
+  limit: int;
+  offset: int;
+  total: int;
+}

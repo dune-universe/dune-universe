@@ -1,0 +1,3 @@
+(executables
+ (names vmnet_listen vmnet_write)
+ (libraries vmnet))

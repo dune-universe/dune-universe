@@ -1,5 +1,0 @@
-(library
- (name torch_tests)
- (inline_tests)
- (libraries sexplib stdio torch)
- (preprocess (pps ppx_custom_printf ppx_sexp_conv ppx_expect)))

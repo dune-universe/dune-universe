@@ -1,0 +1,4 @@
+(library
+  (public_name launchd)
+  (c_names     launchd_stubs)
+  (libraries   unix))

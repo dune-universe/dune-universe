@@ -1,0 +1,4 @@
+type followers = {
+  href: string nullable;
+  total: int;
+}

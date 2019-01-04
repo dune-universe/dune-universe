@@ -1,0 +1,18 @@
+type external_urls <ocaml from="External_urls"> = abstract
+type image <ocaml from="Image"> = abstract
+type 'a paging <ocaml from="Paging"> = abstract
+
+type album_simplified = {
+  album_type: string;
+  available_markets: string list;
+  external_urls: external_urls;
+  href: string;
+  id: string;
+  images: image list;
+  name: string;
+  uri: string;
+}
+
+type search_wrapper = {
+  albums: album_simplified paging;
+}

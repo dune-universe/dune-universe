@@ -1,0 +1,14 @@
+(library
+  (name spotify_web_api)
+  (public_name spotify-web-api)
+  (libraries atdgen biniou yojson uri cohttp-lwt-unix)
+  (modules album_t          album_j
+           artist_t         artist_j
+           external_ids_t   external_ids_j
+           external_urls_t  external_urls_j
+           followers_t      followers_j
+           image_t          image_j
+           paging_t         paging_j
+           track_t          track_j
+           spotify_web_api)
+  (wrapped false))

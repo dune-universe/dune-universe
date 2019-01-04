@@ -1,0 +1,13 @@
+(executable
+  (name      example)
+  (modules   example)
+  (libraries launchd))
+
+(executable
+  (name      example_lwt)
+  (modules   example_lwt)
+  (libraries launchd.lwt))
+
+(alias
+  (name runtest)
+  (deps ./example.exe ./example_lwt.exe))

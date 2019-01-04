@@ -1,0 +1,40 @@
+(library
+ (name        ipaddr)
+ (public_name ipaddr)
+ (modules ipaddr)
+ (libraries macaddr))
+
+(library
+ (name        macaddr)
+ (public_name macaddr)
+ (modules macaddr))
+
+(library
+ (name        ipaddr_sexp)
+ (public_name ipaddr.sexp)
+ (modules ipaddr_sexp)
+ (libraries ipaddr sexplib0))
+
+(library
+ (name        macaddr_sexp)
+ (public_name macaddr.sexp)
+ (modules macaddr_sexp)
+ (libraries macaddr sexplib0))
+
+(library
+ (name        ipaddr_unix)
+ (public_name ipaddr.unix)
+ (modules ipaddr_unix)
+ (libraries unix ipaddr))
+
+(library
+ (name        ipaddr_top)
+ (public_name ipaddr.top)
+ (modules ipaddr_top)
+ (libraries macaddr.top ipaddr compiler-libs))
+
+(library
+ (name        macaddr_top)
+ (public_name macaddr.top)
+ (modules macaddr_top)
+ (libraries macaddr compiler-libs))

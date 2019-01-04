@@ -1,0 +1,65 @@
+{
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=will_smith&offset=0&limit=20&type=track",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "available_markets" : [ "AR", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/1eMrRFFbPPC2zgKGojsVxX"
+        },
+        "href" : "https://api.spotify.com/v1/albums/1eMrRFFbPPC2zgKGojsVxX",
+        "id" : "1eMrRFFbPPC2zgKGojsVxX",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/a50c2eae749b0f4c5125ca639e4b34dda5f8db72",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/9ab898ff26fd366b925a34185cbd180f6a840b49",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/a947b4743b6fd4c36be1256811ea62c3e5853ff9",
+          "width" : 64
+        } ],
+        "name" : "OCTOPUS4",
+        "type" : "album",
+        "uri" : "spotify:album:1eMrRFFbPPC2zgKGojsVxX"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/14u4KXVp0iXQil79EpxXGc"
+        },
+        "href" : "https://api.spotify.com/v1/artists/14u4KXVp0iXQil79EpxXGc",
+        "id" : "14u4KXVp0iXQil79EpxXGc",
+        "name" : "The Algorithm",
+        "type" : "artist",
+        "uri" : "spotify:artist:14u4KXVp0iXQil79EpxXGc"
+      } ],
+      "available_markets" : [ "AR", "AT", "BE", "BO", "BR", "BG", "CA", "CL", "CO", "CR", "CY", "CZ", "DK", "DO", "DE", "EC", "EE", "SV", "FI", "FR", "GR", "GT", "HN", "HK", "HU", "IS", "IE", "IT", "LV", "LT", "LU", "MY", "MT", "MX", "NL", "NI", "NO", "PA", "PY", "PE", "PH", "PL", "PT", "SG", "SK", "ES", "SE", "CH", "TW", "TR", "UY", "US", "GB", "AD", "LI", "MC", "ID" ],
+      "disc_number" : 1,
+      "duration_ms" : 261346,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "UK2D51400006"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/7FPxCA9KaWXV18r1Za878d"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/7FPxCA9KaWXV18r1Za878d",
+      "id" : "7FPxCA9KaWXV18r1Za878d",
+      "name" : "will_smith",
+      "popularity" : 30,
+      "preview_url" : "https://p.scdn.co/mp3-preview/860ab99fe6dfe6b0455b91f5a8039d08308fae0f",
+      "track_number" : 4,
+      "type" : "track",
+      "uri" : "spotify:track:7FPxCA9KaWXV18r1Za878d"
+    } ],
+    "limit" : 20,
+    "next" : null,
+    "offset" : 0,
+    "previous" : null,
+    "total" : 1
+  }
+}

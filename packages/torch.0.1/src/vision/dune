@@ -1,4 +1,0 @@
-(library
-  (name torch_vision)
-  (public_name torch.vision)
-  (libraries base imagelib stdio torch_core torch))
