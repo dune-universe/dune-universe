@@ -1,10 +1,10 @@
-version: "1.8.0"
-opam-version: "1.2"
+version: "1.8.1"
+opam-version: "2.0"
 maintainer:    "anil@recoil.org"
 authors:       ["Anil Madhavapeddy" "Thomas Leonard"]
 homepage:      "https://github.com/mirage/mirage-net-xen"
 bug-reports:   "https://github.com/mirage/mirage-net-xen/issues"
-dev-repo:      "https://github.com/mirage/mirage-net-xen.git"
+dev-repo:      "git+https://github.com/mirage/mirage-net-xen.git"
 doc:           "https://mirage.github.io/mirage-net-xen"
 build: [
   [ "jbuilder" "subst" "-n" name] {pinned}
@@ -12,6 +12,7 @@ build: [
 ]
 
 depends: [
+  "ocaml" {>= "4.04.0"}
   "jbuilder"  {build & >="1.0+beta9"}
   "cstruct" {>= "3.0.0"}
   "lwt" {>= "2.4.3"}
@@ -22,5 +23,5 @@ depends: [
   "netchannel"
   "logs" {>= "0.5.0"}
 ]
-available: [ocaml-version >= "4.03.0"]
 tags: "org:mirage"
+synopsis: "Network device for reading and writing Ethernet frames via then Xen netfront/netback protocol"

@@ -14,7 +14,6 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
-open Result
 
 [@@@ocaml.warning "-32"]  (* cstruct ppx generates unused values *)
 
@@ -58,7 +57,7 @@ module Request = struct
     else Ok x
 
   let read slot =
-    let open ResultM in
+    let open Rresult.R.Infix in
     let gref = get_req_gref slot in
     let offset = get_req_offset slot in
     within_page "TX.Request.offset" offset
@@ -66,7 +65,7 @@ module Request = struct
     let flags = Flags.of_int (get_req_flags slot) in
     let id = get_req_id slot in
     let size = get_req_size slot in
-    return { gref; offset; flags; id; size }
+    Ok { gref; offset; flags; id; size }
 
   let flags t = t.flags
 

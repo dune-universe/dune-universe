@@ -14,7 +14,6 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
-open Result
 open Sexplib.Std
 
 [@@@ocaml.warning "-32"]  (* cstruct ppx generates unused values *)
@@ -68,7 +67,7 @@ module Response = struct
     else Ok x
 
   let read slot =
-    let open ResultM in
+    let open Rresult.R.Infix in
     let id = get_resp_id slot in
     let offset = get_resp_offset slot in
     within_page "RX.Response.offset" offset
@@ -78,7 +77,7 @@ module Response = struct
       match get_resp_status slot with
       | status when status > 0 -> Ok status
       | status -> Error status in
-    return { id; offset; flags; size }
+    Ok { id; offset; flags; size }
 
   let write t slot =
     set_resp_id slot t.id;

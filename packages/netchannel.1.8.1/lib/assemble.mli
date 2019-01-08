@@ -16,8 +16,6 @@
 
 (** Assemble complete network frames from Xen network messages. *)
 
-open Result
-
 module type FRAME_MSG = sig
   type error
   type t

@@ -15,12 +15,41 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Result
+module Request : sig
+  type error = { impossible : 'a. 'a }  (* No errors *)
 
-type 'a t = ('a, string) result
+  type t = {
+    gref: int32;
+    offset: int;
+    flags: Flags.t;
+    id: int;
+    size: int;
+  }
 
-let (>>=) (m: 'a t) f = match m with
-| Ok x -> f x
-| Error msg -> Error msg
+  val write: t -> Cstruct.t -> unit
 
-let return x = Ok x
+  val read: Cstruct.t -> (t, string) result
+
+  val flags: t -> Flags.t
+
+  val size: t -> (int, error) result
+end
+
+module Response : sig
+  type status =
+    | DROPPED
+    | ERROR
+    | OKAY
+    | NULL  (* No response: used for auxiliary requests (e.g., xen_netif_extra_info). *)
+
+  type t = {
+    id: int;
+    status: status;
+  }
+
+  val write: t -> Cstruct.t -> unit
+
+  val read: Cstruct.t -> t
+end
+
+val total_size: int

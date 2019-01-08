@@ -17,7 +17,6 @@
  *)
 
 open Lwt.Infix
-open Result
 open Mirage_net
 
 let src = Logs.Src.create "net-xen:backend" ~doc:"Mirage's Xen netback"

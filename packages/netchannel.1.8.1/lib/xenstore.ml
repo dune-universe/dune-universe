@@ -72,11 +72,11 @@ module Make(Xs: Xs_client_lwt.S) = struct
     Xs.(immediate xsc (fun h -> read h (frontend / "mac")))
     >|= Macaddr.of_string
     >>= function
-    | Some x -> return x
-    | None ->
+    | Ok x -> return x
+    | Error (`Msg msg) ->
       let m = Macaddr.make_local (fun _ -> Random.int 255) in
-      Log.info (fun f -> f "%s: no configured MAC, using %s"
-        (Sexplib.Sexp.to_string (S.sexp_of_id id)) (Macaddr.to_string m));
+      Log.info (fun f -> f "%s: no configured MAC (error: %s), using %a"
+        (Sexplib.Sexp.to_string (S.sexp_of_id id)) msg Macaddr.pp m);
       return m
 
   let read_features side path =

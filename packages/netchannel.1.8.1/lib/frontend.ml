@@ -15,9 +15,7 @@
  *)
 
 open Lwt.Infix
-open Printf
 open OS
-open Result
 open Mirage_net
 
 let src = Logs.Src.create "net-xen:frontend" ~doc:"Mirage's Xen netfront"
@@ -45,9 +43,9 @@ let create_ring ~domid ~idx_size name =
   return (rx_gnt, fring, client)
 
 let create_rx (id, domid) =
-  create_ring ~domid ~idx_size:RX.total_size (sprintf "Netif.RX.%d" id)
+  create_ring ~domid ~idx_size:RX.total_size (Printf.sprintf "Netif.RX.%d" id)
 let create_tx (id, domid) =
-  create_ring ~domid ~idx_size:TX.total_size (sprintf "Netif.TX.%d" id)
+  create_ring ~domid ~idx_size:TX.total_size (Printf.sprintf "Netif.TX.%d" id)
 
 module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
   type 'a io = 'a Lwt.t
