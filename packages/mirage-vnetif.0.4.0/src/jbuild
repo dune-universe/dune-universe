@@ -1,8 +1,0 @@
-(jbuild_version 1)
-(library
-  ((name mirage_vnetif)
-   (public_name mirage-vnetif)
-   (modules (basic_backend vnetif))
-   (wrapped false)
-   (libraries (cstruct lwt mirage-clock-lwt ipaddr mirage-profile io-page duration result mirage-time-lwt mirage-net mirage-net-lwt logs))
-))
