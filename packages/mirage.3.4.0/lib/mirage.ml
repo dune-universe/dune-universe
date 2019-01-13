@@ -861,7 +861,7 @@ let clean i =
 
 module Project = struct
   let name = "mirage"
-  let version = "3.3.1"
+  let version = "v3.4.0"
   let prelude =
     "open Lwt.Infix\n\
      let return = Lwt.return\n\
@@ -885,14 +885,15 @@ module Project = struct
         Key.(abstract no_depext);
       ]
       method! packages =
-        (* XXX: use 3.3.1 here instead of hardcoding a version? *)
-        let min = "3.3.0" and max = "3.4.0" in
+        (* XXX: use 3.4.0 here instead of hardcoding a version? *)
+        let min = "3.4.0" and max = "3.5.0" in
         let common = [
           package ~build:true ~min:"4.04.2" "ocaml";
           package "lwt";
           package ~min ~max "mirage-types-lwt";
           package ~min ~max "mirage-types";
           package ~min ~max "mirage-runtime" ;
+          package ~build:true ~min ~max "mirage" ;
           package ~build:true "ocamlfind" ;
           package ~build:true "ocamlbuild" ;
         ] in

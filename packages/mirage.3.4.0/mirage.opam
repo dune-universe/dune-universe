@@ -1,3 +1,4 @@
+version: "3.4.0"
 opam-version: "2.0"
 maintainer:   ["anil@recoil.org" "thomas@gazagnaire.org"]
 authors:      ["Thomas Gazagnaire" "Anil Madhavapeddy" "Gabriel Radanne"
@@ -19,13 +20,23 @@ build: [
 depends: [
   "ocaml" {>= "4.04.2"}
   "dune" {build & >= "1.1.0"}
-  "ipaddr"             {>= "2.6.0"}
-  "functoria-runtime"  {>= "2.2.2"}
-  "fmt"
+  "ipaddr"             {>= "3.0.0"}
+  "functoria"          {>= "2.2.3"}
+  "bos"
   "astring"
   "logs"
+  "mirage-runtime"     {>= "3.4.0"}
 ]
-synopsis: "The base MirageOS runtime library, part of every MirageOS unikernel"
+synopsis: "The MirageOS library operating system"
 description: """
-A bundle of useful runtime functions for applications built with MirageOS
+MirageOS is a library operating system that constructs unikernels for
+secure, high-performance network applications across a variety of
+cloud computing and mobile platforms. Code can be developed on a
+normal OS such as Linux or MacOS X, and then compiled into a
+fully-standalone, specialised unikernel that runs under the Xen
+hypervisor.
+
+Since Xen powers most public cloud computing infrastructure such as
+Amazon EC2 or Rackspace, this lets your servers run more cheaply,
+securely and with finer control than with a full software stack.
 """

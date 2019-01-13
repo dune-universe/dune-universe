@@ -16,7 +16,7 @@
 
 (** Mirage keys.
 
- {e Release 3.3.1 } *)
+ {e Release v3.4.0 } *)
 
 module Arg : sig
   include module type of struct include Functoria_key.Arg end
@@ -93,7 +93,7 @@ val prng : ?group:string -> unit -> [ `Stdlib | `Nocrypto ] key
 val dhcp : ?group:string -> unit -> bool key
 (** Enable dhcp. Is either [true] or [false]. *)
 
-val net : ?group:string -> unit -> [ `Direct | `Socket ] key
+val net : ?group:string -> unit -> [ `Direct | `Socket ] option key
 (** The type of stack. Is either ["direct"] or ["socket"]. *)
 
 (** {3 Network keys} *)

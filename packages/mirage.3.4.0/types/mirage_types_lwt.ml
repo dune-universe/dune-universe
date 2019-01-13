@@ -18,7 +18,7 @@
 
 (** lwt-compatible MirageOS signatures.
 
-    {e Release 3.3.1 } *)
+    {e Release v3.4.0 } *)
 
 module type TIME = Mirage_time_lwt.S
 module type MCLOCK = Mirage_clock_lwt.MCLOCK

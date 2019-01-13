@@ -44,7 +44,7 @@
        descriptions for details. }
     }
 
-    {e Release 3.3.1 } *)
+    {e Release v3.4.0 } *)
 
 module type DEVICE = Mirage_device.S
 
