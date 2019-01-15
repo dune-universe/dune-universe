@@ -128,6 +128,9 @@ let length = function
   | Shallow (Two _) -> 2
   | Shallow (Three _) -> 3
 
+let pp ?sep pp_elt = Fmt.iter ?sep iter pp_elt
+let dump pp_elt = Fmt.Dump.iter iter (Fmt.always "fke") pp_elt
+
 module Weighted = struct
   type ('a, 'b) t =
     { r: int
@@ -145,7 +148,6 @@ module Weighted = struct
   let[@inline always] full t = size t = t.c
   let[@inline always] available t = t.c - (t.w - t.r)
   let is_empty t = (empty [@inlined]) t
-
   let length q = size q
 
   let[@inline always] to_power_of_two v =
@@ -157,8 +159,7 @@ module Weighted = struct
     res := !res lor (!res lsr 16) ;
     succ !res
 
-  let[@inline always] is_power_of_two v =
-    (v <> 0) && ((v land (lnot v + 1)) = v)
+  let[@inline always] is_power_of_two v = v <> 0 && v land (lnot v + 1) = v
 
   let create ?capacity kind =
     let capacity =
@@ -175,15 +176,17 @@ module Weighted = struct
       ; v= Bigarray.Array1.create kind Bigarray.c_layout capacity }
     , capacity )
 
+  let copy t =
+    let v = Bigarray.Array1.create t.k Bigarray.c_layout t.c in
+    Bigarray.Array1.blit t.v v ;
+    {r= t.r; w= t.w; c= t.c; v; k= t.k}
+
   let from v =
-    if not (is_power_of_two (Bigarray.Array1.dim v)) then Fmt.invalid_arg "RBA.from" ;
+    if not (is_power_of_two (Bigarray.Array1.dim v)) then
+      Fmt.invalid_arg "RBA.from" ;
     let c = Bigarray.Array1.dim v in
     let k = Bigarray.Array1.kind v in
-    { r= 0
-    ; w= 0
-    ; c
-    ; k
-    ; v }
+    {r= 0; w= 0; c; k; v}
 
   let push_exn t v =
     if (full [@inlined]) t then raise Full ;
@@ -228,7 +231,7 @@ module Weighted = struct
         if rst > 0 then (
           blit v off t.v msk pre ;
           blit v (off + pre) t.v 0 rst ;
-          [ Bigarray.Array1.sub t.v ((mask [@inlined]) t t.w) len
+          [ Bigarray.Array1.sub t.v ((mask [@inlined]) t t.w) pre
           ; Bigarray.Array1.sub t.v 0 rst ] )
         else (
           blit v off t.v msk len ;
@@ -270,10 +273,25 @@ module Weighted = struct
       incr idx
     done
 
+  let rev_iter f t =
+    if t.r == t.w then ()
+    else
+      let idx = ref (pred t.w) in
+      let min = t.r in
+      while
+        f (Bigarray.Array1.unsafe_get t.v ((mask [@inlined]) t !idx)) ;
+        !idx <> min
+      do
+        decr idx
+      done
+
   let fold f a t =
     let a = ref a in
     iter (fun x -> a := f !a x) t ;
     !a
 
-  let unsafe_bigarray { v; _ } = v
+  let clear t = {t with r= 0; w= 0}
+  let unsafe_bigarray {v; _} = v
+  let pp ?sep pp_elt = Fmt.iter ?sep iter pp_elt
+  let dump pp_elt = Fmt.Dump.iter iter (Fmt.always "fke:weighted") pp_elt
 end

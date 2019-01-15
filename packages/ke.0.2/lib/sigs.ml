@@ -41,6 +41,12 @@ module type F = sig
   val fold : ('acc -> 'x -> 'acc) -> 'acc -> 'x t -> 'acc
   (** [fold f a q] is equivalent to [List.fold_left f a l], where [l] is the
      list of [q]'s elements. The queue remains unchanged. *)
+
+  val pp : ?sep:unit Fmt.t -> 'a Fmt.t -> 'a t Fmt.t
+  (** Pretty-printer of {!t}. *)
+
+  val dump : 'a Fmt.t -> 'a t Fmt.t
+  (** Human-readable pretty-printer of {!t}. *)
 end
 
 module type R = sig
@@ -81,6 +87,12 @@ module type R = sig
   val cons : ('a, 'b) t -> 'a -> unit
   (** [cons q x] adds element [x] at the front of the given queue [q]. It
      returns [None] if it fails. *)
+
+  val copy : ('a, 'b) t -> ('a, 'b) t
+  (** Return a copy of the given queue. *)
+
+  val clear : ('a, 'b) t -> unit
+  (** Discard all elements from a queue. *)
 
   module N : sig
     (** The type of the internal bigarray of {!t}. *)
@@ -148,9 +160,20 @@ module type R = sig
      recently entered to the most recently entered. The queue itself is
      unchanged. *)
 
+  val rev_iter : ('a -> unit) -> ('a, 'b) t -> unit
+  (** [iter f q] applies [f] in turn to all elements of [q], from the most
+     recently entered to the least recently entered. The queue itself is
+     unchanged. *)
+
   val fold : ('acc -> 'x -> 'acc) -> 'acc -> ('x, 'b) t -> 'acc
   (** [fold f a q] is equivalent to [List.fold_left f a l], where [l] is the
      list of [q]'s elements. The queue remains unchanged. *)
+
+  val pp : ?sep:unit Fmt.t -> 'a Fmt.t -> ('a, 'b) t Fmt.t
+  (** Pretty-printer of {!t}. *)
+
+  val dump : 'a Fmt.t -> ('a, 'b) t Fmt.t
+  (** Human-readable pretty-printer of {!t}. *)
 end
 
 module Weighted = struct
@@ -206,6 +229,12 @@ module Weighted = struct
     val cons : ('a, 'b) t -> 'a -> unit option
     (** [cons q x] adds element [x] at the front of the given queue [q]. It
        returns [None] if it fails. *)
+
+    val copy : ('a, 'b) t -> ('a, 'b) t
+    (** Return a copy of the given queue. *)
+
+    val clear : ('a, 'b) t -> unit
+    (** Discard all elements from a queue. *)
 
     module N : sig
       (** The type of the internal bigarray of {!t}. *)
@@ -286,9 +315,20 @@ module Weighted = struct
        recently entered to the most recently entered. The queue itself is
        unchanged. *)
 
+    val rev_iter : ('a -> unit) -> ('a, 'b) t -> unit
+    (** [iter f q] applies [f] in turn to all elements of [q], from the most
+       recently entered to the least recently entered. The queue itself is
+       unchanged. *)
+
     val fold : ('acc -> 'x -> 'acc) -> 'acc -> ('x, 'b) t -> 'acc
     (** [fold f a q] is equivalent to [List.fold_left f a l], where [l] is the
        list of [q]'s elements. The queue remains unchanged. *)
+
+    val pp : ?sep:unit Fmt.t -> 'a Fmt.t -> ('a, 'b) t Fmt.t
+    (** Pretty-printer of {!t}. *)
+
+    val dump : 'a Fmt.t -> ('a, 'b) t Fmt.t
+    (** Human-readable pretty-printer of {!t}. *)
   end
 
   module type F = sig
@@ -344,6 +384,12 @@ module Weighted = struct
     val cons_exn : ('a, 'b) t -> 'a -> ('a, 'b) t
     (** [cons q x] adds element [x] at the front of the given queue [q]. It
        raises {!Empty} if the given queue [q] is full or the new queue [q']. *)
+
+    val copy : ('a, 'b) t -> ('a, 'b) t
+    (** Return a copy of the given queue. *)
+
+    val clear : ('a, 'b) t -> ('a, 'b) t
+    (** Discard all elements from a queue. *)
 
     module N : sig
       (** The type of the internal bigarray of {!t}. *)
@@ -424,13 +470,26 @@ module Weighted = struct
        recently entered to the most recently entered. The queue itself is
        unchanged. *)
 
+    val rev_iter : ('a -> unit) -> ('a, 'b) t -> unit
+    (** [iter f q] applies [f] in turn to all elements of [q], from the most
+       recently entered to the least recently entered. The queue itself is
+       unchanged. *)
+
     val fold : ('acc -> 'x -> 'acc) -> 'acc -> ('x, 'b) t -> 'acc
     (** [fold f a q] is equivalent to [List.fold_left f a l], where [l] is the
        list of [q]'s elements. The queue remains unchanged. *)
 
+    val pp : ?sep:unit Fmt.t -> 'a Fmt.t -> ('a, 'b) t Fmt.t
+    (** Pretty-printer of {!t}. *)
+
+    val dump : 'a Fmt.t -> ('a, 'b) t Fmt.t
+    (** Human-readable pretty-printer of {!t}. *)
+
     (** / **)
 
-    val unsafe_bigarray : ('a, 'b) t -> ('a, 'b, Bigarray.c_layout) Bigarray.Array1.t
+    val unsafe_bigarray :
+      ('a, 'b) t -> ('a, 'b, Bigarray.c_layout) Bigarray.Array1.t
+
     val from : ('a, 'b, Bigarray.c_layout) Bigarray.Array1.t -> ('a, 'b) t
   end
 end

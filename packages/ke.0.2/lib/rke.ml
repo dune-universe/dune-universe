@@ -15,7 +15,6 @@ let[@inline always] empty t = t.r = t.w
 let[@inline always] size t = t.w - t.r
 let[@inline always] available t = t.c - (t.w - t.r)
 let[@inline always] full t = size t = t.c
-
 let length q = size q
 
 let[@inline always] to_power_of_two v =
@@ -41,6 +40,11 @@ let create ?capacity kind =
   ; c= capacity
   ; k= kind
   ; v= Bigarray.Array1.create kind Bigarray.c_layout capacity }
+
+let copy t =
+  let v = Bigarray.Array1.create t.k Bigarray.c_layout t.c in
+  Bigarray.Array1.blit t.v v ;
+  {r= t.r; w= t.w; c= t.c; v; k= t.k}
 
 let grow t want =
   let max : int -> int -> int = max in
@@ -105,7 +109,7 @@ module N = struct
   let keep_exn t ~blit ~length ?(off = 0) ?len v =
     let len = match len with None -> length v - off | Some len -> len in
     if (size [@inlined]) t < len then raise Empty ;
-    let msk = (mask [@inlined]) t t.w in
+    let msk = (mask [@inlined]) t t.r in
     let pre = t.c - msk in
     let rst = len - pre in
     if rst > 0 then (
@@ -133,10 +137,29 @@ let iter f t =
     incr idx
   done
 
+let rev_iter f t =
+  if t.r == t.w then ()
+  else
+    let idx = ref (pred t.w) in
+    let min = t.r in
+    while
+      f (Bigarray.Array1.unsafe_get t.v ((mask [@inlined]) t !idx)) ;
+      !idx <> min
+    do
+      decr idx
+    done
+
 let fold f a t =
   let a = ref a in
   iter (fun x -> a := f !a x) t ;
   !a
+
+let pp ?sep pp_elt = Fmt.iter ?sep iter pp_elt
+let dump pp_elt = Fmt.Dump.iter iter (Fmt.always "rke") pp_elt
+
+let clear q =
+  q.r <- 0 ;
+  q.w <- 0
 
 module Weighted = struct
   type ('a, 'b) t =
@@ -155,7 +178,6 @@ module Weighted = struct
   let[@inline always] full t = size t = t.c
   let[@inline always] available t = t.c - (t.w - t.r)
   let is_empty t = (empty [@inlined]) t
-
   let length q = size q
 
   let create ?capacity kind =
@@ -172,6 +194,11 @@ module Weighted = struct
       ; k= kind
       ; v= Bigarray.Array1.create kind Bigarray.c_layout capacity }
     , capacity )
+
+  let copy t =
+    let v = Bigarray.Array1.create t.k Bigarray.c_layout t.c in
+    Bigarray.Array1.blit t.v v ;
+    {r= t.r; w= t.w; c= t.c; v; k= t.k}
 
   let push_exn t v =
     if (full [@inlined]) t then raise Full ;
@@ -217,7 +244,7 @@ module Weighted = struct
         if rst > 0 then (
           blit v off t.v msk pre ;
           blit v (off + pre) t.v 0 rst ;
-          [ Bigarray.Array1.sub t.v ((mask [@inlined]) t t.w) len
+          [ Bigarray.Array1.sub t.v ((mask [@inlined]) t t.w) pre
           ; Bigarray.Array1.sub t.v 0 rst ] )
         else (
           blit v off t.v msk len ;
@@ -260,8 +287,27 @@ module Weighted = struct
       incr idx
     done
 
+  let rev_iter f t =
+    if t.r == t.w then ()
+    else
+      let idx = ref (pred t.w) in
+      let min = t.r in
+      while
+        f (Bigarray.Array1.unsafe_get t.v ((mask [@inlined]) t !idx)) ;
+        !idx <> min
+      do
+        decr idx
+      done
+
   let fold f a t =
     let a = ref a in
     iter (fun x -> a := f !a x) t ;
     !a
+
+  let pp ?sep pp_elt = Fmt.iter ?sep iter pp_elt
+  let dump pp_elt = Fmt.Dump.iter iter (Fmt.always "rke:weighted") pp_elt
+
+  let clear q =
+    q.r <- 0 ;
+    q.w <- 0
 end
