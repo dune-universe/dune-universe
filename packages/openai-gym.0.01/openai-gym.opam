@@ -1,0 +1,30 @@
+opam-version: "1.2"
+name: "openai-gym"
+version: "0.01"
+maintainer: [
+  "Louis Mandel <lmandel@us.ibm.com>"
+]
+authors: [
+  "Louis Mandel"
+]
+homepage: "https://github.ibm.com/openai-gym-ocaml/openai-gym"
+bug-reports: "https://github.ibm.com/openai-gym-ocaml/openai-gym/issues"
+license: "Apache License 2.0"
+dev-repo: "https://github.ibm.com/openai-gym-ocaml/openai-gym.git"
+
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "dune" {build}
+  "ocaml-migrate-parsetree" {build}
+  "atdgen" {build}
+  "atd"
+  "yojson"
+  "cohttp-lwt-unix" {>= "1.0.0"}
+]
+available: [
+  ocaml-version >= "4.03.0"
+]

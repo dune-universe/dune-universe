@@ -1,4 +1,0 @@
-(library
-  (name torch_vision)
-  (public_name torch.vision)
-  (libraries base stb_image stb_image_write stdio torch_core torch))

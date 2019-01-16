@@ -1,0 +1,3 @@
+(library
+  (name interface')
+  (public_name interface-prime))

@@ -1,0 +1,6 @@
+(library
+  (name interface_prime_lwt)
+  (public_name interface-prime-lwt)
+  (wrapped false)
+  (modules interface'_lwt)
+  (libraries interface-prime lwt.unix))

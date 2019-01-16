@@ -1,0 +1,79 @@
+(*
+ *  This file is part of the Watson Conversation Service OCaml API project.
+ *
+ * Copyright 2016-2017 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *)
+
+<doc text="gym-http-api data structures.">
+
+type json <ocaml module="Json_t"> = abstract
+<doc text="Type of arbitrary JSON values.">
+
+type env_id = {
+  env_id : string;
+}
+
+type instance_id = {
+  instance_id : string;
+}
+
+type envs = (string * string) list <json repr="object">
+
+type all_envs = {
+  all_envs : envs;
+}
+
+type observation = {
+  observation : json;
+}
+
+type step_param = {
+  ~render <ocaml default="false"> : bool;
+  action : json;
+} <ocaml field_prefix="step_">
+
+type step_response = {
+  observation : json;
+  reward : float;
+  done : bool;
+  info : json;
+} <ocaml field_prefix="step_">
+
+type action_space_info = {
+  info : json;
+} <ocaml field_prefix="action_space_">
+
+type action = {
+  action : int;
+}
+
+type action_space_contains_response = {
+  member : bool;
+} <ocaml field_prefix="action_space_contains_">
+
+type observation_space_info = {
+  info : json;
+} <ocaml field_prefix="observation_space_">
+
+type observation_space_contains_response = {
+  member : bool;
+} <ocaml field_prefix="observation_space_contains_">
+
+type monitor_start_param = {
+  directory : string;
+  force : bool;
+  resume : bool;
+  ~video_callable <ocaml default="false"> : bool;
+}  <ocaml field_prefix="monitor_">

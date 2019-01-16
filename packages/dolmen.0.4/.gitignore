@@ -1,0 +1,16 @@
+# Source directory (doc, build dir and bin)
+_build/
+src/_build/
+
+# Generated files
+.merlin
+*.install
+dolmen
+doc/index.html
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# swap files
+*.swp
