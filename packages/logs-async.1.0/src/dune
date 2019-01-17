@@ -1,0 +1,25 @@
+(library
+ (name logs_async)
+ (public_name logs-async)
+ (modules Logs_async)
+ (libraries logs async_kernel))
+
+(library
+ (name logs_async_reporter)
+ (public_name logs-async-reporter)
+ (modules Logs_async_reporter)
+ (optional)
+ (libraries logs.fmt async))
+
+(library
+ (name logs_async_ovh)
+ (public_name logs-async-ovh)
+ (modules Record Logs_async_ovh)
+ (flags -w -55)
+ (optional)
+ (libraries logs.fmt uri core async async_ssl capnp))
+
+(rule
+ (targets record.ml record.mli)
+ (deps    record.capnp)
+ (action  (run capnpc -o ocaml %{deps})))
