@@ -1,4 +1,0 @@
-(executables
- ((names (client))
-  (libraries (lwt lwt.unix shared-memory-ring shared-memory-ring-lwt))
-))

@@ -1,6 +1,0 @@
-(library
- ((name        lwt_shared_memory_ring)
-  (public_name shared-memory-ring-lwt)
-  (libraries   (shared-memory-ring lwt mirage-profile))
-  (wrapped     false)
-)) 

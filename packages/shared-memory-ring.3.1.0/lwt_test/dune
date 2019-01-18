@@ -1,0 +1,9 @@
+(executables
+ (names lwt_test)
+ (libraries lwt lwt.unix shared-memory-ring shared-memory-ring-lwt oUnit))
+
+(alias
+ (name runtest)
+ (package shared-memory-ring-lwt)
+ (deps lwt_test.exe)
+ (action (run %{deps})))

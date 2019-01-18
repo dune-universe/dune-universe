@@ -1,8 +1,0 @@
-(executables
- ((names (lwt_test))
-  (libraries (lwt lwt.unix shared-memory-ring shared-memory-ring-lwt oUnit))
-))
-(alias
- ((name    runtest)
-  (deps    (lwt_test.exe))
-  (action  (run ${<}))))
