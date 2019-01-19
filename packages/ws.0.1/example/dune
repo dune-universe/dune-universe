@@ -1,0 +1,3 @@
+(executable
+  (name example_server)
+  (libraries cohttp-lwt-unix ws interface-prime-lwt))

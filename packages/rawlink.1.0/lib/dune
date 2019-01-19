@@ -1,0 +1,16 @@
+(library
+ (name rawlink)
+ (synopsis "Rawlink is a portable interface to BPF/AF_SOCKET")
+ (public_name rawlink)
+ (modules rawlink)
+ (libraries cstruct)
+ (preprocess (pps ppx_cstruct))
+ (c_names rawlink_stubs))
+
+(library
+ (name lwt_rawlink)
+ (synopsis "Lwt_rawlink is a Lwt interface to BPF/AF_SOCKET")
+ (modules lwt_rawlink)
+ (public_name rawlink.lwt)
+ (libraries rawlink lwt lwt.unix))
+

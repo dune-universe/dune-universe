@@ -1,0 +1,30 @@
+opam-version: "2.0"
+name: "ws"
+version: "0.1"
+synopsis: "Generic websocket implementation for OCaml"
+maintainer: "Dorian Peake <dorian@vereia.com>"
+authors: "Dorian Peake <dorian@vereia.com>"
+homepage: "https://github.com/dozzman/ws"
+bug-reports: "https://github.com/dozzman/ws/issues"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+tags: [
+  "monad"
+  "io"
+  "interface"
+  "interface-prime"
+  "websocket"
+  "ws"
+]
+depends: [
+  "ocaml" {>= "4.05"}
+  "dune" {build & >= "1.6.2"}
+  "base64" {>= "2.3.0"}
+  "bitstring" {>= "3.1.0"}
+  "containers" {>= "2.4"}
+  "ppx_deriving" {>= "4.2.1"}
+  "sha" {>= "1.12"}
+  "interface-prime" {>= "0.1"}
+]
+dev-repo: "git+https://github.com/dozzman/ws.git"

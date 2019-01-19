@@ -1,0 +1,5 @@
+(library
+  (name ws)
+  (public_name ws)
+  (preprocess (pps bitstring.ppx ppx_deriving.show))
+  (libraries interface-prime bitstring containers base64 sha))
