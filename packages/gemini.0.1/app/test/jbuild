@@ -1,0 +1,28 @@
+(jbuild_version 1)
+
+(executable (
+  (name gemini_tester)
+  (modules (gemini_tester))
+  (public_name gemini-tester)
+  (package gemini)
+  (libraries (
+    ppx_expect.evaluator
+    ppx_inline_test.runner.lib
+    gemini_test
+  ))
+))
+
+(rule (
+  (targets (gemini_tester.ml))
+  (action (write-file ${@} "Ppx_inline_test_lib.Runtime.exit ()"))
+))
+
+(alias (
+  (name runtest)
+  (deps (gemini_tester.exe))
+  (action (chdir ${ROOT}
+          (progn
+            (run ${<} inline-test-runner gemini-tester)
+           )))
+
+))

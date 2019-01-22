@@ -1,0 +1,14 @@
+(jbuild_version 1)
+
+(executable (
+  (name cli)
+  (public_name gemini)
+  (libraries (gemini))
+  (modules (cli))
+  (package gemini)
+  (flags (
+    :standard
+    -open Core
+    -open Async
+  ))
+))

@@ -1,0 +1,12 @@
+(library
+  (name gemini_test)
+  (library_flags -linkall)
+  (libraries gemini expect_test_helpers)
+  (synopsis "Gemini Client unit tester")
+
+  (flags :standard -open Core -open Async
+   -open Expect_test_helpers_kernel)
+  (inline_tests (flags :standard) (deps (universe)))
+  (preprocess (pps ppx_jane))
+
+)
