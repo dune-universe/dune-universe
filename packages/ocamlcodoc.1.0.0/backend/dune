@@ -1,0 +1,6 @@
+(library
+ (name ocamlcodoc_backend)
+ (public_name ocamlcodoc)
+ (inline_tests.backend
+  (generate_runner (run ocamlcodoc "-o" "-" %{impl-files} %{intf-files}))
+  ))

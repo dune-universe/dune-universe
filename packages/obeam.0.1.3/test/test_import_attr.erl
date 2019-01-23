@@ -1,0 +1,2 @@
+-module(test_import_attr).
+-import(hoge_module, [f/0, g/1, h/2]).

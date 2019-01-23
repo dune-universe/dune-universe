@@ -1,0 +1,5 @@
+(library
+  (name utils)
+  (flags -open Stdcompat)
+  (libraries stdcompat)
+  (inline_tests (backend ocamlcodoc)))

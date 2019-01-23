@@ -1,0 +1,32 @@
+before_script:
+  - docker info
+
+stages:
+  - prepare
+  - build
+  - test
+  - deploy
+
+build_image:
+  stage: prepare
+  script: docker build -t ocamlcodoc .
+
+build:
+  stage: build
+  script: docker build --no-cache -t ocamlcodoc-build -f Dockerfile.build .
+
+test:
+  stage: test
+  script:
+    - docker run --rm ocamlcodoc-build
+        bash -c 'make -C /home/ci/ocamlcodoc/ tests'
+
+deploy:
+  stage: deploy
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^Release:/
+  except:
+    - tags
+  script:
+    - ./release.sh

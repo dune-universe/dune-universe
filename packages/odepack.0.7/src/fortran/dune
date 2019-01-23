@@ -1,0 +1,24 @@
+; Need to have a separate sub-package to compile the FORTRAN code.
+(library
+ (name        odepack_fortran)
+ (public_name odepack.fortran)
+ (ocamlc_flags -custom); libgfortran not build with -fPIC
+ (c_flags    (:include c_flags.sexp))
+ (c_library_flags :standard (:include c_library_flags.sexp))
+ (self_build_stubs_archive (odepack_fortran))
+ (synopsis "Original FORTRAN code of odepack"))
+
+(rule
+ (targets libodepack_fortran_stubs.a dllodepack_fortran_stubs.so)
+ (deps    opkda1.o  opkda2.o  opkdmain.o)
+ (action  (run ocamlmklib -o odepack_fortran_stubs %{deps})))
+
+(rule
+ (targets opkda1.o opkda2.o opkdmain.o)
+ (deps    opkda1.f opkda2.f opkdmain.f)
+ (action  (run %{read-lines:fortranc.txt} -c -fPIC -O3 %{deps})))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp fortranc.txt)
+ (deps ../../config/discover.exe)
+ (action (run %{deps})))
