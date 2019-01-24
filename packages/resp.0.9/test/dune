@@ -1,0 +1,26 @@
+(library
+    (name util)
+    (libraries alcotest resp-server)
+    (modules util))
+
+(executables
+    (libraries alcotest-lwt resp)
+    (names test)
+    (modules test))
+
+(executables
+    (libraries alcotest-lwt util resp-unix)
+    (names test_unix)
+    (modules test_unix))
+
+(alias
+    (name runtest)
+    (package resp)
+    (deps test.exe)
+    (action (run %{dep:test.exe})))
+
+(alias
+    (name runtest)
+    (package resp-unix)
+    (deps test_unix.exe)
+    (action (run %{dep:test_unix.exe})))

@@ -1,0 +1,12 @@
+(executables
+    (libraries bimage-unix)
+    (names test)
+    (modules test))
+
+(alias
+    (name runtest)
+    (package bimage)
+    (deps test.exe test.jpg
+        (glob_files tests/*.png)
+    )
+    (action (run %{dep:test.exe})))
