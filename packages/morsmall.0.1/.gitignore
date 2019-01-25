@@ -1,0 +1,16 @@
+## /.gitignore
+
+## Emacs specific
+*~
+*#
+
+## Dune specific
+_build
+*.install
+.merlin
+
+## Project specific
+lib
+doc
+bin
+morsmall_test_report_*.org

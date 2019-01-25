@@ -1,0 +1,39 @@
+#+TITLE: Morsmall -- A concise AST for POSIX shell
+#+STARTUP: indent inlineimages
+
+This library is a small wrapper around [[https://gitlab.inria.fr/regisgia/morbig/][morbig]].  Morbig provides a
+parser and a CST representation of POSIX shell scripts which may
+contain too much information for certain uses.
+
+Morsmall provides a converter from Morbig's CST to an AST that aims to
+be easely understandable and manipulable.  It also provides a printer
+from that AST to Shell.
+
+This program is a free software licensed under the GNU General Public
+License, version 3. Please refer to the file [[file:LICENSE][LICENSE]].
+
+* Downloading, building and installing
+** Download
+*** Clone the repository
+: git clone https://github.com/colis-anr/morsmall
+*** Download the latest release
+There is no release yet.
+** Install dependencies
+Morsmall depends on the following software:
+- [[https://ocaml.org/][OCaml]] ≥ 4.04.0
+- [[https://github.com/colis-anr/morbig/][Morbig]]
+- [[https://github.com/ocaml-ppx/ppx_deriving][ppx_deriving]] ≥ 4.2.0
+- [[https://github.com/ocaml/dune][Dune]] (ex jbuilder) with ocaml-migrate-parsetree
+- [[http://opam.ocaml.org/][OPAM]]
+** Build
+: make
+** Run tests
+: make tests
+** Install
+: make install
+
+This target recognises the environment variables =PREFIX= and =LIBDIR=.
+** Uninstall
+: make uninstall
+
+This target recognises the environment variables =PREFIX= and =LIBDIR=.
