@@ -1,7 +1,7 @@
 (library
  (name        vmnet)
  (public_name vmnet)
- (libraries   bigarray unix cstruct-unix sexplib ipaddr threads)
+ (libraries   bigarray unix cstruct-unix sexplib macaddr macaddr.sexp threads)
  (modules     Vmnet)
  (c_names     vmnet_stubs)
  (c_library_flags (-framework vmnet))

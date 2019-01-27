@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** MacOS X userspace network bridging. *)
+(** macOS userspace network bridging. *)
 
 (** [t] contains the interface state for one vmnet interface. *)
 type t [@@deriving sexp_of]

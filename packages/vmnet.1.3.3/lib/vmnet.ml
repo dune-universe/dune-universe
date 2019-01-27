@@ -72,7 +72,7 @@ type mode =
 type t = {
   iface: interface_ref sexp_opaque;
   name: string;
-  mac: Macaddr.t;
+  mac: Macaddr_sexp.t;
   max_packet_size: int;
 } [@@deriving sexp_of]
 

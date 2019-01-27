@@ -1,0 +1,5 @@
+(library 
+  (name MUTF8)
+  (public_name mutf8)
+  (libraries batteries)
+)

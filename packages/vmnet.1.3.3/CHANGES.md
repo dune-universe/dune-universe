@@ -1,3 +1,8 @@
+## v1.3.3 (2019-01-25)
+
+* Switch to using macaddr library in ipaddr.3.0.0+ (#25 @hannesm)
+* Minor ocamldoc fixes (@avsm)
+
 ## 1.3.2 (2018-12-26)
 
 * compile with Lwt 4 (#22 by @anmonteiro)
