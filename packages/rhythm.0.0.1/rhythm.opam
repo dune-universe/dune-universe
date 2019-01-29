@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "rhythm"
+version: "0.0.1"
+maintainer: "Kyle Davis <oss@kyldvs.com>"
+authors: ["Kyle Davis <oss@kyldvs.com>"]
+license: "MIT"
+homepage: "https://github.com/decent-algorithms/rhythm"
+bug-reports: "https://github.com/decent-algorithms/rhythm/issues"
+dev-repo: "git+https://github.com/decent-algorithms/rhythm.git"
+depends: [
+  "ocaml" {>= "4.03"}
+  "reason"
+  "dune"
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+synopsis: "Data Structures and Algorithms implemented in Reason"
+description: """
+Data Structures and Algorithms implemented in Reason
+"""

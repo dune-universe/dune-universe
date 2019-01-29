@@ -1,0 +1,18 @@
+
+(library
+ (name freetds)
+ (public_name freetds)
+ (c_names ct_c dblib_stubs)
+ (c_flags :standard (:include c_flags.sexp))
+ (c_library_flags :standard (:include c_library_flags.sexp)))
+
+(rule
+ (targets dblib.ml)
+ (deps    dblib.cppo.ml)
+ (action  (run %{bin:cppo} -D "REG_ROW %{read:reg_row.txt}" %{deps}
+            -o %{targets})))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp reg_row.txt)
+ (deps    ../config/discover.exe)
+ (action  (run %{deps})))

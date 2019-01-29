@@ -1,0 +1,28 @@
+platform:
+  - x64
+
+services:
+  - mssql2017
+
+environment:
+  global:
+    PACKAGE: freetds
+    FORK_USER: ocaml
+    FORK_BRANCH: master
+    CYG_ROOT: C:\cygwin64
+    MSSQL_TEST_USER: sa
+    MSSQL_TEST_PASSWORD: Password12!
+    MSSQL_TEST_SERVER: 127.0.0.1 #(local)\SQL2017
+    MSSQL_TEST_DATABASE: master
+#    TDSVER: 4.2
+    TDSVER: 7.4
+  matrix:
+    - OPAM_SWITCH: 4.04.2+mingw64c
+#    - OPAM_SWITCH: 4.04.2+msvc64c
+
+install:
+  - ps: iex ((new-object net.webclient).DownloadString("https://raw.githubusercontent.com/$env:FORK_USER/ocaml-ci-scripts/$env:FORK_BRANCH/appveyor-install.ps1"))
+  - "%CYG_ROOT%\\setup-x86_64.exe -qnNdO -R %CYG_ROOT% -s http://cygwin.mirror.constant.com -l %CYG_ROOT%/var/cache/setup -P mingw64-x86_64-freetds"
+
+build_script:
+  - call %CYG_ROOT%\bin\bash.exe -l %APPVEYOR_BUILD_FOLDER%\appveyor-opam.sh

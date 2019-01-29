@@ -1,0 +1,7 @@
+
+(executables
+ (names ct_example dbi_example)
+ ; FIXME: Not building dbi_example because Dbi_freetds is in a package that
+ ; conflicts with this one
+ (public_names ct_example -)
+ (libraries freetds))

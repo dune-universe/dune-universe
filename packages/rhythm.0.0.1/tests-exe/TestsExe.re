@@ -1,0 +1,2 @@
+
+Tests.TestFramework.cli();

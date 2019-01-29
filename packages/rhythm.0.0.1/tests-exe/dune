@@ -1,0 +1,9 @@
+(executable
+  (package tests)
+  (name TestsExe)
+  (public_name TestsExe.exe)
+  (ocamlopt_flags -g)
+  (libraries
+    Tests
+  )
+)

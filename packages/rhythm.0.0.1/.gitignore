@@ -1,0 +1,17 @@
+*.native
+*.byte
+*.cmt
+a.out
+_build
+*.install
+pkg/META
+.DS_Store
+*.log
+*~
+node_modules
+# gitignored, but not npmignored. Published by `npm run prepublish`
+_esybuild
+_esyinstall
+.merlin
+_release
+_esy

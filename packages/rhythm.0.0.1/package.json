@@ -1,0 +1,31 @@
+{
+  "name": "rhythm",
+  "version": "0.0.1",
+  "description": "Data Structures and Algorithms implemented in Reason",
+  "license": "MIT",
+  "esy": {
+    "build": "refmterr dune build --profile=release",
+    "install": [
+      "esy-installer rhythm.install",
+      "esy-installer tests.install"
+    ]
+  },
+  "scripts": {
+    "test": "./scripts/test",
+    "watch": "./scripts/watch",
+    "watch-build-only": "./scripts/watch-build-only"
+  },
+  "dependencies": {
+    "@opam/dune": "*",
+    "@esy-ocaml/reason": "*",
+    "refmterr": "*",
+    "ocaml": ">= 4.2.0  <= 4.7.0",
+    "@opam/re": "*",
+    "@reason-native/rely": "*"
+  },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "ocaml": "~4.6.0",
+    "@esy-ocaml/reason": "3.3.3"
+  }
+}

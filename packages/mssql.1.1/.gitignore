@@ -1,0 +1,13 @@
+*~
+*.install
+_build
+
+.vimrc
+.nvimrc
+.merlin
+.idea/
+.vscode/
+
+# Coverage/Bisect files
+_coverage/
+bisect*.out

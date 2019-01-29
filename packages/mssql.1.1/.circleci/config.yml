@@ -1,0 +1,65 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ocaml/opam2:ubuntu-18.04-ocaml-4.07
+        environment:
+          MSSQL_TEST_USERNAME: sa
+          # This password isn't secret but needs to meet complexity requirements
+          MSSQL_TEST_PASSWORD: 'this is not secret i6B*W45XCW1u'
+          MSSQL_TEST_SERVER: localhost
+          MSSQL_TEST_DATABASE: master
+          TERM: xterm
+      - image: mcr.microsoft.com/mssql/server
+        environment:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: 'this is not secret i6B*W45XCW1u'
+    steps:
+      - run:
+          name: Install apt deps
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y tzdata
+      - checkout
+      - restore_cache:
+          keys:
+            - opam-v1-{{ arch }}-{{ checksum "mssql.opam" }}-{{ checksum "Makefile" }}
+      - run:
+          name: Update opam
+          command: |
+            opam remote remove --all default
+            opam remote add default https://opam.ocaml.org
+      - run:
+          name: Pin packages
+          command: opam config exec -- make pin
+      - run:
+          name: Install system dependencies
+          command: opam depext -y mssql
+      - run:
+          name: Install OCaml dependencies
+          command: opam install --deps-only -y mssql
+      - run:
+          # This is a separate step so we don't run tests for dependencies
+          name: Install OCaml test dependencies
+          command: opam install --deps-only -t -y mssql
+      - save_cache:
+          key: opam-v1-{{ arch }}-{{ checksum "mssql.opam" }}-{{ checksum "Makefile" }}
+          paths:
+            - ~/.opam
+      - run:
+          name: Build
+          command: opam config exec -- make
+      - run:
+          name: Test
+          command: opam config exec -- make coverage
+      - run:
+          name: Install ocveralls
+          command: opam install -y ocveralls
+      - run:
+          name: Upload coverage report
+          command: |
+            cd _build/default
+            shopt -s globstar
+            if [[ -n "$COVERALLS_REPO_TOKEN" ]]; then
+              opam config exec -- ocveralls **/bisect*.out --send --repo_token $COVERALLS_REPO_TOKEN --git
+            fi

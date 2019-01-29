@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+START_DIR=`pwd`
+function finish() {
+  cd "$START_DIR"
+}
+trap finish EXIT
+
+# This will be the location of this script.
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+cd "$DIR/../"
+./scripts/watcher "esy build && esy test"
