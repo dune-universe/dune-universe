@@ -15,6 +15,7 @@ module CLI = Minicli.CLI
 module A = MyArray
 module Ht = BatHashtbl
 module L = MyList
+module Mol = Molecules
 
 let find_best_d dscan_fn global_res ds =
   (* get actives_tot and decoys_tot from HT *)
@@ -55,6 +56,41 @@ let apply_DBBAD ncores best_d train test =
   Log.info "passed AD: %d / %d" ok_card test_card;
   ok_test_mols
 
+let demux input () =
+  try Mol.read_one input
+  with End_of_file -> raise Parany.End_of_input
+
+let work best_d actives_bst test_mol =
+  if Dbad_common.mol_is_inside_global_AD test_mol best_d actives_bst then
+    Some test_mol
+  else
+    None
+
+(* counters maintained by the demuxer *)
+let mol_count = ref 0
+let glob_ok_card = ref 0
+
+let mux output maybe_mol =
+  (match maybe_mol with
+   | None -> ()
+   | Some test_mol ->
+     let () = incr glob_ok_card in
+     FpMol.to_out output test_mol);
+  incr mol_count;
+  if !mol_count mod 1000 = 0 then
+    (* user feedback *)
+    eprintf "processed: %d\r%!" !mol_count
+
+let apply_DBBAD_large_test ncores best_d train test_in test_out =
+  let actives_train = L.filter FpMol.is_active train in
+  let actives_bst = Bstree.(create 1 Two_bands (A.of_list actives_train)) in
+  (* Parany *)
+  Parany.run ~verbose:false ~csize:1 ~nprocs:ncores
+    ~demux:(demux test_in)
+    ~work:(work best_d actives_bst)
+    ~mux:(mux test_out);
+  Log.info "passed AD: %d / %d" !glob_ok_card !mol_count
+
 let rand_split_in_three rng train' =
   let train = L.shuffle ~state:rng train' in
   let train_card = L.length train in
@@ -73,6 +109,7 @@ let main () =
               --test <file>: file with encoded test set molecules\n\
               [--seed <int>]: random seed\n\
               [-np <int>]: number of processors\n\
+              [--large]: if test set does not fit in memory\n\
               [--dscan <file>]: where to store the scan\n"
        Sys.argv.(0);
      exit 1);
@@ -85,9 +122,6 @@ let main () =
   let train_dbbad_fn = train_fn ^ ".dbbad" in
   let test_dbbad_fn = test_fn ^ ".dbbad" in
   let nb_features, train = Molecules.from_file train_fn in
-  let nb_features', test = Molecules.from_file test_fn in
-  (* check molecules use the same encoding *)
-  assert(nb_features' = nb_features);
   let dscan_fn = CLI.get_string_def ["--dscan"] args "/dev/null" in
   (* train the DBBAD on the training set *)
   let ds =
@@ -102,33 +136,56 @@ let main () =
   Dbad_common.global_dscan
     ds global_res (L.rev_append train_0 train_2) train_1;
   let best_d = find_best_d dscan_fn global_res ds in
-  (* apply the DBBAD on the training set, for before and before-after modes *)
+  Log.info "best_d: %f" best_d;
+  let large_testset = CLI.get_set_bool ["--large"] args in
+  (* apply the DBBAD on the training set,
+     for before and before-after modes *)
   let train_DBBAD = apply_DBBAD ncores best_d train train in
   Utls.with_out_file train_dbbad_fn (fun out ->
       L.iter (FpMol.to_out out) train_DBBAD
     );
   Log.info "train_DBBAD written to: %s" train_dbbad_fn;
   (* apply the DBBAD on the test set, for after and before-after modes *)
-  let test_DBBAD = apply_DBBAD ncores best_d train test in
-  Utls.with_out_file test_dbbad_fn (fun out ->
-      L.iter (FpMol.to_out out) test_DBBAD
-    );
-  Log.info "test_DBBAD written to: %s" test_dbbad_fn;
-  (* report actives proportion before/after DBBAD *)
-  let card_act_train, card_dec_train = L.filter_counts FpMol.is_active train in
-  let card_act_test, card_dec_test = L.filter_counts FpMol.is_active test_DBBAD in
-  let old_rate =
-    let atrain = float card_act_train in
-    let dtrain = float card_dec_train in
-    atrain /. (atrain +. dtrain) in
-  let new_rate =
-    let atest = float card_act_test in
-    let dtest = float card_dec_test in
-    atest /. (atest +. dtest) in
-  Log.info "A_train: %d D_train: %d AD_A_test: %d AD_D_test: %d \
-            old: %f new: %f EF: %.3f"
-    card_act_train card_dec_train
-    card_act_test card_dec_test
-    old_rate new_rate (new_rate /. old_rate)
+  if large_testset then
+    Utls.with_in_file test_fn (fun input ->
+        (* parse format header on 1st line *)
+        let radius, index_fn = Mop2d_env.parse_comment input in
+        let radius', mop2d_index = Mop2d_env.restore_mop2d_index index_fn in
+        assert(radius = radius');
+        let nb_features' = Hashtbl.length mop2d_index in
+        assert(nb_features' = nb_features);
+        (* process all molecules in // *)
+        Utls.with_out_file test_dbbad_fn (fun output ->
+            apply_DBBAD_large_test ncores best_d train input output
+          );
+        Log.info "test_DBBAD written to: %s" test_dbbad_fn
+      )
+  else
+    let nb_features', test = Molecules.from_file test_fn in
+    (* check molecules use the same encoding *)
+    assert(nb_features' = nb_features);
+    let test_DBBAD = apply_DBBAD ncores best_d train test in
+    Utls.with_out_file test_dbbad_fn (fun out ->
+        L.iter (FpMol.to_out out) test_DBBAD
+      );
+    Log.info "test_DBBAD written to: %s" test_dbbad_fn;
+    (* report actives proportion before/after DBBAD *)
+    let card_act_train, card_dec_train =
+      L.filter_counts FpMol.is_active train in
+    let card_act_test, card_dec_test =
+      L.filter_counts FpMol.is_active test_DBBAD in
+    let old_rate =
+      let atrain = float card_act_train in
+      let dtrain = float card_dec_train in
+      atrain /. (atrain +. dtrain) in
+    let new_rate =
+      let atest = float card_act_test in
+      let dtest = float card_dec_test in
+      atest /. (atest +. dtest) in
+    Log.info "A_train: %d D_train: %d AD_A_test: %d AD_D_test: %d \
+              old: %f new: %f EF: %.3f"
+      card_act_train card_dec_train
+      card_act_test card_dec_test
+      old_rate new_rate (new_rate /. old_rate)
 
 let () = main ()

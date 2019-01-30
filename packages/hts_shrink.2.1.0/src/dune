@@ -2,4 +2,4 @@
 (executables
   (names        mop2d_indexer mop2d_encoder dscan)
   (public_names hts_shrink_index hts_shrink_encode hts_shrink_dbbad)
-  (libraries batteries dolog parmap minicli bitv bst))
+  (libraries batteries dolog parmap minicli bitv bst parany))

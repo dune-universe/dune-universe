@@ -15,7 +15,11 @@ depends: [
   "minicli"
   "bitv"
   "bst"
-  "get_line" {test}
+  "ocamlgraph"
+  "ptmap"
+  "get_line" {with-test}
+  "ocaml" {>= "4.03"}
+  "parany"
 ]
 synopsis:
 "Distance-Based Boolean Applicability Domain for High Throughput Screening datasets"

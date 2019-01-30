@@ -10,6 +10,9 @@ module IntMap = MyIntMap
 module L = MyList
 module Fp = Fingerprint
 
+let read_one input =
+  FpMol.parse_one Fp.SFPf (input_line input)
+
 let from_file fn =
   let count = ref 0 in
   let nb_features, mols =
@@ -20,9 +23,9 @@ let from_file fn =
         assert(radius = radius');
         let res, exn =
           L.unfold_exc (fun () ->
-              let line = input_line input in
+              let res = read_one input in
               incr count;
-              FpMol.parse_one Fp.SFPf line
+              res
             ) in
         if exn <> End_of_file then raise exn;
         (nb_features, res)
