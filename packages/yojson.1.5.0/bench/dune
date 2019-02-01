@@ -1,5 +1,0 @@
-;; doesn't actually build b/c json_io doesn't exist
-(executable
- (name bench)
- (flags (-safe-string))
- (libraries yojson))

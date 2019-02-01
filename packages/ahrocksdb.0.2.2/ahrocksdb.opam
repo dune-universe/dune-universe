@@ -1,0 +1,27 @@
+version: "0.2.2"
+opam-version: "1.2"
+maintainer: "Enguerrand Decorne <enguerrand.decorne@ahrefs.com>"
+authors: ["Enguerrand Decorne <enguerrand.decorne@ahrefs.com>"]
+homepage: "https://github.com/ahrefs/ocaml-ahrocksdb"
+doc: "https://ahrefs.github.io/ocaml-ahrocksdb/"
+license: "MIT"
+dev-repo: "https://github.com/ahrefs/ocaml-ahrocksdb.git"
+bug-reports: "https://github.com/ahrefs/ocaml-ahrocksdb/issues"
+available: [ ocaml-version >= "4.06.0"]
+depends: [
+  "dune" {build}
+  "ctypes" {>="0.12.0"}
+  "astring"
+  "conf-rocksdb"
+  "rresult"
+  "bos" {test}
+  "cryptokit" {test}
+  "alcotest" {test}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+build-test: [
+  ["dune" "runtest"]
+]
