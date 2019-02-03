@@ -1,0 +1,4 @@
+(library
+ (name        ezxmlm)
+ (public_name ezxmlm)
+ (libraries   xmlm))
