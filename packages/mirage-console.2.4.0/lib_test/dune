@@ -1,0 +1,11 @@
+(executables
+ (names portable)
+ (libraries mirage-console-unix lwt cstruct-lwt cstruct))
+
+(alias
+ (name runtest)
+ (package mirage-console-unix)
+ (deps
+  (:< portable.exe))
+ (action
+  (run %{<})))

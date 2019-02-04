@@ -1,0 +1,5 @@
+(library
+ (name mirage_console)
+ (public_name mirage-console)
+ (libraries mirage-flow mirage-device)
+ (flags :standard -safe-string))

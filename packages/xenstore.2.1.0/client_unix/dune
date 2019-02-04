@@ -1,0 +1,6 @@
+(library
+ (name xenstore_unix)
+ (public_name xenstore.unix)
+ (wrapped false)
+ (libraries unix threads xenstore)
+ (flags :standard -safe-string))

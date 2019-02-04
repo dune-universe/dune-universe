@@ -1,0 +1,12 @@
+(executables
+ (names test_fs_unix)
+ (libraries unix ptime mirage-clock-unix alcotest rresult mirage-fs-lwt
+   mirage-fs-unix))
+
+(alias
+ (name runtest)
+ (deps
+  (:< test_fs_unix.exe)
+  (source_tree test_directory))
+ (action
+  (run %{<})))
