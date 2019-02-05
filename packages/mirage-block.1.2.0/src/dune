@@ -1,0 +1,5 @@
+(library
+ (name mirage_block)
+ (public_name mirage-block)
+ (libraries mirage-device)
+ (flags :standard -w A-4-41-44 -safe-string))
