@@ -1,0 +1,10 @@
+(executable
+ (name example)
+ (libraries win-error unix))
+
+(alias
+ (name runtest)
+ (deps
+  (:< example.exe))
+ (action
+  (run %{<})))

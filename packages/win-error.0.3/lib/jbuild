@@ -1,6 +1,0 @@
-(library
- ((name win_error)
-  (public_name win-error)
-  (libraries (unix))
-  (wrapped false)
-))
