@@ -1,9 +1,0 @@
-(executables
- ((names (test))
-  (libraries (alcotest mirage-net-unix))
-))
-
-(alias
- ((name    runtest)
-  (deps    (test.exe))
-  (action  (run ${<} ))))

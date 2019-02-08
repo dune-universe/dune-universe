@@ -1,0 +1,17 @@
+(executables
+ (names test_dblib test_ct)
+ (libraries freetds oUnit))
+
+(alias
+ (name test)
+ (deps test_dblib.exe test_ct.exe))
+
+(alias
+ (name runtest)
+ (deps test_dblib.exe)
+ (action (run %{deps})))
+
+(alias
+ (name runtest)
+ (deps test_ct.exe)
+ (action (run %{deps})))

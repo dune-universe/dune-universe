@@ -1,8 +1,0 @@
-description = "Mirage network driver for Unix"
-version = "2.4.1"
-requires = "cstruct.lwt cstruct lwt lwt.unix mirage-net-lwt tuntap io-page.unix io-page result"
-archive(byte) = "mirage-net-unix.cma"
-archive(native) = "mirage-net-unix.cmxa"
-plugin(byte) = "mirage-net-unix.cma"
-plugin(native) = "mirage-net-unix.cmxs"
-exists_if = "mirage-net-unix.cma"
