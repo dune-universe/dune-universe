@@ -1,0 +1,25 @@
+(library
+  (name gemini)
+  (public_name gemini)
+  (flags
+    :standard -w -39
+    -open Core
+    -open Async
+  )
+  (preprocess (pps ppx_jane ppx_deriving_yojson ppx_csv_conv))
+  (synopsis "Gemini REST Client for OCaml")
+  (library_flags -linkall)
+  (libraries
+              async
+              cohttp-async
+              csvfields
+              ppx_deriving_yojson.runtime
+              ppx_csv_conv
+              uri
+              yojson
+              zarith
+              nocrypto
+              hex
+              websocket-async
+  )
+)

@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "tip-parser"
+version: "0.6"
+maintainer: "simon.cruanes.2007@m4x.org"
+synopsis: "Parser for https://tip-org.github.io/format.html"
+author: "Simon Cruanes"
+build: [
+  ["dune" "build" "-p" name]
+  ["dune" "runtest" "-p" name] {with-test}
+  ["dune" "build" "@doc" "-p" name] {with-doc}
+]
+depends: [
+  "dune" {build}
+  "base-bytes"
+  "result"
+  "menhir" {build}
+  "odoc" {with-doc}
+]
+tags: [ "TIP" "parse" "inductive" "logic" ]
+homepage: "https://github.com/c-cube/tip-parser/"
+bug-reports: "https://github.com/c-cube/tip-parser/issues"
+dev-repo: "git+https://github.com/c-cube/tip-parser.git"
+
