@@ -1,3 +1,10 @@
+v1.2.0 2019-02-08
+-----------------
+
+- Port build to dune (@avsm)
+- Upgrade opam metadata to 2.0 (@avsm)
+- ocamldoc improvements (@avsm)
+
 v1.1.0 2017-05-23
 -----------------
 

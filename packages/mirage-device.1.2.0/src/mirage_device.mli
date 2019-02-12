@@ -16,12 +16,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** {1 Abstract devices}
+(** {2 Abstract devices}
 
     This module define the basic functions that a MirageOS device
     should implement.
 
-    {e Release v1.1.0 } *)
+    {e Release v1.2.0 } *)
 
 (** The type for device errors. *)
 type error = [
