@@ -1,0 +1,28 @@
+(library
+	(name disml)
+	(public_name disml)
+	(synopsis "An OCaml library for interfacing with the Discord API")
+	(modules
+		activity
+		attachment
+		ban ban_t
+		channel channel_t channel_id channel_id_t
+		embed
+		emoji
+		guild guild_t guild_id guild_id_t
+		member member_t
+		message message_t message_id
+		presence
+		reaction reaction_t
+		role role_t role_id
+		snowflake
+		user user_t user_id user_id_t
+		event_models
+		cache client client_options disml dispatch endpoints event http opcode rl sharder
+	)
+	(libraries checkseum.ocaml core async_ssl cohttp-async decompress logs yojson websocket-async ppx_deriving_yojson.runtime)
+	(preprocess (pps ppx_sexp_conv ppx_deriving_yojson))
+	(flags (:standard -w -D)) ; Temporary solution for Yojson `json` type deprecation. Remove when ppx_deriving_yojson updates
+)
+
+(include_subdirs unqualified)
