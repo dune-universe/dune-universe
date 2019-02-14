@@ -1,0 +1,15 @@
+(library
+ (name xen_evtchn)
+ (public_name xen-evtchn)
+ (libraries lwt lwt-dllist)
+ (modules Eventchn Generation)
+ (wrapped false))
+
+(library
+ (name xen_evtchn_unix)
+ (public_name xen-evtchn-unix)
+ (modules Unix_activations)
+ (c_names eventchn_stubs)
+ (c_library_flags -L/usr/lib/xen-4.2/lib -lxenctrl)
+ (libraries unix lwt lwt.unix bigarray xen-evtchn)
+ (wrapped false))

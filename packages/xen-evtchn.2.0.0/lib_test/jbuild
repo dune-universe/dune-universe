@@ -1,8 +1,0 @@
-(executables
- ((names (main))
-  (libraries (xen-evtchn xen-evtchn-unix oUnit lwt.unix))
-))
-(alias
- ((name    runtest)
-  (deps    (main.exe))
-  (action  (run ${<}))))
