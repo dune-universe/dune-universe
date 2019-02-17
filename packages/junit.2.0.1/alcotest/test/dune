@@ -1,0 +1,18 @@
+(executable
+ (name alcotest_report)
+ (modules alcotest_report)
+ (libraries junit junit_alcotest)
+ (flags :standard -safe-string -short-paths))
+
+(rule
+ (targets alcotest_report.xml)
+ (action
+  (setenv REPORT_PATH %{targets}
+   (run %{dep:alcotest_report.exe}))))
+
+(alias
+ (name runtest)
+ (package junit_alcotest)
+ (action
+  (diff %{dep:alcotest_report.expected} %{dep:alcotest_report.xml}))
+ (deps alcotest_report.exe))
