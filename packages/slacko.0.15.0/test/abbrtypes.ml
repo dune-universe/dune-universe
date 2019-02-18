@@ -3,17 +3,6 @@
    those values at all. Therefore, we copy the record type that use these and
    skip the problematic fields. *)
 
-(* These are copied directly from slacko.ml so we can use them here. *)
-type timestamp = float
-let timestamp_to_yojson ts = `Int (int_of_float ts)
-let timestamp_of_yojson = function
-  | `Int x -> Result.Ok (float_of_int x)
-  | `Intlit x -> Result.Ok (float_of_string x)
-  | `String x -> Result.Ok (float_of_string x)
-  | _ -> Result.Error "Couldn't parse timestamp type"
-(* But this one is new. *)
-let pp_timestamp fmt ts = Format.pp_print_float fmt ts
-
 (* Wrap Yojson.Safe.json so we don't have to keep providing printers for it. *)
 type json = Yojson.Safe.json
 [@@deriving yojson]
@@ -37,7 +26,7 @@ let abbr_authed_obj (authed : Slacko.authed_obj) = {
 type abbr_topic_obj = {
   value: string;
   (* creator: user; *)
-  last_set: timestamp;
+  last_set: Timestamp.t;
 } [@@deriving show, yojson { strict = false }]
 
 let abbr_topic_obj (topic : Slacko.topic_obj) = {
@@ -49,7 +38,7 @@ type abbr_channel_obj = {
   (* id: channel; *)
   name: string;
   is_channel: bool;
-  created: timestamp;
+  created: Timestamp.t;
   (* creator: user; *)
   is_archived: bool;
   is_general: bool;
@@ -57,7 +46,7 @@ type abbr_channel_obj = {
   (* members: user list; *)
   topic: abbr_topic_obj;
   purpose: abbr_topic_obj;
-  last_read: timestamp option [@default None];
+  last_read: Timestamp.t option [@default None];
   latest: json option [@default None];
   unread_count: int option [@default None];
   unread_count_display: int option [@default None];
@@ -85,7 +74,7 @@ type abbr_channel_obj_list = abbr_channel_obj list
 
 type abbr_message_obj = {
   type': string [@key "type"];
-  ts: timestamp;
+  ts: Timestamp.t;
   (* user: user; *)
   text: string option;
   is_starred: bool option [@default None];
@@ -99,7 +88,7 @@ let abbr_message_obj (message : Slacko.message_obj) = {
 }
 
 type abbr_history_obj = {
-  latest: timestamp option [@default None];
+  latest: Timestamp.t option [@default None];
   messages: abbr_message_obj list;
   has_more: bool;
 } [@@deriving show, yojson { strict = false }]
@@ -114,17 +103,17 @@ type abbr_user_obj = {
   (* id: user; *)
   name: string;
   deleted: bool;
-  color: string;
-  real_name: string;
+  color: string option [@default None];
+  real_name: string option [@default None];
   tz: string option [@default None];
-  tz_label: string;
-  tz_offset: int;
+  tz_label: string option [@default None];
+  tz_offset: int [@default 0];
   profile: json;
-  is_admin: bool;
-  is_owner: bool;
-  is_primary_owner: bool;
-  is_restricted: bool;
-  is_ultra_restricted: bool;
+  is_admin: bool [@default false];
+  is_owner: bool [@default false];
+  is_primary_owner: bool [@default false];
+  is_restricted: bool [@default false];
+  is_ultra_restricted: bool [@default false];
   is_bot: bool;
   has_files: bool [@default false];
 } [@@deriving show, yojson { strict = false } ]
@@ -163,9 +152,9 @@ let abbr_user_obj_list_of_yojson json =
 type abbr_file_obj = {
   (* TODO file id type *)
   id: string;
-  created: timestamp;
+  created: Timestamp.t;
   (* deprecated *)
-  timestamp: timestamp;
+  timestamp: Timestamp.t;
 
   name: string option [@default None];
   title: string;
@@ -269,14 +258,14 @@ type abbr_group_obj = {
   (* id: group; *)
   name: string;
   is_group: bool;
-  created: timestamp;
+  created: Timestamp.t;
   (* creator: user; *)
   is_archived: bool;
   (* members: user list; *)
   topic: abbr_topic_obj;
   purpose: abbr_topic_obj;
   is_open: bool option [@default None];
-  last_read: timestamp option [@default None];
+  last_read: Timestamp.t option [@default None];
   unread_count: int option [@default None];
   unread_count_display: int option [@default None];
   latest: json option [@default None];
@@ -303,7 +292,7 @@ type abbr_im_obj = {
   id: string;
   is_im: bool;
   (* user: user; *)
-  created: timestamp;
+  created: Timestamp.t;
   is_user_deleted: bool;
   unread_count: int option [@default None];
   unread_count_display: int option [@default None];
