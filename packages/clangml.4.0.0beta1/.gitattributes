@@ -1,0 +1,7 @@
+# tabs are allowed in Makefiles.
+Makefile* whitespace=blank-at-eol
+
+# in general we don't want tabs.
+*.h whitespace=blank-at-eol,tab-in-indent
+*.cpp whitespace=blank-at-eol,tab-in-indent
+*.ml whitespace=blank-at-eol,tab-in-indent

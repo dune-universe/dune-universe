@@ -1,0 +1,42 @@
+(** Compatibility implementations for some functions and type
+    definitions that are missing in old versions of Clang API. *)
+
+open Clang__bindings
+
+@IF_CLANG_BEFORE_3_5@
+type cxerrorcode =
+  | Failure
+  | Crashed
+  | InvalidArguments
+  | ASTReadError
+(** Error codes introduced in clang 3.5, declared here for compatibility.
+    Only {!constr:Failure} will be used. *)
+
+let parse_translation_unit2 index filename command_line_args unsaved_files
+    options : (cxtranslationunit, cxerrorcode) result =
+  match
+    parse_translation_unit index filename command_line_args unsaved_files
+      options
+  with
+  | None -> Error Failure
+  | Some tu -> Ok tu
+(** Compatibility wrapper for [parse_translation_unit].
+    In case of error, [Error Failure] will be returned. *)
+@ENDIF_CLANG_BEFORE_3_5@
+
+@IF_CLANG_BEFORE_3_7@
+type cxvisitorresult =
+  | Break 
+  | Continue
+
+let type_visit_fields ty visitor =
+  visit_children (ty |> get_type_declaration) (fun cur _parent ->
+    match get_cursor_kind cur with
+    | FieldDecl ->
+        begin
+          match visitor cur with
+          | Break -> Break
+          | Continue -> Continue
+        end
+    | _ -> Continue)
+@ENDIF_CLANG_BEFORE_3_7@

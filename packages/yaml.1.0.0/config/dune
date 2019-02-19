@@ -1,0 +1,8 @@
+(executable
+ (name discover)
+ (libraries dune.configurator))
+
+(rule
+ (targets cflags ctypes-cflags)
+ (action (run ./discover.exe -cstubs %{lib:ctypes:ctypes_cstubs_internals.h})))
+
