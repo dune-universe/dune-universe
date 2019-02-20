@@ -1,0 +1,15 @@
+(library
+  (public_name stitch)
+  (libraries
+    containers
+    oUnit
+    ppx_deriving_yojson.runtime
+    yojson
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+      ppx_deriving_yojson
+    )
+  )
+)

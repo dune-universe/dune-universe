@@ -10,7 +10,7 @@ let start = ref (Unix.gettimeofday ())
 let published = ref 0
 let concurrency = 5
 
-let rec publish p =
+let publish p =
   let rec loop () =
     let msg = Int.to_string !published |> Bytes.of_string in
     Producer.publish p (Topic "Test") msg >>= function
@@ -20,7 +20,7 @@ let rec publish p =
       then Caml.exit 0
       else loop ()
     | Result.Error e -> 
-      Lwt_log.error e >>= fun () ->
+      Logs_lwt.err (fun l -> l "%s" e) >>= fun () ->
       Lwt_unix.sleep publish_error_backoff >>= fun () -> 
       loop ()
   in
@@ -32,24 +32,20 @@ let rate_logger () =
     let published = !published in
     let elapsed = (Unix.gettimeofday ()) -. !start in
     let per_sec = (Float.of_int published) /. elapsed in
-    Lwt_log.debug_f "Published %d, %f/s" published per_sec >>= fun () ->
+    Logs_lwt.debug (fun l -> l "Published %d, %f/s" published per_sec) >>= fun () ->
     loop ()
   in
   loop ()
 
 let setup_logging level =
-  Lwt_log_core.default :=
-    Lwt_log.channel
-      ~template:"$(date).$(milliseconds) [$(level)] $(message)"
-      ~close_mode:`Keep
-      ~channel:Lwt_io.stdout
-      ();
-  Lwt_log_core.add_rule "*" level
+  Logs.set_level level;
+  Fmt_tty.setup_std_outputs ();
+  Logs.set_reporter (Logs_fmt.reporter ())
 
 let () = 
-  setup_logging Lwt_log.Debug;
+  setup_logging (Some Logs.Debug);
   let p = Result.ok_or_failwith @@ Producer.create ~pool_size:concurrency (Host nsqd_address) in
-  let publishers = List.init concurrency (fun _ -> publish p) in
+  let publishers = List.init ~f:(fun _ -> publish p) concurrency in
   start := Unix.gettimeofday ();
   Lwt_main.run @@ join ((rate_logger ()) :: publishers)
 

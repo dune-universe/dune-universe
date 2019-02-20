@@ -15,7 +15,7 @@ let rate_logger () =
     let consumed = !consumed in
     let elapsed = (Unix.gettimeofday ()) -. !start in
     let per_sec = (Float.of_int consumed) /. elapsed in
-    Lwt_log.debug_f "Consumed %d, %f/s" consumed per_sec >>= fun () ->
+    Logs_lwt.debug (fun l -> l "Consumed %d, %f/s" consumed per_sec) >>= fun () ->
     if consumed >= expected
     then Caml.exit 0
     else loop ()
@@ -23,21 +23,17 @@ let rate_logger () =
   loop ()
 
 let setup_logging level =
-  Lwt_log_core.default :=
-    Lwt_log.channel
-      ~template:"$(date).$(milliseconds) [$(level)] $(message)"
-      ~close_mode:`Keep
-      ~channel:Lwt_io.stdout
-      ();
-  Lwt_log_core.add_rule "*" level
+  Logs.set_level level;
+  Fmt_tty.setup_std_outputs ();
+  Logs.set_reporter (Logs_fmt.reporter ())
 
-let handler msg =
-  consumed := !consumed + 1;
-  return HandlerOK
+let handler _ =
+  Int.incr consumed;
+  return Consumer.HandlerOK
 
 let () = 
-  setup_logging Lwt_log.Debug;
-  let config = Consumer.create_config ~max_in_flight:in_flight () |> Result.ok_or_failwith in
+  setup_logging (Some Logs.Debug);
+  let config = Consumer.Config.create ~max_in_flight:in_flight () |> Result.ok_or_failwith in
   let consumer = 
     Consumer.create
       ~mode:Consumer.ModeNsqd

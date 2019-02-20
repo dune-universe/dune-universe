@@ -1,27 +1,28 @@
-opam-version: "1.2"
+opam-version: "2.0"
 name: "nsq"
-version: "0.3.0"
+version: "0.4.0"
 maintainer: "Ryan Slade <ryanslade@gmail.com>"
 authors: "Ryan Slade <ryanslade@gmail.com>"
 homepage: "https://github.com/ryanslade/nsq-ocaml"
 bug-reports: "https://github.com/ryanslade/nsq-ocaml/issues"
-dev-repo: "https://github.com/ryanslade/nsq-ocaml.git"
-build: [["jbuilder" "build" "-p" name "-j" jobs]]
+dev-repo: "git+https://github.com/ryanslade/nsq-ocaml.git"
+build: [["dune" "build" "-p" name "-j" jobs]]
+synopsis: "A client library for the NSQ messaging platform"
 depends: [
-  "jbuilder" {build}
+  "ocaml" {>= "4.04.0"}
+  "dune" {build}
   "base"
+  "stdio"
   "lwt" {>= "3.2.0"}
-  "ocplib-endian" 
-  "integers" 
+  "ocplib-endian"
+  "integers"
   "cohttp"
   "cohttp-lwt-unix"
   "yojson"
   "ocaml-migrate-parsetree"
   "ppx_deriving_yojson"
   "ppx_sexp_conv"
+  "ppx_expect"
   "ppx_compare"
   "logs"
-]
-available: [
-  ocaml-version >= "4.04.0"
 ]
