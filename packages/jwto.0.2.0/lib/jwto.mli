@@ -1,11 +1,11 @@
-type algorithm =
-	| HS256
-	| HS512
-	| Unknown
+type algorithm = HS256 | HS512 | Unknown
 
 type t
+
 type header
+
 type payload = (string * string) list
+
 type unsigned_token
 
 (* Encode, decode, verify *)
@@ -18,7 +18,7 @@ Encode a token
 		"secret" 
 		payload
 *)
-val encode : algorithm -> string -> payload -> string
+val encode : algorithm -> string -> payload -> (string, string) result
 
 (* 
 Decode a token, this doesn't verify
@@ -43,7 +43,7 @@ val make_header : algorithm -> header
 
 val make_unsigned_token : header -> payload -> unsigned_token
 
-val make_signed_token : string -> unsigned_token -> t
+val make_signed_token : string -> unsigned_token -> (t, string) result
 
 (* Utility functions *)
 
