@@ -1,5 +1,0 @@
-(library
- (name        tuntap)
- (public_name tuntap)
- (libraries   ipaddr)
- (c_names     tuntap_stubs))
