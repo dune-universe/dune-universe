@@ -21,7 +21,7 @@ structures directly from OCaml.  It supports both reading and writing to these
 memory buffers, and they are accessed via the [Bigarray] module.
 
 The library interface below is intended to be used in conjunction with the
-ppx rewriter that is also supplied with this library (in the [cstruct.ppx]
+ppx rewriter that is also supplied with this library (in the [cstruct-ppx]
 ocamlfind package).
 
 An example description for the pcap packet format is:
@@ -501,3 +501,7 @@ val append: t -> t -> t
 val concat: t list -> t
 (** [concat ts] is the concatenation of all the [ts]. It is not guaranteed that
  * the result is a newly created [t] in the zero- and one-element cases. *)
+
+val rev: t -> t
+(** [rev t] is [t] in reverse order. The return value is a freshly allocated
+    cstruct, and the argument is not modified. *)
