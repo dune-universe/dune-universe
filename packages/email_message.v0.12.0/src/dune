@@ -1,0 +1,8 @@
+(library (name email_message) (public_name email_message)
+ (libraries async core_extended.base64 core cryptokit email_address
+  magic-mime re2 core.uuid)
+ (preprocess (pps ppx_jane)))
+
+(ocamllex email_lexer media_type_lexer quoted_printable_lexer)
+
+(ocamlyacc email_grammar media_type_grammar)

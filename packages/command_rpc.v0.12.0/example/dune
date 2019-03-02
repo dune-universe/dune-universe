@@ -1,0 +1,2 @@
+(executables (names command_rpc_example command_rpc_expert_example)
+ (libraries async core command_rpc) (preprocess (pps ppx_jane)))

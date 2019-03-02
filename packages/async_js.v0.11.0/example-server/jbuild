@@ -1,9 +1,0 @@
-(executables
-  ((names (key_value_store))
-   (flags (:standard -safe-string))
-   (libraries (core async cohttp cohttp_async_lib uri))
-   (preprocess (pps (ppx_jane ppxlib.runner)))
-   ))
-
-
-(jbuild_version 1)

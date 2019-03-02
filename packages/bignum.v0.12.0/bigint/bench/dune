@@ -1,0 +1,2 @@
+(library (name bigint_benchmarks) (libraries core bigint)
+ (preprocess (pps ppx_jane)))

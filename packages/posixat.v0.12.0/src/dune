@@ -1,0 +1,11 @@
+(library (name posixat) (public_name posixat)
+ (c_names posixat_stubs posixat_generated_stubs) (libraries base unix)
+ (preprocess
+  (pps ppx_optcomp ppx_sexp_conv -type-conv-keep-w32=both
+   -apply=optcomp,type_conv)))
+
+(rule (targets posixat_generated_stubs.c) (deps (:first_dep gen/gen.exe))
+ (action (bash "%{first_dep} c > %{targets}")) (mode fallback))
+
+(rule (targets posixat_generated.ml) (deps (:first_dep gen/gen.exe))
+ (action (bash "%{first_dep} ml > %{targets}")) (mode fallback))

@@ -1,0 +1,3 @@
+(library (name parsexp_io) (public_name parsexp_io)
+ (libraries base stdio parsexp)
+ (preprocess (pps ppx_js_style -check-doc-comments)))

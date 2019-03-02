@@ -1,0 +1,3 @@
+(library (name core_profiler_offline_tool)
+ (public_name core_profiler.offline_tool) (libraries core re2 core_profiler)
+ (preprocess (pps ppx_jane)))

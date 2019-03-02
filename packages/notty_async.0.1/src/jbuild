@@ -1,8 +1,0 @@
-(library
- ((name notty_async)
-  (public_name notty_async)
-  (synopsis "Async driver for Notty terminal graphics library")
-  (libraries (async notty.unix))
-  (preprocess (pps (ppx_jane)))
-  (inline_tests)
-  (flags (:standard -short-paths))))

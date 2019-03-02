@@ -1,0 +1,4 @@
+(library (name hardcaml_waveterm_test)
+ (libraries base expect_test_helpers_kernel hardcaml_waveterm
+  hardcaml_waveterm_interactive notty notty.unix)
+ (preprocess (pps ppx_deriving_hardcaml ppx_jane)))

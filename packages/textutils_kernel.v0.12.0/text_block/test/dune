@@ -1,0 +1,2 @@
+(library (name textutils_test) (libraries expect_test_helpers text_block)
+ (preprocess (pps ppx_jane)))

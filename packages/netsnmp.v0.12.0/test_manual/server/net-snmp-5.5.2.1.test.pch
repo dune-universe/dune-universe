@@ -1,0 +1,11 @@
+diff -r -u net-snmp-5.5.2.1.orig/snmplib/snmp_client.c net-snmp-5.5.2.1/snmplib/snmp_client.c
+--- net-snmp-5.5.2.1.orig/snmplib/snmp_client.c	2014-02-20 15:54:58.000000000 +0000
++++ net-snmp-5.5.2.1/snmplib/snmp_client.c	2017-02-27 15:27:03.744221604 +0000
+@@ -948,6 +948,7 @@
+         break;
+ 
+ #ifdef NETSNMP_WITH_OPAQUE_SPECIAL_TYPES
++    case ASN_OPAQUE_COUNTER64:
+     case ASN_OPAQUE_U64:
+     case ASN_OPAQUE_I64:
+ #endif                          /* NETSNMP_WITH_OPAQUE_SPECIAL_TYPES */

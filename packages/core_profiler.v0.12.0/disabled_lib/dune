@@ -1,0 +1,2 @@
+(library (name core_profiler_disabled) (public_name core_profiler.disabled)
+ (libraries core) (preprocess (pps ppx_jane)))

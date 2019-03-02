@@ -1,0 +1,4 @@
+(library (name hardcaml_waveterm_interactive)
+ (public_name hardcaml_waveterm.interactive)
+ (libraries base hardcaml_waveterm notty notty_async stdio)
+ (preprocess (pps ppx_jane)))

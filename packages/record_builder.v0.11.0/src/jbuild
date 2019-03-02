@@ -1,8 +1,0 @@
-(library (
-  (name        record_builder)
-  (public_name record_builder)
-  (flags (:standard -safe-string))
-  (libraries (core_kernel))
-  (preprocess (pps (ppx_jane ppxlib.runner)))))
-
-(jbuild_version 1)

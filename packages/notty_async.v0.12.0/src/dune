@@ -1,0 +1,2 @@
+(library (name notty_async) (public_name notty_async)
+ (libraries async notty.unix) (preprocess (pps ppx_jane)))

@@ -1,0 +1,9 @@
+(executables (names dump_metrics profiler_tool)
+ (libraries textutils.ascii_table textutils.console core core_profiler
+  core_profiler_offline_tool shell.string_extended
+  textutils_kernel.text_graph)
+ (preprocess (pps ppx_jane)))
+
+(install (section bin)
+ (files (dump_metrics.exe as core-profiler-dump-metrics)
+  (profiler_tool.exe as core-profiler-tool)))

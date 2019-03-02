@@ -1,0 +1,2 @@
+(library (name sexp_macro) (public_name sexp_macro) (libraries sexplib async)
+ (preprocess (pps ppx_jane -annotated-ignores)))

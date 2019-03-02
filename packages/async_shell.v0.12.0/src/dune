@@ -1,0 +1,2 @@
+(library (name async_shell) (public_name async_shell)
+ (libraries async core shell) (preprocess (pps ppx_jane)))

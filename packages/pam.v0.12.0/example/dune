@@ -1,0 +1,1 @@
+(executables (names simple) (libraries core pam) (preprocess (pps ppx_jane)))

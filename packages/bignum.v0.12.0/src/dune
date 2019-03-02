@@ -1,0 +1,3 @@
+(library (name bignum) (public_name bignum)
+ (libraries core_kernel bigint typerep num zarith)
+ (preprocess (pps ppx_jane)))

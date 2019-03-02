@@ -1,8 +1,0 @@
-(library
- ((name bignum_benchmarks)
-(flags (:standard -safe-string))
-  (libraries (core bignum))
-  (preprocess (pps (ppx_jane ppxlib.runner)))))
-
-
-(jbuild_version 1)

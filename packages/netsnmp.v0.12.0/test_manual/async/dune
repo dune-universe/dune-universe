@@ -1,0 +1,2 @@
+(executables (names mib_async_test sess_async_test)
+ (libraries core async netsnmp.async) (preprocess (pps ppx_jane)))

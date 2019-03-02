@@ -1,0 +1,4 @@
+(library (name ppx_csv_conv_test) (libraries core csvfields)
+ (preprocess (pps ppx_jane ppx_csv_conv)))
+
+(alias (name DEFAULT) (deps example.ml.pp example.mli.pp))

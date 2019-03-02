@@ -1,0 +1,1 @@
+include Resource_cache_intf.Resource_cache

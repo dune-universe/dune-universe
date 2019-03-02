@@ -1,4 +1,0 @@
-(library ((name record_builder_test) (libraries (core_kernel record_builder))
- (preprocess (pps (ppx_jane ppxlib.runner)))))
-
-(jbuild_version 1)

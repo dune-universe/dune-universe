@@ -1,0 +1,2 @@
+(executables (names mib_test sess_test var_types netsnmp_test)
+ (libraries core_kernel netsnmp re) (preprocess (pps ppx_jane)))

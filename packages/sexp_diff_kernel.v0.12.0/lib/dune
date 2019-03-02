@@ -1,0 +1,2 @@
+(library (name sexp_diff_kernel) (libraries core_kernel)
+ (public_name sexp_diff_kernel) (preprocess (pps ppx_jane)))

@@ -1,0 +1,5 @@
+(library (name resource_cache) (public_name resource_cache)
+ (preprocess
+  (pps ppx_jane -dated-deprecation -annotated-ignores -check-doc-comments))
+ (libraries async_kernel async_rpc_kernel core_kernel
+  async_kernel.eager_deferred))

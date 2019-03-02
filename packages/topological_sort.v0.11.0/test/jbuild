@@ -1,9 +1,0 @@
-(library
- ((name topological_sort_test)
-  (flags (:standard -safe-string))
-  (libraries (expect_test_helpers_kernel
-              topological_sort))
-  (preprocess (pps (ppx_jane ppxlib.runner)))))
-
-
-(jbuild_version 1)

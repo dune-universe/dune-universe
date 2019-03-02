@@ -1,0 +1,56 @@
+#+TITLE: Pam
+
+* Overview
+
+*Pam* provides the necessary functions for OCaml programs to interact
+with the Linux Pluggable Authentication Modules (PAM) system.
+
+It allows applications to make use of existing Linux PAM modules for
+authentication, authorization or even setting up the application
+session similar to other applications like sshd.
+
+For clarity, we will use /Pam/ to refer to the OCaml library and
+/Linux-PAM/ to refer to the native PAM stack in this document.
+
+* Details
+
+The library is designed to look similar to functions in the Linux-PAM
+library. For details on how PAM is used, please kindly refer to the
+Linux-PAM Application Developer's Guide
+(http://www.linux-pam.org/Linux-PAM-html/Linux-PAM_ADG.html) or the
+manpages of specific pam functions. The function names should be
+similar enough if not exactly identical.
+
+The Pam library implements most of the functions required by
+applications to interact with the Linux-PAM system. It does not mean
+to implement every function provided in the PAM C-library. However,
+it should be complete enough for most uses.
+
+There are several functions implemented in a slightly different way:
+
+1. ~pam_start~ requires a /conversation/ function argument with an
+   interface different from the one in the C library. It requires a
+   function which takes an argument of ~(Pam_conv.Message.t, string)
+   Result.t list~ while the corresponding C library requires a
+   function which takes an argument of ~pam_message~ array only (see
+   ~man 3 pam_conv~). The extra ~Result.t~ is for the /Pam/ library to
+   report error if it fails to convert any ~pam_message~ structure in
+   C into ~Pam_conv.Message.t~ in OCaml.
+
+2. ~pam_start~ also behaves differently when it fails to start a new
+   pam session. Instead of leaving the cleanup to the caller, it will
+   also call ~pam_end~ to close and clean up the session. The design
+   itself aims at making it more trivial to chain successful pam
+   operations and populate the errors without handling the cleanup
+   explicitly.
+
+3. ~pam_unsetenv~ is newly introduced and not in the Linux-PAM
+   stack. This function allows the application developer to clear a
+   PAM environment explicitly. This function is done via ~pam_putenv~
+   with a specific key notation. We think an explicit function is
+   better than relying on any notation.
+
+* Examples
+
+There are some sample codes in the ~examples~ directory which
+illustrate how /Pam/ works.

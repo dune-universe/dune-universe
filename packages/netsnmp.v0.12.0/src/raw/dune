@@ -1,0 +1,5 @@
+(library (name netsnmp_raw) (public_name netsnmp.raw)
+ (c_library_flags :standard -lnetsnmp) (c_flags :standard)
+ (c_names netsnmp_mib_stub netsnmp_helper_fun netsnmp_error_helper
+  netsnmp_sess_stub netsnmp_pdu_stub netsnmp_stubs_mutex)
+ (preprocess (pps ppx_jane)))

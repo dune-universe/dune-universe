@@ -1,0 +1,4 @@
+(library (name email_address_test)
+ (libraries textutils.ascii_table async_kernel core_kernel email_address
+  expect_test_helpers)
+ (preprocess (pps ppx_jane)))

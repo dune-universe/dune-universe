@@ -1,0 +1,3 @@
+(library (name email_message_test)
+ (libraries async core email_message expect_test_helpers)
+ (preprocess (pps ppx_jane)))

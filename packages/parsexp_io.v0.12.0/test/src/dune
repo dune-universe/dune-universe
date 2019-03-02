@@ -1,0 +1,2 @@
+(library (name parsexp_io_test) (libraries core_kernel parsexp_io)
+ (preprocess (pps ppx_jane)))
