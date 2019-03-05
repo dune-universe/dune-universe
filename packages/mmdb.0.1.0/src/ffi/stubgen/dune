@@ -1,0 +1,3 @@
+(executable
+ (name mmdb_ffi_stubgen)
+ (libraries mmdb_ffi_bindings ctypes.stubs))

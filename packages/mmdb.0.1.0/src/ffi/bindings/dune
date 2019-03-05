@@ -1,0 +1,4 @@
+(library
+ (name mmdb_ffi_bindings)
+ (public_name mmdb.ffi.bindings)
+ (libraries mmdb_types ctypes))

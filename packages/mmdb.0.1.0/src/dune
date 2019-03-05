@@ -1,0 +1,7 @@
+(library
+ (name mmdb)
+ (public_name mmdb)
+ (synopsis "High-level interface for querying MaxMind DB files")
+ (libraries base ctypes mmdb_types mmdb_ffi)
+ (preprocess
+  (pps ppx_let ppx_deriving.show)))

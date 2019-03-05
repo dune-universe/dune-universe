@@ -1,0 +1,19 @@
+(executable
+ (name mmdb_types_stubgen)
+ (libraries mmdb_types_bindings ctypes.stubs))
+
+(rule
+ (targets mmdb_ml_types_stubgen.c)
+ (deps ./mmdb_types_stubgen.exe)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{deps}))))
+
+(rule
+ (targets mmdb_ml_types_stubgen.exe)
+ (deps
+  (:c ./mmdb_ml_types_stubgen.c))
+ (action
+  (run %{cc} %{c} -lmaxminddb -I %{ocaml_where}/../ctypes -I %{ocaml_where}
+    -o %{targets})))

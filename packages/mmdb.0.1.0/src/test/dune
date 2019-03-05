@@ -1,0 +1,11 @@
+(executable
+ (name test)
+ (libraries alcotest mmdb))
+
+(alias
+ (name runtest)
+ (deps
+  sample.mmdb
+  (:test test.exe))
+ (action
+  (run %{test} --color=always)))

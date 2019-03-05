@@ -1,0 +1,25 @@
+(rule
+ (targets g.ml)
+ (deps stubgen/mmdb_ffi_stubgen.exe)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{deps} -ml))))
+
+(rule
+ (targets mmdb_ffi_stubs.c)
+ (deps stubgen/mmdb_ffi_stubgen.exe)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{deps} -c))))
+
+(library
+ (name mmdb_ffi)
+ (public_name mmdb.ffi)
+ (synopsis
+   "Ctypes bindings for libmaxminddb header functions and some additional helpers")
+ (flags :standard -cclib -lmaxminddb)
+ (c_names mmdb_ffi_stubs mmdb_helpers)
+ (c_flags -Wno-incompatible-pointer-types-discards-qualifiers)
+ (libraries mmdb_ffi_bindings ctypes.foreign))

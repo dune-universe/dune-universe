@@ -1,0 +1,15 @@
+(rule
+ (targets g.ml)
+ (deps stubgen/mmdb_ml_types_stubgen.exe)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{deps}))))
+
+(library
+ (name mmdb_types)
+ (public_name mmdb.types)
+ (synopsis
+   "Ctypes bindings that describe the libmaxminddb constants and types")
+ (flags :standard -w -9-27 -cclib -lmaxminddb)
+ (libraries mmdb_types_bindings))
