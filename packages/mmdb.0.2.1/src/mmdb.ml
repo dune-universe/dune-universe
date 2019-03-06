@@ -2,6 +2,8 @@ open Base
 
 type t = Mmdb_types.Mmdb.t
 
+exception Binding_integrity_error = Errors.Binding_integrity_error
+
 module Common_error = Errors.Common_error
 module Open_file_error = Errors.Open_file_error
 module Lookup_ip_error = Errors.Lookup_ip_error
@@ -111,24 +113,27 @@ let run_query ~lookup_result ~query :
       let entry_data_ptr = Pointers.Entry_data.allocate () in
       let query = Pointers.Char_ptr_ptr.of_string_list query in
       let error_code = Mmdb_ffi.Core.aget_value entry entry_data_ptr query in
-      match Errors.Lookup_ip_error.of_error_code error_code with
-      | Some e -> Error e
-      | None -> (
-        match Mmdb_ffi.Helpers.get_entry_data_has_data entry_data_ptr with
-        | false -> Ok None
-        | true -> (
-            let data_type_code =
-              Mmdb_ffi.Helpers.get_entry_data_type entry_data_ptr
-            in
-            match Supported_data_type.of_data_type_code data_type_code with
-            | Some data_type ->
-                Ok
-                  (Some
-                     (Query_result.get_query_result data_type entry_data_ptr))
-            | None ->
-                Error
-                  (`Unsupported_data_type
-                    (Unsigned.UInt32.to_string data_type_code)) ) ) )
+      match Errors.Lookup_error.is_ignorable_error_code error_code with
+      | true -> Ok None
+      | false -> (
+        match Errors.Lookup_ip_error.of_error_code error_code with
+        | Some e -> Error e
+        | None -> (
+          match Mmdb_ffi.Helpers.get_entry_data_has_data entry_data_ptr with
+          | false -> Ok None
+          | true -> (
+              let data_type_code =
+                Mmdb_ffi.Helpers.get_entry_data_type entry_data_ptr
+              in
+              match Supported_data_type.of_data_type_code data_type_code with
+              | Some data_type ->
+                  Ok
+                    (Some
+                       (Query_result.get_query_result data_type entry_data_ptr))
+              | None ->
+                  Error
+                    (`Unsupported_data_type
+                      (Unsigned.UInt32.to_string data_type_code)) ) ) ) )
 
 let run_string_query ~lookup_result ~query =
   Result.Let_syntax.(

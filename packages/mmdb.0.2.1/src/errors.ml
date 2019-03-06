@@ -1,3 +1,5 @@
+exception Binding_integrity_error of string
+
 module Error_code = struct
   let to_message error_code =
     Mmdb_ffi.Core.strerror error_code |> Pointers.Char_ptr.to_string
@@ -26,7 +28,10 @@ module Common_error = struct
       | error_code when error_code = invalid_data_error ->
           Some (`Invalid_data (get_message ()))
       | _ ->
-          Printf.sprintf "Unrecognized error code: %d" error_code |> failwith)
+          let message =
+            Printf.sprintf "Unrecognized error code: %d" error_code
+          in
+          Binding_integrity_error message |> raise)
 end
 
 module Open_file_error = struct
@@ -53,9 +58,6 @@ end
 module Lookup_ip_error = struct
   type t =
     [ `Invalid_address_info
-    | `Invalid_lookup_path of string
-    | `Lookup_path_does_not_match_data of string
-    | `Invalid_node_number of string
     | `Ipv6_lookup_in_ipv4_database of string
     | Common_error.t ]
   [@@deriving show]
@@ -63,21 +65,30 @@ module Lookup_ip_error = struct
   let of_error_code ?(address_error_code = 0) error_code =
     if address_error_code != 0 then Some `Invalid_address_info
     else
-      let get_message () = Error_code.to_message error_code in
+      let get_error_message () = Error_code.to_message error_code in
+      let fail error_name =
+        let message =
+          get_error_message ()
+          |> Printf.sprintf "Bindings to libmaxminddb caused an '%s' error: %s"
+               error_name
+        in
+        Binding_integrity_error message |> raise
+      in
       Mmdb_types.Error_code.(
         match error_code with
         | error_code when error_code = invalid_lookup_path_error ->
-            Some (`Invalid_lookup_path (get_message ()))
-        | error_code when error_code = lookup_path_does_not_match_data_error ->
-            Some (`Lookup_path_does_not_match_data (get_message ()))
+            fail "invalid_lookup_path"
         | error_code when error_code = invalid_node_number_error ->
-            Some (`Invalid_node_number (get_message ()))
+            fail "invalid_node_number"
         | error_code when error_code = ipv6_lookup_in_ipv4_database_error ->
-            Some (`Ipv6_lookup_in_ipv4_database (get_message ()))
+            Some (`Ipv6_lookup_in_ipv4_database (get_error_message ()))
         | _ -> Common_error.of_error_code error_code)
 end
 
 module Lookup_error = struct
   type t = [`Unsupported_data_type of string | Lookup_ip_error.t]
   [@@deriving show]
+
+  let is_ignorable_error_code error_code =
+    error_code = Mmdb_types.Error_code.lookup_path_does_not_match_data_error
 end

@@ -86,11 +86,6 @@ module FetchingCommon = struct
             match (expected, actual) with
             | `Unsupported_data_type _, `Unsupported_data_type _ -> true
             | `Invalid_address_info, `Invalid_address_info -> true
-            | `Invalid_lookup_path _, `Invalid_lookup_path _ -> true
-            | ( `Lookup_path_does_not_match_data _
-              , `Lookup_path_does_not_match_data _ ) ->
-                true
-            | `Invalid_node_number _, `Invalid_node_number _ -> true
             | `Ipv6_lookup_in_ipv4_database _, `Ipv6_lookup_in_ipv4_database _
               ->
                 true
