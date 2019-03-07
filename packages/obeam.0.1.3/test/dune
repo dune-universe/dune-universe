@@ -1,8 +1,0 @@
-(library
- (name abs_form_test)
- (libraries obeam expect_test_helpers_kernel)
- (inline_tests (deps (glob_files *.beam)))
- (preprocess (pps ppx_sexp_conv ppx_expect)))
-
-(env
- (dev (flags (:standard -w -9-27-39))))
