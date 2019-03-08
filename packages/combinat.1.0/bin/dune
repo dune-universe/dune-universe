@@ -1,0 +1,5 @@
+(executable
+ (name bench)
+ (libraries core_bench combinat)
+ (flags -unsafe)
+ (modules bench))

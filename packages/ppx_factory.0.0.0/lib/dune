@@ -1,0 +1,12 @@
+(library
+  (name ppx_factory_lib)
+  (public_name ppx_factory._lib)
+  (libraries
+    ppxlib
+  )
+  (preprocess
+    (pps
+      ppxlib.metaquot
+    )
+  )
+)

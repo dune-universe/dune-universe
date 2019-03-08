@@ -1,0 +1,18 @@
+version: "1.0"
+opam-version: "1.2"
+name: "combinat"
+maintainer: "Jack Feser <feser@csail.mit.edu>"
+authors: "Jack Feser <feser@csail.mit.edu>"
+dev-repo: "git+https://github.com/jfeser/combinat.git"
+homepage: "https://github.com/jfeser/combinat"
+bug-reports: "https://github.com/jfeser/combinat/issues"
+doc: "https://jfeser.github.io/combinat/"
+build: [["dune" "build" "-p" name "-j" jobs]]
+depends: [
+  "dune" {build & >= "1.7"}
+  "base" {>= "v0.12"}
+  "stdio" {>= "v0.12"}
+  "ppx_sexp_conv" {>= "v0.12"}
+  "ppx_expect" {>= "v0.12"}
+  "core_bench" {test & >= "v0.11" & < "v0.13"}
+]

@@ -1,0 +1,11 @@
+(executable
+ (name damped)
+ (libraries cviode owl owl-plplot stdcompat)
+)
+
+(alias
+ (name runtest)
+ (action
+  (run ./damped.exe)
+ )
+)

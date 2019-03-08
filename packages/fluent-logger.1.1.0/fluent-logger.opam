@@ -1,0 +1,21 @@
+opam-version: "2.0"
+version: "1.1.0"
+maintainer: "komamitsu@gmail.com"
+authors: ["Mitsunori Komatsu"]
+homepage: "https://github.com/komamitsu/fluent-logger-ocaml"
+bug-reports: "https://github.com/komamitsu/fluent-logger-ocaml/issues"
+dev-repo: "git+https://github.com/komamitsu/fluent-logger-ocaml.git"
+description: "Structured logger for Fluentd (OCaml)"
+synopsis: "Structured logger for Fluentd (OCaml)"
+license: "Apache"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+
+depends: [
+    "dune" {build}
+    "msgpack"
+    "extlib"
+    "ounit" {with-test}
+]

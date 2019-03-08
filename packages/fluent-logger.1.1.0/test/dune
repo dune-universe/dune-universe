@@ -1,0 +1,3 @@
+(test
+ (name fluent_logger_test)
+ (libraries extlib oUnit fluent_logger))

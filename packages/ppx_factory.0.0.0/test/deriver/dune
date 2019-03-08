@@ -1,0 +1,40 @@
+(executable
+  (name pp)
+  (modules pp)
+  (libraries
+    ppx_factory
+    ppxlib
+  )
+)
+
+(rule
+  (targets pp_default.actual.ml)
+  (deps test_default.ml)
+  (action (run ./pp.exe -deriving-keep-w32 both --impl %{deps} -o %{targets}))
+)
+
+(alias
+  (name runtest)
+  (action (diff pp_default.expected.ml pp_default.actual.ml))
+)
+
+(rule
+  (targets pp_factory.actual.ml)
+  (deps test_factory.ml)
+  (action (run ./pp.exe -deriving-keep-w32 both --impl %{deps} -o %{targets}))
+)
+
+(alias
+  (name runtest)
+  (action (diff pp_factory.expected.ml pp_factory.actual.ml))
+)
+
+(tests
+  (names test_default test_factory)
+  (modules test_default test_factory)
+  (preprocess
+    (pps
+      ppx_factory
+    )
+  )
+)

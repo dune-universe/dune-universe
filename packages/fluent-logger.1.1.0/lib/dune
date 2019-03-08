@@ -1,0 +1,3 @@
+(library
+ (name fluent_logger)
+ (libraries unix extlib msgpack))
