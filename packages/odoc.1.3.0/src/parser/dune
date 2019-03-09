@@ -1,5 +1,0 @@
-(ocamllex lexer)
-
-(library
- (name parser_)
- (libraries model compat astring))

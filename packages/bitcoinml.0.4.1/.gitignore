@@ -1,0 +1,4 @@
+_build
+bitcoinml.*
+test/data/*.hex
+.vscode/*

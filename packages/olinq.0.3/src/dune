@@ -1,0 +1,7 @@
+
+(library
+  (name olinq)
+  (public_name olinq)
+  (wrapped false)
+  (libraries bytes seq)
+  (flags :standard -safe-string -short-paths))

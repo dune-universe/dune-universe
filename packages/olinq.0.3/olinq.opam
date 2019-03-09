@@ -1,0 +1,25 @@
+opam-version: "2.0"
+name: "olinq"
+version: "0.3"
+author: "Simon Cruanes"
+maintainer: "simon.cruanes.2007@m4x.org"
+synopsis: "LINQ inspired queries on in-memory data"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "@doc" "-p" name "-j" jobs] {with-doc}
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "dune" {build}
+  "base-bytes"
+  "seq"
+  "ocaml" { >= "4.02" }
+  "odoc" {with-doc}
+  "qtest" {with-test}
+  "qcheck" {with-test}
+]
+tags: [ "linq" "query" "join" "group" "collection" ]
+homepage: "https://github.com/c-cube/olinq/"
+dev-repo: "git+https://github.com/c-cube/olinq.git"
+bug-reports: "https://github.com/c-cube/olinq/issues/"
+
