@@ -1,0 +1,22 @@
+## Emacs files
+
+*~
+*#
+
+## Dune
+
+/_build
+.merlin
+*.install
+
+## Project
+
+/bin
+/lib
+/doc
+
+/tests.org
+*.json
+*.sjson
+
+/src/c/dune

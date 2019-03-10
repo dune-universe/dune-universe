@@ -1,0 +1,168 @@
+[
+  "Program_LineBreak_CompleteCommands_LineBreak",
+  [ "LineBreak_Empty" ],
+  [
+    "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+    [
+      "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+      [
+        "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+        [
+          "CompleteCommands_CompleteCommand",
+          [
+            "CompleteCommand_CList",
+            [
+              "CList_AndOr",
+              [
+                "AndOr_Pipeline",
+                [
+                  "Pipeline_PipeSequence",
+                  [
+                    "PipeSequence_Command",
+                    [
+                      "Command_SimpleCommand",
+                      [
+                        "SimpleCommand_CmdName_CmdSuffix",
+                        [
+                          "CmdName_Word",
+                          [ "Word", "alias", [ [ "WordName", "alias" ] ] ]
+                        ],
+                        [
+                          "CmdSuffix_Word",
+                          [
+                            "Word",
+                            "show=echo",
+                            [
+                              [
+                                "WordAssignmentWord",
+                                [
+                                  [ "Name", "show" ],
+                                  [
+                                    "Word",
+                                    "echo",
+                                    [ [ "WordLiteral", "echo" ] ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [ "NewLineList_NewLine" ],
+        [
+          "CompleteCommand_CList",
+          [
+            "CList_AndOr",
+            [
+              "AndOr_Pipeline",
+              [
+                "Pipeline_PipeSequence",
+                [
+                  "PipeSequence_Command",
+                  [
+                    "Command_SimpleCommand",
+                    [
+                      "SimpleCommand_CmdName_CmdSuffix",
+                      [
+                        "CmdName_Word",
+                        [ "Word", "alias", [ [ "WordName", "alias" ] ] ]
+                      ],
+                      [
+                        "CmdSuffix_Word",
+                        [
+                          "Word",
+                          "list=ls",
+                          [
+                            [
+                              "WordAssignmentWord",
+                              [
+                                [ "Name", "list" ],
+                                [ "Word", "ls", [ [ "WordLiteral", "ls" ] ] ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [ "NewLineList_NewLine" ],
+      [
+        "CompleteCommand_CList",
+        [
+          "CList_AndOr",
+          [
+            "AndOr_Pipeline",
+            [
+              "Pipeline_PipeSequence",
+              [
+                "PipeSequence_Command",
+                [
+                  "Command_SimpleCommand",
+                  [
+                    "SimpleCommand_CmdName_CmdSuffix",
+                    [
+                      "CmdName_Word",
+                      [ "Word", "unalias", [ [ "WordName", "unalias" ] ] ]
+                    ],
+                    [
+                      "CmdSuffix_CmdSuffix_Word",
+                      [
+                        "CmdSuffix_CmdSuffix_Word",
+                        [
+                          "CmdSuffix_Word",
+                          [ "Word", "ls", [ [ "WordName", "ls" ] ] ]
+                        ],
+                        [ "Word", "show", [ [ "WordName", "show" ] ] ]
+                      ],
+                      [ "Word", "coocoo", [ [ "WordName", "coocoo" ] ] ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    [ "NewLineList_NewLine" ],
+    [
+      "CompleteCommand_CList",
+      [
+        "CList_AndOr",
+        [
+          "AndOr_Pipeline",
+          [
+            "Pipeline_PipeSequence",
+            [
+              "PipeSequence_Command",
+              [
+                "Command_SimpleCommand",
+                [
+                  "SimpleCommand_CmdName",
+                  [
+                    "CmdName_Word",
+                    [ "Word", "ls", [ [ "WordName", "ls" ] ] ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  [ "LineBreak_Empty" ]
+]

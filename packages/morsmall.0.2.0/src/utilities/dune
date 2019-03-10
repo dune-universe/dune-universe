@@ -1,0 +1,4 @@
+(library
+ (name morsmall_utilities)
+ (public_name morsmall.utilities)
+ (libraries morbig))

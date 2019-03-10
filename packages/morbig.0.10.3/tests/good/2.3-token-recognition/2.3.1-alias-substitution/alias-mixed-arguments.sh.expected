@@ -1,0 +1,179 @@
+[
+  "Program_LineBreak_CompleteCommands_LineBreak",
+  [ "LineBreak_Empty" ],
+  [
+    "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+    [
+      "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+      [
+        "CompleteCommands_CompleteCommand",
+        [
+          "CompleteCommand_CList",
+          [
+            "CList_AndOr",
+            [
+              "AndOr_Pipeline",
+              [
+                "Pipeline_PipeSequence",
+                [
+                  "PipeSequence_Command",
+                  [
+                    "Command_SimpleCommand",
+                    [
+                      "SimpleCommand_CmdName_CmdSuffix",
+                      [
+                        "CmdName_Word",
+                        [ "Word", "alias", [ [ "WordName", "alias" ] ] ]
+                      ],
+                      [
+                        "CmdSuffix_CmdSuffix_Word",
+                        [
+                          "CmdSuffix_Word",
+                          [
+                            "Word",
+                            "titi=TITI",
+                            [
+                              [
+                                "WordAssignmentWord",
+                                [
+                                  [ "Name", "titi" ],
+                                  [
+                                    "Word",
+                                    "TITI",
+                                    [ [ "WordLiteral", "TITI" ] ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          "Word",
+                          "toto=TOTO",
+                          [
+                            [
+                              "WordAssignmentWord",
+                              [
+                                [ "Name", "toto" ],
+                                [
+                                  "Word",
+                                  "TOTO",
+                                  [ [ "WordLiteral", "TOTO" ] ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [ "NewLineList_NewLine" ],
+      [
+        "CompleteCommand_CList",
+        [
+          "CList_AndOr",
+          [
+            "AndOr_Pipeline",
+            [
+              "Pipeline_PipeSequence",
+              [
+                "PipeSequence_Command",
+                [
+                  "Command_SimpleCommand",
+                  [
+                    "SimpleCommand_CmdName_CmdSuffix",
+                    [
+                      "CmdName_Word",
+                      [ "Word", "alias", [ [ "WordName", "alias" ] ] ]
+                    ],
+                    [
+                      "CmdSuffix_CmdSuffix_Word",
+                      [
+                        "CmdSuffix_CmdSuffix_Word",
+                        [
+                          "CmdSuffix_CmdSuffix_Word",
+                          [
+                            "CmdSuffix_Word",
+                            [
+                              "Word",
+                              "tata=TATA",
+                              [
+                                [
+                                  "WordAssignmentWord",
+                                  [
+                                    [ "Name", "tata" ],
+                                    [
+                                      "Word",
+                                      "TATA",
+                                      [ [ "WordLiteral", "TATA" ] ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ],
+                          [ "Word", "titi", [ [ "WordName", "titi" ] ] ]
+                        ],
+                        [
+                          "Word",
+                          "tutu=TUTU",
+                          [
+                            [
+                              "WordAssignmentWord",
+                              [
+                                [ "Name", "tutu" ],
+                                [
+                                  "Word",
+                                  "TUTU",
+                                  [ [ "WordLiteral", "TUTU" ] ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ],
+                      [ "Word", "toto", [ [ "WordName", "toto" ] ] ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    [ "NewLineList_NewLine" ],
+    [
+      "CompleteCommand_CList",
+      [
+        "CList_AndOr",
+        [
+          "AndOr_Pipeline",
+          [
+            "Pipeline_PipeSequence",
+            [
+              "PipeSequence_Command",
+              [
+                "Command_SimpleCommand",
+                [
+                  "SimpleCommand_CmdName",
+                  [
+                    "CmdName_Word",
+                    [ "Word", "TATA", [ [ "WordName", "TATA" ] ] ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  [ "LineBreak_Empty" ]
+]

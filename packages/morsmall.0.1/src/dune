@@ -1,8 +1,0 @@
-(copy_files ext/*)
-
-(library
- (name morsmall)
- (public_name morsmall)
- (preprocess (pps ppx_deriving.std))
- (libraries morbig)
- (flags :standard -w +A-4-30-42))

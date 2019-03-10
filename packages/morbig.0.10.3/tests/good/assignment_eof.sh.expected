@@ -1,0 +1,49 @@
+[
+  "Program_LineBreak_CompleteCommands_LineBreak",
+  [ "LineBreak_Empty" ],
+  [
+    "CompleteCommands_CompleteCommand",
+    [
+      "CompleteCommand_CList",
+      [
+        "CList_AndOr",
+        [
+          "AndOr_Pipeline",
+          [
+            "Pipeline_PipeSequence",
+            [
+              "PipeSequence_Command",
+              [
+                "Command_SimpleCommand",
+                [
+                  "SimpleCommand_CmdName_CmdSuffix",
+                  [
+                    "CmdName_Word",
+                    [ "Word", "a", [ [ "WordName", "a" ] ] ]
+                  ],
+                  [
+                    "CmdSuffix_Word",
+                    [
+                      "Word",
+                      "b=c",
+                      [
+                        [
+                          "WordAssignmentWord",
+                          [
+                            [ "Name", "b" ],
+                            [ "Word", "c", [ [ "WordLiteral", "c" ] ] ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  [ "LineBreak_Empty" ]
+]

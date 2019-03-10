@@ -1,0 +1,137 @@
+#!/bin/sh
+cd "$(dirname "$0")"
+
+MODE=${MODE:=strict}
+
+realpath () (
+    cd "$(dirname "$1")"
+    printf '%s' "$PWD"
+    [ "$PWD" != '/' ] && printf '/'
+    printf '%s\n' "$(basename "$1")"
+)
+
+printf "* Testsuite configuration\n"
+
+# cleanup
+find . \( -name '*.sjson' -o -name '*.morbigerror' \) -delete
+[ "$1" = 'clean' ] && exit 0
+
+## ========= Find morbig; either in this directory, or in the $PATH ========= ##
+
+localmorbig=../bin/morbig
+
+if [ -e "$localmorbig" ]; then
+    morbig=$(realpath "$localmorbig")
+    printf 'Using local %s.\n' "$morbig"
+
+elif command -v morbig >/dev/null 2>&1; then
+    morbig=$(command -v morbig)
+    printf '[WARN] Using from $PATH: %s.\n' "$morbig"
+
+else
+    printf '[FAIL] Could not find morbig. Did you compile it?\n'
+    exit 1
+fi
+
+# Define counters
+good_total=0
+good_accepted=0
+good_rejected=0
+good_unexpected=0
+bad_total=0
+bad_accepted=0
+bad_rejected=0
+
+# Test loop
+for category in good bad
+do
+    for test in $(find "$category" -type f -name '*.sh' | sort -n)
+    do
+	test=${test%.sh}
+
+	if [ \! -f "$test.sh" ]
+	then
+	    printf '\n* [WARN] File `%s` does not exist or is not a file.
+         Did you create a test whose name contains a space?\n' "$test"
+	    continue
+	fi
+
+	case "$category" in
+	    'good') good_total=$((good_total + 1)) ;;
+	    'bad') bad_total=$((bad_total + 1)) ;;
+	esac
+	if "$morbig" --as simple "$test.sh" 2>/dev/null
+	then
+	    case "$category" in
+		'bad')
+		    printf '* [FAIL] Wrongly accepted: %s\n' "$test"
+		    bad_accepted=$((bad_accepted + 1))
+		    ;;
+		'good')
+		    if [ $MODE = "strict" ] && [ \! -f "$test.sh.expected" ]
+		    then
+			printf '* [WARN] Missing `.expected` file: %s\n' "$test"
+			good_unexpected=$((good_unexpected + 1))
+		    elif [ $MODE = "strict" ] \
+                         && ! diff "$test.sh.sjson" "$test.sh.expected" 2>&1 >/dev/null
+		    then
+   		        printf '* [FAIL] Wrong output: %s\n' "$test";
+			if [ x$VERBOSE != x ]; then
+			    echo "** $test.sh"
+			    cat "$test.sh"
+			    echo "** $test.sh.sjson"
+			    cat "$test.sh.sjson"
+			    echo "** $test.sh.expected"
+			    cat "$test.sh.expected"
+			fi
+			good_unexpected=$((good_unexpected + 1))
+		    else
+			good_accepted=$((good_accepted + 1))
+		    fi
+	    esac
+	else
+	    case "$category" in
+		'bad') bad_rejected=$((bad_rejected + 1)) ;;
+		'good')
+		    good_rejected=$((good_rejected + 1))
+		    printf '* [FAIL] Wrongly reject: %s\n' "$test"
+ 		    if [ x$VERBOSE != x ]; then
+			echo "** $test.sh"
+			cat "$test.sh"
+		    fi
+	    esac
+	fi
+    done
+done
+
+passed=$((good_accepted + bad_rejected))
+failed=$((good_unexpected + good_rejected + bad_accepted))
+total=$((good_total + bad_total))
+
+if [ "$((passed + failed))" -ne "$total" ]
+then
+    printf '* *Erk... there must be a problem in this test script*.\n'
+fi
+
+printf '* Summary:
+-----------------------------------
+| Tests | Passed | Failed | Total |
+|-------|--------|--------|-------|
+| good  |    %3d |    %3d |   %3d | %s
+| bad   |    %3d |    %3d |   %3d |
+| all   |    %3d |    %3d |   %3d |
+-----------------------------------\n' \
+       "$good_accepted" "$((good_unexpected + good_rejected))" "$good_total" \
+       "$([ "$good_unexpected" -ne 0 ] && printf '(inc. %d tests with wrong output)' "$good_unexpected")" \
+       "$bad_rejected" "$bad_accepted" "$bad_total" \
+       "$passed" "$failed" "$total"
+
+if [ "$failed" -gt 0 ]
+then
+    exit 2
+else
+    printf "\n         ----------------\n"
+    printf "         Congratulations!\n"
+    printf "         ----------------\n"
+    exit 0
+fi

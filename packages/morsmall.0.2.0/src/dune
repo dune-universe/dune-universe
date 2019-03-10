@@ -1,0 +1,6 @@
+(library
+ (name morsmall)
+ (public_name morsmall)
+ (preprocess (pps ppx_deriving.std))
+ (libraries morbig morsmall.utilities)
+ (flags :standard -w +A-4-30-42))

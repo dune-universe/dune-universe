@@ -1,0 +1,206 @@
+[
+  "Program_LineBreak_CompleteCommands_LineBreak",
+  [ "LineBreak_Empty" ],
+  [
+    "CompleteCommands_CompleteCommands_NewlineList_CompleteCommand",
+    [
+      "CompleteCommands_CompleteCommand",
+      [
+        "CompleteCommand_CList",
+        [
+          "CList_AndOr",
+          [
+            "AndOr_Pipeline",
+            [
+              "Pipeline_PipeSequence",
+              [
+                "PipeSequence_Command",
+                [
+                  "Command_SimpleCommand",
+                  [
+                    "SimpleCommand_CmdPrefix",
+                    [
+                      "CmdPrefix_AssignmentWord",
+                      [
+                        [ "Name", "BAR" ],
+                        [
+                          "Word",
+                          "'fo o'\"ba\"r",
+                          [
+                            [
+                              "WordSingleQuoted",
+                              [
+                                "Word",
+                                "fo o",
+                                [ [ "WordLiteral", "fo o" ] ]
+                              ]
+                            ],
+                            [
+                              "WordDoubleQuoted",
+                              [ "Word", "ba", [ [ "WordLiteral", "ba" ] ] ]
+                            ],
+                            [ "WordLiteral", "r" ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    [ "NewLineList_NewLine" ],
+    [
+      "CompleteCommand_CList",
+      [
+        "CList_AndOr",
+        [
+          "AndOr_Pipeline",
+          [
+            "Pipeline_PipeSequence",
+            [
+              "PipeSequence_Command",
+              [
+                "Command_SimpleCommand",
+                [
+                  "SimpleCommand_CmdPrefix_CmdWord_CmdSuffix",
+                  [
+                    "CmdPrefix_AssignmentWord",
+                    [
+                      [ "Name", "X" ],
+                      [ "Word", "0", [ [ "WordLiteral", "0" ] ] ]
+                    ]
+                  ],
+                  [
+                    "CmdWord_Word",
+                    [ "Word", "echo", [ [ "WordName", "echo" ] ] ]
+                  ],
+                  [
+                    "CmdSuffix_Word",
+                    [
+                      "Word",
+                      "x$BAR\" \"$(echo $(date))",
+                      [
+                        [ "WordLiteral", "x" ],
+                        [
+                          "WordVariable",
+                          [ "VariableAtom", "BAR", [ "NoAttribute" ] ]
+                        ],
+                        [
+                          "WordDoubleQuoted",
+                          [ "Word", " ", [ [ "WordLiteral", " " ] ] ]
+                        ],
+                        [
+                          "WordSubshell",
+                          [ "SubShellKindParentheses" ],
+                          [
+                            "Program_LineBreak_CompleteCommands_LineBreak",
+                            [ "LineBreak_Empty" ],
+                            [
+                              "CompleteCommands_CompleteCommand",
+                              [
+                                "CompleteCommand_CList",
+                                [
+                                  "CList_AndOr",
+                                  [
+                                    "AndOr_Pipeline",
+                                    [
+                                      "Pipeline_PipeSequence",
+                                      [
+                                        "PipeSequence_Command",
+                                        [
+                                          "Command_SimpleCommand",
+                                          [
+                                            "SimpleCommand_CmdName_CmdSuffix",
+                                            [
+                                              "CmdName_Word",
+                                              [
+                                                "Word",
+                                                "echo",
+                                                [ [ "WordName", "echo" ] ]
+                                              ]
+                                            ],
+                                            [
+                                              "CmdSuffix_Word",
+                                              [
+                                                "Word",
+                                                "$(date)",
+                                                [
+                                                  [
+                                                    "WordSubshell",
+                                                    [
+                                                      "SubShellKindParentheses"
+                                                    ],
+                                                    [
+                                                      "Program_LineBreak_CompleteCommands_LineBreak",
+                                                      [ "LineBreak_Empty" ],
+                                                      [
+                                                        "CompleteCommands_CompleteCommand",
+                                                        [
+                                                          "CompleteCommand_CList",
+                                                          [
+                                                            "CList_AndOr",
+                                                            [
+                                                              "AndOr_Pipeline",
+                                                              [
+                                                                "Pipeline_PipeSequence",
+                                                                [
+                                                                  "PipeSequence_Command",
+                                                                  [
+                                                                    "Command_SimpleCommand",
+                                                                    [
+                                                                    "SimpleCommand_CmdName",
+                                                                    [
+                                                                    "CmdName_Word",
+                                                                    [
+                                                                    "Word",
+                                                                    "date",
+                                                                    [
+                                                                    [
+                                                                    "WordName",
+                                                                    "date"
+                                                                    ]
+                                                                    ]
+                                                                    ]
+                                                                    ]
+                                                                    ]
+                                                                  ]
+                                                                ]
+                                                              ]
+                                                            ]
+                                                          ]
+                                                        ]
+                                                      ],
+                                                      [ "LineBreak_Empty" ]
+                                                    ]
+                                                  ]
+                                                ]
+                                              ]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ],
+                            [ "LineBreak_Empty" ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  [ "LineBreak_Empty" ]
+]
