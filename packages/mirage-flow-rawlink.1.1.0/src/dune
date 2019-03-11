@@ -1,0 +1,4 @@
+(library
+ (name mirage_flow_rawlink)
+ (public_name mirage-flow-rawlink)
+ (libraries rawlink rawlink.lwt mirage-flow-lwt cstruct lwt))
