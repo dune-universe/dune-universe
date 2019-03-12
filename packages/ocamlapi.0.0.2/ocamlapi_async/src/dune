@@ -1,0 +1,4 @@
+(library
+    (name ocamlapi_async)
+    (public_name ocamlapi_async)
+    (libraries ocamlapi cohttp-async))

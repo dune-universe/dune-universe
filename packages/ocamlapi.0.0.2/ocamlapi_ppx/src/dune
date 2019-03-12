@@ -1,0 +1,7 @@
+(library
+ (name ocamlapi_ppx)
+ (public_name ocamlapi_ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib ocamlapi)
+ (ppx_runtime_libraries ocamlapi core)
+ (preprocess (pps ppxlib.metaquot)))

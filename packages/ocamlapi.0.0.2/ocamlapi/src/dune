@@ -1,0 +1,5 @@
+(library
+    (name ocamlapi)
+    (public_name ocamlapi)
+    (libraries core re2 cohttp)
+    (preprocess (pps ppx_jane)))

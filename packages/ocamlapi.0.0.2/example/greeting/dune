@@ -1,0 +1,4 @@
+(executable
+ (name greeting)
+ (libraries core cohttp cohttp-async ocamlapi_async)
+     (preprocess (pps ppx_jane ocamlapi_ppx)))

@@ -1,0 +1,4 @@
+(library
+    (name ocamlapi_lwt_unix)
+    (public_name ocamlapi_lwt_unix)
+    (libraries ocamlapi cohttp-lwt cohttp-lwt-unix))

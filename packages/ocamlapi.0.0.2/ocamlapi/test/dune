@@ -1,0 +1,3 @@
+(tests
+    (names ocamlapi_test)
+    (libraries core oUnit ocamlapi))

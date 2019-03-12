@@ -1,0 +1,14 @@
+(library
+ (name xen_gnt)
+ (public_name xen-gnt)
+ (libraries io-page lwt mirage-profile lwt-dllist)
+ (modules Gnt)
+ (wrapped false))
+
+(library
+ (name xen_gnt_unix)
+ (public_name xen-gnt-unix)
+ (modules Gnt_dummy)
+ (c_names gntshr_stubs gnttab_stubs)
+ (c_library_flags -lxenctrl)
+ (libraries unix lwt lwt.unix bigarray io-page-unix))
