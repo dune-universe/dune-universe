@@ -1,0 +1,9 @@
+
+(alias
+ (name runtest)
+ (deps (:readme README.md)
+       (source_tree tests))
+ (action (progn
+          (run ocaml-mdx test %{readme})
+          (diff? %{readme} %{readme}.corrected))))
+

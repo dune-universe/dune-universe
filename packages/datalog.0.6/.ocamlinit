@@ -1,0 +1,22 @@
+#use "topfind";;
+#directory "_build/src";;
+#load "datalog.cma";;
+#install_printer Datalog.Default.pp_term;;
+#install_printer Datalog.Default.pp_literal;;
+#install_printer Datalog.Default.pp_clause;;
+#install_printer Datalog_top_down.Default.T.fmt;;
+#install_printer Datalog_top_down.Default.Lit.fmt;;
+#install_printer Datalog_top_down.Default.C.fmt;;
+module CI = Datalog_caml_interface;;
+module CI_T = CI.Logic.T;;
+module CI_DB = CI.Logic.DB;;
+#install_printer CI.Rel1.fmt;;
+#install_printer CI.Rel2.fmt;;
+#install_printer CI.Rel3.fmt;;
+#install_printer CI.Logic.T.fmt;;
+#install_printer CI.Logic.Lit.fmt;;
+#install_printer CI.Logic.C.fmt;;
+let load_file = CI.Parse.load_file;;
+print_endline "CI: caml interface; CI_T: terms; CI_DB: database; load_file;";;
+(* vim:filetype=ocaml:
+*)
