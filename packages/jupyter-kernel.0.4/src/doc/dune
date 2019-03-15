@@ -1,0 +1,9 @@
+
+(library
+  (name jupyter_kernel_document)
+  (optional)
+  (public_name jupyter-kernel.doc)
+  (libraries jupyter-kernel tyxml)
+  (flags :standard -safe-string -w -3@8)
+  )
+

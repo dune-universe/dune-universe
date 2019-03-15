@@ -1,0 +1,20 @@
+
+(library
+  (name jupyter_kernel)
+  (public_name jupyter-kernel)
+  (libraries result atdgen yojson uuidm ZMQ lwt-zmq
+             digestif.c lwt lwt.unix threads
+             lwt_ppx bytes uutf ISO8601)
+  (flags :standard -safe-string -w +a-4-44-58@8)
+  (preprocess (pps lwt_ppx))
+  )
+
+(rule
+ (targets Protocol_j.ml Protocol_j.mli)
+ (deps    Protocol.atd)
+ (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+ (targets Protocol_t.ml Protocol_t.mli)
+ (deps    Protocol.atd)
+ (action  (run atdgen -t -j-std %{deps})))
