@@ -1,5 +1,5 @@
 opam-version: "2.0"
-version: "3.2.1"
+version: "3.2.1-1"
 synopsis: "A GLFW binding for OCaml"
 maintainer: "Sylvain BOILARD <boilard@crans.org>"
 authors: ["Sylvain BOILARD <boilard@crans.org>"]
@@ -12,5 +12,6 @@ depends: [
   "conf-glfw3"
   "base-bigarray"
   "dune"            {build & >= "1.0"}
+  "conf-pkg-config" {build}
   "ocaml"           {>= "4.02.0"}
 ]
