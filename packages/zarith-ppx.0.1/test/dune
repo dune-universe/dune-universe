@@ -1,0 +1,11 @@
+;; Testing
+
+(rule
+ (targets testppx.result)
+ (deps    (package zarith-ppx) testppx.ml)
+ (action (system "TERM=dumb %{ocaml} -noinit -noprompt < testppx.ml 2>&1 | tail -n +18 > testppx.result")))
+
+(alias
+ (name   runtest)
+ (deps   testppx.result testppx.expected)
+ (action (run diff -dEbZBt testppx.result testppx.expected)))

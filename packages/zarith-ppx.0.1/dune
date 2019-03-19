@@ -1,0 +1,23 @@
+(library
+ (name zarith_ppx)
+ (public_name zarith-ppx)
+ (synopsis "Zarith PPX syntax extension")
+ (modules zarith_ppx)
+ (libraries
+   compiler-libs.common
+   ocaml-migrate-parsetree
+   zarith
+   str)
+ (ppx_runtime_libraries zarith)
+ (kind ppx_rewriter)
+)
+
+(alias
+ (name   runtest)
+ (deps   (:x README.md) test/prelude.ml (package zarith-ppx))
+ (action (progn
+           (run ocaml-mdx test
+               --prelude test/prelude.ml
+               --direction=infer-timestamp %{x})
+           (diff? %{x} %{x}.corrected)
+)))
