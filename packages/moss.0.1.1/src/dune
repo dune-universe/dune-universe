@@ -1,0 +1,6 @@
+(library
+ (name        moss)
+ (public_name moss)
+ (flags       (:standard -safe-string))
+ (synopsis "Client for the MOSS plagiarism detection service")
+ (libraries unix bytes uri))

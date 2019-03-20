@@ -1,0 +1,9 @@
+(executable
+  (name runtest)
+  (libraries alcotest textrazor)
+)
+
+(alias
+  (name runtest)
+  (action (run ./runtest.exe))
+)

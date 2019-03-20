@@ -1,0 +1,4 @@
+(executable
+ (name      make_FC_code)
+ (modules   make_FC_code)
+ (libraries str))

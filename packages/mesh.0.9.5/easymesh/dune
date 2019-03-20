@@ -1,0 +1,26 @@
+(library
+ (name        mesh_easymesh)
+ (public_name mesh-easymesh)
+ (synopsis  "Triangular mesh generation with Easymesh")
+ (modules   Mesh_easymesh  Mesh_easymeshF Mesh_easymeshC)
+ (flags     (:standard -safe-string))
+ (libraries mesh bigarray bytes))
+
+(rule
+ (targets mesh_easymeshF.ml mesh_easymeshC.ml)
+ (deps    ../config/make_FC_code.exe
+          mesh_easymeshFC.ml)
+ (action  (run ../config/make_FC_code.exe)))
+
+;; EasyMesh is no longer downloadble from the internet.  Build it and
+;; install it alongside Mesh_easymesh
+(rule
+ (targets EasyMesh.exe)
+ (deps    easymesh.c)
+ (action  (system "%{cc} -o EasyMesh.exe easymesh.c -lm")))
+ ;(action  (run ${CC} -o EasyMesh.exe easymesh.c -lm))))
+
+(install
+ (section bin)
+ (package mesh-easymesh)
+ (files EasyMesh.exe))

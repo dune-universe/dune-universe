@@ -1,0 +1,28 @@
+opam-version: "2.0"
+name: "textrazor"
+maintainer: "Richard Degenne <richdeg2@gmail.com>"
+authors: ["Richard Degenne <richdeg2@gmail.com>"]
+homepage: "https://github.com/Richard-Degenne/ocaml-textrazor"
+bug-reports: "https://github.com/Richard-Degenne/ocaml-textrazor/issues"
+dev-repo: "git+https://github.com/Richard-Degenne/ocaml-textrazor.git"
+version: "0.1"
+license: "GPL"
+depends: [
+  "ocaml"
+  "uri"
+  "lwt_ssl"
+  "lwt_ppx"
+  "cohttp-lwt-unix"
+  "yojson"
+  "ppx_deriving_yojson"
+  "dune"{build}
+  "alcotest"{with-test}
+  "odoc" {with-doc}
+]
+build: [
+  ["dune" "build" "-p" "textrazor"]
+  ["dune" "build" "-p" "textrazor" "@doc"] {with-doc}
+]
+run-test: ["dune" "runtest"]
+description: "An OCaml wrapper for the TextRazor API"
+synopsis: "An OCaml wrapper for the TextRazor API"

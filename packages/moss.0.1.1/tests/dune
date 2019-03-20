@@ -1,0 +1,3 @@
+(executables
+ (names     test moss_tarball)
+ (libraries moss unix uri))

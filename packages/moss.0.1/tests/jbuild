@@ -1,5 +1,0 @@
-(jbuild_version 1)
-
-(executables
- ((names     (test moss_tarball))
-  (libraries (moss unix uri))))
