@@ -309,6 +309,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
    * The buffer's data must fit in a single block. *)
   let write_already_locked nf ~size fillf =
     Shared_page_pool.use nf.t.tx_pool (fun ~id gref shared_block ->
+        Cstruct.memset shared_block 0;
         let len = fillf shared_block in
         if len > size then failwith "length exceeds size" ;
         Stats.tx nf.t.stats (Int64.of_int len);

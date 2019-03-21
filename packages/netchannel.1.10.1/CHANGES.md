@@ -1,3 +1,6 @@
+## v1.10.1 (2019-03-20)
+* Zero buffers before calling fill functions (@yomimono and @hannesm, #83).
+
 ## v1.10.0 (2019-02-24)
 * Adapt to mirage-net 2.0.0 changes (@hannesm)
 

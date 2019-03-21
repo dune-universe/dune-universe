@@ -249,6 +249,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
                let gnt = {Gnt.Gnttab.domid = t.frontend_id; ref = Int32.to_int r.RX.Request.gref} in
                let mapping = Gnt.Gnttab.map_exn gnttab gnt true in
                let dst = Gnt.Gnttab.Local_mapping.to_buf mapping |> Io_page.to_cstruct in
+               Cstruct.memset dst 0;
                let len = fillf dst in
                if len > size then failwith "length exceeds total size" ;
                Gnt.Gnttab.unmap_exn gnttab mapping;
