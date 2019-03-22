@@ -1,0 +1,3 @@
+(library
+ (name      connect)
+ (libraries mindstorm))

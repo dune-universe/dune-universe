@@ -1,4 +1,4 @@
-version: "0.17.0"
+version: "0.17.1"
 opam-version: "2.0"
 maintainer: "rudi.grinberg@gmail.com"
 authors: ["Rudi Grinberg"]
@@ -7,6 +7,7 @@ license: "MIT"
 homepage: "https://github.com/rgrinberg/opium"
 bug-reports: "https://github.com/rgrinberg/opium/issues"
 dev-repo: "git+https://github.com/rgrinberg/opium.git"
+doc: "https://rgrinberg.github.io/opium/"
 synopsis: "Sinatra like web toolkit based on Lwt + Cohttp"
 description: """
 Opium is a minimalistic library for quickly binding functions to http routes. Its features include (but not limited to):
@@ -37,5 +38,4 @@ depends: [
   "magic-mime"
   "stringext"
   "alcotest" {with-test}
-  "cow" {with-test & >= "0.10.0"}
 ]

@@ -1,0 +1,7 @@
+(executables
+ (names     file_list info keep_alive)
+ (libraries mindstorm-lwt connect_lwt))
+
+(alias
+ (name tests)
+ (deps file_list.exe info.exe keep_alive.exe))

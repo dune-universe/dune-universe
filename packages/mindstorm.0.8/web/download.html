@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <title>OCaml-mindstorm</title>
+</head>
+  <body>
+    <div class="logo"><h1>OCaml Mindstorm</h1></div>
+    <div id="nav">
+      <ul>
+	<li><a href="index.html" class="index">Home</a></li>
+	<li><a href="doc/" class="doc">Documentation</a></li>
+	<li><a href="download.html" class="download">Download</a></li>
+	<li><a href="license.html" class="license">License</a></li>
+	<li><a href="users.html" class="users">Users</a></li>
+      </ul>
+    </div>
+    <div class="main">
+      <h1 class="download">Download<hr noshade="true" /></h1>
+
+      <p>Download the
+	<a href="https://github.com/Chris00/ocaml-mindstorm/releases" >
+	  source tarball</a> and type <code>make</code>.  You can
+	also track the most recent version of the code by using
+	<a href="http://git-scm.com/" >Git</a>:
+	<pre>  git clone https://github.com/Chris00/ocaml-mindstorm.git</pre>
+	and then <code>git pull</code> from time to time to stay up to
+	date.
+	Additional information for each system is given below.</p>
+
+      <h2>Linux &amp; Unix</h2>
+
+      <p>
+	You will need the <code>libbluetooth2-dev</code> package for
+	your distribution.  Connecting to the brick is
+	<a href="doc/#3_Linux">simple</a>.</p>
+      <p>
+	Other Unixes: please help access bluetooth devices, send us a
+	patch!
+      </p>
+
+
+      <h2>Mac OSX</h2>
+
+      <p>No special library is needed to connect to
+	LEGO<sup>&reg;</sup> mindstorm bricks on the Mac.  Just follow
+	the procedure described in
+	the <a href="doc/#3_MacOSX">documentation</a>.</p>
+
+
+      <h2>Windows</h2>
+
+      <p>If you do <em>not</em> have the <em>fantom drivers</em>
+	installed (which you do if you installed the software coming
+	with the mindstorm box), Windows can connect to the brick
+	through its <a href="doc/#3_Windows">usual bluetooth
+	software</a> and will create a <code>COM</code> serial port
+	that we can use.
+      </p>
+      <p>Help wanted: In order to connect with the <em>fantom
+	  drivers</em>, download
+	  the <a href="http://mindstorms.lego.com/Overview/NXTreme.aspx"
+		 >fantom SDK</a> and send us a patch on how to use them.
+      </p>
+    </div>	
+    <br />
+    <a href="http://ocaml.org">
+      <img src="http://ocaml.org/logo/Colour/PNG/colour-logo.png"
+           alt="OCaml"
+           class="ocaml" />
+    </a>
+  </body>
+</html>

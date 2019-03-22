@@ -1,0 +1,223 @@
+body {
+  color: #000000;
+  background-color: #F4F4F4;
+  text-align: justify;
+  margin-top: 10px;
+}
+
+/** LOGO **/
+div.logo {
+  width: 90%;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 100px;
+  color: #F33F00;
+  background-color: #DEDEDE;
+  background-image: url(logo.png);
+  background-repeat: no-repeat;
+  background-position: top right;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.logo h1 {
+  background-color: transparent;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+/** FIN LOGO **/
+
+/** NAVIGATION BAR **/
+#nav {
+  width: 90%;
+  height: 2.6ex;
+/*   width: 150; */
+/*   float: left; */
+  background-color: #F33F00;
+  color: #030502;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left:  12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 3px;
+}
+
+#nav ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: normal small Arial, Helvetica, sans-serif;
+}
+#nav ul li {
+  display: inline;
+}
+
+#nav ul li a {
+/*   display: block; */
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  margin-right: 10px;
+  border: 1px solid #DEDEDE;
+  padding: 0.5ex 1em;
+}
+
+a.index {
+  background-color: #36B2BA;
+  color: black;
+  padding: 3px;
+}
+
+a.index:hover {
+  background-color: #F33F00;
+  color: #36B2BA;
+}
+
+a.doc {
+  background-color: #77C52F;
+  color: black;
+  padding: 3px;
+}
+
+a.doc:hover {
+  background-color: #F33F00;
+  color: #77C52F;
+}
+
+a.download {
+  background-color: #f26de3;
+  color: black;
+/*   margin-left: 80px; */
+  padding: 3px;
+}
+
+a.download:hover {
+  background-color: #F33F00;
+  color: #f26de3;
+}
+
+a.license {
+  background-color: #edcf08;
+  color: black;
+/*   margin-left: 80px; */
+  padding: 3px;
+}
+
+a.license:hover {
+  background-color: #F33F00;
+  color: #edcf08;
+}
+
+a.users {
+  background-color: #b2acf2;
+  color: black;
+  padding: 3px;
+}
+
+a.users:hover {
+  background-color: #F33F00;
+  color: #edcf08;
+}
+
+/** END NAVIGATION BAR **/
+
+/** PAGE CONTENT **/
+
+hr {
+  background-color: #F33F00;
+  width: 75ex;
+}
+
+div.main {
+  width: 90%;
+  color: #030502;
+  background-color: #DEDEDE;
+  /*border: 1px solid black;*/
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: justify;
+  padding: 12px;
+  padding-top: 20px;
+  margin: auto; /* On peut donc demander à ce que le block
+                         soit centré avec "auto" */
+}
+
+
+h1 {
+  font-family: arial;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 3px;  
+  display: block;
+  font-style: normal;
+  background-color: #686551;
+  padding-left: 3px;
+  padding-top: 3px;
+  padding-bottom: 0px;
+  margin: 0px;  
+  margin-bottom: 1ex;
+  border: 0px;
+}
+
+h1 hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 3px;  
+  width: 100%;
+/*   border: 0px; */
+}
+
+h1.title_blue{ color: #36B2BA; }
+h1.title_blue hr { background-color: #36B2BA; }
+h1.title_yellow { color: #edcf08; }
+h1.title_yellow hr { background-color: #edcf08; }
+h1.download { color: #f26de3; }
+h1.download hr { background-color: #f26de3; }
+h1.users { color: #b2acf2; }
+h1.users hr { background-color: #b2acf2; }
+
+.title_green{ color:#77C52F; }
+
+
+a {
+	font-weight:bold;
+	color:#F33F00;
+	text-decoration: none;
+}
+a:hover {
+	font-weight:bold;
+	color:black;
+	text-decoration: none;
+}
+
+p {
+  margin-top: 0.5ex;
+  margin-bottom: 0.5ex;  
+}
+
+ul {
+  padding-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 0.5ex;
+}
+
+li {
+  list-style-type: square;
+  padding-top: 0.5ex;
+  padding-bottom: 0.5ex;
+  margin-top: 0px;
+}
+
+/** END PAGE CONTENT **/
+
+img.ocaml {
+  float: right;
+  width: 150px;
+  padding-top: 20px;
+  border: none;
+}

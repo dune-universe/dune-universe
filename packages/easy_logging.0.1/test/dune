@@ -1,0 +1,15 @@
+
+(executable
+ (name logging_test)
+       
+    (preprocess
+     (pps ppx_deriving.show))
+    (libraries easy_logging)
+    )
+
+
+(alias
+  (name runtest)
+  (deps logging_test.exe)
+  (action (run %{deps}))
+)

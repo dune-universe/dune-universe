@@ -1,0 +1,29 @@
+(library
+ (name        mindstorm)
+ (public_name mindstorm)
+ (modules    Mindstorm Mindstorm__NXT Mindstorm__EV3 Mindstorm_connect)
+ (libraries  bytes unix)
+ (wrapped false)
+ (preprocess (action (run %{exe:../config/discover.exe} --cppo %{input-file})))
+ (preprocessor_deps mindstorm_connect.ml mindstorm_macros.ml
+                    mindstorm_common.ml
+                    mindstorm_win.c mindstorm_unix.c)
+ (c_names    mindstorm_stubs)
+ (c_flags    :standard (:include c_flags.sexp))
+ (c_library_flags :standard (:include c_library_flags.sexp))
+ (synopsis  "Drive Lego Mindstorms bricks from OCaml"))
+
+(documentation
+ (package mindstorm)
+ (mld_files :standard))
+
+;; Generate the interface, so it is easily readable.
+(rule
+ (targets mindstorm__NXT.mli)
+ (deps    mindstorm__NXT.mli.pp %{workspace_root}/config/pp.ml)
+ (action  (chdir %{workspace_root} (run %{bin:ocaml} config/pp.ml))))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (deps    ../config/discover.exe)
+ (action  (run %{deps})))

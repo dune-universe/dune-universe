@@ -1,0 +1,3 @@
+(library
+ (name      connect_lwt)
+ (libraries mindstorm-lwt))

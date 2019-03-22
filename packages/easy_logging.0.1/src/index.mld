@@ -1,0 +1,95 @@
+
+{1 Easy logging }
+     Logging infrastructure inspired by the Python logging module.
+     The aim of this module is to provide a quick and easy to use logging
+     infrastructure.
+
+It has the following features :
+   - one line logger creation
+   - log messages are either [string] or [string lazy_t]
+   - log level adaptable at runtime from anywhere in the program
+   - handlers associated to each logger will format and treat the message independantly
+
+{4     Basic example } 
+{[   
+open Easy_logging
+logger = Logging.make_logger "my_logger" (Some Debug) [Cli Debug];;
+logger#info "log_message";; ]}   
+will output to the stdout a message of the form
+{v 1.306  my_logger    Info    log_message v}
+
+{2 Reference}
+
+ - {! Easy_logging.Logging.logger} : Default logger class.
+ - {! Easy_logging__Default_handlers} : Default handlers.
+ - {! Easy_logging.MakeLogging} : Functor to create your own logging module.
+ - {! Easy_logging__Easy_logging_types} : Types definitions.
+ - {! Easy_logging} : Entry point of the module.
+
+
+{2 Overall description }
+
+{4 Infrastructure }
+Like in the python logging module, this logging infrastructure is based on four concepts:
+ 
+{e loggers,  handlers, formatters} and {e log items }.
+
+A call to {e logger} will create a {e log item}, which it will pass to its {e handlers}. Each {e handler} transforms the {e log item} to a string using its assigned {e formatter}, and then treats the {e item} (e.g. outputs to stdout or to a file).
+{v
+                                   ___________________________
+                                  |         handler 1         |
+                                  | (formatter) | (treatment) |
+             _______________      |---------------------------|
+            |     logger    | ==> | -> string  ==>    ( * )   |
+            |---------------|     |___________________________|
+message ==> | -> log item   |      ___________________________
+            [_______________| ==> |         handler 2         |
+                                  |            ...            |
+v}
+
+
+{4 Levels}
+
+To each logger, handler and log message are associated a level, which will
+be used to filter the messages going through the logging infrastructure.
+
+The predefined levels are, in increasing order of precedence :
+ + Debug   : used for debugging.
+ + Info    : used to trace program execution.
+ + Warning : used for warnings.
+ + Error   : used for errors.
+ + Flash   : used for one-shot debugging: displays an easy to spot message.
+
+{2 Defaults}
+
+{3 Default Handlers}
+By default, two handlers are provided:
+ - Cli handler: outputs colored messages to stdout.
+   {[ let h = Default_handlers.make (Cli Debug) ]}
+ - File handler : outputs messages to a given file.
+   {[ let h = Default_handlers.make (File ("filename", Debug)) ]}
+
+See more about default handlers at {!module:Easy_logging__Default_handlers}.
+
+{3 Loggers}
+
+See complete class documentation at {! Easy_logging.Logging.logger}
+
+{4 Creation}
+A logger object can be created directly :
+{[ let logger1 = new Logging.logger "my_logger1" (Some Warning) [Cli Debug] ]}
+or through the make_logger function :
+{[ let logger2 = Logging.make_logger "my_logger2" (Some Debug) [Cli Debug] ]}
+
+The [make_logger] function will register the logger instance internaly so that it will be possible to access and modify it from anywhere in the program.
+
+
+{4 Usage}
+
+A logger object has two methods for each of the log levels.
+
+{[logger1#debug "x is alive";
+logger1#ldebug (lazy (heavy_calculation ())); ]}
+
+
+

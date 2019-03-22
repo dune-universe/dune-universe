@@ -1,0 +1,9 @@
+(executables
+ (names     disconnect file_list info keep_alive motor sensors sound
+            upload ev3_sound)
+ (libraries mindstorm connect))
+
+(alias
+ (name tests)
+ (deps disconnect.exe file_list.exe info.exe keep_alive.exe motor.exe
+       sensors.exe sound.exe upload.exe ev3_sound.exe))
