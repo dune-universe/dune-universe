@@ -1,0 +1,10 @@
+{
+  "query": {
+    "bool": {
+      "must": {
+        "query_string": { "query": $query }
+      },
+      "filter": $filter
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "query":{
+    "bool":{
+      "should":
+            [
+                {
+                    "bool": {
+                        "filter": [
+                            {
+                                "match": {
+                                    "keyword.search": {
+                                        "query": $keyword,
+                                        "operator": "and"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+}}}

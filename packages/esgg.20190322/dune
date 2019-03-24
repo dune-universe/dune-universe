@@ -1,0 +1,36 @@
+(env
+ (ci_build (flags (:standard (:include dune_flags.sexp) -warn-error +A-d)))
+ (_ (flags (:include dune_flags.sexp))))
+
+; Git version
+
+(executable
+ (name gen_version)
+ (libraries mybuild)
+ (modules gen_version))
+
+(rule
+ (targets version.ml)
+ (deps (universe))
+ (action (run ./gen_version.bc %{targets})))
+
+(library
+ (name version)
+ (wrapped false)
+ (flags (:standard -opaque))
+ (modules version))
+
+; Use a library with all the code except the entry point to be able to
+; use `dune utop`.
+(library
+ (name esgglib)
+ (wrapped false)
+ (modules (:standard \ esgg gen_version version))
+ (libraries yojson extlib atd easy-format jsonm version)
+ (preprocess (pps ppx_deriving.std)))
+
+(executable
+ (name esgg)
+ (public_name esgg)
+ (modules esgg)
+ (libraries esgglib))

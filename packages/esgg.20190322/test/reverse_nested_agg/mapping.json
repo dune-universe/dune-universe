@@ -1,0 +1,31 @@
+{
+  "properties": {
+    "name": {
+      "type": "keyword",
+      "fields": {
+        "hash": {
+          "type": "murmur3"
+        }
+      }
+    },
+    "obj": {
+      "type": "nested",
+      "properties": {
+        "user_id": {
+          "type": "long"
+        },
+        "user_name": {
+          "type": "keyword"
+        },
+        "roles": {
+          "type": "nested",
+          "properties": {
+            "role_id": {
+              "type": "long"
+            }
+          }
+        }
+      }
+    }
+  }
+}

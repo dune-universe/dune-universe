@@ -1,0 +1,33 @@
+{
+  "query": {
+    "bool": {
+      "filter": [{
+        "ids": {
+          "values": $ids
+        }
+      }, {
+        "nested": {
+        "path": "obj",
+        "query": {
+          "bool": {
+            "filter": [
+              {
+                "term": {
+                  "obj.user_id": $user_id
+                }
+              },
+              {
+                "range": {
+                  "obj.next_update": {
+                    "gte": "now-1h"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+      }]
+    }
+  }
+}

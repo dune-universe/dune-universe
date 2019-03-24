@@ -1,0 +1,65 @@
+{
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "into_obj": {
+      "nested": {
+        "path": "obj"
+      },
+      "aggs": {
+        "users": {
+          "terms": {
+            "field": "obj.user_id"
+          },
+          "aggs": {
+            "top_level": {
+              "reverse_nested": {},
+              "aggs": {
+                "users_keywords": {
+                  "terms": {
+                    "field": "name.hash"
+                  },
+                  "aggs": {
+                    "keyword": {
+                      "top_hits": {
+                        "size": 1,
+                        "_source": [
+                          "name"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "into_roles": {
+          "nested": {
+            "path": "obj.roles"
+          },
+          "aggs": {
+            "roles": {
+              "terms": {
+                "field": "obj.roles.role_id"
+              },
+              "aggs": {
+                "obj_level": {
+                  "reverse_nested": {
+                    "path": "obj"
+                  },
+                  "aggs": {
+                    "roles_user_names": {
+                      "top_hits": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

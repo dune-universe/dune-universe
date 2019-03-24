@@ -1,0 +1,53 @@
+{
+  "query": {
+    "bool": {
+      "must": {
+        "query_string": {
+          "query": $query,
+          "default_operator": "AND"
+        }
+      }
+    }
+  },
+  "aggs": {
+      "w_over_time": {
+        "date_histogram": {
+          "field": "publish_time",
+          "interval": "1M"
+        },
+        "aggs": {
+          "w": {
+            "range": {
+              "field": "words",
+              "keyed": true,
+              "ranges": [
+                {
+                  "to": 100,
+                  "key": "w<1"
+                },
+                {
+                  "from": 100,
+                  "to": 300,
+                  "key": "w_1_3"
+                },
+                {
+                  "from": 300,
+                  "to": 999,
+                  "key": "w_3_10"
+                },
+                {
+                  "from": 999,
+                  "to": 4999,
+                  "key": "w_3_50"
+                },
+                {
+                  "from": 4999,
+                  "key": "w_50"
+                }
+              ]
+            }
+          }
+        }
+      }
+  }
+}

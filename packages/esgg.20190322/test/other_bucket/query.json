@@ -1,0 +1,43 @@
+{
+  "size": 0,
+  "query": {
+    "range": {
+      "@timestamp": {
+        "gte": $first,
+        "lt": $last
+      }
+    }
+  },
+  "aggs": {
+    "by_event": {
+      "terms": {
+        "field": "event",
+        "size": 100
+      },
+      "aggs": {
+        "by_result": {
+          "filters": {
+            "filters": {
+              "success": {
+                "terms": {
+                  "result": [
+                    "http 200",
+                    "http 202"
+                  ]
+                }
+              }
+            },
+            "other_bucket_key": "failure"
+          },
+          "aggs": {
+            "count": {
+              "sum": {
+                "field": "count"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

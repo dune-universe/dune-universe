@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "@timestamp": { "type": "date" },
+    "event": { "type": "text"},
+    "result": { "type": "text" },
+    "count": { "type": "long" }
+  }
+}
+

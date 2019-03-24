@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "content": { "type": "text"},
+    "words": { "type": "long" },
+    "publish_time": { "type": "date" }
+  }
+}

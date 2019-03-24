@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "keyword": {
+      "eager_global_ordinals": true,
+      "fields": {
+        "hash": {
+          "type": "murmur3"
+        },
+        "search": {
+          "term_vector": "with_positions_offsets",
+          "type": "text"
+        },
+        "word_count": {
+          "analyzer": "default",
+          "store": true,
+          "type": "token_count"
+        }
+      },
+      "type": "keyword"
+    }
+  }
+}

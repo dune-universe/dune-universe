@@ -1,0 +1,55 @@
+{
+  "query": {
+    "bool": {
+      "must": {
+        "query_string": {
+          "query": $query,
+          "default_operator": "AND"
+        }
+      }
+    }
+  },
+  "aggregations": {
+      "target": {
+          "filters": {
+              "filters": {
+                  "words10": {
+                      "bool": {
+                          "filter": {
+                              "term": {
+                                  "words": 10
+                              }
+                          }
+                      }
+                  },
+                  "wordsn": {
+                      "bool": {
+                          "filter": {
+                              "term": {
+                                  "words": $n
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "aggs": {
+              "latest_date": {
+                "max": {
+                    "field": "publish_time"
+                }
+              },
+              "dynamic": {
+                "filters": {
+                  "filters": $filters
+                }
+              },
+              "dynamic2": {
+                "filters": {
+                  "filters": $(unnamed:list)
+                }
+              }
+          }
+      }
+  }
+}

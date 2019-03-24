@@ -1,0 +1,12 @@
+{
+  "properties" : {
+      "name": { "type": "keyword" },
+      "obj" : {
+          "type" : "nested",
+          "properties": {
+            "user_id": { "type": "long" },
+            "next_update": { "type": "date" }
+          }
+      }
+  }
+}

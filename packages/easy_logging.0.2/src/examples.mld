@@ -1,0 +1,174 @@
+{1 Examples }
+
+{ol
+  {- {!section:centralized}}
+  {- {!section:dynamic}
+     - {!dyn_logger}
+     - {!dyn_handler}
+     }
+  {- {!section:handlers}
+     - {!section:basic_handlers}
+     - {!section:tagged_handlers}
+  }
+  {- {!section:file_handler_defaults}}
+}
+
+{2:centralized Centralize all logs to a single file}
+
+All messages of level at least Warning will be written to [centralize.log],
+while all logs of [A] and [B] will be written to their own file, and messages
+of level at least info will be printed on the terminal.
+
+{[open Easy_logging
+
+let loggerA = Logging.make_logger "A" (Some Debug)
+                [Cli Info;File ("A.log", Debug);
+                 File ("problems.log", Warning)]
+and loggerB = Logging.make_logger "B" (Some Debug)
+                [Cli Info;File ("B.log", Debug);
+                 File ("problems.log", Warning)] 
+
+
+]}
+
+
+
+
+{2:dynamic Dynamic level modification}
+
+{3:dyn_logger Of a Logging module}
+file [a.ml]:
+{[ open Easy_logging
+logger = Logging.make_logger "MyApp.A" (Some Warning) (Cli Debug) ]}
+
+file [main.ml]:
+{[
+open Easy_logging
+if Sys.argv.(1) = "debug"
+then
+   Logging.set_level "MyApp" (Some Debug);
+]}
+
+{3:dyn_handler Of a handler}
+{[
+
+let h = Default_handlers.make (Cli Debug) in
+let logger = Logging.make_logger "handlerTest" (Some Debug) [] in
+logger#add_handler h;
+logger#debug "this message is displayed";
+Default_handlers.set_level h Info;
+logger#debug "this message is not displayed"]}
+
+{2:handlers Defining your own Handlers}
+
+{3:basic_handlers Another kind of handler}
+
+This handler add messages to a [list ref] given at handler creation.
+{[ module MyHandlers =
+  struct
+    type t = string -> unit
+    type tag = unit
+    type log_item = {
+        level : Easy_logging__.Easy_logging_types.level;
+        logger_name : string;
+        msg : string;
+        tags : tag list
+      }
+                  
+    type log_formatter = log_item -> string
+
+    type desc = string list ref
+
+    let apply h (item : log_item) = h item.msg
+    let make (_internal : desc) =
+      fun s -> _internal := s::!_internal
+  end
+
+
+
+let l = ref [];;
+let mylogger = MyLogging.make_logger "mylogger" (Some Debug) [l];;
+mylogger#info "this is a message";
+l;;]}
+
+{v val l : string list ref = {contents = ["this is a message"]} v}
+
+
+{3:tagged_handlers Tagged handlers}
+
+This handler handles tags passed with a log message:
+{[
+module TaggedHandlers =
+  struct
+    type tag =
+      | Time
+      | Value of int
+
+    type log_item = {
+        level : Easy_logging__.Easy_logging_types.level;
+        logger_name : string;
+        msg : string;
+        tags : tag list
+      }
+    type t = log_item -> unit
+                  
+    type log_formatter = log_item -> string
+
+    type desc = unit
+
+    let apply h (item : log_item) = h item
+
+    let rec tags_to_string tags =
+      let open Unix in
+      match tags with
+
+      | Time :: tags' -> 
+         let {tm_sec; tm_min; tm_hour;
+   	      tm_mday; tm_mon;  _; } :tm
+           = time () |> gmtime
+         in
+         let s = 
+           Printf.sprintf "%d/%d %d:%d:%d"
+             (tm_mday+1) (tm_mon+1) tm_hour tm_min tm_sec
+         in
+         s :: tags_to_string tags'
+          
+      | Value n :: tags' ->
+         ( "[Val: "^(string_of_int n)^"]" ) :: tags_to_string tags'
+
+      | [] -> []
+      
+    let make () =
+      fun item ->
+      let tags_s = List.fold_left
+                   (fun a b -> a ^ " " ^ b)
+                   "" (tags_to_string item.tags) in
+      tags_s ^ " " ^ item.msg
+    |> print_endline
+  end
+
+
+
+module TagsLogging = MakeLogging(TaggedHandlers);;
+
+let logger = TagsLogging.make_logger "tagged" (Some Debug) [()];;
+logger#info ~tags:[Time; Value 4] "log message with tags";
+]}
+
+{v 23/3 18:33:3 [Val: 4] log message with tags v}
+
+
+{2:file_handlers_defaults Modifying the file handlers defaults}
+
+{[
+
+module H = Default_handlers
+let defaults : H.file_handler_defaults_t = {
+    logs_folder= "test/";
+    truncate= false;
+    file_perms=0o664;};;
+H.set_file_handler_defaults defaults;;
+module TestLogging = MakeLogging(H)
+let logger = TestLogging.make_logger
+               "test" (Some Debug) [File ("test", Debug)];; 
+logger#info "this is a message";]}
