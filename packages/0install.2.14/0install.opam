@@ -1,0 +1,31 @@
+opam-version: "2.0"
+synopsis: "Decentralised installation system"
+maintainer: "talex5@gmail.com"
+authors: "zero-install-devel@lists.sourceforge.net"
+homepage: "http://0install.net/"
+bug-reports: "https://github.com/0install/0install/issues"
+dev-repo: "git+https://github.com/0install/0install.git"
+build: [
+  [make "all"]
+  [make "test"] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "yojson"
+  "xmlm"
+  "ounit" {with-test}
+  "lwt_react"
+  "ocurl" {>= "0.7.9"}
+  "sha" {>= "1.9"}
+  "dune" {build}
+  "cppo" {build}
+]
+depopts: ["obus" "lablgtk" "lwt_glib"]
+conflicts: [
+  "lablgtk" {< "2.18.2"}
+]
+depexts: [
+  ["unzip"] {os-distribution = "ubuntu"}
+  ["unzip"] {os-distribution = "debian"}
+  ["gnupg"] {os = "macos" & os-distribution = "homebrew"}
+]
