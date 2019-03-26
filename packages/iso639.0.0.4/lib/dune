@@ -1,0 +1,69 @@
+(library
+  (public_name iso639)
+  (modules
+    Common
+    Data
+    Lang
+    Lang_family
+    Lang_or_family
+    Iso639))
+
+(rule
+  (targets data.ml)
+  (deps
+    manifest.txt
+    (:tab2 iso-639-2.txt)
+    (:tab3 iso-639-3.tsv)
+    (:tab3m iso-639-3-macrolanguages.tsv)
+    (:tab5 iso-639-5.tsv)
+    (:gen gen_data.ml))
+  (action (with-stdout-to %{targets}
+    (run %{ocaml} %{gen} %{tab2} %{tab3} %{tab3m} %{tab5}))))
+
+; ISO 692-2 Data
+(rule
+  (targets iso-639-2.txt)
+  (mode fallback)
+  (action
+    (run wget --quiet -O %{targets}
+      "https://www.loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt")))
+
+; ISO 693-3 Data
+(rule
+  (targets iso-639-3.tsv)
+  (mode fallback)
+  (action
+    (run wget --quiet -O %{targets}
+      "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3.tab")))
+(rule
+  (targets iso-639-3-macrolanguages.tsv)
+  (mode fallback)
+  (action
+    (run wget --quiet -O %{targets}
+      "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3-macrolanguages.tab")))
+(rule
+  (targets iso-639-3-retirements.tsv)
+  (mode fallback)
+  (action
+    (run wget --quiet -O %{targets}
+      "https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3_Retirements.tab")))
+
+; ISO 693-5 Data
+(rule
+  (targets iso-639-5.tsv)
+  (mode fallback)
+  (action
+    (run wget --quiet -O %{targets}
+      "http://id.loc.gov/vocabulary/iso639-5.tsv")))
+
+; Data manifest
+(rule
+  (mode promote)
+  (targets manifest.txt)
+  (deps
+    iso-639-2.txt
+    iso-639-3.tsv
+    iso-639-3-macrolanguages.tsv
+    iso-639-3-retirements.tsv
+    iso-639-5.tsv)
+  (action (with-stdout-to %{targets} (run sha256sum %{deps}))))

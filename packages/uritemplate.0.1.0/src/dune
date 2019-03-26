@@ -1,0 +1,8 @@
+(library
+  (name uritemplate)
+  (public_name uritemplate)
+  (libraries str stdcompat))
+
+(env
+(dev
+  (flags (:standard -warn-error -A))))

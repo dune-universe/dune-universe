@@ -1,0 +1,21 @@
+type testcase_result = [
+  | String of string
+  | List of string list
+] <json adapter.ocaml="Atd_utils.Variant_from_type">
+
+type variable = [
+  | String of string
+  | List of string list
+  | Assoc of (string * string) list <json repr="object">
+] <json adapter.ocaml="Atd_utils.Variant_from_type">
+
+type variables = (string * variable) list <json repr="object">
+type testcases = (string * testcase_result) list
+
+type example_set = {
+  ~level <ocaml default="4">: int;
+  variables: variables;
+  testcases: testcases;
+}
+
+type file = (string * example_set) list <json repr="object">
