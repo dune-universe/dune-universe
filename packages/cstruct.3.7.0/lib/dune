@@ -1,5 +1,0 @@
-(library
- (name cstruct)
- (public_name cstruct)
- (libraries sexplib)
- (c_names cstruct_stubs))

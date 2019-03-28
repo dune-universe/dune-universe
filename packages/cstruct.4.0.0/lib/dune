@@ -1,0 +1,13 @@
+(library
+ (name cstruct)
+ (public_name cstruct)
+ (libraries bigarray)
+ (c_names cstruct_stubs)
+ (js_of_ocaml (javascript_files cstruct.js))
+ (modules cstruct))
+
+(library
+ (name cstruct_sexp)
+ (public_name cstruct-sexp)
+ (modules cstruct_sexp)
+ (libraries cstruct sexplib))
