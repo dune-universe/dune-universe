@@ -1,5 +1,0 @@
-(library
- ((name        parse_argv)
-  (public_name parse-argv)
-  (libraries   (astring result))
-))

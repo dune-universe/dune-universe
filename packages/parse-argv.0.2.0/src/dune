@@ -1,0 +1,5 @@
+(library
+ (name parse_argv)
+ (public_name parse-argv)
+ (libraries astring)
+ (flags :standard -safe-string))

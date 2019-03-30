@@ -1,0 +1,10 @@
+(executables
+ (names test)
+ (libraries oUnit parse-argv))
+
+(alias
+ (name runtest)
+ (deps
+  (:< test.exe))
+ (action
+  (run %{<})))

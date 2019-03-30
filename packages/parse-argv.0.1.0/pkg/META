@@ -1,7 +1,0 @@
-description = "argv parser library"
-version = "0.1.0"
-requires = "astring result"
-archive(byte) = "parse-argv.cma"
-archive(native) = "parse-argv.cmxa"
-plugin(byte) = "parse-argv.cma"
-plugin(native) = "parse-argv.cmxs"
