@@ -1,0 +1,9 @@
+(library
+ (name netchannel)
+ (public_name netchannel)
+ (modules Frontend Backend Xenstore S Stats Flags RX TX Features
+   Shared_page_pool Assemble)
+ (libraries cstruct macaddr mirage-xen xen-evtchn mirage-profile lwt-dllist
+   sexplib logs mirage-net-lwt io-page-xen rresult)
+ (preprocess
+  (pps ppx_sexp_conv ppx_cstruct)))
