@@ -1,7 +1,7 @@
-version: "1.0.2"
+version: "1.1.0"
 opam-version: "2.0"
 maintainer: "jeremie@dimino.org"
-authors: ["Jérémie Dimino <jeremie@dimino.org>"]
+authors: ["Jérémie Dimino <jeremie@dimino.org>" "Anton Bachin" ]
 homepage: "https://github.com/mirage/mmap"
 bug-reports: "https://github.com/mirage/mmap/issues"
 doc: "https://mirage.github.io/mmap/"

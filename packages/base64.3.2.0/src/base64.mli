@@ -24,7 +24,7 @@
     binary data in an ASCII string format by translating it into a radix-64
     representation. It is specified in RFC 4648.
 
-    {e Release v3.1.0 - https://github.com/mirage/ocaml-base64} *)
+    {e Release v3.2.0 - https://github.com/mirage/ocaml-base64} *)
 
 type alphabet
 (** Type of alphabet. *)

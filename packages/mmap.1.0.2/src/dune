@@ -1,4 +1,0 @@
-(library
- (public_name mmap)
- (c_names mmap mmap_ba)
- (libraries unix bigarray))
