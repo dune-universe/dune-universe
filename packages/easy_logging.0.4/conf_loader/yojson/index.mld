@@ -1,0 +1,88 @@
+
+{1 Easy logging yojson }
+
+This package provides the same features as {!Easy_logging}, but is extended with configuration loader from the json format, using [ppx_deriving_yojson] as a deserializer.
+
+Logging modules created by {!MakeLogging} are enriched with the three following functions to instantiate loggers and allow easy external configuration :
+
+ - {[val load_config : Yojson.Safe.json -> unit]}
+ - {[val load_config_str : string -> unit]}
+ - {[val load_config_file : string -> unit]}
+
+{2 Configuration example}
+{v
+{
+    "handlers": {
+        "file_handlers": {
+             "logs_folder" : "logs",
+             "truncate" : false
+        }
+    },
+    "loggers": 
+        [
+            {
+                "name": "Main",
+                "level": "debug",
+                "handlers": [ {"cli": {"level" : "debug"}} ] },
+            {
+                "name": "Main.A",
+                "level": "info"},
+            {
+                "name": "Main.B",
+                "level": "warning"},
+            {
+                "name": "Main.C",
+                "level": "debug",
+                "propagate" : false,
+                "handlers": [{ "file": {"filename": "main.c.logs", 
+                                      "level" : "info"}}
+                           ] }
+        ]
+}
+v}
+
+{2 Configuration types}
+
+{3 Top configuration }
+{[
+    type config = {
+        handlers : H.config;     [@default H.default_config]
+        loggers : config_logger list
+      } 
+]}
+
+
+{3 Logger configuration }
+{[
+type config_logger = {
+        name: string;
+        level : log_level;       [@default NoLevel]
+        handlers : H.desc list;  [@default [] ]
+        propagate : bool;        [@default true]
+      } 
+]}
+
+{3 Default handlers configuration}
+
+{[
+
+    type config_ = {file_handlers: file_handlers_config}
+
+    type file_handlers_config_  =
+      { logs_folder: string;     [@default file_handlers_defaults.logs_folder]
+        truncate: bool;          [@default file_handlers_defaults.truncate]
+        file_perms: int          [@default file_handlers_defaults.file_perms]
+      }
+
+    type cli_json_params = {level : log_level}
+    
+    type cli_json_desc =  {cli : cli_json_params}
+    
+    type file_json_desc_params = {filename : string;level: log_level}
+    
+    type file_json_desc = {file : file_json_desc_params}
+
+]}
+
+{2 Reference}
+{! Easy_logging_yojson}

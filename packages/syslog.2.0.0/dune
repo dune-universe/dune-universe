@@ -1,0 +1,6 @@
+(library
+ (name syslog)
+ (public_name syslog)
+ (synopsis "syslog(3) routines for ocaml")
+ (libraries unix)
+)

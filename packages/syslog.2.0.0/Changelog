@@ -1,0 +1,7 @@
+2.0:
+  - Ported code to OCaml >= 4.03
+  - Use dune as a build system
+  - Pad day number with space instead of 0 (as specified in RFC 3164)
+
+1.2: imported changes from Eric Cooper at CMU which allows us to talk to syslog-ng when it is using a socket stream.
+

@@ -1,0 +1,4 @@
+requires="unix"
+version="1.4"
+archive(byte)="syslog.cma"
+archive(native)="syslog.cmxa"

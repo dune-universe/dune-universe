@@ -1,0 +1,16 @@
+(documentation
+ (package easy_logging_yojson)
+ (mld_files :standard))
+(library
+ (name easy_logging_yojson)
+ (public_name easy_logging_yojson)
+ (flags -w)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving_yojson))
+ (libraries
+  unix
+  easy_logging
+  ppx_deriving_yojson
+  )
+ )
+
