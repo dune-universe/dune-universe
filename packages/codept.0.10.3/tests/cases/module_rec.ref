@@ -1,0 +1,5 @@
+{
+"version" : [0, 10, 3],
+"dependencies" : [{ "file" : "cases/module_rec.ml", "deps" : [["Set"]] }],
+"local" : [{ "module" : ["Module_rec"], "ml" : "cases/module_rec.ml" }]
+}

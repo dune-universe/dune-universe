@@ -1,0 +1,5 @@
+{
+"version" : [0, 10, 3],
+"dependencies" : [{ "file" : "cases/include.ml", "deps" : [["List"]] }],
+"local" : [{ "module" : ["Include"], "ml" : "cases/include.ml" }]
+}

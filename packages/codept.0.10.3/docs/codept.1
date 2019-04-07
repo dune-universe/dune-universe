@@ -1,0 +1,352 @@
+.TH CODEPT 1
+
+.SH NAME
+.B codept [\fIoptions\fR] \fI filepath ... \fR
+
+.SH DESCRIPTION
+\fBcodept(1)\fR is an alternative dependency solver for OCaml.
+\fBcodept(1)\fR scans OCaml source files, directories or codept serialized files
+to compute both the dependency graph and module level outlines of the input source
+files.
+
+Multiple outputs are available, and are intended to be used in either Makefile or other build systems.
+
+The typical usage for use in conjunction of \fBmake(1)\fR is
+.P
+codept \fIoptions\fR *.mli *.ml > .depend
+
+.SH "OCAMLDEP OPTIONS"
+
+\fBCodept\fR can be used as a drop-in replacement for \fBocamldep(1)\fR
+and recognizes all ocamldep options. However, the options \fI-as-map\fR and
+\fI-map\fR are reinterpreted to use the more uniform \fI-no-alias-deps\fR
+option.
+
+.TP
+.BR \-absname
+use absolute path name
+
+.TP
+.BR \-all
+generate full dependencies in makefile without assuming implicit
+dependencies.
+
+.TP
+.BR \-allow-approx
+use a new experimental heuristic for parsing syntactically
+invalid file that might be more precise − or brittle. More tests are needed.
+
+.TP
+.BI \-as-map \ file
+same as \fB-no-alias-deps\fR \fIfile\fR
+
+.TP
+.BI \-I \ dir
+include files in \fIdir\fR when printing dependencies
+
+.TP
+.BI \-impl \ filename
+read \fIfilename\fR as a ml file
+
+.TP
+.BI \-intf \ filename
+read \fIfilename\fR as a mli file
+
+.TP
+.BI \-map \ filename
+same as \fB\-no-alias-deps\fR \fB\-see\fR \fIfilename\fR
+
+.TP
+.BI \-ml-synonym \ ext
+use \fIext\fR extension as a synonym for ml
+
+.TP
+.BI \-mli-synonym \ ext
+use \fIext\fR extension as a synonym for mli
+.TP
+.BR \-modules
+print raw module dependencies
+
+.TP
+.BR \-native
+generate native compilation only dependencies
+
+.TP
+.BR \-bytecode
+generate bytecode only dependencies
+
+.TP
+.B \-one-line
+ output makefile dependencies on a single line for each target
+
+.TP
+.BI \-open \ modulename
+open module \fImodulename\fR at the start of all compilation units
+(except for units whose name is \fImodulename\fR).
+.TP
+.BI \-pp \ cmd
+pipe sources through preprocessor \fIcmd\fR
+
+.TP
+.BI \-ppx \ cmd
+pipe abstract syntax trees through ppx preprocessor \fIcmd\fR
+
+.TP
+.B \-shared
+generate dependencies for native plugin files (.cmxs) in addition
+to native object files (.cmx).
+
+.TP
+.BR \-slash
+use forward slash as directory separator
+
+.TP
+.BR \-sort
+output sorted files according to their dependencies
+
+.TP
+.BR \-version
+print human-friendly version description
+
+.TP
+.BR \-vnum
+print version number
+
+
+.SH "Major options"
+
+These options modify the behavior of either the outliner or the solver.
+
+.TP
+.B -closed-world
+stops the analysis as soon as a non-resolvable module is
+identified. Contrarily, \fBcodept\fR default mode assumes that non-resolvable
+module have for outline `sig end` (this approximation can only
+lead to an over-approximation of dependencies).
+
+
+.TP
+.B -expand-deps
+compute exact dependencies, rather than a subset of dependencies that is equivalent to the exact dependency set up to transitive closure
+
+.TP
+.B -k
+ignore most recoverable errors and keep going
+
+.TP
+.BI -L \ dir
+use the cmi files in directory \fIdir\fR to resolve unknown module names during
+the analysis.
+
+.TP
+.B -no-alias-deps
+delay alias dependency up to the use point of the alias.
+For instance, in the code fragment `module M = A open M` the `A`
+dependency is recorded only when the module `M` is opened in `open M`
+not during the definition of the alias.
+
+.TP
+.B -nested
+Map file path \fISubdir/…/file\fR to module path \fISubdir.….File\fR instead
+of <File>. In particular, this can be used to compute dependencies precisely
+for a deeply nested hierarchy of modules, where the same final module name
+appears multiple time at different point in the hierarchy.
+
+.TP
+.BI -o \ filename
+set the output file for the subsequent modes. Multiple outputs
+can be specified for the same invocation of \fBcodept\fR.
+
+.TP
+.BI -ancestors-of \ modulename
+only analyze files which are an ancestor of \fImodulename\fR
+Note that the input name is capitalized and extension are removed to avoid
+some discomfort.
+
+.TP
+.BI -transparent-extension-node \ bool
+decide what to do with extension nodes,
+if `bool` is true, extension node are considered as transparent and analyzed,
+otherwise they are left alone. Note that ocaml built-in extension nodes
+(i.e. `[%extension_constructor … ]` nodes)  are always analyzed and are not
+affected by this option.
+
+
+.SH "Codept only modes"
+
+\fBcodept(1)\fR modes output different slices of the dependencies and
+outlines analysis performed by codept. These different modes can be combined
+together using the \fB-o\fR option to control the output files for each mode.
+
+.TP
+.B \-deps
+print dependencies using the currently selected structured format (default:json)
+
+.TP
+.B \-info
+print detailed (and human-readable) information
+
+.TP
+.B \-json
+print dependencies in json format
+
+.TP
+.BI \-json-schema \ mode
+print the json schema for the corresponding \fImode\fR output (deps,sig,m2l)
+
+.TP
+.B \-sexp
+print dependencies in a s-expression format
+
+.TP
+.B \-export
+export resolved module outlines in a valid OCaml source file
+
+.TP
+.B \-dot
+print dependencies in graphviz format
+
+.TP
+.B \-makefile
+print makefile depend file(default)
+
+.TP
+.B -approx-m2l
+print approximated m2l ast for each files
+
+.TP
+.B -m2l
+print m2l ast in the current structured format for each files
+
+.TP
+.B -m2l-info
+print m2l ast for each files
+
+.TP
+.B -one-pass
+print simplified m2l ast after one pass of the outliner
+
+.TP
+.B \-sig
+export inferred outlines in a s-expression format
+
+.SH "Module suboptions"
+These options refine the modules main modes, by either filtering the dependencies
+outputed or slightly altering the output format.
+
+.TP
+.B -nl-modules
+print new-line separated raw dependencies
+
+.TP
+.B -extern-modules
+print raw external dependencies: external modules are modules discovered due to
+either the \fB-pkg\fR or \fB-L\fR options or precomputed package
+(like the standard library)
+
+.TP
+.B -inner-modules
+print raw inner dependencies: inner modules are the one provided to
+.BR codept directly through the command line
+.TP
+.B -unknown-modules
+print raw unresolved dependencies
+
+.SH "Findlib options"
+
+.TP
+.B -pkg \fI pkg_name\fR, \fB-package\fR \fIpkg_name\fR
+use the ocamlfind package <pkg_name> during the analysis
+
+.TP
+.B predicates \ \fIcomma-separated-list\fR
+add predicates to ocamlfind processing
+
+.TP
+.BI -ppxopt \ ppx,opt
+add \fIopt\fR as an option of \fIppx\fR
+
+.TP
+.BI -ppopt \ ppopt
+add \fIopt\fR to the active pp preprocessor
+
+.TP
+.BI -syntax \ syntaxname
+use the \fIsyntaxname\fR preprocessor provided by one of the available findlib packages.
+
+.TP
+.B -native-filter
+generate native compilation only dependencies
+
+.TP
+.B -bytecode-filter
+generate bytecode only dependencies.
+
+
+.SH Fault options
+These options modify the handling of warning and error messages.
+
+.TP
+.B -strict
+fail rather than approximate anything
+
+.TP
+.B -quiet
+ignore and silent all recoverable errors and keep going
+
+.TP
+.BI -fatal \ level
+set the fatal \fIlevel\fR for faults: \fBcodept\fR will exit as soon a fault
+at level \fIlevel\fR or beyond is emitted.
+
+.TP
+.BI -fault \ fault.path=level
+update fault policy for the given fault. See \fB-fault-doc\fR for a list of
+potential faults.
+
+.TP
+.B -fault-doc
+show fault policy documentation
+
+.TP
+.BI -verbosity \ level
+only print faults beyond level \fIlevel\fR,
+with \fIlevel\fR ∈{info,notification,warning,error,critical}
+
+
+.SH "Misc options"
+
+.TP
+.BI \-format \ format
+Use \fIformat\fR(eitheir sexp or json) for structured output
+The default is to use sexp for m2l and signature files and json
+for deps.
+
+.TP
+.B -no-implicits
+do not implicitly search for a mli file when given a ml file input
+
+.TP
+.B -no-include
+do not include base directory by default
+
+.TP
+.B -no-stdlib
+do not use precomputed stdlib environment
+
+.TP
+.BI -read-sig \ signature
+add \fIsignature\fR to the base environment
+
+.TP
+.BI -see \ file
+use \fIfile\fR in dependencies computation but do not display it.
+
+.TP
+.B \-sig-only
+filter produced m2l to keep only signature-level elements.
+
+.SH See also
+
+.TP
+.BR ocamldep(1)

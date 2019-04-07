@@ -1,0 +1,5 @@
+{
+"version" : [0, 10, 3],
+"dependencies" : [{ "file" : "cases/bug.ml", "deps" : [["Sys"]] }],
+"local" : [{ "module" : ["Bug"], "ml" : "cases/bug.ml" }]
+}
