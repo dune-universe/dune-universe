@@ -1,0 +1,8 @@
+(executables
+ (names     example precision)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_intel))
+
+(alias
+ (name examples)
+ (deps example.exe precision.exe))

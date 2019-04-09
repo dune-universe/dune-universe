@@ -1,0 +1,4 @@
+
+(executables
+ (names     discover dispatch)
+ (libraries dune.configurator str))

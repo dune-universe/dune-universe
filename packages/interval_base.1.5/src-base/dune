@@ -1,0 +1,11 @@
+(library
+ (name        interval)
+ (public_name interval_base)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (c_names     interval_base_stubs)
+ (c_flags     :standard (:include c_flags.sexp))
+ (synopsis "Interval arithmetic library (base)"))
+
+(rule
+ (targets c_flags.sexp)
+ (action  (run %{exe:../config/discover.exe})))

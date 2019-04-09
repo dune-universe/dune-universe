@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(executables
- ((names     (tests))
-  (libraries (interval unix))))
-
-(alias
- ((name runtest)
-  (deps (tests.exe))))

@@ -1,0 +1,45 @@
+{
+  "name": "h2",
+  "version": "0.1.0",
+  "description": "An HTTP/2 library for OCaml based on Angstrom and Faraday",
+  "author": "António N. Monteiro <anmonteiro@gmail.com>",
+  "license": "BSD-3-clause",
+  "repository": "git+https://github.com/anmonteiro/ocaml-h2",
+  "dependencies": {
+    "ocaml": " >= 4.4.0",
+    "@opam/dune": "*",
+    "@opam/lwt": "*",
+    "@opam/bigstringaf": "*",
+    "@opam/angstrom": "*",
+    "@opam/faraday": "*",
+    "@opam/psq": "*",
+    "@opam/mirage-conduit": "*",
+    "@opam/faraday-lwt-unix": "*",
+    "@opam/lwt_ssl": "*",
+    "@opam/conf-libev": "*",
+    "@opam/httpaf": "*"
+  },
+  "devDependencies": {
+    "@opam/alcotest": "*",
+    "@opam/hex": "*",
+    "@opam/merlin": "*",
+    "@opam/ocamlformat": "*",
+    "@opam/odoc": "*"
+  },
+  "resolutions": {
+    "@opam/conf-libev": "esy-packages/libev:package.json#86d244e",
+    "@opam/conf-autoconf": "esy-packages/esy-autoconf:package.json#71a8836",
+    "@opam/conf-gmp": "esy-packages/esy-gmp:package.json#1ecf502",
+    "@opam/conf-openssl": {
+      "source": "no-source:",
+      "override": {
+        "dependencies": {
+          "@opam/conf-pkg-config": "*",
+          "@esy-packages/esy-openssl": "esy-packages/esy-openssl#65efbc9"
+        }
+      }
+    },
+    "@opam/ssl": "anmonteiro/ocaml-ssl:ssl.opam#917b768",
+    "@opam/httpaf": "inhabitedtype/httpaf:httpaf.opam#53042e5"
+  }
+}

@@ -1,0 +1,68 @@
+(executable
+ (name    tests)
+ (modules tests)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_intel interval_crlibm unix))
+
+(executable
+ (name    accuracy)
+ (modules accuracy)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_intel interval_crlibm))
+
+(alias
+ (name runtest)
+ (package interval)
+ (deps tests.exe)
+ ; Do not run "tests.exe" (too long), use "make tests" for that.
+ (action (run %{exe:accuracy.exe})))
+
+; Do not run "tests_spees.exe" (slow), use "make test-speed" for that.
+(executable
+ (name      tests_speed)
+ (modules   tests_speed)
+ (libraries interval_intel interval_crlibm unix))
+
+(executable
+ (name      test_base)
+ (modules   test_base)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_base))
+
+(alias
+ (name runtest)
+ (package interval_base)
+ (action (run %{exe:test_base.exe})))
+
+(executable
+ (name      test_crlibm)
+ (modules   test_crlibm)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_crlibm))
+
+(alias
+ (name runtest)
+ (package interval_crlibm)
+ (action (run %{exe:test_crlibm.exe})))
+
+(executable
+ (name      graphs)
+ (modules   graphs)
+ (ocamlopt_flags :standard -no-float-const-prop)
+ (libraries interval_crlibm))
+
+(alias
+ (name runtest)
+ (package interval_crlibm)
+ (action (run %{exe:graphs.exe})))
+
+(rule
+ (targets graphs.pdf)
+ (deps    graphs.tex)
+ (action  (progn
+           (run %{exe:graphs.exe})
+           (run pdflatex -interaction=nonstopmode graphs.tex))))
+
+(alias
+ (name graphs)
+ (deps graphs.pdf))

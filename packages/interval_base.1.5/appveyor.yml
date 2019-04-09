@@ -1,0 +1,24 @@
+platform:
+  - x64
+
+image:
+  - Visual Studio 2017
+
+environment:
+  global:
+    PACKAGE: interval
+    PINS: "interval.dev:. interval_base.dev:. interval_intel.dev:. interval_crlibm.dev:."
+    CYG_ROOT: "C:\\cygwin"
+    CYG_BASH: "%CYG_ROOT%\\bin\\bash -lc"
+    FORK_USER: ocaml
+  matrix:
+#    - OPAM_SWITCH: 4.04.2+msvc64c
+    - OPAM_SWITCH: 4.04.2+mingw64c
+
+install:
+  - appveyor DownloadFile https://raw.githubusercontent.com/%FORK_USER%/ocaml-ci-scripts/master/appveyor-opam.sh
+  - "%CYG_ROOT%\\setup-x86.exe -qnNdO -R %CYG_ROOT% -s http://cygwin.mirror.constant.com -l C:/cygwin/var/cache/setup -P rsync -P patch -P make -P unzip -P git -P perl -P mingw64-x86_64-gcc-core"
+  - curl -L -o C:/cygwin/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-win32.exe
+
+build_script:
+  - "%CYG_BASH% '${APPVEYOR_BUILD_FOLDER}/appveyor-opam.sh'"

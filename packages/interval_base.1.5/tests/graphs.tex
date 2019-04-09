@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage[left=20mm, right=20mm]{geometry}
+
+\begin{document}
+
+\begin{tikzpicture}[x=350ex, y=1600ex]
+  \newcommand{\xmin}{1.4}
+  \newcommand{\ymin}{0.98}
+  \begin{scope}[color=red, fill=red!20]
+    \input{sin.tex}
+  \end{scope}
+  \draw[color=blue] plot file{sin.dat};
+  \draw[dashed] (1.57079632679489656, 1) -- (1.57079632679489656, \ymin);
+  \draw (1.57079632679489656, \ymin) -- +(0, 3pt) -- +(0, -3pt)
+  node[below]{$\pi/2$};
+  \draw[->] (\xmin, \ymin) -- (1.71, \ymin);
+  \draw[->] (\xmin, \ymin) -- +(0, -3pt) -- (\xmin, 1);
+  \foreach \x in {1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7}{
+    \draw (\x, \ymin) -- +(0, 3pt) -- +(0, -3pt) node[below]{$\x$};
+  }
+\end{tikzpicture}
+
+\begin{tikzpicture}[x=7.5ex, y=10ex]
+  \newcommand{\xmin}{0}
+  \newcommand{\ymin}{-1}
+  \begin{scope}[color=green!80, fill=green!15]
+    \input{sin2.tex}
+  \end{scope}
+  \begin{scope}[color=red, fill=red!20, opacity=0.5]
+    \input{sin3.tex}
+  \end{scope}
+  \draw[color=blue] plot file{sin2.dat};
+  \draw[->] (\xmin, 0) -- (14.5, 0);
+  \draw[->] (\xmin, \ymin) -- +(0, -3pt) -- (\xmin, 1.2);
+  \foreach \x in {1001,..., 1014}{
+    \draw (\x - 1000, 3pt) -- +(0, -6pt) node[below]{$\x$};
+  }
+\end{tikzpicture}
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

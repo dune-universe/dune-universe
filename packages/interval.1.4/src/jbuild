@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name        interval)
-  (public_name interval)
-  (c_names    (interval_stubs))
-  (wrapped false)
-  (synopsis  "Interval arithmetic library")))
-

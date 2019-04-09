@@ -1,0 +1,7 @@
+(executable
+ (name      main)
+ (libraries interval_intel))
+
+(alias
+ (name examples)
+ (deps main.exe))
