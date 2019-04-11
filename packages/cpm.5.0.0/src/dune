@@ -1,0 +1,10 @@
+(library
+ (name cpm)
+ (public_name cpm)
+ (modules MakeROC TopKeeper RegrStats)
+ (libraries batteries))
+
+(executable
+ (name test)
+ (modules test)
+ (libraries cpm))

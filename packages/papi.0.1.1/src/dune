@@ -1,0 +1,20 @@
+(library
+  (public_name papi)
+  (synopsis "Performance Application Programming Interface (PAPI) bindings")
+  (modules papi)
+  (c_names stubs)
+  (c_flags (-Wall -Wextra -O3 -Wno-implicit-fallthrough))
+  (c_library_flags (-lpapi)))
+
+(include_subdirs unqualified)
+
+(library
+  (public_name papi.top)
+  (synopsis "PAPI toplevel support")
+  (name papi_top)
+  (modules papi_top)
+  (libraries papi compiler-libs.toplevel))
+
+(install
+  (section lib)
+  (files (papi_top_init.ml as top/papi_top_init.ml)))

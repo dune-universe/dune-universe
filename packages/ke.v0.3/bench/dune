@@ -1,0 +1,9 @@
+(executable
+ (name bench_with_bechamel)
+ (modules bench_with_bechamel)
+ (libraries notty.unix bigstringaf ke bechamel bechamel.perf bechamel.notty))
+
+(executable
+ (name bench_with_core)
+ (modules bench_with_core)
+ (libraries bigstringaf core_bench ke core))

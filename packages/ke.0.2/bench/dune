@@ -1,9 +1,0 @@
-(executable
- (name bench_with_bechamel)
- (modules bench_with_bechamel)
- (libraries bigstringaf fmt.tty logs.fmt mtime.clock.os oclock ke bechamel bechamel.perf))
-
-(executable
- (name bench_with_core)
- (modules bench_with_core)
- (libraries bigstringaf core_bench ke core))
