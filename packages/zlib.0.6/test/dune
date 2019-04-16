@@ -1,0 +1,5 @@
+(test
+ (name test)
+  (flags :standard -safe-string)
+  (libraries unix zlib)
+)

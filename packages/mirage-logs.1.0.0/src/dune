@@ -1,0 +1,4 @@
+(library
+  (name mirage_logs)
+  (public_name mirage-logs)
+  (libraries logs mirage-clock lwt mirage-profile ptime))

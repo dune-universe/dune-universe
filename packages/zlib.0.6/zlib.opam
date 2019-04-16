@@ -1,0 +1,23 @@
+opam-version: "2.0"
+maintainer: "Christopher Zimmermann <christopher@gmerlin.de>"
+authors: "Christopher Zimmermann <christopher@gmerlin.de>"
+homepage: "https://github.com/madroach/ocaml-zlib"
+dev-repo: "git+https://github.com/madroach/ocaml-zlib.git"
+bug-reports: "https://github.com/madroach/ocaml-zlib/issues"
+tags: [ "clib:z" "compression" ]
+license: "ISC"
+build: [
+  ["dune" "build" "-p" "zlib" "-j" 2]
+]
+build-test: [["dune" "runtest" "-p" "zlib"]]
+depends: [
+  "dune"
+  "base-bigarray"
+  "conf-zlib"
+]
+synopsis: "Bindings for the zlib compression library"
+description: """
+providing deflate compression with or without zlib or gzip headers.
+
+This library uses bigarrays as buffers and can therefore release the OCaml
+runtime during (de)compression, allowing other OCaml threads to continue."""

@@ -1,0 +1,86 @@
+(executable
+ (name discover)
+ (modules discover)
+ (libraries dune.configurator))
+
+(rule
+  (targets cflags minios-cflags)
+  (deps discover.exe)
+  (action (run ./discover.exe)))
+
+(rule
+ (targets libmirage-xen_bindings.a)
+ (deps   atomic_stubs.o barrier_stubs.o clock_stubs.o cstruct_stubs.o
+         eventchn_stubs.o exit_stubs.o gnttab_stubs.o main.o mm_stubs.o
+         sched_stubs.o start_info_stubs.o xb_stubs.o)
+ (action (run ar rcs %{targets} %{deps})))
+
+(install
+ (section lib)
+ (files (libmirage-xen_bindings.a as libmirage-xen_bindings.a)))
+
+(install
+ (section lib)
+ (files (mirage-xen.pc as ../pkgconfig/mirage-xen.pc)))
+
+(rule
+ (targets atomic_stubs.o)
+ (deps    (:c atomic_stubs.c))
+ (action  (run %{cc} %{read-lines:cflags} -c %{c})))
+
+(rule
+ (targets barrier_stubs.o)
+ (deps    (:c barrier_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets clock_stubs.o)
+ (deps    (:c clock_stubs.c))
+ (action  (run %{cc} %{read-lines:cflags} -c %{c})))
+
+(rule
+ (targets cstruct_stubs.o)
+ (deps    (:c cstruct_stubs.c))
+ (action  (run %{cc} %{read-lines:cflags} -c %{c})))
+
+(rule
+ (targets eventchn_stubs.o)
+ (deps    (:c eventchn_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets exit_stubs.o)
+ (deps    (:c exit_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets gnttab_stubs.o)
+ (deps    (:c gnttab_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets main.o)
+ (deps    (:c main.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets mm_stubs.o)
+ (deps    (:c mm_stubs.c))
+ (action  (run %{cc} %{read-lines:cflags} -c %{c})))
+
+(rule
+ (targets sched_stubs.o)
+ (deps    (:c sched_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets start_info_stubs.o)
+ (deps    (:c start_info_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+(rule
+ (targets xb_stubs.o)
+ (deps    (:c xb_stubs.c))
+ (action  (run %{cc} %{read-lines:minios-cflags} -c %{c})))
+
+

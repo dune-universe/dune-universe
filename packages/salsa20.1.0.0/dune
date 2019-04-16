@@ -1,0 +1,10 @@
+(library
+ (name salsa20)
+ (public_name salsa20)
+ (modules salsa20)
+ (libraries cstruct nocrypto salsa20-core))
+
+(test
+ (name salsa20_tests)
+ (modules salsa20_tests)
+ (libraries salsa20 alcotest))

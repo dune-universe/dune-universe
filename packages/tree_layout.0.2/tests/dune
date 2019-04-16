@@ -1,0 +1,18 @@
+(library
+ (name test_utils)
+ (modules Utils)
+ (wrapped false)
+ (libraries tree_layout tyxml)
+)
+
+(tests
+ (names layered_test)
+ (modules Layered_test)
+ (libraries test_utils tree_layout)
+)
+
+(tests
+ (names treemap_test)
+ (modules Treemap_test)
+ (libraries test_utils tree_layout)
+)
