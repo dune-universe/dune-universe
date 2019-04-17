@@ -1,0 +1,11 @@
+(menhir
+  (flags --no-stdlib --explain)
+  (modules parser))
+
+(ocamllex (modules lexer))
+
+(library
+  (public_name petr4)
+  (name petr4)
+   (libraries bignum core ppx_deriving_yojson.runtime yojson)
+   (preprocess (pps ppx_jane ppx_deriving_yojson)))
