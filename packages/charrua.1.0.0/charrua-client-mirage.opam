@@ -1,10 +1,10 @@
-version: "0.12.0"
+version: "1.0.0"
 opam-version: "2.0"
 maintainer:   ["Mindy Preston"]
 authors   :   ["Mindy Preston"]
-homepage:     "https://github.com/mirage/charrua-core"
-bug-reports:  "https://github.com/mirage/charrua-core/issues"
-dev-repo:     "git+https://github.com/mirage/charrua-core.git"
+homepage:     "https://github.com/mirage/charrua"
+bug-reports:  "https://github.com/mirage/charrua/issues"
+dev-repo:     "git+https://github.com/mirage/charrua.git"
 tags:         [ "org:mirage"]
 doc:          "https://docs.mirage.io"
 
@@ -16,13 +16,13 @@ build: [
 depends: [
   "dune" {build & >= "1.0"}
   "ocaml" {>= "4.04.2"}
-  "charrua-client-lwt" {>= "0.12.0"}
+  "charrua-client-lwt" {>= "1.0.0"}
   "ipaddr" {>= "3.0.0"}
   "mirage-random" {>= "1.0.0"}
   "mirage-clock"
   "mirage-time-lwt"
-  "mirage-net-lwt"
-  "mirage-protocols-lwt"
+  "mirage-net-lwt" {>= "2.0.0"}
+  "mirage-protocols-lwt" {>= "2.0.0"}
   "logs"
   "lwt"
 ]

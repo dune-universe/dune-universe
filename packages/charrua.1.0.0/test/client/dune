@@ -1,0 +1,5 @@
+(test
+ (name test_client)
+ (package charrua-client)
+ (libraries cstruct-unix alcotest charrua-client charrua-server tcpip.unix
+            mirage-random-test))

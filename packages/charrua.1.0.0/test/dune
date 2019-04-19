@@ -1,0 +1,15 @@
+(test
+ (name test)
+ (package charrua-server)
+ (preprocess (pps ppx_cstruct))
+ (libraries cstruct-unix charrua charrua-server tcpip.unix))
+
+(alias
+ (name runtest)
+ (package charrua-server)
+ (deps
+  (:< test.exe)
+  dhcp.pcap
+  dhcp2.pcap)
+ (action
+  (run %{<})))

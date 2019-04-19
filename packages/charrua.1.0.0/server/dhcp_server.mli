@@ -18,7 +18,7 @@
     former deals with building a suitable configuration for using with the
     later.
 
-   {e v0.12.0 - {{:https://github.com/mirage/charrua-core }homepage}}
+   {e v1.0.0 - {{:https://github.com/mirage/charrua }homepage}}
 *)
 
 (** {2 DHCP Server Configuration } *)
