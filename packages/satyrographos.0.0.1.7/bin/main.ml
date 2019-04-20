@@ -41,9 +41,10 @@ let () =
 let repo = Repository.read repository_dir metadata_file
 let reg = Registory.read package_dir repo metadata_file
 let reg_opam =
-  let opam_share_dir = SatysfiDirs.opam_share_dir () in
-  Printf.printf "opam share dir: %s\n" opam_share_dir;
-  {SatysfiRegistory.package_dir=Filename.concat opam_share_dir "satysfi"}
+  SatysfiDirs.opam_share_dir ()
+  |> Option.map ~f:(fun opam_share_dir ->
+    Printf.printf "opam share dir: %s\n" opam_share_dir;
+    {SatysfiRegistory.package_dir=Filename.concat opam_share_dir "satysfi"})
 
 let status () =
   printf "scheme version: ";
@@ -178,17 +179,21 @@ let package_command =
 
 let package_opam_list () =
   compatibility_optin ();
-  [%derive.show: string list] (SatysfiRegistory.list reg_opam) |> print_endline
+  Option.iter reg_opam ~f:(fun reg_opam ->
+    [%derive.show: string list] (SatysfiRegistory.list reg_opam) |> print_endline
+  )
 let package_opam_list_command =
   package_list_command_g package_opam_list
 
 let package_opam_show p () =
   compatibility_optin ();
-  SatysfiRegistory.directory reg_opam p
-    |> Package.read_dir
-    |> [%sexp_of: Package.t]
-    |> Sexp.to_string_hum
-    |> print_endline
+  Option.iter reg_opam ~f:(fun reg_opam ->
+    SatysfiRegistory.directory reg_opam p
+      |> Package.read_dir
+      |> [%sexp_of: Package.t]
+      |> Sexp.to_string_hum
+      |> print_endline
+  )
 let package_opam_show_command =
   package_show_command_g package_opam_show
 
@@ -199,7 +204,7 @@ let package_opam_command =
     ]
 
 
-let install d ~system_font_prefix ~verbose () =
+let install d ~system_font_prefix ~verbose ~copy () =
   (* TODO build all *)
   Printf.printf "Updating packages\n";
   begin match Repository.update_all repo with
@@ -224,9 +229,12 @@ let install d ~system_font_prefix ~verbose () =
   let user_packages = Registory.list reg
     |> List.map ~f:(Registory.directory reg)
   in
-  let opam_packages = SatysfiRegistory.list reg_opam
-    |> List.filter ~f:(fun name -> String.equal "dist" name |> not)
-    |> List.map ~f:(SatysfiRegistory.directory reg_opam)
+  let opam_packages = match reg_opam with
+    | None -> []
+    | Some reg_opam ->
+      SatysfiRegistory.list reg_opam
+        |> List.filter ~f:(fun name -> String.equal "dist" name |> not)
+        |> List.map ~f:(SatysfiRegistory.directory reg_opam)
   in
   let packages = dist_package :: List.append user_packages opam_packages
     |> List.map ~f:Package.read_dir
@@ -260,7 +268,7 @@ let install d ~system_font_prefix ~verbose () =
       |> Sexp.to_string_hum
       |> print_endline
     end;
-    Package.write_dir ~symlink:true d merged;
+    Package.write_dir ~symlink:(not copy) d merged;
     List.iter ~f:(Printf.printf "WARNING: %s") (Package.validate merged);
     Printf.printf "Installation completed!\n"
 
@@ -277,11 +285,12 @@ let install_command =
     ~readme
     [%map_open
       let system_font_prefix = flag "system-font-prefix" (optional string) ~doc:"FONT_NAME_PREFIX Installing system fonts with names with the given prefix"
-      and target_dir = anon (maybe_with_default default_target_dir ("DIR" %: file))
+      and target_dir = anon (maybe_with_default default_target_dir ("DIR" %: string))
       and verbose = flag "verbose" no_arg ~doc:"Make verbose"
+      and copy = flag "copy" no_arg ~doc:"Copy files instead of making symlinks"
       in
       fun () ->
-        install target_dir ~system_font_prefix ~verbose ()
+        install target_dir ~system_font_prefix ~verbose ~copy ()
     ]
 
 let status_command =
@@ -306,4 +315,4 @@ let total_command =
     ]
 
 let () =
-  Command.run ~version:"0.0.1.5" total_command
+  Command.run ~version:"0.0.1.7" total_command

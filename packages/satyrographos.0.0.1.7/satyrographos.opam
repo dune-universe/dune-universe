@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "satyrographos"
-version: "0.0.1.5"
+version: "0.0.1.7"
 maintainer: "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
 authors: [
   "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
@@ -16,21 +16,18 @@ build: [
 
 depends: [
   "ocaml" {>= "4.06.0"}
-  "cmdliner"
-  "core"
+  "core" {< "v0.13"}
   "dune" {build}
   "fileutils"
   "json-derivers"
-  "ppx_deriving" {build}
-  "ppx_inline_test" {build}
-  "ppx_jane" {build}
-  (* "satysfi" {>= "0.0.3" & < "0.0.4"} *)
+  "ppx_deriving"
+  "ppx_jane" {< "v0.13"}
   "uri" {>= "2.0.0"}
   "yojson"
 ]
-synopsis: "A naive package manager for SATySFi"
+synopsis: "A package manager for SATySFi"
 description: """
-Satyrographos is a naive package manager for [SATySFi].
+Satyrographos is a package manager for [SATySFi].
 
 Satyrographos is distributed under the LGPL-3.0 license.
 

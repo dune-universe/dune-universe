@@ -128,7 +128,8 @@ let%test "union: p + empty = empty" =
 let read_dir d =
   let add acc f =
     let rel_f = FilePath.make_relative d f in
-    if FilePath.is_subdir rel_f "hash"
+    if String.equal rel_f ".satyrographos" then acc
+    else if FilePath.is_subdir rel_f "hash"
     then add_hash rel_f f acc
     else add_file rel_f f acc
   in
@@ -150,7 +151,13 @@ let write_dir ?(verbose=false) ?(symlink=false) d p =
     end;
     FileUtil.mkdir ~parent:true (FilePath.dirname file_dst);
     if symlink
-    then Unix.symlink ~src:fullpath ~dst:file_dst
+    then (* Breaking change in Core v0.11 and v0.12. Use Core v0.12 notation when the OCaml 4.06 support is dropped.
+      Core v0.11:
+        Unix.symlink ~src:fullpath ~dst:file_dst
+      Core v0.12:
+        Unix.symlink ~target:fullpath ~link_name:file_dst
+      *)
+      UnixLabels.symlink ~to_dir:false ~src:fullpath ~dst:file_dst
     else FileUtil.cp [fullpath] file_dst
   ) p.files;
   PackageFiles.iteri ~f:(fun ~key:path ~data:(_, h) ->
