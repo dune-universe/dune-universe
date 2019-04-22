@@ -1,0 +1,147 @@
+=== Test__Test_arrays.SingleElem ===
+
+=== Test__Test_arrays.SingleElem ===
+
+=== Test__Test_arrays.Longarray ===
+
+=== Test__Test_arrays.EmptyInsideRec ===
+
+=== Test__Test_arrays.SingleInsideRec ===
+
+=== Test__Test_arrays.MultiInsideRec ===
+
+=== Test__Test_arrays.ArrayOfArrays ===
+
+=== Test__Test_arrays.ArrayOfArrays2 ===
+
+=== Tuple ===
+[[10, [20, 30, 40], [s50, s60, s70], [[100, 200], [300, 400], [500, 600]]],
+ [11, [21, 31, 41], [s51, s61, s71], [[101, 201], [301, 401], [501, 601]]],
+ [12, [22, 32, 42], [s52, s62, s72], [[102, 202], [302, 402], [502, 602]]],
+ [13, [23, 33, 43], [s53, s63, s73], [[103, 203], [303, 403], [503, 603]]]]
+=== Any ===
+{z: 101, record: {y: string, x: 5}, varray:
+ [[B, [5, 6, 7], [10, 11, 12]], [B, [5, 6, 7], [10, 11, 12]],
+  [B, [5, 6, 7], [10, 11, 12]]], vlist:
+ [[B, [5, 6, 7], [10, 11, 12]], [B, [5, 6, 7], [10, 11, 12]],
+  [B, [5, 6, 7], [10, 11, 12]]], tuple: [5, protocol, false], intref: 4,
+ intoption: 100, intlist: [3, 4, 5], string: string, float: 3.14, nativeint:
+ 20, int64: 10, int32: 5, int: 2, char: x, bool: true}
+=== Record ===
+{t_il: [1000, 1001, 1002], t_tl:
+ [[100, 101, [s100, s101]], [110, 111, [s110, s111]],
+  [120, 121, [s120, s121]], [130, 131, [s130, s131]],
+  [140, 141, [s140, s141]]], t_t: [100, 101, [s100, s101]], t_i: 1000, t_bl:
+ [], t_b:
+ {b_al:
+  [{a_string: s7, a_int: 7}, {a_string: s8, a_int: 8},
+   {a_string: s9, a_int: 9}], b_a: {a_string: s6, a_int: 6}, b_string: s5,
+  b_int: 5}, t_al:
+ [{a_string: s2, a_int: 2}, {a_string: s3, a_int: 3},
+  {a_string: s4, a_int: 4}], t_a: {a_string: s1, a_int: 1}}
+=== list ===
+
+=== Lists ===
+{l:
+ [[A, [1, 2, 3]], [B, [[1, 2], [3, 4, 5], [2]], [3, 1], 5],
+  [C, [1, 2, 3], [3, 4, 5]]], c: [100, 101, 102, 103], b:
+ [[8, 9], [10, 20, 30, 40]], a: [[1, 2, 3], [], [10, 20, 30, 40], [100, 101]]}
+=== array ===
+
+=== Test__Test_lists.SingleElem ===
+
+=== Test__Test_lists.SingleElem ===
+
+=== Test__Test_lists.Longlist ===
+
+=== Test__Test_lists.EmptyInsideRec ===
+
+=== Test__Test_lists.SingleInsideRec ===
+
+=== Test__Test_lists.MultiInsideRec ===
+
+=== Test__Test_lists.ListOfLists ===
+
+=== Test__Test_lists.ListOfLists2 ===
+
+=== Test__Test_nonrec.Nonrec ===
+
+=== Test__Test_nonrec.Nonrec2 ===
+
+=== None ===
+
+=== Some None ===
+
+=== Some Some None ===
+
+=== Some Some Some Unit ===
+
+=== simple ===
+
+=== record ===
+
+=== multiple ===
+
+=== reference ===
+
+=== recursive ===
+
+=== Test__Test_poly.Simple ===
+
+=== Test__Test_poly.Tree ===
+
+=== Test__Test_poly.MutualRecursion ===
+
+=== Test__Test_poly.InsideRec ===
+
+=== Test__Test_record.RecordList ===
+
+=== Test__Test_record.SimpleRecord ===
+{HostId: SDsd, RequestId: sdfsd, Endpoint: (), Bucket: (), Message: Message,
+ Code: Error}
+=== Test__Test_sig.Test_sig ===
+
+=== Test__Test_sig.Test_sig2 ===
+
+=== Test__Test_types.S3 ===
+
+=== Test__Test_types.Types ===
+{baz:
+ {y_yd: [Variant_two1, 1], y_yc: [three, [100, 200, 300]], y_b:
+  [two, [10, 20, 30]], y_a: 2}, bar: one, foo: 1}
+=== Test__Test_unit.Some Some Some true ===
+
+=== Test__Test_unit.Some Some None ===
+
+=== Test__Test_unit.Some None ===
+
+=== Test__Test_unit.None ===
+
+=== Test__Test_unit.Some Some Some true ===
+
+=== Test__Test_unit.Some Some None ===
+
+=== Test__Test_unit.Some None ===
+
+=== Test__Test_unit.None ===
+
+=== Test__Test_unit.unit option option list option option ===
+
+=== Test__Test_unit.confuse deserialization by using reserved word ===
+
+=== Test__Test_variant.Simple ===
+
+=== Test__Test_variant.Tuple ===
+
+=== Test__Test_variant.Tree ===
+
+=== Test__Test_variant.MutualRecursion ===
+
+=== Test__Test_variant.InsideRec ===
+
+=== Test__Test_variant.InlineRecord ===
+
+=== Test__Test_variant.InlineRecord2 ===
+
+=== Test__Test_variant.Poly ===
+

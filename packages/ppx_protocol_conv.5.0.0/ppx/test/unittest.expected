@@ -1,0 +1,265 @@
+=== Test__Test_arrays.SingleElem ===
+(List ())
+=== Test__Test_arrays.SingleElem ===
+(List ((Int 2)))
+=== Test__Test_arrays.Longarray ===
+(List ((Int 4) (Int 2) (Int 3) (Int 1)))
+=== Test__Test_arrays.EmptyInsideRec ===
+(Record ((c (String c)) (V (List ())) (a (String a))))
+=== Test__Test_arrays.SingleInsideRec ===
+(Record ((c (String c)) (V (List ((Int 2)))) (a (String a))))
+=== Test__Test_arrays.MultiInsideRec ===
+(Record
+ ((c (String c)) (V (List ((Int 4) (Int 2) (Int 3) (Int 1)))) (a (String a))))
+=== Test__Test_arrays.ArrayOfArrays ===
+(Record ((a (List ((List ((Int 2) (Int 3))) (List ((Int 4) (Int 5))))))))
+=== Test__Test_arrays.ArrayOfArrays2 ===
+(List
+ ((List ()) (List ((List ()) (List ((Int 2))) (List ((Int 3) (Int 4)))))
+  (List ((List ()))) (List ((List ((Int 2)))))))
+=== Tuple ===
+(List
+ ((List
+   ((Int 10) (List ((Int 20) (Int 30) (Int 40)))
+    (List ((String s50) (String s60) (String s70)))
+    (List
+     ((List ((Int 100) (Int 200))) (List ((Int 300) (Int 400)))
+      (List ((Int 500) (Int 600)))))))
+  (List
+   ((Int 11) (List ((Int 21) (Int 31) (Int 41)))
+    (List ((String s51) (String s61) (String s71)))
+    (List
+     ((List ((Int 101) (Int 201))) (List ((Int 301) (Int 401)))
+      (List ((Int 501) (Int 601)))))))
+  (List
+   ((Int 12) (List ((Int 22) (Int 32) (Int 42)))
+    (List ((String s52) (String s62) (String s72)))
+    (List
+     ((List ((Int 102) (Int 202))) (List ((Int 302) (Int 402)))
+      (List ((Int 502) (Int 602)))))))
+  (List
+   ((Int 13) (List ((Int 23) (Int 33) (Int 43)))
+    (List ((String s53) (String s63) (String s73)))
+    (List
+     ((List ((Int 103) (Int 203))) (List ((Int 303) (Int 403)))
+      (List ((Int 503) (Int 603)))))))))
+=== Any ===
+(Record
+ ((z (Int 101)) (record (Record ((y (String string)) (x (Int 5)))))
+  (varray
+   (List
+    ((Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12)))))
+     (Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12)))))
+     (Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12))))))))
+  (vlist
+   (List
+    ((Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12)))))
+     (Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12)))))
+     (Variant B
+      ((List ((Int 5) (Int 6) (Int 7))) (List ((Int 10) (Int 11) (Int 12))))))))
+  (tuple (List ((Int 5) (String protocol) (Bool false)))) (intref (Int 4))
+  (intoption (Option ((Int 100)))) (intlist (List ((Int 3) (Int 4) (Int 5))))
+  (string (String string)) (float (Float 3.14)) (nativeint (Nativeint 20))
+  (int64 (Int64 10)) (int32 (Int32 5)) (int (Int 2)) (char (Char x))
+  (bool (Bool true))))
+=== Record ===
+(Record
+ ((t_il (List ((Int 1000) (Int 1001) (Int 1002))))
+  (t_tl
+   (List
+    ((List ((Int 100) (Int 101) (List ((String s100) (String s101)))))
+     (List ((Int 110) (Int 111) (List ((String s110) (String s111)))))
+     (List ((Int 120) (Int 121) (List ((String s120) (String s121)))))
+     (List ((Int 130) (Int 131) (List ((String s130) (String s131)))))
+     (List ((Int 140) (Int 141) (List ((String s140) (String s141))))))))
+  (t_t (List ((Int 100) (Int 101) (List ((String s100) (String s101))))))
+  (t_i (Int 1000)) (t_bl (List ()))
+  (t_b
+   (Record
+    ((b_al
+      (List
+       ((Record ((a_string (String s7)) (a_int (Int 7))))
+        (Record ((a_string (String s8)) (a_int (Int 8))))
+        (Record ((a_string (String s9)) (a_int (Int 9)))))))
+     (b_a (Record ((a_string (String s6)) (a_int (Int 6)))))
+     (b_string (String s5)) (b_int (Int 5)))))
+  (t_al
+   (List
+    ((Record ((a_string (String s2)) (a_int (Int 2))))
+     (Record ((a_string (String s3)) (a_int (Int 3))))
+     (Record ((a_string (String s4)) (a_int (Int 4)))))))
+  (t_a (Record ((a_string (String s1)) (a_int (Int 1)))))))
+=== list ===
+(Record ((a (List ((Int 1) (Int 2) (Int 3))))))
+=== Lists ===
+(Record
+ ((l
+   (List
+    ((Variant A ((List ((Int 1) (Int 2) (Int 3)))))
+     (Variant B
+      ((List
+        ((List ((Int 1) (Int 2))) (List ((Int 3) (Int 4) (Int 5)))
+         (List ((Int 2)))))
+       (List ((Int 3) (Int 1))) (Int 5)))
+     (Variant C
+      ((List ((Int 1) (Int 2) (Int 3))) (List ((Int 3) (Int 4) (Int 5))))))))
+  (c (List ((Int 100) (Int 101) (Int 102) (Int 103))))
+  (b
+   (List
+    ((List ((Int 8) (Int 9))) (List ((Int 10) (Int 20) (Int 30) (Int 40))))))
+  (a
+   (List
+    ((List ((Int 1) (Int 2) (Int 3))) (List ())
+     (List ((Int 10) (Int 20) (Int 30) (Int 40)))
+     (List ((Int 100) (Int 101))))))))
+=== array ===
+(Record ((a (List ((Int 1) (Int 2) (Int 3))))))
+=== Test__Test_lists.SingleElem ===
+(List ())
+=== Test__Test_lists.SingleElem ===
+(List ((Int 2)))
+=== Test__Test_lists.Longlist ===
+(List ((Int 4) (Int 2) (Int 3) (Int 1)))
+=== Test__Test_lists.EmptyInsideRec ===
+(Record ((c (String c)) (V (List ())) (a (String a))))
+=== Test__Test_lists.SingleInsideRec ===
+(Record ((c (String c)) (V (List ((Int 2)))) (a (String a))))
+=== Test__Test_lists.MultiInsideRec ===
+(Record
+ ((c (String c)) (V (List ((Int 4) (Int 2) (Int 3) (Int 1)))) (a (String a))))
+=== Test__Test_lists.ListOfLists ===
+(Record ((a (List ((List ((Int 2) (Int 3))) (List ((Int 4) (Int 5))))))))
+=== Test__Test_lists.ListOfLists2 ===
+(List
+ ((List ()) (List ((List ()) (List ((Int 2))) (List ((Int 3) (Int 4)))))
+  (List ((List ()))) (List ((List ((Int 2)))))))
+=== Test__Test_nonrec.Nonrec ===
+(Variant A
+ ((Variant Cons ((Int 4) (Variant Cons ((Int 3) (Variant Nil ())))))))
+=== Test__Test_nonrec.Nonrec2 ===
+(Variant Cons ((Int 4) (Variant Cons ((Int 3) (Variant Nil ())))))
+=== None ===
+(Option ())
+=== Some None ===
+(Option ((Option ())))
+=== Some Some None ===
+(Option ((Option ((Option ())))))
+=== Some Some Some Unit ===
+(Option ((Option ((Option ((Option (Unit))))))))
+=== simple ===
+(Int 5)
+=== record ===
+(Record ((a (Int 5))))
+=== multiple ===
+(List ((Int 5) (String 5) (Bool true)))
+=== reference ===
+(Record ((a (Record ((a (Int 5)))))))
+=== recursive ===
+(Record ((c (Record ((b (Record ((a (Int 5))))))))))
+=== Test__Test_poly.Simple ===
+(List
+ ((Variant A ()) (Variant B ((Int 5))) (Variant C ((List ((Int 6) (Int 7)))))
+  (Variant D ((List ((Int 8) (Int 9)))))))
+=== Test__Test_poly.Tree ===
+(Variant Node
+ ((List
+   ((Variant Node ((List ((Variant Leaf ()) (Int 3) (Variant Leaf ())))))
+    (Int 10) (Variant Leaf ())))))
+=== Test__Test_poly.MutualRecursion ===
+(Variant T1
+ ((Variant V
+   ((Variant T
+     ((Variant V
+       ((Variant V1 ((Variant V1 ((Variant V1 ((Variant V0 ((Int 5)))))))))))))))))
+=== Test__Test_poly.InsideRec ===
+(Record ((c (String c)) (V (Variant A ())) (a (String a))))
+=== Test__Test_record.RecordList ===
+(Record
+ ((objects (List ((Record ((key (Int 1)))) (Record ((key (Int 2)))))))))
+=== Test__Test_record.SimpleRecord ===
+(Record
+ ((HostId (String SDsd)) (RequestId (String sdfsd)) (Endpoint (Option ()))
+  (Bucket (Option ())) (Message (String Message)) (Code (String Error))))
+=== Test__Test_sig.Test_sig ===
+(Record
+ ((x
+   (Variant A
+    ((List
+      ((Variant A ((Int 7))) (Int 7) (Int 7) (Variant B ((Float 0.7)))
+       (Int 7))))))))
+=== Test__Test_sig.Test_sig2 ===
+(List
+ ((Int 1) (Float 2) (String 3.0) Unit (Variant A ((Int 1)))
+  (Record ((c (String 3.0)) (b (Float 2)) (a (Int 1))))
+  (Variant A ((Int 1)))))
+=== Test__Test_types.S3 ===
+(Record
+ ((Contents
+   (List
+    ((Record ((ETag (String Etag)) (StorageClass (Variant STANDARD ())))))))
+  (Prefix (Option ((String prefix))))))
+=== Test__Test_types.Types ===
+(Record
+ ((baz
+   (Record
+    ((y_yd (Variant Variant_two1 ((Int 1))))
+     (y_yc
+      (Option
+       ((List ((String three) (List ((Int 100) (Int 200) (Int 300))))))))
+     (y_b (List ((String two) (List ((Int 10) (Int 20) (Int 30))))))
+     (y_a (Int 2)))))
+  (bar (String one)) (foo (Int 1))))
+=== Test__Test_unit.Some Some Some true ===
+(Option ((Option ((Option ((Bool true)))))))
+=== Test__Test_unit.Some Some None ===
+(Option ((Option ((Option ())))))
+=== Test__Test_unit.Some None ===
+(Option ((Option ())))
+=== Test__Test_unit.None ===
+(Option ())
+=== Test__Test_unit.Some Some Some true ===
+(Record ((a (Option ((Option ((Option ((Bool true))))))))))
+=== Test__Test_unit.Some Some None ===
+(Record ((a (Option ((Option ((Option ()))))))))
+=== Test__Test_unit.Some None ===
+(Record ((a (Option ((Option ()))))))
+=== Test__Test_unit.None ===
+(Record ((a (Option ()))))
+=== Test__Test_unit.unit option option list option option ===
+(Option
+ ((Option
+   ((List ((Option ((Option (Unit)))) (Option ((Option ()))) (Option ())))))))
+=== Test__Test_unit.confuse deserialization by using reserved word ===
+(Record ((o (Record ((option (Option ((Option ((Bool true)))))))))))
+=== Test__Test_variant.Simple ===
+(List
+ ((Variant A ()) (Variant B ((Int 5))) (Variant C ((Int 6) (Int 7)))
+  (Variant D ((List ((Int 8) (Int 9)))))))
+=== Test__Test_variant.Tuple ===
+(Variant A ((List ((Int 3) (Int 4)))))
+=== Test__Test_variant.Tree ===
+(Variant Node
+ ((Variant Node ((Variant Leaf ()) (Int 3) (Variant Leaf ()))) (Int 10)
+  (Variant Leaf ())))
+=== Test__Test_variant.MutualRecursion ===
+(Variant T1
+ ((Variant V
+   ((Variant T
+     ((Variant V
+       ((Variant V1 ((Variant V1 ((Variant V1 ((Variant V0 ((Int 5)))))))))))))))))
+=== Test__Test_variant.InsideRec ===
+(Record ((c (String c)) (V (Variant A ())) (a (String a))))
+=== Test__Test_variant.InlineRecord ===
+(Variant A ((Record ((a (String a))))))
+=== Test__Test_variant.InlineRecord2 ===
+(Variant aa
+ ((Record
+   ((b (Variant aa ((Record ((b (Variant B ((Int 5)))) (A (String a)))))))
+    (A (String a))))))
+=== Test__Test_variant.Poly ===
+(Variant aaa ((Int 5)))

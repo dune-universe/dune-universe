@@ -1,0 +1,17 @@
+(executable
+ (name       unittest)
+ (libraries  test protocol_conv_msgpack sexplib)
+ (preprocess (pps ppx_protocol_conv ppx_sexp_conv))
+)
+
+(rule
+ (targets unittest.output)
+ (deps    unittest.exe)
+ (action  (run %{deps}))
+)
+
+(alias
+ (name runtest)
+ (package ppx_protocol_conv_msgpack)
+ (action (diff unittest.expected unittest.output))
+)

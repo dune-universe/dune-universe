@@ -1,0 +1,90 @@
+-*- mode: fundamental -*-
+
+Changes marked with '*' indicates a changes that breaks backward compatibility
+[ ] Support extensible polymorphic variants
+
+5.0.0 (2019-04-19)
+[x] Add option make make lazy type indeed lazy
+[x] Add option to mangle variant names
+[*] Refactor tuple, variant and record code to be more efficient
+[x] Reduce amount of closures in generated code
+[*] support nativeint
+[x] Remove superfluous rec flag from generated code
+[x] Cache partial results for recursive types
+[x] Fix signatures for parameterized types
+[x] Create helper module for tuple, record and variant.
+[x] Add strict option
+[*] create t_to_driver and t_to_driver_exn
+[x] Move some documentation to wiki pages
+[x] Add a TLDR to the README, including dune build instructions
+[x] Allow core < v.013
+[x] Switch to use alcotest
+[x] Expose constructor to driver error type for custom parsers. (@paurkedal)
+
+4.0.0 (released 2019-03-26)
+[*] Support "@default" argument on record fields. #9
+[x] Add @name attribute to be compatible with ppx_deriving_yojson
+[*] Support ref cells
+[*] Serialize unit to Null instead of the empty list
+[*] Replace mangle option with driver functors.
+[x] Add compatability with yojson 1.5
+
+3.2.0
+[x] Require ppx_protocol_conv in all drivers. #12
+[*] Handle char primitive type
+
+3.1.3
+[x] Require yojson >= 1.6.0
+[x] Require ppxlib >= 0.3.0
+
+3.1.2
+[x] Support arrays
+
+3.1.1
+[x] Do not reference ppx in libraries
+
+3.1.0
+[x] Generalise json/jsonm/yaml/msgpack driver into one.
+[x] Switch to dune
+[x] Use ppxlib
+[x] Xml: Decode </x> to the empty string
+
+3.0.0
+[x] Support inline records
+[x] Improve error messages on unsupported type constructs
+[x] Support polymorphic variants
+[x] Support parameterised types
+[x] Improve deserialisation error messages
+[x] Make `None` and `Some None` map to distinct values
+[x] Fix error when emitting code for types declared nonrec
+[x] Msgpack: Add fine grained control of serialised types
+[x] *Only emit <of|to>_protocol for types named t (Breaks backward compatibility)
+
+2.0.1
+[x] Move tests to own packages
+
+2.0.0
+[x] Split drivers into multiple driver packages
+[x] Implement yaml driver
+
+1.0.0
+[x] Xml driver: Error when deserialising singleton lists in records
+
+0.10.0
+[x] Suport for non-recursive types
+[x] Add alias to allow use without 't_' for types named 't' to mimic deriving_yojson behaviour
+
+0.9.0
+[x] Handle lazy types.
+[x] Allow overriding Variant constructor names in serialisation
+[x] Add t_of_xml and t_to_xml to drivers.
+
+[x] Support int32 and int64
+[x] Don't require all drivers to accept a flags parameter
+[x] Add support for variants
+[x] Support of_protocol and to_protocol
+[x] Add msgpack driver
+[x] Renamed package to ppx_protocol_conv
+
+0.8:
+[x] Initial release
