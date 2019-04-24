@@ -1,7 +1,7 @@
 opam-version: "2.0"
 maintainer: "Anders Fugmann <anders@fugmann.net>"
 authors: "Anders Fugmann"
-version: "4.3.0"
+version: "4.4.0"
 license: "BSD-3"
 homepage: "https://github.com/andersfugmann/aws-s3"
 dev-repo: "git+https://github.com/andersfugmann/aws-s3"
@@ -21,8 +21,8 @@ depends: [
   "uri"
   "xml-light"
   "yojson"
-  "ppx_protocol_conv_xml_light"
-  "ppx_protocol_conv_json"
+  "ppx_protocol_conv_xml_light" {>= "5.0.0" & < "6.0.0"}
+  "ppx_protocol_conv_json" {>= "5.0.0" & < "6.0.0"}
   "cmdliner"
   "ppx_inline_test"
   "base64" {>= "3.1.0"}
