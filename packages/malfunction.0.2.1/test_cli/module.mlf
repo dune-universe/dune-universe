@@ -1,2 +1,0 @@
-(module
-  (export (block (tag 0) 42 0)))

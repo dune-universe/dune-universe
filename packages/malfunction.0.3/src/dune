@@ -1,0 +1,19 @@
+(ocamllex (modules malfunction_sexp))
+
+(rule
+ (targets malfunction_compat.ml)
+ (deps malfunction_compat.cppo.ml)
+ (action (run %{bin:cppo} %{deps} -V OCAML:%{ocaml_version} -o %{targets})))
+
+(executable
+ (name malfunction_main)
+ (libraries malfunction)
+ (modules malfunction_main)
+ (public_name malfunction))
+
+(library
+ (name malfunction)
+ (public_name malfunction)
+ (libraries compiler-libs.optcomp str zarith findlib dynlink unix)
+ (wrapped false)
+ (modules (:standard \ malfunction_main)))

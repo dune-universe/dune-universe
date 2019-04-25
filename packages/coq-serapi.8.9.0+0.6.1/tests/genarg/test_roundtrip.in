@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+SERCOMP=../../sertop/sercomp.exe
+FILE_IN="$1"
+FILE_OUT="${FILE_IN%.v}.sexp"
+
+$SERCOMP --input=vernac --mode=sexp --exn_on_opaque "$FILE_IN" > "$FILE_OUT"
+$SERCOMP --input=sexp --mode=check "$FILE_OUT"

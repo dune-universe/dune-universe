@@ -1,6 +1,0 @@
-_build
-*~
-js/sertop_js.js
-sertop/ser_version.ml
-.merlin
-*.install

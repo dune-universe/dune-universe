@@ -1,0 +1,9 @@
+(executable
+ (name test)
+ (libraries malfunction omd)
+ (modules test))
+
+(alias
+ (name runtest)
+ (deps (:prog test.exe) ../docs/spec.md (glob_files ../test/*.test))
+ (action (run %{prog} ../docs/spec.md ../test)))

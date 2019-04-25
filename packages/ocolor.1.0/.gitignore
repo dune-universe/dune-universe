@@ -1,0 +1,14 @@
+*.cmi
+*.cmt
+*.cmo
+*.o
+._d/
+ocolor
+*.cmx
+*.cma
+*.cmxa
+*.a
+_build/
+ocolor.install
+
+.merlin
