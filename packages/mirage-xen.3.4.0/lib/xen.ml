@@ -114,9 +114,33 @@ module Export = struct
   let refs t = t.refs
   let mapping t = t.mapping
 
-  let put = Gnt.Gntshr.put
-  let num_free_grants = Gnt.Gntshr.num_free_grants
-  let get = Gnt.Gntshr.get
+  let free_list : Gntref.t Queue.t = Queue.create ()
+  let free_list_waiters = Lwt_dllist.create ()
+
+  let count_gntref = MProf.Counter.make ~name:"gntref"
+
+  let put_no_count r =
+    Queue.push r free_list;
+    match Lwt_dllist.take_opt_l free_list_waiters with
+    | None -> ()
+    | Some u -> Lwt.wakeup u ()
+
+  let put r =
+    MProf.Counter.increase count_gntref (-1);
+    put_no_count r
+
+  let num_free_grants () = Queue.length free_list
+
+  let rec get () =
+    match Queue.is_empty free_list with
+    | true ->
+      let th, u = MProf.Trace.named_task "Wait for free gnt" in
+      let node = Lwt_dllist.add_r u free_list_waiters  in
+      Lwt.on_cancel th (fun () -> Lwt_dllist.remove node);
+      th >>= fun () -> get ()
+    | false ->
+      MProf.Counter.increase count_gntref (1);
+      return (Queue.pop free_list)
 
   let get_n num =
     let rec gen_gnts num acc =
@@ -130,9 +154,18 @@ module Export = struct
         end
     in gen_gnts num []
 
-  let get_nonblock = Gnt.Gntshr.get_nonblock
+  let get_nonblock () =
+    try Some (Queue.pop free_list) with Queue.Empty -> None
 
-  let get_n_nonblock = Gnt.Gntshr.get_n_nonblock
+  let get_n_nonblock num =
+    let rec aux acc num = match num with
+      | 0 -> List.rev acc
+      | n ->
+        (match get_nonblock () with
+         | Some p -> aux (p::acc) (n-1)
+         (* If we can't have enough, we push them back in the queue. *)
+         | None -> List.iter (fun gntref -> Queue.push gntref free_list) acc; [])
+    in aux [] num
 
   let with_ref f =
     get ()
@@ -229,4 +262,12 @@ module Export = struct
     List.iter2 (grant_access ~domid ~writable) gnts pages;
     Lwt.finalize fn
       (fun () -> Lwt_list.iter_s (end_access ~release_ref:false) gnts)
+
+  external nr_entries : unit -> int = "stub_gnttab_nr_entries"
+  external nr_reserved : unit -> int = "stub_gnttab_reserved"
+
+  let () =
+    for i = nr_reserved () to nr_entries () - 1 do
+      put_no_count i
+    done
 end

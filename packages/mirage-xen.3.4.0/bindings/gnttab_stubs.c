@@ -16,10 +16,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/* Note: these stubs are currently used by both OS.Xen and xen-gnt's Gnt module.
-   Once xen-gnt stops using them, they can be cleaned up and unused ones removed.
- */
-
 #include <mini-os/os.h>
 #include <mini-os/mm.h>
 #include <mini-os/gnttab.h>
@@ -46,18 +42,6 @@ extern grant_entry_t *gnttab_table;
 #define XC_GNTTAB_BIGARRAY (CAML_BA_UINT8 | CAML_BA_C_LAYOUT | CAML_BA_EXTERNAL)
 
 
-CAMLprim value stub_gnttab_interface_open(value unit)
-{
-	CAMLparam1(unit);
-	CAMLreturn(Val_unit);
-}
-
-CAMLprim value stub_gnttab_interface_close(value unit)
-{
-	CAMLparam1(unit);
-	CAMLreturn(Val_unit);
-}
-
 void gnttab_init(void)
 {
 	init_gnttab();
@@ -65,22 +49,6 @@ void gnttab_init(void)
 	map = (struct gntmap*) malloc(sizeof(struct gntmap));
 	gntmap_init(map);
 	printk("initialised mini-os gntmap\n");
-}
-
-CAMLprim value stub_gnttab_allocates(void)
-{
-	CAMLparam0();
-	/* The mini-os API is now the same as the userspace Linux one: it
-	   returns fresh granted pages rather than expecting us to pass in
-	   an existing heap page. FIXME: remove the 'map_onto' API completely */
-	CAMLreturn(Val_bool(1));
-}
-
-CAMLprim value stub_gntshr_allocates(void)
-{
-	CAMLparam0();
-	/* We still manage our grant references from the OCaml code */
-	CAMLreturn(Val_bool(0));
 }
 
 static void *
@@ -161,20 +129,6 @@ CAMLprim value stub_gnttab_mapv_batched(value xgh, value array, value writable)
     CAMLreturn(pair);
 }
 
-/* No longer needed: stop_kernel now handles this automatically. */
-CAMLprim value
-stub_gnttab_fini(value unit)
-{
-    return Val_unit;
-}
-
-/* No longer needed: start_kernel now handles this automatically. */
-CAMLprim value
-stub_gnttab_init(value unit)
-{
-    return Val_unit;
-}
-
 /* Return the number of reserved grant entries at the start */
 CAMLprim value
 stub_gnttab_reserved(value unit)
@@ -189,22 +143,6 @@ stub_gnttab_nr_entries(value unit)
 }
 
 /* Exporting (sharing) pages */
-
-CAMLprim value stub_gntshr_open(value unit)
-{
-	CAMLparam1(unit);
-	CAMLlocal1(result);
-	result = Val_unit;
-	CAMLreturn(result);
-}
-
-CAMLprim value stub_gntshr_close(value unit)
-{
-	CAMLparam1(unit);
-	CAMLlocal1(result);
-	result = Val_unit;
-	CAMLreturn(result);
-}
 
 /* FIXME: we should use the mini-OS functions directly for these */
 
@@ -230,48 +168,9 @@ stub_gntshr_grant_access(value v_ref, value v_iopage, value v_domid, value v_wri
 }
 
 CAMLprim value
-stub_gntshr_end_access(value v_ref)
-{
-    grant_ref_t ref = Int_val(v_ref);
-
-    /* TODO: how should we handle failures due to the grant still being
-       mapped in on the other side? */
-    gnttab_end_access(ref);
-
-    return Val_unit;
-}
-
-CAMLprim value
 stub_gntshr_try_end_access(value v_ref)
 {
     CAMLparam1(v_ref);
     grant_ref_t ref = Int_val(v_ref);
     CAMLreturn(Val_bool(gnttab_end_access(ref)));
 }
-
-CAMLprim value stub_gntshr_share_pages_batched(value xgh, value domid, value count, value writable) {
-    CAMLparam4(xgh, domid, count, writable);
-    /* The OCaml code will never call this because gnttab_allocates is false */
-    printk("FATAL ERROR: stub_gntshr_share_pages_batched called\n");
-    caml_failwith("stub_gntshr_share_pages_batched");
-    CAMLreturn(Val_unit);
-}
-
-CAMLprim value stub_gntshr_munmap_batched(value xgh, value share) {
-    CAMLparam2(xgh, share);
-    /* The OCaml code will never call this because gnttab_allocates is false */
-    printk("FATAL ERROR: stub_gntshr_munmap_batched called\n");
-    caml_failwith("stub_gntshr_munmap_batched");
-    CAMLreturn(Val_unit);
-}
-
-CAMLprim value
-stub_gnttab_map_onto(value i, value v_ref, value v_iopage, value v_domid, value v_writable)
-{
-    CAMLparam5(i, v_ref, v_iopage, v_domid, v_writable);
-    /* The OCaml code will never call this because gnttab_allocates is true */
-    printk("FATAL ERROR: stub_gnttab_map_onto called\n");
-    caml_failwith("stub_gnttab_map_onto");
-    CAMLreturn(Val_unit);
-}
-

@@ -1,0 +1,5 @@
+(executables
+ (names omrt updates)
+ (public_names omrt updates)
+ (flags :standard -w A-27-32-4-39-8-44-3-6-40-42)
+ (libraries mrt-format))

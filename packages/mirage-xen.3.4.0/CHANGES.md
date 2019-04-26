@@ -1,3 +1,8 @@
+## v3.4.0 (2018-04-22)
+
+* Drop support for old ocaml-gnt package (#12, by @talex5)
+* require dune, and conflict with broken version 1.9.1 (#13, by @hannesm)
+
 ## v3.3.0 (2019-03-22)
 
 * Add grant-handling code to OS.Xen (#9, by @talex5)

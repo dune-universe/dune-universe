@@ -1,0 +1,14 @@
+(library
+ (name mrt)
+ (public_name mrt-format)
+ (synopsis "MRT parser library.")
+ (preprocess
+  (pps ppx_cstruct))
+ (flags :standard -w A-27-32-4-39-8-44-3-6)
+ (libraries
+  bigarray
+  cstruct
+  ipaddr
+  logs
+  result
+  ))
