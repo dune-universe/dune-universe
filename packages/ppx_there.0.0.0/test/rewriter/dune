@@ -1,0 +1,25 @@
+(executable
+  (name pp)
+  (modules pp)
+  (libraries
+    ppx_there
+    ppxlib
+  )
+)
+
+(rule
+  (targets test.actual.ml)
+  (deps test.ml)
+  (action (run ./pp.exe --impl %{deps} -o %{targets}))
+)
+
+(alias
+  (name runtest)
+  (action (diff test.expected.ml test.actual.ml))
+)
+
+(test
+  (name test)
+  (modules test)
+  (preprocess (pps ppx_there))
+)

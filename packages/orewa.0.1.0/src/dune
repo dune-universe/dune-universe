@@ -1,0 +1,5 @@
+(library
+  (name orewa)
+  (public_name orewa)
+  (libraries core async)
+  (preprocess (pps ppx_let ppx_deriving.show ppx_deriving.eq)))
