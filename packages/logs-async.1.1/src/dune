@@ -1,0 +1,19 @@
+(library
+ (name logs_async)
+ (public_name logs-async)
+ (modules Logs_async)
+ (libraries logs async_kernel))
+
+(library
+ (name logs_async_reporter)
+ (public_name logs-async-reporter)
+ (modules Logs_async_reporter)
+ (optional)
+ (libraries logs.fmt core_kernel async))
+
+(library
+ (name logs_async_ovh)
+ (public_name logs-async-ovh)
+ (modules Logs_async_ovh)
+ (optional)
+ (libraries ptime.clock.os syslog-rfc5424 uri core async async_ssl warp10-async))
