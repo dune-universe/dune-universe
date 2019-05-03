@@ -1,0 +1,10 @@
+(executables
+ (names example consume produce)
+ (libraries nsq logs logs.fmt fmt.tty))
+
+(install
+ (section bin)
+ (files
+  (example.exe as example)
+  (consume.exe as consume)
+  (produce.exe as produce)))
