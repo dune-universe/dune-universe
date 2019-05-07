@@ -38,7 +38,8 @@ module type CONFIGURATION = sig
 
   type 'a io
 
-  val read_mac: id -> Macaddr.t io
+  val read_frontend_mac: id -> Macaddr.t io
+  val read_backend_mac: id -> Macaddr.t io
 
   val read_mtu: id -> int io
 

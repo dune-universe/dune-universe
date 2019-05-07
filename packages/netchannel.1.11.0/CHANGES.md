@@ -1,3 +1,9 @@
+## v1.11.0 (2019-05-05)
+* Fix MAC address for netback devices (@talex5, #87).
+  This changes the `CONFIGURATION` signature to provide both
+  `read_frontend_mac` and `read_backend_mac`, and changes the XenStore
+  implementation to return `fe:ff:ff:ff:ff:ff` for backends.
+
 ## v1.10.2 (2019-04-01)
 * Use the new grant API provided by mirage-xen (@talex5 and @yomimono, #85).
 

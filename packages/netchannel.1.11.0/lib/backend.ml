@@ -68,6 +68,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
     channel: Eventchn.t;
     frontend_id: int;
     mac: Macaddr.t;
+    frontend_mac: Macaddr.t;
     mtu: int;
     backend_configuration: S.backend_configuration;
     mutable to_netfront: (RX.Response.t,int) Ring.Rpc.Back.t option;
@@ -85,7 +86,8 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
     let cleanup = Cleanup.create () in
     Lwt_switch.add_hook (Some switch) (fun () -> Cleanup.perform cleanup);
     Cleanup.push cleanup (fun () -> C.disconnect_backend id);
-    C.read_mac id >>= fun mac ->
+    C.read_backend_mac id >>= fun mac ->
+    C.read_frontend_mac id >>= fun frontend_mac ->
     C.init_backend id Features.supported >>= fun backend_configuration ->
     let frontend_id = backend_configuration.S.frontend_id in
     C.read_frontend_configuration id >>= fun f ->
@@ -119,7 +121,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
       channel; frontend_id; backend_configuration;
       to_netfront = Some to_netfront; from_netfront = Some from_netfront; rx_reqs;
       get_free_mutex; write_mutex;
-      stats; mac; mtu; } in
+      stats; mac; frontend_mac; mtu; } in
     Cleanup.push cleanup (fun () ->
       t.to_netfront <- None;
       t.from_netfront <- None;
@@ -303,6 +305,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
   let get_stats_counters t = t.stats
   let reset_stats_counters t = Stats.reset t.stats
 
+  let frontend_mac t = t.frontend_mac
   let mac t = t.mac
   let mtu t = t.mtu
 

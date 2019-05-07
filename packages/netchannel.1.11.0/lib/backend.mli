@@ -19,4 +19,6 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) : sig
   include Mirage_net_lwt.S
   val make: domid:int -> device_id:int -> t Lwt.t
   (** [make ~domid ~device_id] connects a backend connecting to [domid] *)
+
+  val frontend_mac : t -> Macaddr.t
 end

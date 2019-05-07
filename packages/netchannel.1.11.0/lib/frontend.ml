@@ -103,7 +103,7 @@ module Make(C: S.CONFIGURATION with type 'a io = 'a Lwt.t) = struct
     let features = backend_conf.S.features_available in
     Log.info Features.(fun f -> f " sg:%b gso_tcpv4:%b rx_copy:%b rx_flip:%b smart_poll:%b"
       features.sg features.gso_tcpv4 features.rx_copy features.rx_flip features.smart_poll);
-    C.read_mac id >>= fun mac ->
+    C.read_frontend_mac id >>= fun mac ->
     Log.info (fun f -> f "MAC: %s" (Macaddr.to_string mac));
     (* Allocate a transmit and receive ring, and event channel *)
     create_rx (vif_id, backend_id)

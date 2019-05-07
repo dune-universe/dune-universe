@@ -64,7 +64,7 @@ module Make(Xs: Xs_client_lwt.S) = struct
   | `Server (domid, devid) ->
     return (Printf.sprintf "backend/vif/%d/%d" domid devid)
 
-  let read_mac id =
+  let read_frontend_mac id =
     frontend id
     >>= fun frontend ->
     Xs.make ()
@@ -78,6 +78,12 @@ module Make(Xs: Xs_client_lwt.S) = struct
       Log.info (fun f -> f "%s: no configured MAC (error: %s), using %a"
         (Sexplib.Sexp.to_string (S.sexp_of_id id)) msg Macaddr.pp m);
       return m
+
+  (* Curiously, libxl writes the frontend MAC to both the frontend and
+     backend directories. The convention seems to be to use this as the
+     backend MAC. See: https://github.com/QubesOS/qubes-issues/issues/5013 *)
+  let backend_mac = Macaddr.of_string_exn "fe:ff:ff:ff:ff:ff"
+  let read_backend_mac _ = return backend_mac
 
   let read_mtu _id = return 1514 (* TODO *)
 
