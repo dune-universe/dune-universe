@@ -5,13 +5,13 @@ type t
 
 type common_error =
   [ `Connection_closed
-  | `Eof
   | `Unexpected ]
 [@@deriving show, eq]
 
 val echo : t -> string -> (string, [> common_error]) Deferred.Result.t
 
 type exist =
+  | Always
   | Not_if_exists
   | Only_if_exists
 

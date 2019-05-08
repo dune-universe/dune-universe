@@ -1,4 +1,0 @@
-(executable
-  (name test)
-  (libraries core async)
-  (preprocess (pps ppx_let)))

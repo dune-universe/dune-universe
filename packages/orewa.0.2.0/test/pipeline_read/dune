@@ -1,0 +1,4 @@
+(executable
+ (name pipeline_read)
+ (preprocess (pps ppx_let))
+ (libraries core async orewa))

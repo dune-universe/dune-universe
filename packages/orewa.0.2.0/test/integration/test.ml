@@ -718,6 +718,42 @@ let test_restore () =
   Alcotest.(check (result (list string) err)) "Correct value restored" (Ok [value]) res;
   return ()
 
+let test_pipelining () =
+  Orewa.with_connection ~host @@ fun conn ->
+  (* Test that we in parallel can do multiple requests *)
+  let prefix = random_key () in
+  let key i = Printf.sprintf "%s.%d" prefix i in
+  let keys = Array.init 1000 ~f:key in
+  (* Now insert all the keys *)
+  let%bind () =
+    Deferred.Array.iteri ~how:`Sequential keys ~f:(fun i key ->
+        let%bind res = Orewa.set conn ~key (string_of_int i) in
+        Alcotest.(check be) "Set test key" (Ok true) res;
+        return () )
+  in
+  let%bind () =
+    Deferred.Array.iteri
+      ~how:`Parallel
+      ~f:(fun i key ->
+        let%bind res = Orewa.get conn key in
+        Alcotest.(check soe) "Wrong value for key" (Ok (Some (string_of_int i))) res;
+        return () )
+      keys
+  in
+  return ()
+
+let test_close () =
+  let%bind conn = Orewa.connect ?port:None ~host in
+  let key = random_key () in
+  let%bind res = Orewa.set conn ~key "test" in
+  Alcotest.(check be) "Set test key" (Ok true) res;
+  let%bind res = Orewa.get conn key in
+  Alcotest.(check soe) "Get test key" (Ok (Some "test")) res;
+  let%bind () = Orewa.close conn in
+  let%bind res = Orewa.get conn key in
+  Alcotest.(check soe) "Get test key" (Error `Connection_closed) res;
+  return ()
+
 let tests =
   Alcotest_async.
     [ test_case "ECHO" `Slow test_echo;
@@ -765,7 +801,9 @@ let tests =
       test_case "TTL" `Slow test_ttl;
       test_case "TYPE" `Slow test_type';
       test_case "DUMP" `Slow test_dump;
-      test_case "RESTORE" `Slow test_restore ]
+      test_case "RESTORE" `Slow test_restore;
+      test_case "PIPELINE" `Slow test_pipelining;
+      test_case "CLOSE" `Slow test_close ]
 
 let () =
   Log.Global.set_level `Debug;

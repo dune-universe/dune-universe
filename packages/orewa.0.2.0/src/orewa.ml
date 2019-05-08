@@ -1,16 +1,19 @@
 open Core
 open Async
 
-type t = {
-  reader : Reader.t;
-  writer : Writer.t
-}
-
 type common_error =
   [ `Connection_closed
-  | `Eof
   | `Unexpected ]
 [@@deriving show, eq]
+
+type response = (Resp.t, common_error) result
+
+type command = string list
+
+type request = {
+  command : command;
+  waiter : response Ivar.t
+}
 
 let construct_request commands =
   commands
@@ -18,9 +21,68 @@ let construct_request commands =
   |> (fun xs -> Resp.Array xs)
   |> Resp.encode
 
-let submit_request writer command = construct_request command |> Writer.write writer
+type t = {
+  (* Need a queue of waiter Ivars. Need some way of closing the connection *)
+  waiters : response Ivar.t Queue.t;
+  reader : request Pipe.Reader.t;
+  writer : request Pipe.Writer.t
+}
 
-let request {reader; writer} req = submit_request writer req; Parser.read_resp reader
+let init reader writer =
+  let waiters = Queue.create () in
+  let rec recv_loop reader =
+    match%bind Monitor.try_with_or_error @@ fun () -> Parser.read_resp reader with
+    | Error _ | Ok (Error _) -> return ()
+    | Ok (Ok r as result) -> (
+      match Queue.dequeue waiters with
+      | None when Reader.is_closed reader -> return ()
+      | None -> failwithf "No waiters are waiting for this message: %s" (Resp.show r) ()
+      | Some waiter -> Ivar.fill waiter result; recv_loop reader )
+  in
+  (* Requests are posted to a pipe, and requests are processed in sequence *)
+  let request_reader, request_writer = Pipe.create () in
+  let handle_request {command; waiter} =
+    Queue.enqueue waiters waiter;
+    let request = construct_request command in
+    return @@ Writer.write writer request
+  in
+  (* Start redis receiver. Processing ends if the connection is closed. *)
+  don't_wait_for
+    (let%bind () = recv_loop reader in
+     return @@ Pipe.close request_writer);
+  (* Start processing requests. Once the pipe is closed, we signal
+     closed to all outstanding waiters after closing the underlying
+     socket *)
+  don't_wait_for
+    (let%bind () = Pipe.iter request_reader ~f:handle_request in
+     let%bind () = Writer.close writer in
+     let%bind () = Reader.close reader in
+     (* Signal this to all waiters. As the pipe has been closed, we
+        know that no new waiters will arrive *)
+     Queue.iter waiters ~f:(fun waiter -> Ivar.fill waiter @@ Error `Connection_closed);
+     return @@ Queue.clear waiters);
+  {waiters; reader = request_reader; writer = request_writer}
+
+let connect ?(port = 6379) ~host =
+  let where =
+    Tcp.Where_to_connect.of_host_and_port @@ Host_and_port.create ~host ~port
+  in
+  let%bind _socket, reader, writer = Tcp.connect where in
+  return @@ init reader writer
+
+let close {writer; _} = return @@ Pipe.close writer
+
+let request t command =
+  match Pipe.is_closed t.writer with
+  | true -> return @@ Error `Connection_closed
+  | false -> (
+      let waiter = Ivar.create () in
+      let%bind () = Pipe.write t.writer {command; waiter} in
+      (* Type coercion: [common_error] -> [> common_error] *)
+      match%map Ivar.read waiter with
+      | Ok _ as res -> res
+      | Error `Connection_closed -> Error `Connection_closed
+      | Error `Unexpected -> Error `Unexpected )
 
 let echo t message =
   let open Deferred.Result.Let_syntax in
@@ -29,10 +91,11 @@ let echo t message =
   | _ -> Deferred.return @@ Error `Unexpected
 
 type exist =
+  | Always
   | Not_if_exists
   | Only_if_exists
 
-let set t ~key ?expire ?exist value =
+let set t ~key ?expire ?(exist = Always) value =
   let open Deferred.Result.Let_syntax in
   let expiry =
     match expire with
@@ -41,9 +104,9 @@ let set t ~key ?expire ?exist value =
   in
   let existence =
     match exist with
-    | None -> []
-    | Some Not_if_exists -> ["NX"]
-    | Some Only_if_exists -> ["XX"]
+    | Always -> []
+    | Not_if_exists -> ["NX"]
+    | Only_if_exists -> ["XX"]
   in
   let command = ["SET"; key; value] @ expiry @ existence in
   match%bind request t command with
@@ -516,19 +579,6 @@ let restore t ~key ?ttl ?replace value =
   match%bind request t (["RESTORE"; key; ttl; value] @ replace) with
   | Resp.String "OK" -> return ()
   | _ -> Deferred.return @@ Error `Unexpected
-
-let init reader writer = {reader; writer}
-
-let connect ?(port = 6379) ~host =
-  let where =
-    Tcp.Where_to_connect.of_host_and_port @@ Host_and_port.create ~host ~port
-  in
-  let%bind _socket, reader, writer = Tcp.connect where in
-  return @@ init reader writer
-
-let close {reader; writer} =
-  let%bind () = Writer.close writer in
-  Reader.close reader
 
 let with_connection ?(port = 6379) ~host f =
   let where =
