@@ -32,7 +32,7 @@ clean:
 
 doc:
 	dune build @doc
-	sed -e 's/1.5/$(PKGVERSION)/' --in-place \
+	sed -e 's/1.5.1/$(PKGVERSION)/' --in-place \
 	  _build/default/_doc/_html/interval_base/Interval/index.html \
 	  _build/default/_doc/_html/interval_intel/Interval_intel/index.html \
 	  _build/default/_doc/_html/interval_crlibm/Interval_crlibm/index.html

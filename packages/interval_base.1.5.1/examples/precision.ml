@@ -20,7 +20,7 @@ let g u v =
   let x = f u v in
   let y = f_I a b in
   Printf.printf "f(x,y) = %e\nf(I) = %a\n" x I.pr y;
-  let err = 100.0 *. I.size_high y /. (abs_float x) in
+  let err = 100.0 *. I.width_high y /. (abs_float x) in
   Printf.printf "error (in percent) = %e\n" err;
   print_newline();;
 

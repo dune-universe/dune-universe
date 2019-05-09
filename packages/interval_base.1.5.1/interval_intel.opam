@@ -1,3 +1,4 @@
+version: "1.5.1"
 opam-version: "2.0"
 maintainer: "Christophe Troestler <Christophe.Troestler@umons.ac.be>"
 authors: ["Jean-Marc Alliot <jean-marc.alliot@irit.fr>"
@@ -18,16 +19,16 @@ depends: [
   "ocaml" {>= "4.03"}
   "interval_base" {= version}
   "dune" {build}
-  "crlibm"
 ]
-synopsis: "An interval library for OCaml (crlibm version)"
+available: [ arch = "x86_64" ]
+synopsis: "An interval library for OCaml"
 description: "
 This library uses assembly code to compute all operations with proper
-roundings, and currently ONLY works on intel processors.
+roundings, and currently ONLY works on intel processors.  It supports
+Linux, Windows and MacOs, with gcc and clang.  Unfortunately, the Intel
+processor does not properly round trigonometric functions so this library
+cannot be used whenever proved correct enclosures are needed.
 
-This package uses CRlibm (a proved correctly rounded mathematical
-library) to provide enclosures of transcendental functions.  It may be
-slower than the version using the implementation in the CPU but
-the bounds are proved correct.  It also provides *pi versions of the
-trigonometric functions and their inverse.
+More information is given in the paper presented in the OCaml meeting
+2012: http://www.alliot.fr/papers/oud2012.pdf
 "

@@ -29,7 +29,7 @@
 
    It is recommended to open this module.
 
-   @version 1.5 *)
+   @version 1.5.1 *)
 
 (** {2 Interval sub-module} *)
 

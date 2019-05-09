@@ -98,7 +98,7 @@ let x = I.(v 0.5 1. + sin(v 3. 3.125))
    The library is implemented in x87 assembly mode and is quite
    efficient ({{:#perf}see below}).
 
-   @version 1.5  *)
+   @version 1.5.1  *)
 
 (** {2 Intervals (for Intel processors)} *)
 

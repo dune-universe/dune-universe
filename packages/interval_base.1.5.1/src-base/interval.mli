@@ -22,7 +22,7 @@
 
 (** Base module for interval arithmetic.
 
-   @version 1.5 *)
+   @version 1.5.1 *)
 
 (** Basic signature for interval arithmetic packages. *)
 module type T = sig
@@ -163,17 +163,23 @@ module type T = sig
 
   (** {2 Operations} *)
 
-  val size: t -> t
-  (** [size a] returns an interval containing the true length of the
+  val width: t -> t
+  (** [size a] returns an interval containing the true width of the
      interval [high a - low a]. *)
 
-  val size_high : t -> number
-  (** [size_high a] returns the length of the interval [high a - low a]
+  val width_high : t -> number
+  (** [size_high a] returns the width of the interval [high a - low a]
      rounded up. *)
 
-  val size_low : t -> number
-  (** [size_low a] returns the length of the interval [high a - low a]
+  val width_low : t -> number
+  (** [size_low a] returns the width of the interval [high a - low a]
      rounded down. *)
+
+  val mag : t -> number
+  (** [mag x] returns the magnitude of [x], that is sup\{ |x| : x ∈ [x] \}. *)
+
+  val mig : t -> number
+  (** [mig x] returns the mignitude of [x], that is inf\{ |x| : x ∈ [x] \}. *)
 
   val sgn: t -> t
   (** [sgn a] returns the sign of each bound, e.g., for floats
@@ -327,6 +333,10 @@ exception Domain_error of string [@@warn_on_literal_pattern]
    interval arithmetic. *)
 module I : sig
   include T with type number = float and type t = t
+
+  val size : t -> t           [@@deprecated "Use I.width"]
+  val size_high : t -> number [@@deprecated "Use I.width_high"]
+  val size_low : t -> number  [@@deprecated "Use I.width_low"]
 
   (** {2 Usual arithmetic operators} *)
 

@@ -57,9 +57,11 @@ module type T = sig
   val strict_precedes : t -> t -> bool
   val disjoint : t -> t -> bool
 
-  val size: t -> t
-  val size_high : t -> number
-  val size_low : t -> number
+  val width: t -> t
+  val width_high : t -> number
+  val width_low : t -> number
+  val mag : t -> number
+  val mig : t -> number
   val sgn: t -> t
   val truncate: t -> t
   val abs: t -> t
@@ -93,8 +95,8 @@ end
 
 (* [min] and [max], specialized to floats (faster).
    NaN do dot need to be handled (see [I.v]). *)
-let fmin (a: float) (b: float) = if a <= b then a else b
-let fmax (a: float) (b: float) = if a <= b then b else a
+let[@inline] fmin (a: float) (b: float) = if a <= b then a else b
+let[@inlne] fmax (a: float) (b: float) = if a <= b then b else a
 
 let[@inline] is_even x = x land 1 = 0
 
@@ -162,15 +164,21 @@ module H = struct
     else pos_pow_IN (a *. x) (x *. x) (n / 2)
 end
 
+let[@inline] low_cbr x =
+  if x >= 0. then L.(x *. x *. x) else L.(x *. H.(x *. x))
+
+let[@inline] high_cbr x =
+  if x >= 0. then H.(x *. x *. x) else H.(x *. L.(x *. x))
+
 let rec low_pow_IN x n = (* x ∈ ℝ, n ≥ 0 *)
   if is_even n then L.(pos_pow_IN 1. (x *. x) (n / 2))
-  else if x >= 0. then x *. L.(pos_pow_IN 1. (x *. x) (n / 2))
+  else if x >= 0. then L.(pos_pow_IN x (x *. x) (n / 2))
   else L.(x *. H.(pos_pow_IN 1. (x *. x) (n / 2)))
 and low_pow_i x = function
   | 0 -> 1.
   | 1 -> x
   | 2 -> L.(x *. x)
-  | 3 -> if x >= 0. then L.(x *. x *. x) else L.(x *. H.(x *. x))
+  | 3 -> low_cbr x
   | 4 -> L.(let x2 = x *. x in x2 *. x2)
   | n -> if n >= 0 then low_pow_IN x n
          else (* Since the rounding has the same sign than xⁿ, we can
@@ -178,13 +186,13 @@ and low_pow_i x = function
            L.(1. /. high_pow_IN x (- n))
 and high_pow_IN x n =
   if is_even n then H.(pos_pow_IN 1. (x *. x) (n / 2))
-  else if x >= 0. then x *. H.(pos_pow_IN 1. (x *. x) (n / 2))
+  else if x >= 0. then H.(pos_pow_IN x (x *. x) (n / 2))
   else H.(x *. L.(pos_pow_IN 1. (x *. x) (n / 2)))
 and high_pow_i x = function
   | 0 -> 1.
   | 1 -> x
   | 2 -> H.(x *. x)
-  | 3 -> if x >= 0. then H.(x *. x *. x) else H.(x *. L.(x *. x))
+  | 3 -> high_cbr x
   | 4 -> H.(let x2 = x *. x in x2 *. x2)
   | n -> if n >= 0 then high_pow_IN x n else H.(1. /. low_pow_IN x (- n))
 
@@ -193,18 +201,17 @@ and high_pow_i x = function
 module Low = struct
   include L
 
-  let[@inline] cbr x =
-    if x >= 0. then x *. x *. x else x *. H.(x *. x)
+  let cbr = low_cbr
 
   (* xⁿ for x ≤ 0 and n ≥ 0.  Useful for the interval extension. *)
-  let neg_pow_IN x = function
+  let[@inline] neg_pow_IN x = function
     | 0 -> 1.
     | 1 -> x
     | 2 -> x *. x
     | 3 -> x *. H.(x *. x)
     | 4 -> let x2 = x *. x in x2 *. x2
     | n -> if is_even n then pos_pow_IN 1. (x *. x) (n / 2)
-           else x *. H.pos_pow_IN 1. (x *. x) (n / 2)
+           else x *. H.(pos_pow_IN 1. (x *. x) (n / 2))
 
   let pow_i = low_pow_i
 end
@@ -212,18 +219,17 @@ end
 module High = struct
   include H
 
-  let[@inline] cbr x =
-    if x >= 0. then x *. x *. x else x *. L.(x *. x)
+  let cbr = high_cbr
 
   (* xⁿ for x ≤ 0 and n ≥ 0.  Useful for the interval extension. *)
-  let neg_pow_IN x = function
+  let[@inline] neg_pow_IN x = function
     | 0 -> 1.
     | 1 -> x
     | 2 -> x *. x
     | 3 -> x *. L.(x *. x)
     | 4 -> let x2 = x *. x in x2 *. x2
     | n -> if is_even n then pos_pow_IN 1. (x *. x) (n / 2)
-           else x *. L.pos_pow_IN 1. (x *. x) (n / 2)
+           else x *. L.(pos_pow_IN 1. (x *. x) (n / 2))
 
   let pow_i = high_pow_i
 end
@@ -256,8 +262,11 @@ module I = struct
   type number = float
   type interval = t
   type t = interval
-  (* Save original operators *)
-  module U = Interval__U
+  (* Invariants (enforced by [I.v]:
+     - -∞ ≤ low ≤ high ≤ +∞.  In particular, no bound is NaN.
+     - [-∞,-∞] and [+∞,+∞] are not allowed. *)
+
+  module U = Interval__U   (* Save original operators *)
 
   let zero = {low=0.; high=0.}
   let one = {low=1.; high=1.}
@@ -342,11 +351,21 @@ module I = struct
     (* Intervals are not empty *)
     b < c || d < a
 
-  let size x =
+  let width x =
     { low = Low.(x.high -. x.low);  high = High.(x.high -. x.low) }
 
-  let size_low x = Low.(x.high -. x.low)
-  let size_high x = High.(x.high -. x.low)
+  let width_low x = Low.(x.high -. x.low)
+  let width_high x = High.(x.high -. x.low)
+
+  let size = width
+  let size_low = width_low
+  let size_high = width_high
+
+  let mag x = fmax (abs_float x.low) (abs_float x.high)
+
+  let mig x = if x.low >= 0. then x.low
+              else if x.high <= 0. then -. x.high
+              else (* x.low < 0 < x.high *) 0.
 
   let abs ({low = a; high = b} as x) =
     if 0. <= a then x
@@ -362,14 +381,14 @@ module I = struct
   let hull x y = {low = fmin x.low y.low; high = fmax x.high y.high}
 
   let inter_exn {low = a; high = b} {low = c; high = d} =
-    let low = if a >= c then a else c in (* no NaN *)
-    let high = if b <= d then b else d in
+    let low = fmax a c in
+    let high = fmin b d in
     if low <= high then {low; high}
     else raise(Domain_error "I.inter_exn")
 
   let inter {low = a; high = b} {low = c; high = d} =
-    let low = if a >= c then a else c in (* no NaN *)
-    let high = if b <= d then b else d in
+    let low = fmax a c in
+    let high = fmin b d in
     if low <= high then Some {low; high} else None
 
   let max x y = {low = fmax x.low y.low; high = fmax x.high y.high}
@@ -529,7 +548,7 @@ module I = struct
            {low = 0.;  high = fmax High.(neg_pow_IN x.low n)
                                 High.(pos_pow_IN 1. x.high n)}
          else (* x.low ≤ x.high ≤ 0 *)
-           {low = High.neg_pow_IN x.low n;  high = Low.neg_pow_IN x.high n}
+           {low = Low.neg_pow_IN x.high n;  high = High.neg_pow_IN x.low n}
        else (* x ↦ xⁿ is increasing. *)
          {low = Low.pow_i x.low n;  high = High.pow_i x.high n}
 

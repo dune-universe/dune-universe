@@ -26,7 +26,7 @@ open Interval_intel
 
 let cut_X v =
   let (k,_,_) = Array.fold_left (fun (k,maxv,i) x->
-                    if I.size_high x > maxv then (i, I.size_high x, i+1)
+                    if I.width_high x > maxv then (i, I.width_high x, i+1)
                     else (k, maxv, i+1)
                   ) (-1,-1.0,0) v in
   let int1 = Array.copy v and int2= Array.copy v in
@@ -59,7 +59,7 @@ let branch_and_bound f_x f_X start_inter precisionx precisionfx =
     while true do
       let (_,(x,fx),newq)= Pqueue.extract !queue in
       queue:= newq;
-      if fx.high > !best_v && I.size_high fx > precisionfx
+      if fx.high > !best_v && I.width_high fx > precisionfx
          && I.Arr.size_max x > precisionx then
         let (int1,int2)= (cut_X x) in test_inter int1;test_inter int2;
     done;
