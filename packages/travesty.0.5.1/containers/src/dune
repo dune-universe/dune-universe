@@ -1,0 +1,10 @@
+;; -*- mode: lisp; -*-
+
+(library
+ (name travesty_containers)
+ (public_name travesty.containers)
+ (synopsis
+   "Non-standard containers with traversability and other Travesty extensions")
+ (preprocess
+  (pps ppx_deriving.std ppx_expect ppx_jane))
+ (libraries base travesty))

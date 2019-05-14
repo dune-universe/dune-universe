@@ -1,0 +1,3 @@
+(executable
+  (name hashed_type_compare)
+  (preprocess (staged_pps override)))

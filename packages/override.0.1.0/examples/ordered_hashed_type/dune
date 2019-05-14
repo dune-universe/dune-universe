@@ -1,0 +1,3 @@
+(executable
+  (name ordered_hashed_type)
+  (preprocess (staged_pps override)))

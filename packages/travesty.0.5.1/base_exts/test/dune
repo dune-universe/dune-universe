@@ -1,0 +1,8 @@
+;; -*- mode: lisp; -*-
+
+(library
+ (name travesty_base_exts_test)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane))
+ (libraries base travesty travesty_base_exts travesty_test))

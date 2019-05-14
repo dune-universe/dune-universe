@@ -1,0 +1,3 @@
+(executable
+  (name map_diff)
+  (preprocess (staged_pps override)))

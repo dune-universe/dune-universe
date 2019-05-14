@@ -1,0 +1,5 @@
+(executable
+  (name tests)
+  (flags -dsource)
+  (preprocess (staged_pps override))
+  (modules_without_implementation tests_spec))

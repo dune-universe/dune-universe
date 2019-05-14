@@ -1,0 +1,9 @@
+(library
+ (name nsq)
+ (public_name nsq)
+ (inline_tests
+  (flags (-show-counts)))
+ (preprocess
+  (pps ppx_expect ppx_sexp_conv ppx_compare ppx_deriving_yojson ppx_hash))
+ (libraries base stdio lwt ocplib-endian integers lwt.unix cohttp-lwt-unix
+   yojson ppx_deriving_yojson.runtime))

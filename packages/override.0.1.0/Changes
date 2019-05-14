@@ -1,0 +1,11 @@
+# override 0.1.0, 2019-05-09
+
+- generalizes ppx_import by allowing a whole module to be imported
+  with all its types, possibly with annotations.
+
+- module overriding: mechanization of Gabriel Scherer's post on Gagallium blog
+  http://gallium.inria.fr/blog/overriding-submodules/
+
+- type rewriting: types can be systematically annotated, substituted,
+  renamed, or removed. Transformations such as those that are described in
+  the comments of ast/ast.ml in ppxlib sources can be mechanized.

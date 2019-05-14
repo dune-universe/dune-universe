@@ -1,0 +1,8 @@
+;; -*- mode: lisp; -*-
+
+(library
+ (name travesty_containers_test)
+ (inline_tests)
+ (preprocess
+  (pps ppx_deriving.std ppx_expect ppx_jane))
+ (libraries base base_quickcheck travesty travesty_containers))

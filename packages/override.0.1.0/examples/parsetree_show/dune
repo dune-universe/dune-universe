@@ -1,0 +1,16 @@
+(executable
+  (name parsetree_show)
+  (preprocess (staged_pps override ppxlib.metaquot ppx_deriving.show))
+  (libraries compiler-libs.common))
+
+(rule
+  (targets parsetree_show.ml)
+  (deps parsetree_show.cppo.ml)
+  (action
+     (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
+
+(rule
+  (targets parsetree_show.mli)
+  (deps parsetree_show.cppo.mli)
+  (action
+     (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
