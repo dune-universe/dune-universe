@@ -1,0 +1,16 @@
+opam-version: "2.0"
+name: "ocaml-diff"
+version: "0.1.2"
+synopsis: "Symmetric Diffs for OCaml stdlib and ReasonML"
+maintainer: "Jan Hrdina <jan.hrdka@gmail.com>"
+authors: "Jan Hrdina <jan.hrdka@gmail.com>"
+license: "MIT"
+homepage: "http://github.com/jhrdina/ocaml-diff"
+bug-reports: "http://github.com/jhrdina/ocaml-diff/issues"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "dune" {>= "1.6.0"}
+  "reason" {>= "3.4.0"}
+]
