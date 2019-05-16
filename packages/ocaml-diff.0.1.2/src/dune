@@ -1,5 +1,0 @@
-(library
- (name ocaml_diff)
- (public_name ocaml-diff)
- (wrapped false)
-)

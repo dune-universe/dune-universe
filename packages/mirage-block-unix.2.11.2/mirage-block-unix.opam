@@ -1,4 +1,4 @@
-version: "2.11.1"
+version: "2.11.2"
 opam-version: "2.0"
 authors:      "Dave Scott <dave@recoil.org>"
 maintainer:   "dave@recoil.org"
@@ -21,9 +21,7 @@ depends: [
   "ounit" {with-test}
   "diet" {with-test}
   "fmt" {with-test}
-  "ppx_tools" {with-test}
-  "ppx_sexp_conv" {with-test}
-  "ppx_type_conv" {with-test}
+  "ppx_sexp_conv" {>= "v0.9.0" & with-test}
 ]
 build: [
   ["dune" "subst"] {pinned}

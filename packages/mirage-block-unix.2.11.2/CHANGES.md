@@ -1,3 +1,7 @@
+## v2.11.2 (2019-05-11)
+* Fix test use of io-page-unix to work with io-page>2.0.0 (@avsm)
+* Remove unnecessary opam dependencies and refine `ppx_sexp_conv` one (@avsm)
+
 ## v2.11.1 (2019-03-10)
 * Fix some warnings in dev mode (#94 @emillon)
 * Clarify documentation about behaviour of `discard` (#95 @g2p)
