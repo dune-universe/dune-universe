@@ -1,0 +1,4 @@
+(executable
+  (name record)
+  (preprocess (pps pattern.ppx ppxlib.metaquot ppxlib.traverse))
+  (libraries compiler-libs ppxlib.metaquot_lifters pattern.runtime))

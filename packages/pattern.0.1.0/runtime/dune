@@ -1,0 +1,5 @@
+(library
+   (name pattern_runtime)
+   (public_name pattern.runtime)
+   (preprocess (pps ppx_deriving.std))
+   (libraries compiler-libs.common))

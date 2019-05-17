@@ -1,0 +1,5 @@
+(library
+ (name stdlib_diff)
+ (public_name stdlib-diff)
+ (wrapped false)
+)

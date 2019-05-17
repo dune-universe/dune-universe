@@ -1,0 +1,19 @@
+{
+  "name": "ocaml-diff",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "examples",
+      "type": "dev"
+    }
+  ],
+  "bs-dependencies": [],
+  "warnings": {
+    "error": "+101"
+  },
+  "namespace": false,
+  "refmt": 3
+}

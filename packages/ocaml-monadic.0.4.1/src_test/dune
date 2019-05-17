@@ -1,0 +1,8 @@
+(executable
+  (name test)
+  (preprocess (pps ocaml-monadic)))
+
+(alias
+  (name runtest)
+  (deps test.exe)
+  (action (run ./test.exe)))
