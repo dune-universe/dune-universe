@@ -1,0 +1,16 @@
+(library
+  (name jhupllib)
+  (public_name jhupllib)
+  (synopsis "A library of tools and utilities for JHU PL lab projects.")
+  (wrapped false)
+  (libraries
+    batteries
+    monadlib
+    yojson
+  )
+  (preprocess
+    (pps
+      ocaml-monadic ppx_deriving.std ppx_deriving_yojson
+    )
+  )
+)
