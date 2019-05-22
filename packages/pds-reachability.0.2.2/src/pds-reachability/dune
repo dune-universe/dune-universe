@@ -1,0 +1,19 @@
+(library
+  (name pds_reachability)
+  (public_name pds-reachability)
+  (synopsis "A PDS reachability query library.")
+  (wrapped false)
+  (libraries
+    batteries
+    jhupllib
+    ocaml-monadic
+    ppx_deriving_yojson
+    yojson
+  )
+  (preprocess
+    (pps
+      ocaml-monadic ppx_deriving.std ppx_deriving_yojson
+    )
+  )
+  (flags (:standard (-w -37) (-w -39)))
+)

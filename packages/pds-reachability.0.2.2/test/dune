@@ -1,0 +1,21 @@
+(alias
+  (name runtest)
+  (deps test.exe)
+  (action (run ./test.exe))
+)
+
+(executable
+  (name test)
+  (libraries
+    oUnit
+    ppx_deriving_yojson.runtime
+    pds-reachability
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+      ppx_deriving_yojson
+    )
+  )
+  (flags (:standard (-w -39)))
+)

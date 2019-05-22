@@ -1,4 +1,4 @@
-version: "11.0.3"
+version: "11.0.4"
 opam-version: "2.0"
 maintainer: [
   "Markus Mottl <markus.mottl@gmail.com>"
