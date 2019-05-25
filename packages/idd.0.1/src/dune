@@ -1,0 +1,9 @@
+(library
+  (name idd_)
+  (public_name idd)
+  (wrapped true)
+  (libraries
+    base
+  )
+  (preprocess (pps ppx_jane ppx_deriving.std))
+)

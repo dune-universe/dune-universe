@@ -1,0 +1,21 @@
+(test
+  (name test)
+  (modules test)
+  (libraries
+    oUnit
+    zxcvbn
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+    )
+  )
+)
+
+(executable
+  (name test_memory)
+  (modules test_memory)
+  (libraries
+    zxcvbn
+  )
+)
