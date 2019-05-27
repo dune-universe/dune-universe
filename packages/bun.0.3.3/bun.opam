@@ -1,0 +1,34 @@
+version: "0.3.3"
+opam-version: "2.0"
+synopsis: "Simple management of afl-fuzz processes"
+maintainer: "maintenance@identity-function.com"
+authors: [
+  "Mindy Preston"
+  "Thomas Leonard"
+]
+license: "MIT"
+homepage: "https://github.com/yomimono/ocaml-bun"
+bug-reports: "https://github.com/yomimono/ocaml-bun/issues"
+depends: [
+  "ocaml" {>= "4.05"}
+  "dune" {build & >= "1.0"}
+  "bos" {>= "0.2.0"}
+  "cmdliner" {>= "1.0.0"}
+  "fpath"
+  "rresult" {>= "0.3.0"}
+  "astring"
+  "crowbar" {with-test}
+  "afl" {= "2.52b"}
+  "logs"
+  "fmt"
+  "lwt"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+dev-repo: "git+https://github.com/yomimono/ocaml-bun.git"
+description: """
+A wrapper for OCaml processes using afl-fuzz, intended for easy use in CI environments.
+See the README.md for more information.
+"""
