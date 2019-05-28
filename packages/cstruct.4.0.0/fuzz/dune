@@ -1,3 +1,0 @@
-(executable
- (name fuzz)
- (libraries cstruct crowbar fmt))
