@@ -1,0 +1,8 @@
+(library
+  (public_name ppx_enum)
+  (kind ppx_deriver)
+  (libraries
+    ppx_enum_lib
+    ppxlib
+  )
+)

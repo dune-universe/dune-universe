@@ -1,0 +1,12 @@
+(test
+  (name test_ppx_enum_lib)
+  (libraries
+    oUnit
+    ppx_enum_lib
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+    )
+  )
+)

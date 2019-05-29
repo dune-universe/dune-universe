@@ -1,0 +1,6 @@
+(library
+ (name pcap)
+ (public_name pcap-format)
+ (wrapped false)
+ (preprocess
+  (pps ppx_cstruct)))

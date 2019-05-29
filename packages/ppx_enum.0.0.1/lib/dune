@@ -1,0 +1,12 @@
+(library
+  (name ppx_enum_lib)
+  (public_name ppx_enum._lib)
+  (libraries
+    ppxlib
+  )
+  (preprocess
+    (pps
+      ppxlib.metaquot
+    )
+  )
+)

@@ -1,0 +1,29 @@
+(executable
+  (name pp)
+  (modules pp)
+  (libraries
+    ppx_enum
+    ppxlib
+  )
+)
+
+(rule
+  (targets test_enum.actual.ml)
+  (deps test_enum.ml)
+  (action (run ./pp.exe -deriving-keep-w32 both --impl %{deps} -o %{targets}))
+)
+
+(alias
+  (name runtest)
+  (action (diff test_enum.expected.ml test_enum.actual.ml))
+)
+
+(tests
+  (names test_enum)
+  (modules test_enum)
+  (preprocess
+    (pps
+      ppx_enum
+    )
+  )
+)

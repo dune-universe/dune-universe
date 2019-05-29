@@ -1,0 +1,10 @@
+(library
+  (name        bst)
+  (public_name bst)
+  (modules bisec_tree)
+  (libraries batteries))
+
+(executables
+  (names   test dump simplify)
+  (modules test dump simplify)
+  (libraries unix dolog batteries minicli bst))
