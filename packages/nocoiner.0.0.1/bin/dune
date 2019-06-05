@@ -1,0 +1,10 @@
+(executable
+ (name program)
+ (public_name nocoiner)
+ (package nocoiner)
+ (libraries nocoiner cmdliner)
+ ; (flags :standard -ccopt -static)
+ ; (ocamlopt_flags :standard -ccopt -static)
+ ; (link_flags :standard -cclib -static)
+ (modes (best exe))
+ (modules program helpers commands))

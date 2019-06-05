@@ -1,0 +1,4 @@
+(test
+ (name spec)
+ (modules spec commit reveal helpers)
+ (libraries alcotest nocoiner core))

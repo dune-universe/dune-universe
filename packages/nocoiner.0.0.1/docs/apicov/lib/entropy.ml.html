@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>entropy.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span > </span>
+<a id="L4"></a><span class="visited"> </span>
+<a id="L5"></a><span > </span>
+<a id="L6"></a><span class="visited"> </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span > </span>
+<a id="L9"></a><span class="visited"> </span>
+<a id="L10"></a><span class="visited"> </span>
+<a id="L11"></a><span class="visited"> </span>
+<a id="L12"></a><span > </span>
+<a id="L13"></a><span class="visited"> </span>
+<a id="L14"></a><span > </span>
+<a id="L15"></a><span class="visited"> </span>
+<a id="L16"></a><span > </span>
+<a id="L17"></a><span class="visited"> </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1"> 1</a>
+<a href="#L2"> 2</a>
+<a href="#L3"> 3</a>
+<a href="#L4"> 4</a>
+<a href="#L5"> 5</a>
+<a href="#L6"> 6</a>
+<a href="#L7"> 7</a>
+<a href="#L8"> 8</a>
+<a href="#L9"> 9</a>
+<a href="#L10">10</a>
+<a href="#L11">11</a>
+<a href="#L12">12</a>
+<a href="#L13">13</a>
+<a href="#L14">14</a>
+<a href="#L15">15</a>
+<a href="#L16">16</a>
+<a href="#L17">17</a>
+</pre>
+        <pre id="code">
+module RngZ = Nocrypto.Rng.Z
+module NumZ = Nocrypto.Numeric.Z
+
+let __gen_min bits = <span data-count="24">"</span>1" ^ Core.String.init (bits - 1) ~f:(Core.const '0')
+
+let __gen_max bits = <span data-count="24">C</span>ore.String.init bits ~f:(Core.const '1')
+
+let __random_bits bits =
+  <span data-count="24">l</span>et _min_random = <span data-count="24">Z</span>.of_string_base 2 @@ __gen_min bits in
+  <span data-count="24">l</span>et _max_random = <span data-count="24">Z</span>.of_string_base 2 @@ __gen_max bits in
+  <span data-count="24">N</span>umZ.to_cstruct_be @@ RngZ.gen_r _min_random _max_random
+
+let key () = <span data-count="12">_</span>_random_bits 256
+
+let iv () = <span data-count="12">_</span>_random_bits 160
+
+let _ = <span data-count="15">N</span>ocrypto_entropy_unix.initialize ()
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-05-26 22:26:39 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+title: nocoiner
+description: "A Commitment Scheme library for Coin Flipping/Tossing algorithms and sort."
+repository: marcoonroad/nocoiner
+google_analytics: "UA-41209773-2"
+theme: jekyll-theme-hacker
+plugins:
+#- jekyll-feed
+#- jekyll-redirect-from
+#- jekyll-seo-tag
+#- jekyll-sitemap
+ - jekyll-avatar
+ - jemoji
+ - jekyll-mentions
+#- jekyll-include-cache

@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>nocoiner.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span > </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span > </span>
+<a id="L6"></a><span class="visited"> </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span > </span>
+<a id="L9"></a><span class="visited"> </span>
+<a id="L10"></a><span class="visited"> </span>
+<a id="L11"></a><span class="visited"> </span>
+<a id="L12"></a><span class="visited"> </span>
+<a id="L13"></a><span class="visited"> </span>
+<a id="L14"></a><span class="visited"> </span>
+<a id="L15"></a><span class="visited"> </span>
+<a id="L16"></a><span > </span>
+<a id="L17"></a><span > </span>
+<a id="L18"></a><span class="visited"> </span>
+<a id="L19"></a><span class="visited"> </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span > </span>
+<a id="L22"></a><span class="visited"> </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span class="visited"> </span>
+<a id="L25"></a><span > </span>
+<a id="L26"></a><span > </span>
+<a id="L27"></a><span > </span>
+<a id="L28"></a><span class="visited"> </span>
+<a id="L29"></a><span > </span>
+<a id="L30"></a><span class="visited"> </span>
+<a id="L31"></a><span > </span>
+<a id="L32"></a><span > </span>
+<a id="L33"></a><span > </span>
+<a id="L34"></a><span > </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1"> 1</a>
+<a href="#L2"> 2</a>
+<a href="#L3"> 3</a>
+<a href="#L4"> 4</a>
+<a href="#L5"> 5</a>
+<a href="#L6"> 6</a>
+<a href="#L7"> 7</a>
+<a href="#L8"> 8</a>
+<a href="#L9"> 9</a>
+<a href="#L10">10</a>
+<a href="#L11">11</a>
+<a href="#L12">12</a>
+<a href="#L13">13</a>
+<a href="#L14">14</a>
+<a href="#L15">15</a>
+<a href="#L16">16</a>
+<a href="#L17">17</a>
+<a href="#L18">18</a>
+<a href="#L19">19</a>
+<a href="#L20">20</a>
+<a href="#L21">21</a>
+<a href="#L22">22</a>
+<a href="#L23">23</a>
+<a href="#L24">24</a>
+<a href="#L25">25</a>
+<a href="#L26">26</a>
+<a href="#L27">27</a>
+<a href="#L28">28</a>
+<a href="#L29">29</a>
+<a href="#L30">30</a>
+<a href="#L31">31</a>
+<a href="#L32">32</a>
+<a href="#L33">33</a>
+<a href="#L34">34</a>
+</pre>
+        <pre id="code">
+module Reasons = Exceptions
+module String = Core.String
+module List = Core.List
+
+let __join ~on left right =
+  <span data-count="24">E</span>ncoding.encode_blob left ^ on ^ Encoding.encode_blob right
+
+let commit message =
+  <span data-count="12">l</span>et key = <span data-count="12">E</span>ntropy.key () in
+  <span data-count="12">l</span>et iv = <span data-count="12">E</span>ntropy.iv () in
+  <span data-count="12">l</span>et fingerprint = <span data-count="12">F</span>ingerprint.id () in
+  let payload = Encod<span data-count="12">i</span>ng.encode messag<span data-count="12">e</span> ^ ":" ^ fingerprint in
+  let <span data-count="12">c</span>ipher, tag = <span data-count="12">E</span>ncryption.encrypt ~key ~iv<span data-count="12"> </span>~message:payload in
+  let commitment = __join cipher<span data-count="28"> </span>~on:"@" tag in
+  let opening = __join<span data-count="8"> </span>key ~on:"." iv in
+  (commitment, opening)
+
+let __de<span data-count="11">c</span>ode ~reason data =
+  try Encoding.de<span data-count="18">c</span>ode_as_blob data with _ -&gt; raise reason
+
+let __split ~reason ~on data =
+  <span data-count="8">m</span>atch String.split data ~on with
+  | [left; right] -&gt;
+      (<span data-count="58">_</span>_decode ~reason left, __decode ~rea<span data-count="8">s</span>on right)
+  | _ -&gt;
+      raise reason
+
+let reveal ~<span data-count="129">c</span>ommitment ~openin<span data-count="246">g</span> =
+  let open Reasons in
+  let key, iv = __split ~reason:<span data-count="126">I</span>nvalidOpening ~on:'.' opening in
+  let cipher, tag = __split ~reason:InvalidCommitment ~on:'@' commitment in
+  let payload = Encryption.decrypt ~reason:BindingFailure ~key ~iv ~cipher ~tag in
+  let parts = String.split ~on:':' payload in
+  Encoding.decode @@ List.nth_exn parts 0 (* discards fingerprint at index 1 *)
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-05-26 22:26:39 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

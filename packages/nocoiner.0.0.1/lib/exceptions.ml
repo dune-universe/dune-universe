@@ -1,0 +1,5 @@
+exception InvalidCommitment
+
+exception InvalidOpening
+
+exception BindingFailure
