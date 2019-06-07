@@ -1,0 +1,14 @@
+_build
+lib/ppx/ppx_h5struct.ml
+setup.data
+setup.log
+*.a
+*.byte
+*.cm*
+*.exe
+*.native
+*.o
+*.so
+*.swp
+*.merlin
+*.install

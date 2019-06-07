@@ -1,0 +1,10 @@
+(rule
+ (targets ppx_h5struct.ml)
+ (deps    (:first-dep ppx_h5struct.cppo.ml))
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{first-dep} -o %{targets})))
+ 
+(library
+ (name ppx_h5struct)
+ (public_name hdf5-ocaml.ppx)
+ (kind ppx_rewriter) 
+ (libraries ppx_tools_versioned))
