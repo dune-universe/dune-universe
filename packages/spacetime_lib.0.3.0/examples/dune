@@ -1,0 +1,3 @@
+(executable
+ (name spacetime_decoder)
+ (libraries spacetime_lib))

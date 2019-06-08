@@ -1,0 +1,10 @@
+._d
+._ncdi
+*.cmi
+*.cmx
+*.cmxa
+*.o
+*.a
+.merlin
+src/versioned.ml
+*.install
