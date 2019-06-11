@@ -1,4 +1,0 @@
-(executable
- (name test_suite)
- (modules test_suite)
- (libraries ocaml-r.base))
