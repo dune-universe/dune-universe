@@ -1,6 +1,0 @@
-(library
-    (name ocolor)
-    (wrapped false)
-    (public_name ocolor)
-    (flags (:standard -w @A))
-)

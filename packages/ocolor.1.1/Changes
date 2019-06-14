@@ -1,0 +1,6 @@
+1.1 (13-09-2019):
+- dune is now a build dependency
+- Support OCaml from 4.02.3, using cppo
+- For OCaml 4.08.0: add constructors Ocolor_style_tag and Ocolor_styles_tag to Format.stag
+- Improve inner working of Ocolor_format
+
