@@ -3,7 +3,7 @@ open Ppxlib
 module Attr = struct
   let value =
     Attribute.declare
-      "ppx_enum.enum.value"
+      "ppx_enum.str_enum.value"
       Attribute.Context.constructor_declaration
       Ast_pattern.(single_expr_payload (estring __))
       (fun x -> x)

@@ -15,6 +15,7 @@ let%expect_test "test_record.beam" =
             (module_name test_record))
           (DeclRecord
             (line 4)
+            (name r)
             (fields (
               (RecordField
                 (line            4)

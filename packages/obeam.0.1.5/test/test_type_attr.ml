@@ -41,6 +41,7 @@ let%expect_test "test_type_attr.beam" =
               (args ()))))
           (DeclRecord
             (line 12)
+            (name state)
             (fields (
               (RecordField
                 (line            12)

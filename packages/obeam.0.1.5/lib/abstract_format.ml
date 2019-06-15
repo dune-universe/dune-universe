@@ -30,7 +30,7 @@ and form_t =
   | DeclFun of {line: line_t; function_name: string; arity: int; clauses: clause_t list}
   | SpecFun of {line: line_t; module_name: string option; function_name: string; arity: int; specs: type_t list}
   | Callback of {line: line_t; function_name: string; arity: int; specs: type_t list}
-  | DeclRecord of {line: line_t; fields: record_field_t list}
+  | DeclRecord of {line: line_t; name: string; fields: record_field_t list}
   | DeclType of {line: line_t; name: string; tvars: (line_t * string) list; ty: type_t}
   | DeclOpaqueType of {line: line_t; name: string; tvars: (line_t * string) list; ty: type_t}
   | AttrWild of {line: line_t; attribute: string; term: Sf.t}
@@ -259,7 +259,7 @@ let rec of_sf sf : (t, err_t) Result.t =
      AbstractCode forms |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("root", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("root", sf)) |> Result.fail
 
 (*
  * 8.1  Module Declarations and Forms
@@ -377,7 +377,7 @@ and form_of_sf sf : (form_t, err_t) Result.t =
      let%bind fields =
        sf_fields |> List.map ~f:record_field_of_sf |> Result.all |> track ~loc:[%here]
      in
-     DeclRecord {line; fields} |> return
+     DeclRecord {line; name; fields} |> return
 
   (* type declaration *)
   | Sf.Tuple (4, [Sf.Atom "attribute";
@@ -417,7 +417,7 @@ and form_of_sf sf : (form_t, err_t) Result.t =
      FormEof |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("form", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("form", sf)) |> Result.fail
 
 and name_and_arity_of_sf sf : ((string * int), err_t) Result.t =
   match sf with
@@ -425,7 +425,7 @@ and name_and_arity_of_sf sf : ((string * int), err_t) Result.t =
      Ok (name, arity)
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("name_and_arity", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("name_and_arity", sf)) |> Result.fail
 
 and record_field_of_sf sf : (record_field_t, err_t) Result.t =
   let open Result.Let_syntax in
@@ -467,7 +467,7 @@ and record_field_of_sf sf : (record_field_t, err_t) Result.t =
      RecordField {line; line_field_name; field_name; ty=Some t; default_expr=Some e} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("record_field", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("record_field", sf)) |> Result.fail
 
 and tvar_of_sf sf : ((line_t * string), err_t) Result.t =
   match sf with
@@ -478,7 +478,7 @@ and tvar_of_sf sf : ((line_t * string), err_t) Result.t =
      Ok (line, tvar)
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("tvar", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("tvar", sf)) |> Result.fail
 
 (*
  * 8.2  Atomic Literals
@@ -519,7 +519,7 @@ and lit_of_sf sf : (literal_t, err_t) Result.t =
      LitString {line; str=CharList chars} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("lit", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("lit", sf)) |> Result.fail
 
 (*
  * 8.3  Patterns
@@ -626,7 +626,7 @@ and pat_assoc_of_sf sf : (pattern_assoc_t, err_t) Result.t =
      PatAssocExact {line; key; value} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("pat_assoc", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("pat_assoc", sf)) |> Result.fail
 
 (*
  * 8.4  Expressions
@@ -889,7 +889,7 @@ and expr_assoc_of_sf sf : (expr_assoc_t, err_t) Result.t =
      ExprAssocExact {line; key; value} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("expr_assoc", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("expr_assoc", sf)) |> Result.fail
 
 and qualifier_of_sf sf : (qualifier_t, err_t) Result.t =
     let open Result.Let_syntax in
@@ -923,7 +923,7 @@ and atom_or_var_of_sf sf : (atom_or_var_t, err_t) Result.t =
                    (Sf.Atom id)])) ->
     AtomVarVar {line; id} |> return
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("atom_or_var", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("atom_or_var", sf)) |> Result.fail
 
 and record_field_for_expr_of_sf sf =
   let open Result.Let_syntax in
@@ -948,7 +948,7 @@ and integer_or_var_of_sf sf =
                    (Sf.Atom id)])) ->
     IntegerVarVar {line; id} |> return
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("integer_or_var", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("integer_or_var", sf)) |> Result.fail
 
 (*
  * 8.5  Clauses
@@ -1054,7 +1054,7 @@ and cls_of_sf ?(in_function=false) sf : (clause_t, err_t) Result.t =
      ClsFun {line; patterns; guard_sequence = Some guard_sequence; body} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("cls", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("cls", sf)) |> Result.fail
 
 (*
  * 8.6  Guards
@@ -1068,7 +1068,7 @@ and guard_sequence_of_sf sf : (guard_sequence_t, err_t) Result.t =
      GuardSeq {guards} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("guard_sequence", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("guard_sequence", sf)) |> Result.fail
 
 and guard_of_sf sf : (guard_t, err_t) Result.t =
   let open Result.Let_syntax in
@@ -1079,7 +1079,7 @@ and guard_of_sf sf : (guard_t, err_t) Result.t =
      Guard {guard_tests} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("guard", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("guard", sf)) |> Result.fail
 
 and guard_test_of_sf sf : (guard_test_t, err_t) Result.t =
   let open Result.Let_syntax in
@@ -1218,7 +1218,7 @@ and guard_test_assoc_of_sf sf : (guard_test_assoc_t, err_t) Result.t =
      GuardTestAssocExact {line; key; value} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("guard_test_assoc", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("guard_test_assoc", sf)) |> Result.fail
 
 and atom_or_wildcard_of_sf sf =
   match sf with
@@ -1410,7 +1410,7 @@ and fun_type_of_sf sf : (type_t, err_t) Result.t =
      TyFun {line; line_params; params; ret} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("fun_type", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("fun_type", sf)) |> Result.fail
 
 and type_fun_cont_of_sf sf : (type_func_cont_t, err_t) Result.t =
   let open Result.Let_syntax in
@@ -1435,7 +1435,7 @@ and type_fun_cont_of_sf sf : (type_func_cont_t, err_t) Result.t =
      TyContIsSubType {line} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("type_fun_cont", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("type_fun_cont", sf)) |> Result.fail
 
 and type_assoc_of_sf sf : (type_assoc_t, err_t) Result.t =
   let open Result.Let_syntax in
@@ -1459,7 +1459,7 @@ and type_assoc_of_sf sf : (type_assoc_t, err_t) Result.t =
      TyAssocExact {line; key; value} |> return
 
   | _ ->
-     Err.create ~loc:[%here] (Err.Not_supported_absform ("type_assoc", sf)) |> Result.fail
+     Err.create ~loc:[%here] (Err.Invalid_input ("type_assoc", sf)) |> Result.fail
 
 and record_field_type_of_sf sf =
   let open Result.Let_syntax in

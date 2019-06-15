@@ -17,10 +17,10 @@ type my_enum =
   | Foo
   | Bar
   | Baz
-[@@deriving enum]
+[@@deriving str_enum]
 ```
 
-The use of `[@@deriving enum]` will generate the following functions:
+The use of `[@@deriving str_enum]` will generate the following functions:
 
 ```ocaml
 let my_enum_to_string = function
@@ -73,7 +73,7 @@ It is possible to customize the string value that will be used to represent a sp
 type myenum =
   | Foo [@value "baz"]
   | Bar
-[@deriving enum]
+[@deriving str_enum]
 
 my_enum_to_string Foo  (* "baz" *)
 my_enum_to_string Bar  (* "bar" *)
@@ -83,12 +83,12 @@ my_enum_from_string "bar"  (* Ok Bar *)
 my_enum_from_string "baz"  (* Ok Foo *)
 ```
 
-The attributes will accept any valid suffix of `ppx_enum.enum.value`, so the following will work:
+The attributes will accept any valid suffix of `ppx_enum.str_enum.value`, so the following will work:
 
 ```ocaml
 type myenum =
   | Foo [@value "foo-1"]
-  | Bar [@enum.value "bar-1"]
-  | Baz [@ppx_enum.enum.value "baz-1"]
-[@deriving enum]
+  | Bar [@str_enum.value "bar-1"]
+  | Baz [@ppx_enum.str_enum.value "baz-1"]
+[@deriving str_enum]
 ```
