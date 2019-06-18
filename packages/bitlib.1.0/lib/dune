@@ -1,0 +1,4 @@
+(library
+ (name bitlib)
+ (public_name bitlib)
+ (synopsis "A library for writing binary files"))

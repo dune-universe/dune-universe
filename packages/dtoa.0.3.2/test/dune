@@ -1,0 +1,10 @@
+(executable
+ (name test)
+ (libraries dtoa oUnit))
+
+(alias
+ (name runtest)
+ (deps
+  (:< test.exe))
+ (action
+  (run %{<})))

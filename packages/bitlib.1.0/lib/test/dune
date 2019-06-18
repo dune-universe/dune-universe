@@ -1,0 +1,6 @@
+(library
+ (name test_bitlib)
+ (libraries
+    alcotest
+    bitlib)
+  (synopsis "Tests for bitlib"))

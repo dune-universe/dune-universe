@@ -1,0 +1,8 @@
+(library
+ (name dtoa)
+ (public_name dtoa)
+ (c_names bignum bignum_dtoa cached_powers diy_fp dtoa_stubs ieee fast_dtoa)
+ (c_flags -std=c99 -g -Wall -Wshadow -Werror -Wextra -Wshadow
+   -Wno-unused-parameter)
+ (js_of_ocaml
+  (javascript_files ../js/dtoa_stubs.js)))

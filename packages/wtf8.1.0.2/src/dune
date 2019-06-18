@@ -1,0 +1,3 @@
+(library
+ (name wtf8)
+ (public_name wtf8))
