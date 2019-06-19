@@ -1,0 +1,3 @@
+(library
+ (name mirage_time)
+ (public_name mirage-time))

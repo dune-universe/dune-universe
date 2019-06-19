@@ -1,0 +1,4 @@
+(lang dune 1.2)
+(name ppx_import)
+(version v1.6.2)
+
