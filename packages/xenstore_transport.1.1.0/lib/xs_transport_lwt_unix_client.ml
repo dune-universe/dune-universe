@@ -34,7 +34,12 @@ let create () =
   | Lwt_unix.S_SOCK ->
     let sockaddr = Lwt_unix.ADDR_UNIX(path) in
     let fd = Lwt_unix.socket Lwt_unix.PF_UNIX Lwt_unix.SOCK_STREAM 0 in
-    Lwt_unix.connect fd sockaddr >>= fun () ->
+    Lwt.catch (fun () ->
+        Lwt_unix.connect fd sockaddr
+      ) (fun e ->
+        Lwt_unix.close fd >>= fun () -> Lwt.fail e
+      )
+    >>= fun () ->
     return fd
   | _ ->
     let fd = Unix.openfile path [ Lwt_unix.O_RDWR ] 0o0 in

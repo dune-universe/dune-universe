@@ -1,3 +1,8 @@
+1.0.1 (18-Jun-2019):
+* Upgrade build to dune from jbuilder (@avsm)
+* Test OCaml 4.07 in CI (@avsm)
+* Upgrade opam metadata to 2.0 format (@avsm)
+
 1.0.0 (07-Dec-2017):
 * compile with -safe-string
 

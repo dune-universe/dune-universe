@@ -8,6 +8,9 @@ env:
   global:
   - PACKAGE="xenstore_transport"
   - PINS="xenstore_transport:. xenstore-tool:."
+  - DISTRO="debian-stable"
   matrix:
-  - PACKAGE="xenstore_transport" DISTRO="debian-stable" OCAML_VERSION="4.04.2"
-  - PACKAGE="xenstore-tool"      DISTRO="debian-stable" OCAML_VERSION="4.04.2"
+  - PACKAGE="xenstore_transport" OCAML_VERSION="4.04"
+  - PACKAGE="xenstore-tool"      OCAML_VERSION="4.04"
+  - PACKAGE="xenstore_transport" OCAML_VERSION="4.07"
+  - PACKAGE="xenstore-tool"      OCAML_VERSION="4.07"

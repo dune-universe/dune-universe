@@ -62,6 +62,21 @@ sig
       scores < threshold are predicted as non targets. *)
   val mcc: float -> SL.t list -> float
 
+  (** [a, b = platt_scaling ~debug score_labels]
+      Fit a logistic curve (1 / (1 + exp (ax + b))) to [score_labels]
+      and return its [(a, b)] parameters.
+      Gnuplot it used underneath to do the fitting.
+      Biblio:
+      Platt, J. (1999). Probabilistic outputs for support vector machines
+      and comparisons to regularized likelihood methods.
+      Advances in large margin classifiers, 10(3), 61-74. *)
+  val platt_scaling: ?debug:bool -> SL.t list -> (float * float)
+
+  (** [platt_probability a b score] transform [score] into
+      a probability, given logistic function parameters [a] and [b]
+      obtained from a prior call to [platt_scaling]. *)
+  val platt_probability: float -> float -> float -> float
+
 end
 
 (* functions for ROC analysis *)
@@ -304,5 +319,32 @@ struct
       let num = (tp *. tn) -. (fp *. fn) in
       let denum = sqrt denum' in
       num /. denum
+
+  let platt_scaling ?(debug = false) score_labels =
+    let scores_fn = Filename.temp_file "scores_" ".txt" in
+    Utls.with_out_file scores_fn (fun out ->
+        L.iter (fun sl ->
+            let score = SL.get_score sl in
+            let label = SL.get_label sl in
+            Printf.fprintf out "%f %d\n" score (if label then 1 else 0)
+          ) score_labels
+      );
+    let gnuplot_script_fn = Filename.temp_file "gnuplot_" ".gpl" in
+    Utls.with_out_file gnuplot_script_fn (fun out ->
+        Printf.fprintf out
+          "g(x) = 1 / (1 + exp(a * x + b))\n\
+           fit g(x) '%s' using 1:2 via a, b\n\
+           print a, b\n"
+          scores_fn
+      );
+    let a_b_str =
+      Utls.get_command_output
+        (Printf.sprintf "gnuplot %s 2>&1 | tail -1" gnuplot_script_fn) in
+    if not debug then
+      L.iter Sys.remove [scores_fn; gnuplot_script_fn];
+    Scanf.sscanf a_b_str "%f %f" (fun a b -> (a, b))
+
+  let platt_probability a b x =
+    1.0 /. (1.0 +. exp (a *. x +. b))
 
 end
