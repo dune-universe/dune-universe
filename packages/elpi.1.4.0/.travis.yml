@@ -1,0 +1,153 @@
+dist: trusty
+sudo: required
+language: c
+env:
+  global:
+    - OCAML_MIN=4.04.0
+    - OCAML_MAX=4.08.0
+    - PREDEPS="ocamlfind"
+    - DEPS="camlp5 ocamlfind ppx_tools_versioned ppx_deriving ocaml-migrate-parsetree re dune cmdliner ANSITerminal"
+    - JOBS=2
+
+install:
+  - curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > install.sh
+  - echo | sudo sh install.sh
+  - test -d $HOME/opam-cache/.opam || echo "building cache"
+  - test -d $HOME/opam-cache/.opam || opam init --disable-sandboxing -j $JOBS --bare -n -y
+  - test -d $HOME/opam-cache/.opam || opam switch create min $OCAML_MIN -y
+  - test -d $HOME/opam-cache/.opam || opam switch create max $OCAML_MAX -y
+  - test -d $HOME/opam-cache/.opam || cp -r $HOME/.opam $HOME/opam-cache
+  - rm -rf $HOME/.opam
+  - echo "installing cache"
+  - cp -r $HOME/opam-cache/.opam $HOME/.opam
+
+matrix:
+  include:
+
+  - env: TEST="linux build $OCAML_MIN"
+    os: linux
+    addons:
+      apt:
+        sources:
+        - avsm
+        packages:
+        - lua5.1
+        - gnuplot
+        - gcc-multilib
+    cache:
+      apt: true
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch min
+    - eval $(opam env)
+    - opam install -j $JOBS -y $PREDEPS
+    - opam install -j $JOBS -y $DEPS
+    - dune build
+    - make tests
+
+  - env: TEST="linux build $OCAML_MAX"
+    os: linux
+    addons:
+      apt:
+        sources:
+        - avsm
+        packages:
+        - lua5.1
+        - gnuplot
+        - gcc-multilib
+    cache:
+      apt: true
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch max
+    - eval $(opam env)
+    - opam install -j $JOBS -y $PREDEPS
+    - opam install -j $JOBS -y $DEPS
+    - dune build
+    - make tests
+
+  - env: TEST="osx build $OCAML_MIN"
+    os: osx
+    before_install:
+    - brew update
+    - brew install --ignore-dependencies opam
+    - brew install gnu-time
+    - brew install lua51
+    cache:
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch min
+    - eval $(opam env)
+    - opam install -j $JOBS -y $PREDEPS
+    - opam install -j $JOBS -y $DEPS
+    - dune build
+    - make tests
+
+  - env: TEST="osx build $OCAML_MAX"
+    os: osx
+    before_install:
+    - brew update
+    - brew install --ignore-dependencies opam
+    - brew install gnu-time
+    - brew install lua51
+    cache:
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch max
+    - eval $(opam env)
+    - opam install -j $JOBS -y $PREDEPS
+    - opam install -j $JOBS -y $DEPS
+    - dune build
+    - make tests
+
+  - env: TEST="linux opam package installation"
+    os: linux
+    addons:
+      apt:
+        sources:
+        - avsm
+        packages:
+        - lua5.1
+        - gnuplot
+        - gcc-multilib
+    cache:
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch max
+    - eval $(opam env)
+    - opam pin -y -t -v add elpi "https://github.com/${TRAVIS_REPO_SLUG}.git#${TRAVIS_COMMIT}" 
+    - ocamlfind query elpi
+    - ls `ocamlfind printconf destdir`/elpi
+    - which elpi
+    - opam remove elpi
+    - opam pin -y remove elpi
+    - if ocamlfind query elpi; then false; else true; fi
+    - if which elpi; then false; else true; fi
+
+  - env: TEST="osx opam package installation"
+    os: osx
+    before_install:
+    - brew update
+    - brew install --ignore-dependencies opam
+    - brew install gnu-time
+    - brew install lua51
+    cache:
+      directories:
+      - $HOME/opam-cache
+    script:
+    - opam switch max
+    - eval $(opam env)
+    - opam pin -y -t -v add elpi "https://github.com/${TRAVIS_REPO_SLUG}.git#${TRAVIS_COMMIT}" 
+    - ocamlfind query elpi
+    - ls `ocamlfind printconf destdir`/elpi
+    - which elpi
+    - opam remove elpi
+    - opam pin -y remove elpi
+    - if ocamlfind query elpi; then false; else true; fi
+    - if which elpi; then false; else true; fi
+
