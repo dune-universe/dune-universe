@@ -1,0 +1,6 @@
+(library
+ (name dataframe_tests)
+ (inline_tests)
+ (libraries base dataframe)
+ (flags :standard -w -66)
+ (preprocess (pps ppx_expect ppx_let)))

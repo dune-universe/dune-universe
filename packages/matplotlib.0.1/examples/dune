@@ -1,0 +1,3 @@
+(executables
+  (names fig pyplot)
+  (libraries base stdio matplotlib))
