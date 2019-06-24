@@ -6,7 +6,11 @@
 #include <caml/callback.h>
 #include <caml/bigarray.h>
 
-#define CAMLvoid CAMLunused_start value unit CAMLunused_end
+#ifdef CAMLunused_start
+# define CAMLvoid CAMLunused_start value unit CAMLunused_end
+#else
+# define CAMLvoid CAMLunused value unit
+#endif
 
 #define Val_none Val_int(0)
 
@@ -281,7 +285,6 @@ static inline void raise_if_error(void)
 
 CAMLprim value init_stub(CAMLvoid)
 {
-    caml_register_global_root(&error_arg);
     glfwSetErrorCallback(error_callback);
     return Val_unit;
 }
@@ -1172,7 +1175,7 @@ CAML_WINDOW_SETTER_STUB(glfwSetDropCallback, drop)
 
 CAMLprim value caml_glfwJoystickPresent(value joy)
 {
-    value ret = glfwJoystickPresent(Int_val(joy));
+    int ret = glfwJoystickPresent(Int_val(joy));
     raise_if_error();
     return Val_bool(ret);
 }
@@ -1201,9 +1204,9 @@ CAMLprim value caml_glfwGetJoystickButtons(value joy)
     raise_if_error();
     if (count == 0)
         return Atom(0);
-    ret = caml_alloc_float_array(count);
+    ret = caml_alloc_small(count, 0);
     for (int i = 0; i < count; ++i)
-        Field(ret, i) = Int_val(buttons[i]);
+        Field(ret, i) = Val_int(buttons[i] == GLFW_PRESS);
     return ret;
 }
 
