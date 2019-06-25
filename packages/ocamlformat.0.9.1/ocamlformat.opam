@@ -1,8 +1,9 @@
+version: "0.9.1"
 ######################################################################
 #                                                                    #
 #                            OCamlFormat                             #
 #                                                                    #
-#  Copyright (c) 2019-present, Facebook, Inc.  All rights reserved.  #
+#  Copyright (c) 2017-present, Facebook, Inc.  All rights reserved.  #
 #                                                                    #
 #  This source code is licensed under the MIT license found in the   #
 #  LICENSE file in the root directory of this source tree.           #
@@ -11,20 +12,27 @@
 
 opam-version: "2.0"
 maintainer: "OCamlFormat Team <ocamlformat-team@fb.com>"
-authors: "Guillaume Petiot <guillaume@tarides.com>"
+authors: "Josh Berdine <jjb@fb.com>"
 homepage: "https://github.com/ocaml-ppx/ocamlformat"
 bug-reports: "https://github.com/ocaml-ppx/ocamlformat/issues"
 dev-repo: "git+https://github.com/ocaml-ppx/ocamlformat.git"
-url { archive: "https://github.com/ocaml-ppx/ocamlformat/archive/0.9.tar.gz" }
+url { archive: "https://github.com/ocaml-ppx/ocamlformat/archive/0.9.1.tar.gz" }
 license: "MIT"
 build: [
-  ["dune" "build" "-p" "tools/ocamlformat-diff/ocamlformat_diff.exe" "-j" jobs]
+  ["ocaml" "tools/gen_version.ml" "src/Version.ml" version] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
-  "bos"
+  "ocaml" {>= "4.06"}
+  "base" {>= "v0.11.0"}
+  "base-unix"
   "cmdliner"
   "dune" {build & >= "1.1.1"}
-  "ocamlformat"
+  "fpath"
+  "ocaml-migrate-parsetree" {>= "1.0.10"}
+  "octavius" {>= "1.2.0"}
+  "stdio"
+  "uutf"
 ]
-synopsis: "OCamlFormat diff tool"
-description: "OCamlFormat-Diff is a tool that uses OCamlFormat to apply the same formatting to compared OCaml files, so that the formatting differences between the two files are not displayed."
+synopsis: "Auto-formatter for OCaml code"
+description: "OCamlFormat is a tool to automatically format OCaml code in a uniform style."
