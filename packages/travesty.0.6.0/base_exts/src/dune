@@ -1,0 +1,9 @@
+;; -*- mode: lisp; -*-
+
+(library
+ (name travesty_base_exts)
+ (public_name travesty.base_exts)
+ (synopsis "Travesty-extended versions of Base container modules")
+ (preprocess
+  (pps ppx_jane))
+ (libraries sexplib0 base travesty travesty.containers))
