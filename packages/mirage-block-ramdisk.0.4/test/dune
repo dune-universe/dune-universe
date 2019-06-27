@@ -1,0 +1,4 @@
+(test
+ (name tests)
+ (libraries mirage-block-ramdisk mirage-block-lwt lwt alcotest lwt.unix io-page-unix)
+)

@@ -1,0 +1,153 @@
+.contribute-element, .table td.btn-more {
+  text-align: center;
+}
+
+#main {
+  overflow: visible;
+  clear:both;
+  min-height: calc(100% - 142px);
+  padding-top: 50px;
+}
+
+.navbar .brand {
+  padding: 4px;
+  margin: 0;
+}
+
+.navbar .nav > li > a img {
+  margin-top: -16px;
+  margin-bottom: -16px;
+}
+
+span.opam-title {
+  font-size: 120%;
+  font-weight: bold;
+}
+
+.footer {
+  position: relative;
+  margin-top: 10px;
+  height: 50px;
+  clear: both;
+  text-align: center;
+  padding-top: 20px; /* + border-top 10px */
+  padding-bottom: 0;
+}
+
+.footer .copyright {
+  clear: both;
+}
+
+.footer .icons {
+  margin: auto;
+  /* padding-bottom: 20px; */
+  width: 150px;
+  overflow: hidden;
+}
+
+.footer .icons .icon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin: 0 2px;
+  float: left;
+}
+
+.footer a {
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.footer a:hover {
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+table.package-info > tbody > tr:first-child > th,
+table.package-info > tbody > tr:first-child > td {
+  border-top: 0;
+}
+
+span.versions {
+  margin-left: 2ex;
+  vertical-align: text-top;
+}
+
+span.package-version {
+  font-weight: bold;
+  margin-left: 0.2em;
+  /* margin-right: 0.6em; */
+}
+
+span.invisible {
+  display: none;
+}
+
+ul.formula {
+  list-style-type: none;
+  margin-left: 0;
+}
+
+ul.formula > li {
+  clear: both;
+}
+
+ul.formula ul.formula formula-package {
+  margin-left: 1em;
+}
+
+span.formula-package {
+  display: inline-block;
+  min-width: 50%;
+}
+
+span.version-constraint {
+  min-width: 50%;
+  float: right;
+  min-height: 20px;
+  color: #777777;
+}
+
+.version-constraint span {
+  vertical-align: top;
+}
+
+div.revdeps {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 0;
+  margin-bottom: 10px;
+  max-height: 60ex;
+  overflow: auto;
+}
+
+.revdeps ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.revdeps li {
+  clear: both;
+  padding-top: 3px;
+}
+
+.revdeps li span {
+  vertical-align: baseline;
+}
+
+span.revdeps-title {
+  padding: 3px 7px;
+  font-size: 100%;
+  font-weight: bold;
+  /* background-color: #f5f5f5; */
+}
+
+.revdeps span.revdeps-title {
+  position: relative;
+  left: -1px;
+  top: -1px;
+  border: 1px solid #ddd;
+  /* color: #9da0a4; */
+  border-radius: 4px 0 4px 0;
+}

@@ -1,0 +1,6 @@
+(library
+ (name mirage_block_ramdisk)
+ (public_name mirage-block-ramdisk)
+ (libraries cstruct io-page lwt mirage-block-lwt)
+ (wrapped false)
+)

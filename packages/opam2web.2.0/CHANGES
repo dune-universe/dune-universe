@@ -1,0 +1,45 @@
+1.5.0 (2017-06-24):
+* Use opam-lib ≥ 1.3.0.
+* Many layout and package index fixes.
+
+1.4.0 (2015-01-22):
+* Update for opam 1.2.0
+* Update for opamfu 0.1.2
+* Update for omd >= 0.8.2
+* Improve log parsing in presence of bad package names
+* Include basic blog
+* Support embedding into other web sites
+
+1.3.1 (2014-03-09):
+* Expose a number of modules in an installed ocamlfind archive
+* Display OS constraints on package pages (#83)
+* Fix non-root favicon bug
+* Issue tracker links are now rendered on package pages from bug-reports (#36)
+
+1.3.0 (2014-02-16):
+* Use cmdliner for CLI
+* -l and --local opam repo options are now --remote
+* -p and --prefix HREF prefix options have been removed
+* Providing a web server access log is now optional
+* opam2web version/revision and dirty flag are now exposed in meta generator
+* Packages and their versions have been moved into a path hierarchy
+* Anonymous command-line arguments no longer supported/interpreted as repo dirs
+* --where disjunctively filters the opam universe by a conjunction of
+comma-separated predicates
+* Added "tag:*","depopt","not:*","repo:*","pkg:*" predicates
+* Operates over entire opam universes rather than single repositories
+* Factor opam universe functions into new dependency opamfu
+* Factor common page template into content/template.xhtml
+* Factor universe index into content/universe.xhtml
+* Factor home page into content/home.xhtml
+* Conform generated paths to opam overlay convention
+* Add edit link to opam metadata on each package page
+* Requires ocaml-uri 1.3.11 or higher
+* Add structured rendering of dependency and reverse dependency formulae
+* Add links in formulae rendering for packages and constraint versions
+* Add constrained reverse and optional reverse dependency rendering
+* Use publication date terminology
+* Show OCaml version constraint on package page
+
+1.2.0 (2013-01-15):
+* Last release before change tracking
