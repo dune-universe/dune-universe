@@ -1,9 +1,0 @@
-description = "Library for reading MirageOS unikernel boot parameters in Xen"
-version = "0.5.0"
-requires = "lwt mirage-xen astring parse-argv"
-archive(byte) = "mirage-bootvar-xen.cma"
-archive(native) = "mirage-bootvar-xen.cmxa"
-plugin(byte) = "mirage-bootvar-xen.cma"
-plugin(native) = "mirage-bootvar-xen.cmxs"
-exists_if = "mirage-bootvar-xen.cma"
-

@@ -1,0 +1,8 @@
+(library
+ (name mirage_block_xen)
+ (public_name mirage-block-xen)
+ (modules Blkproto Device_number)
+ (libraries cstruct io-page mirage-xen.internals)
+ (wrapped false)
+ (preprocess
+  (pps ppx_cstruct)))

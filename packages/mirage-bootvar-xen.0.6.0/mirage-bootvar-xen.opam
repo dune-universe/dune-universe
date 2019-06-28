@@ -1,0 +1,30 @@
+version: "0.6.0"
+opam-version: "2.0"
+synopsis: "Handle boot-time arguments for Xen platform"
+description: """
+Simple library for reading MirageOS unikernel boot parameters from Xen.
+
+To send boot parameters to the unikernel you can either add them as options in the "extra=" field in the .xl-file.
+"""
+
+maintainer: "Magnus Skjegstad <magnus@skjegstad.com>"
+authors: "Magnus Skjegstad <magnus@skjegstad.com>"
+homepage: "https://github.com/mirage/mirage-bootvar-xen"
+bug-reports: "https://github.com/mirage/mirage-bootvar-xen/issues/"
+dev-repo: "git+https://github.com/mirage/mirage-bootvar-xen.git"
+doc: "https://mirage.github.io/mirage-bootvar-xen/"
+license: "ISC"
+
+build: [
+  [ "dune" "subst" ] {pinned}
+  [ "dune" "build" "-p" name "-j" jobs ]
+]
+
+depends: [
+  "dune" {build & >= "1.0"}
+  "mirage-xen" { >= "4.0.0"}
+  "lwt" {>="2.4.3"}
+  "astring"
+  "parse-argv"
+  "ocaml" { >= "4.04.2" }
+]

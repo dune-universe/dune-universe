@@ -1,0 +1,182 @@
+
+type json <ocaml module="Yojson.Safe" t="t"> = abstract
+
+type main = {
+  version : main_version;
+}
+
+type main_version = {
+  number : string;
+}
+
+type id_hit = {
+  index <json name="_index"> : string;
+  doc_type <json name="_type"> : string;
+  id <json name="_id"> : string;
+}
+
+type unit_hit = {
+  inherit id_hit;
+  ~routing <json name="_routing"> : string nullable;
+  ~found: bool;
+  ~score <json name="_score"> : float;
+  ?version <json name="_version"> : int option;
+  ?fields : (string * json list) list <json repr="object"> option;
+  ?shard <json name="_shard"> : string option;
+  ?node <json name="_node"> : string option;
+  ~sort : json list;
+}
+
+type 'source option_hit = {
+  inherit unit_hit;
+  ?source <json name="_source"> : 'source option;
+}
+
+type 'source hit = {
+  inherit unit_hit;
+  source <json name="_source"> : 'source;
+}
+
+type ('hits, 'total) hits' = {
+  ?total : 'total option;
+  ~max_score : float;
+  hits : 'hits;
+}
+
+type ('hit, 'total) hits = ('hit list, 'total) hits'
+
+type total = {
+  value : int;
+  relation : total_relation;
+}
+
+type total_relation = [
+  | Eq <json name="eq">
+  | Gte <json name="gte">
+]
+
+type es6_total = int wrap <ocaml
+  t="total"
+  wrap="fun value -> { value; relation = `Eq; }"
+  unwrap="fun { value; _ } -> value"
+>
+
+type response'' = {
+  ?error : error option;
+}
+
+type ('hit, 'total) response' = {
+  inherit response'';
+  took: int;
+  timed_out: bool;
+  shards <json name="_shards"> : shards;
+  ?scroll_id <json name="_scroll_id"> : string option;
+  ?hits: ('hit, 'total) hits option;
+}
+
+type ('hit, 'total) opt_response = ('hit option_hit, 'total) response'
+
+type ('hit, 'total) response = ('hit hit, 'total) response'
+
+type shards = {
+  total : int;
+  successful : int;
+  failed : int;
+}
+
+type error = {
+  error <json name="type"> : string;
+  ?reason : string nullable;
+}
+
+type scroll = {
+  scroll : string;
+  scroll_id : string;
+}
+
+type clear_scroll = {
+  scroll_id : string list;
+}
+
+type aliases = {
+  actions : alias_action list;
+}
+
+type alias_action_name = [
+  | Add <json name="add">
+  | Remove <json anme="remove">
+]
+
+type alias_action_name' = string wrap <ocaml
+  t="[ `Add | `Remove ]"
+  wrap="function \"add\" -> `Add | \"remove\" -> `Remove | x -> Devkit.Exn.fail \"unknown action %s\" x"
+  unwrap="function `Add -> \"add\" | `Remove -> \"remove\""
+>
+
+type alias_action = (alias_action_name' * index_alias) list <json repr="object">
+
+type index_alias = {
+  index : string;
+  alias : string;
+}
+
+type indices_shards = (string * index_shards) list <json repr="object">
+
+type index_shards = {
+  shards : index_shard list;
+}
+
+type index_shard = {
+  id : int;
+  kind <json name="type"> : string;
+  stage : string;
+  primary : bool;
+  source : shard_host;
+  target : shard_host;
+  index : shard_index;
+  translog : shard_translog;
+  verify_index : shard_verify_index;
+}
+
+type shard_host = {
+  ?id : string option;
+  ?host : string option;
+  ?transport_address : string option;
+  ?ip : string option;
+  ?name : string option;
+}
+
+type shard_index = {
+  size : shard_index_size;
+  files : shard_index_files;
+  total_time_in_millis : int;
+  source_throttle_time_in_millis : int;
+  target_throttle_time_in_millis : int;
+}
+
+type shard_index_size = {
+  total_in_bytes : int;
+  reused_in_bytes : int;
+  recovered_in_bytes : int;
+  percent : string;
+}
+
+type shard_index_files = {
+  total : int;
+  reused : int;
+  recovered : int;
+  percent : string;
+}
+
+type shard_translog = {
+  recovered : int;
+  total : int;
+  percent : string;
+  total_on_start : int;
+  total_time_in_millis : int;
+}
+
+type shard_verify_index = {
+  check_index_time_in_millis : int;
+  total_time_in_millis : int;
+}

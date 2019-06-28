@@ -1,0 +1,9 @@
+(library
+ (name mirage_block_xen_back)
+ (public_name mirage-block-xen.back)
+ (modules Blkback Block_request)
+ (flags :standard -w -3)
+ (libraries logs lwt cstruct io-page shared-memory-ring
+   shared-memory-ring-lwt mirage-block-xen xen-evtchn xenstore
+   xenstore.client mirage-block-lwt rresult mirage-xen)
+ (wrapped false))
