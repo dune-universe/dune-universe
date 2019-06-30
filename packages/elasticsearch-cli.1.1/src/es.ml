@@ -7,10 +7,6 @@ module SS = Set.Make(String)
 
 let log = Log.from "es"
 
-let json_content_type = "application/json"
-
-let cmd = ref []
-
 let http_timeout = ref (Time.seconds 60)
 
 type common_args = {
@@ -21,8 +17,20 @@ type common_args = {
 let args =
   ExtArg.[
     "-T", String (fun t -> http_timeout := Time.of_compact_duration t), " set HTTP request timeout (format: 45s, 2m, or 1m30s)";
-    "--", Rest (tuck cmd), " signal end of options";
   ]
+
+let json_content_type = "application/json"
+
+let ndjson_content_type = "application/x-ndjson"
+
+type content_type =
+  | JSON of string
+  | NDJSON of string
+
+let json_body_opt = function
+  | Some JSON body -> Some (`Raw (json_content_type, body))
+  | Some NDJSON body -> Some (`Raw (ndjson_content_type, body))
+  | None -> None
 
 let make_url host path args =
   let args = List.filter_map (function name, Some value -> Some (name, value) | _ -> None) args in
@@ -30,17 +38,42 @@ let make_url host path args =
   let path = String.concat "?" (path :: match args with [] -> [] | _ -> [ Web.make_url_args args; ]) in
   String.concat "" [ host; path; ]
 
-let http_request_lwt' ?verbose ?body action host path args =
-  Web.http_request_lwt' ?verbose ~timeout:(Time.to_sec !http_timeout) ?body action (make_url host path args)
+let request ?verbose ?body action host path args =
+  Web.http_request_lwt' ?verbose ~timeout:(Time.to_sec !http_timeout) ?body:(json_body_opt body) action (make_url host path args)
 
-let http_request_lwt ?verbose ?body action host path args =
-  Web.http_request_lwt ?verbose ~timeout:(Time.to_sec !http_timeout) ?body action (make_url host path args)
+let request ?verbose ?body action host path args unformat =
+  match%lwt request ?verbose ?body action host path args with
+  | `Error code -> Exn_lwt.fail "(%d) %s" (Curl.errno code) (Curl.strerror code)
+  | `Ok (code, result) ->
+  let is_error_response result = Elastic_j.((response''_of_string result).error) <> None in
+  let is_severe_error code result = code / 100 <> 2 && (code <> 404 || is_error_response result) in
+  match is_severe_error code result with
+  | exception exn -> Exn_lwt.fail ~exn "http %d : %s" code result
+  | true -> Lwt.return_error result
+  | false ->
+  match unformat result with
+  | exception exn -> Exn_lwt.fail ~exn "unformat %s" result
+  | docs -> Lwt.return_ok docs
+
+exception ErrorExit
+
+let fail_lwt fmt =
+  ksprintf begin fun s ->
+    let%lwt () = Lwt_io.eprintl s in
+    Lwt.fail ErrorExit
+  end fmt
+
+type 't json_reader = J.lexer_state -> Lexing.lexbuf -> 't
+
+type 't json_writer = Bi_outbuf.t -> 't -> unit
 
 type es_version_config = {
   source_includes_arg : string;
   source_excludes_arg : string;
-  read_total : J.lexer_state -> Lexing.lexbuf -> Elastic_t.total;
-  write_total : Bi_outbuf.t -> Elastic_t.total -> unit;
+  read_total : Elastic_t.total json_reader;
+  write_total : Elastic_t.total json_writer;
+  default_get_doc_type : string;
+  default_put_doc_type : string option;
 }
 
 let es6_config = {
@@ -48,6 +81,8 @@ let es6_config = {
   source_excludes_arg = "_source_exclude";
   read_total = Elastic_j.read_es6_total;
   write_total = Elastic_j.write_es6_total;
+  default_get_doc_type = "_all";
+  default_put_doc_type = None;
 }
 
 let es7_config = {
@@ -55,19 +90,18 @@ let es7_config = {
   source_excludes_arg = "_source_excludes";
   read_total = Elastic_j.read_total;
   write_total = Elastic_j.write_total;
+  default_get_doc_type = "_doc";
+  default_put_doc_type = Some "_doc";
 }
 
 let rec coalesce = function Some _ as hd :: _ -> hd | None :: tl -> coalesce tl | [] -> None
 
 let get_es_version { verbose; _ } host =
-  match%lwt http_request_lwt ~verbose `GET host [] [] with
-  | `Error error -> Exn_lwt.fail "could not get ES version : %s" error
-  | `Ok s ->
-  match Elastic_j.main_of_string s with
-  | exception exn -> Exn_lwt.fail ~exn "could not parse ES response to get ES version : %s" s
-  | { Elastic_t.version = { number; }; } ->
+  match%lwt request ~verbose `GET host [] [] Elastic_j.main_of_string with
+  | Error error -> fail_lwt "could not get ES version:\n%s" error
+  | Ok { Elastic_t.version = { number; }; } ->
   match Stre.nsplitc number '.' with
-  | [] -> Exn_lwt.fail "empty ES version number : %s" s
+  | [] -> Exn_lwt.fail "empty ES version number"
   | "5" :: _ -> Lwt.return `ES5
   | "6" :: _ -> Lwt.return `ES6
   | "7" :: _ -> Lwt.return `ES7
@@ -279,6 +313,121 @@ let compare_fmt = function
   | `Duration x -> Factor.Float.equal x $ float_of_string (* FIXME parse time? *)
   | `None -> (fun _ -> false)
 
+let split doc_id = Stre.nsplitc doc_id '/'
+
+let join doc_id = String.concat "/" doc_id
+
+let is_pure_id' doc_id =
+  match doc_id with
+  | [ _doc_id; ] | [ ""; _doc_id; ] -> true
+  | _ -> false
+
+let is_pure_id doc_id = is_pure_id' (split doc_id)
+
+let map_index_doc_id' doc_type doc_id =
+  match doc_id with
+  | [ doc_id; ] | [ ""; doc_id; ] -> Exn_lwt.fail "document id missing index name : /%s" doc_id
+  | [ index; doc_id; ] | [ ""; index; doc_id; ] -> Lwt.return (index, doc_type, doc_id)
+  | [ index; doc_type; doc_id; ] | [ ""; index; doc_type; doc_id; ] -> Lwt.return (index, Some doc_type, doc_id)
+  | _ -> Exn_lwt.fail "invalid document id : %s" (join doc_id)
+
+let map_index_doc_id doc_type doc_id = map_index_doc_id' doc_type (split doc_id)
+
+let map_doc_id' index doc_type doc_id =
+  match doc_id with
+  | [ doc_id; ] | [ ""; doc_id; ] -> Lwt.return (index, doc_type, doc_id)
+  | [ doc_type; doc_id; ] | [ ""; doc_type; doc_id; ] -> Lwt.return (index, Some doc_type, doc_id)
+  | _ -> Exn_lwt.fail "invalid document id : /%s/%s" index (join doc_id)
+
+let map_doc_id index doc_type doc_id = map_doc_id' index doc_type (split doc_id)
+
+let map_doc_id_opt' index doc_type doc_id =
+  let%lwt (index, doc_type, doc_id) = map_doc_id' index doc_type doc_id in
+  Lwt.return (index, doc_type, Some doc_id)
+
+let map_doc_id_opt index doc_type doc_id = map_doc_id_opt' index doc_type (split doc_id)
+
+let map_typed_doc_id' index doc_type doc_id =
+  match doc_id with
+  | [ doc_id; ] | [ ""; doc_id; ] -> Lwt.return (index, Some doc_type, doc_id)
+  | _ -> Exn_lwt.fail "invalid document id : /%s/%s/%s" index doc_type (join doc_id)
+
+let map_typed_doc_id index doc_type doc_id = map_typed_doc_id' index doc_type (split doc_id)
+
+let map_typed_doc_id_opt' index doc_type doc_id =
+  let%lwt (index, doc_type, doc_id) = map_typed_doc_id' index doc_type doc_id in
+  Lwt.return (index, doc_type, Some doc_id)
+
+let map_typed_doc_id_opt index doc_type doc_id = map_typed_doc_id_opt' index doc_type (split doc_id)
+
+let map_index_mode index =
+  match Stre.nsplitc index '/' with
+  | [ index; ] | [ ""; index; ] -> `Index index
+  | [ index; doc_type_or_id; ] | [ ""; index; doc_type_or_id; ] -> `IndexOrID (index, doc_type_or_id)
+  | [ index; doc_type; doc_id; ] | [ ""; index; doc_type; doc_id; ] -> `ID (index, doc_type, doc_id)
+  | _ -> Exn.fail "invalid index name or document id : %s" index
+
+let map_ids ~default_get_doc_type index doc_type doc_ids =
+  let multiple (first_index, first_doc_type, _doc_id as first_doc) other_doc_ids =
+    let first_doc_type = Option.default default_get_doc_type first_doc_type in
+    let merge_equal x y = match x with Some x' when String.equal x' y -> x | _ -> None in
+    let (docs, common_index, common_doc_type) =
+      List.fold_left begin fun (docs, common_index, common_doc_type) (index, doc_type, _doc_id as doc) ->
+        let common_index = merge_equal common_index index in
+        let common_doc_type = merge_equal common_doc_type (Option.default default_get_doc_type doc_type) in
+        doc :: docs, common_index, common_doc_type
+      end ([ first_doc; ], Some first_index, Some first_doc_type) other_doc_ids
+    in
+    let (docs, index, doc_type) =
+      match common_index, common_doc_type with
+      | Some _, Some _ ->
+        let docs = List.map (fun (_index, _doc_type, doc_id) -> None, None, doc_id) docs in
+        docs, common_index, common_doc_type
+      | Some _, None ->
+        let docs = List.map (fun (_index, doc_type, doc_id) -> None, doc_type, doc_id) docs in
+        docs, common_index, None
+      | None, _ ->
+        let docs = List.map (fun (index, doc_type, doc_id) -> Some index, doc_type, doc_id) docs in
+        docs, None, None
+    in
+    Lwt.return (`Multi (docs, index, doc_type))
+  in
+  let%lwt mode = Lwt.wrap1 map_index_mode index in
+  let doc_ids = List.map split doc_ids in
+  match mode, doc_ids with
+  | `Index _, [] ->
+    let%lwt () = Lwt_io.eprintl "only INDEX is provided and no DOC_ID" in
+    Lwt.return `None
+  | `Index index, [ doc_id; ] ->
+    let%lwt (index, doc_type, doc_id) = map_doc_id' index doc_type doc_id in
+    let doc_type = Option.default default_get_doc_type doc_type in
+    Lwt.return (`Single (Some index, Some doc_type, Some doc_id))
+  | `Index index, doc_id :: doc_ids ->
+    let%lwt doc_id = map_doc_id' index doc_type doc_id in
+    let%lwt doc_ids = Lwt_list.map_s (map_doc_id' index doc_type) doc_ids in
+    multiple doc_id doc_ids
+  | `IndexOrID (index, doc_id), [] ->
+    let doc_type = Option.default default_get_doc_type doc_type in
+    Lwt.return (`Single (Some index, Some doc_type, Some doc_id))
+  | `IndexOrID (index, doc_type), doc_id :: doc_ids when List.for_all is_pure_id' (doc_id :: doc_ids) ->
+    begin match doc_ids with
+    | [] ->
+      let%lwt (index, doc_type, doc_id) = map_typed_doc_id' index doc_type doc_id in
+      Lwt.return (`Single (Some index, doc_type, Some doc_id))
+    | _ ->
+      let%lwt doc_id = map_typed_doc_id' index doc_type doc_id in
+      let%lwt doc_ids = Lwt_list.map_s (map_typed_doc_id' index doc_type) doc_ids in
+      multiple doc_id doc_ids
+    end
+  | `IndexOrID (index, doc_id), doc_ids ->
+    let%lwt doc_ids = Lwt_list.map_s (map_index_doc_id' doc_type) doc_ids in
+    multiple (index, doc_type, doc_id) doc_ids
+  | `ID (index, doc_type, doc_id), [] ->
+    Lwt.return (`Single (Some index, Some doc_type, Some doc_id))
+  | `ID (index, doc_type', doc_id), doc_ids ->
+    let%lwt doc_ids = Lwt_list.map_s (map_index_doc_id' doc_type) doc_ids in
+    multiple (index, Some doc_type', doc_id) doc_ids
+
 module Common_args = struct
 
   open Cmdliner
@@ -289,7 +438,11 @@ module Common_args = struct
 
   let doc_type = Arg.(value & opt (some string) None & info [ "T"; "doctype"; ] ~docv:"DOC_TYPE" ~doc:"document type")
 
-  let doc_id = Arg.(value & pos 2 (some string) None & info [] ~docv:"DOC_ID" ~doc:"document id")
+  let doc_id = Arg.(pos 2 (some string) None & info [] ~docv:"DOC_ID" ~doc:"document id")
+
+  let doc_ids =
+    let doc = "document ids" in
+    Arg.(value & pos_right 1 string [] & info [] ~docv:"DOC_ID1[ DOC_ID2[ DOC_ID3...]]" ~doc)
 
   let timeout = Arg.(value & opt (some string) None & info [ "t"; "timeout"; ] ~doc:"timeout")
 
@@ -297,7 +450,7 @@ module Common_args = struct
 
   let source_excludes = Arg.(value & opt_all string [] & info [ "e"; "source-excludes"; ] ~doc:"source_excludes")
 
-  let routing = Arg.(value & opt_all string [] & info [ "r"; "routing"; ] ~doc:"routing")
+  let routing = Arg.(value & opt (some string) None & info [ "r"; "routing"; ] ~doc:"routing")
 
   let preference = Arg.(value & opt_all string [] & info [ "p"; "preference"; ] ~doc:"preference")
 
@@ -342,13 +495,61 @@ let alias { verbose; _ } {
     | [] -> `GET, None
     | actions ->
     let actions = List.map (fun { action; index; alias; } -> [ action, { Elastic_t.index; alias; }; ]) actions in
-    `POST, Some (`Raw (json_content_type, Elastic_j.string_of_aliases { Elastic_t.actions; }))
+    `POST, Some (JSON (Elastic_j.string_of_aliases { Elastic_t.actions; }))
   in
   Lwt_main.run @@
-  match%lwt http_request_lwt ~verbose ?body action host [ Some "_aliases"; ] [] with
-  | exception exn -> log #error ~exn "alias"; Lwt.fail exn
-  | `Error error -> log #error "alias error : %s" error; Lwt.fail_with error
-  | `Ok result -> Lwt_io.printl result
+  match%lwt request ~verbose ?body action host [ Some "_aliases"; ] [] id with
+  | Error error -> fail_lwt "alias error:\n%s" error
+  | Ok result -> Lwt_io.printl result
+
+type delete_args = {
+  host : string;
+  index : string;
+  doc_type : string option;
+  doc_ids : string list;
+  timeout : string option;
+  routing : string option;
+}
+
+let delete ({ verbose; es_version; _ } as common_args) {
+    host;
+    index;
+    doc_type;
+    doc_ids;
+    timeout;
+    routing;
+  } =
+  let config = Common.load_config () in
+  let { Common.host; version; _ } = Common.get_cluster config host in
+  Lwt_main.run @@
+  let%lwt ({ default_get_doc_type; _ }) =
+    get_es_version_config common_args host es_version config version
+  in
+  match%lwt map_ids ~default_get_doc_type index doc_type doc_ids with
+  | `None -> Lwt.return_unit
+  | `Single _ | `Multi _ as mode ->
+  let (action, body, path) =
+    match mode with
+    | `Single (index, doc_type, doc_id) -> `DELETE, None, [ index; doc_type; doc_id; ]
+    | `Multi (docs, index, doc_type) ->
+    let body =
+      List.fold_left begin fun acc (index, doc_type, doc_id) ->
+        let delete = { Elastic_t.index; doc_type; id = doc_id; routing = None; } in
+        let bulk = { Elastic_t.index = None; create = None; update = None; delete = Some delete; } in
+        "\n" :: Elastic_j.string_of_bulk bulk :: acc
+      end [] docs |>
+      List.rev |>
+      String.concat ""
+    in
+    `POST, Some (NDJSON body), [ index; doc_type; Some "_bulk"; ]
+  in
+  let args = [
+    "timeout", timeout;
+    "routing", routing;
+  ] in
+  match%lwt request ~verbose ?body action host path args id with
+  | Error response -> Lwt_io.eprintl response
+  | Ok response -> Lwt_io.printl response
 
 type flush_args = {
   host : string;
@@ -375,20 +576,19 @@ let flush { verbose; _ } {
   ] in
   let path = [ csv indices; Some "_flush"; bool' "synced" synced; ] in
   Lwt_main.run @@
-  match%lwt http_request_lwt ~verbose `POST host path args with
-  | exception exn -> log #error ~exn "flush"; Lwt.fail exn
-  | `Error error -> log #error "flush error : %s" error; Lwt.fail_with error
-  | `Ok result -> Lwt_io.printl result
+  match%lwt request ~verbose `POST host path args id with
+  | Error error -> fail_lwt "flush error:\n%s" error
+  | Ok result -> Lwt_io.printl result
 
 type get_args = {
   host : string;
   index : string;
   doc_type : string option;
-  doc_id : string option;
+  doc_ids : string list;
   timeout : string option;
   source_includes : string list;
   source_excludes : string list;
-  routing : string list;
+  routing : string option;
   preference : string list;
   format : hit_format list list;
 }
@@ -397,7 +597,7 @@ let get ({ verbose; es_version; _ } as common_args) {
     host;
     index;
     doc_type;
-    doc_id;
+    doc_ids;
     timeout;
     source_includes;
     source_excludes;
@@ -408,38 +608,64 @@ let get ({ verbose; es_version; _ } as common_args) {
   let config = Common.load_config () in
   let { Common.host; version; _ } = Common.get_cluster config host in
   Lwt_main.run @@
-  let%lwt { source_includes_arg; source_excludes_arg; _ } =
+  let%lwt ({ source_includes_arg; source_excludes_arg; default_get_doc_type; _ }) =
     get_es_version_config common_args host es_version config version
+  in
+  match%lwt map_ids ~default_get_doc_type index doc_type doc_ids with
+  | `None -> Lwt.return_unit
+  | `Single _ | `Multi _ as mode ->
+  let (body, path, unformat) =
+    match mode with
+    | `Single (index, doc_type, doc_id) ->
+      let path = [ index; doc_type; doc_id; ] in
+      let unformat x = [ Elastic_j.option_hit_of_string J.read_json x; ] in
+      None, path, unformat
+    | `Multi (docs, index, doc_type) ->
+    let (docs, ids) =
+      match index, doc_type with
+      | Some _, Some _ ->
+        let ids = List.map (fun (_index, _doc_type, doc_id) -> doc_id) docs in
+        [], ids
+      | _ ->
+      let docs =
+        List.map begin fun (index, doc_type, id) ->
+          { Elastic_t.index; doc_type; id; routing = None; source = None; stored_fields = None; }
+        end docs
+      in
+      docs, []
+    in
+    let path = [ index; doc_type; Some "_mget"; ] in
+    let unformat x =
+      let { Elastic_t.docs; } = Elastic_j.docs_of_string (Elastic_j.read_option_hit J.read_json) x in
+      docs
+    in
+    Some (JSON (Elastic_j.string_of_multiget { docs; ids; })), path, unformat
   in
   let args = [
     "timeout", timeout;
     (if source_excludes = [] then "_source" else source_includes_arg), csv source_includes;
     source_excludes_arg, csv source_excludes;
-    "routing", csv routing;
+    "routing", routing;
     "preference", csv ~sep:"|" preference;
   ] in
-  match%lwt http_request_lwt' ~verbose `GET host [ Some index; doc_type; doc_id; ] args with
-  | exception exn -> log #error ~exn "get"; Lwt.fail exn
-  | `Error code ->
-    let error = sprintf "(%d) %s" (Curl.errno code) (Curl.strerror code) in
-    log #error "get error : %s" error;
-    Lwt.fail_with error
-  | `Ok (code, result) ->
-  let is_error_response result = Elastic_j.((response''_of_string result).error) <> None in
-  let is_severe_error code result = code / 100 <> 2 && (code <> 404 || is_error_response result) in
-  match is_severe_error code result with
-  | exception exn -> log #error ~exn "get"; Lwt.fail exn
-  | is_error when is_error || format = [] -> Lwt_io.printl result
+  let request unformat = request ~verbose ?body `GET host path args unformat in
+  match format with
+  | [] ->
+    begin match%lwt request id with
+    | Error response -> Lwt_io.eprintl response
+    | Ok response -> Lwt_io.printl response
+    end
   | _ ->
-  match Elastic_j.option_hit_of_string J.read_json result with
-  | exception exn -> log #error ~exn "get %s" result; Lwt.fail exn
-  | { Elastic_t.found = false; _ } -> Lwt.return_unit
-  | hit ->
-  List.map (List.map map_of_hit_format) format |>
-  List.concat |>
-  List.map (fun f -> f hit) |>
-  String.join " " |>
-  Lwt_io.printl
+  match%lwt request unformat with
+  | Error response -> Lwt_io.eprintl response
+  | Ok docs ->
+  Lwt_list.iter_s begin fun hit ->
+    List.map (List.map map_of_hit_format) format |>
+    List.concat |>
+    List.map (fun f -> f hit) |>
+    String.join " " |>
+    Lwt_io.printl
+  end docs
 
 type health_args = {
   hosts : string list;
@@ -471,10 +697,9 @@ let health { verbose; _ } {
         "active_shards_percent";
       ] in
       let args = [ "h", Some (String.concat "," columns); ] in
-      match%lwt http_request_lwt ~verbose `GET host [ Some "_cat"; Some "health"; ] args with
-      | exception exn -> log #error ~exn "health"; Lwt.return (i, sprintf "%s failure %s" host (Printexc.to_string exn))
-      | `Error error -> log #error "health error : %s" error; Lwt.return (i, sprintf "%s error %s\n" host error)
-      | `Ok result -> Lwt.return (i, sprintf "%s %s" host result)
+      match%lwt request ~verbose `GET host [ Some "_cat"; Some "health"; ] args id with
+      | Error error -> Lwt.return (i, sprintf "%s error %s\n" host error)
+      | Ok result -> Lwt.return (i, sprintf "%s %s" host result)
     end hosts
   in
   List.sort ~cmp:(Factor.Int.compare $$ fst) results |>
@@ -494,12 +719,10 @@ let nodes { verbose; _ } {
   let check_nodes = match check_nodes with [] -> Option.default [] nodes | nodes -> nodes in
   let check_nodes = SS.of_list (List.concat (List.map Common.expand_node check_nodes)) in
   Lwt_main.run @@
-  match%lwt http_request_lwt ~verbose `GET host [ Some "_nodes"; ] [] with
-  | exception exn -> log #error ~exn "nodes"; Lwt.fail exn
-  | `Error error -> log #error "nodes error : %s" error; Lwt.fail_with error
-  | `Ok result ->
-  J.from_string result |>
-  J.Util.member "nodes" |>
+  match%lwt request ~verbose `GET host [ Some "_nodes"; ] [] J.from_string with
+  | Error error -> fail_lwt "nodes error:\n%s" error
+  | Ok result ->
+  J.Util.member "nodes" result |>
   J.Util.to_assoc |>
   List.fold_left begin fun (missing, present) (_node_id, node) ->
     let name = J.Util.member "name" node |> J.Util.to_string in
@@ -524,11 +747,11 @@ type put_args = {
   index : string;
   doc_type : string option;
   doc_id : string option;
-  routing : string list;
+  routing : string option;
   body : string option;
 }
 
-let put { verbose; _ } {
+let put ({ verbose; es_version; _ } as common_args) {
     host;
     index;
     doc_type;
@@ -537,15 +760,33 @@ let put { verbose; _ } {
     body;
   } =
   let config = Common.load_config () in
-  let { Common.host; _ } = Common.get_cluster config host in
-  let routing = match routing with [] -> None | _ -> Some (String.concat "," routing) in
-  let args = [ "routing", routing; ] in
+  let { Common.host; version; _ } = Common.get_cluster config host in
   Lwt_main.run @@
+  let%lwt { default_put_doc_type; _ } =
+    get_es_version_config common_args host es_version config version
+  in
+  let%lwt (index, doc_type, doc_id) =
+    let%lwt mode = Lwt.wrap1 map_index_mode index in
+    match mode, doc_id with
+    | `Index index, None -> Lwt.return (index, doc_type, None)
+    | `Index index, Some doc_id -> map_doc_id_opt index doc_type doc_id
+    | `IndexOrID (index, doc_id), None -> Lwt.return (index, doc_type, Some doc_id)
+    | `IndexOrID (index, doc_type), Some doc_id -> map_typed_doc_id_opt index doc_type doc_id
+    | `ID (index, doc_type, doc_id), None -> Lwt.return (index, Some doc_type, Some doc_id)
+    | `ID (index, doc_type, doc_id1), Some doc_id2 ->
+      Exn_lwt.fail "invalid document id : /%s/%s/%s/%s" index doc_type doc_id1 doc_id2
+  in
+  let%lwt doc_type =
+    match coalesce [ doc_type; default_put_doc_type; ] with
+    | Some doc_type -> Lwt.return doc_type
+    | None -> Exn_lwt.fail "DOC_TYPE is not provided"
+  in
+  let args = [ "routing", routing; ] in
   let%lwt body = match body with Some body -> Lwt.return body | None -> Lwt_io.read Lwt_io.stdin in
-  match%lwt http_request_lwt ~verbose ~body:(`Raw (json_content_type, body)) `PUT host [ Some index; doc_type; doc_id; ] args with
-  | exception exn -> log #error ~exn "put"; Lwt.fail exn
-  | `Error error -> log #error "put error : %s" error; Lwt.fail_with error
-  | `Ok result -> Lwt_io.printl result
+  let action = if doc_id <> None then `PUT else `POST in
+  match%lwt request ~verbose ~body:(JSON body) action host [ Some index; Some doc_type; doc_id; ] args id with
+  | Error error -> fail_lwt "put error:\n%s" error
+  | Ok result -> Lwt_io.printl result
 
 type recovery_args = {
   host : string;
@@ -574,13 +815,9 @@ let recovery { verbose; _ } {
   let filter_exclude = List.map (fun (k, v) -> map_of_index_shard_format k, v) filter_exclude in
   let { Common.host; _ } = Common.get_cluster config host in
   Lwt_main.run @@
-  match%lwt http_request_lwt ~verbose `GET host [ csv indices; Some "_recovery"; ] [] with
-  | exception exn -> log #error ~exn "recovery"; Lwt.fail exn
-  | `Error error -> log #error "recovery error : %s" error; Lwt.fail_with error
-  | `Ok result ->
-  match Elastic_j.indices_shards_of_string result with
-  | exception exn -> log #error ~exn "recovery %s" result; Lwt.fail exn
-  | indices ->
+  match%lwt request ~verbose `GET host [ csv indices; Some "_recovery"; ] [] Elastic_j.indices_shards_of_string with
+  | Error error -> fail_lwt "recovery error:\n%s" error
+  | Ok indices ->
   let indices =
     match filter_include, filter_exclude with
     | [], [] -> indices
@@ -615,10 +852,9 @@ let refresh { verbose; _ } {
   let config = Common.load_config () in
   let { Common.host; _ } = Common.get_cluster config host in
   Lwt_main.run @@
-  match%lwt http_request_lwt ~verbose `POST host [ csv indices; Some "_refresh"; ] [] with
-  | exception exn -> log #error ~exn "refresh"; Lwt.fail exn
-  | `Error error -> log #error "refresh error : %s" error; Lwt.fail_with error
-  | `Ok result -> Lwt_io.printl result
+  match%lwt request ~verbose `POST host [ csv indices; Some "_refresh"; ] [] id with
+  | Error error -> fail_lwt "refresh error:\n%s" error
+  | Ok result -> Lwt_io.printl result
 
 type search_args = {
   host : string;
@@ -631,7 +867,7 @@ type search_args = {
   source_includes : string list;
   source_excludes : string list;
   fields : string list;
-  routing : string list;
+  routing : string option;
   preference : string list;
   scroll : string option;
   slice_id : int option;
@@ -680,7 +916,7 @@ let search ({ verbose; es_version; _ } as common_args) {
   let config = Common.load_config () in
   let { Common.host; version; _ } = Common.get_cluster config host in
   Lwt_main.run @@
-  let%lwt { source_includes_arg; source_excludes_arg; read_total; write_total; } =
+  let%lwt { source_includes_arg; source_excludes_arg; read_total; write_total; _ } =
     get_es_version_config common_args host es_version config version
   in
   let body_query = Option.map get_body_query_file body_query in
@@ -693,7 +929,7 @@ let search ({ verbose; es_version; _ } as common_args) {
     (if source_excludes = [] then "_source" else source_includes_arg), csv source_includes;
     source_excludes_arg, csv source_excludes;
     "stored_fields", csv fields;
-    "routing", csv routing;
+    "routing", routing;
     "preference", csv ~sep:"|" preference;
     "explain", flag explain;
     "scroll", scroll;
@@ -719,22 +955,21 @@ let search ({ verbose; es_version; _ } as common_args) {
     let body = slice :: List.filter (function "slice", _ -> false | _ -> true) body in
     Some (Util_j.string_of_assoc body)
   in
-  let body = match body_query with Some query -> Some (`Raw (json_content_type, query)) | None -> None in
+  let body_query = match body_query with Some query -> Some (JSON query) | None -> None in
   let htbl = Hashtbl.create (if retry then Option.default 10 size else 0) in
   let rec search () =
-    match%lwt http_request_lwt ~verbose ?body `POST host [ Some index; doc_type; Some "_search"; ] args with
-    | exception exn -> log #error ~exn "search"; Lwt.fail exn
-    | `Error error -> log #error "search error : %s" error; Lwt.fail_with error
-    | `Ok result ->
+    match%lwt request ~verbose ?body:body_query `POST host [ Some index; doc_type; Some "_search"; ] args id with
+    | Error error -> fail_lwt "search error:\n%s" error
+    | Ok result ->
     match show_count, format, scroll, retry with
     | false, [], None, false -> Lwt_io.printl result
     | show_count, format, scroll, retry ->
     let scroll_path = [ Some "_search"; Some "scroll"; ] in
     let clear_scroll' scroll_id =
-      let clear_scroll = Elastic_j.string_of_clear_scroll { Elastic_t.scroll_id = [ scroll_id; ]; } in
-      match%lwt http_request_lwt ~verbose ~body:(`Raw (json_content_type, clear_scroll)) `DELETE host scroll_path [] with
-      | `Error error -> log #error "clear scroll error : %s" error; Lwt.fail_with error
-      | `Ok _ok -> Lwt.return_unit
+      let clear_scroll = JSON (Elastic_j.string_of_clear_scroll { Elastic_t.scroll_id = [ scroll_id; ]; }) in
+      match%lwt request ~verbose ~body:clear_scroll `DELETE host scroll_path [] id with
+      | Error error -> fail_lwt "clear scroll error:\n%s" error
+      | Ok _ok -> Lwt.return_unit
     in
     let clear_scroll scroll_id = Option.map_default clear_scroll' Lwt.return_unit scroll_id in
     let rec loop result =
@@ -789,13 +1024,13 @@ let search ({ verbose; es_version; _ } as common_args) {
       match hits, scroll, scroll_id with
       | [], _, _ | _, None, _ | _, _, None -> clear_scroll scroll_id
       | _, Some scroll, Some scroll_id ->
-      let scroll = Elastic_j.string_of_scroll { Elastic_t.scroll; scroll_id; } in
-      match%lwt http_request_lwt ~verbose ~body:(`Raw (json_content_type, scroll)) `POST host scroll_path [] with
-      | `Error error ->
-        log #error "scroll error : %s" error;
+      let scroll = JSON (Elastic_j.string_of_scroll { Elastic_t.scroll; scroll_id; }) in
+      match%lwt request ~verbose ~body:scroll `POST host scroll_path [] id with
+      | Error error ->
+        let%lwt () = Lwt_io.eprintlf "scroll error:\n%s" error in
         let%lwt () = clear_scroll' scroll_id in
-        Lwt.fail_with error
-      | `Ok result -> loop result
+        Lwt.fail ErrorExit
+      | Ok result -> loop result
     in
     loop result
   in
@@ -885,6 +1120,39 @@ let alias_tool =
   let man = [] in
   info "alias" ~doc ~sdocs:Manpage.s_common_options ~exits ~man
 
+let delete_tool =
+  let delete
+      common_args
+      host
+      index
+      doc_type
+      doc_ids
+      timeout
+      routing
+    =
+    delete common_args {
+      host;
+      index;
+      doc_type;
+      doc_ids;
+      timeout;
+      routing;
+    }
+  in
+  let open Term in
+  const delete $
+    common_args $
+    host $
+    index $
+    doc_type $
+    doc_ids $
+    timeout $
+    routing,
+  let doc = "delete document(s)" in
+  let exits = default_exits in
+  let man = [] in
+  info "delete" ~doc ~sdocs:Manpage.s_common_options ~exits ~man
+
 let flush_tool =
   let flush
       common_args
@@ -928,7 +1196,7 @@ let get_tool =
       host
       index
       doc_type
-      doc_id
+      doc_ids
       timeout
       source_includes
       source_excludes
@@ -940,7 +1208,7 @@ let get_tool =
       host;
       index;
       doc_type;
-      doc_id;
+      doc_ids;
       timeout;
       source_includes;
       source_excludes;
@@ -949,24 +1217,20 @@ let get_tool =
       format;
     }
   in
-  let index =
-    let doc = "index to get" in
-    Arg.(required & pos 1 (some string) None & info [] ~docv:"INDEX" ~doc)
-  in
   let open Term in
   const get $
     common_args $
     host $
     index $
     doc_type $
-    doc_id $
+    doc_ids $
     timeout $
     source_includes $
     source_excludes $
     routing $
     preference $
     format,
-  let doc = "get index" in
+  let doc = "get document(s)" in
   let exits = default_exits in
   let man = [] in
   info "get" ~doc ~sdocs:Manpage.s_common_options ~exits ~man
@@ -1036,7 +1300,7 @@ let put_tool =
   in
   let body =
     let doc = "document source to put" in
-    Arg.(value & pos 2 (some string) None & info [] ~docv:"DOC" ~doc)
+    Arg.(value & opt (some string) None & info [ "s"; "source"; ] ~docv:"DOC" ~doc)
   in
   let open Term in
   const put $
@@ -1044,10 +1308,10 @@ let put_tool =
     host $
     index $
     doc_type $
-    doc_id $
+    Arg.value doc_id $
     routing $
     body,
-  let doc = "put index" in
+  let doc = "put document" in
   let exits = default_exits in
   let man = [] in
   info "put" ~doc ~sdocs:Manpage.s_common_options ~exits ~man
@@ -1259,6 +1523,7 @@ let search_tool =
 
 let tools = [
   alias_tool;
+  delete_tool;
   flush_tool;
   get_tool;
   health_tool;
@@ -1269,4 +1534,9 @@ let tools = [
   search_tool;
 ]
 
-let () = Term.(exit (eval_choice default_tool tools))
+let () =
+  try
+    Term.(exit (eval_choice ~catch:false default_tool tools))
+  with
+  | ErrorExit -> exit 1
+  | exn -> log #error ~exn "uncaught exception"; exit 125

@@ -1,0 +1,6 @@
+(library
+  (public_name phonetic)
+  (wrapped true)
+  (synopsis "phonetic algorithm library")
+  (modules doubleMetaphone soundex)
+)

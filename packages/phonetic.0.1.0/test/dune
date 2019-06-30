@@ -1,0 +1,20 @@
+(library
+  (name test_utils)
+  (modules test_utils)
+)
+
+(executable
+  (name test)
+  (modules test)
+  (libraries phonetic oUnit test_utils)
+)
+
+(alias (name runtest) (action (run ./test.exe) ) )
+
+(executable
+  (name bench)
+  (modules bench)
+  (libraries phonetic benchmark test_utils)
+)
+
+(alias (name runbench) (action (run ./bench.exe) ) )

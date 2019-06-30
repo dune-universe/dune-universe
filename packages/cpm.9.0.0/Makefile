@@ -1,4 +1,4 @@
-.PHONY: build config clean edit install uninstall reinstall tests
+.PHONY: build config clean edit install uninstall reinstall test
 
 build:
 	dune build @install
@@ -18,6 +18,6 @@ uninstall:
 	dune uninstall
 
 # unit tests
-tests:
+test:
 	dune build _build/default/src/test.exe
 	_build/default/src/test.exe

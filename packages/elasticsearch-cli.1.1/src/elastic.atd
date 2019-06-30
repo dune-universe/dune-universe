@@ -9,6 +9,24 @@ type main_version = {
   number : string;
 }
 
+type doc_id = {
+  ?index <json name="_index"> : string option;
+  ?doc_type <json name="_type"> : string option;
+  id <json name="_id"> : string;
+}
+
+type multiget_doc = {
+  inherit doc_id;
+  ?routing <json name="_routing"> : string option;
+  ?source <json name="_source"> : json option;
+  ?stored_fields : string list option;
+}
+
+type multiget = {
+  ~docs: multiget_doc list;
+  ~ids: string list;
+}
+
 type id_hit = {
   index <json name="_index"> : string;
   doc_type <json name="_type"> : string;
@@ -17,14 +35,14 @@ type id_hit = {
 
 type unit_hit = {
   inherit id_hit;
-  ~routing <json name="_routing"> : string nullable;
-  ~found: bool;
-  ~score <json name="_score"> : float;
+  ?routing <json name="_routing"> : string nullable;
+  ?found: bool option;
+  ?score <json name="_score"> : float option;
   ?version <json name="_version"> : int option;
   ?fields : (string * json list) list <json repr="object"> option;
   ?shard <json name="_shard"> : string option;
   ?node <json name="_node"> : string option;
-  ~sort : json list;
+  ?sort : json list option;
 }
 
 type 'source option_hit = {
@@ -35,6 +53,10 @@ type 'source option_hit = {
 type 'source hit = {
   inherit unit_hit;
   source <json name="_source"> : 'source;
+}
+
+type 'hit docs = {
+  docs : 'hit list;
 }
 
 type ('hits, 'total) hits' = {
@@ -179,4 +201,16 @@ type shard_translog = {
 type shard_verify_index = {
   check_index_time_in_millis : int;
   total_time_in_millis : int;
+}
+
+type bulk = {
+  ?index : bulk_action option;
+  ?create : bulk_action option;
+  ?update : bulk_action option;
+  ?delete : bulk_action option;
+}
+
+type bulk_action = {
+  inherit doc_id;
+  ?routing : string option;
 }

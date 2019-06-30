@@ -1,0 +1,36 @@
+opam-version: "2.0"
+
+name: "metaphone"
+
+version: "0.1.0"
+
+synopsis: "Phonetic algorithm in OCaml"
+
+description: """
+Phonetic algorithm in OCaml:
+- Double metaphone
+"""
+
+maintainer: "Julien Sagot <julien.sagot@geneanet.org>"
+
+authors: [
+  "Julien Sagot <julien.sagot@geneanet.org>"
+  "Fabien Lheureux <fabien.lheureux@gmail.com>"
+]
+
+license: "MIT"
+
+homepage: "https://github.com/geneweb/phonetic"
+
+bug-reports: "https://github.com/geneweb/phonetic/issues"
+
+dev-repo: "git+https://github.com/geneweb/phonetic.git"
+
+depends: [
+  "benchmark" { with-test }
+  "ounit" { with-test }
+  ]
+
+build: [ [ "dune" "build"] ]
+
+install: [ "dune" "install" ]

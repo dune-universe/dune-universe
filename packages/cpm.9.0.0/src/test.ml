@@ -1,6 +1,8 @@
 
 open Printf
 
+module L = BatList
+
 (* Example usage *)
 
 (* first, define your score_label module *)
@@ -12,7 +14,7 @@ end
 
 (* second, instantiate the ROC functor for your score_label module *)
 module ROC = Cpm.MakeROC.Make (SL)
-module Top = Cpm.Top_keeper
+module Top = Cpm.TopKeeper
 
 let almost_equal epsilon x_curr x_ref =
   (x_ref -. epsilon <= x_curr) && (x_curr <= x_ref +. epsilon)
@@ -71,14 +73,24 @@ let main () =
   assert(mcc = ((tp *. tn -. fp *. fn) /.
                 sqrt ((tp +. fp) *. (tp +. fn) *. (tn +. fp) *. (tn +. fn))));
   assert(almost_equal 0.0000001 mcc 0.135242);
-  let top_3 =
-    Top.add 'a' 5.
-      (Top.add 'b' 4.
-         (Top.add 'c' 3.
-            (Top.add 'd' 4.
-               (Top.add 'e' 1.
-                  (Top.create 3))))) in
-  assert(Top.high_scores_first top_3 = [(5., 'a'); (4., 'd'); (4., 'b')]);
+  let top3 = Top.create 3 in
+  Top.add top3 1. 'e';
+  Top.add top3 4. 'd';
+  Top.add top3 3. 'c';
+  Top.add top3 4. 'b';
+  Top.add top3 5. 'a';
+  assert(Top.high_scores_first top3 = [(5., 'a'); (4., 'd'); (4., 'b')]);
+  Random.self_init ();
+  let top50 = Top.create 50 in
+  let rands = L.init 1000 (fun _ -> Random.float 1.0) in
+  L.iter (fun rand ->
+      Top.add top50 rand rand
+    ) rands;
+  let top_scores = Top.high_scores_first top50 in
+  let reference =
+    let l = L.take 50 (L.stable_sort (fun x y -> compare y x) rands) in
+    L.combine l l in
+  assert(top_scores = reference);
   printf "all OK\n"
 
 let () = main ()
