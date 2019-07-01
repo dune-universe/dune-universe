@@ -1,0 +1,15 @@
+(test
+  (name tests)
+  (libraries uritemplate oUnit atdgen))
+
+(rule
+ (targets example_tests_j.ml
+          example_tests_j.mli)
+ (deps    example_tests.atd)
+ (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+ (targets example_tests_t.ml
+          example_tests_t.mli)
+ (deps    example_tests.atd)
+ (action  (run atdgen -t %{deps})))

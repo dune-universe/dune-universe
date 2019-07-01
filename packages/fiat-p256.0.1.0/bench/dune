@@ -1,0 +1,7 @@
+(executable
+ (name bench)
+ (libraries fiat_p256 benchmark))
+
+(alias
+ (name bench)
+ (action (run ./bench.exe --all)))
