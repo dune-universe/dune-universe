@@ -1,0 +1,7 @@
+(library
+ (name owork)
+ (libraries lwt lwt.unix duration astring logs logs.lwt)
+ (inline_tests
+  (flags -show-counts -strict))
+ (preprocess
+  (pps ppx_expect lwt_ppx ppx_deriving.std)))
