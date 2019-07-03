@@ -1,5 +1,0 @@
-(executable
- (name to_raw)
- (package pecu)
- (public_name to_raw)
- (libraries cmdliner fmt rresult pecu))

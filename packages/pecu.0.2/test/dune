@@ -1,9 +1,0 @@
-(executable
- (name test)
- (libraries pecu alcotest fmt))
-
-(alias
- (name runtest)
- (package pecu)
- (deps (:test test.exe) (glob_files "contents/*"))
- (action (run %{test} --color=always)))
