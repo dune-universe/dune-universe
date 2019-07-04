@@ -1,0 +1,5 @@
+(library
+  (name ast_wrapper)
+  (public_name override.ast_wrapper)
+  (preprocess (pps ppxlib.metaquot))
+  (libraries ppxlib))

@@ -1,0 +1,13 @@
+(library
+  (name parsetree_of_types)
+  (public_name override.parsetree_of_types)
+  (preprocess (pps ppxlib.metaquot))
+; -warning 40: Constructor or label name used out of scope. (OCaml <=4.06.0)
+  (flags -open Stdcompat -w -40)
+  (libraries compiler-libs.common ocaml-migrate-parsetree stdcompat))
+
+(rule
+  (targets compat.ml)
+  (deps compat.cppo.ml)
+  (action
+     (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
