@@ -1,0 +1,133 @@
+{1 OBus - API Reference}
+
+{2 OBus library}
+
+This section describe modules of the core OBus library. OBus is
+composed of a lot of modules, but you will usually need only a few of
+them.
+
+{3 Connections and message Buses}
+
+{!modules:
+OBus_bus
+OBus_connection
+OBus_server
+}
+
+{3 D-Bus objects}
+
+{!modules:
+OBus_proxy
+OBus_object
+OBus_method
+OBus_signal
+OBus_property
+OBus_member
+}
+
+{3 Introspection}
+
+{!modules:
+OBus_introspect
+OBus_introspect_ext
+}
+
+{3 Misc}
+
+{!modules:
+OBus_error
+OBus_value
+OBus_resolver
+OBus_peer
+OBus_info
+OBus_name
+OBus_path
+OBus_string
+OBus_uuid
+OBus_context
+}
+
+{3 OBus low-level API}
+
+{!modules:
+OBus_match
+OBus_message
+OBus_address
+OBus_auth
+OBus_transport
+OBus_wire
+}
+
+{2 Service bindings}
+
+This section list bindings to D-Bus services shipped with OBus.
+
+{3 Notifications}
+
+Bindings to the freedesktop popup notification service.
+
+{!modules:
+Notification
+}
+
+{3 PolicyKit}
+
+Bindings to the freedesktop popup PolicyKit service.
+
+{!modules:
+Policy_kit
+}
+
+{3 Hal}
+
+Bindings to the freedesktop Hal service.
+
+{!modules:
+Hal_manager
+Hal_device
+}
+
+{3 UPower}
+
+Bindings to the freedesktop UPower service.
+
+{!modules:
+UPower
+UPower_device
+UPower_policy
+UPower_wakeups
+}
+
+{3 UPower}
+
+Bindings to the freedesktop UDisks service.
+
+{!modules:
+UDisks
+UDisks_device
+UDisks_port
+UDisks_adapter
+UDisks_expander
+}
+
+{3 NetworkManager}
+
+Bindings to the NetworkManager service.
+
+{!modules:
+Nm_access_point
+Nm_connection
+Nm_device
+Nm_dhcp4_config
+Nm_ip4_config
+Nm_ip6_config
+Nm_manager
+Nm_ppp
+Nm_settings
+Nm_vpn_connection
+Nm_vpn_plugin
+}
+
+{3 Index}
+
+{!indexlist}
