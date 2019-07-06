@@ -1,0 +1,31 @@
+(test
+  (name testsuite)
+  (libraries
+    alcotest
+    terminal_size
+  )
+  (action
+    (setenv LD_PRELOAD ./%{dep:dllmock_ioctl.so}
+      (setenv DYLD_INSERT_LIBRARIES ./%{dep:libmock_ioctl.dylib}
+        (run %{test})
+      )
+    )
+  )
+)
+
+(rule
+  (targets dllmock_ioctl.so)
+  (action (run %{cc} -shared -o %{targets} %{dep:mock_ioctl_linux.c}))
+)
+
+(rule
+  (targets libmock_ioctl.dylib)
+  (enabled_if (= %{system} macosx))
+  (action (run %{cc} -dynamiclib -o %{targets} %{dep:mock_ioctl_mac.c}))
+)
+
+(rule
+  (targets libmock_ioctl.dylib)
+  (enabled_if (<> %{system} macosx))
+  (action (write-file %{targets} ""))
+)
