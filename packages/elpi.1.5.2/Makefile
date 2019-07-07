@@ -38,11 +38,13 @@ STACK=32768
 
 build:
 	@$(MAKE) --no-print-directory .merlin
-	dune build @install
-	@$(MAKE) --no-print-directory .merlin
+	dune build @install; RC=$?; $(MAKE) --no-print-directory .merlin; exit $$RC
 
 install:
 	dune install
+
+doc:
+	dune build @doc
 
 clean:
 	rm -rf _build
@@ -55,8 +57,8 @@ tests:
 		--seed $$RANDOM \
 		--timeout $(TIMEOUT) \
 		$(TIME) \
-		--sources=$$PWD/tests/sources/ \
-		--plot=$$PWD/tests/plot \
+		--sources=$(shell pwd)/tests/sources/ \
+		--plot=$(shell pwd)/tests/plot \
 		$(addprefix --name-match ,$(ONLY)) \
 		$(addprefix --runner , $(RUNNERS))
 

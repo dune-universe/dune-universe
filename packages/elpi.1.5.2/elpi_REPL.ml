@@ -61,7 +61,8 @@ let usage =
   "\t-no-tc don't typecheck the program\n" ^ 
   "\t-delay-problems-outside-pattern-fragment (deprecated, for Teyjus\n" ^
   "\t                                          compatibility)\n" ^
-  API.Setup.usage ^
+  "\t-version prints the version of Elpi\n" ^ 
+ API.Setup.usage ^
   "\nDebug options (for debugging Elpi, not your program):\n" ^ 
   "\t-print-accumulated-files prints files loaded via accumulate\n" ^ 
   "\t-print-ast prints files as parsed, then exit\n" ^ 
@@ -104,6 +105,9 @@ let _ =
       vars := API.Compile.StrSet.add var !vars;
       aux rest
     | ("-h" | "--help") :: _ -> Printf.eprintf "%s" usage; exit 0
+    | "-version" :: _ ->
+        Printf.printf "%s\n" "1.5.2";
+        exit 0
     | "--" :: rest -> args := rest; []
     | s :: _ when String.length s > 0 && s.[0] == '-' ->
         Printf.eprintf "Unrecognized option: %s\n%s" s usage; exit 1
@@ -164,8 +168,10 @@ let _ =
   let prog = API.Compile.program ~flags pheader [p] in
   let query = API.Compile.query prog g in
   if !typecheck then begin
-    if not (API.Compile.static_check ~flags pheader query) then
-       Format.eprintf "Type error\n";
+    if not (API.Compile.static_check ~flags pheader query) then begin
+       Format.eprintf "Type error. To ignore it, pass -no-tc.\n";
+       exit 1
+    end
   end;
   if !print_lprolog then begin
     API.Pp.query Format.std_formatter query;
