@@ -1,7 +1,0 @@
-(library
-  ((name mirage_profile_unix)
-   (public_name mirage-profile-unix)
-   (libraries (cstruct mtime.clock.os ocplib-endian ocplib-endian.bigstring))
-   (wrapped false)
-))
-

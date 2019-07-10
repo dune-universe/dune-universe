@@ -1,0 +1,6 @@
+(library
+ (name ppx_gen_rec)
+ (public_name ppx_gen_rec)
+ (kind ppx_rewriter)
+ (libraries compiler-libs.common ocaml-migrate-parsetree)
+ (preprocess no_preprocessing))

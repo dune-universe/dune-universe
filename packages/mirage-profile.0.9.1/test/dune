@@ -1,0 +1,10 @@
+(executables
+ (names benchmark)
+ (libraries mirage-profile mirage-profile-unix lwt lwt.unix))
+
+(alias
+ (name runtest)
+ (deps
+  (:< benchmark.exe))
+ (action
+  (run %{<})))
