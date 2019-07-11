@@ -1,0 +1,12 @@
+1.2 (2019-07-09):
+- add pp_iterable_generic, pp_iterable, pp_iterable_mapping_generic and pp_iterable_mapping
+- add pp_iterable_mapping_more_generic
+- cleanup: rewrite pp_list_generic using pp_iterable_generic and remove useless calls to fprintf
+- refactor pretty-printers to share code between Format and Printf versions
+
+1.1 (2019-06-13):
+- dune is now a build dependency
+- Support OCaml from 4.02.3, using cppo
+- For OCaml 4.08.0: add constructors Ocolor_style_tag and Ocolor_styles_tag to Format.stag
+- Improve inner working of Ocolor_format
+
