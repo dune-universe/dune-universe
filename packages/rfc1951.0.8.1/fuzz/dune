@@ -1,8 +1,0 @@
-(executable
- (name fuzz)
- (libraries checkseum.c decompress fmt crowbar))
-
-(alias
- (name runfuzz)
- (deps (:fuzzer fuzz.exe))
- (action (run %{fuzzer})))
