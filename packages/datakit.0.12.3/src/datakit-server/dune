@@ -1,5 +1,0 @@
-(library
- (name        datakit_server)
- (public_name datakit-server)
- (wrapped     false)
- (libraries   astring rresult logs lwt fmt cstruct))
