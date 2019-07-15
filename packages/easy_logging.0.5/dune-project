@@ -1,3 +1,3 @@
-(lang dune 1.6.3)
+(lang dune 1.8.0)
 (name easy_logging)
 

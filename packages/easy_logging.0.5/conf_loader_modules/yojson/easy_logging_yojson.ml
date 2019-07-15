@@ -3,22 +3,15 @@
 module E = Easy_logging
    
 type log_level = E.log_level
-               [@@deriving show]
+                   [@@deriving show]
+let log_level_of_string = E.log_level_of_string
+
 let log_level_to_yojson lvl : Yojson.Safe.json =
   `String (E.show_log_level lvl)
 let log_level_of_yojson lvl_json =
   match lvl_json with
   | `String lvl_str ->
-     (
-       match String.lowercase_ascii lvl_str with
-       | "debug" -> Ok (Debug :  log_level)
-       | "info" -> Ok Info
-       | "warning" -> Ok Warning
-       | "error" -> Ok Error
-       | "flash" -> Ok Flash
-       | "nolevel" -> Ok NoLevel
-       | _ -> Error (lvl_str ^ " does not represent a valid log level")
-     )
+     log_level_of_string lvl_str
   | _ -> Error ("Cannot decode "^ (Yojson.Safe.to_string lvl_json) ^" to log level")
 
 module type HandlersT =
@@ -34,10 +27,10 @@ module type HandlersT =
   end
 
 
-module Default_handlers =
+module Handlers =
   struct
     
-    include E.Default_handlers
+    include E.Handlers
           
     type file_handlers_config_ = file_handlers_config =
       { logs_folder: string; [@default file_handlers_defaults.logs_folder]
@@ -49,7 +42,7 @@ module Default_handlers =
     let file_handlers_config_to_yojson = file_handlers_config__to_yojson
     let file_handlers_config_of_yojson = file_handlers_config__of_yojson
       
-    type config_ = E.Default_handlers.config
+    type config_ = E.Handlers.config
       = {mutable file_handlers: file_handlers_config}
          [@@deriving yojson]
 
@@ -125,5 +118,5 @@ module MakeLogging (H : HandlersT) =
       load_config (Yojson.Safe.from_file config_file)
   end
 
-module Logging = MakeLogging(Default_handlers)
+module Logging = MakeLogging(Handlers)
      

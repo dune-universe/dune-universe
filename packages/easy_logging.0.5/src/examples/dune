@@ -1,4 +1,3 @@
-
 (test
  (name logging_examples)
  (libraries easy_logging)

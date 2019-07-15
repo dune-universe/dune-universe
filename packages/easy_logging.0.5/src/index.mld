@@ -1,4 +1,3 @@
-
 {1 Easy logging }
      Logging infrastructure inspired by the Python logging module.
      The aim of this module is to provide a quick and easy to use logging
@@ -8,9 +7,9 @@ It has the following features :
    - one line logger creation
    - log messages printf style, or provide [string] or [string lazy_t] message
    - tree architecture for easy configuration
-   - handlers associated to each logger will format and treat the message independantly
+   - handlers associated to each logger will format, filter and treat the message independantly
    - use the infrastructure with your own handlers with the [MakeLogging] functor.
-
+   - use tags to add contextual information to log messages  
 {4     Basic example } 
 {[   
 open Easy_logging
@@ -22,14 +21,14 @@ will output to the stdout a message of the form
 {2 Index }
 
 {ol
-{- {!section:description} ({! Easy_logging})}
+{- {!section:description} (see also {! Easy_logging})}
 {- {!section:defaults}
-   + {!section:defaulthandlers} ( {! Easy_logging__Default_handlers})
-   + {!section:logger} ( {! Easy_logging.Logging.logger} )
-   + {!section:logging}  ({! Easy_logging.Logging}) }
-{- {!section:makelogging} ( {! Easy_logging.MakeLogging} )} 
-{- {{:examples.html} Examples}}}
-
+   + {!section:handlers} (see also {! Easy_logging__Handlers})
+   + {!section:logger} (see also {! Easy_logging.Logging.logger} )
+   + {!section:logging}  (see also {! Easy_logging.Logging}) }
+{- {!section:makelogging} (see also {! Easy_logging.MakeLogging} )} 
+{- {{:examples.html} More examples}}
+}
 {2:description Overall description }
 
 The logging infrastructure is based on four concepts:
@@ -76,6 +75,7 @@ be used to filter the messages going through the logging infrastructure.
 
 The predefined levels are, in increasing order of precedence :
  + Debug   : used for debugging.
+ + Trace   : used between info and debug
  + Info    : used to trace program execution.
  + Warning : used for warnings.
  + Error   : used for errors.
@@ -96,16 +96,17 @@ A log item has type
 
 {2 Defaults}
 
-{3:defaulthandlers Default Handlers}
-By default, two handlers are provided. They are instantiated with a level of their own to filter messages :
+{3:handlers Handlers}
+Two handler creation helper function are provided. They  instantiate handlers with a level of their own to filter messages :
  - Cli handler: outputs colored messages to stdout.
    {[ let h = Default_handlers.make (Cli Debug) ]}
  - File handler : outputs messages to a given file.
    {[ let h = Default_handlers.make (File ("filename", Debug)) ]}
 
-
 Note that file handlers will write to files in the [logs] folder in the current path, creating it if it doesn't exist.
 See more about default handlers at {!module:Easy_logging__Default_handlers}.
+
+See more at {! Easy_logging.Handlers}
 
 {3:logger Loggers}
 
@@ -116,7 +117,6 @@ See complete class documentation at {! Easy_logging.Logging.logger}
 A logger object can be created directly (in which case it will not be part of the logging tree)
 {[ let logger1 = new Logging.logger "my_logger1" ]}
 or through helper functions of the {!logging} module.
-
 
 {4 Usage}
 
@@ -148,26 +148,6 @@ The MakeLogging functor takes a {!Easy_logging__.Easy_logging_types.HandlersT} t
 {3 WARNING}
 When declaring your Handlers module, do not coerce it the type [HandlersT], because then  its internal types [t] and [desc] won't be accessible.
 
-{3 Example}
+{3 Examples}
 
-
-Here is a very simple example :
-{[
-module MyHandlers =
-  struct
-    type t = string -> unit
-    type desc = string list ref
-    let set_formatter _ _ = ()
-    let set_level _ _ = ()
-    let apply h (item : log_item) = h item.msg
-    let make (_internal : desc) =
-      fun s -> _internal := s::!_internal
-  end
-
-module MyLogging = MakeLogging(MyHandlers)
-
-let l = ref [];;
-let mylogger = MyLogging.make_logger "mylogger" Debug [l];;
-mylogger#info "this is a message";
-
-]}
+See {{:examples.html} the examples page} for more examples.
