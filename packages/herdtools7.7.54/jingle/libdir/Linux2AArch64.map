@@ -1,0 +1,126 @@
+C to AArch64
+
+"if(%x != constvar:c) codevar:t; else codevar:f;" -> "CMP %x,&c;
+                                     B.EQ else;
+                                     codevar:t;
+                                     B end;
+                                     else:
+                                     codevar:f;
+                                     end:"
+"if(%x) codevar:t; else codevar:f;" -> "CMP %x,#0;
+                                     B.EQ else;
+                                     codevar:t;
+                                     B end;
+                                     else:
+                                     codevar:f;
+                                     end:"
+
+"if(constvar:c == x) codevar:t;" -> "CMP %x,&c;
+	       	     		     B.NE else;
+				     codevar:t;
+				     else:"
+
+"if(x == constvar:c) codevar:t;" -> "CMP %x,&c;
+                                     B.NE else;
+				     codevar:t;
+				     else:"
+"if(%x) codevar:t;" -> "CMP %x,#0;
+			B.EQ else;
+		        codevar:t;
+		        else:"
+
+"%x = constvar:c;" -> "MOV %x,&c"
+
+"*%x = constvar:c;" -> "MOV %tmp,&c;
+                       STR %tmp,[%x]"
+
+"%x = %y;"  -> "MOV %x,%y"
+"%x = %y == %z;"  -> "CMP %y,%z; CSINC %x,XZR,XZR,NE"
+"%x = %y != %z;"  -> "CMP %y,%z; CSINC %x,XZR,XZR,EQ"
+"%x = %y == constvar:c;"  -> "CMP %y,&c; CSINC %x,XZR,XZR,NE"
+"%x = %y != constvar:c;"  -> "CMP %y,&c; CSINC %x,XZR,XZR,EQ"
+
+"*%x = %y;" -> "STR %y,[%x]"
+
+"%x = *%y;" -> "LDR %x,[%y]"
+
+"%x = READ_ONCE(*%y);" -> "load:LDR %x,[%y]"
+
+"WRITE_ONCE(*%y, %x);" -> "store:STR %x,[%y]"
+
+"WRITE_ONCE(*%y, constvar:c);" -> "MOV %tmp,&c;
+                                   store:STR %tmp,[%y]"
+
+"WRITE_ONCE(*%y, %x + constvar:c);" -> "MOV %tmp,&c;
+                                        ADD %tmp, %tmp, %x;
+                                        store:STR %tmp,[%y]"
+
+"%x = %t & constvar:c; %x = %x + constvar:d; WRITE_ONCE(*%y,%x);" ->
+"AND %x,%t,&c;
+ADD %x,%x,&d;
+store: STR %x,[%y]"
+
+"%t0 = %r & constvar:c; %t1 = %x + %t0; WRITE_ONCE(*%t1,constvar:d);" ->
+"AND %t0,%r,&c;
+ADD %t1,%x,%t0;
+MOV %t2,&d;
+store: STR %t2,[%t1]"
+
+"%x = %t & constvar:c; %x = %x + constvar:d; smp_store_release(%y,%x);" ->
+"AND %x,%t,&c;
+ADD %x,%x,&d;
+store: STLR %x,[%y]"
+
+"%t0 = %r & constvar:c; %t1 = %x + %t0; smp_store_release(%t1,constvar:d);" ->
+"AND %t0,%r,&c;
+ADD %t1,%x,%t0;
+MOV %t2,&d;
+store: STLR %t2,[%t1]"
+
+"%r = xchg_relaxed(%x, %y);" -> "loop:load:LDXR %r,[%x];
+				store:STXR w%wmp, %y,[%x];
+				CBNZ w%wmp, loop"
+
+"%r = cmpxchg_relaxed(%x, constvar:c, constvar:d);" -> "loop:MOV %tmp, &c;
+							load:LDXR %r,[%x];
+							CMP %r, %tmp;
+							B.NE out;
+							MOV %tmp, &d;
+							store:STXR w%wmp, %tmp, [%x];
+							CBNZ w%wmp, loop;
+							out:"
+
+"%r = xchg_relaxed(%x, constvar:c);" -> "MOV %tmp,&c;
+					 loop:load:LDXR %r,[%x];
+					 store:STXR w%wmp, %tmp,[%x];
+					 CBNZ w%wmp, loop"
+
+"smp_mb();" -> "DMB ISH"
+
+"smp_rmb();" -> "DMB ISHLD"
+
+"smp_wmb();" -> "DMB ISHST"
+
+"atomic_inc(%x);" -> "MOV %tmp,#1;
+                      stadd %tmp, [%x]"
+
+"release" : "store:STR" -> "store:STLR"
+"release" : "store:STXR" -> "store:STLXR"
+"release" : "" -> "DMB ISH;"
+
+"acquire" : "load:LDR" -> "load:LDAR"
+"acquire" : "load:LDXR" -> "load:LDAXR"
+"acquire" : "\(\(.\|\n\)*\)" -> "\1;DMB ISH"
+
+"full_on_acq_rel" : "\([^;]$\)" -> "\1;
+				   DMB ISH"
+"full" : "acquire | release | full_on_acq_rel"
+
+"id" : "" -> ""
+"const_c_to_1" : "&c" -> "#1"
+"const_c_to_0" : "&c" -> "#0"
+"const_d_to_1" : "&d" -> "#1"
+
+"out_to_loop" : "B.NE out" -> "B.NE loop"
+
+"lock" : "const_c_to_0 | const_d_to_1 | out_to_loop"

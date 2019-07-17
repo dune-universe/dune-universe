@@ -1,0 +1,99 @@
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/proc_fs.h>
+#include <linux/seq_file.h>
+#include <linux/kthread.h>
+#include <linux/ktime.h>
+#include <linux/atomic.h>
+#include <linux/sysfs.h>
+#include <linux/sched.h>
+#include <linux/wait.h>
+#include <linux/slab.h>
+#include <linux/random.h>
+
+typedef u64 count_t;
+#define PCTR "llu"
+
+#ifndef WRITE_ONCE
+#define WRITE_ONCE(x,v) ({ ACCESS_ONCE((x)) = (v); })
+#endif
+#ifndef READ_ONCE
+#define READ_ONCE(x) ACCESS_ONCE((x))
+#endif
+
+#ifndef smp_store_release
+#define smp_store_release(p, v)                                         \
+do {                                                                    \
+        smp_mb();                                                       \
+        WRITE_ONCE(*p, v);                                              \
+} while (0)
+#endif
+
+#ifndef smp_load_acquire
+#define smp_load_acquire(p)                                             \
+({                                                                      \
+        typeof(*p) ___p1 = READ_ONCE(*p);                               \
+        smp_mb();                                                       \
+        ___p1;                                                          \
+})
+#endif
+
+#ifndef xchg_acquire
+#define xchg_acquire(x,v) xchg(x,v)
+#endif
+
+#ifndef xchg_release
+#define xchg_release(x,v) xchg(x,v)
+#endif
+
+#ifndef lockless_dereference 
+#define lockless_dereference(p)                                         \
+({                                                                      \
+        typeof(p) ____p1 = READ_ONCE(p);                                \
+        smp_read_barrier_depends();                                     \
+        ____p1;                                                         \
+})
+#endif
+
+#ifndef cond_resched_rcu_qs
+#define cond_resched_rcu_qs cpu_relax
+#endif
+
+/* Some constant divide (not available on ARMv7) */
+
+inline static u64 divBy10(u64 n) {
+ u64 q, r;
+ q = (n >> 1) + (n >> 2);
+ q = q + (q >> 4);
+ q = q + (q >> 8);
+ q = q + (q >> 16);
+ q = q >> 3;
+ r = n - q*10;
+ return q + ((r + 6) >> 4);
+}
+
+inline static u64 divBy1000(u64 n) {
+  u64 q, r, t;
+  t = (n >> 7) + (n >> 8) + (n >> 12);
+  q = (n >> 1) + t + (n >> 15) + (t >> 11) + (t >> 14);
+  q = q >> 9;
+  r = n - q*1000;
+  return q + ((r + 24) >> 10);
+}
+
+static int randmod(unsigned int m) {
+  unsigned int x ;
+  get_random_bytes(&x,sizeof(x));
+  return x % m ;
+}
+
+static void shuffle_array(int *t,int sz) {
+  for  (int k = 0 ; k < sz-1; k++) {
+    int j = k + randmod(sz-k);
+    int tmp = t[k] ;
+    t[k] = t[j];
+    t[j] = tmp;
+  }
+}

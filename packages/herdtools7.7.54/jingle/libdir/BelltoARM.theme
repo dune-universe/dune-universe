@@ -1,0 +1,26 @@
+Bell to ARM
+
+"r[] %x %y" -> "LDR %x,[%y]"
+
+"r[] %x y" -> "LDR %x,[%y]"
+
+"w[] %x &c" -> "MOV %tmp,&c;
+                STR %tmp,[%x]"
+
+"w[] x &c" -> "MOV %tmp,&c;
+               STR %tmp,[%x]"
+
+"w[] %x %y" -> "STR %x,[%y]"
+
+"f[DMB,SY]" -> "DMB SY"
+
+"f[DMB,ST]" -> "DMB ST"
+
+"f[DSB,SY]" -> "DSB SY"
+
+"f[DSB,ST]" -> "DSB ST"
+
+"f[ISB]" -> "ISB"
+
+"mov %test (eq %r 0);
+ b[] %test label"      -> "CBZ %r,label"

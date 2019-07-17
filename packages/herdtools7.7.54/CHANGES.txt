@@ -1,0 +1,284 @@
+  * RISCV amo support.
+7.47+3
+  * Correct double labelling of rf edges: -doshow rf is now a no-operation
+  * RISCV support for herd
+7.47+2
+  * RISCV support for litmus and generators.
+7.47+1
+  * Some cleanup in options while documenting klitmus.
+7.47
+  * Add many Linux C atomic primitives.
+7.46+3
+  * lock primitive actions take part to dependencies.
+  * herd/linux: serious semantical work on compare exchange and add_unless
+  * herd/linux: failed fenced atomics do not generate fence events.
+  * herd: uniform handling of indivudual events and relational pairs.
+  * litmus: accept void * in argument types.
+  * tools: Introduce mlisa2c, a tool to produce C11/Linux versions from
+    Linux LISA
+7.46+2
+  * New linux locks, simulate load-acquire write release behaviour more
+    closely.
+7.46
+  * C better lock integration. NB: POSIX locks used by litmus.
+  * herd: correct PR #3 [semantics of C11 CAS]
+  * linux: complete (?) implementation of atomic.h
+  * tools, add -int32 <bool> command-line option.
+  * gen Arch64, for -ua 0, now emit a LDXR/STXR pair and observe result
+   register of STXR.
+  * herd, global behaviour for 'show' instruction (no purge of state show component at procedure return)
+  * Add AArch64 instruction csel
+7.45
+  * New ARMv8 model
+  * klitmus tool
+7.44
+  * herd: add atomic_compare_exchange_..._explicit in C parser.
+  * Suppress " in mcond output.
+7.43+3
+  * gen/litmus/herd: add ARMv8 LDAPR instruction (contribution by Will Deacon)
+  * herd: cos-opt.cat, bug ! --> Do not redefine RMW
+  * herd: PPC, avoid data or address dependencies from lwarx to matchin stwcx. 
+7.43+2
+ * Correct C semantics bug if (e) was understood as direct boolean 0/1 test.
+   Now understood as if (e != 0), as it should.
+7.43+1
+ * New tool mlock
+7.43
+ * opam release
+7.42+1
+ * Add -cycles names option, to display cycles of failing checks.
+ * Add support for C11 atomic_compare_exchange_... primitives.
+7.42
+ * Fix license, add README, publish as an OPAM package
+ * gen: avoid pseudo-instruction li in generated tests.
+ * tools: option -alloc <bool> for mprog [allocate symbolic registers].
+ * herd: the match constructs also applies to relation.
+ * Correct libdir definition for gen: same as herd, as it may parse bell
+   files and  would thus include stdlib.cat
+7.41
+ * More opam
+7.40
+ * Opam build
+7.39
+ * herd: enable matching over event sets.
+ * tools: add msethashes, for changing *test* hashes.
+7.38
+ * gen: list all global variables in init when type is non-default
+ * new mselect: specify intervals for number of ins and number of threads.
+ * Data dependencies are through registers only.
+7.37
+ * Add array access as a location, meaningfull only for litmus at present
+7.36
+ * herd: support for linux spin_lock and spin_unlock.
+7.35
+ * herd: Correct LISA rmw "exchange" -> same semantics as X86 xch
+7.34
+ * suppress some 32 bits constants -> 31 bits
+ * gen : follow -realdep true option for AArch64 and ARM
+7.33
+ * herd: reformulate C load and store to use expressions as locations.
+   Brittle (cf. jingle)
+7.32
+ * Specific internal dependencies for C exchange and LISA Rmw...
+ * X86, correct data ports for the exchange instruction.
+7.31
+ * Backward compatibility
+7.30
+ * herd: bug LISA, parsing, add one-letter instruction as possible annotations.
+7.29
+ * herd: bug stdlib.cat (old fromto).
+7.28
+ * herd: correcy fromto ? At least compatible with article.
+7.27
+ * linux: lock -> rcu_read_lock; unlock -> rcu_read_unlock
+7.26
+ * AArch64, add logical and instruction.
+ * Generators, implement -obs three,four,infinity
+7.25
+ * litmus bug, strh instruction were parsed as strb (copy-paste bug)
+ * Linux atomic operations, xchg only.
+7.24
+ * Add AArch64 instruction STP/STNP (litmus only)
+ * Correct msum7 -hexa ---> Conditions are also in hexa.
+ * Add AArch64 instruction LDNP (litmus only).
+7.23
+ * Add AArch64 instruction LDP (litmus only).
+ * Set X is also RMW (Lisa)
+7.22
+  * litmus option -exit true --> exit status reflects final condition success
+    or failure.
+  * qemu mode for litmus
+  * add  -force option to mrcu forces translation in all conditions.
+  * handle the CALL[sync] -> f[sync] change un mrcu
+7.21
+  * LISA: CALL instructuction reversed to  F instruction. Compatibility
+    mode present.
+7.20
+  * C arch, correct stupid bug in control dependencies
+   (forgot if without else....)
+7.19
+  * herd/cat : empty check also operates on sets.
+  * Litmus: noalign meta information
+7.18
+  * Add a set of data ports to event structures, in order to separate
+    data and address dependencies. Brittle on RMW.
+  * Add intruction level control dependency (for C).
+  * Suppress deprecaton warnings, by writing code in misc...
+7.17
+  * More Linux macros
+  * Locked intructions for X86, simplify setting: 1. suppress atomicity
+    component of event structures + set atomicity at event creation time.
+7.16
+  * Oups trivial bug in filters.cat
+7.15
+  * Add M. Batty et all's models and take the most advanced
+   (with partial orders) one as the C default.
+  * Add macros to C arch and bell support
+  * Correct x86tso bug + use A in filters as atomic.
+7.14
+  * <correct> mrcu (check that call[sync] L...U ran at most once
+    (replace condition on shared location by specific register, because
+     of "last write" problem)
+7.13
+  * <correct> mrcu (check that call[sync] L...U ran at most once.
+7.12
+  * tools added mrcu (for rcu translation) => add "filter" component to tests.
+7.11
+  * tools: correct mcmp (normalize_simple in logState), so as to accept
+           flowing model output.
+  * tools: add mshowhashes to list test hashes + share code with mdiag
+7.10
+  * Correct bug in computing ne (not equal): was 1 (true) for two different
+    "S" vars...
+7.09
+  * Internal change of mdiag: diagnostics are more precise.
+  * All lexers, ignore '\r'.
+  * CAT: make the initial "identity" string optional.
+7.08  
+  * C11: add NA for non-atomics events (needed by popl15c11 models from the catalogue)
+  * LISA: change rmw sematics as fetch_and_op , was op_and_fetch
+7.07
+  * herd: set 'Atom' -> set 'X' (compatibility)
+7.06
+  * herd: Add set 'Atom' for LISA atimic events.
+  * Dependencies for C, always "real".
+  * generators: -realdep <bool> option
+  * LISA, non-conditional branch.
+7.05
+  * litmus -noalign option
+7.04
+7.03
+7.02
+
+  * LISA :backward compatibility: f[sync] -> call[sync]
+  * LISA : introduce call instructions.
+  * herd : make exchange an expression (was an instruction !)
+  * herd : use short memory model names in pictures
+  * lib : C make exchange and fetch expressions, as they should be.
+  * tools : handle C arch completely
+7.01
+
+  * herd: Add minimal atomicity to LL/SS (PPC and ARM).
+  * herd: Recursive procedure + match instruction.
+
+7.00 Release 'Seven'
+  * herd: refactored release.
+  * litmus:  -driver optiopn to generate standalone C programs or Objective C
+  * litmus:  More configuration files (nexus10..)
+  * litmus:  Refactoring: avoid mutable internal flags.
+
+  
+5.01 Release
+  * litmus:  litmus option -crossrun adb -> run.sh connects to device using adb
+    (Android Debugging Bridge)
+
+5.00 Release
+   * gen: Added classify tool
+   * gen: Uniform naming scheme, clarify usage and document
+   * gen: Refactor diyone second mode, in the same style as diy/diycross
+   * gen: Support for atomic accesses (undocumented)
+
+  * litmus:  added the mcycles tool
+  * litmus:  iPad and asus TF300T configuration files.
+  * litmus:  New user synchronisation mode userfence (suggested by Javi Merino)
+  * litmus:  More POSIX compliant code in two occasions (malloc/errno and
+    use thread level affinity functions, suggested by Javi Merino)
+  * litmus:  Runtime option +fix, to cancel out changing launch mode
+  * litmus:  Make timebase delay settable (option -delay)
+  * litmus:  Timebase synchronisation mode (-barrier timebase).
+  * litmus:  option -crossrun <host> -> run.sh run executables on distant machine <host>.
+  * litmus:  add -stride mode (memory scanned by increments > 1), useful ? Very useful.
+  * litmus:  -linkopt option
+  * litmus:  -kind false option, to suppress kind and validation information from output
+  * litmus:  -gcc option
+  * litmus:  ARM and cortex9 (cross-compilation) configuration files
+
+4.00 Release
+   * gen: ARM support.
+   * gen: Generalize -o option, as for litmus.
+   * gen: option -var for diycross for nice variables.,
+   * gen: new tool diycross, similar to diyvar, but let user
+     specify  the list of alternatives eg:
+     diycross -name SB PodWR,SyncdWR Fre PodWR,SyncdWR Fre
+     For 3 MP-like tests (MP, MP+sync+po, MP+syncs)
+     diyvar behavior is still here with the pseudo-relaxation all(R|W)(R|W)
+     eg: diycross -name SB allWR Fre allWR Fre
+   * gen: Add a new functionality for diyone: generate tests from a list
+     of cycles given in stdin.
+   * Mode precise edge dependencies, DpdR, DpdW, CltrdR, CtrldW
+     are still recognised by parser and are default values
+     (backward compatibility).
+     However, Dpd* and Ctrld* are not available anymore.
+   * gen: dont: uncompress archive with gunzip (AIX: tar z.. not accepted)
+   * gen: diy: -cumul false also acts on RfStar
+   * gen: dont: Corrected bug in default safe_conform list for PPC.
+   * gen: dont: Use compressed archive
+
+  * litmus:  new -o support -> dir/tar/tgz
+  * litmus:  ARM support, tested on uniproc only
+  * litmus:  -loop option, for time measurement
+  * litmus:  power7.32 config file, [used for shipped testcases]
+  * litmus:  power7 config file
+  * litmus:  If affinity is enabled, avail=0 instructs binaries to
+    detects available logical processors.
+  * litmus:  add optional shuffle in indirect mode (similar to direct mode)
+  * litmus:  add random affinity mode (-ra true/+ra)
+  * litmus:  added chianti config file
+  * litmus:  added vargas16 config file
+  * litmus:  -o name.tgz produce compressed archives
+
+3.00 Release
+
+  * litmus:  There is now a Makefile in archives produced with -o <name>.tar.
+    Best way to provide parallel compilation (make -j N).
+  * litmus:  added -index <@name>, for dumping an index of compiled tests.
+  * litmus:  added the -no <cyclelist> option (used by dont).
+
+2.99 Release (beta)
+
+   * gen: Introduce dont, for automating testing.
+   * gen: Additional mode for diy: critical, for generating critical cycles
+     (no Po/Po consing)
+   * gen: Additional option for diy: -cumul, for avoiding ambiguous tests.
+
+2.00 Release
+
+   * gen: -mix option (default false, for backward compatibility)
+   * gen: Clarification of observers and documentation
+     [three modes accept/avoid/force, three sorts straight/fenced/loop]
+     Defaults avoid/fenced.
+   * gen: Added PPO pseudo-relaxation, very ad-hoc.
+   * gen: Added RfStar edge (ie Rf to a read by lwarx)
+   * gen: various -fno mode
+   * gen: -sta mode
+   * gen: PPO macro
+   * gen: Arch independant readRelax
+
+  * litmus:  Added affinity control
+  * litmus:  Added prealloc mode.
+  * litmus:  -o a.tar and -cross a.tar behave slightly differently.
+    (-cross is for released tests, with Makefile & README
+  * litmus:  Added call mode.
+  * litmus:  Added cache mode.
+
+1.0   Initial release.

@@ -1,0 +1,55 @@
+"AArch64"
+
+include "cos.cat"
+
+(* Uniproc *)
+acyclic po-loc | rf | fr | co as uniproc
+
+(* Utilities *)
+let dd = addr | data
+let rdw = po-loc & (fre;rfe)
+let detour = po-loc & (coe ; rfe)
+let addrpo = addr;po
+let com = fr | co | rf
+
+empty rmw & (fre;coe) as atomic
+
+include "aarch64fences.cat"
+
+let ci0 = ctrlisb | detour
+let ii0 = dd | rfi | rdw
+let cc0 = dd | ctrl | addrpo
+let ic0 = 0
+
+include "ppo.cat"
+
+let acq = (A * M) & po
+let rel = (M * L) & po
+
+let syf = dmb.sy & (M * M)
+        | dsb.sy & (M * M)
+
+let stf = dmb.st & (W * W)
+        | dsb.st & (W * W)
+
+let ldf = dmb.ld & (R * M)
+	| dsb.ld & (R * M)
+	    
+let fence = syf | stf | ldf
+	  | acq | rel
+    
+let hb = (R * M) & fence | rfe | ppo
+
+acyclic hb as thin_air
+
+let prop = com*; syf
+	 | stf
+	 | rfe?; rel
+
+let prop_al = (L * A) & (rf | po)
+	    | (A * L) & fr
+
+let xx = (W * W) & (X * X) & po
+
+irreflexive prop; rfe; (fence | ppo); fre as observation
+acyclic co | prop;hb* | xx | prop_al;hb* as propagation
