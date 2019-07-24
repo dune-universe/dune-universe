@@ -1,0 +1,39 @@
+(executables
+ (names damped custom_rk45)
+ (libraries owl owl-ode owl-plplot)
+ (modules damped custom_rk45))
+
+(alias
+ (name runtest)
+ (action
+  (progn
+   (run ./damped.exe)
+   (run ./custom_rk45.exe)))
+ (package owl-ode))
+
+(executable
+ (name van_der_pol_sundials)
+ (libraries owl owl-ode owl-ode-sundials owl-plplot)
+ (modules van_der_pol_sundials))
+
+(alias
+ (name runtest)
+ (action
+  (run ./van_der_pol_sundials.exe))
+ (package owl-ode-sundials))
+
+(executable
+ (name van_der_pol_odepack)
+ (libraries owl owl-ode owl-ode-odepack owl-plplot)
+ (modules van_der_pol_odepack))
+
+(alias
+ (name runtest)
+ (action
+  (run ./van_der_pol_odepack.exe))
+ (package owl-ode-odepack))
+
+(env
+ (_
+  (env-vars
+   (QT_QPA_PLATFORM offscreen))))
