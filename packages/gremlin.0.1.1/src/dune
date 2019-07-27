@@ -1,0 +1,21 @@
+(library
+  (public_name gremlin)
+  (modules gremlin)
+  (synopsis "Gremlin client library")
+  (libraries
+    lwt
+    websocket
+    websocket-lwt-unix
+    yojson
+    core.uuid
+    lwt_ppx
+    ppx_let
+    containers
+  )
+  (preprocess
+    (pps
+      lwt_ppx
+      ppx_let
+    )
+  )
+)

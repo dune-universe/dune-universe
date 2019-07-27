@@ -1,0 +1,15 @@
+(executables
+  (names
+     add_vertices
+     get_vertices)
+  (libraries
+    gremlin
+    yojson
+  )
+  (preprocess
+    (pps
+      lwt_ppx
+      ppx_let
+    )
+  )
+)

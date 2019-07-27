@@ -16,22 +16,12 @@
  (libraries compiler-libs.common stdlib-shims)
 )
 
-; how incredibly ugly - to accommodate a compiler version change effecting 2 files...
-(alias
- (name epoc1)
- (deps genprintval.ml-epoc1 genprintval.mli-epoc1)
- (action (progn
-         (run %{bin:cp} genprintval.ml-epoc1 ../../../src/genprintval.ml )
-         (run %{bin:cp} genprintval.mli-epoc1 ../../../src/genprintval.mli )
- )))
-
-(alias
- (name epoc2)
- (deps genprintval.ml-epoc2 genprintval.mli-epoc2)
- (action (progn
-         (run %{bin:cp} genprintval.ml-epoc2 ../../../src/genprintval.ml )
-         (run %{bin:cp} genprintval.mli-epoc2 ../../../src/genprintval.mli )
- )))
+(rule
+ (targets genprint.ml)
+ (deps genprint.cppo.ml)
+ (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets} ))
+; (action (with-stdout-to %{targets} (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets} )))
+)
 
 (rule
  (targets genprintval.ml genprintval.mli)

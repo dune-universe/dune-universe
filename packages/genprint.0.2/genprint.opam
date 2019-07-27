@@ -1,6 +1,6 @@
 opam-version: "2.0"
 #name: "genprint"
-#version: "0.1"
+#version: "0.2"
 
 synopsis: "PPX syntax extension and library package for printing values of any type"
 description: """
@@ -16,19 +16,18 @@ dev-repo: "git+https://github.com/progman1/genprintlib.git"
 
 build: [
   ["dune" "subst"] {pinned}
-#  ["dune" "build"  "@epoc1"] {ocaml:version  <"4.08.0"}
-#  ["dune" "build"  "@epoc2"] {ocaml:version >="4.08.0"}
   ["dune" "build" "-p" name "-j" jobs]
 ]
 
 depends: [
   "ocaml" {>= "4.02.0" }
   "dune"
-  "stdlib-shims"
-  "ppxlib" {build}
+  "ppxlib"
+  "cppo"
+  "stdlib-shims" {build}
 ]
 
 url {
-  src: "https://github.com/progman1/genprintlib/archive/v0.1.tar.gz"
-  checksum: "md5=4617fd75dc5cd9c2e4b53927233762a3"
+  src: "https://github.com/progman1/genprintlib/archive/v0.2.tar.gz"
+  checksum: "md5=17d2b498791d517d424b742308701402"
 }

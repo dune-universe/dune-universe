@@ -1,0 +1,6 @@
+(env
+  (dev
+; genprintval has unspecified record fields, 32 is to account for differences in its interfacing.
+    (flags (:standard -w -9-32))
+))
+
