@@ -1,0 +1,29 @@
+opam-version: "2.0"
+name: "sys-socket-unix"
+version: "1.0.0"
+maintainer: "Romain Beauxis <toots@rastageeks.org>"
+homepage: "https://github.com/toots/ocaml-sys-socket"
+authors: "Romain Beauxis <toots@rastageeks.org>"
+bug-reports: "https://github.com/toots/ocaml-sys-socket/issues"
+dev-repo: "git+https://github.com/toots/ocaml-sys-socket.git"
+synopsis: "Ctypes bindings to unix-specific low-level socket structure and data-types"
+description: """
+This module provides OCaml ctypes bindings to system-specific low-level socket
+structure and data-types.
+
+The interface is implemented using ocaml-ctypes and in intended to exposed the
+machine-specific, low-level details of the most important parts of socket
+implementations.
+
+This package provides the part of the API that is specific to Unix systems.
+"""
+license: "MIT"
+depends: [
+  "ocaml"
+  "dune" {>= "1.10"}
+  "ctypes"
+  "unix-errno"
+  "sys-socket"
+]
+available: [os != "win32"]
+build: ["dune" "build" "-p" name "-j" jobs]

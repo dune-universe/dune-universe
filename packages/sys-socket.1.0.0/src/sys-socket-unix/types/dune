@@ -1,0 +1,10 @@
+(library
+ (name sys_socket_unix_types)
+ (public_name sys-socket-unix.types)
+ (enabled_if   (= %{os_type} Unix))
+ (libraries sys-socket.types sys-socket-unix.constants ctypes.stubs))
+
+(rule
+ (targets sys_socket_unix_generated_constants.ml)
+ (deps    (:gen ../generator/gen_constants_c))
+ (action  (system "%{gen} > %{targets}")))

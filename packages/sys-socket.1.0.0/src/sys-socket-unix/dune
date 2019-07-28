@@ -1,0 +1,15 @@
+(env
+  (dev
+     (flags (:standard -warn-error -A))))
+
+(library
+ (name         sys_socket_unix)
+ (public_name  sys-socket-unix)
+ (synopsis    "sys-socket-unix provides access to unix-specific sockaddr_un")
+ (enabled_if   (= %{os_type} Unix))
+ (libraries    unix unix-errno.unix ctypes sys-socket sys-socket-unix.types))
+
+(rule
+ (targets sys_socket_unix_generated_types.ml)
+ (deps    (:gen ./generator/gen_types_c))
+ (action  (system "%{gen} > %{targets}")))

@@ -1,0 +1,5 @@
+(library
+ (name sys_socket_constants)
+ (public_name sys-socket.constants)
+ (libraries ctypes.stubs))
+

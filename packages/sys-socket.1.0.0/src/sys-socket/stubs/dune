@@ -1,0 +1,15 @@
+(env
+  (dev
+     (flags (:standard -warn-error -A))))
+
+(library
+ (name sys_socket_stubs)
+ (public_name sys-socket.stubs)
+ (libraries sys-socket.types ctypes.stubs))
+
+(rule
+ (targets sys_socket_generated_types.ml)
+ (deps    (:exec ../generator/exec.sh)
+          (:gen ../generator/gen_types_c))
+ (action  (with-stdout-to %{targets}
+            (system "%{exec} %{ocaml-config:system} %{gen}"))))
