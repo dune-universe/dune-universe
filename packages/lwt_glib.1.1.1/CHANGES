@@ -1,0 +1,61 @@
+===== Lwt_glib 1.1.1 (2018-07-30) =====
+
+  * Move Lwt_glib to a separate repo.
+  * Fix internal helper (#1, Frédéric Bour).
+  * Upgrade from Jbuilder to Dune (f8269a1).
+  * Fix deprecation warnings due to OCaml 4.08 and Lwt development (9f50a15).
+
+===== Lwt 3.1.0 (2017-07-19) =====
+
+====== Miscellaneous ======
+
+  * The additional packages lwt_ssl, lwt_react, lwt_glib get new minor
+    releases, the change being new Jbuilder build systems (#374, Andrew
+    Ray).
+
+===== Lwt 3.0.0 (2017-04-10) =====
+
+====== Breaking ======
+
+  * ocamlfind packages lwt.react, lwt.ssl, lwt.glib are replaced by lwt_react,
+    lwt_ssl, lwt_glib. These have been separate OPAM packages, under those
+    names, since 2.7.0 (#301).
+
+===== Lwt 2.7.0 (2017-01-03) =====
+
+====== Planned to break in 3.0.0 ======
+
+  * ocamlfind packages lwt.react, lwt.ssl, and lwt.glib will be replaced by the
+    new lwt_react, lwt_ssl, and lwt_glib. These are now distributed in new OPAM
+    packages with the same names, separately from OPAM package lwt (#301).
+
+===== Lwt 2.4.5 (2014-04-21) =====
+
+  * lwt.glib fixes:
+    - handle HUP
+    - fix for BSD/OSX
+
+===== Lwt 2.4.2 (2012-09-28) =====
+
+  * change the default method for Lwt_glib.install
+    (use the glib main loop by default: more portable)
+  * ignore invalid file descriptors returned by glib
+    (like the emulation of select in glib does)
+
+===== Lwt 2.3.2 (2011-11-04) =====
+
+  * Add Lwt_glib.iter and Lwt_glib.wakeup
+
+===== Lwt 2.3.0 (2011-04-12) =====
+
+  * Lots of improvements for Windows:
+    ** make glib integration to work
+
+===== Lwt 2.1.0 (2010-04-19) =====
+
+  * Bugfixes in {{{Lwt_glib}}}: file descriptors were not monitored correctly
+
+===== Lwt 2.0.0 (2009-10-15) =====
+
+  * Adding modules:
+    ** {{{Lwt_glib}}} for integration into the glib main event loop
