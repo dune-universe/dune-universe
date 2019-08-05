@@ -1,3 +1,4 @@
+version: "0.5"
 opam-version: "2.0"
 maintainer: "Frederic Bour <frederic.bour@lakaban.net>"
 authors: "Frederic Bour <frederic.bour@lakaban.net>"
