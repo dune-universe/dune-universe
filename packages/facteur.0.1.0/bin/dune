@@ -1,0 +1,6 @@
+(executable
+ (name facteur)
+ (public_name facteur)
+ (package facteur)
+ (modules facteur x509_handler sendmail_handler)
+ (libraries rfc2183 logs.cli logs.fmt fmt.tty fmt.cli lwt lwt.unix magic zone emile.mrmime colombe.mrmime astring fpath cmdliner emile.cmdliner mrmime colombe sendmail-lwt sendmail.tls))

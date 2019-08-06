@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>hardening.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span class="visited"> </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1">1</a>
+<a href="#L2">2</a>
+</pre>
+        <pre id="code">
+let kdf ~size ~salt password =
+  <span data-count="134">S</span>crypt_kdf.scrypt_kdf ~password ~salt ~dk_len:size ~r:8 ~p:2 ~n:8192
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-08-04 23:31:08 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

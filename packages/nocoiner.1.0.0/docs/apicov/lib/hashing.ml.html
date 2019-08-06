@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>hashing.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span class="visited"> </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span class="visited"> </span>
+<a id="L6"></a><span > </span>
+<a id="L7"></a><span class="visited"> </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1">1</a>
+<a href="#L2">2</a>
+<a href="#L3">3</a>
+<a href="#L4">4</a>
+<a href="#L5">5</a>
+<a href="#L6">6</a>
+<a href="#L7">7</a>
+</pre>
+        <pre id="code">
+module Blake2B = Digestif.BLAKE2B
+
+let hash data = <span data-count="99">B</span>lake2B.to_hex @@ Blake2B.digest_string data
+
+let raw_hash data = <span data-count="8">B</span>lake2B.to_raw_string @@ Blake2B.digest_string data
+
+let mac ~key data = <span data-count="67">B</span>lake2B.to_hex @@ Blake2B.Keyed.mac_string ~key data
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-08-04 23:31:08 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

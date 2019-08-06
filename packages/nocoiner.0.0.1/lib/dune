@@ -1,6 +1,0 @@
-(library
- (name nocoiner)
- (public_name nocoiner)
- (wrapped true)
- (libraries core nocrypto.unix nocrypto digestif digestif.c)
- (synopsis "The Nocoiner module for nocoiner library."))

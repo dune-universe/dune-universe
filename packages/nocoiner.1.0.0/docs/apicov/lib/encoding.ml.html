@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>encoding.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span class="visited"> </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span class="visited"> </span>
+<a id="L6"></a><span > </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span class="visited"> </span>
+<a id="L9"></a><span > </span>
+<a id="L10"></a><span class="visited"> </span>
+<a id="L11"></a><span > </span>
+<a id="L12"></a><span > </span>
+<a id="L13"></a><span class="visited"> </span>
+<a id="L14"></a><span > </span>
+<a id="L15"></a><span > </span>
+<a id="L16"></a><span > </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1"> 1</a>
+<a href="#L2"> 2</a>
+<a href="#L3"> 3</a>
+<a href="#L4"> 4</a>
+<a href="#L5"> 5</a>
+<a href="#L6"> 6</a>
+<a href="#L7"> 7</a>
+<a href="#L8"> 8</a>
+<a href="#L9"> 9</a>
+<a href="#L10">10</a>
+<a href="#L11">11</a>
+<a href="#L12">12</a>
+<a href="#L13">13</a>
+<a href="#L14">14</a>
+<a href="#L15">15</a>
+<a href="#L16">16</a>
+</pre>
+        <pre id="code">
+module Base64 = Nocrypto.Base64
+
+let encode_blob cstruct = Cstruct.to_string @@ Base64.<span data-count="84">e</span>ncode cstruct
+
+let encode message = encode_blob @@ Cstruct.of_st<span data-count="28">r</span>ing message
+
+let decode_as_blob encoded =
+  let nullable = Base64.decode<span data-count="427"> </span>@@ Cstruct.of_<span data-count="425">s</span>tring encoded in
+  match nullable with
+  | Some<span data-count="24"> </span>value -&gt;
+      value
+  | None -&gt;
+      failwith<span data-count="407"> </span>"Failed to decode Base 64 blob!"
+
+
+let decode encoded = Cstruct.to_string @@ decode_as_blob encoded
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-08-04 23:31:08 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

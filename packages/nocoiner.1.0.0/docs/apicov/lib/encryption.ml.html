@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <title>nocoiner</title>
+    <link rel="stylesheet" href="../coverage.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">lib/</span>encryption.ml
+        </a>
+      </h1>
+      <h2>100.00%</h2>
+    </div>
+    <div id="navbar">
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span > </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span class="visited"> </span>
+<a id="L6"></a><span class="visited"> </span>
+<a id="L7"></a><span class="visited"> </span>
+<a id="L8"></a><span class="visited"> </span>
+<a id="L9"></a><span > </span>
+<a id="L10"></a><span > </span>
+<a id="L11"></a><span > </span>
+<a id="L12"></a><span class="visited"> </span>
+<a id="L13"></a><span > </span>
+<a id="L14"></a><span > </span>
+<a id="L15"></a><span class="visited"> </span>
+<a id="L16"></a><span class="visited"> </span>
+<a id="L17"></a><span > </span>
+<a id="L18"></a><span > </span>
+<a id="L19"></a><span > </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span > </span>
+<a id="L22"></a><span > </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span > </span>
+<a id="L25"></a><span > </span>
+<a id="L26"></a><span > </span>
+<a id="L27"></a><span > </span>
+<a id="L28"></a><span > </span>
+<a id="L29"></a><span > </span>
+<a id="L30"></a><span > </span>
+<a id="L31"></a><span > </span>
+<a id="L32"></a><span > </span>
+<a id="L33"></a><span > </span>
+<a id="L34"></a><span > </span>
+<a id="L35"></a><span > </span>
+<a id="L36"></a><span > </span>
+<a id="L37"></a><span > </span>
+<a id="L38"></a><span > </span>
+<a id="L39"></a><span > </span>
+<a id="L40"></a><span > </span>
+<a id="L41"></a><span > </span>
+<a id="L42"></a><span > </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1"> 1</a>
+<a href="#L2"> 2</a>
+<a href="#L3"> 3</a>
+<a href="#L4"> 4</a>
+<a href="#L5"> 5</a>
+<a href="#L6"> 6</a>
+<a href="#L7"> 7</a>
+<a href="#L8"> 8</a>
+<a href="#L9"> 9</a>
+<a href="#L10">10</a>
+<a href="#L11">11</a>
+<a href="#L12">12</a>
+<a href="#L13">13</a>
+<a href="#L14">14</a>
+<a href="#L15">15</a>
+<a href="#L16">16</a>
+<a href="#L17">17</a>
+<a href="#L18">18</a>
+<a href="#L19">19</a>
+<a href="#L20">20</a>
+<a href="#L21">21</a>
+<a href="#L22">22</a>
+<a href="#L23">23</a>
+<a href="#L24">24</a>
+<a href="#L25">25</a>
+<a href="#L26">26</a>
+<a href="#L27">27</a>
+<a href="#L28">28</a>
+<a href="#L29">29</a>
+<a href="#L30">30</a>
+<a href="#L31">31</a>
+<a href="#L32">32</a>
+<a href="#L33">33</a>
+<a href="#L34">34</a>
+<a href="#L35">35</a>
+<a href="#L36">36</a>
+<a href="#L37">37</a>
+<a href="#L38">38</a>
+<a href="#L39">39</a>
+<a href="#L40">40</a>
+<a href="#L41">41</a>
+<a href="#L42">42</a>
+</pre>
+        <pre id="code">
+module String = Core.String
+module AES = Nocrypto.Cipher_block.AES.CBC
+
+let __kdf key =
+  let aes_salt = Entro<span data-count="71">p</span>y.min_bit<span data-count="71">s</span> (32 * 8) in
+  let mac<span data-count="71">_</span>salt = Entropy.<span data-count="71">m</span>ax_bits (32 * 8) in
+  let aes_<span data-count="71">k</span>ey = Hardeni<span data-count="71">n</span>g.kdf ~size:32l ~salt:aes_salt key in
+  let mac_key = Ha<span data-count="71">r</span>dening.kdf ~size:32l ~salt:mac_salt key in
+  (aes_key, mac_key)
+
+
+let hash data = C<span data-count="13">s</span>truct.of_<span data-count="72">h</span>ex @@ Hashing.hash @@ <span data-count="72">C</span>struct.to_st<span data-count="72">r</span>ing data
+
+let mac ~key data =
+  <span data-count="72">l</span>et key', data' = (Cstruct.to_string key, Cst<span data-count="69">r</span>uct.to_string data) in
+  Cstruct.of_hex @@ Hashing.mac ~key:<span data-count="70">k</span>ey' data'
+
+
+let encrypt ~key ~iv ~metadata ~message:msg =
+  let aes_key, mac_key = __kdf key in
+  let aes_key' = AES.of_secret aes_key in
+  let plaintext = Helpers.pad ~basis:16 @@ Cstruct.to_string msg in
+  let ciphertext =
+    AES.encrypt ~iv ~key:aes_key' @@ Cstruct.of_string plaintext
+  in
+  let secret = hash mac_key in
+  let payload = Cstruct.concat [ metadata; iv; ciphertext ] in
+  let tag = mac ~key:secret payload in
+  (ciphertext, tag)
+
+
+let decrypt ~reason ~key ~iv ~metadata ~cipher ~tag =
+  let aes_key, mac_key = __kdf key in
+  let secret = hash mac_key in
+  let payload = Cstruct.concat [ metadata; iv; cipher ] in
+  let tag' = mac ~key:secret payload in
+  if Cstruct.equal tag tag'
+  then
+    let aes_key' = AES.of_secret aes_key in
+    let plaintext = AES.decrypt ~iv ~key:aes_key' cipher in
+    Cstruct.of_string @@ Helpers.unpad @@ Cstruct.to_string plaintext
+  else raise reason
+</pre>
+      </div>
+    </div>
+    <div id="footer">Generated on 2019-08-04 23:31:08 by <a href="https://github.com/aantron/bisect_ppx">Bisect_ppx</a> 1.4.1</div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

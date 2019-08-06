@@ -1,0 +1,16 @@
+(library
+ (name magic)
+ (modules magic)
+ (c_names magic_stubs)
+ (c_library_flags (:standard -lmagic))
+ (libraries fmt))
+
+(library
+ (name zone)
+ (modules zone)
+ (c_names zone_stubs))
+
+(library
+ (name rfc2183)
+ (modules rfc2183)
+ (libraries zone astring mrmime))
