@@ -1,0 +1,25 @@
+# Pipeline
+
+Pipeline is a library to build and execute processing pipelines with Lwt-based
+concurrency.
+
+--------------------------------------------------------------------------------
+
+A pipeline (`('a, 'b) pipe`) is a series of steps (`('c, 'd) step`) which are
+daisy-chained in a type-safe way
+(`cons: ('a, 'b) step -> ('b, 'c) pipe -> ('a, 'c) pipe`).
+
+A step can either be:
+- synchronous (`sync: ('a -> 'b) -> ('a, 'b) step`) in which case its
+  transformation is applied immediately to the data that traverses the pipeline,
+- asynchronous-sequential (`async_s: ('a -> 'b Lwt.t) -> ('a, 'b) step`) in
+  which case its transformation is applied as an Lwt promise, but only one such
+  promise is ever not resolved at a time, or
+- asynchronous-parallel (`async_p: ('a -> 'b Lwt.t) -> ('a, 'b) step`) in which
+  case its transformation is applied as an Lwt promise, but multiple such
+  promises cat be not resolved at the same time.
+
+When a pipeline is executed (`run: ('i, 'o) pipe -> 'i list -> 'o list Lwt.t`)
+each element of the input list goes through each of the steps one-by-one, and
+the order is always preserved. In addition, an optional `pool` argument can be
+used to limit the number of promises that can be not resolved at any given time.

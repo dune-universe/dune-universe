@@ -1,0 +1,20 @@
+opam-version: "2.0"
+name: "lwt-pipeline"
+version: "0.1"
+synopsis: "Pipeline library for Lwt"
+description: """
+A library to handle pipelines (series of transformation) with support for
+Lwt-based concurrency.
+"""
+maintainer: "Raphaël Proust <code@bnwr.net>"
+authors: "Raphaël Proust <code@bnwr.net>"
+license: "MIT"
+homepage: "https://gitlab.com/nomadic-labs/lwt_pipeline"
+bug-reports: "https://gitlab.com/nomadic-labs/lwt_pipeline/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/lwt_pipeline.git"
+depends: [
+	"ocaml" { >= "4.03" }
+	"dune" { >= "1.7" }
+	"lwt"
+	]
+build: ["dune" "build" "-p" name "-j" jobs]

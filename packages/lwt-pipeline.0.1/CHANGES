@@ -1,0 +1,6 @@
+
+- `archaeology`: Commits up to the tag `archaeology` are extracted from
+  <https://gitlab.com/nomadic-labs/tezos> where the pipeline library was
+  orignially developped as an internal library. These commits have messages of
+  the form `<hash>: <message>` where the `<hash>` matches the commit hash on the
+  original repository.
