@@ -1,0 +1,9 @@
+
+(library
+  (name bytearray)
+  (public_name bytearray)
+  (preprocess (action
+                (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+  (libraries bigarray)
+  (c_names bytearray_stubs)
+  (c_flags (-g -O2 -fPIC -Wall -pedantic -Werror -Wno-long-long)))

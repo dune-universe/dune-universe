@@ -1,4 +1,0 @@
-open ModuleC
-fun foo() {
-  bar()
-}

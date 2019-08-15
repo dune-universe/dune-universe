@@ -1,0 +1,6 @@
+
+(library
+  (name        setcore)
+  (public_name setcore)
+  (c_names     setcore_stubs)
+  (c_flags     (-g -O2 -fPIC -Wall -pedantic -Werror -Wno-long-long)))

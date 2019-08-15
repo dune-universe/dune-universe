@@ -1,7 +1,0 @@
-open CyclicB
-
-fun bar() {
-  ()
-}
-
-foo()
