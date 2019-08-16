@@ -1,0 +1,3 @@
+PROG=./otf
+ARGS=-run-collection tests/common-config
+EXIT_CODE=1

@@ -1,0 +1,19 @@
+================================================================================
+Running collection "tests/one-command"
+4 tests collected
+
+false-command .
+true-command .
+wrong-false-command F
+wrong-true-command F
+
+================================================================================
+------ tests/one-command/wrong-false-command -----------------------------------
+Invalid exit code (got 1 while expecting 0)
+
+------ tests/one-command/wrong-true-command ------------------------------------
+Invalid exit code (got 0 while expecting 1)
+
+================================================================================
+Summary: 2 passed, 2 failed
+================================================================================

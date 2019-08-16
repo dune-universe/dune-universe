@@ -1,0 +1,3 @@
+grep: unrecognized option '--invalid-option'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.

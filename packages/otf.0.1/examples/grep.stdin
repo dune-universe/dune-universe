@@ -1,0 +1,3 @@
+A line with foo is present.
+Another line, which is not interesting for this test.
+I can fool grep to keep this line :-p.

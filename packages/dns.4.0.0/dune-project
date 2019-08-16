@@ -1,0 +1,4 @@
+(lang dune 1.2)
+(name dns)
+(version v4.0.0)
+(using menhir 2.0)

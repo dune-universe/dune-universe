@@ -1,0 +1,22 @@
+image: ocaml/opam2
+
+stages:
+    - build
+    - test
+
+build:
+    stage: build
+    script:
+        - opam install dune
+        - make
+    artifacts:
+        paths:
+          - _build
+
+test:
+    stage: test
+    script:
+        - opam install dune
+        - make check
+    dependencies:
+        - build

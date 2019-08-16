@@ -1,0 +1,2 @@
+otf [-print-config|-run-test] <test_name>
+Error: Variable "EXIT_CODE" should be an integer

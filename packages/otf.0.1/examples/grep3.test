@@ -1,0 +1,3 @@
+PROG=grep
+ARGS=--invalid-option foo /dev/null
+EXIT_CODE=2

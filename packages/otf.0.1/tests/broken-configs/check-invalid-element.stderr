@@ -1,0 +1,2 @@
+otf [-print-config|-run-test] <test_name>
+Error: Invalid variable name "INVALID_CONFIG_ELEMENT"

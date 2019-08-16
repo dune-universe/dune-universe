@@ -1,0 +1,10 @@
+(executable
+ (name otf)
+ (public_name otf)
+ (package otf)
+ (libraries unix))
+
+(install
+ (files examples/failing.test examples/false.test examples/grep.stdin examples/grep.stdout examples/grep.test examples/grep2.stdin examples/grep2.stdout examples/grep2.test examples/grep3.stderr examples/grep3.stdout examples/grep3.test examples/sort.stdin examples/sort.stdout examples/sort.test)
+ (section share)
+ (package otf))

@@ -1,0 +1,5 @@
+ARGS: string list = [] [from default configuration]
+DIFFOPTIONS: string list = [] [from default configuration]
+EXIT_CODE: int = 1 [from "tests/one-command/false-command.test"]
+PROG: string = "false" [from "tests/one-command/false-command.test"]
+Config OK

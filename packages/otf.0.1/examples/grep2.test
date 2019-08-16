@@ -1,0 +1,3 @@
+PROG=grep
+ARGS=supercalifragilisticexpialidocious
+EXIT_CODE=1

@@ -1,0 +1,3 @@
+PROG=./otf
+ARGS=tests/broken-configs/invalid-element
+EXIT_CODE=1

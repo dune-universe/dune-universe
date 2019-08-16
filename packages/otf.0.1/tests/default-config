@@ -1,0 +1,6 @@
+ARGS: string list = [] [from default configuration]
+DIFFOPTIONS: string list = [] [from default configuration]
+EXIT_CODE: int = 0 [from default configuration]
+PROG: string = None [MISSING; from default configuration]
+Errors:
+  Missing required element "PROG"
