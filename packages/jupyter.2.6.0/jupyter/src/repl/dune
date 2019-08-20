@@ -1,0 +1,40 @@
+(library
+ (name        jupyter_repl)
+ (synopsis    "A backend module of OCaml REPL for Jupyter")
+ (modes       byte)
+ (modules     Jupyter_repl
+              Process
+              Evaluation
+              Lwt_async_rewrite
+              Caml_args
+              Error
+              Compat)
+ (flags       ((:include %{workspace_root}/config/ocaml_flags.sexp)))
+ (preprocess  (pps lwt_ppx))
+ (libraries   jupyter
+              jupyter_log
+              str
+              lwt
+              lwt.unix
+              compiler-libs.common
+              compiler-libs.toplevel))
+
+(rule
+ (targets compat.ml)
+ (deps    compat.cppo.ml)
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
+
+(rule
+ (targets caml_args.ml)
+ (deps    caml_args.cppo.ml)
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
+
+(rule
+ (targets error.ml)
+ (deps    error.cppo.ml)
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
+
+(rule
+ (targets lwt_async_rewrite.ml)
+ (deps    lwt_async_rewrite.cppo.ml)
+ (action  (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
