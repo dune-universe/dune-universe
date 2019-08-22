@@ -1,0 +1,7 @@
+(library
+  (name ppx_bistro)
+  (public_name bistro.ppx)
+  (kind ppx_rewriter)
+  (libraries core_kernel ppxlib)
+  (preprocess (pps ppx_expect ppx_inline_test ppxlib.metaquot ppxlib.runner ppx_sexp_conv))
+  (inline_tests))

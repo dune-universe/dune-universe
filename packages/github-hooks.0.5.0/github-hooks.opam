@@ -1,0 +1,35 @@
+version: "0.5.0"
+opam-version: "1.2"
+maintainer: "sheets@alum.mit.edu"
+authors: [
+  "David Sheets"
+  "Thomas Gazagnaire"
+]
+homepage: "https://github.com/dsheets/ocaml-github-hooks"
+bug-reports: "https://github.com/dsheets/ocaml-github-hooks/issues"
+dev-repo: "https://github.com/dsheets/ocaml-github-hooks.git"
+doc: "https://dsheets.github.io/ocaml-github-hooks/"
+
+tags: [
+  "git"
+  "github"
+]
+
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "dune"
+  "fmt"
+  "logs"
+  "lwt"
+  "cohttp-lwt" {>= "0.99.0"}
+  "conduit-lwt" {>= "1.5.0"}
+  "github" {>= "3.0.1"}
+  "nocrypto"
+  "cstruct"
+  "hex"
+]
+available: [ ocaml-version >= "4.02.0" ]
