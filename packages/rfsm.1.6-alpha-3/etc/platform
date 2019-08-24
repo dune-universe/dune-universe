@@ -1,0 +1,15 @@
+# Platform-specific definitions to be used in automatically generated Makefiles
+# To be adjusted if necessary
+
+RFSMC=rfsmc
+LIBDIR=$(shell opam config var share)/rfsm
+
+DOT=dot
+DOTVIEWER=graphviz
+VCDVIEWER=gtkwave
+TXTVIEWER=nano
+
+CXX=g++
+LD=g++
+CXXFLAGS=-Wall -Wno-deprecated -I.
+LDFLAGS=
