@@ -1,0 +1,109 @@
+(*
+ * OWL - OCaml Scientific and Engineering Computing
+ * OWL-ODE - Ordinary Differential Equation Solvers
+ *
+ * Copyright (c) 2019 Ta-Chu Kao <tck29@cam.ac.uk>
+ * Copyright (c) 2019 Marcello Seri <m.seri@rug.nl>
+ *)
+
+(** {6 Intro}
+
+Owl_ode is a lightweight package for numerically
+integrating ordinary differential equations.
+
+Built on top of Owl’s numerical library, Owl_ode was designed with
+extensibility and ease of use in mind and includes a number of classic
+ode solvers (e.g. Euler and Runge-Kutta, in both adaptive and 
+fixed-step variants) and symplectic solvers (e.g. Leapfrog), with
+more to come.
+
+{6 Example of use}
+
+Let's solve the linear initial value problem :math:`\dot\{y\} = Ay`, with
+:math:`y(t_0) = y_0`. Say that :math:`A` is the matrix :math:`((1;-1); (2;3))`,
+and the initial conditions are given by :math:`y(0) = (-1;1)`.
+
+We begin by defining a function :math:`f(y, t)` that corresponds to
+the RHS of the differential equation
+{[
+    let f y t = 
+    let a = [|[|1.; -1.|];
+                [|2.; -3.|]|]
+            |> Owl.Mat.of_arrays
+    in
+    Owl.Mat.(a *@ y)
+]}
+and the initial condition :math:`y_0`
+{[
+    let y0 = Mat.of_array [|-1.; 1.|] 2 1
+]}
+
+Before being able to actually call the integrating function,
+we need to define the time specification for the problem at
+hand
+{[
+    let tspec = Owl_ode.Types.(T1 {t0 = 0.; duration = 2.; dt=1E-3})
+]}
+This in particular allows us to specify also that :math:`t_0=0`.
+Here, we construct a record using the constructor {!Owl_ode.Types.T1},
+which includes the start time :math:`t_0`, the time duration for the
+numerical solution, and a step size dt.
+
+Finally we can call
+{[
+    let ts, ys = Owl_ode.odeint (module Owl_ode.Native.D.RK4) f y0 tspec () 
+]}
+to get an array with the approximate value of the vector y
+at the times ts. As you can see from the snippet above, you
+have to specify the algorithm used for the integration by 
+providing its module in the function call. Here, we integrated
+the dynamical system with {!Owl_ode.Native.D.RK4}, a fixed-step
+double-precision Runge-Kutta solver. In Owl_ode, we provide
+a number of ocaml-based double-precision solvers in the
+{!Owl_ode.Native.D} modeuoe and single-precision ones in
+{!Owl_ode.Native.S}. Additional integrators are provided by
+external and third party libraries.
+
+The solution can be easily plotted using {!Owl_plplot} or any
+other owl-compatible plotting library, for example
+{[
+    let open Owl_plplot in
+    let h = Plot.create "myplot.png" in
+    Plot.plot ~h ~spec:[ RGB (0,0,255); LineStyle 1 ] ts (Mat.col ys 0);
+    Plot.output h;
+]}
+
+You can refer to the examples in the source repository for
+more complex examples.
+
+ {6 Core function} *)
+
+val odeint : (module Types.SolverT with type output = 'a and type s = 'b and type t = 'c) -> ('b -> float -> 'c) -> 'b -> Types.tspec_t -> unit -> 'a
+(**
+``odeint (module Solver) f y0 timespec ()`` numerically integrates
+an initial value problem for a system of ODEs given an initial value:
+
+.. math::
+  \frac{dy}{dt} = f(y,t)
+
+.. math::
+  y(t_{0}) = y_{0}
+
+Here :math:`t` is a one-dimensional independent variable (time), :math:`y(t)` is an
+n-dimensional vector-valued function (state), and the n-dimensional
+vector-valued function :math:`f(y, t)` determines the differential equations.
+
+The goal is to find :math:`y(t)` approximately satisfying the differential
+equations, given an initial value :math:`y(t_{0}) = y_{0}`.
+The time :math:`t_{0}` is passed as part of the timespec, that includes
+also the final integration time and a time step. Refer to
+{!Owl_ode.Types.tspec_t} for further information.
+
+The solver has to be passed as a first-class module and have a common
+type, {!Owl_ode.Types.SolverT}. This is useful to write new custom
+solvers or extend and customise the provided ones.
+
+Refer to the documentation of the {!Owl_ode.Types.SolverT} type
+for further information.
+
+*)
