@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "uint"
+version: "2.0.1"
+maintainer: "Andre Nathan <andre@digirati.com.br>"
+authors: [
+  "Andre Nathan <andre@digirati.com.br>"
+  "Jeff Shaw <shawjef3@msu.edu>"
+]
+license: "MIT"
+homepage: "https://github.com/andrenth/ocaml-uint"
+dev-repo: "git+https://github.com/andrenth/ocaml-uint.git"
+bug-reports: "https://github.com/andrenth/ocaml-uint/issues"
+synopsis: "Deprecated: An unsigned integer library"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "@doc" "-p" name ] {with-doc}
+]
+depends: [
+  "dune" {>= "1.11"}
+  "ocamlfind" {>= "1.5"}
+  "ocaml" {>= "4.07.0"}
+  "stdint" {>= "0.5.0"}
+]

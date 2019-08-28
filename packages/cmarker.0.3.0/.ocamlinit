@@ -1,0 +1,4 @@
+(* begin mk topgen *)
+#thread
+#directory "src/_build"
+(* end *)
