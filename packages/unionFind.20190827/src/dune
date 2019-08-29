@@ -1,0 +1,6 @@
+(library
+  (name unionFind)
+  (public_name unionFind)
+  (synopsis "Implementations of the union-find data structure")
+  (flags "-w" "A")
+)

@@ -1,0 +1,17 @@
+name: "unionFind"
+opam-version: "2.0"
+maintainer: "francois.pottier@inria.fr"
+authors: [
+  "François Pottier <francois.pottier@inria.fr>"
+]
+homepage: "https://gitlab.inria.fr/fpottier/unionFind"
+dev-repo: "git+https://gitlab.inria.fr/fpottier/unionFind.git"
+bug-reports: "francois.pottier@inria.fr"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" { >= "4.03" }
+  "dune" { build & >= "1.4" }
+]
+synopsis: "Implementations of the union-find data structure"
