@@ -1,9 +1,13 @@
-## v2.2.0 (2019-08-11)
+## v2.3.0 (2019-08-29)
+
+* Support OCaml 4.02.3, which brings back a dependency on
+  the `result` library.
+
+## v2.2.0
 
 * Add OCaml 4.08.1 release
 
 ## v2.1.0 (2019-06-26)
-
 * Add OCaml 4.08.0 release
 * Add support for 4.10 as the new trunk.
 

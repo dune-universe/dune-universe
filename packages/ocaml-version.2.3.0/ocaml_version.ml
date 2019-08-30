@@ -14,6 +14,8 @@
  *
 *)
 
+open Result
+
 type t = { major: int; minor: int; patch: int option; extra: string option }
 let v ?patch ?extra major minor = { major; minor; patch; extra }
 
