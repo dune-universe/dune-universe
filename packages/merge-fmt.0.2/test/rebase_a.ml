@@ -5,31 +5,26 @@ open! Common
 let%expect_test _ =
   within_temp_dir (fun () ->
       git_init ();
-      write
-        "a.ml"
+      write "a.ml"
         {|
 type t = { a : int;
            b : string;
-           c : float;
-         }
+           c : float }
 |};
       git_commit "first commit";
       git_branch "branch1";
-      write
-        "a.ml"
-        {|
-type t = { a : int;
-           b : string;
-           c : float;
-           d : unit option
-         }
-|};
       system "git mv a.ml b.ml";
+      git_commit "move a to b";
+      write "b.ml"
+        {|
+type t = { a : int; b : string;
+           c : float; d : unit option }
+|};
       git_commit "second commit";
       git_branch "branch2";
-      [%expect {||}];
       git_checkout "branch1";
-      write "a.ml" {|
+      write "a.ml"
+        {|
 type t =
   { a : int option;
     b : string;
@@ -55,32 +50,32 @@ type t =
       print_status ();
       [%expect
         {|
-        UU File b.ml
+        DU File a.ml
 
-        <<<<<<< HEAD:b.ml
-        type t = { a : int;
-                   b : string;
-                   c : float;
-                   d : unit option
-                 }
-        =======
         type t =
           { a : int option;
             b : string;
             c : float;
-          }
-        >>>>>>> second commit (fork):a.ml |}];
+          } |}];
       resolve ();
-      [%expect {| Resolved 1/1 b.ml |}];
+      [%expect
+        {|
+        Ignore a.ml (not a 3-way merge)
+        Exit with 1 |}];
       print_status ();
       [%expect
         {|
-        M File b.ml
+        DU File a.ml
+
         type t =
-          { a : int option
-          ; b : string
-          ; c : float
-          ; d : unit option
+          { a : int option;
+            b : string;
+            c : float;
           } |}];
       system "git rebase --continue";
-      [%expect {| |}] )
+      [%expect
+        {|
+        a.ml: needs merge
+        You must edit all merge conflicts and then
+        mark them as resolved using git add
+        Exit with 1 |}])

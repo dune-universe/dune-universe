@@ -12,7 +12,7 @@ let system fmt =
       match p with
       | Ok () -> ()
       | Error (`Signal _) -> printf "Signaled\n"
-      | Error (`Exit_non_zero n) -> printf "Exit with %d\n" n )
+      | Error (`Exit_non_zero n) -> printf "Exit with %d\n" n)
     fmt
 
 let git_add fn = system "git add %s" fn
@@ -35,15 +35,19 @@ let print_status () =
           String.split (String.strip line) ~on:' '
           |> List.filter ~f:(function "" -> false | _ -> true)
         with
-        | [m; filename] -> Some (m, filename)
-        | _ -> assert false )
+        | [ m; filename ] -> Some (m, filename)
+        | _ -> assert false)
   in
   match stats with
   | [] -> printf "no changes"
   | l ->
       List.iter l ~f:(fun (m, f) ->
           printf "%s File %s\n" m f;
-          print_endline (In_channel.read_all f) )
+          print_endline (In_channel.read_all f))
+
+let print_file file =
+  printf "File %s\n" file;
+  print_endline (In_channel.read_all file)
 
 let git_init () =
   system "git init . -q";
@@ -64,7 +68,9 @@ let with_temp_dir f =
   (* Note that this blocks *)
   assert (Filename.is_absolute dir);
   let res = match f dir with x -> Ok x | exception e -> Error e in
-  if keep_tmp_dir then eprintf "OUTPUT LEFT IN %s\n" dir else system "rm -rf %s" dir;
+  if keep_tmp_dir
+  then eprintf "OUTPUT LEFT IN %s\n" dir
+  else system "rm -rf %s" dir;
   Result.ok_exn res
 
 let within_temp_dir ?(links = []) f =
@@ -75,7 +81,8 @@ let within_temp_dir ?(links = []) f =
       let path_var = "PATH" in
       let old_path = Sys.getenv_exn path_var in
       let bin = temp_dir ^/ "bin" in
-      Unix.putenv ~key:path_var ~data:(String.concat ~sep:":" [bin; old_path]);
+      Unix.putenv ~key:path_var
+        ~data:(String.concat ~sep:":" [ bin; old_path ]);
       let () = system "mkdir %s" bin in
       let () =
         List.iter links ~f:(fun (file, action, link_as) ->
@@ -86,10 +93,10 @@ let within_temp_dir ?(links = []) f =
             in
             (* We use hard links to ensure that files remain available and unchanged even if
            jenga starts to rebuild while the test is running. *)
-            system "/bin/ln -T %s %s" file (temp_dir ^/ link_as) )
+            system "/bin/ln -T %s %s" file (temp_dir ^/ link_as))
       in
       let () = Unix.chdir temp_dir in
       let res = match f () with x -> Ok x | exception e -> Error e in
       Unix.putenv ~key:path_var ~data:old_path;
       Unix.chdir cwd;
-      Result.ok_exn res )
+      Result.ok_exn res)

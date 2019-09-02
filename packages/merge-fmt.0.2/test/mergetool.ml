@@ -7,10 +7,10 @@ open! Common
 let%expect_test _ =
   within_temp_dir (fun () ->
       git_init ();
-      system "%s mergetool-setup --merge-fmt-path %s --update" merge_fmt merge_fmt;
+      system "%s setup-mergetool --merge-fmt-path %s --update" merge_fmt
+        merge_fmt;
       [%expect {||}];
-      write
-        "a.ml"
+      write "a.ml"
         {|
 type t = { a : int;
            b : string;
@@ -19,9 +19,9 @@ type t = { a : int;
 |};
       git_commit "first commit";
       git_branch "branch1";
+
       (* Add new field, move file *)
-      write
-        "a.ml"
+      write "a.ml"
         {|
 type t = { a : int;
            b : string;
@@ -30,9 +30,9 @@ type t = { a : int;
 |};
       system "git mv a.ml b.ml";
       git_commit "second commit";
+
       (* Add new type *)
-      write
-        "b.ml"
+      write "b.ml"
         {|
 type t = { a : int;
            b : string;
@@ -43,9 +43,11 @@ type u = A | B of int
 |};
       git_commit "third commit";
       git_branch "branch2";
+
       (* Go back to branch1, turn [a] to [int option], reformat *)
       git_checkout "branch1";
-      write "a.ml" {|
+      write "a.ml"
+        {|
 type t =
   { a : int option
   ; b : string
@@ -54,9 +56,9 @@ type t =
 |};
       git_commit "second commit (fork)";
       [%expect {| Switched to branch 'branch1' |}];
+
       (* add new type before *)
-      write
-        "a.ml"
+      write "a.ml"
         {|
 type b = int
 
@@ -188,4 +190,4 @@ type t =
           | A
           | B of int |}];
       system "git rebase --continue";
-      [%expect {| |}] )
+      [%expect {| |}])

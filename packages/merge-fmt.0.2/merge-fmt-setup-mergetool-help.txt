@@ -1,8 +1,8 @@
 NAME
-       merge-fmt-mergetool-setup - Configure git with merge-fmt mergetool
+       merge-fmt-setup-mergetool - Register the [merge-fmt] mergetool in git
 
 SYNOPSIS
-       merge-fmt mergetool-setup [OPTION]... 
+       merge-fmt setup-mergetool [OPTION]... 
 
 OPTIONS
        --echo

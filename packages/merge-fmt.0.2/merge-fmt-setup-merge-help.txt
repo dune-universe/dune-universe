@@ -1,14 +1,11 @@
 NAME
-       merge-fmt-mergetool - git mergetool
+       merge-fmt-setup-merge - Register the [merge-fmt] mergetool as the
+       default merge driver in git
 
 SYNOPSIS
-       merge-fmt mergetool [OPTION]... 
+       merge-fmt setup-merge [OPTION]... 
 
 OPTIONS
-       --base=<base-file>
-
-       --current=<current-file>
-
        --echo
            Echo all commands.
 
@@ -17,13 +14,10 @@ OPTIONS
            `pager', `groff' or `plain'. With `auto', the format is `pager` or
            `plain' whenever the TERM env var is `dumb' or undefined.
 
-       -o <output-to>
+       --merge-fmt-path=VAL
+           Path of merge-fmt.
 
-       --ocamlformat=VAL
-           ocamlformat path
-
-       --other=<other-file>
-
-       --refmt=VAL
-           refmt path
+       --update
+           Update the git config of the current repository. Just output
+           commands otherwise.
 
