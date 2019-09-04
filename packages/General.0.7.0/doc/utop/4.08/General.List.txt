@@ -1,0 +1,87 @@
+module List: sig
+  type 'a t = 'a list
+  module O
+  val empty: 'a list
+  val singleton: 'a -> 'a list
+  val of_list: 'a list -> 'a list
+  val to_list: 'a list -> 'a list
+  val of_array: 'a array -> 'a list
+  val to_array: 'a list -> 'a array
+  val size: 'a list -> int
+  val is_empty: 'a list -> bool
+  val head: 'a list -> 'a
+  val tail: 'a list -> 'a list
+  val try_head: 'a list -> 'a option
+  val try_tail: 'a list -> 'a list option
+  val contains: 'a list -> 'a -> equal_a:('a -> 'a -> bool) -> bool
+  module Poly
+  val prepend: 'a -> 'a list -> 'a list
+  val reverse: 'a list -> 'a list
+  val concat: 'a list -> 'a list -> 'a list
+  val map: 'a list -> f:('a -> 'b) -> 'b list
+  val map_i: 'a list -> f:(i:int -> 'a -> 'b) -> 'b list
+  val map_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * 'b) -> 'b list
+  val filter: 'a list -> f:('a -> bool) -> 'a list
+  val filter_i: 'a list -> f:(i:int -> 'a -> bool) -> 'a list
+  val filter_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a list
+  val filter_map: 'a list -> f:('a -> 'b option) -> 'b list
+  val filter_map_i: 'a list -> f:(i:int -> 'a -> 'b option) -> 'b list
+  val filter_map_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b list
+  val flat_map: 'a list -> f:('a -> 'b list) -> 'b list
+  val flat_map_i: 'a list -> f:(i:int -> 'a -> 'b list) -> 'b list
+  val flat_map_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * 'b list) -> 'b list
+  val fold: init:'b -> 'a list -> f:('b -> 'a -> 'b) -> 'b
+  val fold_i: init:'b -> 'a list -> f:(i:int -> 'b -> 'a -> 'b) -> 'b
+  val fold_acc: acc:'acc -> init:'b -> 'a list -> f:(acc:'acc -> 'b -> 'a -> 'acc * 'b) -> 'b
+  val reduce: 'a list -> f:('a -> 'a -> 'a) -> 'a
+  val reduce_i: 'a list -> f:(i:int -> 'a -> 'a -> 'a) -> 'a
+  val reduce_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'a -> 'acc * 'a) -> 'a
+  val try_reduce: 'a list -> f:('a -> 'a -> 'a) -> 'a option
+  val try_reduce_i: 'a list -> f:(i:int -> 'a -> 'a -> 'a) -> 'a option
+  val try_reduce_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'a -> 'acc * 'a) -> 'a option
+  val iter: 'a list -> f:('a -> unit) -> unit
+  val iter_i: 'a list -> f:(i:int -> 'a -> unit) -> unit
+  val iter_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc) -> unit
+  val count: 'a list -> f:('a -> bool) -> int
+  val count_i: 'a list -> f:(i:int -> 'a -> bool) -> int
+  val count_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> int
+  val fold_short: init:'b -> 'a list -> f:('b -> 'a -> General.Shorten.t * 'b) -> 'b
+  val fold_short_i: init:'b -> 'a list -> f:(i:int -> 'b -> 'a -> General.Shorten.t * 'b) -> 'b
+  val fold_short_acc: acc:'acc -> init:'b -> 'a list -> f:(acc:'acc -> 'b -> 'a -> 'acc * General.Shorten.t * 'b) -> 'b
+  val reduce_short: 'a list -> f:('a -> 'a -> General.Shorten.t * 'a) -> 'a
+  val reduce_short_i: 'a list -> f:(i:int -> 'a -> 'a -> General.Shorten.t * 'a) -> 'a
+  val reduce_short_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'a -> 'acc * General.Shorten.t * 'a) -> 'a
+  val try_reduce_short: 'a list -> f:('a -> 'a -> General.Shorten.t * 'a) -> 'a option
+  val try_reduce_short_i: 'a list -> f:(i:int -> 'a -> 'a -> General.Shorten.t * 'a) -> 'a option
+  val try_reduce_short_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'a -> 'acc * General.Shorten.t * 'a) -> 'a option
+  val iter_short: 'a list -> f:('a -> General.Shorten.t) -> unit
+  val iter_short_i: 'a list -> f:(i:int -> 'a -> General.Shorten.t) -> unit
+  val iter_short_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * General.Shorten.t) -> unit
+  val for_all: 'a list -> f:('a -> bool) -> bool
+  val for_all_i: 'a list -> f:(i:int -> 'a -> bool) -> bool
+  val for_all_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> bool
+  val there_exists: 'a list -> f:('a -> bool) -> bool
+  val there_exists_i: 'a list -> f:(i:int -> 'a -> bool) -> bool
+  val there_exists_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> bool
+  val find: 'a list -> f:('a -> bool) -> 'a
+  val find_i: 'a list -> f:(i:int -> 'a -> bool) -> 'a
+  val find_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a
+  val try_find: 'a list -> f:('a -> bool) -> 'a option
+  val try_find_i: 'a list -> f:(i:int -> 'a -> bool) -> 'a option
+  val try_find_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a option
+  val find_map: 'a list -> f:('a -> 'b option) -> 'b
+  val find_map_i: 'a list -> f:(i:int -> 'a -> 'b option) -> 'b
+  val find_map_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b
+  val try_find_map: 'a list -> f:('a -> 'b option) -> 'b option
+  val try_find_map_i: 'a list -> f:(i:int -> 'a -> 'b option) -> 'b option
+  val try_find_map_acc: acc:'acc -> 'a list -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b option
+  val scan: init:'b -> 'a list -> f:('b -> 'a -> 'b) -> 'b list
+  val scan_i: init:'b -> 'a list -> f:(i:int -> 'b -> 'a -> 'b) -> 'b list
+  val scan_acc: acc:'acc -> init:'b -> 'a list -> f:(acc:'acc -> 'b -> 'a -> 'acc * 'b) -> 'b list
+  val scan_short: init:'b -> 'a list -> f:('b -> 'a -> General.Shorten.t * 'b) -> 'b list
+  val scan_short_i: init:'b -> 'a list -> f:(i:int -> 'b -> 'a -> General.Shorten.t * 'b) -> 'b list
+  val scan_short_acc: acc:'acc -> init:'b -> 'a list -> f:(acc:'acc -> 'b -> 'a -> 'acc * General.Shorten.t * 'b) -> 'b list
+  module Two
+  module Specialize
+  module SpecializeEquatable
+end

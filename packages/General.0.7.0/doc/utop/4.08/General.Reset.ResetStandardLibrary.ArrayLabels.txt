@@ -1,0 +1,2 @@
+module ArrayLabels: sig
+end

@@ -1,0 +1,16 @@
+module O: sig
+  val (=): Big_int.big_int -> Big_int.big_int -> bool
+  val (<>): Big_int.big_int -> Big_int.big_int -> bool
+  val (~+): Big_int.big_int -> Big_int.big_int
+  val (~-): Big_int.big_int -> Big_int.big_int
+  val (+): Big_int.big_int -> Big_int.big_int -> Big_int.big_int
+  val (-): Big_int.big_int -> Big_int.big_int -> Big_int.big_int
+  val (*): Big_int.big_int -> Big_int.big_int -> Big_int.big_int
+  val (/): Big_int.big_int -> Big_int.big_int -> Big_int.big_int
+  val (**): Big_int.big_int -> int -> Big_int.big_int
+  val (<): Big_int.big_int -> Big_int.big_int -> bool
+  val (<=): Big_int.big_int -> Big_int.big_int -> bool
+  val (>): Big_int.big_int -> Big_int.big_int -> bool
+  val (>=): Big_int.big_int -> Big_int.big_int -> bool
+  val (mod): Big_int.big_int -> Big_int.big_int -> Big_int.big_int
+end

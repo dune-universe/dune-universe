@@ -1,0 +1,12 @@
+module Make(E: General.Traits.Comparable.Basic.S0): sig
+  type t
+  val empty: t
+  val of_list: E.t list -> t
+  val to_list: t -> E.t list
+  val is_empty: t -> bool
+  val size: t -> int
+  val add: t -> v:E.t -> bool * t
+  val replace: t -> v:E.t -> t
+  val remove: t -> v:E.t -> bool * t
+  val contains: t -> v:E.t -> bool
+end

@@ -1,0 +1,2 @@
+module StdLabels: sig
+end

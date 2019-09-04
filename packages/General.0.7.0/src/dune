@@ -1,0 +1,198 @@
+; @todo Generate cppo dependencies to #included file instead of listing them manually. Handle recursive inclusions
+
+(rule
+  (targets General.mli)
+  (deps
+    (:src General.cppo.mli)
+    Concepts/Able.signatures.ml
+    Concepts/Able.signatures.Operators.ml
+    Concepts/Identifiable.signatures.ml
+    Concepts/Integer.signatures.ml
+    Concepts/Number.signatures.ml
+    Concepts/Number.signatures.Operators.ml
+    Concepts/RealNumber.signatures.ml
+    Concepts/RealNumber.signatures.Operators.ml
+    Reset/CommonHeader.ml
+    Reset/Footer.ml
+    Reset/ResetPervasives.ml
+    Reset/ResetStandardLibrary.ml
+    Reset/SignatureHeader.ml
+    Traits/Comparable.signatures.Basic.ml
+    Traits/Comparable.signatures.ml
+    Traits/Comparable.signatures.Operators.ml
+    Traits/Displayable.signatures.ml
+    Traits/Equatable.signatures.Basic.ml
+    Traits/Equatable.signatures.ml
+    Traits/Equatable.signatures.Operators.ml
+    Traits/FilterMapable.signatures.ml
+    Traits/FilterMapable.signatures.ToContainer.ml
+    Traits/Foldable.signatures.Basic.ml
+    Traits/Foldable.signatures.ml
+    Traits/Foldable.signatures.Right.Basic.ml
+    Traits/Foldable.signatures.Right.ml
+    Traits/Foldable.signatures.Short.Basic.ml
+    Traits/Foldable.signatures.Short.ml
+    Traits/Foldable.signatures.Short.Right.Basic.ml
+    Traits/Foldable.signatures.Short.Right.ml
+    Traits/Parsable.signatures.ml
+    Traits/PredSucc.makers.mli
+    Traits/PredSucc.signatures.ml
+    Traits/Representable.signatures.ml
+    Traits/Ringoid.makers.mli
+    Traits/Ringoid.makers.Operators.mli
+    Traits/Ringoid.signatures.Basic.ml
+    Traits/Ringoid.signatures.ml
+    Traits/Ringoid.signatures.Operators.ml
+    Traits/Scanable.signatures.ml
+    Traits/Scanable.signatures.Right.ml
+    Traits/Scanable.signatures.Right.ToContainer.ml
+    Traits/Scanable.signatures.Short.ml
+    Traits/Scanable.signatures.Short.Right.ml
+    Traits/Scanable.signatures.Short.Right.ToContainer.ml
+    Traits/Scanable.signatures.Short.ToContainer.ml
+    Traits/Scanable.signatures.ToContainer.ml
+ )
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{src} -o %{targets}))
+)
+
+(rule
+  (targets General.ml)
+  (deps
+    (:src General.cppo.ml)
+    Compare.ml
+    Concepts/Able.ml
+    Concepts/Able.signatures.ml
+    Concepts/Able.signatures.Operators.ml
+    Concepts/Identifiable.ml
+    Concepts/Identifiable.signatures.ml
+    Concepts/Integer.ml
+    Concepts/Integer.signatures.ml
+    Concepts/Number.ml
+    Concepts/Number.signatures.ml
+    Concepts/Number.signatures.Operators.ml
+    Concepts/RealNumber.ml
+    Concepts/RealNumber.signatures.ml
+    Concepts/RealNumber.signatures.Operators.ml
+    Equate.ml
+    Foundations/Bool.ml
+    Foundations/CallStack.ml
+    Foundations/Exception.ml
+    Foundations/Exit.ml
+    Foundations/Float.ml
+    Foundations/Format.ml
+    Foundations/Functions.ml
+    Foundations/Int.ml
+    Foundations/IntRange.ml
+    Foundations/Lazy.ml
+    Foundations/List.ml
+    Foundations/Option.ml
+    Foundations/PervasivesWhitelist.ml
+    Foundations/Reference.ml
+    Foundations/Stream.ml
+    Foundations/String.ml
+    Foundations/Tuples.ml
+    Foundations/Unit.ml
+    Implementation/Array.ml
+    Implementation/BigInt.ml
+    Implementation/BinaryHeap.ml
+    Implementation/Bool.ml
+    Implementation/Bytes.ml
+    Implementation/CallStack.ml
+    Implementation/Char.ml
+    Implementation/Exception.ml
+    Implementation/Exit.ml
+    Implementation/Float.ml
+    Implementation/Format.ml
+    Implementation/Functions.ml
+    Implementation/Heap.ml
+    Implementation/InChannel.ml
+    Implementation/InFile.ml
+    Implementation/Int.ml
+    Implementation/Int32.ml
+    Implementation/Int64.ml
+    Implementation/IntRange.ml
+    Implementation/Lazy.ml
+    Implementation/List.ml
+    Implementation/NativeInt.ml
+    Implementation/Option.ml
+    Implementation/OutChannel.ml
+    Implementation/OutFile.ml
+    Implementation/PriorityQueue.ml
+    Implementation/RedBlackTree.ml
+    Implementation/Reference.ml
+    Implementation/SortedMap.ml
+    Implementation/SortedSet.ml
+    Implementation/StandardInt.ml
+    Implementation/StandardOutChannel.ml
+    Implementation/StdErr.ml
+    Implementation/StdIn.ml
+    Implementation/StdOut.ml
+    Implementation/Stream.ml
+    Implementation/String.ml
+    Implementation/TestingTests.ml
+    Implementation/Tuples.ml
+    Implementation/Unit.ml
+    Reset/CommonHeader.ml
+    Reset/DefinitionHeader.ml
+    Reset/Footer.ml
+    Reset/ResetPervasives.ml
+    Reset/ResetStandardLibrary.ml
+    Shorten.ml
+    Specializations/List.ml
+    Specializations/Option.ml
+    Specializations/Reference.ml
+    Specializations/SortedMap.ml
+    Specializations/SortedSet.ml
+    Testing.ml
+    Traits/Comparable.ml
+    Traits/Comparable.signatures.Basic.ml
+    Traits/Comparable.signatures.ml
+    Traits/Comparable.signatures.Operators.ml
+    Traits/Displayable.ml
+    Traits/Displayable.signatures.ml
+    Traits/Equatable.ml
+    Traits/Equatable.signatures.Basic.ml
+    Traits/Equatable.signatures.ml
+    Traits/Equatable.signatures.Operators.ml
+    Traits/FilterMapable.ml
+    Traits/FilterMapable.signatures.ml
+    Traits/FilterMapable.signatures.ToContainer.ml
+    Traits/Foldable.ml
+    Traits/Foldable.signatures.Basic.ml
+    Traits/Foldable.signatures.ml
+    Traits/Foldable.signatures.Right.Basic.ml
+    Traits/Foldable.signatures.Right.ml
+    Traits/Foldable.signatures.Short.Basic.ml
+    Traits/Foldable.signatures.Short.ml
+    Traits/Foldable.signatures.Short.Right.Basic.ml
+    Traits/Foldable.signatures.Short.Right.ml
+    Traits/Parsable.ml
+    Traits/Parsable.signatures.ml
+    Traits/PredSucc.ml
+    Traits/PredSucc.signatures.ml
+    Traits/Representable.ml
+    Traits/Representable.signatures.ml
+    Traits/Ringoid.ml
+    Traits/Ringoid.signatures.Basic.ml
+    Traits/Ringoid.signatures.ml
+    Traits/Ringoid.signatures.Operators.ml
+    Traits/Scanable.ml
+    Traits/Scanable.signatures.ml
+    Traits/Scanable.signatures.Right.ml
+    Traits/Scanable.signatures.Right.ToContainer.ml
+    Traits/Scanable.signatures.Short.ml
+    Traits/Scanable.signatures.Short.Right.ml
+    Traits/Scanable.signatures.Short.Right.ToContainer.ml
+    Traits/Scanable.signatures.Short.ToContainer.ml
+    Traits/Scanable.signatures.ToContainer.ml
+  )
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{src} -o %{targets}))
+)
+
+(library
+  (name General)
+  (public_name General)
+  (modules General)
+  (libraries num)
+  (flags (:standard -nopervasives -w @A-4-33-44-45-48))
+)

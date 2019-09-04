@@ -1,0 +1,39 @@
+module Int32: sig
+  type t = int32
+  module O
+  val to_string: int32 -> string
+  val equal: int32 -> int32 -> bool
+  val different: int32 -> int32 -> bool
+  val try_of_string: string -> int32 option
+  val of_string: string -> int32
+  val repr: int32 -> string
+  val zero: int32
+  val one: int32
+  val negate: int32 -> int32
+  val add: int32 -> int32 -> int32
+  val substract: int32 -> int32 -> int32
+  val multiply: int32 -> int32 -> int32
+  val divide: int32 -> int32 -> int32
+  val square: int32 -> int32
+  val exponentiate: int32 -> int -> int32
+  val of_int: int -> int32
+  val of_float: float -> int32
+  val compare: int32 -> int32 -> General.Compare.t
+  val less_than: int32 -> int32 -> bool
+  val less_or_equal: int32 -> int32 -> bool
+  val greater_than: int32 -> int32 -> bool
+  val greater_or_equal: int32 -> int32 -> bool
+  val between: int32 -> low:int32 -> high:int32 -> bool
+  val between_or_equal: int32 -> low:int32 -> high:int32 -> bool
+  val min: int32 -> int32 -> int32
+  val max: int32 -> int32 -> int32
+  val min_max: int32 -> int32 -> int32 * int32
+  val abs: int32 -> int32
+  val modulo: int32 -> int32 -> int32
+  val to_int: int32 -> int
+  val to_float: int32 -> float
+  val succ: int32 -> int32
+  val pred: int32 -> int32
+  val smallest: int32
+  val greatest: int32
+end

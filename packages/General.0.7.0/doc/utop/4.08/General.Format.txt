@@ -1,0 +1,9 @@
+module Format: sig
+  type ('a, 'b, 'c, 'd, 'e, 'f) t = ('a, 'b, 'c, 'd, 'e, 'f) format6
+  val with_result: ('b, unit, string, string, string, 'a) format6 -> f:(string -> 'a) -> 'b
+  val apply: ('a, unit, string, string, string, string) format6 -> 'a
+  val to_string: ('a, 'b, 'c, 'd, 'e, 'f) format6 -> string
+  val of_string: ('a, 'b, 'c, 'd, 'e, 'f) format6 -> ('a, 'b, 'c, 'd, 'e, 'f) format6
+  val concat: ('a, 'b, 'c, 'd, 'e, 'f) format6 -> ('f, 'b, 'c, 'e, 'g, 'h) format6 -> ('a, 'b, 'c, 'd, 'g, 'h) format6
+  val with_scan_result: ('a, Scanf.Scanning.scanbuf, 'b, 'c -> 'd, 'a -> 'e, 'e) format6 -> f:'c -> string -> 'd
+end

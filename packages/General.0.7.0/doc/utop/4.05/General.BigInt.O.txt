@@ -1,0 +1,16 @@
+module O: sig
+  val (=): General.BigInt.t -> General.BigInt.t -> bool
+  val (<>): General.BigInt.t -> General.BigInt.t -> bool
+  val (~+): General.BigInt.t -> General.BigInt.t
+  val (~-): General.BigInt.t -> General.BigInt.t
+  val (+): General.BigInt.t -> General.BigInt.t -> General.BigInt.t
+  val (-): General.BigInt.t -> General.BigInt.t -> General.BigInt.t
+  val (*): General.BigInt.t -> General.BigInt.t -> General.BigInt.t
+  val (/): General.BigInt.t -> General.BigInt.t -> General.BigInt.t
+  val (**): General.BigInt.t -> int -> General.BigInt.t
+  val (<): General.BigInt.t -> General.BigInt.t -> bool
+  val (<=): General.BigInt.t -> General.BigInt.t -> bool
+  val (>): General.BigInt.t -> General.BigInt.t -> bool
+  val (>=): General.BigInt.t -> General.BigInt.t -> bool
+  val (mod): General.BigInt.t -> General.BigInt.t -> General.BigInt.t
+end

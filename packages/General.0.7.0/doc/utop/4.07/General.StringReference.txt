@@ -1,0 +1,7 @@
+module StringReference: sig
+  type t = string ref
+  module O
+  val of_contents: string -> t
+  val contents: t -> string
+  val assign: t -> string -> unit
+end

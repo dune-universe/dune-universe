@@ -1,0 +1,40 @@
+module Int: sig
+  type t = int
+  module O
+  val to_string: int -> string
+  val equal: int -> int -> bool
+  val different: int -> int -> bool
+  val try_of_string: string -> int option
+  val of_string: string -> int
+  val repr: int -> string
+  val zero: int
+  val one: int
+  val negate: int -> int
+  val add: int -> int -> int
+  val substract: int -> int -> int
+  val multiply: int -> int -> int
+  val divide: int -> int -> int
+  val square: int -> int
+  val exponentiate: int -> int -> int
+  val of_int: int -> int
+  val of_float: float -> int
+  val compare: int -> int -> General.Compare.t
+  val less_than: int -> int -> bool
+  val less_or_equal: int -> int -> bool
+  val greater_than: int -> int -> bool
+  val greater_or_equal: int -> int -> bool
+  val between: int -> low:int -> high:int -> bool
+  val between_or_equal: int -> low:int -> high:int -> bool
+  val min: int -> int -> int
+  val max: int -> int -> int
+  val min_max: int -> int -> int * int
+  val abs: int -> int
+  val modulo: int -> int -> int
+  val to_int: int -> int
+  val to_float: int -> float
+  val succ: int -> int
+  val pred: int -> int
+  val smallest: int
+  val greatest: int
+  module Bitwise
+end

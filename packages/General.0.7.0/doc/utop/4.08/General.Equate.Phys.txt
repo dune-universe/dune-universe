@@ -1,0 +1,4 @@
+module Phys: sig
+  val equal: 'a -> 'a -> bool
+  val different: 'a -> 'a -> bool
+end

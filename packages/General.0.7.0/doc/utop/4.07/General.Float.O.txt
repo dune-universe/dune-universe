@@ -1,0 +1,16 @@
+module O: sig
+  val (=): float -> float -> bool
+  val (<>): float -> float -> bool
+  val (~+): float -> float
+  val (~-): float -> float
+  val (+): float -> float -> float
+  val (-): float -> float -> float
+  val (*): float -> float -> float
+  val (/): float -> float -> float
+  val (**): float -> int -> float
+  val (<): float -> float -> bool
+  val (<=): float -> float -> bool
+  val (>): float -> float -> bool
+  val (>=): float -> float -> bool
+  val (mod): float -> float -> float
+end

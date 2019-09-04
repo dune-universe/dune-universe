@@ -1,0 +1,4 @@
+module Heap: sig
+  module Poly
+  module Make
+end

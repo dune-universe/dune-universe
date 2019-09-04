@@ -1,0 +1,9 @@
+module InFile: sig
+  type t
+  val with_file: string -> f:(t -> 'a) -> 'a
+  val with_channel: string -> f:(in_channel -> 'a) -> 'a
+  val channel: t -> in_channel
+  val seek: t -> pos:int64 -> unit
+  val pos: t -> int64
+  val size: t -> int64
+end

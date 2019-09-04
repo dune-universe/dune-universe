@@ -1,0 +1,7 @@
+module Make0(M: sig
+  type t
+  val negate: t -> t
+  val add: t -> t -> t
+end): sig
+  val substract: M.t -> M.t -> M.t
+end

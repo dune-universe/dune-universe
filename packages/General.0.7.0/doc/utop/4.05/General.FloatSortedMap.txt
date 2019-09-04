@@ -1,0 +1,14 @@
+module FloatSortedMap: sig
+  type 'a t = 'a General.FloatSortedMap.t
+  val empty: 'a t
+  val of_list_first: (float * 'a) list -> 'a t
+  val of_list_last: (float * 'a) list -> 'a t
+  val to_list: 'a t -> (float * 'a) list
+  val is_empty: 'a t -> bool
+  val size: 'a t -> int
+  val add: 'a t -> k:float -> v:'a -> bool * 'a t
+  val replace: 'a t -> k:float -> v:'a -> 'a t
+  val remove: 'a t -> k:float -> bool * 'a t
+  val try_get: 'a t -> k:float -> 'a option
+  val get: 'a t -> k:float -> 'a
+end

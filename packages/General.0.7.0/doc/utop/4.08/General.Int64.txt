@@ -1,0 +1,39 @@
+module Int64: sig
+  type t = int64
+  module O
+  val to_string: int64 -> string
+  val equal: int64 -> int64 -> bool
+  val different: int64 -> int64 -> bool
+  val try_of_string: string -> int64 option
+  val of_string: string -> int64
+  val repr: int64 -> string
+  val zero: int64
+  val one: int64
+  val negate: int64 -> int64
+  val add: int64 -> int64 -> int64
+  val substract: int64 -> int64 -> int64
+  val multiply: int64 -> int64 -> int64
+  val divide: int64 -> int64 -> int64
+  val square: int64 -> int64
+  val exponentiate: int64 -> int -> int64
+  val of_int: int -> int64
+  val of_float: float -> int64
+  val compare: int64 -> int64 -> General.Compare.t
+  val less_than: int64 -> int64 -> bool
+  val less_or_equal: int64 -> int64 -> bool
+  val greater_than: int64 -> int64 -> bool
+  val greater_or_equal: int64 -> int64 -> bool
+  val between: int64 -> low:int64 -> high:int64 -> bool
+  val between_or_equal: int64 -> low:int64 -> high:int64 -> bool
+  val min: int64 -> int64 -> int64
+  val max: int64 -> int64 -> int64
+  val min_max: int64 -> int64 -> int64 * int64
+  val abs: int64 -> int64
+  val modulo: int64 -> int64 -> int64
+  val to_int: int64 -> int
+  val to_float: int64 -> float
+  val succ: int64 -> int64
+  val pred: int64 -> int64
+  val smallest: int64
+  val greatest: int64
+end

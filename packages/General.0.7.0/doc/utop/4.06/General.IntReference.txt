@@ -1,0 +1,9 @@
+module IntReference: sig
+  type t = int ref
+  module O
+  val of_contents: int -> t
+  val contents: t -> int
+  val assign: t -> int -> unit
+  val increment: t -> unit
+  val decrement: t -> unit
+end

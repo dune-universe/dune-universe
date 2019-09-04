@@ -1,0 +1,3 @@
+module O: sig
+  val (@): 'a list -> 'a list -> 'a list
+end

@@ -1,0 +1,2 @@
+module Spacetime: sig
+end

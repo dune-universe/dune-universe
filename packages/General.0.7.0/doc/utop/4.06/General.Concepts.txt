@@ -1,0 +1,7 @@
+module Concepts: sig
+  module Identifiable
+  module Able
+  module Number
+  module RealNumber
+  module Integer
+end

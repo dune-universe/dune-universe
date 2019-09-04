@@ -1,0 +1,6 @@
+module O: sig
+  val (<): 'a -> 'a -> bool
+  val (<=): 'a -> 'a -> bool
+  val (>): 'a -> 'a -> bool
+  val (>=): 'a -> 'a -> bool
+end

@@ -1,0 +1,14 @@
+module Poly: sig
+  type ('a, 'b) t
+  val empty: ('a, 'b) t
+  val of_list_first: ('a * 'b) list -> ('a, 'b) t
+  val of_list_last: ('a * 'b) list -> ('a, 'b) t
+  val to_list: ('a, 'b) t -> ('a * 'b) list
+  val is_empty: ('a, 'b) t -> bool
+  val size: ('a, 'b) t -> int
+  val add: ('a, 'b) t -> k:'a -> v:'b -> bool * ('a, 'b) t
+  val replace: ('a, 'b) t -> k:'a -> v:'b -> ('a, 'b) t
+  val remove: ('a, 'b) t -> k:'a -> bool * ('a, 'b) t
+  val try_get: ('a, 'b) t -> k:'a -> 'b option
+  val get: ('a, 'b) t -> k:'a -> 'b
+end

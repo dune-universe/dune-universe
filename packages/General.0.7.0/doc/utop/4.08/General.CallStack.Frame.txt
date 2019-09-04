@@ -1,0 +1,6 @@
+module Frame: sig
+  type t = Printexc.backtrace_slot
+  val is_raise: t -> bool
+  val location: t -> Printexc.location option
+  val format: int -> t -> string option
+end

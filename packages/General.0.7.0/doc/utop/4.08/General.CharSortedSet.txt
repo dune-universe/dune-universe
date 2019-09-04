@@ -1,0 +1,12 @@
+module CharSortedSet: sig
+  type t = General.CharSortedSet.t
+  val empty: t
+  val of_list: char list -> t
+  val to_list: t -> char list
+  val is_empty: t -> bool
+  val size: t -> int
+  val add: t -> v:char -> bool * t
+  val replace: t -> v:char -> t
+  val remove: t -> v:char -> bool * t
+  val contains: t -> v:char -> bool
+end

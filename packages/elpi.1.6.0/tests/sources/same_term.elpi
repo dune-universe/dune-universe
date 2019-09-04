@@ -1,8 +1,0 @@
-main :-
-  3 == 3,
-  [X, _] == [X, Y],
-  not(X == Y),
-  (x\ x) == (y\ y),
-  ID = (x\x),
-  (ID 3) == (ID 3),
-  pi x y\ same_var (X x) (X y), not(same_term (X x) (X y)).

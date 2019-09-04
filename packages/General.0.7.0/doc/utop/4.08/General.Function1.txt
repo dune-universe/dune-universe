@@ -1,0 +1,8 @@
+module Function1: sig
+  type ('a, 'z) t = 'a -> 'z
+  val identity: ('a, 'a) t
+  val apply: ('a, 'z) t -> 'a -> 'z
+  val rev_apply: 'a -> ('a, 'z) t -> 'z
+  val compose: ('a, 'b) t -> ('c, 'a) t -> ('c, 'b) t
+  module O
+end

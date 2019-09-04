@@ -1,0 +1,20 @@
+module Tuple2: sig
+  type ('a, 'b) t = 'a * 'b
+  val equal: ('a, 'b) t -> ('a, 'b) t -> equal_a:('a -> 'a -> bool) -> equal_b:('b -> 'b -> bool) -> bool
+  val different: ('a, 'b) t -> ('a, 'b) t -> equal_a:('a -> 'a -> bool) -> equal_b:('b -> 'b -> bool) -> bool
+  val repr: ('a, 'b) t -> repr_a:('a -> string) -> repr_b:('b -> string) -> string
+  val compare: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> General.Compare.t
+  val less_than: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val less_or_equal: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val greater_than: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val greater_or_equal: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val between: ('a, 'b) t -> low:('a, 'b) t -> high:('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val between_or_equal: ('a, 'b) t -> low:('a, 'b) t -> high:('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> bool
+  val min: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> ('a, 'b) t
+  val max: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> ('a, 'b) t
+  val min_max: ('a, 'b) t -> ('a, 'b) t -> compare_a:('a -> 'a -> General.Compare.t) -> compare_b:('b -> 'b -> General.Compare.t) -> ('a, 'b) t * ('a, 'b) t
+  val make: 'a -> 'b -> ('a, 'b) t
+  val get_0: ('a, 'b) t -> 'a
+  val get_1: ('a, 'b) t -> 'b
+  val flip: ('a, 'b) t -> ('b, 'a) t
+end

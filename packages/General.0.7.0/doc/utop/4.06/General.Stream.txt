@@ -1,0 +1,22 @@
+module Stream: sig
+  type 'a t = 'a General.Stream.t
+  val empty: 'a t
+  val singleton: 'a -> 'a t
+  val to_list: 'a t -> 'a list
+  val of_list: 'a list -> 'a t
+  val prepend: 'a -> 'a t -> 'a t
+  val concat: 'a t -> 'a t -> 'a t
+  val map: 'a t -> f:('a -> 'b) -> 'b t
+  val map_i: 'a t -> f:(i:int -> 'a -> 'b) -> 'b t
+  val map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b) -> 'b t
+  val filter: 'a t -> f:('a -> bool) -> 'a t
+  val filter_i: 'a t -> f:(i:int -> 'a -> bool) -> 'a t
+  val filter_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a t
+  val filter_map: 'a t -> f:('a -> 'b option) -> 'b t
+  val filter_map_i: 'a t -> f:(i:int -> 'a -> 'b option) -> 'b t
+  val filter_map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b t
+  val flat_map: 'a t -> f:('a -> 'b t) -> 'b t
+  val flat_map_i: 'a t -> f:(i:int -> 'a -> 'b t) -> 'b t
+  val flat_map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b t) -> 'b t
+  module ToList
+end

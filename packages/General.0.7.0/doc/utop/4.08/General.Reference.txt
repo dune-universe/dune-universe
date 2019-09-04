@@ -1,0 +1,12 @@
+module Reference: sig
+  type 'a t = 'a ref = { mutable contents: 'a; }
+  val of_contents: 'a -> 'a ref
+  val contents: 'a ref -> 'a
+  val assign: 'a ref -> 'a -> unit
+  module O
+  module SpecializeOperators
+  module Specialize
+  module SpecializePredSucc
+  module SpecializeRingoidOperators
+  module SpecializeRingoid
+end

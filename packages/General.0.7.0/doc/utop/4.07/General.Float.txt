@@ -1,0 +1,68 @@
+module Float: sig
+  type t = float
+  module O
+  val to_string: t -> string
+  val equal: t -> t -> bool
+  val different: t -> t -> bool
+  val try_of_string: string -> t option
+  val of_string: string -> t
+  val repr: t -> string
+  val zero: t
+  val one: t
+  val negate: t -> t
+  val add: t -> t -> t
+  val substract: t -> t -> t
+  val multiply: t -> t -> t
+  val divide: t -> t -> t
+  val square: t -> t
+  val exponentiate: t -> int -> t
+  val of_int: int -> t
+  val of_float: t -> t
+  val compare: t -> t -> General.Compare.t
+  val less_than: t -> t -> bool
+  val less_or_equal: t -> t -> bool
+  val greater_than: t -> t -> bool
+  val greater_or_equal: t -> t -> bool
+  val between: t -> low:t -> high:t -> bool
+  val between_or_equal: t -> low:t -> high:t -> bool
+  val min: t -> t -> t
+  val max: t -> t -> t
+  val min_max: t -> t -> t * t
+  val abs: t -> t
+  val modulo: t -> t -> t
+  val to_int: t -> int
+  val to_float: t -> t
+  val approx_equal: ?precision:t -> t -> t -> bool
+  val epsilon: t
+  val smallest: t
+  val greatest: t
+  val infinity: t
+  val negative_infinity: t
+  val not_a_number: t
+  val pi: t
+  val e: t
+  val of_parts: significand:t -> exponent:int -> t
+  val to_parts: t -> t * int
+  val to_fractional_and_integral: t -> t * t
+  val sqrt: t -> t
+  val exp: t -> t
+  val log: t -> t
+  val log10: t -> t
+  val expm1: t -> t
+  val log1p: t -> t
+  val cos: t -> t
+  val sin: t -> t
+  val tan: t -> t
+  val acos: t -> t
+  val asin: t -> t
+  val atan: t -> t
+  val atan2: y:t -> x:t -> t
+  val hypot: t -> t -> t
+  val cosh: t -> t
+  val sinh: t -> t
+  val tanh: t -> t
+  val ceil: t -> t
+  val floor: t -> t
+  val copy_sign: t -> sign:t -> t
+  module Class
+end

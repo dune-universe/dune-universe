@@ -1,0 +1,4 @@
+module SpecializeEquatable(A: General.Traits.Equatable.Basic.S0): sig
+  type t = A.t list
+  val contains: t -> A.t -> bool
+end

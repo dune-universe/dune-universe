@@ -1,0 +1,3 @@
+module Square: sig
+  module Make0
+end

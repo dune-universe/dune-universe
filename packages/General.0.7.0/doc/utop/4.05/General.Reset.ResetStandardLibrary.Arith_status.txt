@@ -1,0 +1,2 @@
+module Arith_status: sig
+end

@@ -1,0 +1,7 @@
+module Make(E: General.Traits.Comparable.Basic.S0): sig
+  type t
+  val empty: t
+  val add: t -> v:E.t -> t
+  val pop_max: t -> t
+  val max: t -> E.t
+end

@@ -1,0 +1,10 @@
+(rule
+  (targets demo.ml)
+  (deps (:src demo.cppo.ml))
+  (action (run %{bin:cppo} %{src} -o %{targets}))
+)
+
+(tests
+  (names demo)
+  (libraries General)
+)

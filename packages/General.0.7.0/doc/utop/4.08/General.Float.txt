@@ -1,0 +1,68 @@
+module Float: sig
+  type t = float
+  module O
+  val to_string: float -> string
+  val equal: float -> float -> bool
+  val different: float -> float -> bool
+  val try_of_string: string -> float option
+  val of_string: string -> float
+  val repr: float -> string
+  val zero: float
+  val one: float
+  val negate: float -> float
+  val add: float -> float -> float
+  val substract: float -> float -> float
+  val multiply: float -> float -> float
+  val divide: float -> float -> float
+  val square: float -> float
+  val exponentiate: float -> int -> float
+  val of_int: int -> float
+  val of_float: float -> float
+  val compare: float -> float -> General.Compare.t
+  val less_than: float -> float -> bool
+  val less_or_equal: float -> float -> bool
+  val greater_than: float -> float -> bool
+  val greater_or_equal: float -> float -> bool
+  val between: float -> low:float -> high:float -> bool
+  val between_or_equal: float -> low:float -> high:float -> bool
+  val min: float -> float -> float
+  val max: float -> float -> float
+  val min_max: float -> float -> float * float
+  val abs: float -> float
+  val modulo: float -> float -> float
+  val to_int: float -> int
+  val to_float: float -> float
+  val approx_equal: ?precision:float -> float -> float -> bool
+  val epsilon: float
+  val smallest: float
+  val greatest: float
+  val infinity: float
+  val negative_infinity: float
+  val not_a_number: float
+  val pi: float
+  val e: float
+  val of_parts: significand:float -> exponent:int -> float
+  val to_parts: float -> float * int
+  val to_fractional_and_integral: float -> float * float
+  val sqrt: float -> float
+  val exp: float -> float
+  val log: float -> float
+  val log10: float -> float
+  val expm1: float -> float
+  val log1p: float -> float
+  val cos: float -> float
+  val sin: float -> float
+  val tan: float -> float
+  val acos: float -> float
+  val asin: float -> float
+  val atan: float -> float
+  val atan2: y:float -> x:float -> float
+  val hypot: float -> float -> float
+  val cosh: float -> float
+  val sinh: float -> float
+  val tanh: float -> float
+  val ceil: float -> float
+  val floor: float -> float
+  val copy_sign: float -> sign:float -> float
+  module Class
+end

@@ -1,0 +1,33 @@
+module ToList: sig
+  module type S0 = sig
+    type elt
+    type t
+    val map: t -> f:(elt -> 'b) -> 'b list
+    val map_i: t -> f:(i:int -> elt -> 'b) -> 'b list
+    val map_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc * 'b) -> 'b list
+    val filter: t -> f:(elt -> bool) -> elt list
+    val filter_i: t -> f:(i:int -> elt -> bool) -> elt list
+    val filter_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc * bool) -> elt list
+    val filter_map: t -> f:(elt -> 'b option) -> 'b list
+    val filter_map_i: t -> f:(i:int -> elt -> 'b option) -> 'b list
+    val filter_map_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc * 'b option) -> 'b list
+    val flat_map: t -> f:(elt -> 'b list) -> 'b list
+    val flat_map_i: t -> f:(i:int -> elt -> 'b list) -> 'b list
+    val flat_map_acc: acc:'acc -> t -> f:(acc:'acc -> elt -> 'acc * 'b list) -> 'b list
+  end
+  module type S1 = sig
+    type 'a t
+    val map: 'a t -> f:('a -> 'b) -> 'b list
+    val map_i: 'a t -> f:(i:int -> 'a -> 'b) -> 'b list
+    val map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b) -> 'b list
+    val filter: 'a t -> f:('a -> bool) -> 'a list
+    val filter_i: 'a t -> f:(i:int -> 'a -> bool) -> 'a list
+    val filter_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * bool) -> 'a list
+    val filter_map: 'a t -> f:('a -> 'b option) -> 'b list
+    val filter_map_i: 'a t -> f:(i:int -> 'a -> 'b option) -> 'b list
+    val filter_map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b option) -> 'b list
+    val flat_map: 'a t -> f:('a -> 'b list) -> 'b list
+    val flat_map_i: 'a t -> f:(i:int -> 'a -> 'b list) -> 'b list
+    val flat_map_acc: acc:'acc -> 'a t -> f:(acc:'acc -> 'a -> 'acc * 'b list) -> 'b list
+  end
+end

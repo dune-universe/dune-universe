@@ -1,0 +1,33 @@
+module Exception: sig
+  type t = exn
+  val equal: exn -> exn -> bool
+  val different: exn -> exn -> bool
+  module O
+  val repr: exn -> string
+  val to_string: exn -> string
+  val register_printer: (exn -> string option) -> unit
+  val record_backtraces: bool -> unit
+  val recording_backtraces: unit -> bool
+  val most_recent_backtrace: unit -> Printexc.raw_backtrace option
+  exception MatchFailure of (string * int * int)
+  exception AssertFailure of (string * int * int)
+  exception InvalidArgument of string
+  exception Failure of string
+  exception NotFound
+  exception OutOfMemory
+  exception StackOverflow
+  exception SysError of string
+  exception EndOfFile
+  exception DivisionByZero
+  exception SysBlockedIO
+  exception UndefinedRecursiveModule of (string * int * int)
+  exception Exit
+  val raise: exn -> 'a
+  val raise_without_backtrace: exn -> 'a
+  val invalid_argument: ('a, unit, string, string, string, 'b) format6 -> 'a
+  val failure: ('a, unit, string, string, string, 'b) format6 -> 'a
+  val failure_if: bool -> ('a, unit, string, string, string, unit) format6 -> 'a
+  val failure_unless: bool -> ('a, unit, string, string, string, unit) format6 -> 'a
+  val name: exn -> string
+  val or_none: 'a lazy_t -> 'a option
+end

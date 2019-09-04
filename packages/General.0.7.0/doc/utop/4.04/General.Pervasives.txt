@@ -1,0 +1,229 @@
+module Pervasives: sig
+  val raise: [ `Please_use_General__Exception__raise ]
+  val raise_notrace: [ `Please_use_General__Exception__raise_without_backtrace ]
+  val invalid_arg: [ `Please_use_General__Exception__invalid_argument ]
+  val failwith: [ `Please_use_General__Exception__failure ]
+  val compare: [ `Please_use_General__Compare__Poly__compare ]
+  val min: [ `Please_use_General__Compare__Poly__min ]
+  val max: [ `Please_use_General__Compare__Poly__max ]
+  val (==): [ `Please_use_General__Equate__Phys__equal ]
+  val (!=): [ `Please_use_General__Equate__Phys__different ]
+  val (&): [ `Please_use_General__Bool__and_ ]
+  val (or): [ `Please_use_General__Bool__or_ ]
+  val succ: [ `Please_use_General__Int__succ ]
+  val pred: [ `Please_use_General__Int__pred ]
+  val abs: [ `Please_use_General__Int__abs ]
+  val max_int: [ `Please_use_General__Int__greatest ]
+  val min_int: [ `Please_use_General__Int__smallest ]
+  val (land): [ `Please_use_General__Int__Bitwise__logical_and ]
+  val (lor): [ `Please_use_General__Int__Bitwise__logical_or ]
+  val (lxor): [ `Please_use_General__Int__Bitwise__logical_xor ]
+  val lnot: [ `Please_use_General__Int__Bitwise__logical_not ]
+  val (lsl): [ `Please_use_General__Int__Bitwise__logical_shift_left ]
+  val (lsr): [ `Please_use_General__Int__Bitwise__logical_shift_right ]
+  val (asr): [ `Please_use_General__Int__Bitwise__arithmetic_shift_right ]
+  val sqrt: [ `Please_use_General__Float__sqrt ]
+  val exp: [ `Please_use_General__Float__exp ]
+  val log: [ `Please_use_General__Float__log ]
+  val log10: [ `Please_use_General__Float__log10 ]
+  val expm1: [ `Please_use_General__Float__expm1 ]
+  val log1p: [ `Please_use_General__Float__log1p ]
+  val cos: [ `Please_use_General__Float__cos ]
+  val sin: [ `Please_use_General__Float__sin ]
+  val tan: [ `Please_use_General__Float__tan ]
+  val acos: [ `Please_use_General__Float__acos ]
+  val asin: [ `Please_use_General__Float__asin ]
+  val atan: [ `Please_use_General__Float__atan ]
+  val atan2: [ `Please_use_General__Float__atan2 ]
+  val hypot: [ `Please_use_General__Float__hypot ]
+  val cosh: [ `Please_use_General__Float__cosh ]
+  val sinh: [ `Please_use_General__Float__sinh ]
+  val tanh: [ `Please_use_General__Float__tanh ]
+  val ceil: [ `Please_use_General__Float__ceil ]
+  val floor: [ `Please_use_General__Float__floor ]
+  val abs_float: [ `Please_use_General__Float__abs ]
+  val copysign: [ `Please_use_General__Float__copy_sign ]
+  val mod_float: [ `Please_use_General__Float__modulo ]
+  val frexp: [ `Please_use_General__Float__to_parts ]
+  val ldexp: [ `Please_use_General__Float__of_parts ]
+  val modf: [ `Please_use_General__Float__to_fractional_and_integral ]
+  val float: [ `Please_use_General__Float__of_int ]
+  val float_of_int: [ `Please_use_General__Float__of_int ]
+  val truncate: [ `Please_use_General__Int__of_float ]
+  val int_of_float: [ `Please_use_General__Int__of_float ]
+  val infinity: [ `Please_use_General__Float__infinity ]
+  val neg_infinity: [ `Please_use_General__Float__negative_infinity ]
+  val nan: [ `Please_use_General__Float__not_a_number ]
+  val max_float: [ `Please_use_General__Float__smallest ]
+  val min_float: [ `Please_use_General__Float__greatest ]
+  val epsilon_float: [ `Please_use_General__Float__epsilon ]
+  type fpclass = [ `Please_use_General__Float__Class__t ]
+  val classify_float: [ `Please_use_General__Float__Class__of_float ]
+  val int_of_char: [ `Please_use_General__Char__of_int ]
+  val char_of_int: [ `Please_use_General__Char__to_int ]
+  val string_of_bool: [ `Please_use_General__Bool__to_string ]
+  val bool_of_string: [ `Please_use_General__Bool__of_string ]
+  val string_of_int: [ `Please_use_General__Int__to_string ]
+  val int_of_string: [ `Please_use_General__Int__of_string ]
+  val string_of_float: [ `Please_use_General__Float__of_string ]
+  val float_of_string: [ `Please_use_General__Float__to_string ]
+  val fst: [ `Please_use_General__Tuple2__get_0 ]
+  val snd: [ `Please_use_General__Tuple2__get_1 ]
+  type in_channel = [ `Please_use_General__InChannel__t ]
+  type out_channel = [ `Please_use_General__OutChannel__t ]
+  val stdin: [ `Please_use_General__StdIn__channel ]
+  val stdout: [ `Please_use_General__StdOut__channel ]
+  val stderr: [ `Please_use_General__StdErr__channel ]
+  val print_char: [ `Please_use_General__StdOut__print ]
+  val print_string: [ `Please_use_General__StdOut__print ]
+  val print_bytes: [ `Please_use_General__StdOut__print ]
+  val print_int: [ `Please_use_General__StdOut__print ]
+  val print_float: [ `Please_use_General__StdOut__print ]
+  val print_endline: [ `Please_use_General__StdOut__print ]
+  val print_newline: [ `Please_use_General__StdOut__print ]
+  val prerr_char: [ `Please_use_General__StdErr__print ]
+  val prerr_string: [ `Please_use_General__StdErr__print ]
+  val prerr_bytes: [ `Please_use_General__StdErr__print ]
+  val prerr_int: [ `Please_use_General__StdErr__print ]
+  val prerr_float: [ `Please_use_General__StdErr__print ]
+  val prerr_endline: [ `Please_use_General__StdErr__print ]
+  val prerr_newline: [ `Please_use_General__StdErr__print ]
+  val read_line: [ `Please_use_General__todo ]
+  val read_int: [ `Please_use_General__todo ]
+  val read_float: [ `Please_use_General__todo ]
+  type open_flag = [ `Please_use_General__todo ]
+  val open_out: [ `Please_use_General__OutFile__with_file ]
+  val open_out_bin: [ `Please_use_General__OutFile__with_file ]
+  val open_out_gen: [ `Please_use_General__OutFile__with_file ]
+  val flush: [ `Please_use_General__OutChannel__flush ]
+  val flush_all: [ `Please_use_General__todo ]
+  val output_char: [ `Please_use_General__OutChannel__print ]
+  val output_string: [ `Please_use_General__OutChannel__print ]
+  val output_bytes: [ `Please_use_General__OutChannel__output ]
+  val output: [ `Please_use_General__OutChannel__output ]
+  val output_substring: [ `Please_use_General__OutChannel__output ]
+  val output_byte: [ `Please_use_General__OutChannel__output ]
+  val output_binary_int: [ `Please_use_General__OutChannel__output ]
+  val output_value: [ `Please_use_General__OutChannel__output ]
+  val seek_out: [ `Please_use_General__OutFile__seek ]
+  val pos_out: [ `Please_use_General__OutFile__pos ]
+  val out_channel_length: [ `Please_use_General__OutFile__size ]
+  val close_out: [ `Please_use_General__OutFile__with_file ]
+  val close_out_noerr: [ `Please_use_General__todo ]
+  val set_binary_mode_out: [ `Please_use_General__todo ]
+  val open_in: [ `Please_use_General__InFile__with_file ]
+  val open_in_bin: [ `Please_use_General__InFile__with_file ]
+  val open_in_gen: [ `Please_use_General__InFile__with_file ]
+  val input_char: [ `Please_use_General__todo ]
+  val input_line: [ `Please_use_General__todo ]
+  val input: [ `Please_use_General__todo ]
+  val really_input: [ `Please_use_General__todo ]
+  val really_input_string: [ `Please_use_General__todo ]
+  val input_byte: [ `Please_use_General__todo ]
+  val input_binary_int: [ `Please_use_General__todo ]
+  val input_value: [ `Please_use_General__todo ]
+  val seek_in: [ `Please_use_General__InFile__seek ]
+  val pos_in: [ `Please_use_General__InFile__pos ]
+  val in_channel_length: [ `Please_use_General__InFile__size ]
+  val close_in: [ `Please_use_General__InFile__with_file ]
+  val close_in_noerr: [ `Please_use_General__todo ]
+  val set_binary_mode_in: [ `Please_use_General__todo ]
+  module LargeFile
+  type 'a ref = [ `Please_use_General__Reference__t ]
+  val incr: [ `Please_use_General__IntReference__increment ]
+  val decr: [ `Please_use_General__IntReference__decrement ]
+  type ('a, 'b) result = [ `Please_use_General__todo ]
+  type ('a, 'b, 'c, 'd, 'e, 'f) format6 = [ `Please_use_General__Format__t ]
+  type ('a, 'b, 'c, 'd) format4 = [ `Please_use_General__Format__t ]
+  type ('a, 'b, 'c) format = [ `Please_use_General__Format__t ]
+  val string_of_format: [ `Please_use_General__Format__to_string ]
+  val format_of_string: [ `Please_use_General__Format__of_string ]
+  val (^^): [ `Please_use_General__Format__concat ]
+  val exit: [ `Please_use_General__Exit__exit ]
+  val at_exit: [ `Please_use_General__Exit__at_exit ]
+  val valid_float_lexem: [ `Please_use_General__Standard__OCamlStandard__Pervasives__valid_float_lexem ]
+  val unsafe_really_input: [ `Please_use_General__Standard__OCamlStandard__Pervasives__unsafe_really_input ]
+  val do_at_exit: [ `Please_use_General__Standard__OCamlStandard__Pervasives__do_at_exit ]
+  module OCamlStandard
+  module Pervasives
+  module Arg
+  module Array
+  module ArrayLabels
+  module Buffer
+  module Bytes
+  module BytesLabels
+  module Callback
+  module Char
+  module Complex
+  module Digest
+  module Ephemeron
+  module Filename
+  module Format
+  module Gc
+  module Genlex
+  module Hashtbl
+  module Int32
+  module Int64
+  module Lazy
+  module Lexing
+  module List
+  module ListLabels
+  module Map
+  module Marshal
+  module MoreLabels
+  module Nativeint
+  module Oo
+  module Parsing
+  module Printexc
+  module Printf
+  module Queue
+  module Random
+  module Scanf
+  module Set
+  module Sort
+  module Spacetime
+  module Stack
+  module StdLabels
+  module Stream
+  module String
+  module StringLabels
+  module Sys
+  module Uchar
+  module Weak
+  module Num
+  module Big_int
+  module Arith_status
+  val not: bool -> bool
+  val (&&): bool -> bool -> bool
+  val (||): bool -> bool -> bool
+  val (~-): int -> int
+  val (~+): int -> int
+  val (+): int -> int -> int
+  val (-): int -> int -> int
+  val (*): int -> int -> int
+  val (/): int -> int -> int
+  val (mod): int -> int -> int
+  val (~-.): float -> float
+  val (~+.): float -> float
+  val (+.): float -> float -> float
+  val (-.): float -> float -> float
+  val (*.): float -> float -> float
+  val (/.): float -> float -> float
+  val (**): float -> float -> float
+  val (@@): ('a -> 'b) -> 'a -> 'b
+  val (|>): 'a -> ('a -> 'b) -> 'b
+  val (%): ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b
+  val ref: 'a -> 'a ref
+  val (:=): 'a ref -> 'a -> unit
+  val (!): 'a ref -> 'a
+  val (=): 'a -> 'a -> bool
+  val (<>): 'a -> 'a -> bool
+  val (<): 'a -> 'a -> bool
+  val (<=): 'a -> 'a -> bool
+  val (>=): 'a -> 'a -> bool
+  val (>): 'a -> 'a -> bool
+  val ignore: 'a -> unit
+  val identity: 'a -> 'a
+  val (@): 'a list -> 'a list -> 'a list
+  val (^): string -> string -> string
+end

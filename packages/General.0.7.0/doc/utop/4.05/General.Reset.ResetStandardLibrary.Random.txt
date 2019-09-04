@@ -1,0 +1,2 @@
+module Random: sig
+end

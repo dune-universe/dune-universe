@@ -1,0 +1,6 @@
+module Array: sig
+  type 'a t = 'a array
+  val size: 'a array -> int
+  val get: 'a array -> int -> 'a
+  val set: 'a array -> int -> 'a -> unit
+end

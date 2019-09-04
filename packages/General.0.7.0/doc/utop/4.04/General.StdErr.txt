@@ -1,0 +1,6 @@
+module StdErr: sig
+  val channel: out_channel
+  val print: ?flush:bool -> ('a, out_channel, unit, unit, unit, unit) format6 -> 'a
+  val output: string -> unit
+  val flush: unit -> unit
+end

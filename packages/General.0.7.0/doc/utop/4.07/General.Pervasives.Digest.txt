@@ -1,0 +1,2 @@
+module Digest: sig
+end

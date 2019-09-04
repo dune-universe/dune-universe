@@ -1,0 +1,5 @@
+module SpecializePredSucc(A: General.Traits.PredSucc.S0): sig
+  type nonrec t = A.t ref
+  val increment: t -> unit
+  val decrement: t -> unit
+end

@@ -1,0 +1,3 @@
+module Counts: sig
+  type t = { successes: int; failures: int; errors: int; }
+end

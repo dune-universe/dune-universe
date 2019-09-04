@@ -1,0 +1,10 @@
+module Bytes: sig
+  type t = string
+  val size: t -> int
+  val of_string: t -> t
+  val to_string: t -> t
+  val get: t -> int -> char
+  val set: t -> int -> char -> unit
+  val empty: t
+  val make: len:int -> t
+end

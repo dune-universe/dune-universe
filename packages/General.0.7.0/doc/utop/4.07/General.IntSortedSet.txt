@@ -1,0 +1,12 @@
+module IntSortedSet: sig
+  type t = General.IntSortedSet.t
+  val empty: t
+  val of_list: int list -> t
+  val to_list: t -> int list
+  val is_empty: t -> bool
+  val size: t -> int
+  val add: t -> v:int -> bool * t
+  val replace: t -> v:int -> t
+  val remove: t -> v:int -> bool * t
+  val contains: t -> v:int -> bool
+end

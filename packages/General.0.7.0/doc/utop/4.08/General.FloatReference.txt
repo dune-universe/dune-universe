@@ -1,0 +1,7 @@
+module FloatReference: sig
+  type t = float ref
+  module O
+  val of_contents: float -> t
+  val contents: t -> float
+  val assign: t -> float -> unit
+end

@@ -1,0 +1,2 @@
+module Printf: sig
+end

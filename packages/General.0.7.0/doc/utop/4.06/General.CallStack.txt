@@ -1,0 +1,9 @@
+module CallStack: sig
+  type t = General.CallStack.t
+  val to_string: t -> string
+  val repr: t -> string
+  val current: ?max_size:int -> unit -> t
+  module Location
+  module Frame
+  val frames: t -> Frame.t list
+end

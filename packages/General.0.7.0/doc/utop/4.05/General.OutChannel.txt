@@ -1,0 +1,6 @@
+module OutChannel: sig
+  type t = out_channel
+  val print: ?flush:bool -> t -> ('a, t, unit, unit, unit, unit) format6 -> 'a
+  val output: t -> string -> unit
+  val flush: t -> unit
+end

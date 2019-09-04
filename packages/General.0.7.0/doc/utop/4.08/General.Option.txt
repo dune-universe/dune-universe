@@ -1,0 +1,31 @@
+module Option: sig
+  type 'a t = 'a option
+  val equal: 'a option -> 'a option -> equal_a:('a -> 'a -> bool) -> bool
+  val different: 'a option -> 'a option -> equal_a:('a -> 'a -> bool) -> bool
+  val repr: 'a option -> repr_a:('a -> string) -> string
+  val compare: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> General.Compare.t
+  val less_than: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val less_or_equal: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val greater_than: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val greater_or_equal: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val between: 'a option -> low:'a option -> high:'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val between_or_equal: 'a option -> low:'a option -> high:'a option -> compare_a:('a -> 'a -> General.Compare.t) -> bool
+  val min: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> 'a option
+  val max: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> 'a option
+  val min_max: 'a option -> 'a option -> compare_a:('a -> 'a -> General.Compare.t) -> 'a option * 'a option
+  val none: 'a option
+  val some: 'a -> 'a option
+  val some_if: bool -> 'a lazy_t -> 'a option
+  val some_if': bool -> 'a -> 'a option
+  val is_some: 'a option -> bool
+  val is_none: 'a option -> bool
+  val value_def: 'a option -> def:'a -> 'a
+  val value: ?exc:exn -> 'a option -> 'a
+  val or_failure: ('a, unit, string, string, string, 'b option -> 'b) format6 -> 'a
+  val map: 'a option -> f:('a -> 'b) -> 'b option
+  val iter: 'a option -> f:('a -> unit) -> unit
+  val filter: 'a option -> f:('a -> bool) -> 'a option
+  val filter_map: 'a option -> f:('a -> 'b option) -> 'b option
+  val value_map: 'a option -> def:'b -> f:('a -> 'b) -> 'b
+  module Specialize
+end

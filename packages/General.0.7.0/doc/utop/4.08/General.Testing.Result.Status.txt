@@ -1,0 +1,5 @@
+module Status: sig
+  type failure
+  type t = Success | Failure of failure | Error of exn * Printexc.raw_backtrace option
+  val to_string: t -> string
+end

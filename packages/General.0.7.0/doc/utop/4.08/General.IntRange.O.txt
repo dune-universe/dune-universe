@@ -1,0 +1,4 @@
+module O: sig
+  val (=): General.IntRange.t -> General.IntRange.t -> bool
+  val (<>): General.IntRange.t -> General.IntRange.t -> bool
+end

@@ -1,0 +1,20 @@
+module ToList: sig
+  val map: General.StringList.t -> f:(string -> 'b) -> 'b list
+  val map_i: General.StringList.t -> f:(i:int -> string -> 'b) -> 'b list
+  val map_acc: acc:'acc -> General.StringList.t -> f:(acc:'acc -> string -> 'acc * 'b) -> 'b list
+  val filter: General.StringList.t -> f:(string -> bool) -> string list
+  val filter_i: General.StringList.t -> f:(i:int -> string -> bool) -> string list
+  val filter_acc: acc:'acc -> General.StringList.t -> f:(acc:'acc -> string -> 'acc * bool) -> string list
+  val filter_map: General.StringList.t -> f:(string -> 'b option) -> 'b list
+  val filter_map_i: General.StringList.t -> f:(i:int -> string -> 'b option) -> 'b list
+  val filter_map_acc: acc:'acc -> General.StringList.t -> f:(acc:'acc -> string -> 'acc * 'b option) -> 'b list
+  val flat_map: General.StringList.t -> f:(string -> 'b list) -> 'b list
+  val flat_map_i: General.StringList.t -> f:(i:int -> string -> 'b list) -> 'b list
+  val flat_map_acc: acc:'acc -> General.StringList.t -> f:(acc:'acc -> string -> 'acc * 'b list) -> 'b list
+  val scan: init:'a -> General.StringList.t -> f:('a -> string -> 'a) -> 'a list
+  val scan_i: init:'a -> General.StringList.t -> f:(i:int -> 'a -> string -> 'a) -> 'a list
+  val scan_acc: acc:'acc -> init:'a -> General.StringList.t -> f:(acc:'acc -> 'a -> string -> 'acc * 'a) -> 'a list
+  val scan_short: init:'a -> General.StringList.t -> f:('a -> string -> General.Shorten.t * 'a) -> 'a list
+  val scan_short_i: init:'a -> General.StringList.t -> f:(i:int -> 'a -> string -> General.Shorten.t * 'a) -> 'a list
+  val scan_short_acc: acc:'acc -> init:'a -> General.StringList.t -> f:(acc:'acc -> 'a -> string -> 'acc * General.Shorten.t * 'a) -> 'a list
+end

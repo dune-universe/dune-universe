@@ -1,0 +1,6 @@
+module Make0(M: sig
+  type t
+  val multiply: t -> t -> t
+end): sig
+  val square: M.t -> M.t
+end

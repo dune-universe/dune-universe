@@ -1,0 +1,24 @@
+module Bool: sig
+  type t = bool
+  module O
+  val equal: bool -> bool -> bool
+  val different: bool -> bool -> bool
+  val repr: bool -> string
+  val compare: bool -> bool -> General.Compare.t
+  val less_than: bool -> bool -> bool
+  val less_or_equal: bool -> bool -> bool
+  val greater_than: bool -> bool -> bool
+  val greater_or_equal: bool -> bool -> bool
+  val between: bool -> low:bool -> high:bool -> bool
+  val between_or_equal: bool -> low:bool -> high:bool -> bool
+  val min: bool -> bool -> bool
+  val max: bool -> bool -> bool
+  val min_max: bool -> bool -> bool * bool
+  val to_string: bool -> string
+  val try_of_string: string -> bool option
+  val of_string: string -> bool
+  val not: bool -> bool
+  val and_: bool -> bool -> bool
+  val or_: bool -> bool -> bool
+  val xor: bool -> bool -> bool
+end

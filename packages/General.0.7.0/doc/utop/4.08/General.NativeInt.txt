@@ -1,0 +1,39 @@
+module NativeInt: sig
+  type t = nativeint
+  module O
+  val to_string: nativeint -> string
+  val equal: nativeint -> nativeint -> bool
+  val different: nativeint -> nativeint -> bool
+  val try_of_string: string -> nativeint option
+  val of_string: string -> nativeint
+  val repr: nativeint -> string
+  val zero: nativeint
+  val one: nativeint
+  val negate: nativeint -> nativeint
+  val add: nativeint -> nativeint -> nativeint
+  val substract: nativeint -> nativeint -> nativeint
+  val multiply: nativeint -> nativeint -> nativeint
+  val divide: nativeint -> nativeint -> nativeint
+  val square: nativeint -> nativeint
+  val exponentiate: nativeint -> int -> nativeint
+  val of_int: int -> nativeint
+  val of_float: float -> nativeint
+  val compare: nativeint -> nativeint -> General.Compare.t
+  val less_than: nativeint -> nativeint -> bool
+  val less_or_equal: nativeint -> nativeint -> bool
+  val greater_than: nativeint -> nativeint -> bool
+  val greater_or_equal: nativeint -> nativeint -> bool
+  val between: nativeint -> low:nativeint -> high:nativeint -> bool
+  val between_or_equal: nativeint -> low:nativeint -> high:nativeint -> bool
+  val min: nativeint -> nativeint -> nativeint
+  val max: nativeint -> nativeint -> nativeint
+  val min_max: nativeint -> nativeint -> nativeint * nativeint
+  val abs: nativeint -> nativeint
+  val modulo: nativeint -> nativeint -> nativeint
+  val to_int: nativeint -> int
+  val to_float: nativeint -> float
+  val succ: nativeint -> nativeint
+  val pred: nativeint -> nativeint
+  val smallest: nativeint
+  val greatest: nativeint
+end

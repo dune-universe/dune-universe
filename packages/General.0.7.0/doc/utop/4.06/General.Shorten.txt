@@ -1,0 +1,3 @@
+module Shorten: sig
+  type t = GoOn | ShortCircuit
+end

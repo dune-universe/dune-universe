@@ -1,0 +1,13 @@
+module Specialize(A: sig
+  type t
+end): sig
+  type nonrec t = A.t ref
+  val of_contents: A.t -> t
+  val contents: t -> A.t
+  val assign: t -> A.t -> unit
+  module O: sig
+    val ref: A.t -> t
+    val (!): t -> A.t
+    val (:=): t -> A.t -> unit
+  end
+end

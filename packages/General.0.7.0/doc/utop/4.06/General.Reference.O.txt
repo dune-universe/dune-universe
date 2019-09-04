@@ -1,0 +1,5 @@
+module O: sig
+  val ref: 'a -> 'a ref
+  val (!): 'a ref -> 'a
+  val (:=): 'a ref -> 'a -> unit
+end

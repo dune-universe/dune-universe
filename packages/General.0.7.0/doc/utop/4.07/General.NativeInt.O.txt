@@ -1,0 +1,16 @@
+module O: sig
+  val (=): nativeint -> nativeint -> bool
+  val (<>): nativeint -> nativeint -> bool
+  val (~+): nativeint -> nativeint
+  val (~-): nativeint -> nativeint
+  val (+): nativeint -> nativeint -> nativeint
+  val (-): nativeint -> nativeint -> nativeint
+  val (*): nativeint -> nativeint -> nativeint
+  val (/): nativeint -> nativeint -> nativeint
+  val (**): nativeint -> int -> nativeint
+  val (<): nativeint -> nativeint -> bool
+  val (<=): nativeint -> nativeint -> bool
+  val (>): nativeint -> nativeint -> bool
+  val (>=): nativeint -> nativeint -> bool
+  val (mod): nativeint -> nativeint -> nativeint
+end

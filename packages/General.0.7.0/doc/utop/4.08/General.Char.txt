@@ -1,0 +1,18 @@
+module Char: sig
+  type t = char
+  val compare: char -> char -> General.Compare.t
+  val less_than: char -> char -> bool
+  val less_or_equal: char -> char -> bool
+  val greater_than: char -> char -> bool
+  val greater_or_equal: char -> char -> bool
+  val between: char -> low:char -> high:char -> bool
+  val between_or_equal: char -> low:char -> high:char -> bool
+  val min: char -> char -> char
+  val max: char -> char -> char
+  val min_max: char -> char -> char * char
+  module O
+  val of_int: int -> char
+  val to_int: char -> int
+  val to_string: char -> string
+  val repeat: char -> len:int -> string
+end

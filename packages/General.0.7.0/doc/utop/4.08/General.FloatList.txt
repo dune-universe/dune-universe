@@ -1,0 +1,84 @@
+module FloatList: sig
+  type t = float list
+  module O
+  val empty: t
+  val singleton: float -> t
+  val of_list: float list -> t
+  val to_list: t -> float list
+  val of_array: float array -> t
+  val to_array: t -> float array
+  val size: t -> int
+  val is_empty: t -> bool
+  val head: t -> float
+  val tail: t -> t
+  val try_head: t -> float option
+  val try_tail: t -> t option
+  val prepend: float -> t -> t
+  val reverse: t -> t
+  val concat: t -> t -> t
+  val map: t -> f:(float -> float) -> t
+  val map_i: t -> f:(i:int -> float -> float) -> t
+  val map_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * float) -> t
+  val filter: t -> f:(float -> bool) -> t
+  val filter_i: t -> f:(i:int -> float -> bool) -> t
+  val filter_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> t
+  val filter_map: t -> f:(float -> float option) -> t
+  val filter_map_i: t -> f:(i:int -> float -> float option) -> t
+  val filter_map_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * float option) -> t
+  val flat_map: t -> f:(float -> t) -> t
+  val flat_map_i: t -> f:(i:int -> float -> t) -> t
+  val flat_map_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * t) -> t
+  val fold: init:'b -> t -> f:('b -> float -> 'b) -> 'b
+  val fold_i: init:'b -> t -> f:(i:int -> 'b -> float -> 'b) -> 'b
+  val fold_acc: acc:'acc -> init:'b -> t -> f:(acc:'acc -> 'b -> float -> 'acc * 'b) -> 'b
+  val reduce: t -> f:(float -> float -> float) -> float
+  val reduce_i: t -> f:(i:int -> float -> float -> float) -> float
+  val reduce_acc: acc:'acc -> t -> f:(acc:'acc -> float -> float -> 'acc * float) -> float
+  val try_reduce: t -> f:(float -> float -> float) -> float option
+  val try_reduce_i: t -> f:(i:int -> float -> float -> float) -> float option
+  val try_reduce_acc: acc:'acc -> t -> f:(acc:'acc -> float -> float -> 'acc * float) -> float option
+  val iter: t -> f:(float -> unit) -> unit
+  val iter_i: t -> f:(i:int -> float -> unit) -> unit
+  val iter_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc) -> unit
+  val count: t -> f:(float -> bool) -> int
+  val count_i: t -> f:(i:int -> float -> bool) -> int
+  val count_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> int
+  val fold_short: init:'b -> t -> f:('b -> float -> General.Shorten.t * 'b) -> 'b
+  val fold_short_i: init:'b -> t -> f:(i:int -> 'b -> float -> General.Shorten.t * 'b) -> 'b
+  val fold_short_acc: acc:'acc -> init:'b -> t -> f:(acc:'acc -> 'b -> float -> 'acc * General.Shorten.t * 'b) -> 'b
+  val reduce_short: t -> f:(float -> float -> General.Shorten.t * float) -> float
+  val reduce_short_i: t -> f:(i:int -> float -> float -> General.Shorten.t * float) -> float
+  val reduce_short_acc: acc:'acc -> t -> f:(acc:'acc -> float -> float -> 'acc * General.Shorten.t * float) -> float
+  val try_reduce_short: t -> f:(float -> float -> General.Shorten.t * float) -> float option
+  val try_reduce_short_i: t -> f:(i:int -> float -> float -> General.Shorten.t * float) -> float option
+  val try_reduce_short_acc: acc:'acc -> t -> f:(acc:'acc -> float -> float -> 'acc * General.Shorten.t * float) -> float option
+  val iter_short: t -> f:(float -> General.Shorten.t) -> unit
+  val iter_short_i: t -> f:(i:int -> float -> General.Shorten.t) -> unit
+  val iter_short_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * General.Shorten.t) -> unit
+  val for_all: t -> f:(float -> bool) -> bool
+  val for_all_i: t -> f:(i:int -> float -> bool) -> bool
+  val for_all_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> bool
+  val there_exists: t -> f:(float -> bool) -> bool
+  val there_exists_i: t -> f:(i:int -> float -> bool) -> bool
+  val there_exists_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> bool
+  val find: t -> f:(float -> bool) -> float
+  val find_i: t -> f:(i:int -> float -> bool) -> float
+  val find_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> float
+  val try_find: t -> f:(float -> bool) -> float option
+  val try_find_i: t -> f:(i:int -> float -> bool) -> float option
+  val try_find_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * bool) -> float option
+  val find_map: t -> f:(float -> 'b option) -> 'b
+  val find_map_i: t -> f:(i:int -> float -> 'b option) -> 'b
+  val find_map_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * 'b option) -> 'b
+  val try_find_map: t -> f:(float -> 'b option) -> 'b option
+  val try_find_map_i: t -> f:(i:int -> float -> 'b option) -> 'b option
+  val try_find_map_acc: acc:'acc -> t -> f:(acc:'acc -> float -> 'acc * 'b option) -> 'b option
+  val scan: init:float -> t -> f:(float -> float -> float) -> t
+  val scan_i: init:float -> t -> f:(i:int -> float -> float -> float) -> t
+  val scan_acc: acc:'acc -> init:float -> t -> f:(acc:'acc -> float -> float -> 'acc * float) -> t
+  val scan_short: init:float -> t -> f:(float -> float -> General.Shorten.t * float) -> t
+  val scan_short_i: init:float -> t -> f:(i:int -> float -> float -> General.Shorten.t * float) -> t
+  val scan_short_acc: acc:'acc -> init:float -> t -> f:(acc:'acc -> float -> float -> 'acc * General.Shorten.t * float) -> t
+  module ToList
+  val contains: t -> float -> bool
+end
