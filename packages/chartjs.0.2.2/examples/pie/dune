@@ -1,0 +1,14 @@
+(executables
+  (names pie)
+  (libraries chartjs)
+  (preprocess (pps js_of_ocaml-ppx)))
+
+(rule
+  (targets pie.js)
+  (action
+    (run %{bin:js_of_ocaml} --noruntime %{lib:js_of_ocaml-compiler:runtime.js}
+         --source-map %{dep:pie.bc} -o %{targets} --pretty)))
+
+(alias
+  (name default)
+  (deps pie.js index.html))

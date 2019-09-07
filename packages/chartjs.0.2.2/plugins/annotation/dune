@@ -1,0 +1,5 @@
+(library
+  (name chartjs_annotation)
+  (public_name chartjs-annotation)
+  (libraries js_of_ocaml chartjs)
+  (preprocess (pps js_of_ocaml-ppx)))

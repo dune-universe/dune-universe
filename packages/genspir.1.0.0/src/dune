@@ -1,0 +1,11 @@
+
+(library
+  (name genspir)
+  (public_name genspir)
+  (modules genspir))
+
+;; never installed executables
+(executables
+  (names example)
+  (modules example)
+  (libraries genspir))

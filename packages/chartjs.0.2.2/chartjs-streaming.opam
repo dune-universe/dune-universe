@@ -1,0 +1,25 @@
+opam-version: "2.0"
+name: "chartjs-streaming"
+maintainer: "sashayanin@gmail.com"
+authors: ["Alexander Yanin"]
+homepage: "https://github.com/monstasat/chartjs-ocaml"
+dev-repo: "git+https://github.com/monstasat/chartjs-ocaml.git"
+bug-reports: "https://github.com/monstasat/chartjs-ocaml/issues"
+license: "MIT"
+synopsis: "OCaml bindings for Chart.js streaming plugin"
+description: """
+This library provides OCaml bindings for chartjs-plugin-streaming.
+This plugin allows creation of live streaming charts.
+"""
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "ocaml" {>= "4.08.0"}
+  "dune" {>= "1.11"}
+  "js_of_ocaml"
+  "js_of_ocaml-ppx"
+  "chartjs" {= version}
+]

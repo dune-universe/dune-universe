@@ -1,0 +1,14 @@
+(executables
+  (names bar)
+  (libraries chartjs)
+  (preprocess (pps js_of_ocaml-ppx)))
+
+(rule
+  (targets bar.js)
+  (action
+    (run %{bin:js_of_ocaml} --noruntime %{lib:js_of_ocaml-compiler:runtime.js}
+         --source-map %{dep:bar.bc} -o %{targets} --pretty)))
+
+(alias
+  (name default)
+  (deps bar.js index.html))

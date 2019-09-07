@@ -1,0 +1,14 @@
+(executables
+  (names timescale)
+  (libraries chartjs)
+  (preprocess (pps js_of_ocaml-ppx)))
+
+(rule
+  (targets timescale.js)
+  (action
+    (run %{bin:js_of_ocaml} --noruntime %{lib:js_of_ocaml-compiler:runtime.js}
+         --source-map %{dep:timescale.bc} -o %{targets} --pretty)))
+
+(alias
+  (name default)
+  (deps timescale.js index.html))

@@ -1,0 +1,7 @@
+normal
+base=2
+in=0
+with=0
+match_clause=4
+syntax=lwt mll
+max_indent=2

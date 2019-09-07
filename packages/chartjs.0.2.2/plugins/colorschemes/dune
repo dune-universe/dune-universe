@@ -1,0 +1,5 @@
+(library
+  (name chartjs_colorschemes)
+  (public_name chartjs-colorschemes)
+  (libraries js_of_ocaml chartjs)
+  (preprocess (pps js_of_ocaml-ppx)))

@@ -1,0 +1,10 @@
+(executables
+ (names svm_test svm_test2 svm_test3)
+ (libraries core_kernel libsvm))
+
+(alias
+ (name runtest)
+ (deps
+  (:< svm_test.exe))
+ (action
+  (run %{<})))

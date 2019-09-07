@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Line Chart Example</title>
+        <style type="text/css">>
+         body {
+             margin: 0;
+         }
+         canvas {
+             max-height: 300px;
+             margin-bottom: 1rem;
+         }
+         .wrapper {
+             display: flex;
+             flex-direction: column;
+             position: relative;
+             overflow: hidden;
+             margin: 1rem;
+         }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    </head>
+    <body>
+        <div class="wrapper" style="display: flex;">
+            <canvas id="bar"></canvas>
+            <canvas id="horizontalBar"></canvas>
+        </div>
+    </body>
+    <script type="text/javascript" src="bar.js"></script>
+</html>
