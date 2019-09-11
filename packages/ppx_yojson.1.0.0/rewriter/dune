@@ -1,0 +1,9 @@
+(library
+  (name ppx_yojson)
+  (public_name ppx_yojson)
+  (kind ppx_rewriter)
+  (libraries
+    ppx_yojson_lib
+    ppxlib
+  )
+)
