@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "satyrographos"
-version: "0.0.1.7"
+version: "0.0.2.1"
 maintainer: "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
 authors: [
   "SAKAMOTO Noriaki <mrty.ityt.pt@gmail.com>"
@@ -22,7 +22,10 @@ depends: [
   "json-derivers"
   "ppx_deriving"
   "ppx_jane" {< "v0.13"}
-  "uri" {>= "2.0.0"}
+  "opam-format" {>= "2.0" & < "2.1"}
+  "uri" {>= "3.0.0"}
+  "uri-sexp" {>= "3.0.0"}
+  "shexp" {< "v0.13"}
   "yojson"
 ]
 synopsis: "A package manager for SATySFi"

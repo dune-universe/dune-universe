@@ -91,9 +91,9 @@ let font_to_json_and_hash prefix f =
         (name f, `Variant ("Collection", Some value)), (filepath f, f.file)
       )
 
-let fonts_to_package prefix fonts =
+let fonts_to_library prefix fonts =
   let add_variant = function
-    | [] -> failwith "BUG: fonts_to_package"
+    | [] -> failwith "BUG: fonts_to_library"
     | [f] -> `Single f
     | fs -> `Collection fs
   in
@@ -107,15 +107,15 @@ let fonts_to_package prefix fonts =
   in
   let hash_filename_fonts = "hash/fonts.satysfi-hash" in
   let hash_path_fonts = "#Automatically generated from the system fonts#" in
-  Package.{
-    hashes = PackageFiles.singleton hash_filename_fonts ([hash_path_fonts], `Assoc hash);
-    files = PackageFiles.of_alist_reduce files ~f:(fun f1 f2 ->
+  Library.{ empty with
+    hashes = LibraryFiles.singleton hash_filename_fonts ([hash_path_fonts], `Assoc hash);
+    files = LibraryFiles.of_alist_reduce files ~f:(fun f1 f2 ->
       begin if not (String.equal f1 f2)
         then Printf.printf "WARNING: %s and %s have conflicting filename.\n" f1 f2
       end;
       f1
-    )
+    );
   }
 
-let get_package prefix () =
-  font_list () |> fonts_to_package prefix
+let get_library prefix () =
+  font_list () |> fonts_to_library prefix
