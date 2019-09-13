@@ -1,0 +1,5 @@
+; -*- mode: lisp -*-
+
+(test
+ (name test)
+ (libraries AMF core oUnit oUnit.advanced oUnit.threads sexplib))

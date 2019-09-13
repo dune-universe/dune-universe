@@ -1,0 +1,26 @@
+opam-version: "2.0"
+name: "amf"
+version: "0.1.2"
+maintainer: "Brian Caine <brian.d.caine@gmail.com>"
+authors: "Brian Caine <brian.d.caine@gmail.com>"
+synopsis: "Parser/serializer for Adobe's Action Message Format"
+dev-repo: "git+https://github.com/briancaine/ocaml-amf.git"
+homepage: "https://briancaine.github.io/ocaml-amf/"
+bug-reports: "https://github.com/briancaine/ocaml-amf/issues"
+license: "LGPL with OCaml linking exception"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.04"}
+  "dune" {>= "1.0"}
+  "ppx_deriving"
+  "ppx_sexp_conv"
+  "base-threads"
+  "core" {>= "v0.9.1"}
+  "stdint"
+  "sexplib"
+  "bisect_ppx" {build}
+  "ounit" {with-test}
+]

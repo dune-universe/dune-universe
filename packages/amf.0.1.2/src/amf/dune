@@ -1,0 +1,9 @@
+; -*- mode: lisp -*-
+
+(library
+ (name AMF)
+ (public_name amf)
+ (libraries core sexplib stdint)
+ (synopsis "Unserializer and serializer for Adobe's AMF format")
+ (preprocess
+  (pps ppx_deriving ppx_sexp_conv ppx_fields_conv bisect_ppx -- -conditional)))

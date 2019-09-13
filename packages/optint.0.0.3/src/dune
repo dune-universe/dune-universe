@@ -1,0 +1,12 @@
+(rule
+ (targets optint.ml optint.mli)
+ (deps    (:select select/select.ml)
+          int_x64_backend.ml int_x86_backend.ml
+          int_x64_backend.mli int_x86_backend.mli)
+ (action  (run %{ocaml} %{select}
+            --x64 %{arch_sixtyfour} -o optint)))
+
+(library
+ (modules     optint)
+ (name        optint)
+ (public_name optint))
