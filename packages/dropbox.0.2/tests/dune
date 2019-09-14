@@ -1,0 +1,17 @@
+(executables
+ (names info get_file metadata delta latest_cursor
+        longpoll_delta revisions restore search copy_ref
+        shares media shared_folders files_put_stream
+        files_put_cohttp_body chunked_upload thumbnails
+        previews copy_from_path copy_from_ref delete
+        create_folder move)
+ (libraries dropbox_lwt_unix unix))
+
+(alias
+ (name tests)
+ (deps info.exe get_file.exe metadata.exe delta.exe latest_cursor.exe
+       longpoll_delta.exe revisions.exe restore.exe search.exe copy_ref.exe
+       shares.exe media.exe shared_folders.exe files_put_stream.exe
+       files_put_cohttp_body.exe chunked_upload.exe thumbnails.exe
+       previews.exe copy_from_path.exe copy_from_ref.exe delete.exe
+       create_folder.exe move.exe))

@@ -1,0 +1,23 @@
+(library
+ (name        dropbox)
+ (public_name dropbox)
+ (modules     Dropbox Dropbox_date Dropbox_t
+              Dropbox_j Dropbox_json)
+ (flags :standard -warn-error -3) ; atdgen use an earlier "yojson" interface
+ (wrapped false)
+ (libraries   bytes cohttp-lwt lwt atdgen)
+ (synopsis "Binding to the Dropbox Remote API"))
+
+(rule
+ (targets dropbox_j.ml dropbox_j.mli dropbox_t.ml dropbox_t.mli)
+ (deps    dropbox.atd)
+ (action  (progn
+           (run atdgen -j %{deps})
+           (run atdgen -t %{deps}))))
+
+(library
+ (name        dropbox_lwt_unix)
+ (public_name dropbox_lwt_unix)
+ (modules     Dropbox_lwt_unix)
+ (libraries   dropbox cohttp-lwt-unix)
+ (synopsis "Binding to the Dropbox Remote API (Unix)"))

@@ -1,0 +1,121 @@
+(* 								-*-tuareg-*- *)
+
+type error_description = { ~error: string;
+                           ~error_description: string }
+
+type token = { access_token: string;
+               (* token_type: string; (* always "bearer" *) *)
+             }
+
+type name_details = { familiar_name: string;
+                      given_name: string;
+                      surname: string }
+
+type team = { name: string;
+              team_id: int }
+
+type quota_info = { shared: int;
+                    quota: int;
+                    normal: int }
+type uri = string wrap
+           <ocaml t="Uri.t" wrap="Uri.of_string" unwrap="Uri.to_string">
+
+type info = { uid: int;
+              display_name: string;
+              ~email_verified <ocaml default="false">: bool;
+              name_details: name_details;
+              referral_link: uri;
+              ~country: string;
+              locale: string;
+              is_paired: bool;
+              team: team nullable;
+              quota_info: quota_info }
+
+type date = string wrap
+            <ocaml t="Dropbox_date.t"
+                   wrap="Dropbox_date.of_string"
+                   unwrap="Dropbox_date.to_string" >
+
+type metadata_root = [
+  | Dropbox     <json name="dropbox">
+  | App_folder  <json name="app_folder">
+  ]
+
+
+type json <ocaml module="Yojson.Safe"> = abstract (* "Raw" JSON. *)
+
+type photo_info_variant = json wrap <ocaml module="Dropbox_json.Photo">
+type video_info_variant = json wrap <ocaml module="Dropbox_json.Video">
+
+type user = { uid: int;
+              display_name: string;
+              ~same_team: bool;
+              ~member_id: string }
+
+type user_info = { user: user;
+                   access_type: string;
+                   active: bool }
+
+type group = { group_name: string;
+               group_id: string;
+               num_members: int }
+
+type shared_folder = { shared_folder_id: string;
+                       shared_folder_name: string;
+                       path: string;
+                       access_type: string;
+                       shared_link_policy: string;
+                       ?owner: user option;
+                       ~membership: user_info list;
+                       ~groups: group list }
+
+type shared_folders = shared_folder list
+
+type metadata = { size: string;
+                  bytes: int;
+                  ~mime_type: string;
+                  path: string;
+                  is_dir: bool;
+                  ~is_deleted <ocaml default="false"> : bool;
+                  ~rev <ocaml default="\"\"">: string;
+                  ~hash: string;
+                  thumb_exists: bool;
+                  ~photo_info <ocaml default="`None">: photo_info_variant;
+                  ~video_info <ocaml default="`None">: video_info_variant;
+                  icon: string;
+                  ?modified: date option;
+                  ?client_mtime: date option;
+                  root: metadata_root;
+                  ~contents: metadata list;
+                  ?shared_folder: shared_folder option;
+                  ~read_only: bool;
+                  ~parent_shared_folder_id: int;
+                  ?modifier: user option }
+
+type metadata_list = metadata list
+
+type delta_json = { ~entries: (string * metadata nullable) list;
+                    reset: bool;
+                    cursor: string;
+                    has_more: bool }
+
+type latest_cursor = { cursor <ocaml name="latest_cursor">: string }
+
+type longpoll_delta = { changes: bool;
+                        ?backoff : int option; }
+
+type copy_ref = { copy_ref: string;
+                  expires: date }
+
+type link = { url: string;
+              expires: date }
+
+type visibility = json wrap <ocaml module="Dropbox_json.Visibility">
+
+type shared_link = { url: string;
+                     expires: date;
+                     visibility: visibility }
+
+type chunked_upload = { upload_id <ocaml name="id">: string;
+                        offset <ocaml name="ofs">: int;
+                        expires: date }

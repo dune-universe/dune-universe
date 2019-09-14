@@ -1,0 +1,4 @@
+(executables
+ (names     example)
+ (libraries csv unix))
+

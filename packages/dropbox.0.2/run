@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Wrap the command to set the proper authentication
+
+PGM=$1
+shift
+
+# Specify the App ID and secret (and then connect to the Dropbox site
+# to have a token for each run)
+CLIENT_ID=
+SECRET=
+# Or generate a token in the Dropbox App Console
+TOKEN=
+
+# Read the above variables from "run.conf":
+test -f "run.conf" && source run.conf
+
+if [ "$TOKEN" = "" ]; then
+    exec ./$PGM --id $CLIENT_ID --secret $SECRET "$@"
+else
+    exec ./$PGM --token $TOKEN "$@"
+fi

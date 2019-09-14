@@ -1,0 +1,12 @@
+(library
+ (name        lbfgs)
+ (public_name lbfgs)
+ (libraries   bigarray bytes lbfgs.fortran)
+ (flags       :standard -w -9 -safe-string)
+ (c_names     lbfgs_stubs)
+ (synopsis "Bound-constrainted optimization in many variables"))
+
+(rule
+ (targets lbfgs.ml)
+ (deps    (:p lbfgs.pp.ml) lbfgs_FC.pp.ml)
+ (action  (run %{bin:cppo} -D LBFGS3 %{p} -o %{targets})))
