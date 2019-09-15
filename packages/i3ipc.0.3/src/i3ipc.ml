@@ -12,8 +12,9 @@ type protocol_error =
   | No_IPC_socket
   | Bad_magic_string of string
   | Unexpected_eof
-  | Unknown_type of Uint32.t
+  | Unknown_type of Uint32.t [@printer Uint32.printer]
   | Bad_reply of string
+[@@deriving show]
 
 exception Protocol_error of protocol_error
 
@@ -53,7 +54,7 @@ module Reply = struct
     name: string;
     active: bool;
     primary: bool;
-    current_workspace: string option;
+    current_workspace: string option [@default None];
     rect: rect;
   } [@@deriving of_yojson { strict = false }, show]
 
@@ -110,11 +111,19 @@ module Reply = struct
     | `String s -> Result.Ok (Unknown s)
     | j -> Result.Error ("Reply.node_layout_of_yojson: " ^ Json.to_string j)
 
+  (* According to the X11 protocol specification
+     (https://www.x.org/releases/X11R7.5/doc/x11proto/proto.pdf), a X11 window
+     ID is a 32 bits integer with its top three bits guaranteed to be zero.
+
+     Consequently, it is representable as an OCaml integer, including on 32 bits
+     platforms. *)
+  type x11_window_id = int [@@deriving of_yojson, show]
+
   type window_properties = {
-    class_: string option [@key "class"];
-    instance: string option;
-    title: string option;
-    transient_for: string option;
+    class_: string option [@key "class"] [@default None];
+    instance: string option [@default None];
+    title: string option [@default None];
+    transient_for: x11_window_id option [@default None];
     window_role: string option [@default None];
   } [@@deriving of_yojson { strict = false }, show]
 
@@ -132,18 +141,18 @@ module Reply = struct
     nodes : (node list [@default []]);
     floating_nodes: (node list [@default []]);
     id: node_id;
-    name: string option;
+    name: string option [@default None];
     num: int option [@default None];
     nodetype: node_type [@key "type"];
     border: node_border;
     current_border_width: int;
     layout: node_layout;
-    percent: float option;
+    percent: float option [@default None];
     rect: rect;
     window_rect: rect;
     deco_rect: rect;
     geometry: rect;
-    window: int option;
+    window: x11_window_id option [@default None];
     window_properties: window_properties option [@default None];
     urgent: bool;
     focused: bool;
@@ -304,8 +313,8 @@ module Event = struct
 
   type workspace_event_info = {
     change: workspace_change;
-    current: Reply.node option;
-    old: Reply.node option;
+    current: Reply.node option [@default None];
+    old: Reply.node option [@default None];
   } [@@deriving of_yojson { strict = false }, show]
 
   type output_change =
@@ -380,8 +389,8 @@ module Event = struct
     command: string;
     event_state_mask: string list;
     input_code: int;
-    mods: string list option;
-    symbol: string option;
+    mods: string list option [@default None];
+    symbol: string option [@default None];
     input_type: input_type;
   } [@@deriving of_yojson { strict = false }, show]
 
@@ -426,7 +435,10 @@ type connection = {
 
 let connect () =
   try%lwt
-    let%lwt socketpath = Lwt_process.pread ("i3", [|"i3"; "--get-socketpath"|]) in
+    let%lwt socketpath = match Sys.getenv "I3SOCK" with
+      | exception Not_found -> Lwt_process.pread ("i3", [|"i3"; "--get-socketpath"|])
+      | s -> Lwt.return s
+    in
     let socketpath = String.trim socketpath in
     let fd = Lwt_unix.socket Lwt_unix.PF_UNIX Lwt_unix.SOCK_STREAM 0 in
     let%lwt () = Lwt_unix.connect fd (Lwt_unix.ADDR_UNIX socketpath) in
