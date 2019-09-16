@@ -1,0 +1,8 @@
+(executables
+ (names     tests Kahaner)
+ (libraries integration1d))
+
+(alias
+ (name   runtest)
+ (deps   tests.exe)
+ (action (run %{deps})))
