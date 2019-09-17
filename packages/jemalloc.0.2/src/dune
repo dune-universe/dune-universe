@@ -1,0 +1,7 @@
+(library
+  (name jemalloc)
+  (public_name jemalloc)
+  (modules jemalloc)
+  (c_names jemalloc_stubs)
+  (c_flags -g)
+  (c_library_flags -ljemalloc))
