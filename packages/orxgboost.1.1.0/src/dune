@@ -1,0 +1,10 @@
+(library
+  (name orxgboost)
+  (public_name orxgboost)
+  (modules result utls gbtree)
+  (libraries dolog))
+
+(executables
+  (names test)
+  (modules test)
+  (libraries dolog batteries cpm orxgboost))

@@ -1,23 +1,23 @@
 .PHONY: install uninstall reinstall test
 
 build:
-	jbuilder build @install
+	dune build @install
 
 clean:
-	jbuilder clean
+	dune clean
 
 edit:
 	emacs src/*.ml &
 
 install:
-	jbuilder build @install
-	jbuilder install
+	dune build @install
+	dune install
 
 test:
-	jbuilder build src/test.exe
+	dune build src/test.exe
 	_build/default/src/test.exe -np `getconf _NPROCESSORS_ONLN`
 
 uninstall:
-	jbuilder uninstall
+	dune uninstall
 
 reinstall: uninstall install

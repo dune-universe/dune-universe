@@ -448,14 +448,6 @@ let process_expect_file fname ~use_color ~in_place ~sexp_output ~use_absolute_pa
     true
 ;;
 
-let override_sys_argv args =
-  let len = Array.length args in
-  assert (len <= Array.length Sys.argv);
-  Array.blit ~src:args ~src_pos:0 ~dst:Sys.argv ~dst_pos:0 ~len;
-  Obj.truncate (Obj.repr Sys.argv) len;
-  Arg.current := 0;
-;;
-
 let setup_env () =
   (* Same as what run-tests.py does, to get repeatable output *)
   List.iter ~f:(fun (k, v) -> Unix.putenv k v)
@@ -493,15 +485,21 @@ let sexp_output = ref false
 let use_absolute_path = ref false
 let allow_output_patterns = ref false
 
+[%%if ocaml_version < (4, 09, 0)]
+let init_path () = Compmisc.init_path true
+[%%else]
+let init_path () = Compmisc.init_path ()
+[%%endif]
+
 let main fname =
   let cmd_line =
     Array.sub Sys.argv ~pos:!Arg.current ~len:(Array.length Sys.argv - !Arg.current)
   in
   setup_env ();
   setup_config ();
-  override_sys_argv cmd_line;
+  Core.Sys.override_argv cmd_line;
   Toploop.set_paths ();
-  Compmisc.init_path true;
+  init_path ();
   Toploop.toplevel_env := Compmisc.initial_env ();
   Sys.interactive := false;
   Backend.init ();

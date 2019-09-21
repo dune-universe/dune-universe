@@ -14,6 +14,3 @@ install.packages('xgboost', dependencies = TRUE, repos='http://cran.r-project.or
 library(xgboost)
 help(xgboost)
 ````
-
-This project is part of the poor lonesome cowboy's plan to enhance
-the OCaml ecosystem in the Machine Learning field.

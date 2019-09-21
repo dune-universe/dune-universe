@@ -1,6 +1,6 @@
-opam-version: "1.2"
-maintainer: "ligand@free.fr"
-authors: ["Francois BERENGER"]
+opam-version: "2.0"
+maintainer: "unixjunkie@sdf.org"
+authors: ["Francois Berenger"]
 homepage: "https://github.com/UnixJunkie/orxgboost"
 bug-reports: "https://github.com/UnixJunkie/orxgboost/issues"
 dev-repo: "git+https://github.com/UnixJunkie/orxgboost.git"
@@ -8,9 +8,11 @@ license: "LGPL + linking exception"
 build: [
   ["R" "CMD" "BATCH" "files/install_matrix.r"]
   ["R" "CMD" "BATCH" "files/install_xgboost.r"]
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
-  "jbuilder" {build}
+  "dune"
   "conf-r"
+  "ocaml"
 ]
+synopsis: "Gradient boosting for OCaml using the R xgboost package"

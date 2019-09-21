@@ -1,6 +1,6 @@
 (library (name toplevel_expect_test) (public_name toplevel_expect_test)
  (modes byte)
- (libraries toplevel_expect_test_types ppxlib ppxlib.print_diff
+ (libraries toplevel_expect_test_types ppxlib ppxlib.print_diff core
   ppx_here.expander core_kernel ppx_expect.common ppx_expect.matcher
   mlt_parser ocaml-compiler-libs.common compiler-libs.common
   compiler-libs.toplevel findlib.top unix threads ppx_inline_test.runner.lib)
