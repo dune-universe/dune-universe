@@ -1,0 +1,37 @@
+archetype miles
+
+variable[%transferable%] validator role
+
+asset account identified by owner = {
+  owner  : role;
+  amount : int;
+}
+
+action add (ow : role) (value : int) = {
+  called by validator
+  effect {
+    if account.contains(ow) then
+     account.update (ow, { amount += value })
+    else
+     account.add({ owner = ow; amount = 0 })
+  }
+}
+
+action consume (ow : role) (value : int) = {
+  specification {
+    postcondition s1 = {
+      account.before.get(ow).amount =
+        account.get(ow).amount + value
+    }
+  }
+
+  called by validator
+
+  require {
+    c1 : account.get(ow).amount >= value;
+  }
+
+  effect {
+    account.update (ow, { amount -= value })
+  }
+}
