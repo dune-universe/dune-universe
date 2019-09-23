@@ -1,7 +1,0 @@
-(executable
- (name server)
- (libraries cohttp-lwt cohttp-lwt-unix graphql-lwt graphql-cohttp yojson))
-
-(alias
- (name DEFAULT)
- (deps server.exe))

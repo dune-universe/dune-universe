@@ -1,0 +1,7 @@
+(executable
+ (name server)
+ (libraries digestif.c cohttp-lwt-unix graphql-lwt graphql-cohttp yojson))
+
+(alias
+ (name DEFAULT)
+ (deps server.exe))

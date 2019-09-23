@@ -1,0 +1,11 @@
+(ocamllex
+ (modules lexer))
+
+(menhir
+ (modules parser))
+
+(library
+ (name graphql_parser)
+ (public_name graphql_parser)
+ (libraries fmt re)
+ (flags (:standard -w -30)))
