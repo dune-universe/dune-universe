@@ -1,5 +1,0 @@
-(test
- (name test)
- (libraries checkseum.c alcotest))
-
-(rule (copy# ../test.ml test.ml))

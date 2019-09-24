@@ -1,5 +1,0 @@
-(library
- (name checkseum_c)
- (public_name checkseum.c)
- (libraries bigarray optint checkseum.laolao)
- (implements checkseum))

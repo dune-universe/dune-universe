@@ -1,5 +1,0 @@
-(test
- (name test)
- (libraries checkseum.ocaml alcotest))
-
-(rule (copy# ../test.ml test.ml))

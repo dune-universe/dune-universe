@@ -1,6 +1,0 @@
-(library
- (name checkseum_ocaml)
- (public_name checkseum.ocaml)
- (libraries bigarray optint)
- (implements checkseum)
- (private_modules gin_adler32 gin_crc32 gin_crc32c))
