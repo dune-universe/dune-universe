@@ -1,0 +1,5 @@
+(test
+  (name Main)
+  (libraries unix pprint inferno)
+  (flags "-w" "@1..66-4-44")
+)

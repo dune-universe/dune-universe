@@ -1,0 +1,6 @@
+(test
+  (name TestUnionFind)
+  (modules TestUnionFind)
+  (libraries unix pprint inferno)
+  (flags "-w" "@1..66")
+)

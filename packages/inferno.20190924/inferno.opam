@@ -1,0 +1,18 @@
+name: "inferno"
+opam-version: "2.0"
+maintainer: "francois.pottier@inria.fr"
+authors: [
+  "François Pottier <francois.pottier@inria.fr>"
+]
+homepage: "https://gitlab.inria.fr/fpottier/inferno"
+dev-repo: "git+https://gitlab.inria.fr/fpottier/inferno.git"
+bug-reports: "francois.pottier@inria.fr"
+license: "MIT"
+synopsis: "A library for constraint-based Hindley-Milner type inference"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" { >= "4.02.3" }
+  "dune"  { build }
+]
