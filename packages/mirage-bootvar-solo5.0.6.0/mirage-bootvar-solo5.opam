@@ -1,0 +1,29 @@
+version: "0.6.0"
+opam-version: "2.0"
+name:         "mirage-bootvar-solo5"
+maintainer:   "Martin Lucina <martin@lucina.net>"
+homepage:     "https://github.com/mirage/mirage-bootvar-solo5"
+bug-reports:  "https://github.com/mirage/mirage-bootvar-solo5/issues/"
+dev-repo:     "git+https://github.com/mirage/mirage-bootvar-solo5.git"
+license:      "ISC"
+authors: [
+  "Dan Williams <djwillia@us.ibm.com>"
+  "Magnus Skjegstad <magnus@skjegstad.com>"
+  "Martin Lucina <martin@lucina.net>"
+]
+tags: [
+  "org:mirage"
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.04.2"}
+  "dune" {build & >= "1.0"}
+  "mirage-solo5" {>= "0.6.0" & < "0.7.0"}
+  "lwt"
+  "parse-argv"
+]
+synopsis: "Solo5 implementation of MirageOS Bootvar interface"

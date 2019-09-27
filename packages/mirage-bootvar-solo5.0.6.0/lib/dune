@@ -1,0 +1,4 @@
+(library
+  (name bootvar)
+  (public_name mirage-bootvar-solo5)
+  (libraries lwt mirage-solo5 parse-argv))

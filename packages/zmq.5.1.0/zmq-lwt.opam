@@ -1,0 +1,22 @@
+version: "5.1.0"
+opam-version: "2.0"
+maintainer: "Anders Fugmann <anders@fugmann.net>"
+authors: ["Anders Fugmann <anders@fugmann.net>"]
+license: "MIT"
+homepage: "https://github.com/issuu/ocaml-zmq"
+doc: "https://issuu.github.io/ocaml-zmq/"
+dev-repo:
+  "git+https://github.com/issuu/ocaml-zmq.git"
+bug-reports: "https://github.com/issuu/ocaml-zmq/issues"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.03"}
+  "zmq" {>= "5.1.0"}
+  "ounit" {with-test}
+  "dune"
+  "lwt"
+]
+synopsis: "Lwt aware bindings to zmq"

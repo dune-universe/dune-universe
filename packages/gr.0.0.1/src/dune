@@ -1,0 +1,4 @@
+(library
+ (name gr)
+ (public_name gr)
+ (libraries ctypes ctypes.foreign stdcompat))

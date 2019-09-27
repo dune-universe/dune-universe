@@ -1,0 +1,3 @@
+(executable
+ (name pipe)
+ (libraries checkseum.c bigstringaf fmt rresult decompress.dd decompress.zz cmdliner))

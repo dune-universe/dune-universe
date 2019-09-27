@@ -1,0 +1,2 @@
+doc: "https://mseri.github.io/ocaml-gr"
+post-messages: "Make sure that libGR (gr-framework.org) is installed and, in case of error, that either of the GRDIR or LIBGRPATH env variables is set"

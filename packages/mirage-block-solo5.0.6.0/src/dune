@@ -1,0 +1,4 @@
+(library
+ (name block)
+ (public_name mirage-block-solo5)
+ (libraries cstruct lwt mirage-block-lwt mirage-solo5 fmt))

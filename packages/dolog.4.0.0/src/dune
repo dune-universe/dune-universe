@@ -1,0 +1,11 @@
+(library
+  (name dolog)
+  (public_name dolog)
+  (modules log)
+  (libraries unix))
+
+;; never installed executables
+(executables
+  (names test example)
+  (modules test example)
+  (libraries dolog))
