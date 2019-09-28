@@ -1,0 +1,5 @@
+/_build/
+/redirect.install
+/redirect.opam
+.merlin
+*~

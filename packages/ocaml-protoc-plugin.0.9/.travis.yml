@@ -1,0 +1,23 @@
+language: c
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+sudo: required
+services:
+  - docker
+sudo: false
+dist: bionic
+env:
+  global:
+  - DEPOPTS="*"
+  - DISTRO=ubuntu-18.04
+  - TESTS=true
+  - PACKAGE=ocaml-protoc-plugin
+  - PINS="conf-protoc:."
+
+  matrix:
+  - OCAML_VERSION=4.07
+  - OCAML_VERSION=4.08
+  - OCAML_VERSION=4.09
+
+os:
+  - linux

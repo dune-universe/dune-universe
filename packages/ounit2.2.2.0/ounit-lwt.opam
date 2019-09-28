@@ -1,0 +1,25 @@
+version: "2.2.0"
+opam-version: "2.0"
+maintainer: "Sylvain Le Gall <sylvaini+ocaml@le-gall.net>"
+authors: [ "Sylvain Le Gall" ]
+homepage: "https://github.com/gildor478/ounit"
+dev-repo: "git+https://github.com/gildor478/ounit.git"
+bug-reports: "https://github.com/gildor478/ounit/issues"
+doc: "https://gildor478.github.io/ounit/"
+depends: [
+  "ocamlfind"
+  "ounit2-lwt" {= version}
+]
+build: [
+  [make "null"]
+  [make "null"] {with-test}
+  [make "null"] {with-doc}
+]
+install: [
+  [make "install-ounit-lwt" "version=%{version}%"]
+]
+synopsis: "This is a transition package, ounit-lwt is now ounit2-lwt"
+description:"""
+More details for the transition:
+https://github.com/gildor478/ounit#transition-to-ounit2
+"""

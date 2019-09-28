@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+message UInt64 {
+  repeated uint64 i = 13;
+}
+
+message Double {
+  repeated double i = 1;
+}
+
+message Float {
+  repeated float i = 1;
+}
+
+message String {
+  repeated string i = 1;
+}
+
+message Enum {
+  enum E {
+    A = 0;
+    B = 1000;
+    C = 2000;
+  }
+  repeated E e = 1;
+}
+
+message Message {
+  message M { int64 i = 1; }
+  repeated M ms = 1;
+}

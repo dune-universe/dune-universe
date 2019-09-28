@@ -1,3 +1,0 @@
-(executable
-  (name fakeRunner)
-  (libraries ounit ounit.threads testcommon))

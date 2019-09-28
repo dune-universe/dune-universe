@@ -1,0 +1,5 @@
+(library
+  (name redirect)
+  (public_name redirect)
+  (libraries unix threads stdcompat)
+  (flags -open Stdcompat))

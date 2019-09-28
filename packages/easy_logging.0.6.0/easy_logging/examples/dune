@@ -1,0 +1,5 @@
+(test
+ (flags -w)
+ (name logging_examples)
+ (libraries easy_logging)
+ )
