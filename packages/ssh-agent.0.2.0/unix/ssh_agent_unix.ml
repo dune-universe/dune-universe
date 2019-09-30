@@ -12,17 +12,17 @@ let request ((ic, oc) : in_channel * out_channel)
           ic with
   | { len = 0; _ }, Ok response ->
     Ssh_agent.unpack_any_response request response
-  | { len; _ }, Ok _ ->
+  | { len = _; _ }, Ok _ ->
     Error "Additional data in reply"
   | _, Error e ->
     Error ("Parse error: " ^ e)
 
-let listen ((ic, oc) : in_channel * out_channel)
+let listen ((ic, _oc) : in_channel * out_channel)
       (handler : Ssh_agent.request_handler) =
   match Angstrom_unix.parse Ssh_agent.Parse.ssh_agentc_message ic with
   | { len = 0; _ }, Ok (Ssh_agent.Any_request request) ->
     Ok (Ssh_agent.Any_response (handler.handle request))
-  | { len; _ }, Ok _ ->
+  | { len = _; _ }, Ok _ ->
     Error "Additional data in request"
   | _, Error e ->
     Error e

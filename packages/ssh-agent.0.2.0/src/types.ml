@@ -1,5 +1,44 @@
 open Sexplib.Conv
 
+module Pubkey = struct
+  type ssh_dss = Nocrypto.Dsa.pub
+  [@@deriving sexp_of]
+
+  type ssh_rsa = Nocrypto.Rsa.pub
+  [@@deriving sexp_of]
+
+  type options = (string * string) list
+  [@@deriving sexp_of]
+
+  type ssh_rsa_cert_tbs = {
+    nonce : string;
+    pubkey : ssh_rsa;
+    serial : int64;
+    typ : Protocol_number.ssh_cert_type;
+    key_id : string;
+    valid_principals : string list;
+    valid_after : int64;
+    valid_before : int64;
+    critical_options : options;
+    extensions : options;
+    reserved : string;
+    signature_key : t;
+  }
+  and ssh_rsa_cert = {
+    to_be_signed : ssh_rsa_cert_tbs;
+    signature : string;
+  }
+  and t =
+    | Ssh_dss of ssh_dss
+    | Ssh_rsa of ssh_rsa
+    | Ssh_rsa_cert of ssh_rsa_cert
+    | Blob of {
+        key_type : string;
+        key_blob : string;
+      }
+  [@@deriving sexp_of]
+end
+
 module Privkey = struct
   type ssh_dss = Nocrypto.Dsa.priv
   [@@deriving sexp_of]
@@ -10,23 +49,7 @@ module Privkey = struct
   type t =
     | Ssh_dss of ssh_dss
     | Ssh_rsa of ssh_rsa
-    | Blob of {
-        key_type : string;
-        key_blob : string;
-      }
-  [@@deriving sexp_of]
-end
-
-module Pubkey = struct
-  type ssh_dss = Nocrypto.Dsa.pub
-  [@@deriving sexp_of]
-
-  type ssh_rsa = Nocrypto.Rsa.pub
-  [@@deriving sexp_of]
-
-  type t =
-    | Ssh_dss of ssh_dss
-    | Ssh_rsa of ssh_rsa
+    | Ssh_rsa_cert of ssh_rsa * Pubkey.ssh_rsa_cert
     | Blob of {
         key_type : string;
         key_blob : string;

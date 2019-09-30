@@ -59,7 +59,7 @@ let unpack_any_response (type a) (request : a ssh_agent_request) (response : any
 
 let sign priv (sign_flags : Protocol_number.sign_flag list) blob =
   match priv with
-  | Privkey.Ssh_rsa key ->
+  | Privkey.Ssh_rsa key | Privkey.Ssh_rsa_cert (key, _) ->
     let alg_string, to_sign =
       if List.mem Protocol_number.SSH_AGENT_RSA_SHA2_512 sign_flags
       then let digest = Nocrypto.Hash.SHA512.digest (Cstruct.of_string blob) in
@@ -76,3 +76,6 @@ let sign priv (sign_flags : Protocol_number.sign_flag list) blob =
   | Privkey.Ssh_dss _
   | Privkey.Blob _ ->
     failwith "Not implemented :-("
+
+let string_of_tbs tbs =
+  Serialize.with_faraday (fun t -> Serialize.write_ssh_rsa_cert_tbs t tbs)

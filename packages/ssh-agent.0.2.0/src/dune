@@ -1,0 +1,6 @@
+(library
+ (name ssh_agent)
+ (public_name ssh-agent)
+ (preprocess
+  (pps ppx_cstruct ppx_sexp_conv))
+ (libraries cstruct angstrom nocrypto faraday))

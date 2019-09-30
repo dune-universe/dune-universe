@@ -1,7 +1,0 @@
-(jbuild_version 1)
-
-(executable
- ((name ssh_add)
-  (public_name ssh-add-client)
-  (package ssh-agent-unix)
-  (libraries (ssh-agent nocrypto nocrypto.unix ssh-agent-unix cmdliner))))

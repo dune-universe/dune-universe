@@ -1,6 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name ssh_agent_unix)
-  (public_name ssh-agent-unix)
-  (libraries (ssh-agent unix angstrom-unix))))

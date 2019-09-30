@@ -1,0 +1,10 @@
+(executable
+ (name test)
+ (libraries ssh-agent alcotest nocrypto.unix sexplib))
+
+(alias
+ (name runtest)
+ (deps
+  (:< test.exe))
+ (action
+  (run %{<})))

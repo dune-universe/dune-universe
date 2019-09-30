@@ -1,3 +1,69 @@
+module Pubkey : sig
+  type ssh_dss = Nocrypto.Dsa.pub
+  [@@deriving sexp_of]
+
+  type ssh_rsa = Nocrypto.Rsa.pub
+  [@@deriving sexp_of]
+
+  type options = (string * string) list
+  [@@deriving sexp_of]
+  (** [options] is a list of pairs of options used in [critical_options] and
+   * [extensions]. The first element is the name of the option, and the second
+   * is the option's data.
+   *
+   * The data seems to be always encoded as a ssh wire string inside this
+   * string. The empty string would thus be "no data". *)
+
+  type ssh_rsa_cert_tbs = {
+    nonce : string;
+    (** CA-provided random bitstring. *)
+    pubkey : ssh_rsa;
+    (** The public key this certificate is valid for. *)
+    serial : int64;
+    (** Optional serial number set by the CA. Set to zero if unused. *)
+    typ : Protocol_number.ssh_cert_type;
+    (** Whether this is a host key certificate or a user key certificate. *)
+    key_id : string;
+    (** Free-form text filled by the CA. Used to help identify the identity
+     * principal. *)
+    valid_principals : string list;
+    (** [valid_principals]'s semantics depends on the value of {!recfield:typ}.
+     * For [Ssh_cert_type_user] it's the valid usernames, while for
+     * [Ssh_cert_type_host] it's the valid hostnames. *)
+    valid_after : int64;
+    (** [valid_after] defines when the certificate is valid from. It's
+     * represented as seconds since epoch. *)
+    valid_before : int64;
+    (** [valid_before] defines when the certificate becomes invalid. It's
+     * represented as seconds since epoch. *)
+    critical_options : options;
+    (** Critical extensions. Must be sorted lexicographically. *)
+    extensions : options;
+    (** Non-critical extensions. Must be sorted lexicographically. *)
+    reserved : string;
+    (** [reserved] is always empty currently according to the specification *)
+    signature_key : t;
+    (** Public key used for signing the signature *)
+  }
+  and ssh_rsa_cert = {
+    to_be_signed : ssh_rsa_cert_tbs;
+    (** The data that is signed *)
+    signature : string;
+    (** Signature of the serialized other fields *)
+  }
+  and t =
+    | Ssh_dss of ssh_dss
+    | Ssh_rsa of ssh_rsa
+    | Ssh_rsa_cert of ssh_rsa_cert
+    | Blob of {
+        key_type : string;
+        key_blob : string;
+      }
+    (** [Blob] is an unknown ssh wire string-unwrapped public key of type
+     * [key_type]. *)
+  [@@deriving sexp_of]
+end
+
 module Privkey : sig
   type ssh_dss = Nocrypto.Dsa.priv
   [@@deriving sexp_of]
@@ -8,30 +74,13 @@ module Privkey : sig
   type t =
     | Ssh_dss of ssh_dss
     | Ssh_rsa of ssh_rsa
+    | Ssh_rsa_cert of ssh_rsa * Pubkey.ssh_rsa_cert
+    (** [Ssh_rsa_cert (key, cert)] is a private key with a certificate for said key. *)
     | Blob of {
         key_type : string;
         key_blob : string;
       }
     (** [Blob] is an unknown ssh wire string-unwrapped private key of type
-     * [key_type]. *)
-  [@@deriving sexp_of]
-end
-
-module Pubkey : sig
-  type ssh_dss = Nocrypto.Dsa.pub
-  [@@deriving sexp_of]
-
-  type ssh_rsa = Nocrypto.Rsa.pub
-  [@@deriving sexp_of]
-
-  type t =
-    | Ssh_dss of ssh_dss
-    | Ssh_rsa of ssh_rsa
-    | Blob of {
-        key_type : string;
-        key_blob : string;
-      }
-    (** [Blob] is an unknown ssh wire string-unwrapped public key of type
      * [key_type]. *)
   [@@deriving sexp_of]
 end
@@ -168,3 +217,8 @@ val unpack_any_response
  * respecting the hashing algorithms specified by [flags]. Currently, only RSA
  * signatures are supported. *)
 val sign : Privkey.t -> Protocol_number.sign_flag list -> string -> string
+
+(** [string_of_tbs to_be_signed] is the string representation of [to_be_signed]
+ * that must be signed by [to_be_signed.Pubkey.signature_key] in order to
+ * create a valid certificate. *)
+val string_of_tbs : Pubkey.ssh_rsa_cert_tbs -> string

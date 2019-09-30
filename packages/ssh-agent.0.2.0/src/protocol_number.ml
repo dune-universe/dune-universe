@@ -40,3 +40,9 @@ let mask_to_sign_flags mask =
     then [flag]
     else [] in
   List.concat (List.map (mask_test mask) [SSH_AGENT_RSA_SHA2_256; SSH_AGENT_RSA_SHA2_512])
+
+[%%cenum
+type ssh_cert_type =
+  | Ssh_cert_type_user [@id 1]
+  | Ssh_cert_type_host [@id 2]
+[@@uint32_t][@@sexp]]

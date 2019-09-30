@@ -37,30 +37,35 @@ let with_faraday (f : Faraday.t -> unit) : string =
   f buf;
   Faraday.serialize_to_string buf
 
-let write_privkey t key =
-  let open Privkey in
-  match key with
-  | Ssh_dss { p; q; gg; x; y } ->
-    Wire.write_string t "ssh-dss";
-    Wire.write_mpint t p;
-    Wire.write_mpint t q;
-    Wire.write_mpint t gg;
-    Wire.write_mpint t y;
-    Wire.write_mpint t x
-  | Ssh_rsa { e; d; n; p; q; dp; dq; q' } ->
-    (* iqmp (inverse of q modulo p) is q' *)
-    Wire.write_string t "ssh-rsa";
-    Wire.write_mpint t n;
-    Wire.write_mpint t e;
-    Wire.write_mpint t d;
-    Wire.write_mpint t q';
-    Wire.write_mpint t p;
-    Wire.write_mpint t q
-  | Blob { key_type; key_blob } ->
-    Wire.write_string t key_type;
-    Faraday.write_string t key_blob
+let write_tuple t (name, data) =
+  Wire.write_string t name;
+  Wire.write_string t data
 
-let write_pubkey t key =
+let write_tuples t tuples =
+  List.iter (write_tuple t) tuples
+
+
+let rec write_ssh_rsa_cert_tbs t
+    { Pubkey.nonce; pubkey = { e; n }; serial; typ; key_id;
+      valid_principals; valid_after; valid_before;
+      critical_options; extensions; reserved; signature_key; }
+  =
+  Wire.write_string t "ssh-rsa-cert-v01@openssh.com";
+  Wire.write_string t nonce;
+  Wire.write_mpint t e;
+  Wire.write_mpint t n;
+  Wire.write_uint64 t serial;
+  Wire.write_uint32 t (Protocol_number.ssh_cert_type_to_int typ);
+  Wire.write_string t key_id;
+  Wire.write_string t (with_faraday (fun t -> List.iter (Wire.write_string t) valid_principals));
+  Wire.write_uint64 t valid_before;
+  Wire.write_uint64 t valid_after;
+  Wire.write_string t (with_faraday (fun t -> write_tuples t critical_options));
+  Wire.write_string t (with_faraday (fun t -> write_tuples t extensions));
+  Wire.write_string t reserved;
+  Wire.write_string t (with_faraday (fun t -> write_pubkey t signature_key))
+
+and write_pubkey t key =
   let open Pubkey in
   match key with
   | Ssh_dss { p; q; gg; y } ->
@@ -73,6 +78,40 @@ let write_pubkey t key =
     Wire.write_string t "ssh-rsa";
     Wire.write_mpint t e;
     Wire.write_mpint t n
+  | Ssh_rsa_cert { to_be_signed; signature; } ->
+    write_ssh_rsa_cert_tbs t to_be_signed;
+    Wire.write_string t signature
+  | Blob { key_type; key_blob } ->
+    Wire.write_string t key_type;
+    Faraday.write_string t key_blob
+
+let write_privkey t key =
+  let open Privkey in
+  match key with
+  | Ssh_dss { p; q; gg; x; y } ->
+    Wire.write_string t "ssh-dss";
+    Wire.write_mpint t p;
+    Wire.write_mpint t q;
+    Wire.write_mpint t gg;
+    Wire.write_mpint t y;
+    Wire.write_mpint t x
+  | Ssh_rsa { e; d; n; p; q; dp=_; dq=_; q' } ->
+    (* iqmp (inverse of q modulo p) is q' *)
+    Wire.write_string t "ssh-rsa";
+    Wire.write_mpint t n;
+    Wire.write_mpint t e;
+    Wire.write_mpint t d;
+    Wire.write_mpint t q';
+    Wire.write_mpint t p;
+    Wire.write_mpint t q
+  | Ssh_rsa_cert ({ e=_; d; n=_; p; q; dp=_; dq=_; q' },
+                  pubkey) ->
+    Wire.write_string t "ssh-rsa-cert-v01@openssh.com";
+    Wire.write_string t (with_faraday (fun t -> write_pubkey t (Pubkey.Ssh_rsa_cert pubkey)));
+    Wire.write_mpint t d;
+    Wire.write_mpint t q';
+    Wire.write_mpint t p;
+    Wire.write_mpint t q
   | Blob { key_type; key_blob } ->
     Wire.write_string t key_type;
     Faraday.write_string t key_blob

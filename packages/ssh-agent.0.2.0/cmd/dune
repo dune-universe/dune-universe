@@ -1,0 +1,3 @@
+(executable
+ (name ssh_add)
+ (libraries ssh-agent nocrypto nocrypto.unix ssh-agent-unix cmdliner))
