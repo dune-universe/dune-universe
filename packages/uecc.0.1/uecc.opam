@@ -1,0 +1,20 @@
+opam-version: "2.0"
+name: "uecc"
+maintainer: "contact@nomadic-labs.com"
+authors: [ "Vincent Bernardoff <vb@luminar.eu.org>" "Nomadic Labs" ]
+license: "ISC"
+homepage: "https://gitlab.com/nomadic-labs/ocaml-uecc"
+synopsis: "Bindings for ECDH and ECDSA for 8-bit, 32-bit, and 64-bit processors"
+bug-reports: "https://gitlab.com/nomadic-labs/ocaml-uecc/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/ocaml-uecc.git"
+build: [
+  ["dune" "build" "-j" jobs "-p" name "@install"]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "dune" {>= "1.7"}
+  "bigstring" {>= "0.1.1"}
+  "alcotest" {with-test & >= "0.8.1"}
+  "cstruct" {with-test & >= "3.2.1"}
+  "hex" {with-test}
+]
