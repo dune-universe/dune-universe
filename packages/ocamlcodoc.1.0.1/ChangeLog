@@ -1,0 +1,9 @@
+# Version 1.0.1, 2019-10-01
+
+- Support for {| ... |} strings without identifiers
+
+- Update for changes in dependencies API
+
+# Version 1.0.0, 2019-01-21
+
+- Initial release

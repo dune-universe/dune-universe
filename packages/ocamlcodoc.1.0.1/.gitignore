@@ -1,0 +1,9 @@
+*.o
+*.cm[aiotx]
+*.cmax
+*.cmti
+*~
+.merlin
+*.install
+/_build
+/ocamlcodoc.opam

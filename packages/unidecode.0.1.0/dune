@@ -1,0 +1,5 @@
+(library
+  (public_name unidecode)
+  (wrapped true)
+  (synopsis "Convert unicode strings into its ASCII representation")
+)

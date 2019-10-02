@@ -1,0 +1,7 @@
+(executable
+  (name ocamlcodoc)
+  (public_name ocamlcodoc)
+  (flags -open Stdcompat)
+  (libraries unix stdcompat cmdliner utils redirect))
+
+(ocamllex lexer)
