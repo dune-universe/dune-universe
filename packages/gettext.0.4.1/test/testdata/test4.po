@@ -1,0 +1,216 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ocaml-gettext 0.2.0\n"
+"Report-Msgid-Bugs-To: submit@bugs.gallu.homelinux.org\n"
+"POT-Creation-Date: 2005-02-08 23:35+0200\n"
+"PO-Revision-Date: 2005-02-08 23:35+0200\n"
+"Last-Translator: Sylvain Le Gall <sylvain.le-gall@polytechnique.org>\n"
+"Language-Team: French <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: test4.ml:89
+msgid "GettextCompat.fgettext"
+msgstr "Fonction de compatibilité fgettext"
+
+#: test4.ml:107
+msgid "GettextCompat.fngettext singular"
+msgid_plural "GettextCompat.fngettext plural"
+msgstr[0] "Fonction de compatibilité fngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité fngettext ( pluriel )"
+
+#: test4.ml:86
+msgid "GettextCompat.gettext"
+msgstr "Fonction de compatibilité gettext"
+
+#: test4.ml:104
+msgid "GettextCompat.ngettext singular"
+msgid_plural "GettextCompat.ngettext plural"
+msgstr[0] "Fonction de compatibilité ngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité ngettext ( pluriel )"
+
+#: test4.ml:125
+msgid "TestGettext.Library.f_"
+msgstr "Fonction de librairie f_"
+
+#: test4.ml:131
+msgid "TestGettext.Library.fn_ singular"
+msgid_plural "TestGettext.Library.fn_ plural"
+msgstr[0] "Fonction de librairie fn ( singulier )"
+msgstr[1] "Fonction de librairie fn ( pluriel )"
+
+#: test4.ml:122
+msgid "TestGettext.Library.s_"
+msgstr "Fonction de librairie s_"
+
+#: test4.ml:128
+msgid "TestGettext.Library.sn_ singular"
+msgid_plural "TestGettext.Library.sn_ plural"
+msgstr[0] "Fonction de librairie sn_ ( singulier )"
+msgstr[1] "Fonction de librairie sn_ ( pluriel )"
+
+#: test4.ml:137
+msgid "TestGettext.Program.f_"
+msgstr "Fonction de programme f_"
+
+#: test4.ml:143
+msgid "TestGettext.Program.fn_ singular"
+msgid_plural "TestGettext.Program.fn_ plural"
+msgstr[0] "Fonction de programme ( singulier )"
+msgstr[1] "Fonction de programme ( pluriel )"
+
+#: test4.ml:134
+msgid "TestGettext.Program.s_"
+msgstr "Fonction de programm s_"
+
+#: test4.ml:140
+msgid "TestGettext.Program.sn_ singular"
+msgid_plural "TestGettext.Program.sn_ plural"
+msgstr[0] "Fonction de programme sn_ ( singulier )"
+msgstr[1] "Fonction de programme sn_ ( pluriel )"
+
+#: test4.ml:77
+msgid "TestGettext.f_"
+msgstr "Fonction aliasée f_"
+
+#: test4.ml:83
+msgid "TestGettext.fn_ singular"
+msgid_plural "TestGettext.fn_ plural"
+msgstr[0] "Fonction aliasée fn_ ( singulier )"
+msgstr[1] "Fonction aliasée fn_ ( pluriel )"
+
+#: test4.ml:74
+msgid "TestGettext.s_"
+msgstr "Fonction simple aliasée s_"
+
+#: test4.ml:80
+msgid "TestGettext.sn_ singular"
+msgid_plural "TestGettext.sn_ plural"
+msgstr[0] "Fonction aliasée sn_ ( singulier )"
+msgstr[1] "Fonction aliasée sn_ ( pluriel )"
+
+#: test4.ml:29
+msgid "f_"
+msgstr "Fonction simple f_"
+
+#: test4.ml:41
+msgid "fgettext"
+msgstr "Fonction simple fgettext"
+
+#: test4.ml:35
+msgid "fn_ singular"
+msgid_plural "fn_ plural"
+msgstr[0] "Fonction simple fn_ ( singulier )"
+msgstr[1] "Fonction simple fn_ ( pluriel )"
+
+#: test4.ml:59
+msgid "fngettext singular"
+msgid_plural "fngettext plural"
+msgstr[0] "Fonction simple fngettext ( singulier )"
+msgstr[1] "Fonction simple fngettext ( pluriel )"
+
+#: test4.ml:38
+msgid "gettext"
+msgstr "Fonction simple gettext"
+
+#: test4.ml:56
+msgid "ngettext singular"
+msgid_plural "ngettext plural"
+msgstr[0] "Fonction ngettext ( singulier)"
+msgstr[1] "Fonction ngettext ( pluriel )"
+
+#: test4.ml:26
+msgid "s_"
+msgstr "Fonction simple s_"
+
+#: test4.ml:32
+msgid "sn_ singular"
+msgid_plural "sn_ plural"
+msgstr[0] "Fonction simple sn_ ( singulier )"
+msgstr[1] "Fonction simple sn_ ( pluriel )"
+
+domain "mydomain"
+
+#: test4.ml:98
+msgid "GettextCompat.dcgettext"
+msgstr "Fonction de compatibilité dcgettext"
+
+#: test4.ml:116
+msgid "GettextCompat.dcngettext singular"
+msgid_plural "GettextCompat.dcngettext plural"
+msgstr[0] "Fonction de compatibilité dcngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité dcngettext ( pluriel )"
+
+#: test4.ml:92
+msgid "GettextCompat.dgettext"
+msgstr "Fonction de compatibilité dgettext"
+
+#: test4.ml:110
+msgid "GettextCompat.dngettext singular"
+msgid_plural "GettextCompat.dngettext plural "
+msgstr[0] "Fonction de compatibilité dngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité dngettext ( pluriel )"
+
+#: test4.ml:101
+msgid "GettextCompat.fdcgettext"
+msgstr "Fonction de compatibilité fdcgettext"
+
+#: test4.ml:119
+msgid "GettextCompat.fdcngettext singular"
+msgid_plural "GettextCompat.fdcngettext plural"
+msgstr[0] "Fonction de compatibilité fdcngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité fdcngettext ( pluriel )"
+
+#: test4.ml:95
+msgid "GettextCompat.fdgettext"
+msgstr "Fonction de compatibilité fdgettext"
+
+#: test4.ml:113
+msgid "GettextCompat.fdngettext singular"
+msgid_plural "GettextCompat.fdngettext plural"
+msgstr[0] "Fonction de compatibilité fdngettext ( singulier )"
+msgstr[1] "Fonction de compatibilité fdngettext ( pluriel )"
+
+#: test4.ml:50
+msgid "dcgettext"
+msgstr "Fonction simple dcgettext"
+
+#: test4.ml:68
+msgid "dcngettext singular"
+msgid_plural "dcngettext plural"
+msgstr[0] "Fonction simple dcngettext ( singulier )"
+msgstr[1] "Fonction simple dcngettext ( pluriel )"
+
+#: test4.ml:44
+msgid "dgettext"
+msgstr "Fonction simple dcgettext"
+
+#: test4.ml:62
+msgid "dngettext singular"
+msgid_plural "dngettext plural "
+msgstr[0] "Fonction simple dngettext ( singulier )"
+msgstr[1] "Fonction simple dngettext ( pluriel )"
+
+#: test4.ml:53
+msgid "fdcgettext"
+msgstr "Fonction simple fdcgettext"
+
+#: test4.ml:71
+msgid "fdcngettext singular"
+msgid_plural "fdcngettext plural"
+msgstr[0] "Fonction simple fdcngettext ( singulier )"
+msgstr[1] "Fonction simple fdcngettext ( pluriel )"
+
+#: test4.ml:47
+msgid "fdgettext"
+msgstr "Fonction simple dcgettext"
+
+#: test4.ml:65
+msgid "fdngettext singular"
+msgid_plural "fdngettext plural"
+msgstr[0] "Fonction simple dcgettext"
+msgstr[1] "Fonction simple dcgettext"
+

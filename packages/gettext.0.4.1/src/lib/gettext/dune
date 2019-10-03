@@ -1,0 +1,4 @@
+(library
+ (name gettext)
+ (wrapped false)
+ (public_name gettext))

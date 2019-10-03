@@ -1,0 +1,21 @@
+(ocamllex
+ (modules gettextLocale_lexer gettextPoComment_lexer gettextPo_lexer))
+
+(ocamlyacc
+ (modules gettextLocale_parser gettextPoComment_parser gettextPo_parser))
+
+(library
+ (name gettextExtension)
+ (public_name gettext.extension)
+ (private_modules
+  GettextDomain
+  GettextLocale_lexer
+  GettextLocale_parser
+  GettextLocale_types
+  GettextPoComment_lexer
+  GettextPoComment_parser
+  GettextPo_lexer
+  GettextPo_parser
+  GettextPo_utils)
+ (wrapped false)
+ (libraries gettext.base))

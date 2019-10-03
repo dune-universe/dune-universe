@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: oji 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-27 02:37+0200\n"
+"PO-Revision-Date: 2005-05-27 02:39+0200\n"
+"Last-Translator: French <gnomefr@traduc.org>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;"
+
+#: ../dlg_test.ml:83 ../dlg_config.ml:126 ../dlg_browser.ml:76
+#. ../dlg_editor.ml:70
+msgid "<b>vocabulary</b>"
+msgstr "<b>vocabulaire</b>"
+

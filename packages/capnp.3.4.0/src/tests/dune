@@ -1,0 +1,26 @@
+(executable
+ (name run_tests)
+ (libraries capnp oUnit base_quickcheck)
+ (flags :standard -w -53))
+
+(rule
+ (targets
+  test.ml               test.mli
+  test_iface_import.ml  test_iface_import.mli
+  test_import.ml        test_import.mli
+  c2b2b.ml              c2b2b.mli
+  testLists.ml          testLists.mli
+  testCycles.ml         testCycles.mli)
+ (deps
+  c++.capnp
+  test.capnp
+  test-import.capnp
+  test-iface-import.capnp
+  testLists.capnp
+  testCycles.capnp)
+ (action
+  (run capnpc -o %{bin:capnpc-ocaml} %{deps})))
+
+(alias
+ (name runtest)
+ (action (run %{exe:run_tests.bc})))

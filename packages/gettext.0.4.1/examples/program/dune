@@ -1,0 +1,3 @@
+(executable
+  (name program)
+  (libraries gettext.base gettext-camomile examplesGUI examplesLibrary))

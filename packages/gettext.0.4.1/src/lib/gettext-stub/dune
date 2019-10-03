@@ -1,0 +1,13 @@
+(library
+ (name gettextStub)
+ (public_name gettext-stub)
+ (c_names gettextStubCompat_stubs)
+ (c_flags (:include c_flags.sexp))
+ (c_library_flags (:include c_library_flags.sexp))
+ (wrapped false)
+ (libraries gettext.base gettext.extension))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (deps (:discover ../../tools/discover-stub/discover.exe))
+ (action (run %{discover})))

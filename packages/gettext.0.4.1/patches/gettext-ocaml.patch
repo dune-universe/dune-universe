@@ -1,0 +1,1365 @@
+diff -Nurd gettext-0.12.1/gettext-tools/src/FILES gettext-0.12.1.ocaml/gettext-tools/src/FILES
+--- gettext-0.12.1/gettext-tools/src/FILES	2003-04-29 12:00:15.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/FILES	2003-07-03 18:52:19.000000000 +0200
+@@ -177,6 +177,7 @@
+ format-ycp.c    Format string handling for YCP.
+ format-tcl.c    Format string handling for Tcl.
+ format-php.c    Format string handling for PHP.
++format-ocaml.c  Format string handling for Objective Caml.
+ format.c        Table of the language dependent format string handlers.
+ 
+ +-------------- The 'msgfmt' program
+@@ -239,6 +240,9 @@
+ | x-php.h
+ | x-php.c
+ |               String extractor for PHP.
++| x-ocaml.h
++| x-ocaml.c
++|               String extractor for Objective Caml.
+ | x-rst.h
+ | x-rst.c
+ |               String extractor from .rst files, for Object Pascal.
+diff -Nurd gettext-0.12.1/gettext-tools/src/Makefile.am gettext-0.12.1.ocaml/gettext-tools/src/Makefile.am
+--- gettext-0.12.1/gettext-tools/src/Makefile.am	2003-04-29 12:05:37.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/Makefile.am	2003-07-16 22:00:23.000000000 +0200
+@@ -42,7 +42,7 @@
+ write-mo.h read-java.h write-java.h read-tcl.h write-tcl.h po-time.h \
+ plural-table.h format.h xgettext.h x-c.h x-po.h x-python.h x-lisp.h x-elisp.h \
+ x-librep.h x-smalltalk.h x-java.h x-properties.h x-awk.h x-ycp.h x-tcl.h \
+-x-php.h x-rst.h x-glade.h
++x-php.h x-rst.h x-glade.h x-ocaml.h
+ 
+ EXTRA_DIST += FILES project-id ChangeLog.0
+ 
+@@ -93,7 +93,7 @@
+ FORMAT_SOURCE = format.c format-invalid.h \
+ format-c.c format-python.c format-lisp.c format-elisp.c format-librep.c \
+ format-java.c format-awk.c format-pascal.c format-ycp.c format-tcl.c \
+-format-php.c
++format-php.c format-ocaml.c
+ 
+ # libgettextsrc contains all code that is needed by at least two programs.
+ libgettextsrc_la_SOURCES = \
+@@ -119,7 +119,7 @@
+ msgunfmt_SOURCES = msgunfmt.c read-mo.c read-java.c read-tcl.c
+ xgettext_SOURCES = xgettext.c \
+   x-c.c x-po.c x-python.c x-lisp.c x-elisp.c x-librep.c x-smalltalk.c \
+-  x-java.l x-awk.c x-ycp.c x-tcl.c x-php.c x-rst.c x-glade.c
++  x-java.l x-awk.c x-ycp.c x-tcl.c x-php.c x-rst.c x-glade.c x-ocaml.c
+ msgattrib_SOURCES = msgattrib.c
+ msgcat_SOURCES = msgcat.c
+ msgcomm_SOURCES = msgcomm.c
+diff -Nurd gettext-0.12.1/gettext-tools/src/Makefile.in gettext-0.12.1.ocaml/gettext-tools/src/Makefile.in
+--- gettext-0.12.1/gettext-tools/src/Makefile.in	2003-05-22 15:41:24.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/Makefile.in	2003-07-16 22:04:36.000000000 +0200
+@@ -250,7 +250,7 @@
+ write-mo.h read-java.h write-java.h read-tcl.h write-tcl.h po-time.h \
+ plural-table.h format.h xgettext.h x-c.h x-po.h x-python.h x-lisp.h x-elisp.h \
+ x-librep.h x-smalltalk.h x-java.h x-properties.h x-awk.h x-ycp.h x-tcl.h \
+-x-php.h x-rst.h x-glade.h
++x-php.h x-rst.h x-glade.h x-ocaml.h
+ 
+ 
+ localedir = $(datadir)/locale
+@@ -286,7 +286,7 @@
+ FORMAT_SOURCE = format.c format-invalid.h \
+ format-c.c format-python.c format-lisp.c format-elisp.c format-librep.c \
+ format-java.c format-awk.c format-pascal.c format-ycp.c format-tcl.c \
+-format-php.c
++format-php.c format-ocaml.c
+ 
+ 
+ # libgettextsrc contains all code that is needed by at least two programs.
+@@ -314,7 +314,7 @@
+ msgunfmt_SOURCES = msgunfmt.c read-mo.c read-java.c read-tcl.c
+ xgettext_SOURCES = xgettext.c \
+   x-c.c x-po.c x-python.c x-lisp.c x-elisp.c x-librep.c x-smalltalk.c \
+-  x-java.l x-awk.c x-ycp.c x-tcl.c x-php.c x-rst.c x-glade.c
++  x-java.l x-awk.c x-ycp.c x-tcl.c x-php.c x-rst.c x-glade.c x-ocaml.c
+ 
+ msgattrib_SOURCES = msgattrib.c
+ msgcat_SOURCES = msgcat.c
+@@ -439,7 +439,7 @@
+ 	dir-list.lo str-list.lo
+ am__objects_2 = format.lo format-c.lo format-python.lo format-lisp.lo \
+ 	format-elisp.lo format-librep.lo format-java.lo format-awk.lo \
+-	format-pascal.lo format-ycp.lo format-tcl.lo format-php.lo
++	format-pascal.lo format-ycp.lo format-tcl.lo format-php.lo format-ocaml.lo
+ am_libgettextsrc_la_OBJECTS = $(am__objects_1) read-po.lo \
+ 	write-properties.lo write-po.lo msgl-ascii.lo msgl-iconv.lo \
+ 	msgl-equal.lo msgl-cat.lo msgl-english.lo file-list.lo \
+@@ -517,7 +517,7 @@
+ 	xgettext-x-java.$(OBJEXT) xgettext-x-awk.$(OBJEXT) \
+ 	xgettext-x-ycp.$(OBJEXT) xgettext-x-tcl.$(OBJEXT) \
+ 	xgettext-x-php.$(OBJEXT) xgettext-x-rst.$(OBJEXT) \
+-	xgettext-x-glade.$(OBJEXT)
++	xgettext-x-glade.$(OBJEXT) xgettext-x-ocaml.$(OBJEXT)
+ xgettext_OBJECTS = $(am_xgettext_OBJECTS)
+ xgettext_DEPENDENCIES = ../libuniname/libuniname.a libgettextsrc.la
+ 
+@@ -1045,6 +1045,15 @@
+ xgettext-x-php.lo: x-php.c
+ 	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xgettext_CFLAGS) $(CFLAGS) -c -o xgettext-x-php.lo `test -f 'x-php.c' || echo '$(srcdir)/'`x-php.c
+ 
++xgettext-x-ocaml.o: x-ocaml.c
++	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xgettext_CFLAGS) $(CFLAGS) -c -o xgettext-x-ocaml.o `test -f 'x-ocaml.c' || echo '$(srcdir)/'`x-ocaml.c
++
++xgettext-x-ocaml.obj: x-ocaml.c
++	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xgettext_CFLAGS) $(CFLAGS) -c -o xgettext-x-ocaml.obj `if test -f 'x-ocaml.c'; then $(CYGPATH_W) 'x-ocaml.c'; else $(CYGPATH_W) '$(srcdir)/x-ocaml.c'; fi`
++
++xgettext-x-ocaml.lo: x-ocaml.c
++	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xgettext_CFLAGS) $(CFLAGS) -c -o xgettext-x-ocaml.lo `test -f 'x-ocaml.c' || echo '$(srcdir)/'`x-ocaml.c
++
+ xgettext-x-rst.o: x-rst.c
+ 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xgettext_CFLAGS) $(CFLAGS) -c -o xgettext-x-rst.o `test -f 'x-rst.c' || echo '$(srcdir)/'`x-rst.c
+ 
+diff -Nurd gettext-0.12.1/gettext-tools/src/Makefile.msvc gettext-0.12.1.ocaml/gettext-tools/src/Makefile.msvc
+--- gettext-0.12.1/gettext-tools/src/Makefile.msvc	2003-05-18 13:21:29.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/Makefile.msvc	2003-07-16 22:06:25.000000000 +0200
+@@ -139,13 +139,14 @@
+   format-pascal.obj \
+   format-ycp.obj \
+   format-tcl.obj \
+-  format-php.obj
++  format-php.obj \
++  format-ocaml.obj
+ 
+ msgcmp_OBJECTS = msgcmp.obj
+ msgfmt_OBJECTS = msgfmt.obj write-mo.obj write-java.obj write-tcl.obj plural-eval.obj
+ msgmerge_OBJECTS = msgmerge.obj
+ msgunfmt_OBJECTS = msgunfmt.obj read-mo.obj read-java.obj read-tcl.obj
+-xgettext_OBJECTS = xgettext.obj x-c.obj x-po.obj x-python.obj x-lisp.obj x-elisp.obj x-librep.obj x-smalltalk.obj x-java.obj x-awk.obj x-ycp.obj x-tcl.obj x-php.obj x-rst.obj x-glade.obj
++xgettext_OBJECTS = xgettext.obj x-c.obj x-po.obj x-python.obj x-lisp.obj x-elisp.obj x-librep.obj x-smalltalk.obj x-java.obj x-awk.obj x-ycp.obj x-tcl.obj x-php.obj x-rst.obj x-glade.obj x-ocaml.obj
+ msgattrib_OBJECTS = msgattrib.obj
+ msgcat_OBJECTS = msgcat.obj
+ msgcomm_OBJECTS = msgcomm.obj
+@@ -269,6 +270,9 @@
+ format-php.obj : format-php.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) $(PICFLAGS) -c format-php.c
+ 
++format-ocaml.obj : format-ocaml.c
++	$(CC) $(INCLUDES) $(CFLAGS) $(PICFLAGS) -c format-ocaml.c
++
+ !if !$(DLL)
+ 
+ gettextsrc.lib : $(OBJECTS)
+@@ -360,6 +364,9 @@
+ x-php.obj : x-php.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) -c x-php.c
+ 
++x-ocaml.obj : x-ocaml.c
++	$(CC) $(INCLUDES) $(CFLAGS) -c x-ocaml.c
++
+ x-rst.obj : x-rst.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) -c x-rst.c
+ 
+diff -Nurd gettext-0.12.1/gettext-tools/src/Makefile.vms gettext-0.12.1.ocaml/gettext-tools/src/Makefile.vms
+--- gettext-0.12.1/gettext-tools/src/Makefile.vms	2003-04-29 12:00:16.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/Makefile.vms	2003-07-16 22:07:34.000000000 +0200
+@@ -85,13 +85,14 @@
+   format-pascal.obj, \
+   format-ycp.obj, \
+   format-tcl.obj, \
+-  format-php.obj
++  format-php.obj \
++  format-ocaml.obj
+ 
+ msgcmp_OBJECTS = msgcmp.obj
+ msgfmt_OBJECTS = msgfmt.obj, write-mo.obj, write-java.obj, write-tcl.obj, plural-eval.obj
+ msgmerge_OBJECTS = msgmerge.obj
+ msgunfmt_OBJECTS = msgunfmt.obj, read-mo.obj, read-java.obj, read-tcl.obj
+-xgettext_OBJECTS = xgettext.obj, x-c.obj, x-po.obj, x-python.obj, x-lisp.obj, x-elisp.obj, x-librep.obj, x-smalltalk.obj, x-java.obj, x-awk.obj, x-ycp.obj, x-tcl.obj, x-php.obj, x-rst.obj, x-glade.obj
++xgettext_OBJECTS = xgettext.obj, x-c.obj, x-po.obj, x-python.obj, x-lisp.obj, x-elisp.obj, x-librep.obj, x-smalltalk.obj, x-java.obj, x-awk.obj, x-ycp.obj, x-tcl.obj, x-php.obj, x-rst.obj, x-glade.obj x-ocaml.obj
+ msgattrib_OBJECTS = msgattrib.obj
+ msgcat_OBJECTS = msgcat.obj
+ msgcomm_OBJECTS = msgcomm.obj
+@@ -213,6 +214,9 @@
+ format-php.obj : format-php.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) format-php.c
+ 
++format-ocaml.obj : format-ocaml.c
++	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) format-ocaml.c
++
+ gettextsrc.olb : $(OBJECTS)
+ 	$(AR) $(AR_FLAGS) gettextsrc.olb $(OBJECTS)
+ 
+@@ -290,6 +294,9 @@
+ x-php.obj : x-php.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-php.c
+ 
++x-ocaml.obj : x-ocaml.c
++	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-ocaml.c
++
+ x-rst.obj : x-rst.c
+ 	$(CC) $(INCLUDES) $(CFLAGS) /define=($(DEFS)) x-rst.c
+ 
+diff -Nurd gettext-0.12.1/gettext-tools/src/format-ocaml.c gettext-0.12.1.ocaml/gettext-tools/src/format-ocaml.c
+--- gettext-0.12.1/gettext-tools/src/format-ocaml.c	1970-01-01 01:00:00.000000000 +0100
++++ gettext-0.12.1.ocaml/gettext-tools/src/format-ocaml.c	2003-07-16 22:19:35.000000000 +0200
+@@ -0,0 +1,108 @@
++/* Ocaml format strings.
++   Copyright (C) 2001-2003 Free Software Foundation, Inc.
++   Written by Sylvain LE GALL <sylvain.le-gall@polytechnique.org>, 2003.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software Foundation,
++   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
++
++#ifdef HAVE_CONFIG_H
++# include <config.h>
++#endif
++
++#include <stdbool.h>
++#include <stdlib.h>
++
++#include "format.h"
++#include "xmalloc.h"
++#include "xerror.h"
++#include "format-invalid.h"
++#include "error.h"
++#include "progname.h"
++#include "gettext.h"
++
++#define _(str) gettext (str)
++
++/* Ocaml Printf format string
++   Unfortunately, there is no way to explicitely use args in string from 
++   ocaml. One way is to use Printf.* but, it needs a plain string ( and not
++   the return of a function ).
++
++   Still working on it 
++*/
++
++struct spec
++{
++	int directives;
++};
++
++static void *
++format_parse (const char *format, char **invalid_reason)
++{
++  struct spec spec;
++  struct spec *result;
++
++  spec.directives = 0;
++  
++  result = (struct spec *) xmalloc (sizeof (struct spec) );
++  *result = spec;
++  return result;
++}
++
++static void
++format_free (void *descr)
++{
++  struct spec *spec = (struct spec *) descr;
++
++  free (spec);
++}
++
++static int
++format_get_number_of_directives (void *descr)
++{
++  struct spec *spec = (struct spec *) descr;
++
++  return spec->directives;
++}
++
++static bool
++format_check (const lex_pos_ty *pos, void *msgid_descr, void *msgstr_descr,
++	      bool equality, bool noisy, const char *pretty_msgstr)
++{
++  struct spec *spec1 = (struct spec *) msgid_descr;
++  struct spec *spec2 = (struct spec *) msgstr_descr;
++  bool err = false;
++  unsigned int i;
++
++  // We have always 0 directives
++  if ( equality )
++  {
++	  err = true;
++  }
++  else
++  {
++	  err = false;
++  };
++  
++  return err;
++}
++
++
++struct formatstring_parser formatstring_ocaml =
++{
++  format_parse,
++  format_free,
++  format_get_number_of_directives,
++  format_check
++};
++
+diff -Nurd gettext-0.12.1/gettext-tools/src/format.c gettext-0.12.1.ocaml/gettext-tools/src/format.c
+--- gettext-0.12.1/gettext-tools/src/format.c	2002-08-19 13:00:09.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/format.c	2003-07-16 22:16:32.000000000 +0200
+@@ -37,5 +37,6 @@
+   /* format_pascal */		&formatstring_pascal,
+   /* format_ycp */		&formatstring_ycp,
+   /* format_tcl */		&formatstring_tcl,
+-  /* format_php */		&formatstring_php
++  /* format_php */		&formatstring_php,
++  /* format_ocaml */		&formatstring_ocaml
+ };
+diff -Nurd gettext-0.12.1/gettext-tools/src/format.h gettext-0.12.1.ocaml/gettext-tools/src/format.h
+--- gettext-0.12.1/gettext-tools/src/format.h	2003-02-24 11:50:20.000000000 +0100
++++ gettext-0.12.1.ocaml/gettext-tools/src/format.h	2003-07-03 18:47:27.000000000 +0200
+@@ -67,6 +67,7 @@
+ extern struct formatstring_parser formatstring_ycp;
+ extern struct formatstring_parser formatstring_tcl;
+ extern struct formatstring_parser formatstring_php;
++extern struct formatstring_parser formatstring_ocaml;
+ 
+ /* Table of all format string parsers.  */
+ extern struct formatstring_parser *formatstring_parsers[NFORMATS];
+diff -Nurd gettext-0.12.1/gettext-tools/src/message.c gettext-0.12.1.ocaml/gettext-tools/src/message.c
+--- gettext-0.12.1/gettext-tools/src/message.c	2003-04-29 12:04:04.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/message.c	2003-07-16 22:09:07.000000000 +0200
+@@ -45,7 +45,8 @@
+   /* format_pascal */		"object-pascal",
+   /* format_ycp */		"ycp",
+   /* format_tcl */		"tcl",
+-  /* format_php */		"php"
++  /* format_php */		"php",
++  /* format_ocaml */		"ocaml"
+ };
+ 
+ const char *const format_language_pretty[NFORMATS] =
+@@ -61,7 +62,8 @@
+   /* format_pascal */		"Object Pascal",
+   /* format_ycp */		"YCP",
+   /* format_tcl */		"Tcl",
+-  /* format_php */		"PHP"
++  /* format_php */		"PHP",
++  /* format_ocaml */		"Objective Caml"
+ };
+ 
+ 
+diff -Nurd gettext-0.12.1/gettext-tools/src/message.h gettext-0.12.1.ocaml/gettext-tools/src/message.h
+--- gettext-0.12.1/gettext-tools/src/message.h	2003-04-29 12:04:04.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/message.h	2003-07-03 18:48:21.000000000 +0200
+@@ -45,9 +45,10 @@
+   format_pascal,
+   format_ycp,
+   format_tcl,
+-  format_php
++  format_php,
++  format_ocaml
+ };
+-#define NFORMATS 12	/* Number of format_type enum values.  */
++#define NFORMATS 13	/* Number of format_type enum values.  */
+ extern const char *const format_language[NFORMATS];
+ extern const char *const format_language_pretty[NFORMATS];
+ 
+diff -Nurd gettext-0.12.1/gettext-tools/src/test.c gettext-0.12.1.ocaml/gettext-tools/src/test.c
+--- gettext-0.12.1/gettext-tools/src/test.c	1970-01-01 01:00:00.000000000 +0100
++++ gettext-0.12.1.ocaml/gettext-tools/src/test.c	2003-07-17 00:02:24.000000000 +0200
+@@ -0,0 +1,25 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include "xsetenv.h"
++#define _(string) gettext (string)
++
++int main (argc, argv)
++  int argc;
++  char *argv[];
++{
++  int n = atoi (argv[2]);
++
++  xsetenv ("LC_ALL", argv[1], 1);
++  if (setlocale (LC_ALL, "") == NULL)
++    {
++      fprintf (stderr, "Couldn't set locale.\n");
++      exit (77);
++    }
++
++  textdomain ("prog");
++  bindtextdomain ("prog", ".");
++
++  gettext("Bonjour");
++
++  exit (0);
++}
+diff -Nurd gettext-0.12.1/gettext-tools/src/x-ocaml.c gettext-0.12.1.ocaml/gettext-tools/src/x-ocaml.c
+--- gettext-0.12.1/gettext-tools/src/x-ocaml.c	1970-01-01 01:00:00.000000000 +0100
++++ gettext-0.12.1.ocaml/gettext-tools/src/x-ocaml.c	2003-07-17 23:37:00.000000000 +0200
+@@ -0,0 +1,873 @@
++/* xgettext  Ocaml backend.
++   Copyright (C) 2003, Sylvain LE GALL <sylvain.le-gall@polytechnique.org>
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software Foundation,
++   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
++
++#ifdef HAVE_CONFIG_H
++# include "config.h"
++#endif
++
++#include <errno.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++#include "message.h"
++#include "x-ocaml.h"
++#include "xgettext.h"
++#include "error.h"
++#include "progname.h"
++#include "xmalloc.h"
++#include "exit.h"
++#include "hash.h"
++#include "gettext.h"
++
++#define _(s) gettext(s)
++
++
++/* Ocaml defines string format in 
++http://localhost/cgi-bin/dwww?type=file&location=/usr/share/doc/ocaml/docs/ocaml.html/manual009.html
++
++ 1. Use the text at the adress given to lexify token from input stream
++
++ 2. When a keyword is found find the attached string ( if any )
++
++ This lexer implements the above, and presents the scanner (in xgettext.c)
++ with a stream of Ocaml tokens. The comments are accumulated in a buffer,
++ and given to xgettext when asked for. */
++
++enum xgettext_token_type_ty
++{
++	xgettext_token_type_string_literal,
++	xgettext_token_type_comment,
++	xgettext_token_type_symbol,
++	xgettext_token_type_keyword,
++	xgettext_token_type_beg_parent,
++	xgettext_token_type_end_parent,
++	xgettext_token_type_eof
++};
++
++typedef enum xgettext_token_type_ty xgettext_token_type_ty;
++
++typedef struct xgettext_token_ty xgettext_token_ty;
++struct xgettext_token_ty
++{
++  xgettext_token_type_ty type;
++
++  /* These fields are used only for xgettext_token_type_keyword.  */
++  int argnum1;
++  int argnum2;
++
++  /* This field is used only for xgettext_token_type_string_literal.  */
++  char *string;
++
++  /* These fields are only for
++       xgettext_token_type_keyword,
++       xgettext_token_type_string_literal.  */
++  lex_pos_ty pos;
++};
++
++
++/* ========================= Lexer customization.  ========================= */
++
++/* ====================== Keyword set customization.  ====================== */
++
++/* If true extract all strings.  */
++static bool extract_all = false;
++
++static hash_table keywords;
++static bool default_keywords = true;
++
++
++void
++x_ocaml_extract_all ()
++{
++  extract_all = true;
++}
++
++
++void
++x_ocaml_keyword (const char *name)
++{
++  if (name == NULL)
++    default_keywords = false;
++  else
++    {
++      const char *end;
++      int argnum1;
++      int argnum2;
++      const char *colon;
++
++      if (keywords.table == NULL)
++	init_hash (&keywords, 100);
++
++      split_keywordspec (name, &end, &argnum1, &argnum2);
++
++      /* The characters between name and end should form a valid Ocaml identifier.
++	 A colon means an invalid parse in split_keywordspec().  */
++      colon = strchr (name, ':');
++      if (colon == NULL || colon >= end)
++	{
++	  if (argnum1 == 0)
++	    argnum1 = 1;
++	  insert_entry (&keywords, name, end - name,
++			(void *) (long) (argnum1 + (argnum2 << 10)));
++	}
++    }
++}
++
++bool
++x_ocaml_any_keywords ()
++{
++  return (keywords.filled > 0) || default_keywords;
++}
++
++/* Finish initializing the keywords hash table.
++   Called after argument processing, before each file is processed.  */
++static void
++init_keywords ()
++{
++  if (default_keywords)
++    {
++      x_ocaml_keyword ("gettext");
++      x_ocaml_keyword ("Camlgettext.gettext");
++      x_ocaml_keyword ("dgettext:2");
++      x_ocaml_keyword ("Camlgettext.dgettext:2");
++      x_ocaml_keyword ("dcgettext:2");
++      x_ocaml_keyword ("Camlgettext.dcgettext:2");
++      x_ocaml_keyword ("ngettext:1,2");
++      x_ocaml_keyword ("Camlgettext.ngettext:1,2");
++      x_ocaml_keyword ("dngettext:2,3");
++      x_ocaml_keyword ("Camlgettext.dngettext:2,3");
++      x_ocaml_keyword ("dcngettext:2,3");
++      x_ocaml_keyword ("Camlgettext.dcngettext:2,3");
++      x_ocaml_keyword ("gettext_noop:2,3");
++      x_ocaml_keyword ("Camlgettext.gettext_noop:2,3");
++      default_keywords = false;
++    }
++}
++
++
++/* ================== Reading of characters and tokens.  =================== */
++
++/* Real filename, used in error messages about the input file.  */
++static const char *real_file_name;
++
++/* Logical filename and line number, used to label the extracted messages.  */
++static char *logical_file_name;
++static int line_number;
++
++/* The input file stream.  */
++static FILE *fp;
++
++
++/* Maximum used guaranteed to be < 4.  */
++static unsigned char phase1_pushback[4];
++static int phase1_pushback_length;
++static bool last_was_eof = false;
++
++static int
++phase1_getc ()
++{
++	int c;
++
++	if (phase1_pushback_length)
++	{
++		c = phase1_pushback[--phase1_pushback_length];
++		if ( c == '\n' )
++			++line_number;
++
++		if ( c == EOF )
++			last_was_eof = true;
++		
++		return c;
++	}
++	for (;;)
++	{
++		c = getc (fp);
++		switch (c)
++		{
++			case EOF:
++			if (ferror (fp))
++			{
++				error (EXIT_FAILURE, errno, 
++					_("error while reading \"%s\""), real_file_name);
++			};
++
++			if ( last_was_eof )
++			{
++				/* We ask two time for eof... We are looping */
++				error (EXIT_FAILURE, errno, 
++					_("try to extract repeatedly eof while reading \"%s\""), real_file_name);
++			};
++
++			last_was_eof = true;
++			return EOF;
++
++			case '\n':
++			++line_number;
++			last_was_eof = false;
++			return '\n';
++
++			default:
++			last_was_eof = false;
++			return c;
++		}
++	}
++}
++
++
++static void
++phase1_ungetc (int c)
++{
++  switch (c)
++    {
++    case EOF:
++      break;
++
++    case '\n':
++      --line_number;
++      /* FALLTHROUGH */
++
++    default:
++      phase1_pushback[phase1_pushback_length++] = c;
++      break;
++    }
++}
++
++
++/*
++ Taken from the lexer.mll find at the adress given 
++ */
++
++static void 
++eof_error ( const char * where, int c )
++{
++	if ( c == EOF )
++	{
++		/* Error : we reach the end of the stream */
++		
++		error_with_progname = false;
++		error (0, 0, _("%s:%d: warning: unterminated %s, we reach EOF"),
++			logical_file_name, line_number - 1, where);
++		error_with_progname = true;
++	}
++
++}
++
++#define IS_BLANKS(c) (c == ' ' || c ==  '\013' || c == '\t' || c == '\012' || c == '\010')
++
++#define IS_BACKSLASHES_ESCAPES(c) (( c == '\\' ) \
++		|| (c == '"') \
++		|| (c == '\'') \
++		|| (c == 'n') \
++		|| (c == 't') \
++		|| (c == 'b') \
++		|| (c == 'r'))
++
++#define VAL_BACKSLASHES_ESCAPES(c) \
++		( c == 'n' ? '\n' : \
++		  ( c == 't' ? '\t' : \
++		    ( c == 'b' ? '\b' : \
++		      ( c == 'r' ? '\r' : \
++			c \
++		      )\
++		    )\
++	 	  )\
++		)\
++
++#define LINE_SPLIT 1000
++
++static int 
++get_regular_char ( bool *is_backslashed )
++{
++	int c, i, res;
++	
++	*is_backslashed = false;
++	c = phase1_getc();
++
++	if ( c == '\\' )
++	{
++		c = phase1_getc();
++
++		if ( IS_BACKSLASHES_ESCAPES(c) )
++		{
++			*is_backslashed = true;
++			res = VAL_BACKSLASHES_ESCAPES(c);
++		}
++		else if ( '0' <= c && c <= '9' )
++		{
++			*is_backslashed = true;
++			for ( i = 0, res = 0 ; i < 3 ; i ++ )
++			{
++				switch (c)
++				{
++					case '0' : case '1' : case '2' : case '3' : case '4' :
++					case '5' : case '6' : case '7' : case '8' : case '9' :
++						break;
++					default:
++						/* Error non number in the numeric definition*/
++						error_with_progname = false;
++						error (0, 0, _(
++					"%s:%d: warning: numeric character constant contains non numeric char (%c)"),
++							logical_file_name, line_number - 1, c);
++						error_with_progname = true;
++						phase1_ungetc(c);
++						c = '0';
++						break;
++				};
++				res = res * 10 + (c - '0');
++				c = phase1_getc();
++			};
++
++			if ( res > 255 )
++			{
++				/* Error number defined is too big */
++				error_with_progname = false;
++				error (0, 0, _("%s:%d: warning: character constant too high"),
++					logical_file_name, line_number - 1);
++				error_with_progname = true;
++				res = 255;
++			};
++		}
++		else
++		{
++			/* We have a backslash but nothing can be backslashed */
++			*is_backslashed = false;
++			phase1_ungetc(c);
++			res = '\\';
++		};
++	}
++	else
++	{
++		*is_backslashed = false;
++		res = c;
++	};
++
++	return res;
++}
++		
++static void 
++extract_char ( xgettext_token_ty *tp )
++{
++	int c, res;
++	bool is_backslashed;
++	char buffer[2];
++
++
++	res = get_regular_char(&is_backslashed);
++	c = phase1_getc();
++
++	/* We verify that we reach the end of the char */
++
++	if ( c != '\'' )
++	{
++		/* We have only the 'x which is a generic type */
++		tp->type = xgettext_token_type_symbol;
++		tp->string = NULL;
++		tp->argnum1 = 0;
++		tp->argnum2 = 0;
++		tp->pos.file_name = logical_file_name;
++		tp->pos.line_number = line_number;
++
++		phase1_ungetc(c);
++	}
++	else
++	{
++		buffer[0]=res;
++		buffer[1]='\0';
++		tp->type = xgettext_token_type_string_literal;
++		tp->string = xstrdup(buffer);
++		tp->argnum1 = 0;
++		tp->argnum2 = 0;
++		tp->pos.file_name = logical_file_name;
++		tp->pos.line_number = line_number;
++	};
++
++}
++
++static void 
++extract_string ( xgettext_token_ty *tp )
++{
++	int bufmax = 0;
++	int bufpos = 0;
++	char *buffer = NULL;
++	int c, res;
++	bool is_backslashed;
++
++	buffer = xrealloc (buffer, bufmax);
++
++	c = get_regular_char(&is_backslashed);
++	
++	while ( !(c == '"' && !is_backslashed ) && c != EOF )
++	{
++		
++		/* Possible start of a \\ (CR|LF|CRLF...) (' ' '\t')* ( line split ) ? */
++		if ( c == '\\' && !is_backslashed )
++		{
++			
++			c = phase1_getc();
++			
++			while ( IS_BLANKS(c) )
++			{
++				c = phase1_getc();
++			};
++			
++			phase1_ungetc(c);
++		}
++		else
++		{
++			if (bufpos >= bufmax)
++			{
++				bufmax += 100;
++				buffer = xrealloc (buffer, bufmax);
++			}
++			buffer[bufpos++] = c;
++		}
++		
++		c = get_regular_char(&is_backslashed);
++	};
++	
++	buffer[bufpos] = 0;
++
++	tp->type = xgettext_token_type_string_literal;
++	tp->string = xstrdup (buffer);
++	tp->argnum1 = 0;
++	tp->argnum2 = 0;
++	tp->pos.file_name = logical_file_name;
++	tp->pos.line_number = line_number;
++}
++
++static void 
++extract_comment ( xgettext_token_ty *tp )
++{
++	int bufmax = 0;
++	int bufpos = 0;
++	char *buffer = NULL;
++	/* If we are here, it means we have gone through a leading (* */
++	int comment_depth = 1;
++	int c1, c2;
++
++	buffer = xrealloc (buffer, bufmax);
++
++	c2 = phase1_getc();
++	
++	while ( comment_depth != 0 )
++	{
++		c1 = c2;
++		c2 = phase1_getc();
++		/* Is it a *) ? */
++		if ( c1 == '*' && c2 == ')' )
++		{
++			comment_depth--;	
++		}	
++		else if ( c1 == '(' && c2 == '*' )
++		{
++			comment_depth++;
++		};
++		
++		if (bufpos >= bufmax)
++		{
++			bufmax += 100;
++			buffer = xrealloc (buffer, bufmax);
++		};
++
++		/* We transform a multiline comment into a single line one */
++		if ( c1 != '\r' && c1 != '\n' )
++		{
++			buffer[bufpos++] = c1;
++		};
++	};
++	
++	bufpos--; /* We remove the trailing * */
++	buffer[bufpos] = 0;
++	tp->type = xgettext_token_type_comment;
++	tp->string = xstrdup (buffer);
++	tp->argnum1 = 0;
++	tp->argnum2 = 0;
++	tp->pos.file_name = logical_file_name;
++	tp->pos.line_number = line_number;
++}
++
++#define IN_RANGE(c, a, b) ( a <= c && c <= b )
++#define SKIP(c, test) \
++	c = phase1_getc();\
++	while ( test ) { c = phase1_getc() ; }; \
++	phase1_ungetc(c)
++
++static void 
++extract_numeric ( xgettext_token_ty *tp )
++{
++	int c1, c2, c;
++	/* We don't care about the numeric value... We just skip it */
++
++	c1 = phase1_getc();
++	c2 = phase1_getc();
++
++	if ( c1 == '-' )
++	{
++		c1 = c2;
++		c2 = phase1_getc();
++	};
++
++	if ( c1 == '0' && (c2 == 'x' || c2 == 'X'))
++	{
++		SKIP(c, IN_RANGE(c, '0', '7') 
++				|| IN_RANGE(c, 'A', 'F') 
++				|| IN_RANGE(c, 'a', 'f'));
++	}
++	else if ( c1 == '0' && (c2 == 'o' || c2 == 'O'))
++	{
++		SKIP(c, IN_RANGE(c, '0', '7'));
++	}
++	else if ( c1 == '0' && (c2 == 'b' || c2 == 'B'))
++	{
++		SKIP(c, IN_RANGE(c, '0', '1'));
++	}
++	else
++	{
++		phase1_ungetc(c2);
++		phase1_ungetc(c1);
++		
++		SKIP(c, IN_RANGE(c, '0', '9'));
++		SKIP(c, (c == '.'));
++		SKIP(c, IN_RANGE(c, '0', '9'));
++		SKIP(c, (c == 'e' || c == 'E' || c == '+' || c == '-' ) );
++		SKIP(c, IN_RANGE(c, '0', '9'));
++	}
++
++	tp->type = xgettext_token_type_symbol;
++	tp->string = NULL;
++	tp->argnum1 = 0;
++	tp->argnum2 = 0;
++	tp->pos.file_name = logical_file_name;
++	tp->pos.line_number = line_number;
++}
++
++
++static void 
++extract_ident ( xgettext_token_ty *tp )
++{
++        void *keyword_value;
++	int bufmax = 0;
++	int bufpos = 0;
++	char *buffer = NULL;
++	int c;
++	
++	buffer = xrealloc (buffer, bufmax);
++
++	c = phase1_getc();
++
++	if (bufpos >= bufmax)
++	{
++		bufmax += 100;
++		buffer = xrealloc (buffer, bufmax);
++	};
++
++	buffer[bufpos++] = c;
++
++	c = phase1_getc();
++
++	while ( c != '(' && c != ')' && c !='"' && c!='\'' && c != EOF && !IS_BLANKS(c) ) 
++	{
++		if (bufpos >= bufmax)
++		{
++			bufmax += 100;
++			buffer = xrealloc (buffer, bufmax);
++		};
++
++		buffer[bufpos++] = c;
++
++		c = phase1_getc();
++	}
++
++	phase1_ungetc(c);
++
++	buffer[bufpos] = 0;
++
++	if (find_entry (&keywords, buffer, strlen(buffer), &keyword_value) == 0)
++	{
++	
++		tp->type = xgettext_token_type_keyword;
++		tp->string = NULL;
++		tp->argnum1 = (int) (long) keyword_value & ((1 << 10) - 1);
++	      	tp->argnum2 = (int) (long) keyword_value >> 10;
++	      	tp->pos.file_name = logical_file_name;
++	      	tp->pos.line_number = line_number;
++	}
++	else
++	{
++		tp->type = xgettext_token_type_symbol;
++		tp->string = NULL;
++		tp->argnum1 = 0;
++	      	tp->argnum2 = 0;
++		tp->pos.file_name = logical_file_name;
++		tp->pos.line_number = line_number;
++	}
++}
++
++static void 
++ocaml_lex ( xgettext_token_ty *tp )
++{
++	int c;
++
++	/* Eat white space and all this kind of stuff */
++
++	c = phase1_getc();
++	
++	while ( IS_BLANKS(c) )
++	{
++		c = phase1_getc();
++	}
++
++
++	switch (c)
++	{
++		case '(' :
++			c = phase1_getc();
++			if ( c == '*' )
++			{
++				return extract_comment(tp);
++			}
++			else
++			{
++				phase1_ungetc(c);
++				tp->type = xgettext_token_type_beg_parent;
++				tp->string = NULL;
++				tp->argnum1 = 0;
++				tp->argnum2 = 0;
++				tp->pos.file_name = logical_file_name;
++				tp->pos.line_number = line_number;
++			}
++			break;
++
++		case ')' :
++			tp->type = xgettext_token_type_end_parent;
++			tp->string = NULL;
++			tp->argnum1 = 0;
++			tp->argnum2 = 0;
++			tp->pos.file_name = logical_file_name;
++			tp->pos.line_number = line_number;
++			break;
++			
++		case '0' : case '1' : case '2' : case '3' : case '4' : 
++		case '5' : case '6' : case '7' : case '8' : case '9' : 
++		case '-' : case '.' :
++			phase1_ungetc(c);
++			return extract_numeric(tp);
++			break;
++
++		case '\'' :
++			return extract_char(tp);
++			break;
++
++		case '"' :
++			return extract_string(tp);
++			break;
++
++		case EOF :
++			tp->type = xgettext_token_type_eof;
++			tp->string = NULL;
++			tp->argnum1 = 0;
++			tp->argnum2 = 0;
++			tp->pos.file_name = logical_file_name;
++			tp->pos.line_number = line_number;
++			break;
++
++		default :
++			phase1_ungetc(c);
++			return extract_ident(tp);
++			break;
++	}
++}
++
++
++/* ========================= Extracting strings.  ========================== */
++
++/* The file is broken into tokens.  Scan the token stream, looking for
++   a keyword, followed by a left paren, followed by a string.  When we
++   see this sequence, we have something to remember.  We assume we are
++   looking at a valid C or C++ program, and leave the complaints about
++   the grammar to the compiler.
++
++     Normal handling: Look for
++       keyword ( ... msgid ... )
++     Plural handling: Look for
++       keyword ( ... msgid ... msgid_plural ... )
++
++   We use recursion because the arguments before msgid or between msgid
++   and msgid_plural can contain subexpressions of the same form.  */
++
++
++static bool
++ocaml_parse ( message_list_ty *mlp ) 
++{
++	xgettext_token_ty token;
++	message_ty *plural_mp = NULL;
++	int next_string = -1;
++	int next_plural = -1;
++	
++	for ( ; ; )
++	{
++		ocaml_lex(&token);
++
++		next_string--;
++		if ( next_string <= -1 )
++		{
++			next_string = -1;
++		}
++
++		next_plural--;
++		if ( next_plural <= -1 )
++		{
++			next_plural = -1;
++		}
++
++		if ( !extract_all )
++		{
++			switch ( token.type )
++			{
++			case xgettext_token_type_string_literal :
++				if ( next_string == 0 && next_plural > 0 )
++				{
++					plural_mp=remember_a_message(mlp, token.string, &token.pos);
++				}
++				else if ( next_string == 0 && next_plural < 0 )
++				{
++					remember_a_message(mlp, token.string, &token.pos);
++					plural_mp=NULL;
++				}
++				else if ( next_string < 0 && next_plural == 0 && plural_mp != NULL )
++				{
++					remember_a_message_plural(plural_mp, token.string, &token.pos);
++					plural_mp = NULL;
++				}
++				else if ( next_string == 0 && next_plural == 0 )
++				{
++					/* Error : we string && plural at the same time */
++					error_with_progname = false;
++					error (0, 0, _("%s:%d: warning: plural and singular at the same position ( skipping )"),
++						logical_file_name, line_number - 1);
++					error_with_progname = true;
++
++					next_string = -1;
++					next_plural = -1;
++					free(token.string);
++				}
++				else if ( next_string > 0 && next_plural == 0 )
++				{
++					
++					/* Error : plural before singular*/
++					error_with_progname = false;
++					error (0, 0, _("%s:%d: warning: plural before singular ( skipping )"),
++						logical_file_name, line_number - 1);
++					error_with_progname = true;
++
++					next_string = -1;
++					next_plural = -1;
++					free(token.string);
++
++				}
++				else if ( next_string < 0 && next_plural == 0 && plural_mp == NULL )
++				{
++					/* Error : singular never found*/
++					error_with_progname = false;
++					error (0, 0, _("%s:%d: warning: singular form never found ( skipping )"),
++						logical_file_name, line_number - 1);
++					error_with_progname = true;
++
++					next_string = -1;
++					next_plural = -1;
++					free(token.string);
++				}
++				else 
++				{
++					free(token.string);
++				}
++				break;
++			case xgettext_token_type_comment :
++				xgettext_comment_add(token.string);
++				free(token.string);
++				break;
++			case xgettext_token_type_symbol :
++				xgettext_comment_reset();
++				break;
++			case xgettext_token_type_keyword : 
++				next_string = token.argnum1;
++				next_plural = token.argnum2;
++				xgettext_comment_reset();
++				break;
++			case xgettext_token_type_beg_parent :
++				xgettext_comment_reset();
++				if ( !ocaml_parse(mlp) )
++				{
++					/* Error : reach the end parenthized not balanced*/
++					error_with_progname = false;
++					error (0, 0, _("%s:%d: warning: some parenthizes are not matched"),
++						logical_file_name, line_number - 1);
++					error_with_progname = true;
++				};
++				break;
++			case xgettext_token_type_end_parent :
++				xgettext_comment_reset();
++				return true;
++				break;
++			case xgettext_token_type_eof :
++				xgettext_comment_reset();
++				return false;
++				break;
++			default :
++				abort();
++
++			}
++		}
++		else if ( token.type == xgettext_token_type_string_literal )
++		{
++			if ( strlen(token.string) > 0 )
++				remember_a_message(mlp, token.string, &token.pos);
++		}
++		else if ( token.type == xgettext_token_type_eof )
++		{
++			return false;
++		}
++	}
++}
++
++
++void
++extract_ocaml (FILE *f,
++	   const char *real_filename, const char *logical_filename,
++	   msgdomain_list_ty *mdlp)
++{
++  message_list_ty *mlp = mdlp->item[0]->messages;
++
++  fp = f;
++  real_file_name = real_filename;
++  logical_file_name = xstrdup (logical_filename);
++  line_number = 1;
++
++  init_keywords ();
++
++  /* Eat token until eof */
++  ocaml_parse(mlp);
++
++  /* Close scanner.  */
++  fp = NULL;
++  real_file_name = NULL;
++  logical_file_name = NULL;
++  line_number = 0;
++}
++
+diff -Nurd gettext-0.12.1/gettext-tools/src/x-ocaml.h gettext-0.12.1.ocaml/gettext-tools/src/x-ocaml.h
+--- gettext-0.12.1/gettext-tools/src/x-ocaml.h	1970-01-01 01:00:00.000000000 +0100
++++ gettext-0.12.1.ocaml/gettext-tools/src/x-ocaml.h	2003-07-16 22:45:26.000000000 +0200
+@@ -0,0 +1,35 @@
++/* xgettext Ocaml backend.
++   Copyright (C) 2003 Free Software Foundation, Inc.
++   Written by Sylvain LE GALL <sylvain.le-gall@polytechnique.org>, 2003.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software Foundation,
++   Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
++
++
++#define EXTENSIONS_OCAML \
++  { "ml",      "Ocaml"     },						\
++
++#define SCANNERS_OCAML \
++  { "Ocaml",       extract_ocaml, &formatstring_ocaml },			\
++
++/* Scan an Ocaml file and add its translatable strings to mdlp.  */
++extern void extract_ocaml (FILE *fp, const char *real_filename,
++			  const char *logical_filename,
++			  msgdomain_list_ty *mdlp);
++
++
++/* Handling of options specific to this language.  */
++
++extern void x_ocaml_extract_all (void);
++extern void x_ocaml_keyword (const char *name);
+diff -Nurd gettext-0.12.1/gettext-tools/src/xgettext.c gettext-0.12.1.ocaml/gettext-tools/src/xgettext.c
+--- gettext-0.12.1/gettext-tools/src/xgettext.c	2003-05-21 12:56:46.000000000 +0200
++++ gettext-0.12.1.ocaml/gettext-tools/src/xgettext.c	2003-07-16 22:44:07.000000000 +0200
+@@ -75,6 +75,7 @@
+ #include "x-ycp.h"
+ #include "x-tcl.h"
+ #include "x-php.h"
++#include "x-ocaml.h"
+ #include "x-rst.h"
+ #include "x-glade.h"
+ 
+@@ -259,6 +260,7 @@
+ 	x_awk_extract_all ();
+ 	x_tcl_extract_all ();
+ 	x_php_extract_all ();
++	x_ocaml_extract_all ();
+ 	x_glade_extract_all ();
+ 	break;
+       case 'c':
+@@ -318,6 +320,7 @@
+ 	    x_awk_keyword (optarg);
+ 	    x_tcl_keyword (optarg);
+ 	    x_php_keyword (optarg);
++	    x_ocaml_keyword (optarg);
+ 	    x_glade_keyword (optarg);
+ 	  }
+ 	break;
+@@ -654,7 +657,7 @@
+   -L, --language=NAME         recognise the specified language\n\
+                                 (C, C++, ObjectiveC, PO, Python, Lisp,\n\
+                                 EmacsLisp, librep, Smalltalk, Java,\n\
+-                                JavaProperties, awk, YCP, Tcl, PHP, RST, Glade)\n"));
++                                JavaProperties, awk, YCP, Tcl, PHP, RST, Glade, Ocaml)\n"));
+       printf (_("\
+   -C, --c++                   shorthand for --language=C++\n"));
+       printf (_("\
+@@ -1461,6 +1464,7 @@
+     SCANNERS_PHP
+     SCANNERS_RST
+     SCANNERS_GLADE
++    SCANNERS_OCAML
+     /* Here will follow more languages and their scanners: perl, etc...
+        Make sure new scanners honor the --exclude-file option.  */
+   };
+@@ -1509,6 +1513,7 @@
+     EXTENSIONS_PHP
+     EXTENSIONS_RST
+     EXTENSIONS_GLADE
++    EXTENSIONS_OCAML
+     /* Here will follow more file extensions: sh, pl ... */
+   };
+ 

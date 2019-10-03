@@ -1,0 +1,4 @@
+(install
+  (files ocaml-gettext.1 ocaml-xgettext.1 ocaml-gettext.5)
+  (package gettext)
+  (section man))

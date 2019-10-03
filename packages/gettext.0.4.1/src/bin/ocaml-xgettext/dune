@@ -1,0 +1,5 @@
+(executable
+ (name xgettext)
+ (public_name ocaml-xgettext)
+ (package gettext)
+ (libraries compiler-libs.common gettext.base gettext.extension))

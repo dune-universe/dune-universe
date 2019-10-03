@@ -1,0 +1,5 @@
+(library
+ (name gettextCamomile)
+ (public_name gettext-camomile)
+ (wrapped false)
+ (libraries gettext.extension gettext.base camomile))

@@ -1,0 +1,5 @@
+
+Special thanks to Richard W.M. Jones from Red Hat. He made possible to release
+version 0.3.0 by porting the library to OCaml 3.10.1. A great part of the 0.3.0
+has been made by him.
+

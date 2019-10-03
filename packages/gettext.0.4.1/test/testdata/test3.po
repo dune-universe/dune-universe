@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+domain "fr"
+
+msgid "'Your command, please?', asked the waiter."
+msgstr "«Votre commande, s'il vous plait», dit le garçon."
+
+# Reverse the arguments.
+#, c-format
+msgid "%s is replaced by %s."
+msgstr "%2$s remplace %1$s."
+
+msgid "hey"
+msgstr "hé"
+
+domain "us"
+
+msgid "%d coffee"
+msgid_plural "more %d coffee"
+msgstr[0] "%d café"
+msgstr[1] "%d cafés"

@@ -1,0 +1,14 @@
+(test
+ (name test)
+ (package gettext)
+ (deps
+  ../src/bin/ocaml-gettext/OCamlGettext.exe
+  ../src/bin/ocaml-xgettext/xgettext.exe
+  (glob_files testdata/*)
+  (glob_files testdata/fr_FR/LC_MESSAGES/*))
+ (libraries oUnit str fileutils gettext.extension common)
+ (action
+  (run %{test}
+    -runner sequential
+    -ocaml-gettext ../src/bin/ocaml-gettext/OCamlGettext.exe
+    -ocaml-xgettext ../src/bin/ocaml-xgettext/xgettext.exe)))

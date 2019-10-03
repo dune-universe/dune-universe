@@ -1,0 +1,176 @@
+% OCAML-GETTEXT(1)
+% Sylvain Le Gall
+% 2008-04-29
+
+# NAME
+
+ocaml-gettext - program to manage PO and MO files for OCaml source files.
+
+# SYNOPSIS
+
+ocaml-gettext --action verb options* [file...]
+
+# DESCRIPTION
+
+This manual page documents briefly the ocaml-gettext command.
+
+--action extract
+:  Files provided are considered to be OCaml source files and ocaml-gettext
+   tries to extract translatable strings of it. The output of the command is a
+   POT file. As a special case, if a file named POTFILES is in the list of the
+   file provided, every line of it is considered as a file to be searched.
+
+--action compile
+: Files provided are considered to be PO file. These files are compiled in
+  binary MO files,
+
+--action install
+:  Files provided are considered to be MO files. They are installed in their
+   respective directories considering language, textdomain and category,
+
+--action uninstall
+:  This is the symmetric command to install, but it uninstalls files provided
+   for the considered language, textdomain and category,
+
+--action merge
+:   Merges a POT file with the provided PO file.
+
+--extract-command cmd
+:   Command to extract translatable strings from an OCaml source file. This
+    command should output the same marshalled structure as ocaml-xgettext. The
+    best to do is to use the same build version of ocaml-gettext.
+
+--extract-default-option options
+:   Default options used when extracting translatable strings. These options
+    are camlp4 options and will be passed to ocaml-xgettext when processing
+    files that don't already have specific camlp4 options.
+
+--extract-filename-option filename options
+:   Specific filename camlp4 options. It is used when extracting strings from
+    the specified filename. It overrides default camlp4 options.
+
+--extract-pot filename
+:   POT file to write when extracting translatable strings.
+
+--compile-output filename
+:   MO file to write when compiling a PO file. If not provided, the output will
+    be the name of the PO file with ".mo" extension.
+
+--install-language language
+:   Language to use when installing a MO file.
+
+--install-category category
+:   Category to use when installing a MO file.
+
+--install-textdomain textdomain
+:   Textdomain to use when installing a MO file.
+
+--install-destdir dirname
+:   Base directory to use when installing a MO file.
+
+--uninstall-language language
+:   Language to use when uninstalling a MO file.
+
+--uninstall-category category
+:   Category to use when uninstalling a MO file.
+
+--uninstall-textdomain textdomain
+:   Textdomain to use when uninstalling a MO file.
+
+--uninstall-orgdir dirname
+:   Base directory used when uninstalling a MO file.
+
+--merge-pot filename
+:   POT file to use as a master for merging PO file.
+
+--merge-backup-extension extension
+:   Backup extension to use when moving PO file which have been merged.
+
+--version
+:   Return version information on ocaml-gettext.
+
+--short-version
+:   Returns only the version of ocaml-gettext. The return is made to be easily
+    parseable by configure script. The output of this command will always be
+    the shortest version string, made of numeric characters (0-9) and ".". The
+    version strings should be compared considering that a version A is greater
+    than a version B if there is a number between two "." of A that is greater
+    than B the corresponding number, beginning at the right of the string. For
+    example: 0.14 is greater than 0.13.1.
+
+-help, --help
+:   Displays the help about the ocaml-gettext command.
+
+
+# OCAML-GETTEXT OPTIONS
+
+This section describes briefly the common options provided by programs using
+ocaml-gettext library.
+
+--gettext-failsafe ignore
+:   Defines the behaviour of ocaml-gettext regarding any error that could be
+    encountered during the processing of string translation.  ignore is the
+    default behaviour. The string returned is the original string untranslated.
+    This behaviour is consistent and allows to have a usable output, even if it
+    is not perfect.
+
+--gettext-failsafe inform-stderr
+:   Same behaviour as ignore, except that a message is printed on stderr,
+
+--gettext-failsafe raise-exception
+:   Stops the program by raising an exception when an error is encountered.
+
+--gettext-disable
+:   Disables any translation made by ocaml-gettext. All translations return the
+   original string untranslated.
+
+--gettext-domain-dir textdomain dir
+:   Defines a dir to search for a specific domain. This could be useful if MO
+    files are stored in a non standard directory.
+
+--gettext-dir dir
+:   Adds a directory to search for MO files.
+
+--gettext-language language
+:   Sets the language to use in ocaml-gettext library. The language should be
+    POSIX compliant. The language should follow the following convention:
+    lang\[_territory]\[.charset]\[@modifier]. The lang and territory should be
+    two letters ISO code. Charset should be a valid ISO character set (at least
+    recognised by the underlying charset recoding routine). For example, valid
+    languages are: fr_FR.ISO-8859-1@euro, de_DE.UTF-8.
+
+--gettext-codeset codeset
+:   Sets the codeset for output.
+
+Users should be aware that these command line options, apply only for strings
+after the initialisation of the library. This means that if the options
+initially guessed by ocaml-gettext don't match the command line provided, there
+should be some untranslated string, because these strings are translated before
+parsing options. This is particularly true for the usage message itself
+(--help): even if the strings are translated, they are translated before
+setting the correct option.
+
+Some options (--gettext-codeset for example) are overrided internally for
+particular use. It should be required to always translate strings to UTF-8 in
+graphical user interface (because GTK2 requires it).
+
+# NOTES
+
+Options --uninstall-language, --uninstall-textdomain, --install-language and
+--install-textdomain could be guessed from the filename provided. You must be
+aware that these options can conflict with the fact that you provide several
+files to install. For example, if you provide a textdomain, you should either
+install several MO files which filenames only reflect the language or only one
+MO file if you also provide a language. For example, you can execute
+ocaml-gettext --install-textdomain mytextdomain fr.po de.po without problem,
+but you cannot execute ocaml-gettext --install-textdomain mytextdomain
+--install-language fr fr.po de.po . This restriction is due to the fact that
+you should not over specified file installation.
+
+Rules for guessing the language/textdomain are: language[.textdomain].mo. For a
+full automated install without giving any hints, through command line options,
+you should name your file fr.mytextdomain.mo or de.mytextdomain.mo.
+
+# SEE ALSO
+
+`ocaml-xgettext`(1), `ocaml-gettext`(5).

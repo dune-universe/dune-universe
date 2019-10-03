@@ -1,0 +1,9 @@
+(test
+ (name test)
+ (package gettext-camomile)
+ (deps
+  (glob_files testdata/*)
+  (glob_files ../testdata/fr_FR/LC_MESSAGES/*))
+ (libraries common gettext-camomile oUnit fileutils)
+ (action
+  (run %{test} -test-dir ../testdata)))

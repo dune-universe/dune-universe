@@ -1,0 +1,151 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-16 20:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../libgettext-ocaml/gettext.ml:312
+msgid " Choose how to handle failure in ocaml-gettext. Default: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:327
+msgid " Disable the translation perform by ocaml-gettext. Default: enable."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:217
+msgid "An empty entry has been encounter."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:189
+msgid "Cannot find an approriate ocaml-gettext compiled file ( %s )."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:251
+msgid "Cannot find string %S."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:236
+msgid "Could not open file %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:248
+msgid "Error while merging two PO files: %S and %S cannot be merged."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:242
+msgid "Error while processing parsing of PO file, in msgid %S, %d index is out of bound."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:239
+msgid "Error while processing parsing of PO file: %S at %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:202
+msgid "Error while processing parsing of content-type at %s: %S."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:194
+msgid "Error while processing parsing of options at %s: %S."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:198
+msgid "Error while processing parsing of plural at %s: %S."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:245
+msgid "Error while trying to load PO file %s, file doesn't exist."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:214
+msgid "Junk at the end of the plural form id %S: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:206
+msgid "MO file provided is not encoded following ocaml-gettext convention."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:219
+msgid "Number of strings is negative."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:192
+msgid "Ocaml-gettext library is not initialized"
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:221
+msgid "Offset of string table is out of bound ([%ld,%ld] should be in [%ld,%ld])."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:224
+msgid "Offset of translation table is out of bound ([%ld,%ld] should be in [%ld,%dl])."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:230
+msgid "Out of bound access when trying to find a string (%d < %d)."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:233
+msgid "Out of bound access when trying to find a translation (%d < %d)."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:181
+msgid "Problem reading file %s: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:183
+msgid "Problem while extracting %s: command %S exits with code %d."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:186
+msgid "Problem while extracting %s: command %S killed by signal %d."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:227
+msgid "Translation table and string table overlap ([%ld,%ld] and [%ld,%ld] have a non empty intersection)."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:208
+msgid "Trying to fetch the plural form %d of a singular form %S."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:211
+msgid "Trying to fetch the plural form %d of plural form %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:254
+msgid "Unable to parse the POSIX language environment variable %s"
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:387
+msgid "codeset Set the default codeset for outputting string with ocaml-gettext. Default: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:364
+msgid "dir Add a search dir for ocaml-gettext files. Default: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:373
+msgid "language Set the default language for ocaml-gettext. Default: %s."
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:176
+msgid "line %d character %d"
+msgstr ""
+
+#: ../libgettext-ocaml/gettext.ml:343
+msgid "textdomain dir Set a dir to search ocaml-gettext files for the specified domain. Default: %s."
+msgstr ""
+

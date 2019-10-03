@@ -1,0 +1,3 @@
+(library
+  (name examplesLibrary)
+  (libraries gettext.base))

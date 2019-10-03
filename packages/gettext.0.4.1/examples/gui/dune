@@ -1,0 +1,3 @@
+(library
+  (name examplesGUI)
+  (libraries gettext.base lablgtk3))

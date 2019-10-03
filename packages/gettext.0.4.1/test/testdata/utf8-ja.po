@@ -1,0 +1,395 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: virt-p2v--devel\n"
+"Report-Msgid-Bugs-To: rjones@redhat.com\n"
+"POT-Creation-Date: 2008-03-22 15:53+0000\n"
+"PO-Revision-Date: 2008-03-23 20:29+0000\n"
+"Last-Translator: Naoko - <email@withheld.example.com>\n"
+"Language-Team: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../virt-p2v.ml:1876
+msgid " (about %.0f minutes remaining)"
+msgstr "残り　約%.0f分"
+
+#: ../virt-p2v.ml:1879
+msgid " (about %.0f seconds remaining)"
+msgstr "残り　約%.0f秒"
+
+#: ../virt-p2v.ml:1902
+msgid "%s has finished"
+msgstr "%s修了"
+
+#: ../virt-p2v.ml:813
+msgid "%s starting up ...\\n%!"
+msgstr "%s起動中 ...\\n%!"
+
+#: ../virt-p2v.ml:1424
+msgid "(leave MAC blank for random)"
+msgstr ""
+
+#: ../virt-p2v.ml:1391
+msgid "Architecture:"
+msgstr "アーキテクチャ"
+
+#: ../virt-p2v.ml:1120
+msgid "Automatic from:"
+msgstr ""
+
+#: ../virt-p2v.ml:1356
+msgid "Block devices"
+msgstr "ブロックデバイス"
+
+#: ../virt-p2v.ml:1418
+msgid "CPUs:"
+msgstr ""
+
+#: ../virt-p2v.ml:428
+msgid "Command failed:\\n\\n%s"
+msgstr "コマンド失敗:\\n\\n%2"
+
+#: ../virt-p2v.ml:1090
+msgid "Configure network"
+msgstr "ネットワークを設定"
+
+#: ../virt-p2v.ml:1382
+msgid "Configure target system"
+msgstr "目標システムを設定"
+
+#: ../virt-p2v.ml:825
+msgid "Detecting hard drives (this may take some time) ..."
+msgstr "ハードドライブ検出（要時間）"
+
+#: ../virt-p2v.ml:571
+msgid ""
+"Disk snapshot failed: unable to read the size in sectors of block device %s"
+msgstr "スナップショット失敗：%sのブロックデバイスのセクターのサイズ読み込み不可能"
+
+#: ../virt-p2v.ml:1136
+msgid "Don't configure the network"
+msgstr "ネットワークを設定しないで下さい"
+
+#: ../virt-p2v.ml:323
+msgid "Error"
+msgstr "エラー"
+
+#: ../virt-p2v.ml:295
+msgid "F12 for next screen | [ALT] [F2] root / no password for shell"
+msgstr ""
+
+#: ../virt-p2v.ml:1021
+msgid "Finished detecting hard drives."
+msgstr "ハードドライブ検出修了"
+
+#: ../virt-p2v.ml:1147
+msgid "Gateway"
+msgstr "ゲートウエー"
+
+#: ../virt-p2v.ml:1384
+msgid "Hypervisor:"
+msgstr "ハイパーバイザー"
+
+#: ../virt-p2v.ml:1143
+msgid "IP"
+msgstr ""
+
+#: ../virt-p2v.ml:1141
+msgid "Interface"
+msgstr "インタフェース"
+
+#: ../virt-p2v.ml:212
+msgid "Linux /boot"
+msgstr ""
+
+#: ../virt-p2v.ml:208
+msgid "Linux swap"
+msgstr ""
+
+#: ../virt-p2v.ml:1421
+msgid "MAC addr:"
+msgstr ""
+
+#: ../virt-p2v.ml:1415
+msgid "Memory (MB):"
+msgstr "メモリー (MB)"
+
+#: ../virt-p2v.ml:213
+msgid "Mountable non-root"
+msgstr ""
+
+#: ../virt-p2v.ml:1149
+msgid "Nameserver"
+msgstr "ネーム•サーバー"
+
+#: ../virt-p2v.ml:1145
+msgid "Netmask"
+msgstr "ネットマスク"
+
+#: ../virt-p2v.ml:1089
+msgid "Network"
+msgstr ""
+
+#: ../virt-p2v.ml:1237
+msgid ""
+"Network configuration.\\n\\nPlease configure the network from this shell.\\n"
+"\\nWhen you have finished, exit the shell with ^D or exit.\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:853
+msgid ""
+"No non-removable block devices (hard disks, etc.) could be found on this "
+"machine."
+msgstr ""
+
+#: ../virt-p2v.ml:1557
+msgid "Note"
+msgstr ""
+
+#: ../virt-p2v.ml:1599
+msgid "Performing LVM snapshots ...\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:1076
+msgid "Physical to Virtual (P2V)"
+msgstr ""
+
+#: ../virt-p2v.ml:1133
+msgid "QEMU user network"
+msgstr "QEMU ユーザーネットワーク"
+
+#: ../virt-p2v.ml:1287
+msgid "Remote directory"
+msgstr ""
+
+#: ../virt-p2v.ml:1283
+msgid "Remote host"
+msgstr "リモートホスト"
+
+#: ../virt-p2v.ml:1552
+msgid ""
+"Remote hypervisor claims not to support fully virtualized %s guests.\\n"
+"\\nContinuing anyway.\\n\\n%!"
+msgstr ""
+
+#: ../virt-p2v.ml:1558
+msgid ""
+"Remote hypervisor supports multiple types of fully virtualized %s guests.\\n"
+"\\nPlease help further development of libvirt and virt-p2v by sending the "
+"file /tmp/virt-p2v.log back to the developers.  See the main virt-p2v "
+"website for contact details."
+msgstr ""
+
+#: ../virt-p2v.ml:1285
+msgid "Remote port"
+msgstr ""
+
+#: ../virt-p2v.ml:1373
+msgid "Root filesystem"
+msgstr "ルート　ファイルシステム"
+
+#: ../virt-p2v.ml:1281 ../virt-p2v.ml:1280
+msgid "SSH configuration"
+msgstr "SSH　設定"
+
+#: ../virt-p2v.ml:1338
+msgid "SSH configuration failed"
+msgstr "SSH設定失敗"
+
+#: ../virt-p2v.ml:1289
+msgid "SSH username"
+msgstr "SSHユーザーネーム"
+
+#: ../virt-p2v.ml:1358
+msgid "Select block devices to send"
+msgstr "送信用のブロックデバイスを選択"
+
+#: ../virt-p2v.ml:1374
+msgid "Select root filesystem"
+msgstr ""
+
+#: ../virt-p2v.ml:1123
+msgid "Start a shell"
+msgstr ""
+
+#: ../virt-p2v.ml:1139
+msgid "Static configuration:"
+msgstr "静的設定"
+
+#: ../virt-p2v.ml:1381
+msgid "Target system"
+msgstr ""
+
+#: ../virt-p2v.ml:1302
+msgid "Test SSH connection"
+msgstr "SSHコネクションをテスト"
+
+#: ../virt-p2v.ml:676
+msgid "Testing SSH connection by listing files in remote directory ...\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:1081 ../virt-p2v.ml:1080
+msgid "Transfer type"
+msgstr ""
+
+#: ../virt-p2v.ml:1505
+msgid "Try to fetch remote hypervisor capabilities ...\\n"
+msgstr "遠隔ハイパーバイザー機能をフェッチする"
+
+#: ../virt-p2v.ml:1266
+msgid "Trying QEMU network configuration.\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:1250
+msgid "Trying network auto-configuration from root filesystem ...\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:1241
+msgid "Trying static network configuration.\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:214
+msgid "Unknown partition type"
+msgstr "不明のパーティションタイプ"
+
+#: ../virt-p2v.ml:1298
+msgid "Use SSH compression (not good for LANs)"
+msgstr ""
+
+#: ../virt-p2v.ml:1427
+msgid "Use remote libvirtd"
+msgstr ""
+
+#: ../virt-p2v.ml:1077
+msgid "Virtual to Virtual (V2V)"
+msgstr ""
+
+#: ../virt-p2v.ml:1551
+msgid "Warning"
+msgstr "警告"
+
+#: ../virt-p2v.ml:1068
+msgid ""
+"Welcome to %s, a live CD for migrating a physical machine to a virtualized "
+"host.\\n\\nTo continue press the Return key.\\n\\nTo get a shell you can use "
+"[ALT] [F2] and log in as root with no password.\\n\\nExtra information is "
+"logged in /tmp/virt-p2v.log but this file disappears when the machine "
+"reboots."
+msgstr ""
+
+#: ../virt-p2v.ml:211
+msgid "Windows root"
+msgstr ""
+
+#: ../virt-p2v.ml:821
+msgid "You should only run this script from the live CD or a USB key."
+msgstr "ライブCDもしくはＵＳBキーからこのスクリプトを実行すべきです"
+
+#: ../virt-p2v.ml:1801
+msgid ""
+"\\\n"
+"<!--\n"
+"  This is an automatically generated libvirt configuration file.\n"
+"  It was written by the %s program.\n"
+"\n"
+"  Please check the values in this configuration file carefully,\n"
+"  particularly maxmem, memory, vcpu and any paths.\n"
+"\n"
+"  To start the domain, do:\n"
+"    virsh%s define %s\n"
+"    virsh%s start %s\n"
+"-->\\n\\n"
+msgstr ""
+"\\\n"
+"<!--\n"
+"  This is an automatically generated libvirt configuration file.\n"
+"  このプログラムは%sによって書かれました\n"
+"\n"
+"  このコンフィギュレーションの意義を慎重にチェックして下さい,\n"
+"  particularly maxmem, memory, vcpu and any paths.\n"
+"\n"
+"  To start the domain, do:\n"
+"    virsh%s define %s\n"
+"    virsh%s start %s\n"
+"-->\\n\\n"
+
+#: ../virt-p2v.ml:1256 ../virt-p2v.ml:1244
+msgid ""
+"\\nAuto-configuration failed.  Starting a shell.\\n\\nPlease configure the "
+"network from this shell.\\n\\nWhen you have finished, exit the shell with ^D "
+"or exit.\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:1840
+msgid "\\nSending /dev/%s (%.3f GB) to remote machine\\n\\n%!"
+msgstr ""
+
+#: ../virt-p2v.ml:1903
+msgid ""
+"\\nThe physical to virtual migration is complete.\\n\\nPlease verify the "
+"disk image(s) and configuration file on the remote host, and then start up "
+"the virtual machine by doing:\\n\\ncd %s\\nvirsh define %s\\n\\nWhen you "
+"press [OK] this machine will reboot."
+msgstr ""
+"\\nThe physical to virtual migration is complete.\\n\\nPlease verify the "
+"disk image(s) and configuration file on the remote host, and then start up "
+"the virtual machine by doing:\\n\\ncd %s\\nvirsh define %s\\n\\nWhen you "
+"OKを押して再起動する。"
+
+#: ../virt-p2v.ml:1819
+msgid "\\nWriting configuration file ...\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:683
+msgid ""
+"\\n\\nDid SSH work?\\nHint: If not sure, there is a shell on console [ALT] "
+"[F2]\\n"
+msgstr ""
+
+#: ../virt-p2v.ml:599
+msgid ""
+"\\n\\nDid automatic network configuration work?\\nHint: If not sure, there "
+"is a shell on console [ALT] [F2]"
+msgstr ""
+
+#: ../virt-p2v.ml:322
+msgid ""
+"\\n\\nIf you want to report this error, there is a shell on [ALT] [F2], log "
+"in as root with no password.\\n\\nPlease provide the contents of /tmp/virt-"
+"p2v.log and output of the 'dmesg' command."
+msgstr ""
+
+#: ../virt-p2v.ml:286
+msgid "open_centered_window: not in newt mode"
+msgstr ""
+
+#: ../virt-p2v.ml:447
+msgid "shget: command killed by signal %d"
+msgstr ""
+
+#: ../virt-p2v.ml:449
+msgid "shget: command stopped by signal %d"
+msgstr ""
+
+#: ../virt-p2v.ml:661
+msgid "ssh: exited with error code %d"
+msgstr ""
+
+#: ../virt-p2v.ml:662
+msgid "ssh: killed by signal %d"
+msgstr ""
+
+#: ../virt-p2v.ml:663
+msgid "ssh: stopped by signal %d"
+msgstr ""
+
+#: ../virt-p2v.ml:528
+msgid "unexpected output: "
+msgstr ""
+
+#: ../virt-p2v.ml:1915
+msgid "usage: virt-p2v [--test] [ttyname]\\n%!"
+msgstr ""
+

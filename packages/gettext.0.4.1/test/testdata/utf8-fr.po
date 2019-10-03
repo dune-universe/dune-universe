@@ -1,0 +1,367 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: oji 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-27 02:37+0200\n"
+"PO-Revision-Date: 2005-05-27 02:39+0200\n"
+"Last-Translator: French <gnomefr@traduc.org>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;"
+
+#: ../dlg_browser.ml:93
+msgid " - browse kanji - "
+msgstr " - parcourir les kanji - "
+
+#: ../dlg_config.ml:11
+msgid " - configuration"
+msgstr "- configuration"
+
+#: ../dlg_editor.ml:84
+msgid " - edit kanji - "
+msgstr " - édition de kanji"
+
+#: ../dlg_stacks.ml:18
+msgid " - stacks manager"
+msgstr " - gestionnaire de tas"
+
+#: ../dlg_test.ml:170
+msgid " - statistics"
+msgstr " - statistiques"
+
+#: ../dlg_test.ml:103
+msgid " - test - "
+msgstr " - révision- "
+
+#: ../dlg_editor.ml:34
+msgid " <b>book:</b> "
+msgstr "<b>livre:</b>"
+
+#: ../dlg_editor.ml:42
+msgid " <b>keyword:</b> "
+msgstr "<b>mot clef:</b>"
+
+#: ../dlg_editor.ml:31
+msgid " <b>lang:</b> "
+msgstr "<b>langue:</b>"
+
+#: ../dlg_editor.ml:46
+msgid " <b>nicknames:</b> "
+msgstr "<b>sésames:</b>"
+
+#: ../dlg_editor.ml:50
+msgid " <b>number</b> (-1 if not in this book): "
+msgstr "<b>numéro</b> (-1 si il n'est pas dans le livre)"
+
+#: ../dlg_test.ml:164
+msgid " bad answers were:"
+msgstr "les mauvaises réponses étaient"
+
+#: ../dlg_search.ml:32
+msgid " because "
+msgstr " car "
+
+#: ../dlg_stacks.ml:35
+msgid " in book"
+msgstr " dans le livre "
+
+#: ../dlg_editor.ml:101 ../dlg_editor.ml:161
+msgid " kana "
+msgstr " kana "
+
+#: ../dlg_editor.ml:103 ../dlg_editor.ml:163
+msgid " translation "
+msgstr " signification "
+
+#: ../dlg_voclists.ml:41
+msgid " vocabulary files"
+msgstr " fichiers de vocabulaire"
+
+#: ../dlg_editor.ml:36
+msgid "(just write it instead of selecting in the lists)"
+msgstr "(écrivez le au lieu de le sélectionner)"
+
+#: ../dlg_search.ml:72 ../dlg_search.ml:81 ../dlg_search.ml:90
+msgid ") in lang "
+msgstr ") en langue "
+
+#: ../dlg_config.ml:287
+msgid "<b> select font for big kanji</b>"
+msgstr "<b> chosissez la police pour le gros kanji</b>"
+
+#: ../dlg_editor.ml:63
+msgid "<b>ON readings </b>"
+msgstr "<b>lectures ON</b>"
+
+#: ../dlg_browser.ml:73 ../dlg_config.ml:68 ../dlg_test.ml:80
+msgid "<b>ON</b> readings"
+msgstr "lectures <b>ON</b>"
+
+#: ../dlg_stacks.ml:186
+msgid "<b>already known</b>"
+msgstr "<b>déja connus</b>"
+
+#: ../dlg_stacks.ml:26
+msgid "<b>buffer zone</b>"
+msgstr "<b>zone tampon</b>"
+
+#: ../main.ml:39
+msgid "<b>configuration</b>"
+msgstr "<b>configuration</b>"
+
+#: ../main.ml:47
+msgid "<b>data</b>"
+msgstr "<b>données</b>"
+
+#: ../dlg_stacks.ml:240
+msgid "<b>erroneous</b>"
+msgstr "<b>érronés</b>"
+
+#: ../dlg_editor.ml:39
+msgid "<b>flashcard's datas</b>"
+msgstr "<b>données de la fiche</b>"
+
+#: ../dlg_stacks.ml:29
+msgid "<b>import</b> from number "
+msgstr "<b>importer</b> depuis le numéro "
+
+#: ../dlg_editor.ml:25
+msgid "<b>kanji:</b> "
+msgstr "<b>kanji:</b> "
+
+#: ../dlg_browser.ml:45 ../dlg_test.ml:52
+msgid "<b>keywords</b> in all langs"
+msgstr "<b>mots clefs</b> dans toutes les langues"
+
+#: ../dlg_editor.ml:56
+msgid "<b>kun readings </b>"
+msgstr "<b>lectures kun</b>"
+
+#: ../dlg_browser.ml:70 ../dlg_config.ml:97 ../dlg_test.ml:77
+msgid "<b>kun</b> readings"
+msgstr "lectures <b>kun</b>"
+
+#: ../dlg_config.ml:27
+msgid "<b>main data</b>"
+msgstr "<b>données principales</b>"
+
+#: ../dlg_browser.ml:57 ../dlg_test.ml:64
+msgid "<b>nicknames</b> in all langs"
+msgstr "<b>sésames</b> dans toutes les langues"
+
+#: ../dlg_browser.ml:33 ../dlg_test.ml:40
+msgid "<b>numbers</b> in all books"
+msgstr "<b>numéros</b> dans tous les livres"
+
+#: ../dlg_browser.ml:80 ../dlg_test.ml:87
+msgid "<b>personal notes</b> on this kanji"
+msgstr "<b>notes personnelles</b> sur ce kanji"
+
+#: ../dlg_config.ml:18
+msgid "<b>question type"
+msgstr "<b>type de question"
+
+#: ../dlg_editor.ml:22
+msgid "<b>select flashcard</b>"
+msgstr "<b>choisissez une fiche</b>"
+
+#: ../dlg_stacks.ml:22
+msgid "<b>stacks </b>"
+msgstr "<b>tas </b>"
+
+#: ../dlg_stacks.ml:57
+msgid "<b>sub stacks</b>"
+msgstr "<b>sous tas</b>"
+
+#: ../dlg_editor.ml:70 ../dlg_browser.ml:76 ../dlg_config.ml:126
+#. ../dlg_test.ml:83
+msgid "<b>vocabulary</b>"
+msgstr "<b>vocabulaire</b>"
+
+#: ../main.ml:28
+msgid "<b>work</b>"
+msgstr "<b>révision</b>"
+
+#: ../dlg_test.ml:90
+msgid "See"
+msgstr "Voir"
+
+#: ../main.ml:36
+msgid "add a day to kanji stacks"
+msgstr "avancer d'un jour les tas de kanji"
+
+#: ../dlg_voclists.ml:15
+msgid "add all files you want, click on <b>close</b> when you are done"
+msgstr "ajoutez les fichiers voulus, cliquez sur <b>fermer</b> une fois terminé"
+
+#: ../dlg_voclists.ml:44
+msgid "add and remove files"
+msgstr "ajouter et supprimer des fichiers"
+
+#: ../dlg_config.ml:160 ../dlg_config.ml:215
+msgid "automagically detected in data file"
+msgstr "détecté automagiquement dans le fichier de données"
+
+#: ../dlg_config.ml:160
+msgid "book to use"
+msgstr "livre à utiliser"
+
+#: ../main.ml:49
+msgid "browse all kanji flashcards"
+msgstr "parcourir les fiches de kanji"
+
+#: ../dlg_config.ml:18
+msgid "define what will be displayed"
+msgstr "définissez ce qui sera affiché"
+
+#: ../main.ml:52
+msgid "edit the kanji flashcards"
+msgstr "éditer les fiches de kanji"
+
+#: ../dlg_config.ml:82 ../dlg_config.ml:111 ../dlg_config.ml:140
+msgid "kana"
+msgstr "kana"
+
+#: ../dlg_config.ml:37 ../dlg_config.ml:78 ../dlg_config.ml:107
+#. ../dlg_config.ml:136
+msgid "kanji"
+msgstr "kanji"
+
+#: ../dlg_editor.ml:99 ../dlg_editor.ml:159
+msgid "kanji "
+msgstr "kanji"
+
+#: ../dlg_test.ml:102
+msgid "kanji <b>"
+msgstr "kanji <b>"
+
+#: ../dlg_voclists.ml:21
+msgid "kanjiscope file"
+msgstr "fichier kanjiscope"
+
+#: ../dlg_config.ml:45
+msgid "keyword"
+msgstr "mot-clef"
+
+#: ../dlg_search.ml:59
+msgid "keyword in lang "
+msgstr "mot-clef en langue"
+
+#: ../dlg_search.ml:67
+msgid "kun reading  = "
+msgstr "lecture kun = "
+
+#: ../dlg_config.ml:215
+msgid "lang to use"
+msgstr "langue à utiliser"
+
+#: ../dlg_voclists.ml:12
+msgid "load a vocabulary list"
+msgstr "charger une liste de vocabulaire"
+
+#: ../main.ml:55
+msgid "manage vocabulary files"
+msgstr "gérer les fichiers de vocabulaire"
+
+#: ../main.ml:41
+msgid "manage your kanji stacks"
+msgstr "gérer les tas de kanji"
+
+#: ../dlg_voclists.ml:20
+msgid "native CSV file"
+msgstr "fichier CSV natif"
+
+#: ../dlg_search.ml:63
+msgid "nickname in lang "
+msgstr "sésame en langue"
+
+#: ../dlg_config.ml:49
+msgid "nicknames"
+msgstr "sésames"
+
+#: ../dlg_config.ml:172
+msgid "no book"
+msgstr "pas de livre"
+
+#: ../dlg_config.ml:228
+msgid "no lang"
+msgstr "pas de langue"
+
+#: ../dlg_config.ml:53
+msgid "notes"
+msgstr "notes"
+
+#: ../dlg_config.ml:41
+msgid "number"
+msgstr "numéro"
+
+#: ../dlg_search.ml:47
+msgid "number in book "
+msgstr "numéro dans le livre"
+
+#: ../dlg_search.ml:90
+msgid "on reading "
+msgstr "lecture on"
+
+#: ../dlg_search.ml:85
+msgid "on reading  = "
+msgstr "lecture on = "
+
+#: ../dlg_config.ml:160
+msgid "only used to show numbers"
+msgstr "utilisé seulement pour l'affichage des numéros"
+
+#: ../dlg_search.ml:16
+msgid "search a kanji"
+msgstr "rechercher un kanji"
+
+#: ../dlg_stacks.ml:54
+msgid "stack <b>"
+msgstr "tas <b>"
+
+#: ../main.ml:33
+msgid "stubborn work on kanji (1-0)"
+msgstr "travail têtu sur les kanji (1-0)"
+
+#: ../dlg_stacks.ml:83
+msgid "sub stack <b>"
+msgstr "sous tas <b>"
+
+#: ../dlg_test.ml:158
+msgid "success:"
+msgstr "réussite:"
+
+#: ../dlg_test.ml:158
+msgid "test finished!"
+msgstr "révisions terminées!"
+
+#: ../dlg_stacks.ml:32
+msgid "to"
+msgstr "jusqu'au"
+
+#: ../dlg_config.ml:86 ../dlg_config.ml:115 ../dlg_config.ml:144
+msgid "translation"
+msgstr "traduction"
+
+#: ../dlg_search.ml:81
+msgid "vocabulary "
+msgstr "vocabulaire "
+
+#: ../dlg_search.ml:76
+msgid "vocabulary  = "
+msgstr "vocabulaire = "
+
+#: ../main.ml:30
+msgid "work today's kanji"
+msgstr "réviser les kanji du jour"
+
+#: ../dlg_editor.ml:36
+msgid "you can add a lang, a book, or even a kanji"
+msgstr "vous pouvez ajouter un livre, une langue ou même un kanji"
+
+#: ../dlg_search.ml:93
+msgid "your notes = "
+msgstr "vos notes = "
+

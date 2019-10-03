@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-05 23:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../gui/gui.ml:15
+msgid "Hello %s"
+msgstr ""
+
+#: ../library/library.ml:14
+msgid "Hello %s !\\n"
+msgstr ""
+
+#: ../library/library.ml:29
+msgid "Hello %s\\n"
+msgstr ""
+
+#: ../library/library.ml:13 ../gui/gui.ml:13
+msgid "Hello world !"
+msgstr ""
+
+#: ../library/library.ml:18
+msgid "There is "
+msgid_plural "There are "
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/library.ml:24
+msgid "There is %d plate.\\n"
+msgid_plural "There are %d plates.\\n"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../program/program.ml:35
+msgid "\\\"Hello you\\\" program by Sylvain Le Gall\n\n%s\n\nCommand: program [options]\n\nOptions:"
+msgstr ""
+
+#: ../program/program.ml:19
+msgid "name Your name. Default : %S"
+msgstr ""
+
+#: ../library/library.ml:20
+msgid "plate."
+msgid_plural "plates."
+msgstr[0] ""
+msgstr[1] ""
+
