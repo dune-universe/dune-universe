@@ -1,0 +1,95 @@
+(** Compatibility implementations for some functions and type
+    definitions that are missing in old versions of Clang API. *)
+
+open Clang__bindings
+
+type compat_stmt_kind =
+  | CXXFoldExpr
+  | ArrayInitLoopExpr
+  | ArrayInitIndexExpr
+  | Unknown
+
+let compat_stmt_kind (kind : clang_ext_stmtkind) : compat_stmt_kind =
+  match kind with
+@IF_CLANG_FROM_3_6@
+  | CXXFoldExpr -> CXXFoldExpr
+@ENDIF_CLANG_FROM_3_6@
+@IF_CLANG_FROM_4_0@
+  | ArrayInitLoopExpr -> ArrayInitLoopExpr
+  | ArrayInitIndexExpr -> ArrayInitIndexExpr
+@ENDIF_CLANG_FROM_4_0@
+  | _ -> Unknown
+
+type compat_decl_kind =
+  | Decomposition
+  | Unknown
+
+let compat_decl_kind (kind : clang_ext_declkind) : compat_decl_kind =
+  match kind with
+@IF_CLANG_FROM_4_0@
+  | Decomposition -> Decomposition
+@ENDIF_CLANG_FROM_4_0@
+  | _ -> Unknown
+
+@IF_CLANG_BEFORE_3_5@
+type cxerrorcode =
+  | Failure
+  | Crashed
+  | InvalidArguments
+  | ASTReadError
+(** Error codes introduced in clang 3.5, declared here for compatibility.
+    Only {!constr:Failure} will be used. *)
+
+let parse_translation_unit2 index filename command_line_args unsaved_files
+    options : (cxtranslationunit, cxerrorcode) result =
+  match
+    parse_translation_unit index filename command_line_args unsaved_files
+      options
+  with
+  | None -> Error Failure
+  | Some tu -> Ok tu
+(** Compatibility wrapper for [parse_translation_unit].
+    In case of error, [Error Failure] will be returned. *)
+@ENDIF_CLANG_BEFORE_3_5@
+
+@IF_CLANG_BEFORE_3_6@
+let predefined_expr_get_function_name cursor decl =
+  ext_predefined_expr_compute_name
+    (ext_predefined_expr_get_ident_kind cursor) decl
+@ENDIF_CLANG_BEFORE_3_6@
+@IF_CLANG_FROM_3_6@
+let predefined_expr_get_function_name cursor _decl =
+  ext_predefined_expr_get_function_name cursor
+@ENDIF_CLANG_FROM_3_6@
+
+@IF_CLANG_BEFORE_3_7@
+type cxvisitorresult =
+  | Break 
+  | Continue
+
+let type_visit_fields ty visitor =
+  visit_children (ty |> get_type_declaration) (fun cur _parent ->
+    match get_cursor_kind cur with
+    | FieldDecl ->
+        begin
+          match visitor cur with
+          | Break -> Break
+          | Continue -> Continue
+        end
+    | _ -> Continue)
+@ENDIF_CLANG_BEFORE_3_7@
+
+@IF_CLANG_BEFORE_8_0@
+let include_attributed_types = Cxtranslationunit_flags.none
+
+let type_get_modified_type ty =
+  ty
+
+let type_non_null = NoAttr
+@ENDIF_CLANG_BEFORE_8_0@
+
+@IF_CLANG_FROM_8_0@
+let include_attributed_types = Cxtranslationunit_flags.include_attributed_types
+
+let type_non_null = TypeNonNull
+@ENDIF_CLANG_FROM_8_0@

@@ -1,0 +1,26 @@
+(executable
+ (name test)
+ (libraries alcotest core protocell_google runtime)
+ (preprocess
+  (pps ppx_deriving.eq ppx_deriving.show)))
+
+(env
+ (_
+  (env-vars
+   (WITH_DERIVERS eq,show))))
+
+(rule
+ (targets test_pc.ml test_import_pc.ml)
+ (deps
+  (:plugin ../src/protocell/protocell.exe)
+  (:proto test.proto test_import.proto))
+ (action
+  (run protoc --plugin=protoc-gen-ocaml=%{plugin} --ocaml_out=. %{proto})))
+
+(alias
+ (name runtest)
+ (deps
+  (:test test.exe)
+  test.proto)
+ (action
+  (run %{test} --color=always)))

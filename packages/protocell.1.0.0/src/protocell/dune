@@ -1,0 +1,4 @@
+(executable
+ (name protocell)
+ (public_name protocell)
+ (libraries base generator protoc_interface stdio shared))

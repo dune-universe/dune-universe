@@ -1,0 +1,29 @@
+#require "clangml";;
+
+let command_line_args =
+  [Clang.Command_line.include_directory Clang.includedir;
+   Clang.Command_line.language CXX]
+
+let translation_unit = Clang.parse_string ~command_line_args {|
+#include <string>
+
+struct C {
+  std::string s;              // \tcode{std::string} is the standard library class (Clause~\ref{strings})
+};
+
+int main() {
+  C a;
+  C b = a;
+  b = a;
+}
+|}
+
+let cursor = Clang.get_translation_unit_cursor translation_unit
+
+let _ =
+  Clang.ext_decl_context_visit_decls cursor begin fun (c : Clang.cxcursor) ->
+    let location = 
+      Clang.Ast.concrete_of_cxsourcelocation Presumed (Clang.get_cursor_location c) in
+    Format.eprintf "%s:%d@." location.filename location.line;
+    Continue
+  end

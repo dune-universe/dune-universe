@@ -1,0 +1,3 @@
+(library
+ (name generator)
+ (libraries base runtime shared))

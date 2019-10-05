@@ -1,0 +1,4 @@
+(executable
+  (name print_tree)
+  (flags -open Stdcompat)
+  (libraries stdcompat clangml cmdliner clangml.show clangml_tools_common))

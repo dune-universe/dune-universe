@@ -1,0 +1,6 @@
+(library
+ (name protocell_google)
+ (public_name protocell.google)
+ (libraries runtime)
+ (preprocess
+  (pps ppx_deriving.eq ppx_deriving.show)))

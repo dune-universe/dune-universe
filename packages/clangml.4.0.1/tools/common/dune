@@ -1,0 +1,3 @@
+(library
+  (name clangml_tools_common)
+  (libraries cmdliner clangml))

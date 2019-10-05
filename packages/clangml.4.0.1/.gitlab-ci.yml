@@ -1,0 +1,7 @@
+sonarqube:
+  script:
+    - docker build -t sonar-scanner -f Dockerfile.sonar .
+    - docker build -t sonar-scanner-clangml -f Dockerfile.sonar-clangml .
+    - docker run --rm -v $PWD:/clangml -v
+        /builds/sonarqube-conf:/home/ci/sonar-scanner/conf sonar-scanner-clangml
+        bash -c 'cp -r /clangml . && cd clangml && sonar-scanner'

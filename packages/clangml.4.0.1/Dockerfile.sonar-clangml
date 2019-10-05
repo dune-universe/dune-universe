@@ -1,0 +1,2 @@
+FROM sonar-scanner
+RUN sudo apt-get install --yes ocaml llvm-dev libclang-dev libc6-dev-i386

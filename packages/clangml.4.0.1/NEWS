@@ -1,0 +1,34 @@
+# clangml.4.0.0beta1: OCaml bindings for Clang API
+
+We are happy to announce the first public beta of the new clangml
+library. Clangml provides bindings for all versions of Clang, from 3.4
+to 8.0.0.
+
+In particular, Clangml allows OCaml program to use the Clang parser to
+parse C/C++ code and get an abstract syntax tree annotated with type
+information.
+
+clangml can be installed via opam. Since the library relies on external
+dependencies, we suggest to use the depext plugin to install it together
+with the packages needed for your system:
+
+  opam depext -i clangml
+
+This library is a complete rewritting of the previous clangml (clangml
+versions <4.0.0): the bindings now rely on automatically generated C
+stubs to libclang, with some extensions when libclang is incomplete.
+
+Contrary to old clangml versions, the versions of clangml from 4.0.0
+are independent from the version of the Clang library: any version of
+clangml from 4.0.0 can be built with any version of the Clang library
+in the supported interval.  Currently, all versions of Clang, from 3.4
+to 8.0.0, are supported.
+
+For more informations and documentation:
+https://tmartine.gitlabpages.inria.fr/clangml/
+
+
+
+
+
+

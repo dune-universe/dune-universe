@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+import "test_import.proto";
+import "google/protobuf/timestamp.proto";
+
+enum EnumWithAlias {
+  option allow_alias = true;
+  A = 0;
+  B = 1;
+  C = 2;
+  D = 2;
+}
+
+message String {
+  string field = 1;
+}
+
+message Bytes {
+  bytes field = 1;
+}
+
+message Int32 {
+  int32 field = 1;
+}
+
+message Int64 {
+  int64 field = 1;
+}
+
+message Sint32 {
+  sint32 field = 1;
+}
+
+message Sint64 {
+  sint64 field = 1;
+}
+
+message Uint32 {
+  uint32 field = 1;
+}
+
+message Uint64 {
+  uint64 field = 1;
+}
+
+message Fixed32 {
+  fixed32 field = 1;
+}
+
+message Fixed64 {
+  fixed64 field = 1;
+}
+
+message Sfixed32 {
+  sfixed32 field = 1;
+}
+
+message Sfixed64 {
+  sfixed64 field = 1;
+}
+
+message Float {
+  float field = 1;
+}
+
+message Double {
+  double field = 1;
+}
+
+message Bool {
+  bool field = 1;
+}
+
+message TwoFields {
+  int32 int_field = 7;
+  string string_field = 42;
+}
+
+message WithNestedSubmessage {
+  Nested field = 1;
+
+  message Nested {
+    string field = 1;
+  }
+}
+
+message MutualReferences {
+  Nested1 field = 1;
+
+  message Nested1 {
+    Nested2 field1 = 1;
+  }
+
+  message Nested2 {
+    Nested1 field2 = 1;
+  }
+}
+
+message WithEnum {
+  enum TimeOfDay {
+    DAY = 0;
+    NIGHT = 1;
+  }
+  TimeOfDay field = 1;
+}
+
+message RepeatedString {
+  repeated string field = 1;
+}
+
+message RepeatedInt64Unpacked {
+  repeated int64 field = 1 [packed=false];
+}
+
+message RepeatedInt64Packed {
+  repeated int64 field = 1 [packed=true]; // this is the default in proto3
+}
+
+message WithOneOf {
+  oneof choice {
+    string apples = 1;
+    int32 oranges = 2;
+    WithEnum FruitIsOverrated = 7;
+  }
+  int32 bananas = 3;
+}
+
+message Empty {
+}
+
+message MultipleWireValues {
+  string field = 1;
+}
+
+message WithMap {
+  map<int64, string> values = 1;
+}
+
+message WithImportedMessage {
+  Imported imported = 987;
+}
+
+message WithTimestamp {
+  google.protobuf.Timestamp timestamp = 1;
+}

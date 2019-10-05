@@ -1,0 +1,3 @@
+(library
+ (name protoc_interface)
+ (libraries base protocell_google runtime shared))

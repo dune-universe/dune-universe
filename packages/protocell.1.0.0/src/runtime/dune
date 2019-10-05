@@ -1,0 +1,4 @@
+(library
+ (name runtime)
+ (public_name protocell.runtime)
+ (libraries base ocplib-endian))
