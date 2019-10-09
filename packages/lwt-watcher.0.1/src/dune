@@ -1,0 +1,5 @@
+(library
+ (name lwt_watcher)
+ (public_name lwt-watcher)
+ (libraries lwt)
+ (flags :standard))

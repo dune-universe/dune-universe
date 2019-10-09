@@ -1,0 +1,14 @@
+opam-version: "2.0"
+maintainer: "contact@tezos.com"
+authors: [ "Tezos devteam" ]
+homepage: "https://gitlab.com/nomadic-labs/lwt-watcher"
+bug-reports: "https://gitlab.com/nomadic-labs/lwt-watcher/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/lwt-watcher.git"
+license: "MIT"
+depends: [
+  "lwt"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+synopsis: "One-to-many broadcast in Lwt"
