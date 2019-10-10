@@ -1,0 +1,6 @@
+(library
+  (name gperftools)
+  (public_name gperftools)
+  (c_names gperftools_stubs)
+  (c_library_flags -lstdc++ -ltcmalloc)
+  (c_flags -g -x c++))
