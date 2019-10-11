@@ -1,0 +1,6 @@
+
+(executables
+  (names        linwrap)
+  (public_names linwrap)
+  (libraries batteries cpm dolog minicli parany)
+  (modules utls parmap_wrapper linwrap))

@@ -1,4 +1,0 @@
-(library
- (name capnp_rpc)
- (public_name capnp-rpc)
- (libraries astring fmt logs uint asetmap))
