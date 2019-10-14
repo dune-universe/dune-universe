@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(executables
- ((names (testldif testoo))
-  (libraries (ldif))))
-
-(alias
- ((name runtest)
-  (deps (testldif.exe testoo.exe))))

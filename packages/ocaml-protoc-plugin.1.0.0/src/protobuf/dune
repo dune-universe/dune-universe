@@ -1,0 +1,5 @@
+(library
+ (name protobuf)
+ (public_name ocaml-protoc-plugin.protobuf)
+ (synopsis "Serialization and deserialization of protobuf types")
+)

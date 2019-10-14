@@ -1,0 +1,9 @@
+(ocamlyacc ldap_dnparser ldap_filterparser)
+(ocamllex ldap_schemalexer ldap_urllexer ldap_filterlexer ldap_dnlexer)
+
+(library
+  (name ldap)
+  (public_name ldap)
+  (wrapped false)
+  (modules_without_implementation ldap_urlparser)
+  (libraries str pcre ssl))
