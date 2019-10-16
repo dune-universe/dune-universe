@@ -1,0 +1,5 @@
+/_build/
+/clangml-transforms.install
+.merlin
+*~
+/clangml-transforms.opam

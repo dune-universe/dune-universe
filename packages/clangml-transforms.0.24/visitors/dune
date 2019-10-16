@@ -1,0 +1,7 @@
+(library
+  (name clangml_visitors)
+  (public_name clangml-transforms.visitors)
+  (preprocess (staged_pps override ppx_deriving visitors.ppx))
+; -warning 40: Overridden methods
+  (flags -open Stdcompat -w -7)
+  (libraries clangml visitors.runtime))

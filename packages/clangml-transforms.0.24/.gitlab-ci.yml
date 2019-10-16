@@ -1,0 +1,31 @@
+before_script:
+  - docker info
+
+stages:
+  - prepare
+  - build
+  - test
+  - deploy
+
+build_image:
+  stage: prepare
+  script:
+    - cp ~/.ssh/id_rsa .
+    - docker build -t clangml-transforms .
+
+build:
+  stage: build
+  script:
+    - docker build --no-cache -t clangml-transforms-build -f Dockerfile.build .
+
+prtp:
+  stage: test
+  script:
+    - docker run --rm clangml-transforms-build
+        bash -c 'make -C /home/opam/memcad/ prtp'
+
+bigrt:
+  stage: test
+  script:
+    - docker run --rm clangml-transforms-build
+        bash -c 'make -C /home/opam/memcad/ bigrt'
