@@ -1,0 +1,4 @@
+(library
+ (name resource_pooling)
+ (public_name resource-pooling)
+ (libraries lwt lwt_log))

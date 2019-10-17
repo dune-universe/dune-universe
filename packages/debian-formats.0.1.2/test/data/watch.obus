@@ -1,0 +1,6 @@
+version=3
+opts="uversionmangle=s/rc/~rc/" \
+http://forge.ocamlcore.org/frs/?group_id=26 .*/obus-(.*)\.tar\.gz
+# Upstream darcs repository:
+#   http://darcs.ocamlcore.org/repos/obus
+#   http://darcs.ocamlcore.org/cgi-bin/darcsweb.cgi?r=obus

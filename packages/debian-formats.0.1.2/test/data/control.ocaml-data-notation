@@ -1,0 +1,41 @@
+Source: ocaml-data-notation
+Section: ocaml
+Priority: optional
+Maintainer: Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>
+Uploaders: 
+  Sylvain Le Gall <gildor@debian.org>
+Build-Depends:
+  ocaml-nox (>= 3.11.1-3~),
+  ocaml-findlib,
+  ocaml-base-nox,
+  libtype-conv-camlp4-dev,
+  libounit-ocaml-dev,
+  libfileutils-ocaml-dev (>= 0.4.0),
+  dh-ocaml (>= 0.9~),
+  debhelper (>= 7.0.50~),
+  camlp4
+Standards-Version: 3.9.1
+Homepage: http://forge.ocamlcore.org/projects/odn
+Vcs-Git: git://git.debian.org/git/pkg-ocaml-maint/packages/ocaml-data-notation.git
+Vcs-Browser: http://git.debian.org/?p=pkg-ocaml-maint/packages/ocaml-data-notation.git
+
+Package: libodn-ocaml-dev
+Architecture: any
+Depends: ${ocaml:Depends}, ${misc:Depends}
+Provides: ${ocaml:Provides}
+Recommends: ocaml-findlib
+Description: Store data using OCaml notation
+ This library uses type-conv to dump OCaml data structure using OCaml data
+ notation. This kind of data dumping helps to write OCaml code generator, like
+ OASIS. 
+
+Package: libodn-ocaml
+Architecture: any
+Depends: ${ocaml:Depends}, ${misc:Depends}, ${shlibs:Depends}
+Provides: ${ocaml:Provides}
+Description: Store data using OCaml notation
+ This library uses type-conv to dump OCaml data structure using OCaml data
+ notation. This kind of data dumping helps to write OCaml code generator, like
+ OASIS. 
+ .
+ This package contains the shared runtime libraries.

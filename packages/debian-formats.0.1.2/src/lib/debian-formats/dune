@@ -1,0 +1,6 @@
+(library
+ (name DebianFormats)
+ (public_name debian-formats)
+ (wrapped false)
+ (private_modules DF822 DFUtils)
+ (libraries re extlib str))

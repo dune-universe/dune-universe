@@ -1,0 +1,5 @@
+(lang dune 1.11)
+(name markdown)
+(version v0.2.1)
+(explicit_js_mode)
+(using fmt 1.2)

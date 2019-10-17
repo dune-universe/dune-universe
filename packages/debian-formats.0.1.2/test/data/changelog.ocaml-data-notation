@@ -1,0 +1,17 @@
+ocaml-data-notation (0.0.3-1) UNRELEASED; urgency=low
+
+  * New upstream version
+
+ -- Sylvain Le Gall <gildor@debian.org>  Mon, 22 Nov 2010 16:06:37 +0100
+
+ocaml-data-notation (0.0.2-2) unstable; urgency=low
+
+  * Fix double installation of *.cma files
+
+ -- Sylvain Le Gall <gildor@debian.org>  Fri, 19 Nov 2010 12:53:42 +0100
+
+ocaml-data-notation (0.0.2-1) unstable; urgency=low
+
+  * Initial release. (Closes: #603828)
+
+ -- Sylvain Le Gall <gildor@debian.org>  Fri, 19 Nov 2010 12:37:42 +0100

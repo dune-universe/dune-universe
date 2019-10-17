@@ -1,0 +1,4 @@
+(executable
+ (name interactive)
+ (libraries printbox batteries lwt resource-pooling)
+ (preprocess (pps lwt_ppx)))

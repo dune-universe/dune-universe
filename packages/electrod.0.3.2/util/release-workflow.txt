@@ -1,0 +1,27 @@
+git flow release start VERSION
+
+# IMMEDIATELY prepare changelog
+echo "### $(git rev-parse --abbrev-ref HEAD | cut -f 2- -d '/') ($(date -Idate))" | cat - CHANGES.md > temp && mv temp CHANGES.md
+
+echo "Now update CHANGES.md out of this (and then test \
+		 a little bit until you're happy)"
+
+# if needed, change, clean & update headers
+bash util/headache/headache.sh
+
+# generate opam with dune
+dune build electrod.opam
+
+git commit -am "release v$(git rev-parse --abbrev-ref HEAD | cut -f 2- -d '/')"
+
+git flow finish
+
+git push origin
+
+# dune-release needs at least 4.06 so opam switch accordingly
+#not necessary with git flow:
+#dune-release tag
+
+git push --tags 
+
+dune-release bistro -l path/to/opam-repository

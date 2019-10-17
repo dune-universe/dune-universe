@@ -1,0 +1,5 @@
+(test
+ (name test)
+ (deps
+  (glob_files data/*))
+ (libraries debian-formats ounit2))

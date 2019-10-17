@@ -1,0 +1,56 @@
+OASISFormat:  0.4
+OCamlVersion: >= 3.12.1
+Name:         ocaml-debian-formats
+Version:      0.1.2
+Synopsis:     Parse debian files
+Authors:      Sylvain Le Gall
+License:      LGPL-2.1 with OCaml linking exception
+Plugins:      DevFiles (0.4), META (0.4), StdFiles (0.4)
+BuildTools:   ocamlbuild
+
+Library "debian-formats"
+  Path:            src
+  BuildTools:      ocamlbuild
+  Modules:         DebianFormats, DFChangelog, DFWatch
+  InternalModules: DF822_lexer,
+                   DF822_parser,
+                   DF822,
+                   DFUtils
+  BuildDepends: extlib, re, str
+
+Document "api-debian-formats"
+  Title:                API reference for DebianFormats
+  Type:                 OCamlbuild (0.4)
+  InstallDir:           $htmldir/debian-formats
+  BuildTools+:          ocamldoc
+  XOCamlbuildPath:      src/
+  XOCamlbuildLibraries: debian-formats
+
+Executable test
+  Path:         test
+  MainIs:       test.ml
+  Install:      false
+  BuildDepends: debian-formats, oUnit (>= 2)
+  Build$:       flag(tests)
+
+Test main
+  Command: $test
+  TestTools: test
+  WorkingDirectory: test/data
+
+Flag "examples"
+  Description: Build and test examples
+  Default:    false
+
+Executable "proto_oasis"
+  Path:           examples/proto_oasis
+  MainIs:         proto_oasis.ml
+  BuildDepends:   debian-formats, curl, pcre, fileutils, archive.lwt, oasis, bz2, lwt.preemptive, threads
+  Install:        false
+  Build$:         flag(examples)
+  CompiledObject: best
+
+Test "proto_oasis"
+  Command:    $proto_oasis
+  TestTools:  proto_oasis
+  Run:        false
