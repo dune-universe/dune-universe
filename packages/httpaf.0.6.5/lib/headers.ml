@@ -43,24 +43,23 @@ let of_list t = of_rev_list (List.rev t)
 let to_rev_list t = t
 let to_list t = List.rev (to_rev_list t)
 
-exception Local
-
 module CI = struct
-  let lower c =
+  let[@inline always] lower c =
     if c >= 0x41 && c <= 0x5a then c + 32 else c
 
   let equal x y =
     let len = String.length x in
-    len = String.length y &&
-    match for i = 0 to len - 1 do
-      let c1 = Char.code (String.unsafe_get x i) in
-      let c2 = Char.code (String.unsafe_get y i) in
-      if c1 = c2
-      then ()
-      else if lower c1 <> lower c2 then raise Local
-    done with
-    | () -> true
-    | exception Local -> false
+    len = String.length y && (
+      let equal_so_far = ref true in
+      let i            = ref 0 in
+      while !equal_so_far && !i < len do
+        let c1 = Char.code (String.unsafe_get x !i) in
+        let c2 = Char.code (String.unsafe_get y !i) in
+        equal_so_far := lower c1 = lower c2;
+        incr i
+      done;
+      !equal_so_far
+    )
 end
 
 let rec mem t name =
@@ -85,28 +84,33 @@ let add_multi =
 let add_unless_exists t name value =
   if mem t name then t else (name,value)::t
 
+exception Local
+
 let replace t name value =
-  let rec loop t n nv seen =
+  let rec loop t needle nv seen =
     match t with
     | [] ->
       if not seen then raise Local else []
-    | (n',_ as nv')::t ->
-      if CI.equal n n'
-      then if seen
-        then loop t n nv true
-        else nv::loop t n nv true
-      else nv'::loop t n nv false
+    | (name,_ as nv')::t ->
+      if CI.equal needle name
+      then (
+        if seen
+        then loop t name nv true
+        else nv::loop t name nv true)
+      else nv'::loop t name nv seen
   in
   try loop t name (name,value) false
   with Local -> t
 
 let remove t name =
-  let rec loop s n seen =
+  let rec loop s needle seen =
     match s with
     | [] ->
       if not seen then raise Local else []
-    | (n',_ as nv')::s' ->
-      if CI.equal n n' then loop s' n true else nv'::(loop s' n false)
+    | (name,_ as nv')::s' ->
+      if CI.equal needle name
+      then loop s' needle true
+      else nv'::(loop s' needle seen)
   in
   try loop t name false
   with Local -> t

@@ -111,6 +111,47 @@ module IOVec = struct
     ; "shiftv raises ", `Quick, test_shiftv_raises ]
 end
 
+module Headers = struct
+  include Headers
+
+  let check msg ~expect actual = 
+    Alcotest.(check (list (pair string string))) msg expect (Headers.to_list actual)
+  ;;
+
+  let test_replace () =
+    check "replace trailing element"
+      ~expect:["c", "d"; "a", "d"]
+      (Headers.replace
+        (Headers.of_list ["c", "d"; "a", "b"]) 
+        "a"
+        "d");
+
+    check "remove multiple trailing elements"
+      ~expect:["c", "d"; "a", "d"]
+      (Headers.replace 
+        (Headers.of_list [ "c", "d"; "a", "b"; "a", "c"])
+        "a" 
+        "d");
+  ;;
+
+  let test_remove () =
+    check "remove leading element"
+      ~expect:["c", "d"]
+      (Headers.remove
+        (Headers.of_list ["a", "b"; "c", "d"])
+        "a");
+    check "remove trailing element"
+      ~expect:["c", "d"]
+      (Headers.remove
+        (Headers.of_list ["c", "d"; "a", "b"]) 
+        "a");
+  ;;
+
+  let tests =
+    [ "remove" , `Quick, test_remove
+    ; "replace", `Quick, test_replace ]
+end
+
 let maybe_serialize_body f body =
   match body with
   | None -> ()
@@ -176,16 +217,24 @@ let read_operation = Alcotest.of_pp Read_operation.pp_hum
 module Server_connection = struct
   open Server_connection
 
-  let read_string t str =
+  let feed_string t str =
     let len = String.length str in
     let input = Bigstringaf.of_string str ~off:0 ~len in
-    let c = read t input ~off:0 ~len in
-    Alcotest.(check int) "read consumes all input" len c;
+    read t input ~off:0 ~len
+
+  let read_string t str =
+    let c = feed_string t str in
+    Alcotest.(check int) "read consumes all input" (String.length str) c;
   ;;
 
   let read_request t r =
     let request_string = request_to_string r in
     read_string t request_string
+  ;;
+
+  let reader_ready t =
+    Alcotest.check read_operation "Reader is ready"
+      `Read (next_read_operation t);
   ;;
 
   let reader_yielded t =
@@ -206,14 +255,18 @@ module Server_connection = struct
     write_string ~msg t response_string
   ;;
 
+  let write_eof t =
+    report_write_result t `Closed;
+  ;;
+
   let writer_yielded t =
     Alcotest.check write_operation "Writer is in a yield state"
       `Yield (next_write_operation t);
   ;;
 
-  let writer_closed t =
+  let writer_closed ?(unread = 0) t =
     Alcotest.check write_operation "Writer is closed"
-      (`Close 0) (next_write_operation t);
+      (`Close unread) (next_write_operation t);
   ;;
 
   let connection_is_shutdown t =
@@ -408,6 +461,33 @@ module Server_connection = struct
     writer_yielded t;
   ;;
 
+  let test_empty_fixed_streaming_response () =
+    let request  = Request.create `GET "/" in
+    let response =
+      Response.create `OK
+        ~headers:(Headers.of_list ["Content-length", "0"])
+    in
+
+    let t = create (streaming_handler response []) in
+    read_request   t request;
+    write_response t response;
+    writer_yielded t;
+  ;;
+
+  let test_empty_chunked_streaming_response () =
+    let request  = Request.create `GET "/" in
+    let response =
+      Response.create `OK
+        ~headers:(Headers.of_list ["Transfer-encoding", "chunked"])
+    in
+
+    let t = create (streaming_handler response []) in
+    read_request   t request;
+    write_response t response
+      ~body:"0\r\n\r\n";
+    writer_yielded t;
+  ;;
+
   let test_multiple_get () =
     let t = create default_request_handler in
     read_request   t (Request.create `GET "/");
@@ -537,6 +617,70 @@ module Server_connection = struct
       `Read (next_read_operation t);
   ;;
 
+  let test_blocked_write_on_chunked_encoding () =
+    let request_handler reqd =
+      let response =
+        Response.create `OK
+          ~headers:(Headers.of_list [ "Transfer-encoding", "chunked" ])
+      in
+      let resp_body = Reqd.respond_with_streaming reqd response in
+      Body.write_string resp_body "gets partially written";
+      (* Response body never gets closed but for the purposes of the test, that's 
+       * OK. *)
+    in
+    let t = create ~error_handler request_handler in
+    writer_yielded t;
+    read_request t (Request.create `GET "/");
+    let first_write = "HTTP/1.1 200 OK\r\nTransfer-encoding: chunked\r\n\r\n16\r\ngets partially written\r\n" in
+    Alcotest.(check (option string)) "first write"
+      (Some first_write)
+      (next_write_operation t |> Write_operation.to_write_as_string);
+    report_write_result t (`Ok 16);
+    Alcotest.(check (option string)) "second write"
+      (Some (String.sub first_write 16 (String.length first_write - 16)))
+      (next_write_operation t |> Write_operation.to_write_as_string);
+  ;;
+
+  let test_unexpected_eof () =
+    let t = create default_request_handler in
+    read_request   t (Request.create `GET "/");
+    write_eof      t;
+    writer_closed  t ~unread:19;
+  ;;
+
+  let test_input_shrunk () =
+    let continue_response = ref (fun () -> ()) in
+    let error_handler ?request:_ _ = assert false in
+    let request_handler reqd =
+      Alcotest.(check (list (pair string string)))
+        "got expected headers"
+        [ "Host"           , "example.com"
+        ; "Connection"     , "close"
+        ; "Accept"         , "application/json, text/plain, */*"
+        ; "Accept-Language", "en-US,en;q=0.5" ]
+        (Headers.to_rev_list (Reqd.request reqd).headers);
+      Body.close_reader (Reqd.request_body reqd);
+      continue_response := (fun () ->
+        Reqd.respond_with_string reqd (Response.create `OK) "");
+    in
+    let t = create ~error_handler request_handler in
+    reader_ready t;
+    writer_yielded t;
+    yield_writer t (fun () ->
+      write_response t (Response.create `OK);
+    );
+    let len = feed_string t "GET /v1/b HTTP/1.1\r\nH" in
+    Alcotest.(check int) "partial read" 20 len;
+    read_string t "Host: example.com\r\n\
+Connection: close\r\n\
+Accept: application/json, text/plain, */*\r\n\
+Accept-Language: en-US,en;q=0.5\r\n\r\n";
+    writer_yielded t;
+    Alcotest.check read_operation "reader closed"
+      `Close (next_read_operation t);
+    !continue_response ();
+    writer_closed t;
+	;;
 
   let tests =
     [ "initial reader state"  , `Quick, test_initial_reader_state
@@ -546,11 +690,16 @@ module Server_connection = struct
     ; "asynchronous response" , `Quick, test_asynchronous_response
     ; "echo POST"             , `Quick, test_echo_post
     ; "streaming response"    , `Quick, test_streaming_response
+    ; "empty fixed streaming response", `Quick, test_empty_fixed_streaming_response
+    ; "empty chunked streaming response", `Quick, test_empty_chunked_streaming_response
     ; "synchronous error, synchronous handling", `Quick, test_synchronous_error
     ; "synchronous error, asynchronous handling", `Quick, test_synchronous_error_asynchronous_handling
     ; "asynchronous error, synchronous handling", `Quick, test_asynchronous_error
     ; "asynchronous error, asynchronous handling", `Quick, test_asynchronous_error_asynchronous_handling
     ; "chunked encoding", `Quick, test_chunked_encoding
+    ; "blocked write on chunked encoding", `Quick, test_blocked_write_on_chunked_encoding
+    ; "writer unexpected eof", `Quick, test_unexpected_eof
+    ; "input shrunk", `Quick, test_input_shrunk
     ]
 end
 
@@ -564,11 +713,14 @@ module Client_connection = struct
     let equal x y = x = y
   end
 
-  let read_string t str =
+  let feed_string t str =
     let len = String.length str in
     let input = Bigstringaf.of_string str ~off:0 ~len in
-    let c = read t input ~off:0 ~len in
-    Alcotest.(check int) "read consumes all input" len c;
+    read t input ~off:0 ~len
+
+  let read_string t str =
+    let c = feed_string t str in
+    Alcotest.(check int) "read consumes all input" (String.length str) c;
   ;;
 
   let read_response t r =
@@ -693,9 +845,34 @@ module Client_connection = struct
       !error_message
   ;;
 
+  let test_report_exn () =
+    let request' = Request.create `GET "/" in
+    let response = Response.create `OK in (* not actually writen to the channel *)
+
+    let error_message = ref None in
+    let body, t =
+      request
+        request'
+        ~response_handler:(default_response_handler response)
+        ~error_handler:(function
+          | `Exn (Failure msg) -> error_message := Some msg
+          | _ -> assert false)
+    in
+    Body.close_writer body;
+    write_request  t request';
+    writer_closed  t;
+    reader_ready t;
+    report_exn t (Failure "something went wrong");
+    connection_is_shutdown t;
+    Alcotest.(check (option string)) "something went wrong"
+      (Some "something went wrong")
+      !error_message
+  ;;
+
   let tests =
     [ "GET"         , `Quick, test_get
-    ; "Response EOF", `Quick, test_response_eof ]
+    ; "Response EOF", `Quick, test_response_eof 
+    ; "report_exn"  , `Quick, test_report_exn ]
 end
 
 let () =
@@ -703,6 +880,7 @@ let () =
     [ "version"          , Version.tests
     ; "method"           , Method.tests
     ; "iovec"            , IOVec.tests
-    ; "clien connection" , Client_connection.tests
+    ; "headers"          , Headers.tests
+    ; "client connection", Client_connection.tests
     ; "server connection", Server_connection.tests
     ]
