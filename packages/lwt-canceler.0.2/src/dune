@@ -1,0 +1,5 @@
+(library
+ (name lwt_canceler)
+ (public_name lwt-canceler)
+ (libraries lwt)
+ (flags :standard))

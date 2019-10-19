@@ -1,0 +1,16 @@
+opam-version: "2.0"
+maintainer: "contact@nomadic-labs.com"
+authors: [ "Nomadic Labs" ]
+homepage: "https://gitlab.com/nomadic-labs/lwt-canceler"
+bug-reports: "https://gitlab.com/nomadic-labs/lwt-canceler/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/lwt-canceler.git"
+license: "MIT"
+depends: [
+  "ocaml"
+  "dune" { >= "1.7" }
+  "lwt"  { >= "3.0.0" }
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+synopsis: "Cancellation synchronization object"
