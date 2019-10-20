@@ -418,18 +418,94 @@ let expireat t key dt =
   | Resp.Integer n -> return n
   | _ -> Deferred.return @@ Error `Unexpected
 
+let coerce_bulk_array xs =
+  xs
+  |> List.map ~f:(function
+         | Resp.Bulk key -> Ok key
+         | _ -> Error `Unexpected )
+  |> Result.all
+
 let keys t pattern =
   let open Deferred.Result.Let_syntax in
   match%bind request t ["KEYS"; pattern] with
-  | Resp.Array xs ->
-      List.map xs ~f:(function
-          | Resp.Bulk key -> Ok key
-          | _ -> Error `Unexpected )
-      |> Result.all
-      |> Deferred.return
+  | Resp.Array xs -> xs |> coerce_bulk_array |> Deferred.return
   | _ -> Deferred.return @@ Error `Unexpected
 
-let scan ?pattern ?count t =
+let sadd t ~key ?(members = []) member =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ("SADD" :: key :: member :: members) with
+  | Resp.Integer n -> return n
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let scard t key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SCARD"; key] with
+  | Resp.Integer n -> return n
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let generic_setop setop t ?(keys = []) key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t (setop :: key :: keys) with
+  | Resp.Array res -> res |> coerce_bulk_array |> Deferred.return
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let sdiff = generic_setop "SDIFF"
+
+let generic_setop_store setop t ~destination ?(keys = []) ~key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t (setop :: destination :: key :: keys) with
+  | Resp.Integer n -> return n
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let sdiffstore = generic_setop_store "SDIFFSTORE"
+
+let sinter = generic_setop "SINTER"
+
+let sinterstore = generic_setop_store "SINTERSTORE"
+
+let sismember t ~key member =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SISMEMBER"; key; member] with
+  | Resp.Integer 0 -> return false
+  | Resp.Integer 1 -> return true
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let smembers t key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SMEMBERS"; key] with
+  | Resp.Array res -> res |> coerce_bulk_array |> Deferred.return
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let smove t ~source ~destination member =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SISMEMBER"; source; destination; member] with
+  | Resp.Integer 0 -> return false
+  | Resp.Integer 1 -> return true
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let spop t ?(count = 1) key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SPOP"; key; string_of_int count] with
+  | Resp.Array res -> res |> coerce_bulk_array |> Deferred.return
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let srandmember t ?(count = 1) key =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ["SRANDMEMBER"; key; string_of_int count] with
+  | Resp.Array res -> res |> coerce_bulk_array |> Deferred.return
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let srem t ~key ?(members = []) member =
+  let open Deferred.Result.Let_syntax in
+  match%bind request t ("SREM" :: key :: member :: members) with
+  | Resp.Integer n -> return n
+  | _ -> Deferred.return @@ Error `Unexpected
+
+let sunion = generic_setop "SUNION"
+
+let sunionstore = generic_setop_store "SUNIONSTORE"
+
+let generic_scan t ?pattern ?count over =
   let pattern =
     match pattern with
     | Some pattern -> ["MATCH"; pattern]
@@ -442,7 +518,7 @@ let scan ?pattern ?count t =
   in
   Pipe.create_reader ~close_on_exception:false @@ fun writer ->
   Deferred.repeat_until_finished "0" @@ fun cursor ->
-  match%bind request t (["SCAN"; cursor] @ pattern @ count) with
+  match%bind request t (over @ [cursor] @ pattern @ count) with
   | Ok (Resp.Array [Resp.Bulk cursor; Resp.Array from]) -> (
       let from =
         from
@@ -456,6 +532,10 @@ let scan ?pattern ?count t =
       | "0" -> return @@ `Finished ()
       | cursor -> return @@ `Repeat cursor )
   | _ -> failwith "unexpected"
+
+let scan ?pattern ?count t = generic_scan t ?pattern ?count ["SCAN"]
+
+let sscan t ?pattern ?count key = generic_scan t ?pattern ?count ["SSCAN"; key]
 
 let move t key db =
   let open Deferred.Result.Let_syntax in

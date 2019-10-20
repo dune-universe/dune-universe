@@ -78,8 +78,8 @@ struct cod {
 };
 
 /* Cache for exceptions */
-static value *pcre_exc_Error         = NULL;  /* Exception [Error] */
-static value *pcre_exc_Backtrack     = NULL;  /* Exception [Backtrack] */
+static const value *pcre_exc_Error     = NULL;  /* Exception [Error] */
+static const value *pcre_exc_Backtrack = NULL;  /* Exception [Backtrack] */
 
 /* Cache for polymorphic variants */
 static value var_Start_only;   /* Variant [`Start_only] */
@@ -307,7 +307,8 @@ static struct custom_operations regexp_ops = {
   custom_hash_default,
   custom_serialize_default,
   custom_deserialize_default,
-  custom_compare_ext_default
+  custom_compare_ext_default,
+  custom_fixed_length_default
 };
 
 /* Makes compiled regular expression from compilation options, an optional
@@ -770,7 +771,8 @@ static struct custom_operations tables_ops = {
   custom_hash_default,
   custom_serialize_default,
   custom_deserialize_default,
-  custom_compare_ext_default
+  custom_compare_ext_default,
+  custom_fixed_length_default
 };
 
 /* Generates a new set of chartables for the current locale (see man

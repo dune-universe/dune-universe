@@ -132,8 +132,8 @@ static inline value make_some(value v)
 
 /* Cache for OCaml-values */
 static value v_empty_string = Val_unit;
-static value *v_exc_Oid = NULL;  /* Exception [Oid] */
-static value *v_null_param = NULL;
+static const value *v_exc_Oid = NULL;  /* Exception [Oid] */
+static const value *v_null_param = NULL;
 
 CAMLprim value PQocaml_init(value __unused v_unit)
 {
@@ -528,7 +528,8 @@ static struct custom_operations result_ops = {
   custom_hash_default,
   custom_serialize_default,
   custom_deserialize_default,
-  custom_compare_ext_default
+  custom_compare_ext_default,
+  custom_fixed_length_default
 };
 
 static inline value alloc_result(PGresult *res, np_callback *cb)

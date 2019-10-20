@@ -1,4 +1,4 @@
-version: "4.5.0"
+version: "4.5.1"
 opam-version: "2.0"
 maintainer: "Markus Mottl <markus.mottl@gmail.com>"
 authors: [
@@ -19,7 +19,7 @@ build: [
 
 depends: [
   "ocaml" {>= "4.05"}
-  "dune" {build & >= "1.4.0"}
+  "dune" {build & >= "1.7.0"}
   "base" {build}
   "stdio" {build}
   "base-bytes"

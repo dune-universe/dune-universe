@@ -154,7 +154,83 @@ val expireat : t -> string -> Time.t -> (int, [> common_error]) Deferred.Result.
 
 val keys : t -> string -> (string list, [> common_error]) Deferred.Result.t
 
+val sadd
+  :  t ->
+  key:string ->
+  ?members:string list ->
+  string ->
+  (int, [> common_error]) Deferred.Result.t
+
 val scan : ?pattern:string -> ?count:int -> t -> string Pipe.Reader.t
+
+val scard : t -> string -> (int, [> common_error]) Deferred.Result.t
+
+val sdiff
+  :  t ->
+  ?keys:string list ->
+  string ->
+  (string list, [> common_error]) Deferred.Result.t
+
+val sdiffstore
+  :  t ->
+  destination:string ->
+  ?keys:string list ->
+  key:string ->
+  (int, [> common_error]) Deferred.Result.t
+
+val sinter
+  :  t ->
+  ?keys:string list ->
+  string ->
+  (string list, [> common_error]) Deferred.Result.t
+
+val sinterstore
+  :  t ->
+  destination:string ->
+  ?keys:string list ->
+  key:string ->
+  (int, [> common_error]) Deferred.Result.t
+
+val sismember : t -> key:string -> string -> (bool, [> common_error]) Deferred.Result.t
+
+val smembers : t -> string -> (string list, [> common_error]) Deferred.Result.t
+
+val smove
+  :  t ->
+  source:string ->
+  destination:string ->
+  string ->
+  (bool, [> common_error]) Deferred.Result.t
+
+val spop : t -> ?count:int -> string -> (string list, [> common_error]) Deferred.Result.t
+
+val srandmember
+  :  t ->
+  ?count:int ->
+  string ->
+  (string list, [> common_error]) Deferred.Result.t
+
+val srem
+  :  t ->
+  key:string ->
+  ?members:string list ->
+  string ->
+  (int, [> common_error]) Deferred.Result.t
+
+val sunion
+  :  t ->
+  ?keys:string list ->
+  string ->
+  (string list, [> common_error]) Deferred.Result.t
+
+val sunionstore
+  :  t ->
+  destination:string ->
+  ?keys:string list ->
+  key:string ->
+  (int, [> common_error]) Deferred.Result.t
+
+val sscan : t -> ?pattern:string -> ?count:int -> string -> string Pipe.Reader.t
 
 val move : t -> string -> int -> (bool, [> common_error]) Deferred.Result.t
 

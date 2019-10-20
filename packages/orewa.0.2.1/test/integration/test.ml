@@ -502,6 +502,232 @@ let test_keys () =
   Alcotest.(check (result (list string) err)) "Returns no keys" (Ok []) res;
   return ()
 
+let test_sadd () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let zero = "0" in
+  let dup = "dup" in
+  let%bind res = Orewa.sadd conn ~key zero in
+  Alcotest.(check (result int err)) "Inserts single value" (Ok 1) res;
+  let%bind res = Orewa.sadd conn ~key "a" ~members:["b"; "c"] in
+  Alcotest.(check (result int err)) "Inserts multiple values" (Ok 3) res;
+  let%bind res = Orewa.sadd conn ~key zero in
+  Alcotest.(check (result int err)) "Skips single duplicate value" (Ok 0) res;
+  let%bind res = Orewa.sadd conn ~key dup ~members:[zero; dup] in
+  Alcotest.(check (result int err)) "Skips multiple duplicate value" (Ok 1) res;
+  return ()
+
+let test_scard () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let dup = "dup" in
+  let%bind res = Orewa.scard conn key in
+  Alcotest.(check (result int err)) "Nonexistant key is empty" (Ok 0) res;
+  let%bind _ = Orewa.sadd conn ~key dup in
+  let%bind res = Orewa.scard conn key in
+  Alcotest.(check (result int err)) "Existent set has one member" (Ok 1) res;
+  let%bind _ = Orewa.sadd conn ~key "a" ~members:["b"; "c"] in
+  let%bind res = Orewa.scard conn key in
+  Alcotest.(check (result int err)) "New set has even more members" (Ok 4) res;
+  return ()
+
+let test_sdiff () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sdiff conn key1 ~keys:[key2] in
+  Alcotest.(check (result unordered_string_list err))
+    "Correct differing set"
+    (Ok ["a"; "b"])
+    res;
+  return ()
+
+let test_sdiffstore () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let destination = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sdiffstore conn ~destination ~key:key1 ~keys:[key2] in
+  Alcotest.(check (result int err)) "New set the right amount of members" (Ok 2) res;
+  return ()
+
+let test_sinter () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sinter conn key1 ~keys:[key2] in
+  Alcotest.(check (result unordered_string_list err))
+    "Correct differing set"
+    (Ok ["c"])
+    res;
+  return ()
+
+let test_sinterstore () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let destination = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sinterstore conn ~destination ~key:key1 ~keys:[key2] in
+  Alcotest.(check (result int err))
+    "The right amount of members was calculated"
+    (Ok 1)
+    res;
+  let%bind res = Orewa.scard conn destination in
+  Alcotest.(check (result int err)) "The right members are in the new set" (Ok 1) res;
+  return ()
+
+let test_sismember () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let member = "aaa" in
+  let not_member = "bbb" in
+  let%bind res = Orewa.sismember conn ~key member in
+  Alcotest.(check (result bool err)) "Not member in inexistent set" (Ok false) res;
+  let%bind _ = Orewa.sadd conn ~key member in
+  let%bind res = Orewa.sismember conn ~key member in
+  Alcotest.(check (result bool err)) "Member in set" (Ok true) res;
+  let%bind res = Orewa.sismember conn ~key not_member in
+  Alcotest.(check (result bool err)) "Not member in set" (Ok false) res;
+  return ()
+
+let test_smembers () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let member = "aaa" in
+  let%bind res = Orewa.smembers conn key in
+  Alcotest.(check (result (list string) err)) "Not member in inexistent set" (Ok []) res;
+  let%bind _ = Orewa.sadd conn ~key member in
+  let%bind res = Orewa.smembers conn key in
+  Alcotest.(check (result (list string) err)) "Members in existent set" (Ok [member]) res;
+  return ()
+
+let test_smove () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let source = random_key () in
+  let destination = random_key () in
+  let member = "aaa" in
+  let%bind res = Orewa.smove conn ~source ~destination member in
+  Alcotest.(check (result bool err))
+    "Moving from a set where not member is noop"
+    (Ok false)
+    res;
+  let%bind _ = Orewa.sadd conn ~key:source member in
+  let%bind res = Orewa.smove conn ~source ~destination member in
+  Alcotest.(check (result bool err)) "Moving from a set works" (Ok false) res;
+  let%bind res = Orewa.sismember conn ~key:source member in
+  Alcotest.(check (result bool err)) "Correctly removed from source" (Ok false) res;
+  let%bind res = Orewa.sismember conn ~key:destination member in
+  Alcotest.(check (result bool err)) "Correctly arrived in destination" (Ok true) res;
+  return ()
+
+let test_spop () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let%bind res = Orewa.spop conn key in
+  Alcotest.(check (result (list string) err)) "Popping from nonexistent set" (Ok []) res;
+  let%bind _ = Orewa.sadd conn ~key "a" ~members:["b"; "c"] in
+  let%bind res = Orewa.spop conn key in
+  let length = Result.map ~f:List.length in
+  Alcotest.(check (result int err)) "Popping one from existing set" (Ok 1) (length res);
+  let count = 2 in
+  let%bind res = Orewa.spop conn ~count key in
+  Alcotest.(check (result int err))
+    "Popping rest from existing set"
+    (Ok count)
+    (length res);
+  let%bind res = Orewa.scard conn key in
+  Alcotest.(check (result int err)) "Set is empty now" (Ok 0) res;
+  return ()
+
+let test_srandmember () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let%bind res = Orewa.srandmember conn key in
+  Alcotest.(check (result (list string) err))
+    "Random element from nonexistent set"
+    (Ok [])
+    res;
+  let%bind _ = Orewa.sadd conn ~key "a" ~members:["b"; "c"] in
+  let%bind res = Orewa.srandmember conn key in
+  let length = Result.map ~f:List.length in
+  Alcotest.(check (result int err))
+    "One random member from existing set"
+    (Ok 1)
+    (length res);
+  let count = 4 in
+  let%bind res = Orewa.srandmember conn ~count key in
+  Alcotest.(check (result int err))
+    "Getting all elements from existing set"
+    (Ok 3)
+    (length res);
+  return ()
+
+let test_srem () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  let members = ["b"; "c"; "d"] in
+  let%bind _ = Orewa.sadd conn ~key "a" ~members in
+  let%bind res = Orewa.srem conn ~key "a" in
+  Alcotest.(check (result int err)) "Remove single member" (Ok 1) res;
+  let%bind res = Orewa.srem conn ~key "a" ~members in
+  Alcotest.(check (result int err)) "Remove remaining members" (Ok 3) res;
+  let%bind res = Orewa.scard conn key in
+  Alcotest.(check (result int err)) "Set is empty now" (Ok 0) res;
+  return ()
+
+let test_sunion () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sunion conn key1 ~keys:[key2] in
+  Alcotest.(check (result unordered_string_list err))
+    "Correct differing set"
+    (Ok ["a"; "b"; "c"; "d"; "e"])
+    res;
+  return ()
+
+let test_sunionstore () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key1 = random_key () in
+  let key2 = random_key () in
+  let destination = random_key () in
+  let%bind _ = Orewa.sadd conn ~key:key1 "a" ~members:["b"; "c"] in
+  let%bind _ = Orewa.sadd conn ~key:key2 "c" ~members:["d"; "e"] in
+  let%bind res = Orewa.sunionstore conn ~destination ~key:key1 ~keys:[key2] in
+  Alcotest.(check (result int err))
+    "The right amount of members was calculated"
+    (Ok 5)
+    res;
+  let%bind res = Orewa.scard conn destination in
+  Alcotest.(check (result int err)) "The right members are in the new set" (Ok 5) res;
+  return ()
+
+let test_sscan () =
+  Orewa.with_connection ~host @@ fun conn ->
+  let key = random_key () in
+  print_endline key;
+  let count = 20 in
+  let members =
+    List.init count ~f:(fun i -> String.concat ~sep:":" ["mem"; string_of_int i])
+  in
+  let%bind _ = Orewa.sadd conn ~key "dummy" ~members in
+  let pattern = "mem:*" in
+  let pipe = Orewa.sscan conn ~pattern ~count:4 key in
+  let%bind q = Pipe.read_all pipe in
+  let res = Queue.to_list q in
+  Alcotest.(check unordered_string_list) "Returns the right keys" members res;
+  return ()
+
 let test_scan () =
   Orewa.with_connection ~host @@ fun conn ->
   let prefix = random_key () in
@@ -514,7 +740,7 @@ let test_scan () =
         return key )
   in
   let pattern = prefix ^ "*" in
-  let pipe = Orewa.scan ~pattern ~count conn in
+  let pipe = Orewa.scan ~pattern ~count:4 conn in
   let%bind q = Pipe.read_all pipe in
   let res = Queue.to_list q in
   Alcotest.(check unordered_string_list) "Returns the right keys" expected_keys res;
@@ -791,6 +1017,20 @@ let tests =
       test_case "EXPIRE" `Slow test_expire;
       test_case "EXPIREAT" `Slow test_expireat;
       test_case "KEYS" `Slow test_keys;
+      test_case "SADD" `Slow test_sadd;
+      test_case "SCARD" `Slow test_scard;
+      test_case "SDIFF" `Slow test_sdiff;
+      test_case "SDIFFSTORE" `Slow test_sdiffstore;
+      test_case "SINTER" `Slow test_sinter;
+      test_case "SINTERSTORE" `Slow test_sinterstore;
+      test_case "SISMEMBER" `Slow test_sismember;
+      test_case "SMEMBERS" `Slow test_smembers;
+      test_case "SPOP" `Slow test_spop;
+      test_case "SRANDMEMBER" `Slow test_srandmember;
+      test_case "SREM" `Slow test_srem;
+      test_case "SUNION" `Slow test_sunion;
+      test_case "SUNIONSTORE" `Slow test_sunionstore;
+      test_case "SSCAN" `Slow test_sscan;
       test_case "SCAN" `Slow test_scan;
       test_case "MOVE" `Slow test_move;
       test_case "PERSIST" `Slow test_persist;

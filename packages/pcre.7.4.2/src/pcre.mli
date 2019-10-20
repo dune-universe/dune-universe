@@ -22,7 +22,7 @@
 
 (** Perl Compatibility Regular Expressions for OCaml
 
-    {e 7.4.1 - {{:https://mmottl.github.io/pcre-ocaml}homepage}}
+    {e 7.4.2 - {{:https://mmottl.github.io/pcre-ocaml}homepage}}
 *)
 
 
