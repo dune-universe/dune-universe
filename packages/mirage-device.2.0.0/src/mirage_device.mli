@@ -16,21 +16,31 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** {1 Time-related devices}
+(** {2 Abstract devices}
 
-    This module define time-related devices for MirageOS and
-    sleep operations.
+    This module define the basic functions that a MirageOS device
+    should implement.
 
-    {e Release v1.3.0 } *)
+    {e Release v2.0.0 } *)
 
-(** Sleep operations. *)
+(** The type for device errors. *)
+type error = [
+  | `Unimplemented     (** operation not yet implemented in the code *)
+  | `Disconnected      (** the device has been previously disconnected *)
+]
+
+val pp_error: error Fmt.t
+(** [pp_error] is the pretty-printer for errors. *)
+
+(** Defines the functions to define what is a device state and how to
+    disconnect such a device. *)
 module type S = sig
 
-  type +'a io
-  (** The type for potentially blocking I/O operation *)
+  type t
+  (** The type representing the internal state of the device *)
 
-  val sleep_ns: int64 -> unit io
-  (** [sleep_ns n] Block the current thread for [n] nanoseconds, treating
-      the [n] unsigned.  *)
+  val disconnect: t -> unit Lwt.t
+  (** Disconnect from the device. While this might take some time to
+      complete, it can never result in an error. *)
 
 end

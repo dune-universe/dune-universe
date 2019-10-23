@@ -1,4 +1,4 @@
-version: "1.2.0"
+version: "2.0.0"
 opam-version: "2.0"
 maintainer:    "thomas@gazagnaire.org"
 homepage:      "https://github.com/mirage/mirage-random"
@@ -17,13 +17,12 @@ build: [
 ]
 
 depends: [
-  "dune" {build & >="1.1.0"}
-  "cstruct" {>= "1.9.0"}
-  "ocaml" {>= "4.04.2"}
+  "dune" {>="1.1.0"}
+  "cstruct" {>= "4.0.0"}
+  "ocaml" {>= "4.06.0"}
 ]
 
 synopsis: "Random-related devices for MirageOS"
 description: """
-mirage-random defines `Mirage_random.S` and `Mirage_random.C` the signature for
-random-related devices for MirageOS.
+mirage-random defines `Mirage_random.S` the signature for random-related devices for MirageOS.
 """

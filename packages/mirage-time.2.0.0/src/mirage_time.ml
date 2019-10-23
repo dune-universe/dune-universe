@@ -1,5 +1,7 @@
 (*
- * Copyright (c) 2017 Thomas Gazagnaire <thomas@gazagnaire.org>
+ * Copyright (c) 2011-2015 Anil Madhavapeddy <anil@recoil.org>
+ * Copyright (c) 2013-2015 Thomas Gazagnaire <thomas@gazagnaire.org>
+ * Copyright (c) 2013      Citrix Systems Inc
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -14,6 +16,16 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** Implementation of the [Mirage_time_lwt.S] signature for the unix
-    backend. *)
-include Mirage_time_lwt.S
+(** {1 Time-related devices}
+
+    This module define time-related devices for MirageOS and
+    sleep operations.
+
+    {e Release v2.0.0 } *)
+
+(** Sleep operations. *)
+module type S = sig
+  val sleep_ns: int64 -> unit Lwt.t
+  (** [sleep_ns n] Block the current thread for [n] nanoseconds, treating
+      the [n] unsigned.  *)
+end

@@ -1,3 +1,9 @@
+## v2.0.0 (2019-10-21)
+
+* remove mirage-time-lwt (#10 @hannesm)
+* specialise mirage-time to io being Lwt.t directly (#10 @hannesm)
+* raise OCaml lower bound to 4.06.0 (#10 @hannesm)
+
 ## v1.3.0 (2019-06-18)
 
 * Upgrade opam metadata to 2.0 format (#7 @hannesm)

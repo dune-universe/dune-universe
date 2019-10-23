@@ -1,4 +1,4 @@
-version: "1.2.0"
+version: "2.0.0"
 opam-version: "2.0"
 maintainer: "thomas@gazagnaire.org"
 authors: [
@@ -19,9 +19,10 @@ homepage: "https://github.com/mirage/mirage-device"
 doc: "https://mirage.github.io/mirage-device/"
 bug-reports: "https://github.com/mirage/mirage-device/issues"
 depends: [
-  "ocaml" {>= "4.04.2"}
-  "dune" {build & >= "1.0"}
+  "ocaml" {>= "4.06.0"}
+  "dune" {>= "1.0"}
   "fmt"
+  "lwt" {>= "4.4.0"}
 ]
 build: [
   ["dune" "subst"] {pinned}

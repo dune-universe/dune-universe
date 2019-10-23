@@ -16,34 +16,22 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** {2 Abstract devices}
+(** {1 Random-related devices}
 
-    This module define the basic functions that a MirageOS device
-    should implement.
+    This module define random-related devices for MirageOS.
 
-    {e Release v1.2.0 } *)
+    {e Release v2.0.0 } *)
 
-(** The type for device errors. *)
-type error = [
-  | `Unimplemented     (** operation not yet implemented in the code *)
-  | `Disconnected      (** the device has been previously disconnected *)
-]
-
-val pp_error: error Fmt.t
-(** [pp_error] is the pretty-printer for errors. *)
-
-(** Defines the functions to define what is a device state and how to
-    disconnect such a device. *)
+(** {1 Operations to generate random numbers} *)
 module type S = sig
 
-  type +'a io
-  (** The type for potentially blocking I/O operation *)
+  type g
+  (** The state of the generator. *)
 
-  type t
-  (** The type representing the internal state of the device *)
-
-  val disconnect: t -> unit io
-  (** Disconnect from the device. While this might take some time to
-      complete, it can never result in an error. *)
+  val generate: ?g:g -> int -> Cstruct.t
+  (** [generate ~g n] generates a random buffer of length [n] using [g]. *)
 
 end
+
+module type C = S
+[@@ocaml.deprecated "This module alias to Mirage_random.S will be removed from MirageOS 4.0, use Mirage_random.S directly."]

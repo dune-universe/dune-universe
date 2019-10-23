@@ -1,3 +1,10 @@
+v2.0.0 2019-10-21
+-----------------
+
+- specialise io to Lwt.t (@hannesm #5)
+- remove type io (@hannesm #5)
+- lower OCaml bound 4.06.0, test up to 4.09.0 (@hannesm #5)
+
 v1.2.0 2019-02-08
 -----------------
 

@@ -1,7 +1,5 @@
 (*
- * Copyright (c) 2011-2015 Anil Madhavapeddy <anil@recoil.org>
- * Copyright (c) 2013-2015 Thomas Gazagnaire <thomas@gazagnaire.org>
- * Copyright (c) 2013      Citrix Systems Inc
+ * Copyright (c) 2017 Thomas Gazagnaire <thomas@gazagnaire.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -16,8 +14,5 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-(** {1 Time-related MirageOS devices, using lwt}
-
-    {e Release v1.3.0 } *)
-
-module type S = Mirage_time.S with type 'a io = 'a Lwt.t
+(** Implementation of the [Mirage_time.S] signature for the unix backend. *)
+include Mirage_time.S
