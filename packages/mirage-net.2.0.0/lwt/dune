@@ -1,4 +1,0 @@
-(library
- (name mirage_net_lwt)
- (public_name mirage-net-lwt)
- (libraries mirage-net lwt cstruct macaddr))

@@ -1,0 +1,3 @@
+(library
+ (name        mirage_clock)
+ (public_name mirage-clock))
