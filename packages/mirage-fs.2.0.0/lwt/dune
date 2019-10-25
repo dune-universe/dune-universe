@@ -1,4 +1,0 @@
-(library
- (name        mirage_fs_lwt)
- (public_name mirage-fs-lwt)
- (libraries   mirage-kv-lwt mirage-fs lwt cstruct))

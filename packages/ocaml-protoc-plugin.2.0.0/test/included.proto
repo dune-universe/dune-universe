@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package include;
+
+message N {
+  enum E {
+    A = 0;
+    B = 1;
+    C = 2;
+  }
+  E e  = 1;
+}

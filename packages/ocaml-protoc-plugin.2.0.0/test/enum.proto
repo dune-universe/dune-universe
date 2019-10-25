@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package enum_test;
+
+
+message Message {
+  enum E {
+    A = 0;
+    B = 1;
+    C = 2;
+  }
+  E enum = 1;
+}
+
+
+enum E1 {
+  A = 0;
+  B = 1;
+  C = 2;
+}
+
+message Outside {
+  E1 enum = 1;
+}
+
+message Aliasing {
+  enum Enum {
+    option allow_alias = true;
+    X = 0;
+    Y = 1;
+    Z = 1;
+  }
+  Enum e = 1;
+}
+
+message Negative {
+  enum Enum {
+    A1 = 0;
+    A2 = -1;
+    A3 = -2;
+    A4 = -3;
+    A5 = -4;
+    A100 = -100;
+  }
+  Enum e = 1;
+}

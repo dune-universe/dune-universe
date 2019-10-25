@@ -1,5 +1,0 @@
-(library
- (name mirage_channel)
- (public_name mirage-channel)
- (libraries mirage-flow)
- (flags :standard -safe-string))

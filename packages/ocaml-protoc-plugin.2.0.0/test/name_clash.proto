@@ -1,0 +1,55 @@
+
+syntax = "proto3";
+
+package name_clash;
+
+message Protobuf {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message Ocaml_protoc_plugin {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message Base {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message Pervasives {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message Stdlib {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message StdLabels {
+  int64 Protobuf = 1;
+  int64 Ocaml_protoc_plugin = 2;
+}
+message Enum {
+  int64 enum = 1;
+}
+message Enum1 {
+  int64 Enum1 = 1;
+}
+message struct {
+  int64 struct = 1;
+}
+message end {
+  int64 End = 1;
+}
+message basic {
+  int64 Basic = 1;
+  int64 Int64 = 2;
+}
+message _Enum {
+  int64 i = 1;
+}
+message _enum {
+  int64 i = 1;
+}
+
+message equal {
+  int64 equal = 1;
+}

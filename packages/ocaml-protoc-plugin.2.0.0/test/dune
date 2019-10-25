@@ -1,0 +1,44 @@
+(library
+ (name test)
+ (libraries ocaml_protoc_plugin)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect ppx_deriving.show ppx_deriving.eq)))
+
+
+(rule
+ (targets
+   basic.ml primitive_types.ml int_types.ml repeated.ml enum.ml message.ml oneof.ml
+   map.ml package.ml include.ml included.ml included2.ml service.ml recursive.ml
+   protocol.ml name_clash.ml proto2.ml packed.ml)
+ (deps
+  (:plugin ../src/plugin/protoc_gen_ocaml.exe)
+  (:proto
+    basic.proto primitive_types.proto int_types.proto repeated.proto enum.proto message.proto oneof.proto
+    map.proto package.proto include.proto included.proto included2.proto service.proto recursive.proto
+    protocol.proto name_clash.proto proto2.proto packed.proto)
+ )
+ (action
+  (run protoc -I .
+       "--plugin=protoc-gen-ocaml=%{plugin}"
+       "--ocaml_out=singleton_record=true;annot=[@@deriving show { with_path = false }, eq]:." %{proto})))
+
+(rule
+ (targets int_types_native.ml)
+ (deps
+  (:plugin ../src/plugin/protoc_gen_ocaml.exe)
+  (:proto int_types_native.proto))
+ (action
+  (run protoc -I .
+       "--plugin=protoc-gen-ocaml=%{plugin}"
+       "--ocaml_out=singleton_record=true;use_int32;use_int64;annot=[@@deriving show { with_path = false }, eq]:." %{proto})))
+
+(rule
+ (targets singleton_record.ml oneof2.ml)
+ (deps
+  (:plugin ../src/plugin/protoc_gen_ocaml.exe)
+  (:proto singleton_record.proto oneof2.proto))
+ (action
+  (run protoc -I .
+       "--plugin=protoc-gen-ocaml=%{plugin}"
+       "--ocaml_out=singleton_record=false;annot=[@@deriving show { with_path = false }, eq]:." %{proto})))

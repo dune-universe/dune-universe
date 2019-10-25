@@ -1,4 +1,0 @@
-(library
- (name spec)
- (libraries protobuf)
-)

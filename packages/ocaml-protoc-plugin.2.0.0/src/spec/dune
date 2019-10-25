@@ -1,0 +1,4 @@
+(library
+ (name spec)
+ (libraries ocaml_protoc_plugin)
+)
