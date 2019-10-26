@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-protocols)
-(version v3.1.0)

@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-console)
-(version v2.4.3)

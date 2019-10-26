@@ -1,4 +1,0 @@
-(library
- (name mirage_stack)
- (public_name mirage-stack)
- (libraries mirage-protocols mirage-device fmt))

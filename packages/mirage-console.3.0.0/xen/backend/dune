@@ -1,0 +1,6 @@
+(library
+ (name mirage_console_xen_backend)
+ (public_name mirage-console-xen-backend)
+ (libraries lwt mirage-xen xenstore xenstore.client xen-evtchn
+   shared-memory-ring mirage-console mirage-console-xen-proto io-page-xen)
+ (flags :standard -safe-string))
