@@ -1,0 +1,26 @@
+opam-version: "2.0"
+
+name: "unidecode"
+
+version: "0.3.0"
+
+synopsis: "Convert unicode strings into its ASCII representation"
+
+authors: [ "Daniel de Rauglaudre" ]
+
+maintainer: "Julien Sagot <julien.sagot@geneanet.org>"
+
+license: "GNU GPL"
+
+homepage: "https://github.com/geneweb/unidecode"
+
+bug-reports: "https://github.com/geneweb/unidecode/issues"
+
+dev-repo: "git+https://github.com/geneweb/unidecode.git"
+
+depends: [
+  "dune" { build >= "1.10" }
+  "ocaml" { >= "4.05" }
+  ]
+
+build: [ [ "dune" "build" "-p" name "-j" jobs] ]

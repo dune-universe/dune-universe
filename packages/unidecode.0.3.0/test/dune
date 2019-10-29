@@ -1,0 +1,20 @@
+(library
+ (name test_data)
+ (modules test_data)
+)
+
+(executable
+  (name test)
+  (libraries test_data ounit2 unidecode)
+  (modules test)
+)
+
+(alias (name runtest) (action (run %{exe:test.exe}) ) )
+
+(executable
+  (name bench)
+  (libraries test_data benchmark unidecode ubase)
+  (modules bench)
+)
+
+(alias (name runbench) (action (run %{exe:bench.exe}) ) )
