@@ -1,0 +1,8 @@
+(library
+ (public_name alg_structs_qcheck)
+ (libraries alg_structs
+            qcheck))
+
+(documentation
+ (package alg_structs_qcheck)
+ (mld_files :standard))

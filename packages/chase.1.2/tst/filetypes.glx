@@ -1,0 +1,7 @@
+% File types
+
+[ bound = 50, limit = 500 ]
+
+file(F) => link(F) | regular(F).
+link(L) => target_of(L) = F & file(F).
+file(F).

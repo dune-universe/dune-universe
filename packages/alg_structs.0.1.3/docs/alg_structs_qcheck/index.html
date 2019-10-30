@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>index (alg_structs_qcheck.index)</title><link rel="stylesheet" href="../odoc.css"/><meta charset="utf-8"/><meta name="generator" content="odoc 0.1.3"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – alg_structs_qcheck</nav><h1 id="alg_structs_qcheck:-qcheck-tests-for-alg_structs"><a href="#alg_structs_qcheck:-qcheck-tests-for-alg_structs" class="anchor"></a><code>Alg_structs_qcheck</code>: qCheck tests for <code>Alg_structs</code></h1><nav class="toc"><ul><li><a href="#api">API</a></li><li><a href="#summary">Summary</a></li><li><a href="#examples">Examples</a></li></ul></nav></header><h2 id="api"><a href="#api" class="anchor"></a>API</h2><p>See the <a href="Alg_structs_qcheck/index.html"><span>API reference</span></a>.</p><h2 id="summary"><a href="#summary" class="anchor"></a>Summary</h2><p>Support for generating <a href="https://github.com/c-cube/qcheck">QCheck</a> tests for the structures supplied by <a href="../alg_structs/Alg_structs/index.html"><code>Alg_structs</code></a>.</p><p>Each of the modules for supported structures in the <a href="Alg_structs_qcheck/index.html"><span>API reference</span></a> provides three things:</p><ol><li>A signature <code>S</code> that specifies an interface for a module that can be used to generate a suite of QCheck tests to check for violations of the structures laws.</li><li>A function <code>test</code> that takes a module satisfying <code>S</code> and produces a set of tests to check for the laws.</li><li>A function <code>tests</code> that takes a list of modules satisfying <code>S</code> and produces a list of tests, as per <code>test</code>, for each implementation supplied.</li></ol><h2 id="examples"><a href="#examples" class="anchor"></a>Examples</h2><p>Here is an example of how to use this library to generat tests for various implementations of <code>Functor</code>:</p><pre><code class="ml">open QCheck
+open Alg_structs
+
+(* A convenience wrapper for QCheck and Alcotest *)
+let suite name tests =
+let tests = List.map QCheck_alcotest.to_alcotest tests in
+(name, tests)
+
+let functor_laws =
+let open Alg_structs_qcheck.Functor in
+suite &quot;Functor Laws&quot; @@ tests
+    [
+        (module struct
+            include Functor.Option
+            let name = &quot;Functor.Option&quot;
+            let arbitrary = option
+        end);
+
+        (module struct
+            include Functor.List
+            let name = &quot;Functor.List&quot;
+            let arbitrary = list
+        end);
+
+        (module struct
+            include Functor.Array
+            let name = &quot;Functor.Array&quot;
+            let arbitrary = array
+        end);
+    ]
+
+(* Runs the tests *)
+let () = Alcotest.run &quot;alg&quot; [ functor_laws ]</code></pre></div></body></html>

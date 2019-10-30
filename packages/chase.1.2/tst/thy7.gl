@@ -1,0 +1,5 @@
+% Weak Acyclicity
+
+r(X, Y).
+r(X, W) => q(X, Y).
+q(U,V) => r(U, Z).

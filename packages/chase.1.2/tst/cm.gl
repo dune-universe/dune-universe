@@ -1,0 +1,6 @@
+% Conference Management
+
+author(X) & paper(Y) & assigned(X, Y).
+author(X) & paper(Y) => read_score(X, Y) | conflict(X, Y).
+assigned(X, Y) & author(X) & paper(Y) => read_score(X, Y).
+assigned(X, Y) & conflict(X, Y) => false.

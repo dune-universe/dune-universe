@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>index (alg_structs.index)</title><link rel="stylesheet" href="../odoc.css"/><meta charset="utf-8"/><meta name="generator" content="odoc 0.1.3"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – alg_structs</nav><h1 id="alg_structs:-algebraic-structures-in-ocaml-structs"><a href="#alg_structs:-algebraic-structures-in-ocaml-structs" class="anchor"></a><code>alg_structs</code>: Algebraic Structures in OCaml Structs</h1><nav class="toc"><ul><li><a href="#api-reference">Api Reference</a></li><li><a href="#summary">Summary</a></li><li><a href="#conventions">Conventions</a><ul><li><a href="#a-structure's-signature-is-named-s">A structure's signature is named <code>S</code></a></li><li><a href="#a-structure-can-be-built-from-its-seed">A structure can be built from its <code>Seed</code></a></li><li><a href="#a-structure-should-obey-its-laws">A structure should obey its <code>Law</code>s</a></li></ul></li><li><a href="#some-examples">Some Examples</a><ul><li><a href="#applicative"><code>Applicative</code></a><ul><li><a href="#applying-to-lists">applying to lists</a></li><li><a href="#for-binding-operators">for binding operators</a><ul><li><a href="#on-options">on options</a></li><li><a href="#on-lists">on lists</a></li></ul></li></ul></li><li><a href="#foldable"><code>Foldable</code></a><ul><li><a href="#implementing-a-tree">implementing a tree</a></li><li><a href="#using-the-functions">using the functions</a></li></ul></li></ul></li></ul></nav></header><h2 id="api-reference"><a href="#api-reference" class="anchor"></a>Api Reference</h2><p>See the <a href="Alg_structs/index.html"><span>Api Reference</span></a>.</p><h2 id="summary"><a href="#summary" class="anchor"></a>Summary</h2><p>An library specifying algebraic structures and category-theoretic idioms useful in the design and implementation of software.</p><p>It aims to provide useful modules that are (correctly) based on algebraic and category theoretic structures rather than mathematically precise representations.</p><p>Currently, this library should be viewed as an experiment to determine whether easy access to such mechanisms can be used to any advantage in OCaml programs.</p><p>The library is modeled after a fragment of Haskell’s rich ecosystem of algebraic structures implemented via typeclasses. However, liberties have been taken to adapt the implementations to be more amenable to idiomatic OCaml where it seemed appropriate.</p><h2 id="conventions"><a href="#conventions" class="anchor"></a>Conventions</h2><h3 id="a-structure's-signature-is-named-s"><a href="#a-structure's-signature-is-named-s" class="anchor"></a>A structure's signature is named <code>S</code></h3><p>Each <span class="xref-unresolved" title="unresolved reference to &quot;structures&quot;"><span>structure</span></span> includes a signature <code>S</code> which gives its specification. <code>S</code> specifies the core types and operations of the structure as well any additional functions derived from those core aspects.</p><p>Note that <code>S</code> includes extensions which are derived from the properties of the structure, and is not a mathematically precise representation of the underlying structure</p><h3 id="a-structure-can-be-built-from-its-seed"><a href="#a-structure-can-be-built-from-its-seed" class="anchor"></a>A structure can be built from its <code>Seed</code></h3><p>Most of the structures can be built up from a <code>Seed</code>. Where applicable, a structure's <code>Seed</code> specifies the essential types and operators needed to elaborate out the extended structure.</p><p>Users are free to implement their own fully customized versions of a structure, or to build one from a <code>Seed</code> and then override whichever functions they want. See each structure for relevant examples.</p><h3 id="a-structure-should-obey-its-laws"><a href="#a-structure-should-obey-its-laws" class="anchor"></a>A structure should obey its <code>Law</code>s</h3><p>Every structure includes a parameterized module called <code>Law</code>. The laws are expressed as predicates that should be true for any arguments of the specified type. The <code>Law</code> serves both as documentation of those necessary properties of a structure that cannot be encoded in the type system and as a tool for checking that your own implementations are lawfull.</p><p>If you implement a structure satisfying some spec, you should ensure it follows the laws. You can use the package <code>alg_structs_qcheck</code> to help generate property based tests for this purpose.</p><h2 id="some-examples"><a href="#some-examples" class="anchor"></a>Some Examples</h2><h3 id="applicative"><a href="#applicative" class="anchor"></a><code>Applicative</code></h3><p>See <a href="Alg_structs/Applicative/index.html"><span>Applicative</span></a>.</p><p>Assuming you have</p><pre><code class="ml">open Alg_structs</code></pre><h4 id="applying-to-lists"><a href="#applying-to-lists" class="anchor"></a>applying to lists</h4><pre><code class="ml">Applicative.List.((^) &lt;@&gt; [&quot;a&quot;;&quot;b&quot;] &lt;*&gt; [&quot;1&quot;;&quot;2&quot;])
+(* - : string list = [&quot;a1&quot;; &quot;a2&quot;; &quot;b1&quot;; &quot;b2&quot;] *)</code></pre><h4 id="for-binding-operators"><a href="#for-binding-operators" class="anchor"></a>for binding operators</h4><h5 id="on-options"><a href="#on-options" class="anchor"></a>on options</h5><pre><code class="ml">let some_sum =
+  let open Option.Let_bind
+  in
+  let+ x = Some 1
+  and+ y = Some 2
+  and+ z = Some 3
+  in
+  x + y + z
+
+let () = assert (some_sum = Some 6)</code></pre><h5 id="on-lists"><a href="#on-lists" class="anchor"></a>on lists</h5><pre><code class="ml">let tupples_of_list_elements =
+  let open List.Let_bind in
+  let+ x = [1; 2]
+  and+ y = ['a'; 'b']
+  in
+  (x, y)
+
+let () = assert (tupples_of_list_elements =
+                 [(1, 'a'); (1, 'b');
+                  (2, 'a'); (2, 'b')])</code></pre><h3 id="foldable"><a href="#foldable" class="anchor"></a><code>Foldable</code></h3><p>See <a href="Alg_structs/Foldable/index.html"><span>Foldable</span></a>.</p><h4 id="implementing-a-tree"><a href="#implementing-a-tree" class="anchor"></a>implementing a tree</h4><pre><code class="ml">module Tree = struct
+  module T = struct
+    type 'a t = Nil | Leaf of 'a | Node of 'a t * 'a * 'a t
+
+    let rec fold_right ~f t ~init = match t with
+      | Nil -&gt; init
+      | Leaf x -&gt; f x init
+      | Node (l, x, r) -&gt; fold_right ~f ~init:(f x (fold_right ~f ~init r)) l
+  end
+  include T
+  include (Make (T) : S with type 'a t = 'a T.t)
+end</code></pre><h4 id="using-the-functions"><a href="#using-the-functions" class="anchor"></a>using the functions</h4><pre><code class="ml">let tree = Tree.T.Node(Leaf 1, 2, Node (Leaf 4, 3, Leaf 5))
+
+Tree.max tree ~compare:Int.compare;;
+(* - : int option = Some 5 *)
+
+Tree.min tree ~compare:Int.compare;;
+(* - : int option = Some 1 *)
+
+Tree.to_list tree;;
+(* - : int list = [1; 2; 4; 3; 5] *)
+
+Tree.length tree;;
+(* - : int = 5 *)</code></pre></div></body></html>

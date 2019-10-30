@@ -1,0 +1,9 @@
+% Testing function integrity axioms in the set of possible facts:
+p(X).
+q(Y).
+p(X), q(Y) => X = Y.
+p(X) => r(f(X)).
+q(X) => s(f(X)).
+r(X), s(X) => false.
+
+% This theory is unsatisfiable.

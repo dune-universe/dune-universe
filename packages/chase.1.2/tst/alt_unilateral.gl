@@ -1,0 +1,83 @@
+%% Point-of-view
+
+%% (defskeleton unilateral
+%%    (vars (n text) (k akey))
+%%    (defstrand init 2 (n n) (k k))
+%%    (non-orig (invk k)))
+
+     l_init(strd(z), idx$2) & p_init$k(strd(z)) = mesg(akey(k))
+   & non(mesg(akey(invk(k)))).
+
+%% Protocol
+
+%% (defprotocol unilateral basic
+%%   (defrole init
+%%     (vars (n text) (k akey))
+%%     (trace (send (enc n k)) (recv n))
+%%     (uniq-orig n))
+%%   (defrole resp
+%%     (vars (n text) (k akey))
+%%     (trace (recv (enc n k)) (send n))))
+
+% Sorts
+strd(X) = strd(Y) => X = Y.
+mesg(X) = mesg(Y) => X = Y.
+akey(X) = akey(Y) => X = Y.
+skey(X) = skey(Y) => X = Y.
+text(X) = text(Y) => X = Y.
+name(X) = name(Y) => X = Y.
+
+% Asymmetric keys
+invk(invk(X)) = Y => X = Y.
+invk(X) = X => false.
+invk(X) = invk(Y) => X = Y.
+
+% Names
+pubk(X) = pubk(Y) => X = Y.
+
+% Long term keys
+ltk(W, X) = ltk(Y, Z) => W = Y & X = Z.
+
+% Pairs
+cat(W, X) = cat(Y, Z) => W = Y & X = Z.
+
+% Asymmetric encryption
+aenc(W, X) = aenc(Y, Z) => W = Y & X = Z.
+
+% Symmetric encryption
+senc(W, X) = senc(Y, Z) => W = Y & X = Z.
+
+% Prec is strict
+prec(X, I, X, I) => false.
+prec(X, I, Y, J) & prec(Y, J, Z, K) => prec(X, I, Z, K).
+
+% Listener role
+l_(Z, idx$2) => l_(Z, idx$1) & prec(Z, idx$1, Z, idx$2).
+l_(Z, idx$1) => p_$x(Z) = mesg(X).
+
+% Index axioms
+true => lt(idx$1, idx$2).
+idx$1 = idx$2 => false.
+
+% init role length
+l_init(Z, H) & lt(I, H) => l_init(Z, I) & prec(Z, I, Z, H).
+
+% resp role length
+l_resp(Z, H) & lt(I, H) => l_resp(Z, I) & prec(Z, I, Z, H).
+
+% init role n parameter
+l_init(Z, idx$1) => p_init$n(Z) = mesg(text(X)).
+
+% init role k parameter
+l_init(Z, idx$1) => p_init$k(Z) = mesg(akey(X)).
+
+% resp role n parameter
+l_resp(Z, idx$1) => p_resp$n(Z) = mesg(text(X)).
+
+% resp role k parameter
+l_resp(Z, idx$1) => p_resp$k(Z) = mesg(akey(X)).
+
+% init role unique origination
+l_init(strd(Z), idx$1) & p_init$n(strd(Z)) = mesg(text(N)) => uniq_at(mesg(text(N)), strd(Z), idx$1).
+
+l_init(strd(Z), idx$2) & p_init$n(strd(Z)) = mesg(text(N)) & p_init$k(strd(Z)) = mesg(akey(K)) & non(mesg(akey(invk(K)))) & uniq_at(mesg(text(N)), strd(Z), idx$1) => l_resp(strd(Z_0), idx$2) & p_resp$n(strd(Z_0)) = mesg(text(N)) & p_resp$k(strd(Z_0)) = mesg(akey(K)) & prec(strd(Z), idx$1, strd(Z_0), idx$1) & prec(strd(Z_0), idx$2, strd(Z), idx$2).

@@ -1,0 +1,103 @@
+%% (defskeleton blanchet
+%%   (vars (a b akey) (s skey) (d text))
+%%   (defstrand resp 2 (a a) (b b) (s s) (d d))
+%%   (deflistener d)
+%%   (non-orig (invk a))
+%%   (comment "From the responders's perspective, is the secret leaked?"))
+
+     l_resp(strd(z), idx$2)
+   & p_resp$a(strd(z)) = mesg(akey(a))
+   & p_resp$d(strd(z)) = mesg(text(d))
+   & l_(strd(w), idx$2)
+   & p_$x(strd(w)) = mesg(text(d))
+   & non(mesg(akey(invk(a)))).
+
+%% (defprotocol blanchet basic
+%%   (defrole init
+%%     (vars (a b akey) (s skey) (d text))
+%%     (trace
+%%      (send (enc (enc s (invk a)) b))
+%%      (recv (enc d s)))
+%%     (uniq-orig s))
+%%   (defrole resp
+%%     (vars (a b akey) (s skey) (d text))
+%%     (trace
+%%      (recv (enc (enc s (invk a)) b))
+%%      (send (enc d s)))
+%%     (uniq-orig d))
+%%   (comment "Blanchet's protocol using unnamed asymmetric keys"))
+% Sorts
+strd(X) = strd(Y) => X = Y.
+mesg(X) = mesg(Y) => X = Y.
+akey(X) = akey(Y) => X = Y.
+skey(X) = skey(Y) => X = Y.
+text(X) = text(Y) => X = Y.
+name(X) = name(Y) => X = Y.
+
+% Asymmetric keys
+invk(invk(X)) = Y => X = Y.
+invk(X) = X => false.
+invk(X) = invk(Y) => X = Y.
+
+% Names
+pubk(X) = pubk(Y) => X = Y.
+
+% Long term keys
+ltk(W, X) = ltk(Y, Z) => W = Y & X = Z.
+
+% Pairs
+cat(W, X) = cat(Y, Z) => W = Y & X = Z.
+
+% Asymmetric encryption
+aenc(W, X) = aenc(Y, Z) => W = Y & X = Z.
+
+% Symmetric encryption
+senc(W, X) = senc(Y, Z) => W = Y & X = Z.
+
+% Prec is strict
+prec(X, I, X, I) => false.
+prec(X, I, Y, J) & prec(Y, J, Z, K) => prec(X, I, Z, K).
+
+% Listener role
+l_(Z, idx$2) => l_(Z, idx$1) & prec(Z, idx$1, Z, idx$2).
+l_(Z, idx$1) => p_$x(Z) = mesg(X).
+
+% Index axioms
+true => lt(idx$1, idx$2).
+idx$1 = idx$2 => false.
+
+% init role length
+l_init(Z, H) & lt(I, H) => l_init(Z, I) & prec(Z, I, Z, H).
+
+% resp role length
+l_resp(Z, H) & lt(I, H) => l_resp(Z, I) & prec(Z, I, Z, H).
+
+% init role d parameter
+l_init(Z, idx$2) => p_init$d(Z) = mesg(text(X)).
+
+% init role s parameter
+l_init(Z, idx$1) => p_init$s(Z) = mesg(skey(X)).
+
+% init role a parameter
+l_init(Z, idx$1) => p_init$a(Z) = mesg(akey(X)).
+
+% init role b parameter
+l_init(Z, idx$1) => p_init$b(Z) = mesg(akey(X)).
+
+% resp role d parameter
+l_resp(Z, idx$2) => p_resp$d(Z) = mesg(text(X)).
+
+% resp role s parameter
+l_resp(Z, idx$1) => p_resp$s(Z) = mesg(skey(X)).
+
+% resp role a parameter
+l_resp(Z, idx$1) => p_resp$a(Z) = mesg(akey(X)).
+
+% resp role b parameter
+l_resp(Z, idx$1) => p_resp$b(Z) = mesg(akey(X)).
+
+% init role unique origination
+l_init(strd(Z), idx$1) & p_init$s(strd(Z)) = mesg(skey(S)) => uniq_at(mesg(skey(S)), strd(Z), idx$1).
+
+% resp role unique origination
+l_resp(strd(Z), idx$2) & p_resp$d(strd(Z)) = mesg(text(D)) => uniq_at(mesg(text(D)), strd(Z), idx$2).

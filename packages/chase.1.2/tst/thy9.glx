@@ -1,0 +1,6 @@
+% Bounded Chase
+
+[ bound = 50, limit = 500 ]
+
+r(X, Y).
+r(X, Y) => r(Y, Z).

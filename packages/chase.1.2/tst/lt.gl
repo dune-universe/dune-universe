@@ -1,0 +1,4 @@
+lt(o, s(s(s(s(o))))).
+lt(X, s(Y)) => lt(Y, s(Y)).
+lt(s(X), s(Y)) => lt(X, Y).
+lt(X, Y) & lt(Y, Z) => lt(X, Z).

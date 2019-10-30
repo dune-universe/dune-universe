@@ -1,0 +1,20 @@
+(executables
+ (names chase chasetree)
+ (public_names chase chasetree)
+ (libraries getopt str))
+
+(ocamllex scanner quant_scanner)
+
+(ocamlyacc parser quant_parser)
+
+(install
+ (section bin)
+ (files runchase))
+
+(install
+ (section doc)
+ (files chase.xhtml))
+
+(install
+ (section share)
+ (files chase.mk))

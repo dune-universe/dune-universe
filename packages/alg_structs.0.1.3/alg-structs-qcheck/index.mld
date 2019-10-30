@@ -1,0 +1,62 @@
+{0 [Alg_structs_qcheck]: qCheck tests for [Alg_structs] }
+
+{1 API}
+
+See the {{!module:Alg_structs_qcheck} API reference}.
+
+{1 Summary}
+
+Support for generating {{:https://github.com/c-cube/qcheck} QCheck} tests
+for the structures supplied by {!module:Alg_structs}.
+
+Each of the modules for supported structures in the
+{{!module:Alg_structs_qcheck} API reference} provides three things:
+
++ A signature [S] that specifies an interface for a module that can be used
+    to generate a suite of QCheck tests to check for violations of the
+    structures laws.
++ A function [test] that takes a module satisfying [S] and produces a set of
+    tests to check for the laws.
++ A function [tests] that takes a list of modules satisfying [S] and produces
+    a list of tests, as per [test], for each implementation supplied.
+
+{1 Examples}
+
+Here is an example of how to use this library to generat tests for various
+implementations of [Functor]:
+
+{[
+open QCheck
+open Alg_structs
+
+(* A convenience wrapper for QCheck and Alcotest *)
+let suite name tests =
+let tests = List.map QCheck_alcotest.to_alcotest tests in
+(name, tests)
+
+let functor_laws =
+let open Alg_structs_qcheck.Functor in
+suite "Functor Laws" @@ tests
+    [
+        (module struct
+            include Functor.Option
+            let name = "Functor.Option"
+            let arbitrary = option
+        end);
+
+        (module struct
+            include Functor.List
+            let name = "Functor.List"
+            let arbitrary = list
+        end);
+
+        (module struct
+            include Functor.Array
+            let name = "Functor.Array"
+            let arbitrary = array
+        end);
+    ]
+
+(* Runs the tests *)
+let () = Alcotest.run "alg" [ functor_laws ]
+]}

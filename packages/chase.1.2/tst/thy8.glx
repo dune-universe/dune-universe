@@ -1,0 +1,7 @@
+% Non-Terminating Chase
+
+[ bound = 50, limit = 500 ]
+
+r(X, Y).
+r(X, W) => q(X, Y).
+q(U,V) => r(Z, U).

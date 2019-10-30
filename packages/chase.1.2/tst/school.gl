@@ -1,0 +1,8 @@
+% School example
+
+teacher(T) => person(T).
+class(C) => T = instructor_of(C).
+instructor_of(C) = T => teacher(T).
+class(math).
+class(english).
+instructor_of(math) = instructor_of(english).

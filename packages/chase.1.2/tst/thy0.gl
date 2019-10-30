@@ -1,0 +1,5 @@
+% instantiate functions with multiple values:
+p(a) & f(a) = b.
+
+% The Chase Algorithm assigns two distinct elements to the constant @'a@,
+% however, the SMT solver collapses these two elements.

@@ -1,0 +1,14 @@
+# Chase output files
+
+*.txt
+*.text
+*.xhtml
+
+# Dune build directory
+
+_build
+
+# Backup files
+
+*~
+*.bak

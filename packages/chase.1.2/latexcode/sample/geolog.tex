@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+
+\usepackage{listings}
+\lstloadlanguages{Prolog}
+\lstnewenvironment{code}%
+    {\lstset{}%
+      \csname lst@SetFirstLabel\endcsname}
+    {\csname lst@SaveFirstLabel\endcsname}
+    \lstset{
+      basicstyle=\small\ttfamily,
+      flexiblecolumns=false,
+      basewidth={0.5em,0.45em},
+      literate={=>}{{$\Rightarrow$}}1
+         {|}{{$\lor$}}1 {\&}{{$\land$}}1
+    }
+
+\title{Literate Programming in Geolog}
+\author{John D. Ramsdell}
+
+\begin{document}
+\maketitle
+
+This document demonstrates how to typeset Geolog theories as follows.
+\begin{quote}
+  \begin{code}
+author(X) & paper(Y) & assigned(X, Y).
+author(X) & paper(Y) => read_score(X, Y) | conflict(X, Y).
+assigned(X, Y) & author(X) & paper(Y) => read_score(X, Y).
+assigned(X, Y) & conflict(X, Y) => false.
+  \end{code}
+\end{quote}
+
+The preamble of the document loads the \texttt{listings} package as
+shown in Figure~\ref{fig:code}.
+
+\begin{figure}[h]
+  \begin{quote}
+    \begin{verbatim}
+\usepackage{listings}
+\lstloadlanguages{Prolog}
+\lstnewenvironment{code}%
+    {\lstset{}%
+      \csname lst@SetFirstLabel\endcsname}
+    {\csname lst@SaveFirstLabel\endcsname}
+    \lstset{
+      basicstyle=\small\ttfamily,
+      flexiblecolumns=false,
+      basewidth={0.5em,0.45em},
+      literate={=>}{{$\Rightarrow$}}1
+         {|}{{$\lor$}}1 {\&}{{$\land$}}1
+    }
+\end{verbatim}
+  \end{quote}
+  \caption{Geolog code listing in \LaTeX}\label{fig:code}
+\end{figure}
+
+Geolog formulas placed within a \texttt{code} environment are typeset as
+above.  The \texttt{latexcode} program extracts the Geolog theory from
+the {\LaTeX} source file for ingestion by the \texttt{chase} program.
+\end{document}

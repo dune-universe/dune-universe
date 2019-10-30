@@ -1,0 +1,6 @@
+load_printer "printers.cma"
+install_printer Printers.pform
+install_printer Printers.pid
+install_printer Printers.pfact
+install_printer Printers.pframe
+set arg ../thy.gl

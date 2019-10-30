@@ -1,0 +1,11 @@
+% One step equational reasoning:
+p(X).
+q(Y).
+r(Z).
+
+p(X), r(X) => s(x).
+p(X), q(Y) => X = Y.
+q(Y), r(Z) => Y = Z.
+
+% This example demonstrates that Razor successfully delegates equational
+% reasoning to the SMT solver.

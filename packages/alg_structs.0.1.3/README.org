@@ -1,0 +1,223 @@
+#+TITLE: =alg_structs=: Algebraic Structures in OCaml Structs
+
+@@html:<img src="https://circleci.com/gh/shonfeder/alg_structs.svg?style=svg" alt="Circle CI Badge">@@
+
+*NOTE:* The API is currently unstable: "Major version zero (0.y.z) is for
+initial development. Anything MAY change at any time. The public API SHOULD NOT
+be considered stable." ([[https://semver.org/#spec-item-4][semver]])
+
+An OCaml library specifying algebraic structures useful in the design and
+implementation of software.
+
+[[https://shonfeder.github.io/alg_structs/][Documentation]]
+
+* Contents                                                              :TOC_1:
+- [[#summary][Summary]]
+- [[#installation][Installation]]
+- [[#examples][Examples]]
+- [[#related-work][Related work]]
+- [[#tasks][Tasks]]
+
+* Summary
+=alg_structs= is an OCaml library specifying algebraic structures useful in the
+design and implementation of software.
+
+The only external dependency currently is =ppx_deriving=.
+
+I wrote this library because I needed these structures for other projects, and
+they were not available via any packages published on opam at the time.
+
+I view this library as an experiment to determine whether easy access to such
+mechanisms can be used to any advantage in OCaml programs. Subsequent versions
+are subject to breaking changes as the usefulness of the current implementation
+is tested and evaluated, however proper semantic versioning will be used to
+signal any breaking changes.
+
+The library is modeled after a fragment of Haskell's rich ecosystem of algebraic
+structures, implemented via typeclasses. Most of the code in here started out as
+direct ports of the corresponding Haskell typeclasses. However, I have taken
+liberties to adapt the implementations to be more amenable to idiomatic OCaml
+where it seemed appropriate.
+
+* Installation
+
+** With opam
+
+Requires [[https://opam.ocaml.org/doc/Install.html][opam]]
+
+#+BEGIN_SRC sh
+opam install alg_structs
+#+END_SRC
+
+** Building from source
+
+Requires [[https://github.com/ocaml/dune#installation][dune]]
+
+#+BEGIN_SRC
+git clone git@github.com:shonfeder/alg_structs.git
+cd alg_structs
+dune build
+#+END_SRC
+
+* Examples
+
+** =Applicative=
+
+# TODO: Link to docs
+# See {{!module:Alg_structs.Applicative} Applicative}.
+
+Assuming you have
+
+#+BEGIN_SRC ocaml
+open Alg_structs
+#+END_SRC
+
+*** applying to optional values
+
+#+BEGIN_SRC ocaml
+Applicative.Option.((^) <@> Some "a" <*> Some "b")
+- : string option = Option.Some "ab"
+#+END_SRC
+
+#+BEGIN_SRC ocaml
+Applicative.Option.((^) <@> Some "a" <*> None)
+- : string option = Option.None
+#+END_SRC
+
+*** applying to all combinations of list elements
+
+#+BEGIN_SRC ocaml
+Applicative.List.((^) <@> ["a";"b"] <*> ["1";"2"])
+(* - : string list = ["a1"; "a2"; "b1"; "b2"] *)
+#+END_SRC
+
+*** for [[https://caml.inria.fr/pub/docs/manual-ocaml/manual046.html][binding operators]]
+
+**** on options
+
+#+BEGIN_SRC ocaml
+let some_sum =
+  let open Option.Let_bind
+  in
+  let+ x = Some 1
+  and+ y = Some 2
+  and+ z = Some 3
+  in
+  x + y + z
+
+let () = assert (some_sum = Some 6)
+#+END_SRC
+
+**** on lists
+
+#+BEGIN_SRC ocaml
+let tupples_of_list_elements =
+  let open List.Let_bind
+  in
+  let+ x = [1; 2]
+  and+ y = ['a'; 'b']
+  in
+  (x, y)
+
+let () = assert (tupples_of_list_elements =
+                 [(1, 'a'); (1, 'b');
+                  (2, 'a'); (2, 'b')])
+#+END_SRC
+
+** =Foldable=
+
+# TODO Link to docs
+# See {{!module:Alg_structs.Foldable} Foldable}.
+
+*** implementing a tree
+
+#+BEGIN_SRC ocaml
+module Tree = struct
+  module T = struct
+    type 'a t = Nil | Leaf of 'a | Node of 'a t * 'a * 'a t
+
+    let rec fold_right ~f t ~init = match t with
+      | Nil -> init
+      | Leaf x -> f x init
+      | Node (l, x, r) -> fold_right ~f ~init:(f x (fold_right ~f ~init r)) l
+  end
+  include T
+  include (Make (T) : S with type 'a t = 'a T.t)
+end
+#+END_SRC
+
+*** using the functions
+
+#+BEGIN_SRC ocaml
+let tree = Tree.T.Node(Leaf 1, 2, Node (Leaf 4, 3, Leaf 5))
+
+Tree.max tree ~compare:Int.compare
+(* - : int option = Some 5 *)
+
+Tree.min tree ~compare:Int.compare
+(* - : int option = Some 1 *)
+
+Tree.to_list tree
+(* - : int list = [1; 2; 4; 3; 5] *)
+
+Tree.length tree
+(* - : int = 5 *)
+#+END_SRC
+* Related work
+
+** Resources consulted
+
+I consulted the following while working on this library, and took at least some
+inspiration from each of them:
+
+- Joseph Abrahamson's [[https://github.com/tel/ocaml-cats][ocaml-cats]] :: Abrahamson's =ocaml-cats= is a well
+  structured and well documented collection of signatures specifying a number of
+  category theoretic structures. Had I discovered that work prior to making
+  substantial progress here, I would have considered forking it or basing the
+  structure of this library more closely off of that one. There is an essential
+  difference between the aims of these libraries however, =ocaml-cats= is
+  narrowly focused on specifying the structures, whereas =alg_structs= also
+  provides implementations for common data types along with other utilities.
+  =ocaml-cats= currently has a more extensive catalog of specifications, and the
+  specifications are more principled.
+
+- Yaron Minsky, Anil Madhavapeddy, Jason Hickey's [[https://dev.realworldocaml.org/first-class-modules.html][Real World Ocaml (2nd Edition)]] ::
+  Specifically the chapter on first-class modules, which had to refer back to
+  several times.
+
+- Joel Björnson's [[http://blog.shaynefletcher.org/2017/05/more-type-classes-in-ocaml.html][More type classes]] :: This post provided some helpful guidance
+  on hacking the module system to ape typeclasses.
+
+** Similar projects
+
+Projects which have not had an impact on the design of =alg_structs=
+but are related, and should be considered as alternatives to this library, and
+future sources of inspiration:
+
+- [[https://github.com/IndiscriminateCoding/clarity][clarity]] :: The stated goal of clarity is "to make pure functional programming
+  idioms as useful as possible given OCaml's absence of higher-kinded types and
+  typeclasses". Currently this library is slightly more extensive than
+  =alg_structs=. Two differentiating factors are =clarity='s focus on purity and
+  use of laziness and =alg_structs= emphasis on functions extending the base
+  structures.
+
+- Darin Morrison's [[https://github.com/freebroccolo/ocaml-cats][ocaml-cats]] :: Morrison's =ocaml-cats= is an impressive
+  collection of category theoretic constructs. It includes specifications and
+  implementations, and even support for (still experimental) modular implicits.
+  I wish I had found this work earlier. If I had, I may have forked from it or
+  simply done the work to package it up and use it in my other projects.
+  Morrison's library is significantly more extensive than =alg_structs= is
+  currently, but it is undocummented and doesn't appear to include tests.
+
+* Tasks
+** TODO Add CoC
+** TODO Add CONTRIBUTING file
+** TODO Add a support adapter package for integration with Base/Core
+** TODO Add more structures
+- [ ] Alternative (and kin)
+- [ ] Monads
+- [ ] Free Monads?
+- [ ] Traversable
+** TODO Expanded implementations of common data types
+** TODO Redesign API so extending implementations won't break backwards compatibility
+** TODO Study Morrison's =ocaml-cats= and incorporate relevent design and implementation choices

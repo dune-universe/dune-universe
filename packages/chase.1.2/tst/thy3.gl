@@ -1,0 +1,4 @@
+% Isomorphic models in Razor:
+p(X) | p(X).
+
+%% Razor may return isomorphic models, induced by the structure of the theory.

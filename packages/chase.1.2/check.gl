@@ -1,0 +1,7 @@
+P(X,Y) & X = Y => A = B.
+
+P(X,Y) & X = Y => A = B & X = a & Y = b.
+
+P(X,Y) & X = Y => A = B & Q (X, Y, A , B).
+
+P(X, Y, Z) & X = Y & Y = Z & Z = X => Q(X, Y, Z).

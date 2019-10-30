@@ -1,0 +1,21 @@
+%% dpe.gl
+
+exists(a), exists(b), exists(c). %1
+
+re(b,X), re(c,X) => goal. %2
+
+exists(X) => e(X,X). %3
+
+true => re(a,b), re(a,c). %4
+
+e(X,Y) => e(Y,X).  %5
+
+e(X,Y), re(Y,Z) => re(X,Z). %6
+
+e(X,Y) => re(X,Y). %7
+
+r(X,Y) => re(X,Y). %8
+
+re(X,Y) => e(X,Y) ; r(X,Y). %9
+
+r(X,Y), r(X,Z) => exists(U), r(Y,U), r(Z,U). %10

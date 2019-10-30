@@ -1,0 +1,4 @@
+% this ought to halt with a 2-element model
+src(z).
+src(X) => tail(Z) & p(X, Z).
+tail(Z) => src(X) & p(X, Z).

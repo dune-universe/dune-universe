@@ -1,0 +1,19 @@
+% A fixed bug.
+
+mesg(akey(b)) = a.
+akey(b) = F
+ & akey(G) = H
+ & mesg(F) = a
+ & invk(b) = G.
+
+% Buggy answer
+
+% chase version 1.0
+% bound = 250, limit = 2000
+% ********
+% mesg(akey(b)) = a. % (0)
+% akey(b) = F & akey(G) = H & mesg(F) = a & invk(b) = G. % (1)
+% ********
+
+% (2,1){1}![a = a, b = b, akey(b) = c, akey(b) = c_0, akey(c_1) = c_2,
+%   mesg(c) = a, mesg(c_0) = a, invk(b) = c_1]

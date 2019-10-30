@@ -1,0 +1,147 @@
+{0 [alg_structs]: Algebraic Structures in OCaml Structs}
+
+{1 Api Reference}
+
+See the {{!module:Alg_structs} Api Reference}.
+
+{1 Summary}
+
+An library specifying algebraic structures and category-theoretic idioms
+useful in the design and implementation of software.
+
+It aims to provide useful modules that are (correctly) based on algebraic
+and category theoretic structures rather than mathematically precise
+representations.
+
+Currently, this library should be viewed as an experiment to determine
+whether easy access to such mechanisms can be used to any advantage in OCaml
+programs.
+
+The library is modeled after a fragment of Haskell’s rich ecosystem of
+algebraic structures implemented via typeclasses. However, liberties have
+been taken to adapt the implementations to be more amenable to idiomatic
+OCaml where it seemed appropriate.
+
+{1 Conventions}
+
+{2 A structure's signature is named [S]}
+
+Each {{!section:structures} structure} includes a signature [S] which gives
+its specification. [S] specifies the core types and operations of the
+structure as well any additional functions derived from those core aspects.
+
+Note that [S] includes extensions which are derived from the properties of the
+structure, and is not a mathematically precise representation of the underlying
+structure
+
+{2 A structure can be built from its [Seed]}
+
+Most of the structures can be built up from a [Seed]. Where applicable, a
+structure's [Seed] specifies the essential types and operators needed to
+elaborate out the extended structure.
+
+Users are free to implement their own fully customized versions of a
+structure, or to build one from a [Seed] and then override whichever
+functions they want. See each structure for relevant examples.
+
+{2 A structure should obey its [Law]s}
+
+Every structure includes a parameterized module called [Law]. The laws are
+expressed as predicates that should be true for any arguments of the
+specified type. The [Law] serves both as documentation of those necessary
+properties of a structure that cannot be encoded in the type system and as a
+tool for checking that your own implementations are lawfull.
+
+If you implement a structure satisfying some spec, you
+should ensure it follows the laws. You can use the package
+[alg_structs_qcheck] to help generate property based tests for this purpose.
+
+{1 Some Examples}
+
+{2 [Applicative]}
+
+See {{!module:Alg_structs.Applicative} Applicative}.
+
+Assuming you have
+
+{[
+open Alg_structs
+]}
+
+{3 applying to lists}
+
+{[
+Applicative.List.((^) <@> ["a";"b"] <*> ["1";"2"])
+(* - : string list = ["a1"; "a2"; "b1"; "b2"] *)
+]}
+
+{3 for binding operators}
+
+{4 on options}
+
+{[
+let some_sum =
+  let open Option.Let_bind
+  in
+  let+ x = Some 1
+  and+ y = Some 2
+  and+ z = Some 3
+  in
+  x + y + z
+
+let () = assert (some_sum = Some 6)
+]}
+
+{4 on lists}
+
+{[
+let tupples_of_list_elements =
+  let open List.Let_bind in
+  let+ x = [1; 2]
+  and+ y = ['a'; 'b']
+  in
+  (x, y)
+
+let () = assert (tupples_of_list_elements =
+                 [(1, 'a'); (1, 'b');
+                  (2, 'a'); (2, 'b')])
+]}
+
+{2 [Foldable]}
+
+See {{!module:Alg_structs.Foldable} Foldable}.
+
+{3 implementing a tree}
+
+{[
+module Tree = struct
+  module T = struct
+    type 'a t = Nil | Leaf of 'a | Node of 'a t * 'a * 'a t
+
+    let rec fold_right ~f t ~init = match t with
+      | Nil -> init
+      | Leaf x -> f x init
+      | Node (l, x, r) -> fold_right ~f ~init:(f x (fold_right ~f ~init r)) l
+  end
+  include T
+  include (Make (T) : S with type 'a t = 'a T.t)
+end
+]}
+
+{3 using the functions }
+
+{[
+let tree = Tree.T.Node(Leaf 1, 2, Node (Leaf 4, 3, Leaf 5))
+
+Tree.max tree ~compare:Int.compare;;
+(* - : int option = Some 5 *)
+
+Tree.min tree ~compare:Int.compare;;
+(* - : int option = Some 1 *)
+
+Tree.to_list tree;;
+(* - : int list = [1; 2; 4; 3; 5] *)
+
+Tree.length tree;;
+(* - : int = 5 *)
+]}

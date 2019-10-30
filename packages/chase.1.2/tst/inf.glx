@@ -1,0 +1,6 @@
+% truly minimal model is infinite
+
+[ bound = 50, limit = 500 ]
+
+n(z).
+n(X) => n(Z) & e(X, Z).

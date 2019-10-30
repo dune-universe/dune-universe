@@ -1,0 +1,27 @@
+	       latexcode -- Simple Literate Programming
+
+			   John D. Ramsdell
+			The MITRE Corporation
+
+The latexcode program provides simple literate programming by
+commenting out all but code environments in a LaTeX source file.  It
+can be used with any language that provides line-oriented commenting,
+ones in which a comments starts with one or more characters and
+continues to the end of a line.  For example, // provides
+line-oriented commenting for the C programing language.
+
+INSTALLING FROM SOURCES
+
+    $ make
+    $ mv latexcode $HOME/bin
+
+USAGE
+
+$ latexcode -h
+Usage: latexcode [options] [input]
+Options:
+  -o file -- output to file (default is standard output)
+  -c cmt  -- set comment string (default is "%")
+  -v      -- print version information
+  -h      -- print this message
+latexcode version 1.0

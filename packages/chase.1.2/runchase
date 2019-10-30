@@ -1,0 +1,46 @@
+#! /bin/sh
+
+# Run the chase on a group of inputs.
+# Generate an error file only when the chase fails.
+# Find just one model with -j
+# Set structure bound with -b
+# Set step limit with -l
+# Set ulimit timeout with -t
+
+# Always use the terse and processor time flags
+flags=-tp
+
+# CPU seconds for chase ulimit 
+timeout=300
+
+args=`getopt jb:l:t: $*`
+
+if [ $? != 0 ]
+then
+    echo 'Usage: $0 [-j] [-b INT] [-l INT] [-t INT] FILES...'
+    exit 2
+fi
+set -- $args
+
+for i
+do
+    case "$i"
+    in
+        -j) flags="$flags -j"; shift;;
+        -b) flags="$flags -b $2"; shift; shift;;
+        -l) flags="$flags -l $2"; shift; shift;;
+        -t) timeout="$2"; shift; shift;;
+        --) shift; break;;
+    esac
+done
+
+for i
+do
+    echo $i
+    b=`basename "$i" .gl`
+    (ulimit -t $timeout; chase $flags -o "$b".out "$i")
+    if [ "$?" != 0 ]
+    then
+	touch "$b".err
+    fi
+done

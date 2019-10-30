@@ -1,3 +1,0 @@
-(lang dune 1.7)
-(name postgresql)
-(version 4.5.1)

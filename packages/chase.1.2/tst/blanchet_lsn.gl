@@ -1,0 +1,136 @@
+%% (defskeleton blanchet
+%%   (vars (a b akey) (s skey) (d text))
+%%   (defstrand resp 2 (a a) (b b) (s s) (d d))
+%%   (deflistener d)
+%%   (non-orig (invk a))
+%%   (comment "From the responders's perspective, is the secret leaked?"))
+
+   l_resp(z, idx$2) & p_resp$a(z) = a & p_resp$d(z) = d &
+   l_lsn(w, idx$2) & p_lsn$x(w) = d & non(invk(a)).
+
+% Must add the following to make it into a skeleton, otherwise the
+% antecedent of shape analysis sentence will not be satisfied.
+
+   prec(z, idx$2, w, idx$1).
+
+%% (defprotocol blanchet basic
+%%   (defrole init
+%%     (vars (a b akey) (s skey) (d text))
+%%     (trace
+%%      (send (enc (enc s (invk a)) b))
+%%      (recv (enc d s)))
+%%     (uniq-orig s))
+%%   (defrole resp
+%%     (vars (a b akey) (s skey) (d text))
+%%     (trace
+%%      (recv (enc (enc s (invk a)) b))
+%%      (send (enc d s)))
+%%     (uniq-orig d))
+%%   (comment "Blanchet's protocol using unnamed asymmetric keys"))
+
+% Top sorts: mesg and strd
+mesg(X) & strd(X) => false.
+
+% Basic sorts: akey, skey, text, and name
+akey(X) & skey(X) => false.
+akey(X) & text(X) => false.
+akey(X) & name(X) => false.
+skey(X) & text(X) => false.
+skey(X) & name(X) => false.
+text(X) & name(X) => false.
+
+akey(X) => mesg(X).
+skey(X) => mesg(X).
+text(X) => mesg(X).
+name(X) => mesg(X).
+
+% Asymmetric keys
+invk(X) = Y => akey(X) & akey(Y).
+akey(X) => invk(X) = Y & akey(Y).
+invk(X) = X => false.
+akey(X) => invk(invk(X)) = X.
+invk(X) = invk(Y) => X = Y.
+
+% Names
+pubk(X) = Y => name(X) & akey(Y).
+name(X) => pubk(X) = Y & akey(Y).
+pubk(X) = pubk(Y) => X = Y.
+
+% Symmetric keys
+ltk(X, Y) = Z => name(X) & name(Y) & skey(Z).
+ltk(W, X) = ltk(Y, Z) => W = Y & X = Z.
+
+% Pairs
+cat(X, Y) = Z => mesg(X) & mesg(Y) & mesg(Z).
+cat(W, X) = cat(Y, Z) => W = Y & X = Z.
+
+% Asymmetric encryption
+aenc(X, Y) = Z => mesg(X) & mesg(Y) & akey(Z).
+aenc(W, X) = aenc(Y, Z) => W = Y & X = Z.
+
+% Symmetric encryption
+senc(X, Y) = Z => mesg(X) & mesg(Y) & skey(Z).
+senc(W, X) = senc(Y, Z) => W = Y & X = Z.
+
+% Prec is strict
+prec(X, I, X, I) => false.
+prec(X, I, Y, J) & prec(Y, J, Z, K) => prec(X, I, Z, K).
+
+% Listener role
+l_lsn(Z, H) => strd(Z).
+l_lsn(Z, idx$2) => l_lsn(Z, idx$1) & prec(Z, idx$1, Z, idx$2).
+l_lsn_x(Z) = X => strd(Z) & mesg(X).
+l_lsn(Z, idx$1) => p_lsn$x(Z) = X & mesg(X).
+
+% Index axioms
+lt(idx$1, idx$2).
+idx$1 = idx$2 => false.
+
+% init role length
+l_init(Z, H) => strd(Z).
+l_init(Z, H) & lt(I, H) => l_init(Z, I) & prec(Z, I, Z, H).
+
+% resp role length
+l_resp(Z, H) => strd(Z).
+l_resp(Z, H) & lt(I, H) => l_resp(Z, I) & prec(Z, I, Z, H).
+
+% init role d parameter
+p_init$d(Z) = X => strd(Z) & text(X).
+l_init(Z, idx$2) => p_init$d(Z) = X & text(X).
+
+% init role s parameter
+p_init$s(Z) = X => strd(Z) & skey(X).
+l_init(Z, idx$1) => p_init$s(Z) = X & skey(X).
+
+% init role a parameter
+p_init$a(Z) = X => strd(Z) & akey(X).
+l_init(Z, idx$1) => p_init$a(Z) = X & akey(X).
+
+% init role b parameter
+p_init$b(Z) = X => strd(Z) & akey(X).
+l_init(Z, idx$1) => p_init$b(Z) = X & akey(X).
+
+% resp role d parameter
+p_resp$d(Z) = X => strd(Z) & text(X).
+l_resp(Z, idx$2) => p_resp$d(Z) = X & text(X).
+
+% resp role s parameter
+p_resp$s(Z) = X => strd(Z) & skey(X).
+l_resp(Z, idx$1) => p_resp$s(Z) = X & skey(X).
+
+% resp role a parameter
+p_resp$a(Z) = X => strd(Z) & akey(X).
+l_resp(Z, idx$1) => p_resp$a(Z) = X & akey(X).
+
+% resp role b parameter
+p_resp$b(Z) = X => strd(Z) & akey(X).
+l_resp(Z, idx$1) => p_resp$b(Z) = X & akey(X).
+
+% role unique origination
+l_init(Z$, idx$1) & p_init$s(Z$) = S => uniq_at(S, Z$, idx$1).
+
+% role unique origination
+l_resp(Z$, idx$2) & p_resp$d(Z$) = D => uniq_at(D, Z$, idx$2).
+
+% geometric sequent
+l_resp(Z, idx$2) & l_lsn(Z_0, idx$2) & p_resp$d(Z) = D & p_resp$s(Z) = S & p_resp$a(Z) = A & p_resp$b(Z) = B & p_lsn$x(Z_0) = D & prec(Z, idx$2, Z_0, idx$1) & non(invk(A)) & uniq_at(D, Z, idx$2) & text(D) & skey(S) & akey(A) & akey(B) & strd(Z) & strd(Z_0) => l_init(Z_1, idx$1) & p_init$s(Z_1) = S & p_init$a(Z_1) = A & p_init$b(Z_1) = B_0 & prec(Z_1, idx$1, Z, idx$1) & uniq_at(S, Z_1, idx$1) & akey(B_0) & strd(Z_1).

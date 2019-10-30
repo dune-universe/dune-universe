@@ -1,0 +1,19 @@
+#! /bin/sh
+
+for f in *.gl
+do
+  if test -f "$f"
+  then
+    b=`basename $f .gl`
+    mv "$b.txt" "$b.tst"
+  fi
+done
+
+for f in *.glx
+do
+  if test -f "$f"
+  then
+    b=`basename $f .glx`
+    mv "$b.txt" "$b.tst"
+  fi
+done

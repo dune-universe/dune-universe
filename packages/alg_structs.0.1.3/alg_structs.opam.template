@@ -1,0 +1,15 @@
+# We need to avoid "@runtest" for alg_structs, since it depends
+# On the alg_structs_qcheck package
+build: [
+  ["dune" "subst"] {pinned}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@doc" {with-doc}
+  ]
+]
