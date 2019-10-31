@@ -1,0 +1,5 @@
+(library
+    (name bson2)
+    (public_name bson2)
+    (preprocess (pps ppx_sexp_conv))
+    (libraries core sexplib))
