@@ -1,0 +1,5 @@
+(library
+ (name mirage_fs_unix)
+ (public_name mirage-fs-unix)
+ (wrapped false)
+ (libraries mirage-kv mirage-fs lwt.unix cstruct-lwt))

@@ -1,0 +1,5 @@
+(library
+ (name arp_mirage)
+ (public_name arp-mirage)
+ (wrapped false)
+ (libraries arp mirage-protocols mirage-time lwt logs duration mirage-profile))

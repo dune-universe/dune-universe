@@ -1,0 +1,3 @@
+(lang dune 1.3)
+(name mirage-kv-mem)
+(version v3.0.0)
