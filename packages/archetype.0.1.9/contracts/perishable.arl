@@ -1,0 +1,43 @@
+archetype perishable
+
+enum productType =
+ | Bananas
+ | Apples
+ | Pears
+ | Peaches
+ | Coffee
+
+enum shipmentStatus =
+ | Created
+ | In_transit
+ | Arrived
+
+asset grower identified by id {
+  id : role
+}
+
+asset importer identified by id {
+  id : role
+}
+
+asset importer identified by id {
+  id : role
+}
+
+asset p_contract {
+  grower          : grower;
+  shipper         : shipper;
+  importer        : importer;
+  arrivalDateTime : date;
+  unitPrice       : rational
+}
+
+asset shipment {
+  type     : productType;
+  count    : int;
+  p_c      : p_contract
+} with states shipmentStatus
+
+transition payOut (arrival : date) on (sk : shipment) from In_transit {
+  to Arrived
+}

@@ -1,4 +1,0 @@
-(library
-  (name console_solo5)
-  (public_name mirage-console-solo5)
-  (libraries lwt cstruct mirage-console-lwt))

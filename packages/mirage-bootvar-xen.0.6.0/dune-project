@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-bootvar-xen)
-(version v0.6.0)

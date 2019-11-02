@@ -1,4 +1,0 @@
-(library
-  (name oS)
-  (public_name mirage-unix)
-  (libraries lwt lwt.unix logs io-page-unix))

@@ -1,0 +1,4 @@
+(library
+  (name netif)
+  (public_name mirage-net-solo5)
+  (libraries cstruct macaddr logs mirage-solo5 lwt mirage-net fmt))

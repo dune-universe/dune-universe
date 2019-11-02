@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-net-xen)
-(version v1.12.0)

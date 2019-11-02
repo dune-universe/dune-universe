@@ -1,6 +1,0 @@
-(library
- (name dhcp_client_lwt)
- (public_name charrua-client-lwt)
- (modules dhcp_client_lwt)
- (libraries charrua lwt charrua-client cstruct ipaddr mirage-time-lwt
-   mirage-random mirage-net-lwt duration fmt logs))

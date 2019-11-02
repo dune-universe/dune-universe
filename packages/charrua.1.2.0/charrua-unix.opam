@@ -1,0 +1,30 @@
+version: "1.2.0"
+opam-version: "2.0"
+maintainer: "Christiano F. Haesbaert <haesbaert@haesbaert.org>"
+authors: "Christiano F. Haesbaert <haesbaert@haesbaert.org>"
+homepage: "https://github.com/mirage/charrua"
+bug-reports: "https://github.com/mirage/charrua/issues"
+license: "ISC"
+dev-repo: "git+https://github.com/mirage/charrua.git"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "dune" {>= "1.2.0"}
+  "ocaml" {>= "4.06.0"}
+  "lwt" {>="3.0.0"}
+  "lwt_log"
+  "charrua" {= version}
+  "charrua-server" {= version}
+  "cstruct-unix"
+  "cmdliner"
+  "rawlink" {>= "1.0"}
+  "tuntap" {>= "1.2.0"}
+  "mtime" {>="1.0.0"}
+]
+synopsis: "Unix DHCP daemon"
+description: """
+charrua-unix is an _ISC-licensed_ Unix DHCP daemon based on
+[charrua](http://www.github.com/mirage/charrua).
+"""
