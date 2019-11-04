@@ -1,0 +1,24 @@
+version: "0.1.0"
+opam-version: "2.0"
+maintainer: "Rory Quinlan <rjamesquinlan@gmail.com>"
+authors: [ "Rory Quinlan <rjamesquinlan@gmail.com>" ]
+license: "MIT"
+homepage: "https://github.com/roryqueue/odash"
+bug-reports: "https://github.com/roryqueue/odash/issues"
+dev-repo: "git+https://github.com/roryqueue/odash.git"
+doc: "https://roryqueue.github.io/odash/"
+tags: [ "syntax" ]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml"         {>= "4.02" & < "4.09"}
+  "dune"          {>= "1.11.4"}
+  "reason"        {>= "3.5.2"}
+  "ounit" {with-test}
+]
+synopsis: "Odash: Lodash for Ocaml"
+description: """
+Odash implements part of the lodash API in ocaml/reason,
+with some differences tailored to the language."""

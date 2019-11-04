@@ -1,0 +1,4 @@
+### v0.1.0 (2019-11-01)
+
+* Initial release.
+* Add identity, reduce, map, filter, reject, head, first, last, nth, tail, initial, flatten, concat, flatMap, forEach, each, forEachRight, eachRight, dropWhile, drop, dropRightWhile, dropRight, takeWhile, take, takeRightWhile, takeRight, slice, chunk, differenceBy, difference, fill, find, findLast, findIndex, findLastIndex, some, every, includesBy, includes, partition, sampleSize, sample, shuffle, size, simpleSortBy, sortBy, orderBy, join, uniqWith, uniqBy, uniq, intersectionWith, intersectionBy, intersection, xorWith, xorBy, xor, unionWith, unionBy, union, without, zip, and unzip.
