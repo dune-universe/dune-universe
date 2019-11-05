@@ -1,0 +1,21 @@
+opam-version: "2.0"
+name: "subtype-refinement"
+version: "0.2"
+maintainer: "Marco Aurélio <marcoonroad@gmail.com>"
+authors: "Marco Aurélio <marcoonroad@gmail.com>"
+bug-reports: "http://github.com/marcoonroad/subtype-refinement/issues"
+license: "MIT"
+homepage: "http://github.com/marcoonroad/subtype-refinement"
+dev-repo: "git+https://github.com/marcoonroad/subtype-refinement.git"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+  ["dune" "build" "@doc" "-p" name "-j" jobs] {with-doc}
+  ["dune" "build" "-p" name "-j" jobs "@install"]
+]
+depends: [
+  "ocaml" {>= "3.12"}
+  "dune" {>= "1.11"}
+  "ounit" {with-test}
+]
+synopsis: "Refinement types encoded with private types in OCaml"

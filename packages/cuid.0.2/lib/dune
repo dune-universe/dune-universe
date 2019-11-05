@@ -1,0 +1,8 @@
+(library
+ (name cuid)
+ (public_name cuid)
+ (synopsis "CUID generator for OCaml.")
+ (wrapped false)
+ (preprocess
+  (pps bisect_ppx -- -conditional))
+ (libraries core unix nocrypto nocrypto.unix))

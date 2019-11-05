@@ -1,0 +1,30 @@
+{
+  "name": "bs-ocaml-protoc",
+  "version": "2.0.1",
+  "description": "A Protocol Buffers compiler for OCaml",
+  "keywords": [
+    "protobuf",
+    "serialization",
+    "syntax",
+    "bucklescript"
+  ],
+  "homepage": "https://github.com/mransan/ocaml-protoc",
+  "bugs": "https://github.com/mransan/ocaml-protoc/issues",
+  "license": "MIT",
+  "author": " Maxime Ransan<maxime.ransan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mransan/ocaml-protoc"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "bs-platform": "^5.x.x",
+    "bs-ocaml-protoc-json": "^0.1.x"
+  },
+  "scripts": {
+    "build": "npm run gen && bsb -make-world",
+    "gen": "dune build && ./_build/install/default/bin/ocaml-protoc -bs -ml_out src/tests/bs src/tests/bs/bs_unittest.proto",
+    "test": "npm run build && node lib/js/src/tests/bs/"
+  }
+}

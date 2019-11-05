@@ -1,0 +1,24 @@
+{
+  "name": "bs-ocaml-protoc",
+  "sources": [
+    {
+      "dir": "src/runtime/",
+      "files": [
+        "pbrt.mli",
+        "pbrt.ml"
+      ]
+    },
+    {
+      "dir": "src/tests/bs",
+      "files": [
+        "bs_unittest_types.mli",
+        "bs_unittest_types.ml",
+        "bs_unittest_bs.mli",
+        "bs_unittest_bs.ml",
+        "index.ml"
+      ]
+    }
+  ],
+  "bs-dependencies": ["bs-ocaml-protoc-json"],
+  "generate-merlin": true 
+}

@@ -1,0 +1,3 @@
+(tests
+  (names exceptional applicative generic revocable)
+  (libraries shared-secret oUnit))

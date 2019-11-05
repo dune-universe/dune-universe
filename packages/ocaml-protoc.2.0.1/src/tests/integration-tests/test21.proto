@@ -1,0 +1,18 @@
+import "ocamloptions.proto";
+
+option (ocaml_file_ppx) = "ocaml.warning \"-32\""; 
+option (ocaml_all_types_ppx) = "deriving show";
+
+enum E {
+  EONE = 1; 
+  ETWO = 2;
+}
+
+message M {
+  required int32 f1 = 1;
+  message Sub {
+    required int32 sub_f1 = 1;
+  }
+  required Sub f2 = 2; 
+  required E f3 = 3;
+}

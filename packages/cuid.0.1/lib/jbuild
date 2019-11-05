@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(library
-    ((name cuid)
-    (public_name cuid)
-    (synopsis "CUID generator for OCaml.")
-    (wrapped false)
-    (libraries (core unix))))

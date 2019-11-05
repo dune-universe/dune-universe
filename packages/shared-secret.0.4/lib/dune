@@ -1,0 +1,3 @@
+(library
+  (name shared_secret)
+  (public_name shared-secret))
