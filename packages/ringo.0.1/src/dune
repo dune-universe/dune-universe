@@ -1,0 +1,4 @@
+(library
+ (name ringo)
+ (public_name ringo)
+ (flags :standard))

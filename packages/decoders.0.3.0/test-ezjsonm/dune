@@ -1,0 +1,7 @@
+(test
+ (name main)
+ (package decoders-ezjsonm)
+ (libraries
+  decoders-ezjsonm
+  containers
+  oUnit))
