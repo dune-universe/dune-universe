@@ -1,0 +1,12 @@
+(menhir
+ (modules Parser))
+
+(ocamllex
+ (modules Lexer))
+
+(library
+ (name smtlib_utils)
+ (public_name smtlib-utils)
+ (wrapped true)
+ (flags :standard -safe-string)
+ (libraries bytes result))

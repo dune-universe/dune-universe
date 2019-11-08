@@ -1,0 +1,5 @@
+
+; do not install
+(executable
+  (name smtlib_cat)
+  (libraries smtlib-utils))
