@@ -1,0 +1,8 @@
+(library
+ (name mlmpfr)
+ (public_name mlmpfr)
+ (wrapped false)
+ (modules mpfr)
+ (c_names mlmpfr_stubs)
+ (c_flags -O2 -Wall -Wextra)
+ (c_library_flags -lmpfr))

@@ -1,0 +1,6 @@
+*.swp
+*.db
+test/ezsqlite_test.native
+_build
+*.core
+ezsqlite.install

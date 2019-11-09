@@ -1,0 +1,114 @@
+(tests
+ (deps basicarithmeticfunctions.expected
+       comparisonfunctions.expected
+       exceptionrelatedfunctions.expected
+       initializationfunctions.expected
+       integerandremainderrelatedfunctions.expected
+       miscellaneousfunctions.expected
+       roundingrelatedfunctions.expected
+       specialfunctions.expected)
+ (names basicarithmeticfunctions
+        comparisonfunctions
+        exceptionrelatedfunctions
+        initializationfunctions
+        integerandremainderrelatedfunctions
+        miscellaneousfunctions
+        roundingrelatedfunctions
+        specialfunctions)
+ (libraries mlmpfr))
+
+
+; basic arithmetic functions
+(rule
+ (target basicarithmeticfunctions.ref)
+ (deps   basicarithmeticfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target basicarithmeticfunctions.expected)
+ (deps   basicarithmeticfunctions.ref)
+ (action (with-stdout-to basicarithmeticfunctions.expected (run %{deps}))))
+
+
+; comparison functions
+(rule
+ (target comparisonfunctions.ref)
+ (deps   comparisonfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target comparisonfunctions.expected)
+ (deps   comparisonfunctions.ref)
+ (action (with-stdout-to comparisonfunctions.expected (run %{deps}))))
+
+
+; exception related functions
+(rule
+ (target exceptionrelatedfunctions.ref)
+ (deps   exceptionrelatedfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target exceptionrelatedfunctions.expected)
+ (deps   exceptionrelatedfunctions.ref)
+ (action (with-stdout-to exceptionrelatedfunctions.expected (run %{deps}))))
+
+
+; initialization functions
+(rule
+ (target initializationfunctions.ref)
+ (deps   initializationfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target initializationfunctions.expected)
+ (deps   initializationfunctions.ref)
+ (action (with-stdout-to initializationfunctions.expected (run %{deps}))))
+
+
+; integer and remainder related functions
+(rule
+ (target integerandremainderrelatedfunctions.ref)
+ (deps   integerandremainderrelatedfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target integerandremainderrelatedfunctions.expected)
+ (deps   integerandremainderrelatedfunctions.ref)
+ (action (with-stdout-to integerandremainderrelatedfunctions.expected (run %{deps}))))
+
+
+; miscellaneous functions
+(rule
+ (target miscellaneousfunctions.ref)
+ (deps   miscellaneousfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target miscellaneousfunctions.expected)
+ (deps   miscellaneousfunctions.ref)
+ (action (with-stdout-to miscellaneousfunctions.expected (run %{deps}))))
+
+
+; rounding related functions
+(rule
+ (target roundingrelatedfunctions.ref)
+ (deps   roundingrelatedfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target roundingrelatedfunctions.expected)
+ (deps   roundingrelatedfunctions.ref)
+ (action (with-stdout-to roundingrelatedfunctions.expected (run %{deps}))))
+
+
+; special functions
+(rule
+ (target specialfunctions.ref)
+ (deps   specialfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (target specialfunctions.expected)
+ (deps   specialfunctions.ref)
+ (action (with-stdout-to specialfunctions.expected (run %{deps}))))

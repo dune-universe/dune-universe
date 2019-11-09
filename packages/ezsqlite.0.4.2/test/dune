@@ -1,0 +1,10 @@
+(executables
+ (names ezsqlite_test)
+ (libraries ezsqlite))
+
+(alias
+ (name runtest)
+ (deps
+  (:< ezsqlite_test.exe))
+ (action
+  (run %{<})))

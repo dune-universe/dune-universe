@@ -1,0 +1,20 @@
+mlmpfr
+
+# master branch
+
+- support for mpfr_fpif_import and mpfr_fpif_export
+
+# release_400, release_401, release_402 branches
+
+- root replaced by rootn_ui
+- support failthful rounding mode support
+- support for mpfr_flags_* functions
+- support mpfr_beta
+- support mpfr_fmodquo
+- support mpfr_fmma and mpfr_fmms
+- support mpfr_log_ui and mpfr_gamma_inc
+- support mpfr_rint_roundeven and mpfr_roundeven
+
+# release_316 branch
+
+- initial mlmpfr

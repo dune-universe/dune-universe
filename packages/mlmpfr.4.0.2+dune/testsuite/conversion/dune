@@ -1,0 +1,26 @@
+; conversion functions
+(rule
+ (target conversionfunctions.ref)
+ (deps   conversionfunctions.c)
+ (action (run %{cc} -o %{target} %{deps} -lmpfr)))
+
+(rule
+ (targets fpif_export.expected conversionfunctions.expected)
+ (deps conversionfunctions.ref (file fpif_import.data))
+ (action (with-stdout-to conversionfunctions.expected (run %{deps}))))
+
+(rule
+ (targets fpif_export.output converstionfunctions.output)
+ (deps conversionfunctions.exe (file fpif_import.data))
+ (action (with-stdout-to converstionfunctions.output (run %{deps}))))
+
+(test
+ (deps conversionfunctions.expected)
+ (name conversionfunctions)
+ (libraries mlmpfr)
+ (action (run %{test} fpif_import.data)))
+
+(alias
+ (name runtest)
+ (deps fpif_export.output fpif_export.expected)
+ (action (run diff fpif_export.output fpif_export.expected)))

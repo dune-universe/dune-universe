@@ -1,0 +1,8 @@
+(env
+ (dev
+  (flags (:standard -w +42 -ccopt -L/usr/local/lib))
+  (c_flags (:standard -O2 -Wall -Wextra -g -L/usr/local/lib))
+  (env-vars (LD_LIBRARY_PATH /usr/local/lib)))
+ (release
+  (flags (:standard -warn-error))
+  (c_flags (:standard -O2 -Werror))))
