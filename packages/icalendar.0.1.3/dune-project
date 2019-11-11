@@ -1,3 +1,3 @@
 (lang dune 1.3)
 (name icalendar)
-(version v0.1.2)
+(version v0.1.3)
