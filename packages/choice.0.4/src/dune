@@ -1,0 +1,5 @@
+
+(library
+  (name choice)
+  (public_name choice)
+  (libraries seq))

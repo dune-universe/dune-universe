@@ -1,0 +1,67 @@
+(alias
+  (name default)
+  (deps runtime.js))
+
+(rule
+  (targets runtime.js)
+  (action
+   (run %{bin:jsoo_link} -o %{targets}
+    %{dep:bigarray.js}
+    %{dep:bigstring-cstruct.js}
+    %{dep:bigstring.js}
+    %{dep:fs.js}
+    %{dep:fs_fake.js}
+    %{dep:fs_node.js}
+    %{dep:gc.js}
+    %{dep:ieee_754.js}
+    %{dep:int64.js}
+    %{dep:internalMod.js}
+    %{dep:io.js}
+    %{dep:jslib.js}
+    %{dep:jslib_js_of_ocaml.js}
+    %{dep:lexing.js}
+    %{dep:marshal.js}
+    %{dep:md5.js}
+    %{dep:mlString.js}
+    %{dep:nat.js}
+    %{dep:parsing.js}
+    %{dep:polyfill/json2.js}
+    %{dep:stdlib.js}
+    %{dep:unix.js}
+    %{dep:weak.js}
+)))
+
+(install
+  (section lib)
+  (package js_of_ocaml-compiler)
+  (files
+    bigarray.js
+    bigstring-base_bigstring.js
+    bigstring-core_kernel.js
+    bigstring-cstruct.js
+    bigstring.js
+    dynlink.js
+    fs.js
+    fs_fake.js
+    fs_node.js
+    gc.js
+    graphics.js
+    ieee_754.js
+    int64.js
+    internalMod.js
+    io.js
+    jslib.js
+    jslib_js_of_ocaml.js
+    lexing.js
+    marshal.js
+    md5.js
+    mlString.js
+    nat.js
+    parsing.js
+    polyfill/json2.js
+    runtime.js
+    stdlib.js
+    toplevel.js
+    unix.js
+    weak.js
+    ))
