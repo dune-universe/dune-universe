@@ -1,0 +1,26 @@
+url {
+  src: "https://github.com/ghilesZ/parsley/"
+}
+opam-version: "2.0"
+maintainer: "Ghiles Ziat <ghiles.ziat@lip6.fr>"
+authors: [
+  "Ghiles Ziat <ghiles.ziat@lip6.fr>"
+]
+homepage: "https://github.com/ghilesZ/parsley"
+bug-reports: "https://github.com/ghilesZ/parsley/issues"
+dev-repo: "git+https://github.com/ghilesZ/parsley/AbSolute"
+license: "LGPL"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "dune" {build}
+  "zarith"
+]
+
+synopsis: "Parsley library"
+description: "Parsley is a library that provides string to numeric values utilities (int_of_string, float_of_string ...) while indicating if a loss of precision occured during the conversion "

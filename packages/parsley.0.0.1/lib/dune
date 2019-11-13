@@ -1,0 +1,4 @@
+(library
+ (name        parsley)
+ (public_name parsley)
+ (libraries zarith))

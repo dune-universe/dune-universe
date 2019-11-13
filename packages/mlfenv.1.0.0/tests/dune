@@ -1,0 +1,3 @@
+(tests
+ (names fegetround fesetround round)
+ (libraries mlfenv))
