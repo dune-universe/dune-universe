@@ -1,23 +1,24 @@
 opam-version: "2.0"
 maintainer: "Anders Fugmann <anders@fugmann.net>"
 authors: "Anders Fugmann"
-version: "4.4.0"
 license: "BSD-3"
 homepage: "https://github.com/andersfugmann/aws-s3"
 dev-repo: "git+https://github.com/andersfugmann/aws-s3"
 bug-reports: "https://github.com/andersfugmann/aws-s3/issues"
+doc: "https://andersfugmann.github.io/aws-s3/"
 build: [
   ["dune" "subst"] {pinned}
   ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
   "ocaml" {>= "4.05.0"}
-  "dune" {build}
-  "aws-s3" {= "4.4.0" }
-  "lwt"
-  "conduit-lwt-unix"
+  "dune"
+  "aws-s3" {= version}
+  "async_kernel" {>= "v0.9.0" & < "v0.13"}
+  "async_unix" {>= "v0.9.0" & < "v0.13"}
+  "conduit-async"
 ]
-synopsis: "Ocaml library for accessing Amazon S3 - Lwt version"
+synopsis: "Ocaml library for accessing Amazon S3 - Async version"
 description: """
 This library provides access to Amazon Simple Storage Solution (S3).
 The library supports:
@@ -29,4 +30,4 @@ The library supports:
 * Multi part upload (including s3 -> s3 copy)
 * Fetching machine role/credentials (though IAM)
 
-This library uses lwt for concurrency"""
+This library uses async for concurrency"""
