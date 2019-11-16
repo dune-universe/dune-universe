@@ -270,7 +270,7 @@ static clause* clause_new(solver* s, lit* begin, lit* end, int learnt)
     size           = end - begin;
     c              = (clause*)malloc(sizeof(clause) + sizeof(lit) * size + learnt * sizeof(float));
     c->size_learnt = (size << 1) | learnt;
-    assert(((unsigned int)c & 1) == 0);
+    assert(((unsigned long)c & 1) == 0);
 
     for (i = 0; i < size; i++)
         c->lits[i] = begin[i];
@@ -1079,7 +1079,7 @@ bool   solver_solve(solver* s, lit* begin, lit* end)
             assume(s, *i);
             if (solver_propagate(s) == NULL)
                 break;
-            // falltrough
+            /* fallthrough */
         case -1: /* l_False */
             solver_canceluntil(s, 0);
             return false;

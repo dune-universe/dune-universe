@@ -120,6 +120,7 @@ CAMLprim value caml_minisat_value(value block, value v_lit)
   bool sign = !lit_sign(lit);
   int var = lit_var(lit);
   solver *s = get_solver(block);
+  int ret;
 
   // access literal in model, unless it's out-of-bounds
   lbool cur_val = var < s->model.size ? s->model.ptr[var] : l_Undef;
@@ -127,7 +128,17 @@ CAMLprim value caml_minisat_value(value block, value v_lit)
   // put sign back
   if (!sign) { cur_val = -cur_val; }
 
-  CAMLreturn (Val_int(cur_val));
+  /* convert lbool to int */
+  if (cur_val == l_Undef)
+    ret = 0;
+  else if (cur_val == l_True)
+    ret = 1;
+  else if (cur_val == l_False)
+    ret = -1;
+  else
+    ret = -2;
+
+  CAMLreturn (Val_int(ret));
 }
 
 

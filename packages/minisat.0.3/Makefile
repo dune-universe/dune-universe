@@ -1,15 +1,15 @@
 
 build:
-	dune build
+	@dune build
 
 clean:
-	dune clean
+	@dune clean
 
 doc:
-	dune build @doc
+	@dune build @doc
 
 test:
-	dune runtest --force --no-buffer
+	@dune runtest --force --no-buffer
 
 reindent:
 	@find src '(' -name '*.ml' -or -name '*.mli' ')' -print0 | xargs -0 echo "reindenting: "

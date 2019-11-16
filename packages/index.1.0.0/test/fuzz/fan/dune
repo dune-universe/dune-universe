@@ -1,0 +1,17 @@
+(executable
+ (name main)
+ (libraries crowbar index))
+
+(alias
+ (name runtest)
+ (package index)
+ (deps main.exe))
+
+(alias
+ (name fuzz)
+ (package index)
+ (deps
+  main.exe
+  (source_tree ../input))
+ (action
+  (run afl-fuzz -i ../input -o output ./main.exe @@)))

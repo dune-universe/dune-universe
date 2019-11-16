@@ -1,4 +1,13 @@
 
+## 0.3
+
+- fixes:
+  * return code of caml_minisat_value
+  * fallthrough comment
+  * pointer cast
+- update travis file to add 4.09
+- only ask for dune 1.0
+
 ## 0.2
 
 - migrate to `dune` for build
