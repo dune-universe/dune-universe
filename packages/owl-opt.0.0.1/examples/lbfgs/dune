@@ -1,0 +1,5 @@
+(tests
+ (names regression)
+ (libraries owl-opt owl-opt-lbfgs owl)
+ (preprocess
+  (pps ppx-owl-opt))) 

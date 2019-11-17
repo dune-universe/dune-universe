@@ -1,0 +1,13 @@
+(copy_files# gd/*)
+
+(copy_files# adam/*)
+
+(copy_files# rmsprop/*)
+
+(library
+ (name owl_opt)
+ (public_name owl-opt)
+ (libraries owl))
+
+(documentation
+ (package owl-opt))

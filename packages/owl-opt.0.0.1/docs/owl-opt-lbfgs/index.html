@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>index (owl-opt-lbfgs.index)</title><link rel="stylesheet" href="../odoc.css"/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – owl-opt-lbfgs</nav><nav class="toc"><ul><li><a href="#owl-opt-lbfgs-library">Owl Opt LBFGS Library</a><ul><li><a href="#installation">Installation</a></li><li><a href="#example">Example</a></li></ul></li></ul></nav></header><h2 id="owl-opt-lbfgs-library"><a href="#owl-opt-lbfgs-library" class="anchor"></a>Owl Opt LBFGS Library</h2><p>The entry point of this library is <a href="Owl_opt_lbfgs/index.html"><code>Owl_opt_lbfgs</code></a>. The workflow is similar to that described in <a href="../owl-opt/index.html">Owl Opt</a>.</p><p>This library is built ontop of <a href="https://github.com/Chris00/L-BFGS-ocaml">L-BFGS-ocaml</a>.</p><h3 id="installation"><a href="#installation" class="anchor"></a>Installation</h3><pre><code class="ml">dune build @install
+dune install</code></pre><h3 id="example"><a href="#example" class="anchor"></a>Example</h3><pre><code class="ml">module Prms = struct
+   type 'a t = {a: 'a; b: 'a} [@@deriving prms]
+end
+(* make an Lbfgs optimisation module for the parameter definition Prms *)
+module O = Owl_opt_lbfgs.Make (Prms)
+(* define the objective function *)
+let f prms = Owl.Algodiff.D.Maths.(l2norm' (y - ((prms.a *@ x) + prms.b))) 
+(* define initial parameters *)
+let prms0 = {a = Owl.Algodiff.D.Mat.gaussian 5 5; b = Owl.Algodiff.D.gaussian 5 1} 
+(* initialise an optimisation session *)
+let s0 = O.init ~prms0 ~f () 
+(* define stopping criteria: stop when function value is smaller than 1E-4 *)
+let stop s = O.(fv s) &lt; 1E-4
+(* minimise objective function f *)
+let s = O.min f
+(* final objective function value *)
+let c = O.fv s
+(* final prms *)
+let prms = O.prms s </code></pre></div></body></html>

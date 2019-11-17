@@ -1,0 +1,35 @@
+{1 Owl Opt LBFGS Library}
+
+The entry point of this library is {!module:Owl_opt_lbfgs}. The workflow is similar to that described in {{:../owl-opt/index.html} Owl Opt}. 
+
+This library is built ontop of {{:https://github.com/Chris00/L-BFGS-ocaml} L-BFGS-ocaml}.
+
+{2 Installation}
+{[ 
+dune build @install
+dune install]}
+
+{2 Example} 
+
+{[
+ module Prms = struct
+    type 'a t = {a: 'a; b: 'a} [@@deriving prms]
+ end
+ (* make an Lbfgs optimisation module for the parameter definition Prms *)
+ module O = Owl_opt_lbfgs.Make (Prms)
+ (* define the objective function *)
+ let f prms = Owl.Algodiff.D.Maths.(l2norm' (y - ((prms.a *@ x) + prms.b))) 
+ (* define initial parameters *)
+ let prms0 = {a = Owl.Algodiff.D.Mat.gaussian 5 5; b = Owl.Algodiff.D.gaussian 5 1} 
+ (* initialise an optimisation session *)
+ let s0 = O.init ~prms0 ~f () 
+ (* define stopping criteria: stop when function value is smaller than 1E-4 *)
+ let stop s = O.(fv s) < 1E-4
+ (* minimise objective function f *)
+ let s = O.min f
+ (* final objective function value *)
+ let c = O.fv s
+ (* final prms *)
+ let prms = O.prms s 
+]}
+ 

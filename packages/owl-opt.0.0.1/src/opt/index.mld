@@ -1,0 +1,68 @@
+{1 Owl Opt Library}
+
+The entry point of this library is {!module:Owl_opt}.
+
+{2 Workflow} 
+
++ define a record type ['a t] in some module [Prms]
++ apply ppx deriver [@@deriving prms] to type ['a t] so that [Prms] has type {!Owl_opt.Prms.PT}
++ pass [Prms] through your favourite algorithm functor to create an optimisation module [O]
++ define an objective function [f] that takes as input your record type ['a t] 
++ define initial parameters [prms0]
++ define learning rates [lr] with {!module:Owl_opt.Lr}
++ initialise optimisation state [s0] with [O.init ~prms0 ~f]
++ define stoping criterion function [stop: state -> bool] 
++ minimise the optimisation session with [O.min ~stop s0]
+
+
+{2 Example} 
+
+{[
+ module Prms = struct
+    type 'a t = {a: 'a; b: 'a} [@@deriving prms]
+ end
+ (* make an Adam optimisation module for the parameter definition Prms *)
+ module O = Owl_opt.D.Adam.Make (Prms)
+ (* define the objective function *)
+ let f prms = Owl.Algodiff.D.Maths.(l2norm' (y - ((prms.a *@ x) + prms.b))) 
+ (* define initial parameters *)
+ let prms0 = {a = Owl.Algodiff.D.Mat.gaussian 5 5; b = Owl.Algodiff.D.gaussian 5 1} 
+ (* define fixed learning rate *)
+ let lr = Owl_opt.Lr.(Fix 1E-4) 
+ (* initialise an optimisation session *)
+ let s0 = O.init ~prms0 ~f () 
+ (* define stopping criteria: stop when function value is smaller than 1E-4 *)
+ let stop s = O.(fv s) < 1E-4
+ (* minimise objective function f *)
+ let s = O.min ~stop ~beta1:0.99 ~beta2:0.999 ~lr f
+ (* final objective function value *)
+ let c = O.fv s
+ (* final prms *)
+ let prms = O.prms s 
+]}
+ 
+{2 Important modules }
+
+{3 1. Parameters}
+- module {!Owl_opt.Prms} and module type definition {!Owl_opt.Prms.PT}
+
+{3 2. Learning rate}
+- module {!Owl_opt.Lr}
+
+{3 3. Double-precision} 
+- Vanilla gradient descent {!Owl_opt.D.Gd.Make}
+
+- Adam {!Owl_opt.D.Adam.Make}
+
+- Rmsprop {!Owl_opt.D.Rmsprop.Make}
+
+- Lbfgs (see {{:../owl-opt-lbfgs/index.html}Owl Opt Lbfgs})
+
+{3 4. Single-precision}
+- Vanilla gradient descent {!Owl_opt.S.Gd.Make}
+
+- Adam {!Owl_opt.S.Adam.Make}
+
+- Rmsprop {!Owl_opt.S.Rmsprop.Make}
+
+ 

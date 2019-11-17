@@ -1,0 +1,41 @@
+-------------------------------------------------------------------------
+| Contributors.								|
+-------------------------------------------------------------------------
+
+* Gabriel de Perthuis:
+
+  Contributed patches to make OMakefile builds work using a '-syntax' flag.
+
+* Dario Teixeira:
+
+  Tutorial, web site, miscellaneous patches, release maintenance.
+
+* Jérôme Vouillon:
+
+  Code refactoring to work in a monadic fashion (for Lwt, for example).
+
+* Mykola Stryebkov:
+
+  Support for large data sets.
+
+* Vincent Bernardoff:
+
+  Support for "point" type.
+
+* Boris Yakobowski:
+
+  Patch that replaces 'rows' and 'varname' with '_rows' and '_varname'
+  (avoids unused variable warnings)
+
+* David Allsopp:
+
+  Support for INET type, miscellaneous fixes
+
+* Michael Ekstrand:
+
+  OCaml Batteries support.
+
+* Matías Giovannini:
+
+  Cursor support.
+

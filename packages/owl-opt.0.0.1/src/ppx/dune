@@ -1,0 +1,7 @@
+(library
+ (name ppx_owl_opt)
+ (public_name ppx-owl-opt)
+ (libraries ppxlib base)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (kind ppx_deriver))

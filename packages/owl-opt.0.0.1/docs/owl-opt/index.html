@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>index (owl-opt.index)</title><link rel="stylesheet" href="../odoc.css"/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><script src="../highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><div class="content"><header><nav><a href="../index.html">Up</a> – owl-opt</nav><nav class="toc"><ul><li><a href="#owl-opt-library">Owl Opt Library</a><ul><li><a href="#workflow">Workflow</a></li><li><a href="#example">Example</a></li><li><a href="#important-modules">Important modules</a><ul><li><a href="#1.-parameters">1. Parameters</a></li><li><a href="#2.-learning-rate">2. Learning rate</a></li><li><a href="#3.-double-precision">3. Double-precision</a></li><li><a href="#4.-single-precision">4. Single-precision</a></li></ul></li></ul></li></ul></nav></header><h2 id="owl-opt-library"><a href="#owl-opt-library" class="anchor"></a>Owl Opt Library</h2><p>The entry point of this library is <a href="Owl_opt/index.html"><code>Owl_opt</code></a>.</p><h3 id="workflow"><a href="#workflow" class="anchor"></a>Workflow</h3><ol><li>define a record type <code>'a t</code> in some module <code>Prms</code></li><li>apply ppx deriver <code>@@deriving prms</code> to type <code>'a t</code> so that <code>Prms</code> has type <a href="Owl_opt__/Prms/module-type-PT/index.html"><code>Owl_opt.Prms.PT</code></a></li><li>pass <code>Prms</code> through your favourite algorithm functor to create an optimisation module <code>O</code></li><li>define an objective function <code>f</code> that takes as input your record type <code>'a t</code></li><li>define initial parameters <code>prms0</code></li><li>define learning rates <code>lr</code> with <a href="Owl_opt/Lr/index.html"><code>Owl_opt.Lr</code></a></li><li>initialise optimisation state <code>s0</code> with <code>O.init ~prms0 ~f</code></li><li>define stoping criterion function <code>stop: state -&gt; bool</code></li><li>minimise the optimisation session with <code>O.min ~stop s0</code></li></ol><h3 id="example"><a href="#example" class="anchor"></a>Example</h3><pre><code class="ml">module Prms = struct
+   type 'a t = {a: 'a; b: 'a} [@@deriving prms]
+end
+(* make an Adam optimisation module for the parameter definition Prms *)
+module O = Owl_opt.D.Adam.Make (Prms)
+(* define the objective function *)
+let f prms = Owl.Algodiff.D.Maths.(l2norm' (y - ((prms.a *@ x) + prms.b))) 
+(* define initial parameters *)
+let prms0 = {a = Owl.Algodiff.D.Mat.gaussian 5 5; b = Owl.Algodiff.D.gaussian 5 1} 
+(* define fixed learning rate *)
+let lr = Owl_opt.Lr.(Fix 1E-4) 
+(* initialise an optimisation session *)
+let s0 = O.init ~prms0 ~f () 
+(* define stopping criteria: stop when function value is smaller than 1E-4 *)
+let stop s = O.(fv s) &lt; 1E-4
+(* minimise objective function f *)
+let s = O.min ~stop ~beta1:0.99 ~beta2:0.999 ~lr f
+(* final objective function value *)
+let c = O.fv s
+(* final prms *)
+let prms = O.prms s </code></pre><h3 id="important-modules"><a href="#important-modules" class="anchor"></a>Important modules</h3><h4 id="1.-parameters"><a href="#1.-parameters" class="anchor"></a>1. Parameters</h4><ul><li>module <a href="Owl_opt/Prms/index.html"><code>Owl_opt.Prms</code></a> and module type definition <a href="Owl_opt__/Prms/module-type-PT/index.html"><code>Owl_opt.Prms.PT</code></a></li></ul><h4 id="2.-learning-rate"><a href="#2.-learning-rate" class="anchor"></a>2. Learning rate</h4><ul><li>module <a href="Owl_opt/Lr/index.html"><code>Owl_opt.Lr</code></a></li></ul><h4 id="3.-double-precision"><a href="#3.-double-precision" class="anchor"></a>3. Double-precision</h4><ul><li>Vanilla gradient descent <a href="Owl_opt__/Gd_d/Make/index.html"><code>Owl_opt.D.Gd.Make</code></a></li></ul><ul><li>Adam <a href="Owl_opt__/Adam_d/Make/index.html"><code>Owl_opt.D.Adam.Make</code></a></li></ul><ul><li>Rmsprop <a href="Owl_opt__/Rmsprop_d/Make/index.html"><code>Owl_opt.D.Rmsprop.Make</code></a></li></ul><ul><li>Lbfgs (see <a href="../owl-opt-lbfgs/index.html">Owl Opt Lbfgs</a>)</li></ul><h4 id="4.-single-precision"><a href="#4.-single-precision" class="anchor"></a>4. Single-precision</h4><ul><li>Vanilla gradient descent <a href="Owl_opt__/Gd_s/Make/index.html"><code>Owl_opt.S.Gd.Make</code></a></li></ul><ul><li>Adam <a href="Owl_opt__/Adam_s/Make/index.html"><code>Owl_opt.S.Adam.Make</code></a></li></ul><ul><li>Rmsprop <a href="Owl_opt__/Rmsprop_s/Make/index.html"><code>Owl_opt.S.Rmsprop.Make</code></a></li></ul></div></body></html>
