@@ -1,0 +1,348 @@
+/*-*- mode: tuareg -*-*/
+/**************************************************************************/
+/*                                                                        */
+/*                 ACG development toolkit                                */
+/*                                                                        */
+/*                  Copyright 2008-2021 INRIA                             */
+/*                                                                        */
+/*  More information on "http://acg.gforge.inria.fr/"                     */
+/*  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     */
+/*  Authors: see the AUTHORS file                                         */
+/*                                                                        */
+/*                                                                        */
+/*                                                                        */
+/*                                                                        */
+/*  $Rev::                              $:  Revision of last commit       */
+/*  $Author::                           $:  Author of last commit         */
+/*  $Date::                             $:  Date of last commit           */
+/*                                                                        */
+/**************************************************************************/
+
+%mltop{
+       open Logic
+  open AcgData.Environment
+  open Script_lexer
+  let id = fun x -> x
+    
+  let pr s = Printf.printf "%s\n%!" s
+
+  type global_data_type = bool*bool*(string list)*(string option)
+
+  module Parser =
+  struct  
+    module F=Functions.Functions
+      
+  }
+  
+  {
+    open Dyp
+    let local_data = (Environment.empty,fun _ -> failwith "Bug: Not yet defined")
+    (* for global_data, the first projection describe whether when
+       executing a script, the interpreter should wait between two
+       commands. The second projection is used to specify whether to
+       echo the current command. The third projection correspond to
+       the include dirs, and the the fourth one indicates whether a
+       svg output (if relevant) should be generated and in which file
+       name (Some "filename") or not (None).  *)
+      
+    let global_data = false,true,[""],None
+
+    let echo ((_,b,_,_):global_data_type) s = if b then Printf.printf "%s\n%!" s else ()
+    let wait  ((b,_,_,_):global_data_type) f = 
+      if b then ignore (f () )
+    let svg ((_,_,_,b):global_data_type) = b
+
+
+  }
+  
+  
+%token
+  EOII
+<(string*Abstract_syntax.Abstract_syntax.location*string)>LOAD_DATA
+<(string*Abstract_syntax.Abstract_syntax.location*string)>LOAD_SCRIPT
+<(string*Abstract_syntax.Abstract_syntax.location*string)>LOAD_OBJECT
+  LOAD_HELP
+  LIST
+  SELECT
+  UNSELECT
+  TRACE
+  HELP
+<Abstract_syntax.Abstract_syntax.location>PRINT
+<(string*Abstract_syntax.Abstract_syntax.location*string)>ANALYSE
+  ANALYSE_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>CHECK
+  CHECK_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>REALIZE
+  REALIZE_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>REALIZE_SHOW
+  REALIZE_SHOW_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>PARSE
+  PARSE_HELP
+<Abstract_syntax.Abstract_syntax.location>IDB
+<(string*Abstract_syntax.Abstract_syntax.location*string)>QUERY
+QUERY_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>ADD
+  COMPOSE
+  ADD_HELP
+<string>SEMICOLONN
+  AS
+  DONT
+  WAIT
+  EXIT
+<(string*Abstract_syntax.Abstract_syntax.location)>IDENTT
+  CREATE_SIG
+  CREATE_LEX
+  CREATE_HELP
+<(string*Abstract_syntax.Abstract_syntax.location*string)>SAVE
+  SAVE_HELP
+
+
+%start <(Environment.t)> zzcommands
+
+
+%%
+
+  zzcommands :
+| EOII @{let e,f = dyp.last_local_data in
+	   (e,[Local_data (e,f)])}
+| command<c> ...@{let e,f = (dyp.last_local_data) in
+		  let e' = 
+		    try
+		      c e
+		    with
+		      | F.Not_yet_implemented s-> raise (Scripting_errors.Error (Scripting_errors.Not_yet_implemented s,(Lexing.dummy_pos,Lexing.dummy_pos)))
+		      | Scripting_errors.Error (er,loc_er) ->
+			  let () = Printf.fprintf stderr "Error: %s\n%!" (Scripting_errors.error_msg er loc_er) in
+			  let _ = Script_lexer.reset_echo () in
+			    e
+		  in
+		    try
+		      let () = wait dyp.global_data read_line in
+			(e',[Local_data (e',f)])
+		    with
+		      | Sys.Break 
+		      | End_of_file -> raise F.Stop }
+      zzcommands @{let e,f = (dyp.last_local_data) in e,[Local_data (e,f)]}
+
+
+		  command:
+| EXIT SEMICOLONN<l> @{let g_d1,g_d2,g_d3,g_d4 = dyp.global_data in
+			 (fun e -> let () = echo dyp.global_data l in let () = F.exit () in e),[Global_data (true,g_d2,g_d3,g_d4)]}
+| WAIT SEMICOLONN<l> @{let g_d1,g_d2,g_d3,g_d4 = dyp.global_data in
+			 (fun e -> let () = echo dyp.global_data l in let () = F.wait () in e),[Global_data (true,g_d2,g_d3,g_d4)]}
+| DONT WAIT SEMICOLONN<l> @{let g_d1,g_d2,g_d3,g_d4 = dyp.global_data in
+			      (fun e ->  let () = echo dyp.global_data l in let () = F.dont_wait () in e),[Global_data (false,g_d2,g_d3,g_d4)]}
+| LOAD_DATA<s,loc,l>  {fun e ->  let () = echo dyp.global_data l in
+			 let _,_,incl,_ = dyp.global_data in
+			   F.load F.Data  s  incl e}
+| LOAD_OBJECT<s,loc,l>  {fun e ->  let () = echo dyp.global_data l in
+			 let _,_,incl,_ = dyp.global_data in
+			   F.load F.Object s incl e}
+| LOAD_SCRIPT<s,loc,l>  {fun e ->  let () = echo dyp.global_data l in
+			   let _,_,includes,_ = dyp.global_data in
+			   let new_env = F.load (F.Script (snd dyp.last_local_data)) s includes e in
+			     new_env}
+| LIST SEMICOLONN<l> {fun e ->  let () = echo dyp.global_data l in let () = F.list e in e}
+| SELECT IDENTT<name,loc>  SEMICOLONN<l> {fun e ->  let () = echo dyp.global_data l in F.select name loc e}
+| UNSELECT SEMICOLONN<l> { let () = echo dyp.global_data l in F.unselect}
+| TRACE SEMICOLONN<l> { let () = echo dyp.global_data l in fun e -> let () = F.trace () in e}
+| DONT TRACE SEMICOLONN<l> { let () = echo dyp.global_data l in fun e -> let () = F.dont_trace () in e}
+| optional_ident<name> PRINT<p> SEMICOLONN<l> {
+  let () = echo dyp.global_data l in fun e -> 
+    let loc = 
+      match name with
+      | None -> p
+      | Some (_,l) -> l in
+    match name with
+    | None -> let () = F.print e loc in e
+    | Some (n,l) -> let () = F.print ~name:n e loc in e}
+| optional_idents<names> ANALYSE<t,l,line>   { let () = echo dyp.global_data line in fun e -> 
+					     match names with
+					       | [] -> let () = F.analyse e t l in e
+					       | _ -> let () = F.analyse  ~names e t l in e}
+| optional_idents<names> CHECK<t,l,line>   { 
+  let () = echo dyp.global_data line in fun e -> 
+    match names with
+    | [] -> let () = F.check e t l in e
+    | _ -> let () = F.check  ~names e t l in e}
+| optional_idents<names> REALIZE<t,l,line>   { 
+  let () = echo dyp.global_data line in fun e -> 
+    match names with
+    | [] -> let () = F.realize ?svg_output:(svg dyp.global_data) e t l in e
+    | _ -> let () = F.realize  ~names ?svg_output:(svg dyp.global_data) e t l in e}
+| optional_idents<names> REALIZE_SHOW<t,l,line>   { 
+  let () = echo dyp.global_data line in fun e -> 
+    match names with
+    | [] -> let () = F.realize_show e t l in e
+    | _ -> let () = F.realize_show  ~names e t l in e}
+| optional_ident<name> PARSE<t,l,line>   {
+  let () = echo dyp.global_data line in fun e -> 
+    match name with
+    | None ->  let () = F.parse  e t l in e
+    | Some (n,lex_loc) ->  let () = F.parse ~name:n e t lex_loc in e}
+| optional_ident<name> QUERY<t,l,line>   {
+  let () = echo dyp.global_data line in fun e -> 
+    match name with
+    | None ->  let () = F.query  e t l in e
+    | Some (n,lex_loc) ->  let () = F.query ~name:n e t lex_loc in e}
+| optional_ident<name> IDB<p> SEMICOLONN<l> {
+  let () = echo dyp.global_data l in fun e -> 
+    let loc = 
+      match name with
+      | None -> p
+      | Some (_,l) -> l in
+    match name with
+    | None -> let () = F.idb e loc in e
+    | Some (n,l) -> let () = F.idb ~name:n e loc in e}
+| optional_idents<names> ADD<t,l,line>   { let () = echo dyp.global_data line in fun e -> 
+					     match names with
+					       | [] -> F.add e t l
+					       | _ -> F.add  ~names e t l}
+| COMPOSE IDENTT<n1> IDENTT <n2> AS IDENTT<n3> SEMICOLONN<l> { let () = echo dyp.global_data l in fun e -> F.compose n1 n2 n3 e}
+| HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help None) in e}
+| all_commands<c> HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some c)) in e}
+| LOAD_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Load)) in e}
+
+
+| LOAD_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Load)) in e}
+| ANALYSE_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Analyse)) in e}
+| REALIZE_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Realize)) in e}
+| REALIZE_SHOW_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.RealizeShow)) in e}
+| CHECK_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Check)) in e}
+| PARSE_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Parse)) in e}
+| QUERY_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Query)) in e}
+| SAVE_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Save)) in e}
+| ADD_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Add)) in e}
+| CREATE_HELP SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> let () = F.help (F.Help (Some F.Create)) in e}
+
+| CREATE_SIG IDENTT<n> SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> F.create_sig n e}
+| CREATE_LEX IDENTT<n> IDENTT<n1> IDENTT<n2>  SEMICOLONN<l> {let () = echo dyp.global_data l in fun e -> F.create_lex ~abs:n1 ~obj:n2 n e}
+| optional_idents<names> SAVE<filename,l,line>   { let () = echo dyp.global_data line in fun e -> 
+						match names with
+						  | [] -> let () = F.save filename e l in e
+						  | _ -> let () = F.save ~names filename e l in e}
+
+      all_commands:
+| WAIT {F.Wait}
+| DONT WAIT {F.Dont_wait}
+| LIST {F.List}
+| SELECT {F.Select}
+| UNSELECT {F.Unselect}
+| TRACE {F.Trace}
+| DONT TRACE {F.Dont_trace}
+| PRINT {F.Print}
+| ANALYSE {F.Analyse}
+| CHECK {F.Check}
+| REALIZE {F.Realize}
+| REALIZE_SHOW {F.RealizeShow}
+| PARSE {F.Parse}
+| IDB {F.Idb}
+| QUERY {F.Query}
+| ADD {F.Add}
+| COMPOSE {F.Compose}
+| HELP {F.Help None}
+| SAVE {F.Save}
+
+
+      optional_ident :
+| {None}
+| IDENTT<id> {Some id}
+
+
+      optional_idents :
+| {[]}
+| IDENTT<id> optional_idents<ids> {id::ids}
+
+%%
+
+{
+
+  let rec parse_file ?(verbose=true) ?svg_output filename  includes env =
+    try
+      let in_ch =
+	let fullname = UtilsLib.Utils.find_file filename includes  in
+	  open_in fullname in
+      let lexbuf = Lexing.from_channel in_ch in
+      let () = Printf.printf "Parsing script file \"%s\"...\n%!" filename in
+      let new_env= (fst (List.hd (zzcommands ~global_data:(F.should_wait (),verbose,includes,svg_output) ~local_data:(env,parse_file ~verbose ?svg_output)  Script_lexer.lexer lexbuf))) in
+      let () = Printf.printf "Done.\n%!" in
+	new_env
+    with
+      | UtilsLib.Utils.No_file(f,msg) -> let e = AcgData.Error.System_error (Printf.sprintf "No such file \"%s\" in %s" f msg) in
+	let () = Printf.fprintf stderr "Error: %s\n%!" (AcgData.Error.error_msg e filename) in
+	let _ = Script_lexer.reset_echo () in
+	  env
+      | Sys_error s -> let e = AcgData.Error.System_error s in
+	let () = Printf.fprintf stderr "Error: %s\n%!" (AcgData.Error.error_msg e filename) in
+	let _ = Script_lexer.reset_echo () in
+	  env
+      | AcgData.Error.Error e -> 
+	  let () = Printf.fprintf stderr "Error: %s\n%!" (AcgData.Error.error_msg e filename) in
+	  let _ = Script_lexer.reset_echo () in
+	    env
+      | Scripting_errors.Error (e,p) ->
+	  let () = Printf.fprintf stderr "Error: %s\n%!" (Scripting_errors.error_msg e p) in
+	  let _ = Script_lexer.reset_echo () in
+	    env
+	      
+  let commented_regexp = Str.regexp "^[ \t#]*#"
+
+  let is_fully_commented_line s = Str.string_match commented_regexp s 0
+
+  let read_line_from_in_ch in_ch =
+    let () = flush stdout in
+    input_line in_ch
+    
+
+  let bufferize in_ch =
+    let () = Printf.printf "# " in
+    let buf = Buffer.create 16 in
+    let no_semi_colon=ref true in
+    let () =
+      while !no_semi_colon do
+	let input = read_line_from_in_ch in_ch in
+	  if not (is_fully_commented_line input) then
+	    try
+	      let semi_colon_index=String.index input ';' in
+	      let () = Buffer.add_string buf (String.sub input 0 (semi_colon_index+1)) in
+		no_semi_colon:=false
+	    with
+	      | Not_found ->
+		  Buffer.add_string buf input ;
+		  Buffer.add_char buf '\n';
+		  Printf.printf "  "
+	  else
+	    ()
+      done in
+      Buffer.contents buf
+	
+
+	
+  let parse_entry ~resize ?svg_output ?(verbose=true) in_ch includes env =
+    let in_str = bufferize in_ch in
+    let lexbuf = Lexing.from_string in_str in
+    let () = 
+      if resize then
+	let () = UtilsLib.Utils.sterm_set_size () in
+	UtilsLib.Utils.term_set_size ()
+      else
+	() in
+  let new_env=
+    try
+      (fst (List.hd (zzcommands ~global_data:(false,verbose,includes,svg_output) ~local_data:(env,parse_file ~verbose ?svg_output)  Script_lexer.lexer lexbuf))) 
+    with
+    | F.Stop -> env
+    | Failure f when f="lexing: empty token" -> env
+    | AcgData.Error.Error e -> 
+      let () = Printf.fprintf stderr "Error: %s\n%!" (AcgData.Error.error_msg e "stdin") in
+      let _ = Script_lexer.reset_echo () in
+      env
+    | Scripting_errors.Error (e,p) ->
+      let () = Printf.fprintf stderr "Error: %s\n%!" (Scripting_errors.error_msg e p) in
+      let _ = Script_lexer.reset_echo () in
+      env in
+  new_env
+	
+
+end}
+

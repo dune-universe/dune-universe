@@ -1,0 +1,265 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                 ACG development toolkit                                *)
+(*                                                                        *)
+(*                  Copyright 2008-2021 INRIA                             *)
+(*                                                                        *)
+(*  More information on "http://acg.gforge.inria.fr/"                     *)
+(*  License: CeCILL, see the LICENSE file or "http://www.cecill.info"     *)
+(*  Authors: see the AUTHORS file                                         *)
+(*                                                                        *)
+(*                                                                        *)
+(*                                                                        *)
+(*                                                                        *)
+(*  $Rev::                              $:  Revision of last commit       *)
+(*  $Author::                           $:  Author of last commit         *)
+(*  $Date::                             $:  Date of last commit           *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* We first provide a signature for the derivation trees *)
+
+signature derivation_trees =
+    
+    (* Types "Xa" with an "a" index (such as "Sa") are meant
+       for adjunction. See https://hal.inria.fr/inria-00141913 for further
+       explanation of the encoding of TAG into ACG *)
+
+    Sa, Na, Na_d, N, VPa, S, WH : type;
+    
+    (* Declaration of abstract constants together with their
+       types. -> stands for the linear implication and => (not used in this
+       signature) stands for the intuitionistic implication *)
+    
+    C_dog, C_cat : Na_d -> Na-> N;
+    C_sleeps : Sa -> VPa -> N -> S;
+    C_chases, C_loves, C_to_love : Sa -> VPa -> N -> N -> S;
+    C_every, C_a : Na_d;
+    C_slowly, C_seems : VPa -> VPa;
+    C_new, C_big, C_black : Na -> Na;
+    C_claims, C_said : Sa -> VPa -> N -> Sa;
+    C_john, C_paul, C_mary, C_bill : N;
+    C_who : WH;
+    C_liked : Sa -> VPa -> WH -> N -> S;
+    C_does_think : Sa -> VPa -> N -> Sa;
+    
+    (* Dummy element to specify the end of adjunctions *)
+    I_vp : VPa;
+    I_n : Na;
+    I_s : Sa;
+end
+
+
+(* Now we specify the signature for derived trees *)
+
+signature derived_trees =
+    
+    (* It uses ony one type : the type of trees *)	
+    
+    tree : type;
+    
+    (* Here are the non-terminal symbols we find in the trees, with
+       an index indicating their arity *)
+    WH1, N1, VP1 : tree -> tree;
+    N2, S2, VP2 : tree -> tree -> tree;
+    
+    (* Here are the terminal symbols *)
+    
+    every, dog, chases, a, cat, sleeps, slowly, new, big, black, seems,
+    john, mary, bill, paul, claims, loves, to_love, who, said, liked,
+    does, think : tree;
+    
+    (* We define a few constants that will make the lexicon definitions
+       easier. *)
+    
+    n = lambda n. lambda d a. d (a (N1 n))
+      : tree -> (tree -> tree) -> (tree -> tree) -> tree;
+    iv = lambda v. lambda s a np0. s (S2 np0 (a (VP1 v)))
+       : tree -> (tree -> tree)  -> (tree -> tree) -> tree -> tree;
+    tv = lambda v. lambda s a np0 np1. s (S2 np0 (a (VP2 v np1)))
+       : tree -> (tree -> tree) -> (tree -> tree) -> tree -> tree -> tree;
+    ph_arg_v = lambda v. lambda s_root a np0 s_foot. s_root (S2 np0 (a (VP2 v s_foot)))
+             : tree -> (tree -> tree) -> (tree -> tree) -> tree -> tree -> tree;
+    det = lambda d. lambda n. N2 d n
+        : tree -> (tree -> tree);
+    adv = lambda adv . lambda a v. a (VP2 v adv)
+        : tree -> (tree -> tree) -> (tree -> tree);
+    l_adj = lambda adj. lambda a n. a (N2 adj n)
+          : tree -> (tree -> tree) -> (tree -> tree);
+    r_adj = lambda adj. lambda a n. a (N2 n adj)
+          : tree -> (tree -> tree) -> (tree -> tree);
+    ctrl_v = lambda v. lambda v_root v_foot. v_root (VP2 v v_foot)
+           : tree -> (tree -> tree) -> (tree -> tree);
+    np = lambda proper_name. N1 proper_name
+       : tree -> tree;
+    inf_tv = lambda v. lambda s a np0 np1. S2 np1 (s (S2 np0 (a (VP1 v))))
+           : tree -> (tree -> tree) -> (tree -> tree) -> tree -> tree -> tree;
+    wh_extract_tv = lambda v. lambda s adv wh subj. S2 wh (s (S2 subj (adv (VP1 v))))
+                  : tree -> (tree -> tree) -> (tree -> tree) -> tree -> tree -> tree;
+end
+
+
+(* Then a signature for the strings *)
+
+signature strings =
+    o : type;
+    string = o -> o : type;
+    
+    (* We can define infix and prefix symbols. 
+       Note that as for now, the length of symbols can only be 1. *)
+    
+    infix [Right] + = lambda a b. lambda z. a (b z) : string -> string -> string;
+    
+    every, dog, chases, a, cat, sleeps, slowly, new, big, black, seems,
+    john, mary, bill, paul, claims, loves, to, love, who, said, liked,
+    does, think : string;
+end
+
+
+(* Ok. Now we look at our first lexicon. It translates derived trees into
+   strings. *)
+
+lexicon tag_strings (derived_trees) : strings =
+    
+    (* So every tree results in a string. *)
+    tree := string;
+    
+    every := every; 
+    dog := dog;
+    chases := chases;
+    a := a;
+    cat := cat;
+    sleeps := sleeps;
+    slowly := slowly;
+    new := new;
+    big := big;
+    black := black;
+    seems := seems;
+    john := john;
+    mary := mary;
+    bill := bill;
+    paul := paul;
+    
+    claims := claims;
+    loves := loves;
+    to_love := (+) to love;
+    who := who;
+    said := said;
+    liked := liked;
+    does := does;
+    think:= think;
+    
+    
+    WH1, N1, VP1 := lambda f. f;
+    N2, S2, VP2 := lambda f g. f + g;
+    VP2 := (+);
+    
+end
+
+
+(* We also provide a signature for the semantics *)
+
+signature semantics =
+    
+    (* We define the usual types *)
+    
+    e, t : type;
+    
+    (* Then few non logical-constants *)
+    dog, cat, sleep : e -> t;
+    love, chase, like : e -> e -> t;
+    j, m, b, p : e;
+    slowly : t -> t;
+    seem : (e -> t) -> e -> t;
+    new, big, black : e ->t;
+    claim, say, think : e -> t -> t;
+    
+    WHO : (e -> t) -> t;
+    
+    (* And finally, here are the logical constants *)
+    
+    infix [Right] & : t -> t -> t;	
+    infix [Right, < & ] > : t -> t -> t;
+    binder All : (e => t) -> t;
+    binder Ex : (e => t) -> t;
+    
+end
+
+
+(* We now define the semantics associated to each derivation tree. *)
+
+lexicon tag_semantics (derivation_trees) : semantics =
+    S := t;
+    N := (e -> t) -> t;
+    Sa := t -> t;
+    Na := (e => t) -> (e => t);
+    VPa := (e -> t) -> (e -> t);
+    Na_d := (e => t) -> (e -> t) -> t;
+    WH := (e ->t) -> t;
+    
+    
+    C_every := lambda n. lambda P. All x. (n x) > (P x);
+    C_a := lambda n. lambda P. Ex x. (n x) & (P x);
+    
+    C_dog := lambda d a. d (a (Lambda x. dog x));
+    C_cat := lambda d a. d (a (Lambda x. cat x));
+    C_sleeps := lambda s a S. s (S (a (lambda x. sleep x)));
+    C_chases := lambda s a S O. s (S (a (lambda x. O (lambda y. chase x y))));
+    C_loves := lambda s a S O. s (S (a (lambda x. O (lambda y. love x y))));
+    C_to_love := lambda s a O S. s (S (a (lambda x. O (lambda y. love x y))));
+    C_slowly := lambda vp r. vp (lambda x. slowly (r x));
+    C_seems := lambda vp r. vp (lambda x. seem r x);
+    C_new := lambda a n. a (Lambda x. new x & n x);
+    (* Application has precedence over operators such as & *)
+    (* So we can drop the parenthesis *)
+    C_big := lambda a n. a (Lambda x. (big x) & (n x));
+    C_black := lambda a n. a (Lambda x. (black x) & (n x));
+    C_claims := lambda sa a S comp. sa (S (a (lambda x. claim x comp)));
+    C_said := lambda sa a S comp. sa (S (a (lambda x. say x comp)));
+    C_john := lambda P. P j;
+    C_mary := lambda P. P m;
+    C_paul := lambda P. P p;
+    C_bill := lambda P. P b;
+    C_who := lambda P. WHO P;
+    C_liked := lambda sa a w S. w (lambda y. sa (S (a (lambda x. like x y))));
+    C_does_think := lambda sa a S comp.	sa (S (a (lambda x. think x comp)));
+    I_vp := lambda x. x;
+    I_n := lambda x. x;
+    I_s := lambda x. x;	
+end
+
+
+(* And a lexicon from derivation trees to derived trees. *)
+
+lexicon tag_syntax (derivation_trees) : derived_trees =
+    N, S, WH := tree;
+    Sa, Na, VPa, Na_d := tree -> tree;
+    C_john := np john;
+    C_mary := np mary;
+    C_bill := np bill;
+    C_paul := np paul;
+    C_dog := n dog;
+    C_cat := n cat;
+    C_chases := tv chases;
+    C_loves := tv loves;
+    C_to_love := inf_tv to_love;
+    C_sleeps := iv sleeps;
+    C_seems := ctrl_v seems;
+    C_claims := ph_arg_v claims;
+    C_said := ph_arg_v said;
+    C_every := det every;
+    C_a := det a;
+    C_slowly := adv slowly;
+    C_new := l_adj new;
+    C_big := l_adj big;
+    C_black := l_adj black;
+    
+    C_who := WH1 who;
+    C_liked := wh_extract_tv liked;
+    C_does_think := lambda s_root a subj s_foot. s_root (S2 does (S2 subj (a (VP2 think s_foot))));
+    
+    I_n, I_vp, I_s := lambda x. x;
+end
+
+
+lexicon tag_yields = tag_strings << tag_syntax
