@@ -1,0 +1,26 @@
+version: "1.0"
+opam-version: "2.0"
+maintainer: "Liang Wang <ryanrhymes@gmail.com>"
+authors: [ "Liang Wang" ]
+license: "MIT"
+homepage: "https://github.com/owlbarn/owl_jupyter"
+dev-repo: "git+https://github.com/owlbarn/owl_jupyter.git"
+bug-reports: "https://github.com/owlbarn/owl_jupyter/issues"
+doc: "https://owlbarn.github.io/owl_jupyter/"
+synopsis: "Owl - Jupyter Wrappter"
+description: """
+Owl-Jupyter is Owl's wrappter on Jupyter Notebook.
+"""
+
+
+build: [
+  [ "dune" "build" "-p" name "-j" jobs ]
+]
+
+depends: [
+  "ocaml" {>= "4.06.0"}
+  "owl-top"
+  "owl-plplot"
+  "jupyter"
+  "dune" {build}
+]

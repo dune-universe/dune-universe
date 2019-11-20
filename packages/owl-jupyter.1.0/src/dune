@@ -1,0 +1,13 @@
+(library
+  (name owl_jupyter)
+  (public_name owl-jupyter)
+  (wrapped false)
+  (modes byte)
+  (flags (:standard -safe-string))
+  (libraries
+    owl-top
+    owl-plplot
+    jupyter
+    jupyter.notebook
+  )
+)

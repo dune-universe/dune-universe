@@ -1,0 +1,7 @@
+(library
+  (public_name current.term)
+  (name current_term)
+  (libraries fmt bos)
+  (preprocess (per_module
+                ((pps ppx_deriving.std) output)
+              )))
