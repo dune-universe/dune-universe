@@ -1,0 +1,3 @@
+(library (name async_bus) (public_name async_extra.async_bus)
+ (preprocess (pps ppx_jane -check-doc-comments))
+ (libraries async_kernel core_kernel))

@@ -1,0 +1,3 @@
+(library (name async_durable) (public_name async_durable)
+ (preprocess (pps ppx_jane -allow-unannotated-ignores -check-doc-comments))
+ (libraries async_kernel async_rpc_kernel core_kernel))

@@ -1,0 +1,4 @@
+(library (name async_bus_test)
+ (libraries async async_bus
+  expect_test_helpers_kernel.expect_test_helpers_base)
+ (preprocess (pps ppx_jane)))

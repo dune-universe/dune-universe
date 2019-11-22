@@ -1,0 +1,32 @@
+(lang dune 1.11)
+
+(name omg)
+(version 0.0.1)
+
+(license ISC)
+
+(authors "Léo Andrès <contact@ndrs.fr>")
+
+(maintainers "Léo Andrès <contact@ndrs.fr>")
+
+(source
+ (uri git://git.zapashcanon.fr/zapashcanon/omg.git))
+
+(bug_reports https://git.zapashcanon.fr/zapashcanon/omg/issues)
+
+(homepage https://git.zapashcanon.fr/zapashcanon/omg)
+
+(documentation https://doc.zapashcanon.fr/omg/)
+
+(generate_opam_files true)
+
+(explicit_js_mode)
+
+(package
+ (name omg)
+ (synopsis "Generate text using Markov chains")
+ (description
+   "omg is an OCaml library to generate random text using Markov chains. You initialize a generator, feed it with some input, then it generates random text based on the input.")
+ (depends
+  (dune
+   (> 1.11.0))))

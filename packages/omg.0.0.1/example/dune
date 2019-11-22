@@ -1,0 +1,3 @@
+(executable
+ (name random_text)
+ (libraries omg uutf uucp))

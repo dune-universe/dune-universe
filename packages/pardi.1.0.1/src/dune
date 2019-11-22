@@ -1,5 +1,0 @@
-
-(executables
-  (names        pardi)
-  (public_names pardi)
-  (libraries batteries dolog parany minicli str))

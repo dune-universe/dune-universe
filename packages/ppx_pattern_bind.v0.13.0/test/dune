@@ -1,0 +1,2 @@
+(library (name test_ppx_pattern_bind) (libraries core incremental)
+ (preprocess (pps ppx_jane ppx_pattern_bind)))

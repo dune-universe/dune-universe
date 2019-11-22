@@ -1,0 +1,217 @@
+[%%org
+  {|
+#+TITLE: ppx\_pattern\_bind
+
+A ppx rewriter that is intended for use with Incremental. It makes it
+easier to write incremental computations using pattern-matching in a
+way that causes incremental nodes to fire as little as possible.
+
+* Description
+
+It's easiest to understand this rewriter in the context of
+Incremental, and indeed, while it can be used with any monadic
+library, we don't have any other immediate use-cases in mind.
+
+To see why it's useful, consider what it might be like to build an
+incremental rendering function for a value that is structured as a
+variant.
+
+Here's a simple example, starting with two model types, each with a
+(in this case trivial) incremental function for rendering the model to
+a string.
+|}]
+
+open Base
+module Incr = Incremental.Make ()
+open Incr.Let_syntax
+
+module A_model = struct
+  type t = int
+
+  let render t =
+    let%map t = t in
+    Int.to_string t
+end
+
+module B_model = struct
+  type t = float
+
+  let render t =
+    let%map t = t in
+    Float.to_string t
+end
+
+[%%org
+  {|
+The final model type combines the underlying models under a variant.
+|}]
+
+module Model = struct
+  type t =
+    | A of A_model.t
+    | B of B_model.t
+end
+
+[%%org
+  {|
+Writing a render function for this is a little tricky. We could do it
+as follows, using bind:
+|}]
+
+
+let render (m : Model.t Incr.t) =
+  match%bind m with
+  | A a -> A_model.render (Incr.return a)
+  | B b -> B_model.render (Incr.return b)
+;;
+
+[%%org
+  {|
+But while this is semantically reasonable, the implementation is
+entirely non-incremental, since the bind means you redo the entire
+rendering of the model from scratch on any change.
+
+With ~match%pattern_bind~, we can build a more incremental version of
+this computation as follows (note that ~x~ and ~y~ are incremental nodes).
+|}]
+
+
+let render (m:Model.t Incr.t) =
+  match%pattern_bind m with
+  | A x -> A_model.render x
+  | B y -> B_model.render y
+;;
+
+[%%org {|
+The bind part of this computation only refires when the /case/ of the
+match changes and not when the variant fields change.
+
+For convenience, we also have a ~match%pattern_map~, which behaves identically
+to a ~%pattern_bind~, but its variables are not incremental and the value on the
+right hand side does not need to be incremental.
+
+The only difference between ~match%pattern_map~ and ~match%map~ is that using
+~match%pattern_map~ cuts off computations in the non-matched part of the
+patterns.  That is, updates to the non-matched part of the patterns will not
+trigger a recomputation of the right-hand side of the ~%pattern_map~.
+|}]
+
+module Tuple_model = struct
+  type t =
+    | A of int * int
+    | B of float
+end
+
+let increment_model (m : Tuple_model.t Incr.t) =
+  match%pattern_map m with
+  | A (x, _) -> Model.A (x + 1)
+  | B y -> Model.B (y +. 1.)
+;;
+
+[%%org {|
+Another use case for ~%pattern_bind~ occurs with incremental records. Often, we
+wish to construct a new node that depends on only few values from the record.
+A correct, but not very incremental, way of doing this would be to simply pattern
+match on the record.
+|}]
+
+module Record_model = struct
+  type t = {
+    a : int
+  ; b : bool
+  ; c : float
+  }
+  [@@deriving fields]
+end
+
+let render_ab a b =
+  if b then Int.to_string a else "Error"
+
+let render (m : Record_model.t Incr.t) =
+  let%map {a; b; _} = m in
+  render_ab a b
+;;
+
+[%%org {|
+Since ~%pattern_bind~ projects out each variable from a pattern separately, we
+can get more incrementality with a ~let%pattern_bind~, which is equivalent to
+a ~match%pattern_bind~ with a single case:
+|}]
+
+let render (m : Record_model.t Incr.t) =
+  let%pattern_bind {a; b; _} = m in
+  let%map a = a and b = b in
+  render_ab a b
+;;
+
+[%%org {|
+For convenience, we also have a ~let%pattern_map~:
+|}]
+
+let render (m : Record_model.t Incr.t) =
+  let%pattern_map {a; b; _} = m in
+  render_ab a b
+;;
+
+[%%org
+  {|
+* Supported Patterns
+
+The ~match%pattern_bind~ works with almost any pattern.
+
+It supports nested patterns by projecting out each of the variables in
+the pattern separately. This allows each variable in the pattern
+to be an incremental, regardless of the nesting structure of the
+pattern.
+
+For example, the right hand side of a case such as
+|}];;
+
+
+let f e =
+  match%pattern_bind e with
+  | ((x,_),_,(_,y)) ->
+    let%map x = x and y = y in
+    x + y
+;;
+
+[%%org {|
+is translated to
+|}]
+
+let f e =
+  let v = e in
+  let x = match%map v with ((x,_),_,(_,_)) -> x
+  and y = match%map v with ((_,_),_,(_,y)) -> y in
+  let%map x = x and y = y in
+  x + y
+;;
+
+[%%org {|
+* Unsupported Patterns
+
+Patterns that bind module names are not supported, as shown below. This
+is because you can't put an ordinary module inside of a monadic value.
+
+Patterns that match on exceptions are not supported, because they would
+require support from ~ppx_let~.
+
+~when~ is not supported because it creates ambiguities about whether a variable
+is bound in the pattern for the purpose of use in the ~when~ computation, or
+the right hand side, or both, and this matters for warnings and not depending
+on spurious values.
+|}]
+
+let f e  = match%pattern_bind e with (module M : S) -> return 0
+let f e  = match%pattern_bind e with x -> return 0 | exception _ -> return 1
+let f e  = match%pattern_bind e with x when is_ok x -> return 0
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: %pattern_bind cannot be used with (module ..) patterns.
+Line _, characters _-_:
+Error: %pattern_bind cannot be used with exception patterns.
+Line _, characters _-_:
+Error: %pattern_bind cannot be used with `when`.
+|}]

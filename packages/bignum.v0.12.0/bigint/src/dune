@@ -1,3 +1,0 @@
-(library (name bigint) (public_name bignum.bigint)
- (libraries core_kernel typerep num splittable_random zarith)
- (preprocess (pps ppx_jane)))

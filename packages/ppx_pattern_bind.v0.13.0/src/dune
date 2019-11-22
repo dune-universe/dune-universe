@@ -1,0 +1,2 @@
+(library (name ppx_pattern_bind) (libraries base ppx_let.expander ppxlib)
+ (preprocess (pps ppxlib.metaquot)))

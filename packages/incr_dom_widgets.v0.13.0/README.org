@@ -1,0 +1,3 @@
+#+TITLE: ~Incr_dom_widgets~: shared abstractions for ~Incr_dom~ applications
+
+A library of libraries and widgets for ~Incr_dom~ applications.

@@ -1,0 +1,4 @@
+(library (name ppx_xml_conv) (public_name ppx_xml_conv) (kind ppx_deriver)
+ (ppx_runtime_libraries csvfields)
+ (libraries base ppx_conv_func ppx_fields_conv ppxlib)
+ (preprocess (pps ppxlib.metaquot)))

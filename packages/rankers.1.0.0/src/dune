@@ -1,0 +1,5 @@
+
+(executables
+  (names bwmine bwexploit)
+  (public_names rankers_bwmine rankers_bwexploit)
+  (libraries molenc parmap cpm nlopt parany minicli))

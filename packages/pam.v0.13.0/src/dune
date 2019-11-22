@@ -1,0 +1,4 @@
+(library (name pam) (public_name pam) (libraries core)
+ (library_flags -cclib -lpam -ccopt -O2) (c_names pam_stubs)
+ (virtual_deps conf-pam)
+ (preprocess (pps ppx_jane -allow-unannotated-ignores)))

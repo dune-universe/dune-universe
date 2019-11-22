@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(executable
-  ((name         main)
-   (public_name irmin)
-   (package     irmin-unix)
-   (libraries   (irmin-unix cmdliner irmin-mem
-                 logs.fmt logs.cli fmt.cli fmt.tty))))
