@@ -1,0 +1,36 @@
+(lang dune 1.11)
+
+(name memo)
+(version 0.0.1)
+
+(license ISC)
+
+(authors "Léo Andrès <contact@ndrs.fr>")
+
+(maintainers "Léo Andrès <contact@ndrs.fr>")
+
+(source
+ (uri git://git.zapashcanon.fr/zapashcanon/memo.git))
+
+(bug_reports https://git.zapashcanon.fr/zapashcanon/memo/issues)
+
+(homepage https://git.zapashcanon.fr/zapashcanon/memo)
+
+(documentation https://doc.zapashcanon.fr/memo/)
+
+(generate_opam_files true)
+
+(explicit_js_mode)
+
+(package
+ (name memo)
+ (synopsis "Memoïzation library")
+ (description
+   "memo is an OCaml library for memoïzation. It provides easy ways to memoïze a function, in a type-safe and modular way and the ability to get forgetful memoïzation.")
+ (depends
+  (ocaml
+   (>= 4.05.0))
+  (dune
+   (>= 1.11.0))
+  (bisect_ppx
+   (>= 1.4.1))))

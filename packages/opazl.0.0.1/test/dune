@@ -1,0 +1,5 @@
+(test
+ (name test)
+ (libraries opazl)
+ (deps
+  (file 2017-05-02.log)))

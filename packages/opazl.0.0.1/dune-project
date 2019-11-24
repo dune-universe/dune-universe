@@ -1,0 +1,38 @@
+(lang dune 1.11)
+
+(name opazl)
+(version 0.0.1)
+
+(license ISC)
+
+(authors "Léo Andrès <contact@ndrs.fr>")
+
+(maintainers "Léo Andrès <contact@ndrs.fr>")
+
+(source
+ (uri git://git.zapashcanon.fr/zapashcanon/opazl.git))
+
+(bug_reports https://git.zapashcanon.fr/zapashcanon/opazl/issues)
+
+(homepage https://git.zapashcanon.fr/zapashcanon/opazl)
+
+(documentation https://doc.zapashcanon.fr/opazl/)
+
+(generate_opam_files true)
+
+(explicit_js_mode)
+
+(package
+ (name opazl)
+ (synopsis "Library to parse ZNC logs")
+ (description
+   "opazl is an OCaml library to parse ZNC logs. It can parse a log file encoded in utf-8, allows you to access time, user and content for each message and more.")
+ (depends
+  (ocaml
+   (>= 4.05.0))
+  (dune
+   (>= 1.11.0))
+  (bisect_ppx
+   (>= 1.4.1))
+  (sedlex
+   (>= 2.1))))

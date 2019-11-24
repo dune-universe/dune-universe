@@ -1,0 +1,5 @@
+(library
+ (public_name opazl)
+ (libraries sedlex)
+ (preprocess
+  (pps bisect_ppx -conditional sedlex.ppx)))
