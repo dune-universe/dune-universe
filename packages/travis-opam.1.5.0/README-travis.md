@@ -24,8 +24,9 @@ updating `OCAML_VERSION` from version 4.02.3 was initially proposed.
 env:
   - OCAML_VERSION=4.02 [...]
   - OCAML_VERSION=4.05 [...]
-  - OCAML_VERSION=4.06 [...]
   - OCAML_VERSION=4.07 [...]
+  - OCAML_VERSION=4.08 [...]
+  - OCAML_VERSION=4.09 [...]
 ```
 
 Add one line per compiler version you want to test. The `[...]` are other
@@ -191,6 +192,18 @@ that package being pinned to the URL in that package's `dev-repo`
 field. A pin of a `name:url` or `name.version:url` pair will pin the
 package to the given URL.
 
+### Building with new and not yet published packages
+
+```yaml
+env:
+  - [...] PINS="ounit2.2.2.0:. ounit2-lwt.2.2.0:." [...]
+```
+
+If you start a project from scratch and use these scripts without a
+pre-existing package in OPAM, you need to pin the package to a precise
+version directly in the environment. This will allow to install the
+package and other dependencies correctly.
+
 ### Hooks
 
 ```yaml
@@ -254,7 +267,7 @@ Configuration choices are passed to `mirage configure` via environment variables
 
 ### Changing the version of opam
 
-By default, the CI scripts are using the latest RC release of opam *2.0.0*.
+By default, the CI scripts are using the latest release of opam *2.0.1*.
 To use a different version of opam, use:
 
 ```yaml
