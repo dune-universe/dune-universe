@@ -1,0 +1,29 @@
+opam-version: "2.0"
+name: "distributed-uwt"
+version: "0.2.0"
+maintainer: "essdotteedot <essdotteedot@gmail.com>"
+authors: [ "essdotteedot <essdotteedot@gmail.com>" ]
+license: "MIT"
+homepage: "https://github.com/essdotteedot/distributed"
+dev-repo: "git+https://github.com/essdotteedot/distributed.git"
+bug-reports: "https://github.com/essdotteedot/distributed/issues"
+doc: "https://essdotteedot.github.io/distributed/"
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]  
+]
+
+depends: [
+  "dune"  {>= "1.11.0"}
+  "distributed" {= "0.6.0"}
+  "logs"
+  "uwt" 
+  "ocaml" {>= "4.02.3"}      
+]
+
+synopsis: "A library to probide a uwt based implementation of Distributed"
+
+description: """
+Primitive for spawning processes (in the Erlang sense) either remotely or locally, monitoring/unmonitoring spawned processes, sending, 
+receiving, broadcasting messages to those processes. Unlike Erlang, the messages that are sent between processes are typed.
+"""
