@@ -1,0 +1,20 @@
+(library
+ (name common)
+ (modules common)
+ (libraries xdg-basedir)
+ (preprocess
+  (pps bisect_ppx -conditional)))
+
+(executable
+ (public_name so)
+ (modules so)
+ (libraries common)
+ (preprocess
+  (pps bisect_ppx -conditional)))
+
+(executable
+ (public_name soe)
+ (modules soe)
+ (libraries common)
+ (preprocess
+  (pps bisect_ppx -conditional)))

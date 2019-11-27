@@ -1,0 +1,3 @@
+(executable
+  (name print_code)
+  (libraries exit))

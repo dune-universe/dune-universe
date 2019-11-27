@@ -1,0 +1,36 @@
+(lang dune 2.0)
+
+(name so)
+(version 0.0.1)
+
+(license ISC)
+
+(authors "Léo Andrès <contact@ndrs.fr>")
+
+(maintainers "Léo Andrès <contact@ndrs.fr>")
+
+(source
+ (uri git://git.zapashcanon.fr/zapashcanon/so.git))
+
+(bug_reports https://git.zapashcanon.fr/zapashcanon/so/issues)
+
+(homepage https://git.zapashcanon.fr/zapashcanon/so)
+
+(documentation https://doc.zapashcanon.fr/so/)
+
+(generate_opam_files true)
+
+(package
+ (name so)
+ (synopsis "Open file depending on their extension")
+ (description
+   "Command line tool to quickly open file depending on their extension.")
+ (depends
+  (ocaml
+   (>= 4.05))
+  (dune
+   (>= 2.0))
+  (bisect_ppx
+   (>= 1.4))
+  (ocaml-xdg-basedir
+   (>= 0.0.3))))
