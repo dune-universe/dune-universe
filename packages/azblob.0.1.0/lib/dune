@@ -1,0 +1,5 @@
+(library
+ (name azblob)
+ (public_name azblob)
+ (preprocess (pps ppx_sexp_conv))
+ (libraries sexplib0 base base64 cryptokit cohttp uri))

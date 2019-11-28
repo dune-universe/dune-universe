@@ -1,0 +1,4 @@
+(library
+ (name azblob_async)
+ (public_name azblob-async)
+ (libraries core cohttp cohttp-async azblob))

@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "azblob-async"
+synopsis: "A trivial Azure Blob Storage interface for OCaml"
+description: """
+"""
+maintainer: "obiwanko@me.com"
+authors: ["Kazuo Koga"]
+license: "ISC"
+homepage: "https://github.com/kkazuo/azblob"
+bug-reports: "https://github.com/kkazuo/azblob/issues"
+dev-repo: "git+https://github.com/kkazuo/azblob.git"
+depends: [
+  "ocaml"           {>= "4.06.0"}
+  "core"
+  "cohttp"
+  "cohttp-async"    {>= "2.4.0"}
+  "azblob"          {= version}
+  "dune"            {>= "1.11"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
