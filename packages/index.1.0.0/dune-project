@@ -1,4 +1,0 @@
-(lang dune 1.11)
-(name index)
-(version 1.0.0)
-(using fmt 1.1)
