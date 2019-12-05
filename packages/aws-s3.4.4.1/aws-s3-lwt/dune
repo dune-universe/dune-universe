@@ -1,6 +1,0 @@
-(library
- (name aws_s3_lwt)
- (public_name aws-s3-lwt)
- (synopsis "Lwt backed for aws-s3")
- (libraries aws-s3 lwt ipaddr.unix conduit-lwt-unix)
-)
