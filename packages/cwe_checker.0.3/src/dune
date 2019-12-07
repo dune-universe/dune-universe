@@ -1,0 +1,12 @@
+(library
+  (name cwe_checker_core)
+  (public_name cwe_checker_core)
+  (libraries
+  yojson
+  bap
+  core_kernel
+  ppx_deriving_yojson.runtime)
+  (preprocess (pps ppx_jane ppx_deriving_yojson))
+)
+
+(include_subdirs unqualified) ; Include all subdirs when looking for source files
