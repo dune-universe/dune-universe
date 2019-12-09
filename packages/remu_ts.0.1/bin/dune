@@ -1,0 +1,4 @@
+(executable
+ (public_name remu_ts)
+ (name main)
+ (libraries remu_ts))

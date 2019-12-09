@@ -1,4 +1,0 @@
-(library
- (name semver)
- (public_name semver2)
- (libraries angstrom))
