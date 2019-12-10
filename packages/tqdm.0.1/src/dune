@@ -1,0 +1,6 @@
+(library
+  (name tqdm)
+  (public_name tqdm)
+  (c_names term_width_stubs)
+  (libraries base stdio unix)
+)

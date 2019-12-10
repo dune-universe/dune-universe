@@ -1,0 +1,67 @@
+(executables
+ (names     clip nice osc abs dom horror sequences latex_speed)
+ (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries curve_sampling gsl))
+
+(rule
+ (targets clip_gp.pdf)
+ (deps    (:p clip.exe) clip.gp)
+ (action (progn
+          (run %{p})
+          (run gnuplot clip.gp))))
+(rule
+ (targets clip.pdf)
+ (deps    (:p clip.exe) clip.tex)
+ (action (progn
+          (run %{p})
+          (run pdflatex -interaction=batchmode clip.tex))))
+
+(rule
+ (targets nice.pdf)
+ (deps    (:p nice.exe) nice.gp)
+ (action  (progn
+           (run %{p})
+           (run gnuplot nice.gp))))
+
+
+(rule
+ (targets osc.pdf)
+ (deps    (:p osc.exe) osc.gp)
+ (action  (progn
+           (run %{p})
+           (run gnuplot osc.gp))))
+
+(rule
+ (targets abs.pdf)
+ (deps    (:p abs.exe) abs.gp)
+ (action  (progn
+           (run %{p})
+           (run gnuplot abs.gp))))
+
+(rule
+ (targets dom.pdf)
+ (deps    (:p dom.exe) dom.gp)
+ (action  (progn
+           (run %{p})
+           (run gnuplot dom.gp))))
+
+(rule
+ (targets horror.pdf)
+ (deps    horror.exe)
+ (action  (progn
+           (run %{deps}) ; also generates horror.gp
+           (run gnuplot horror.gp))))
+
+(alias
+ (name runtest)
+ (deps clip_gp.pdf nice.pdf osc.pdf abs.pdf dom.pdf horror.pdf
+       sequences.exe)
+ (action (run %{exe:sequences.exe})))
+
+(alias
+ (name latex)
+ (deps clip.pdf (:s latex_speed.exe))
+ (action (progn
+          (run %{s})
+          (ignore-stdout
+           (run time pdflatex -interaction=nonstopmode latex_speed.tex)))))

@@ -1,0 +1,4 @@
+(executables
+  (names bench pbar)
+  (libraries base stdio tqdm unix)
+)

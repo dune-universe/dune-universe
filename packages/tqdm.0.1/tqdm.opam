@@ -1,0 +1,39 @@
+opam-version: "2.0"
+name:         "tqdm"
+bug-reports:  "https://github.com/LaurentMazare/ocaml-tqdm/issues"
+homepage:     "https://github.com/LaurentMazare/ocaml-tqdm"
+dev-repo:     "git+https://github.com/LaurentMazare/ocaml-tqdm.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [["dune" "build" "-p" name "-j" jobs]]
+install: []
+remove:  []
+
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs]
+]
+
+depends: [
+  "base" {>= "v0.12.0"}
+  "dune" {>= "1.3.0" & build}
+  "ocaml" {>= "4.07"}
+  "ocaml-compiler-libs"
+  "stdio"
+]
+
+depopts: [
+]
+
+conflicts: [
+]
+
+available: os = "linux" | os = "macos"
+
+synopsis: "OCaml library for progress bars"
+
+description: """
+An OCaml library to display and update progress bars inspired by Python tqdm library.
+"""
