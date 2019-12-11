@@ -1,0 +1,5 @@
+(library
+ (name        color_brewery)
+ (public_name color-brewery)
+ (libraries   gg)
+ (synopsis "Offer colors palettes and functions to brew colors"))

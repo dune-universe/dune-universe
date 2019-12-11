@@ -1,0 +1,8 @@
+(library
+ (name yara)
+ (public_name yara)
+ (wrapped false)
+ (preprocess
+  (pps ppx_deriving.std))
+ (libraries core ctypes ctypes.foreign)
+ (c_library_flags :standard -lyara))
