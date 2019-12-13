@@ -1,0 +1,29 @@
+version: "0.2.0"
+opam-version: "2.0"
+name:         "rosetta"
+maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
+authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
+homepage:     "https://github.com/mirage/rosetta"
+bug-reports:  "https://github.com/mirage/rosetta/issues"
+dev-repo:     "git+https://github.com/mirage/rosetta.git"
+doc:          "https://mirage.github.io/rosetta/"
+license:      "MIT"
+synopsis:     "Universal mapper to Unicode"
+description:  "Universal mapper to Unicode (ISO-8859, KOI8, UTF-7)"
+
+build: [
+  ["dune" "subst"]
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune"
+  "fmt"
+  "bos"
+  "uutf"
+  "cmdliner"
+  "coin" {>= "0.1.1"}
+  "uuuu" {>= "0.1.1"}
+  "yuscii" {>= "0.2.1"}
+]
