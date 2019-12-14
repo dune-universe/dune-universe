@@ -1,7 +1,0 @@
-(library
- (name minicaml)
- (public_name minicaml)
- (libraries ANSITerminal))
-
-(ocamllex lexer)
-(menhir (modules parser))

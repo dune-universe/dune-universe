@@ -1,0 +1,2 @@
+File "default_str_no_manifest.ml", line 1, characters 0-27:
+Error: ppx_factory.default: can't derive default for an abstract type without a manifest

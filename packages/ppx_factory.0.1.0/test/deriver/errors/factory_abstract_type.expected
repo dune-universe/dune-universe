@@ -1,0 +1,4 @@
+File "factory_abstract_type.ml", line 1, characters 0-33:
+1 | type t = int
+2 | [@@deriving factory]
+Error: ppx_factory.factory: cannot derive from abstract type. Has to be a record or variant type.
