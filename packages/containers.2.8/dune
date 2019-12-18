@@ -1,0 +1,8 @@
+(rule
+ (targets README.md.corrected)
+ (deps (package containers))
+ (action (run ocaml-mdx test %{dep:README.md} -o %{targets})))
+
+(alias
+ (name runtest)
+ (action (diff README.md README.md.corrected)))

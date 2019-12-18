@@ -1,0 +1,7 @@
+
+(library
+   (name calculon)
+   (public_name calculon)
+   (libraries containers containers.data yojson re re.perl logs
+              irc-client-lwt irc-client-lwt-ssl lwt.unix stringext
+              ISO8601))
