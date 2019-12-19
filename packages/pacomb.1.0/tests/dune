@@ -1,0 +1,90 @@
+(test
+  (name test)
+  (modules test)
+  (libraries unix pacomb)
+  (action (run ./test.exe)))
+
+(test
+  (name hard)
+  (modules hard)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (action (run ./hard.exe 1000)))
+
+(test
+  (name ppx_test)
+  (modules ppx_test)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (action (run ./ppx_test.exe)))
+
+(test
+  (name dseq_test)
+  (modules dseq_test)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (action (run ./dseq_test.exe)))
+
+(executable
+  (name big_expr)
+  (modules big_expr)
+  (libraries))
+
+(executable
+  (name big_sexp)
+  (modules big_sexp)
+  (libraries))
+
+(test
+  (name Break)
+  (modules Break)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps Break.exe GraphemeBreakTest.txt)
+  (action
+    (run ./Break.exe ./GraphemeBreakTest.txt)))
+
+(test
+  (name calc_factor)
+  (modules calc_factor)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps big_expr.exe calc_factor.exe)
+  (action
+    (system "./big_expr.exe 4 4 4 | ./calc_factor.exe")))
+
+(test
+  (name calc_utf8)
+  (modules calc_utf8)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps big_expr.exe calc_utf8.exe)
+  (action
+    (system "./big_expr.exe 4 4 4 | ./calc_utf8.exe")))
+
+(test
+  (name calc_ext_bench)
+  (modules calc_ext_bench)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps big_expr.exe calc_ext_bench.exe)
+  (action
+    (system "./big_expr.exe 3 4 4 | ./calc_ext_bench.exe")))
+
+(test
+  (name sexp)
+  (modules sexp)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps big_sexp.exe sexp.exe)
+  (action
+    (system "./big_sexp.exe 1000 | ./sexp.exe")))
+
+(test
+  (name sexp_rr)
+  (modules sexp_rr)
+  (preprocess (pps pacomb.ppx))
+  (libraries unix pacomb)
+  (deps big_sexp.exe sexp_rr.exe)
+  (action
+    (system "./big_sexp.exe 1000 | ./sexp_rr.exe")))

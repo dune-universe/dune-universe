@@ -1,0 +1,10 @@
+(library
+  (name pacomb)
+  (public_name pacomb)
+  (modules :standard)
+  (preprocess (pps pacomb.ppx))
+  (libraries stdlib-shims)
+  (private_modules container hashtbl_eq assoc comb unionFind))
+
+(documentation
+  (package pacomb))

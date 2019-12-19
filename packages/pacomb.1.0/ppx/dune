@@ -1,0 +1,7 @@
+(library
+  (name pacomb_ppx)
+  (public_name pacomb.ppx)
+  (preprocess (pps ppxlib.metaquot))
+  (modules :standard)
+  (kind ppx_rewriter)
+  (libraries ppxlib stdlib-shims))
