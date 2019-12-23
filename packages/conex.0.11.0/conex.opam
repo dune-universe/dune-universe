@@ -1,0 +1,28 @@
+version: "0.11.0"
+opam-version: "2.0"
+maintainer: "Hannes Mehnert <hannes@mehnert.org>"
+authors: "Hannes Mehnert <hannes@mehnert.org>"
+license: "BSD2"
+homepage: "https://github.com/hannesm/conex"
+doc: "https://hannesm.github.io/conex/doc"
+bug-reports: "https://github.com/hannesm/conex/issues"
+depends: [
+  "ocaml" {>= "4.05.0"}
+  "dune"
+  "cmdliner"
+  "opam-file-format" {>= "2.0.0~rc2"}
+  "stdlib-shims"
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+dev-repo: "git+https://github.com/hannesm/conex.git"
+synopsis: "Establishing trust in community repositories"
+description: """
+Conex is a system based on [TUF](https://theupdateframework.github.io/) to
+establish trust in community repositories. Since opam2, the required hooks
+are present.
+
+This package uses openssl for the required crypto primitives (>=1.0.0u for RSA-PSS).
+"""

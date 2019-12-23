@@ -1,0 +1,18 @@
+(library
+  (name ppx_compose)
+  (public_name ppx_compose)
+  (kind ppx_rewriter)
+  (modules ppx_compose)
+  (libraries ocaml-migrate-parsetree))
+
+(library
+  (name ppx_compose_runtime)
+  (public_name ppx_compose.runtime)
+  (wrapped false)
+  (modules compose))
+
+(test
+  (name test_compose)
+  (modules test_compose)
+  (libraries ppx_compose_runtime)
+  (preprocess (pps ppx_compose)))
