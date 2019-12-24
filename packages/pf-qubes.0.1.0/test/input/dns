@@ -1,0 +1,1 @@
+action=accept dst4=8.8.8.8 proto=udp dstports=53-53

@@ -1,0 +1,14 @@
+### qubes-mirage-firewall default rules
+
+block in from $netvm
+
+
+nat on $extif from $clients
+nat on $netvm from $netvm
+
+rdr on $client_gateway inet proto udp to port 53 -> $netvm port 53
+
+# consider "return-rst" on these:
+block out to $client_gateway # packet addressed to firewall itself
+block out to $firewall_uplink # packet addressed to firewall itself
+block out to $client_cidr # prevent communication between client VMs

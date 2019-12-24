@@ -1,0 +1,14 @@
+(* -*- tuareg -*- *)
+
+let bisect = try Sys.getenv "BISECT_ENABLE" = "yes" with _ -> false
+
+let () =
+  Jbuild_plugin.V1.send @@ Printf.sprintf {|
+(library
+ (name pf_qubes)
+ (public_name pf-qubes)
+ (modules parse_qubes)
+ (libraries angstrom domain-name fmt ipaddr logs rresult)
+ %s)
+|}
+ (if bisect then "(preprocess (pps bisect_ppx -conditional -no-comment-parsing))" else "")

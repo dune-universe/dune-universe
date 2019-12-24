@@ -1,0 +1,23 @@
+(executable
+ (name alcotest_parse)
+ (modules alcotest_parse)
+ (libraries pf-qubes alcotest logs.fmt))
+
+(executable
+ (name fuzz)
+ (modules fuzz)
+ (libraries pf-qubes logs.fmt afl-persistent))
+
+(alias
+ (name runtest)
+ (deps alcotest_parse.exe)
+ (action
+  (progn
+   (run ./alcotest_parse.exe))))
+
+(alias
+ (name fuzz)
+ (deps fuzz.exe input/in input/dns input/ipv6 input/unimplemented output/lo)
+ (action
+  (progn
+   (run afl-fuzz -i input/ -o output/ ./fuzz.exe))))

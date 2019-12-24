@@ -1,0 +1,1 @@
+action=drop dst6=2a00:1450:4000::/37 proto=tcp

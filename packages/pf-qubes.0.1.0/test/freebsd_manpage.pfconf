@@ -1,0 +1,159 @@
+
+ext_if = "kue0"
+all_ifs = "{" $ext_if lo0 "}"
+pass out on $ext_if from any to any
+pass in  on $ext_if proto tcp from any to any port 25
+
+table <private> const { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 }
+table <private> const { 10/8, 172.16/12, 192.168/16 }
+table <badhosts> persist
+block on fxp0 from { <private>, <badhosts> } to any
+
+table <spam> persist file "/etc/spammers" file "/etc/openrelays"
+block on fxp0 from <spam> to any
+
+set timeout tcp.first 120
+set timeout tcp.established 86400
+set timeout { adaptive.start 6000, adaptive.end 12000 }
+set limit states 10000
+
+set loginterface dc0
+
+set loginterface none
+
+set limit states 20000
+
+set limit frags 20000
+
+set limit src-nodes 2000
+
+set limit tables 1000
+set limit table-entries 100000
+
+set limit { states 20000, frags 20000, src-nodes 2000 }
+
+set optimization aggressive
+
+set block-policy return
+
+set state-policy if-bound
+
+set state-defaults pflow, no-sync
+
+set hostid 1
+
+set fingerprints "/etc/pf.os.devel"
+
+set skip on lo0
+
+scrub in on $ext_if all fragment reassemble
+
+queue std bandwidth 10% cbq(default)
+queue http bandwidth 60% priority 2 cbq(borrow red) \
+	   { employees, developers }
+queue  developers bandwidth 75% cbq(borrow)
+queue  employees bandwidth 15%
+queue mail bandwidth 10% priority 0 cbq(borrow ecn)
+queue ssh bandwidth 20% cbq(borrow) { ssh_interactive, ssh_bulk }
+queue  ssh_interactive bandwidth 50% priority 7 cbq(borrow)
+queue  ssh_bulk bandwidth 50% priority 0 cbq(borrow)
+block return out on dc0 inet all queue std
+pass out on dc0 inet proto tcp from $developerhosts to any port 80 \
+	   queue developers
+pass out on dc0 inet proto tcp from $employeehosts to any port 80 \
+	   queue employees
+pass out on dc0 inet proto tcp from any to any port 22 \
+	   queue(ssh_bulk, ssh_interactive)
+pass out on dc0 inet proto tcp from any to any port 25 \
+	   queue mail
+
+rdr on ne3 inet proto tcp to port smtp -> 127.0.0.1 port spamd
+
+block all
+
+pass out inet proto icmp all icmp-type echoreq
+
+pass in all
+pass in from any to any
+pass in proto tcp from any port <= 1024 to any
+pass in proto tcp from any to any port 25
+pass in proto tcp from 10.0.0.0/8 port > 1024 \
+                  to ! 10.1.2.3 port != ssh
+
+pass in proto tcp from any os "OpenBSD"
+
+block out proto { tcp, udp } all
+pass  out proto { tcp, udp } all user { < 1000, dhartmei }
+
+pass all tos lowdelay
+pass all tos 0x10
+pass all tos 16
+
+ips = "{ 1.2.3.4, 1.2.3.5 }"
+pass in proto tcp from any to $ips \
+port > 1023 label "$dstaddr:$dstport"
+pass in inet proto tcp from any to 1.2.3.4 \
+       port > 1023 label "1.2.3.4:>1023"
+pass in inet proto tcp from any to 1.2.3.5 \
+       port > 1023 label "1.2.3.5:>1023"
+
+pass in proto tcp to port 25 queue mail
+pass in proto tcp to port 22 queue(ssh_bulk, ssh_prio)
+
+block in proto icmp probability 20%
+
+pass out proto tcp from any to any modulate state
+pass in  proto tcp from any to any port 25 flags S/SFRA modulate state
+
+pass in proto tcp from any to any port www synproxy state
+
+pass in proto tcp from any to any \
+		 port www keep state \
+		 (max 100, source-track rule, max-src-nodes 75, \
+		 max-src-states 3, tcp.established 60, tcp.closing 5)
+
+block quick from <bad_hosts>
+
+pass in on $ext_if proto tcp to $webserver port www keep state \
+     (max-src-conn-rate 100/10, overload <bad_hosts> flush global)
+
+######### the rules below are not from `man pf.conf`, but are here for \
+          regression testing:
+
+rdr on $ext_if inet proto tcp from <spammers> to port smtp tag SPAMD \
+     -> 127.0.0.1 port spamd
+pass in on $ext_if inet proto tcp tagged SPAMD
+table <BLOCKPERM> counters file "/somedir/block_permanent"
+set timeout { tcp.closing 60, tcp.established 7200}
+scrub out log on $ExtIf all random-id min-ttl 15 set-tos 0x1c fragment reassemble
+nat on $ExtIf from $Xbox360 -> ($ExtIf) static-port
+rdr on $ExtIf inet proto tcp from !<spamd-white> to ($ExtIf) port smtp -> 10.10.10.200 port spamd
+
+table <tbl_Geo2ipCountry_SO> persist file "/etc/firewall/tables/dynamic/geo2ip_country_SO.tb" # Somalia
+pass from <tbl_Geo2ipCountry_SO> to any tag FROM_SO label "tag packets from Somalia"
+
+pass quick proto carp all keep state (no-sync) label "Allow CARP"
+
+# TODO rdr on $IntIf inet proto udp from $IntIf:network to $IntIf port domain -> lo0
+nat-anchor "ftp-proxy/*"
+# TODO anchor geo2ip
+load anchor geo2ip from "/etc/firewall/anchors/geo2ip.rules.pf.conf"
+
+block log quick all tagged TO_CN
+
+altq on dc0 cbq bandwidth 5Mb queue { std, http, mail, ssh }
+
+pass flags S/A flags S/F tag "TODO research how this should be handled"
+
+rdr pass on {$int_if,enc0} inet proto {tcp,udp} from any to !($int_if:0) port 53 -> ($int_if:0) port 53
+
+# IPv6 site-local
+pass quick inet6 from any to fe80::123
+
+# IPv6 site-local with zone ID 1:
+pass quick inet6 from any to fe80::456%1
+
+# IPv6 site-local with zone ID lagg0.1181 (aka VLAN 1181 on if lagg0)
+pass quick inet6 from any to fe80::123:4567:8910:1112%lagg0.1181
+# ^-- pf transforms this to:
+pass quick on lagg0.1181 inet6 from any to fe80::123:4567:8910:1112 flags S/SA keep state
