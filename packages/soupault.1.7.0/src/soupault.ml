@@ -4,9 +4,8 @@ module FU = FileUtil
 module FP = FilePath
 
 (* Result monad *)
-let (>>=) = CCResult.(>>=)
-let bind = CCResult.(>>=)
-let return = CCResult.return
+let (>>=) = Stdlib.Result.bind
+let (let*) = (>>=)
 
 (*** Logging setup ***)
 
@@ -120,7 +119,7 @@ let make_page env settings content =
     in Ok content
   | None ->
     let html = Soup.parse env.template in
-    let%bind () = include_content settings html content in
+    let* () = include_content settings html content in
     Ok html
 
 (* Widget processing *)
@@ -158,26 +157,6 @@ let fix_nav_path settings path page_name =
   if page_name = settings.index_page then Utils.drop_tail path
   else path
 
-let insert_index settings soup index =
-  let index_container = Soup.select_one settings.index_selector soup in
-  match index_container with
-  | None -> Ok ()
-  | Some ic ->
-    begin
-      match settings.index_processor with
-      | None -> Autoindex.add_index settings ic index
-      | Some p ->
-        let json = Autoindex.json_of_entries settings index in
-        let () = Logs.info @@ fun m -> m "Calling index processor %s" p in
-        let output = Utils.get_program_output ~input:(Some json) p [| |] in
-        begin
-          match output with
-          | Error _ as e -> e
-          | Ok output ->
-            Ok (Soup.append_child ic (Soup.parse output))
-        end
-    end
-
 let make_page_url settings nav_path orig_path page_file =
   let page_file_name = FP.basename page_file in
   let page =
@@ -206,7 +185,7 @@ let process_page env index widgets config settings target_dir =
   let page_name = FP.basename env.page_file |> FP.chop_extension in
   (* If clean URLs are used, make_page_dir creates one,
      if not, just returns the current dir *)
-  let%bind target_dir = make_page_dir settings target_dir page_name in
+  let* target_dir = make_page_dir settings target_dir page_name in
   let target_file =
     if settings.clean_urls then (target_dir +/ settings.index_file)
     (* If clean URLs aren't used, keep the original extension *)
@@ -216,28 +195,28 @@ let process_page env index widgets config settings target_dir =
   let nav_path = fix_nav_path settings env.nav_path page_name in
   let env = {env with nav_path = nav_path; page_url=(make_page_url settings nav_path orig_path env.page_file)} in
   let () = Logs.info @@ fun m -> m "Processing page %s" env.page_file in
-  let%bind content = load_html settings env.page_file in
-  let%bind html = make_page env settings content in
+  let* content = load_html settings env.page_file in
+  let* html = make_page env settings content in
   (* Section index injection always happens before any widgets have run *)
-  let%bind () =
+  let* () =
     (* Section index is inserted only in index pages *)
     if (not settings.index) || (page_name <> settings.index_page) then Ok () else
     let () = Logs.info @@ fun m -> m "Inserting section index" in
-    insert_index settings html !index
+    Autoindex.insert_indices settings html !index
   in
   let before_index, after_index, widget_hash = widgets in
-  let%bind () = process_widgets settings env before_index widget_hash config html in
+  let* () = process_widgets settings env before_index widget_hash config html in
   (* Index extraction *)
-  let%bind () =
+  let* () =
     (* Metadata is only extracted from non-index pages *)
     if (not settings.index) || (page_name = settings.index_page) then Ok () else
     let () =
-      Logs.info @@ fun m -> m "Extracting page metadata";
+      let () = Logs.info @@ fun m -> m "Extracting page metadata" in
       index := (Autoindex.get_entry settings env html) :: !index
     in Ok ()
   in
-  let%bind () = process_widgets settings env after_index widget_hash config html in
-  let%bind () = save_html settings html target_file in
+  let* () = process_widgets settings env after_index widget_hash config html in
+  let* () = save_html settings html target_file in
   Ok ()
 
 (* Monadic wrapper for process_page that can either return or ignore errors  *)
@@ -285,8 +264,8 @@ let rec process_dir env index widgets config settings base_src_dir base_dst_dir 
   let pages = reorder_pages settings pages in
   let () = FU.mkdir ~parent:true dst_path in
   let dirs = List.map (FP.basename) (list_dirs src_path) in
-  let%bind () = Utils.iter (_process_page env section_index widgets config settings dst_path) pages in
-  let%bind () = Utils.cp assets dst_path in
+  let* () = Utils.iter (_process_page env section_index widgets config settings dst_path) pages in
+  let* () = Utils.cp assets dst_path in
   let () = save_index settings section_index index in
   Utils.iter (process_dir env index widgets config settings src_path dst_path) dirs
 
@@ -325,15 +304,15 @@ let initialize () =
     try Unix.getenv Defaults.config_path_env_var
     with Not_found -> Defaults.config_file
   in
-  let%bind config = Config.read_config config_file in
+  let* config = Config.read_config config_file in
   let settings = Config.update_settings settings config in
-  let%bind settings = get_args settings in
+  let* settings = get_args settings in
   (* Update the log level from the config and arguments  *)
   let () = setup_logging settings.verbose settings.debug in
   let () = check_project_dir settings in
-  let%bind plugins = Plugins.get_plugins config in
-  let%bind widgets = Widgets.get_widgets config plugins settings.index_extract_after_widgets in
-  let%bind default_template_str =
+  let* plugins = Plugins.get_plugins config in
+  let* widgets = Widgets.get_widgets config plugins settings.index_extract_after_widgets in
+  let* default_template_str =
     if settings.generator_mode then Utils.get_file_content settings.default_template
     else Ok ""
   in
@@ -347,17 +326,17 @@ let dump_index_json settings index =
   match settings.dump_json with
   | None -> Ok ()
   | Some f ->
-    try Ok (Soup.write_file f @@ Autoindex.json_of_entries settings index)
+    try Ok (Soup.write_file f @@ Autoindex.json_string_of_entries settings index)
     with Sys_error e -> Error e
   
 let main () =
-  let%bind config, widgets, settings, default_env = initialize () in
+  let* config, widgets, settings, default_env = initialize () in
   let () = setup_logging settings.verbose settings.debug in
-  let%bind () = make_build_dir settings.build_dir in
+  let* () = make_build_dir settings.build_dir in
   let index = ref [] in
-  let%bind () = process_dir default_env index widgets config settings settings.site_dir settings.build_dir "" in
-  let%bind () = dump_index_json settings !index in
-  return ()
+  let* () = process_dir default_env index widgets config settings settings.site_dir settings.build_dir "" in
+  let* () = dump_index_json settings !index in
+  Ok ()
 
 let () =
   let res = main () in

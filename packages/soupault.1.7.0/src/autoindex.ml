@@ -32,9 +32,10 @@ let rec get_custom_fields strip_tags fields soup =
   if f.select_all then
     `A (Soup.select f.field_selector soup |> Soup.to_list |> List.map (fun e -> string_of_elem strip_tags e |> json_of_string_opt))
   else let e = Soup.select_one f.field_selector soup in
-  match e with
-    | None -> `Null
-    | Some e -> `String (string_of_elem strip_tags e |> CCOpt.get_or ~default:"")
+  match e, f.default_field_value with
+    | None, None -> `Null
+    | None, Some v -> `String v
+    | Some e, _ -> `String (string_of_elem strip_tags e |> CCOpt.get_or ~default:"")
   in
   match fields with
   | [] -> []
@@ -99,19 +100,23 @@ let json_of_entry e =
 
 let json_of_entries settings es =
   let es = List.sort (compare_entries settings) es in
-  (* XXX: to_string instead of pretty_to_string is intentional,
-     newline is used as an end of input marker when passing
-     the data to index processor's stdin *)
-  `A (List.map json_of_entry es) |> Ezjsonm.to_string
+  `A (List.map json_of_entry es)
 
-let add_index settings soup entries =
+let json_string_of_entries ?(minify=false) settings es =
+  json_of_entries settings es |> Ezjsonm.to_string ~minify:minify
+
+(** Renders an index using built-in Mustache templates *)
+let render_index template settings soup entries =
   let () = Logs.info @@ fun m -> m "Generating section index" in
   let strict = not settings.ignore_template_errors in
-  let tmpl = settings.index_item_template in
   try
-    let () = if settings.debug then Logs.debug @@ fun m -> m "Index data: %s" (json_of_entries settings entries) in
+    let () =
+      (* Debug output *)
+      if settings.debug then
+      Logs.debug @@ fun m -> m "Index data (pretty-printed): %s" (json_string_of_entries ~minify:false settings entries)
+    in
     let entries = List.sort (compare_entries settings) entries in
-    let entries = List.map (fun e -> json_of_entry e |> Mustache.render ~strict:strict tmpl |> Soup.parse) entries in
+    let entries = List.map (fun e -> json_of_entry e |> Mustache.render ~strict:strict template |> Soup.parse) entries in
     let () = List.iter (Soup.append_child soup) entries in
     Ok ()
   with
@@ -119,3 +124,30 @@ let add_index settings soup entries =
     let err = Printf.sprintf "Failed to render index item template: undefined variable or section \"%s\"" s in
     Error err
   | _ -> Error ("Failed to render index: invalid template")
+
+let run_index_processor settings cmd ic index =
+  (* Minification is intentional, newline is used as end of input *)
+  let json = json_string_of_entries ~minify:true settings index in
+  let () = Logs.info @@ fun m -> m "Calling index processor %s" cmd in
+  let output = Utils.get_program_output ~input:(Some json) cmd [| |] in
+  begin
+    match output with
+    | Error _ as e -> e
+    | Ok output -> Ok (Soup.append_child ic (Soup.parse output))
+  end
+
+let insert_index settings soup index view =
+  let index_container = Soup.select_one view.index_selector soup in
+  match index_container with
+  | None ->
+    let () = Logs.warn @@ fun m -> m "Page doesn't have an element matching selector \"%s\", ignoring index view \"%s\"" view.index_selector view.index_view_name in
+    Ok ()
+  | Some ic ->
+    begin
+      match view.index_processor with
+      | Defaults.BuiltInTemplate tmpl -> render_index tmpl settings ic index
+      | Defaults.ExternalIndexer cmd -> run_index_processor settings cmd ic index
+    end
+
+let insert_indices settings soup index =
+  Utils.iter ~ignore_errors:(not settings.strict) (insert_index settings soup index) settings.index_views

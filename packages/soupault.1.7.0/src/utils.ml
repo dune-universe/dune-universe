@@ -3,6 +3,10 @@ let get_file_content file =
   try Ok (Soup.read_file file)
   with Sys_error msg -> Error msg
 
+let parse_html ?(body=true) str =
+  let context = if body then `Fragment "body" else `Fragment "head" in
+  Markup.string str |> Markup.parse_html ~context:context |> Markup.signals |> Soup.from_signals
+
 (* Result wrapper for FileUtil.cp *)
 let cp fs d =
   try Ok (FileUtil.cp fs d)
@@ -19,8 +23,10 @@ let get_program_output ?(input=None) command env_array =
     | None -> ()
     | Some i ->
       let () = Logs.debug @@ fun m -> m "Data sent to program \"%s\": %s" command i in
-      Printf.fprintf std_in "%s\n%!" i
+      Printf.fprintf std_in "%s" i
   in
+  (* close stdin to flag end of input *)
+  let () = close_out std_in in
   let output = Soup.read_channel std_out in
   let err = Soup.read_channel std_err in
   let res = Unix.close_process_full (std_out, std_in, std_err) in
@@ -52,7 +58,7 @@ let unwrap_option o =
   | None -> raise (Failure "values of beta will give rise to dom!")
 
 (** Result-aware iteration *)
-let rec iter f xs =
+let rec iter ?(ignore_errors=false) ?(fmt=(fun x -> x)) f xs =
   match xs with
   | [] -> Ok ()
   | x :: xs ->
@@ -60,7 +66,9 @@ let rec iter f xs =
     begin
       match res with
       | Ok _ -> iter f xs
-      | Error _ as e -> e
+      | Error msg as e  ->
+        if ignore_errors then let () = Logs.warn @@ fun m -> m "%s" (fmt msg) in Ok ()
+        else e
     end
 
 (** Checks if a "template" has a specific element in it.
@@ -130,9 +138,13 @@ let child_nodes e =
 
 (** Retrieves the innerHTML of an element --
     a string representation of its children *)
-let inner_html e =
+let inner_html ?(escape_html=true) e =
   let children = child_nodes e in
-  Soup.to_string children
+  if escape_html then Soup.to_string children
+  else
+      let escape_text = fun (x:string) -> x in
+      let escape_attribute = fun (x:string) -> x in
+      children |> Soup.signals |> (fun s -> Markup.write_html ~escape_text ~escape_attribute s) |> Markup.to_string
 
 (** Appends a child if child rather than None is given *)
 let append_child container child =
