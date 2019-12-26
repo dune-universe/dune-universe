@@ -1,0 +1,16 @@
+**/*.annot
+
+**/.\#*
+**/*~
+**/Session.vim
+**/.*.swp
+
+**/*.o
+**/*.a
+**/*.so
+**/*.cm*
+
+.merlin
+_build
+trie.install
+
