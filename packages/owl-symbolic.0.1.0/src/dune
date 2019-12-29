@@ -1,0 +1,19 @@
+(copy_files# engines/*)
+
+(copy_files# onnx_specs/*)
+
+(copy_files# ops/*)
+
+(copy_files# neural/*)
+
+(copy_files# cas/*)
+
+(library
+ (name owl_symbolic)
+ (wrapped false)
+ (public_name owl-symbolic)
+ ; Note: dependency to owl is only for dev purpose
+ (libraries owl-base ocaml-protoc))
+
+(documentation
+ (package owl-symbolic))

@@ -1,8 +1,0 @@
-(library
- (name minicaml)
- (public_name minicaml)
- (libraries ANSITerminal)
- (preprocess (pps ppx_deriving.show)))
-
-(ocamllex lexer)
-(menhir (modules parser))

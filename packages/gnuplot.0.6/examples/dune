@@ -1,0 +1,5 @@
+(executables
+ (names candlesticks gaussian_noise gbm_paths save_plot simple_plot
+   supply_demand)
+ (flags :standard -warn-error -26)
+ (libraries base unix gnuplot))
