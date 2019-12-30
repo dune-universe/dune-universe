@@ -1,0 +1,6 @@
+(library
+  (name test)
+  (flags (:standard -safe-string))
+  (libraries wseg pcre)
+  (inline_tests (deps char.dic word.dic))
+  (preprocess (pps ppx_expect)))

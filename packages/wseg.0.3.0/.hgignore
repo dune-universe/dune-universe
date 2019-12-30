@@ -1,0 +1,14 @@
+syntax: glob
+
+**/*.annot
+
+**/.\#*
+**/*~
+**/Session.vim
+**/.*.swp
+
+**/*.o
+**/*.a
+**/*.so
+**/*.cm*
+

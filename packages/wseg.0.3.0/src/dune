@@ -1,0 +1,5 @@
+(library
+  (name wseg)
+  (public_name wseg)
+  (libraries base stdio trie camomile)
+  (flags (:standard -safe-string)))
