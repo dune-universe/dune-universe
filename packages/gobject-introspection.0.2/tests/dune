@@ -1,0 +1,9 @@
+(executables
+ (names test)
+ (libraries GObject_introspection oUnit ctypes ctypes.foreign stdio)
+)
+
+(alias
+  (name    runtest)
+  (deps    (:x test.exe))
+  (action  (run %{x})))

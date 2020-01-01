@@ -1,0 +1,5 @@
+(library
+  (name bindings)
+  (public_name gobject-introspection.bindings)
+  (libraries ctypes.stubs ctypes)
+)

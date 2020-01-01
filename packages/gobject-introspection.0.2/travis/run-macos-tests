@@ -1,0 +1,5 @@
+#! /bin/bash
+
+eval $(opam env)
+opam pin add . -y
+dune runtest --profile release

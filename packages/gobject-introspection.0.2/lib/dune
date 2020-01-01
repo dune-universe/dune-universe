@@ -1,0 +1,55 @@
+(library
+(name        GObject_introspection)
+  (public_name gobject-introspection)
+  (libraries ctypes ctypes.foreign str gobject-introspection.bindings)
+  (c_flags         (:include c_flags.sexp))
+  (c_library_flags (:include c_library_flags.sexp))
+  (ocamlopt_flags (-ccopt (:include ccopts.sexp)))
+)
+
+(rule
+  (targets c_flags.sexp c_library_flags.sexp ccopts.sexp)
+  (deps    (:x ../config/discover.exe))
+  (action  (run %{x} -ocamlc %{ocamlc}))
+)
+
+(rule
+  (targets bindings_stubs_base_info.ml)
+  (deps ../stubgen/bindings_stubs_gen_base_info.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_function_info.ml)
+  (deps ../stubgen/bindings_stubs_gen_function_info.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_types.ml)
+  (deps ../stubgen/bindings_stubs_gen_types.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_vfunc_info.ml)
+  (deps ../stubgen/bindings_stubs_gen_vfunc_info.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_arg_info.ml)
+  (deps ../stubgen/bindings_stubs_gen_arg_info.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_field_info.ml)
+  (deps ../stubgen/bindings_stubs_gen_field_info.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_g_param.ml)
+  (deps ../stubgen/bindings_stubs_gen_g_param.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+
+(rule
+  (targets bindings_stubs_g_signal.ml)
+  (deps ../stubgen/bindings_stubs_gen_g_signal.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml))))
+

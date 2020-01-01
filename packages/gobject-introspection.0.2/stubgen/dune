@@ -1,0 +1,158 @@
+; Base_info stubs rules
+(executable
+ (name bindings_c_gen_base_info)
+ (modules bindings_c_gen_base_info)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_base_info.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_base_info.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_base_info.exe)
+ (deps bindings_stubs_gen_base_info.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_base_info.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; Function_info stubs rules
+(executable
+ (name bindings_c_gen_function_info)
+ (modules bindings_c_gen_function_info)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_function_info.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_function_info.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_function_info.exe)
+ (deps bindings_stubs_gen_function_info.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_function_info.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; Types stubs rules
+(executable
+ (name bindings_c_gen_types)
+ (modules bindings_c_gen_types)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_types.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_types.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_types.exe)
+ (deps bindings_stubs_gen_types.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_types.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; VFunc_info stubs rules
+(executable
+ (name bindings_c_gen_vfunc_info)
+ (modules bindings_c_gen_vfunc_info)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_vfunc_info.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_vfunc_info.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_vfunc_info.exe)
+ (deps bindings_stubs_gen_vfunc_info.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_vfunc_info.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; Arg_info stubs rules
+(executable
+ (name bindings_c_gen_arg_info)
+ (modules bindings_c_gen_arg_info)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_arg_info.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_arg_info.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_arg_info.exe)
+ (deps bindings_stubs_gen_arg_info.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_arg_info.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; Field_info stubs rules
+(executable
+ (name bindings_c_gen_field_info)
+ (modules bindings_c_gen_field_info)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_field_info.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_field_info.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_field_info.exe)
+ (deps bindings_stubs_gen_field_info.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_field_info.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; GParam stubs rules
+(executable
+ (name bindings_c_gen_g_param)
+ (modules bindings_c_gen_g_param)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_g_param.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_g_param.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_g_param.exe)
+ (deps bindings_stubs_gen_g_param.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_g_param.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; GSignal stubs rules
+(executable
+ (name bindings_c_gen_g_signal)
+ (modules bindings_c_gen_g_signal)
+ (libraries bindings ctypes.stubs ctypes))
+
+(rule
+ (targets bindings_stubs_gen_g_signal.c)
+ (deps (:stubgen ../stubgen/bindings_c_gen_g_signal.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(rule
+ (targets bindings_stubs_gen_g_signal.exe)
+ (deps bindings_stubs_gen_g_signal.c c_flags c_library_flags)
+ (action
+  (bash
+   "%{cc} bindings_stubs_gen_g_signal.c -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} $(< c_flags) $(< c_library_flags) -o %{targets}"))
+)
+
+; Compiling flags rules
+(rule
+  (targets c_library_flags c_flags)
+  (deps    (:x ../config/discover.exe))
+  (action  (run %{x} -ocamlc %{ocamlc}))
+)

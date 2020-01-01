@@ -1,0 +1,15 @@
+#! /bin/bash
+
+brew update
+brew install \
+    gtk+3 \
+    glib \
+    git \
+    darcs \
+    mercurial \
+    libffi \
+    gobject-introspection \
+    opam
+
+opam init --comp "$OCAML_VERSION.0" --yes
+eval $(opam env)

@@ -1,0 +1,7 @@
+#! /bin/bash
+
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    docker run --interactive --tty ocaml-gi/${TYPE};
+elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    bash ./travis/run-macos-tests
+fi

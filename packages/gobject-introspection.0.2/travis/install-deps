@@ -1,0 +1,7 @@
+#! /bin/bash
+
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    docker build -t ocaml-gi/${TYPE} -f travis/Dockerfile.${TYPE} .
+elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    bash ./travis/install-macos-deps
+fi

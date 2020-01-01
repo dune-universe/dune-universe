@@ -1,3 +1,0 @@
-(lang dune 1.1)
-(name fftw3)
-(version 0.8.3)

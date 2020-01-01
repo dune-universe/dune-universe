@@ -1,0 +1,8 @@
+(executables
+ (names gi_repository
+ 	gi_baseinfo_deprecated
+	gi_baseinfo_discriminated
+	gi_baseinfo_get_name
+	gi_baseinfo_get_type)
+  (libraries GObject_introspection)
+)
