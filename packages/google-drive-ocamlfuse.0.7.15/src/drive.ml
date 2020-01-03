@@ -481,34 +481,6 @@ let lookup_resource path trashed =
   end end;
   resource
 
-let get_well_known_resource path trashed =
-  let context = Context.get_ctx () in
-  let root_folder_id = context.Context.root_folder_id |> Option.get in
-  let cache = context.Context.cache in
-  let config = context |. Context.config_lens in
-  match lookup_resource path trashed with
-  | None ->
-    let (well_known_resource, label) =
-      if path = root_directory then
-        (create_root_resource root_folder_id trashed, "root")
-      else if is_lost_and_found_root path trashed config then
-        (create_well_known_resource lost_and_found_directory, "lost+found")
-      else if is_shared_with_me_root path trashed config then
-        (create_well_known_resource shared_with_me_directory, "shared with me")
-      else invalid_arg ("Invalid well known path: " ^ path ^ " trashed=" ^
-                        (string_of_bool trashed))
-    in
-    Utils.log_with_header
-      "BEGIN: Saving %s resource to db\n%!"
-      label;
-    let inserted =
-      Cache.Resource.insert_resource cache well_known_resource in
-    Utils.log_with_header
-      "END: Saving %s resource to db (id=%Ld)\n%!"
-      label inserted.CacheData.Resource.id;
-    inserted
-  | Some resource -> resource
-
 let update_cache_size delta metadata cache =
   Utils.log_with_header "BEGIN: Updating cache size (delta=%Ld) in db\n%!"
     delta;
@@ -725,6 +697,45 @@ let get_root_folder_id config =
     "END: Getting root folder id (id=%s) from server\n%!"
     root_folder_id;
   SessionM.return root_folder_id
+
+let get_root_folder_id_from_context () =
+  let context = Context.get_ctx () in
+  let config = context |. Context.config_lens in
+  let root_folder_id_option = context.Context.root_folder_id in
+  match root_folder_id_option with
+  | None ->
+    let root_folder_id = do_request (get_root_folder_id config) |> fst in
+    Context.update_ctx (Context.root_folder_id ^= Some root_folder_id);
+    root_folder_id
+  | Some r -> r
+
+let get_well_known_resource path trashed =
+  let root_folder_id = get_root_folder_id_from_context () in
+  let context = Context.get_ctx () in
+  let cache = context.Context.cache in
+  let config = context |. Context.config_lens in
+  match lookup_resource path trashed with
+  | None ->
+    let (well_known_resource, label) =
+      if path = root_directory then
+        (create_root_resource root_folder_id trashed, "root")
+      else if is_lost_and_found_root path trashed config then
+        (create_well_known_resource lost_and_found_directory, "lost+found")
+      else if is_shared_with_me_root path trashed config then
+        (create_well_known_resource shared_with_me_directory, "shared with me")
+      else invalid_arg ("Invalid well known path: " ^ path ^ " trashed=" ^
+                        (string_of_bool trashed))
+    in
+    Utils.log_with_header
+      "BEGIN: Saving %s resource to db\n%!"
+      label;
+    let inserted =
+      Cache.Resource.insert_resource cache well_known_resource in
+    Utils.log_with_header
+      "END: Saving %s resource to db (id=%Ld)\n%!"
+      label inserted.CacheData.Resource.id;
+    inserted
+  | Some resource -> resource
 
 let get_metadata () =
   let config = Context.get_ctx () |. Context.config_lens in
@@ -1159,8 +1170,7 @@ let check_resource_in_cache cache path trashed =
 
 let rec get_folder_id path trashed =
   if path = root_directory then
-    let context = Context.get_ctx () in
-    let root_folder_id = context.Context.root_folder_id |> Option.get in
+    let root_folder_id = get_root_folder_id_from_context () in
     SessionM.return root_folder_id
   else
     get_resource path trashed >>= fun resource ->
@@ -1693,9 +1703,13 @@ let get_attr path =
             else 0o777)
       in
       perm land mask in
-    let st_nlink =
-      if CacheData.Resource.is_folder resource then 2
-      else 1 in
+    (* To avoid potential performance issues, counting the number of subdirs
+     * (as st_nlink is usually equals to 2 + subdir number), let set the value
+     * to 1, as it can be used to mean "I don't know the subdirectory count"
+     * (https://github.com/cryptomator/fuse-nio-adapter/issues/34). See also:
+     * https://bugzilla.kernel.org/show_bug.cgi?id=196405#c5
+     *)
+    let st_nlink = 1 in
     let st_uid =
       Option.map_default 
         Int64.to_int
@@ -2223,9 +2237,7 @@ let init_filesystem () =
   if config.Config.async_upload_queue then begin
     UploadQueue.start_async_upload_thread
       cache config.Config.async_upload_threads upload_resource_by_id;
-  end;
-  let root_folder_id = do_request (get_root_folder_id config) |> fst in
-  Context.update_ctx (Context.root_folder_id ^= Some root_folder_id)
+  end
 
 let queue_upload resource =
   let context = Context.get_ctx () in
