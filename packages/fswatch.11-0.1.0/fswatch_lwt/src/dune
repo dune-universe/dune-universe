@@ -1,0 +1,6 @@
+(library
+  (name fswatch_lwt)
+  (public_name fswatch_lwt)
+  (flags (:standard -safe-string))
+  (libraries fswatch lwt.unix)
+  )

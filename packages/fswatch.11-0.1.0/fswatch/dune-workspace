@@ -1,0 +1,5 @@
+(lang dune 1.4)
+
+(profile release)
+
+(context (default))

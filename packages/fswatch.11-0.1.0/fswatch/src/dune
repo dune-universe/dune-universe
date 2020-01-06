@@ -1,0 +1,8 @@
+(library
+  (name fswatch)
+  (public_name fswatch)
+  (flags (:standard -safe-string))
+  (libraries threads)
+  (c_names stub)
+  (c_flags (-I/usr/local/include/libfswatch/c -I/usr/include/libfswatch/c))
+  (c_library_flags (-lfswatch)))
