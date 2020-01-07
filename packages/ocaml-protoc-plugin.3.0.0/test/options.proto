@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+message options { bool mangle_names = 1; }
+extend google.protobuf.FileOptions {
+    options ocaml_options = 1074;
+}
