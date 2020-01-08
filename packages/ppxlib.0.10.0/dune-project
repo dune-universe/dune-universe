@@ -1,4 +1,0 @@
-(lang dune 1.0)
-(name ppxlib)
-(version 0.10.0)
-(using cinaps 1.0)
