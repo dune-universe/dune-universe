@@ -11,10 +11,11 @@ depends: [
   "batteries"
   "cpm"
   "dolog" {>= "4.0.0"}
-  "dune"
+  "dune" {>= "1.10"}
   "minicli"
   "parany"
   "conf-liblinear-tools"
+  "dokeysto_camltc"
 ]
 synopsis: "Wrapper around liblinear-tools"
 description: """

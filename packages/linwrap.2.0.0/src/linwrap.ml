@@ -13,9 +13,9 @@ open Printf
 
 module A = BatArray
 module CLI = Minicli.CLI
-module Ht = BatHashtbl
 module L = BatList
 module Log = Dolog.Log
+module PHT = Dokeysto_camltc.Db_camltc.RW
 
 module SL = struct
   type t = bool * float (* (label, pred_score) *)
@@ -151,40 +151,52 @@ let prod_predict ncores verbose model_fns test_fn output_fn =
   Utls.enforce
     (L.for_all (fun fn -> card = (Utls.file_nb_lines fn)) pred_fns)
     "Linwrap.prod_predict: linwrap_preds_*.txt: different number of lines";
-  (* WARNING: predictions have to fit in memory... *)
-  let ht = Ht.create nb_rows in
+  let tmp_pht_fn = Filename.temp_file "linwrap_" ".pht" in
+  let pht = PHT.create tmp_pht_fn in
+  Log.info "Persistent hash table file: %s" tmp_pht_fn;
+  let nb_models = L.length pred_fns in
   begin match pred_fns with
     | [] -> assert(false)
     | pred_fn_01 :: other_pred_fns ->
       begin
         (* populate ht *)
+        Log.info "gathering %d models..." nb_models;
         Utls.iteri_on_lines_of_file pred_fn_01 (fun k line ->
             if k = 0 then
               assert(line = "labels 1 -1") (* check header *)
             else
               let pred_act_p = pred_score_of_pred_line line in
-              Ht.add ht k pred_act_p
+              let k_str = string_of_int k in
+              PHT.add pht k_str (Utls.marshal_to_string pred_act_p)
           );
         (* accumulate *)
-        L.iter (fun pred_fn ->
+        L.iteri (fun i pred_fn ->
+            Log.info "done: %d/%d" (i + 1) nb_models;
             Utls.iteri_on_lines_of_file pred_fn (fun k line ->
                 if k = 0 then
                   assert(line = "labels 1 -1") (* check header *)
                 else
                   let pred_act_p = pred_score_of_pred_line line in
-                  Ht.modify k (fun prev_v -> prev_v +. pred_act_p) ht
+                  let k_str = string_of_int k in
+                  let prev_v: float =
+                    Utls.unmarshal_from_string (PHT.find pht k_str) in
+                  PHT.replace pht k_str
+                    (Utls.marshal_to_string (pred_act_p +. prev_v))
               )
-          ) other_pred_fns
+          ) other_pred_fns;
+        Log.info "done: %d/%d" nb_models nb_models
       end
   end;
   (* write them to output file, averaged *)
   Utls.with_out_file output_fn (fun out ->
-      let nb_models = float (L.length pred_fns) in
       for i = 1 to nb_rows do
-        let sum_preds = Ht.find ht i in
-        fprintf out "%f\n" (sum_preds /. nb_models)
+        let k_str = string_of_int i in
+        let sum_preds: float = Utls.unmarshal_from_string (PHT.find pht k_str) in
+        fprintf out "%f\n" (sum_preds /. (float nb_models))
       done
     );
+  PHT.close pht;
+  (* PHT.destroy pht; *) (* FBR: UNCOMMENT AFTER DEBUG *)
   if verbose && output_fn <> "/dev/stdout" then
     (* compute AUC *)
     let auc =
@@ -257,6 +269,7 @@ let main () =
               [-p <float>]: training set portion (in [0.0:1.0])\n  \
               [{-l|--load} <filename>]: prod. mode; use trained models\n  \
               [{-s|--save} <filename>]: train. mode; save trained models\n  \
+              [-f]: force overwriting existing model file\n  \
               [--scan-c]: scan for best C\n  \
               [--scan-w]: scan weight to counter class imbalance\n  \
               [--scan-k]: scan number of bags (advice: optim. k rather than w)\n"
@@ -266,6 +279,7 @@ let main () =
   let output_fn = CLI.get_string_def ["-o"] args "/dev/stdout" in
   let will_save = L.mem "-s" args || L.mem "--save" args in
   let will_load = L.mem "-l" args || L.mem "--load" args in
+  let force = CLI.get_set_bool ["-f"] args in
   Utls.enforce (not (will_save && will_load))
     ("Linwrap.main: cannot load and save at the same time");
   let model_cmd =
@@ -273,7 +287,7 @@ let main () =
       | Some fn ->
         let () =
           Utls.enforce
-            (not (Sys.file_exists fn))
+            (force || not (Sys.file_exists fn))
             ("Linwrap: file already exists: " ^ fn) in
         Save_into fn
       | None ->
@@ -320,7 +334,7 @@ let main () =
             [0.01; 0.02; 0.05;
              0.1; 0.2; 0.5;
              1.; 2.; 5.;
-             10.; 20.; 50.]
+             10.; 20.; 50.; 100.]
           else [1.0] in
       let ws =
         if scan_w then L.frange 1.0 `To 10.0 10
@@ -328,7 +342,7 @@ let main () =
           | Some w -> [w]
           | None -> [1.0] in
       let ks =
-        if scan_k then [1; 2; 5; 10; 20; 50]
+        if scan_k then [1; 2; 5; 10; 20; 50; 100]
         else [k] in
       let cwks = L.cartesian_product (L.cartesian_product cs ws) ks in
       let _best_auc =
