@@ -1,0 +1,51 @@
+archetype zero_coupon_bond
+
+variable issuer : role  = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk (* seller 'Alice' *)
+
+variable owner : role = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
+(* buyer 'Bob'; receives 11 tez in one-year *)
+
+
+variable price : tez = 10tz
+
+variable payment : tez = 11 * price
+
+variable maturity : date = 2020-12-31
+
+states =
+  | Created initial
+  | Confirmed (* owner has purchased bond *)
+  | Repaid    (* issuer has transferred payment to contract *)
+  | Collected (* owner has collected payment *)
+
+transition confirm () from Created {
+  specification {
+    postcondition s1 {
+      balance = 0tz
+    }
+  }
+
+  to Confirmed
+  when { transferred = price }
+  with effect {
+    maturity := now + 365d;
+    transfer price to issuer
+  }
+}
+
+transition repay () from Confirmed {
+  called by issuer
+
+  to Repaid when { transferred = payment }
+}
+
+transition collect () from Repaid {
+  called by owner
+
+  to Collected
+  when { now >= maturity }
+  with effect {
+    if balance >= payment
+    then transfer balance to owner
+  }
+}

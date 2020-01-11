@@ -1,0 +1,80 @@
+archetype clause_io_acceptance_of_delivery
+
+variable shipper : role = @tz1_shipper
+
+variable receiver : role = @tz1_receiver
+
+variable payment : tez = 10tz
+
+variable deliveryDate : date = 2020-12-31
+
+variable businessDays : duration = 14d
+
+(* extra blockchain incentives *)
+variable incentiveR : tez = payment
+
+variable incentiveS : tez = 0.2 * payment
+
+(* %traceable (payment + incentiveR, receiver) *)
+(* %traceable (incentiveS, shipper) *)
+
+states =
+ | Created initial
+ | Aborted
+ | Signed
+ | Delivered
+ | Success
+ | Fail
+
+transition[%signedbyall [shipper, receiver]%] sign () from Created {
+  to Signed
+  when { balance = payment + incentiveR + incentiveS }
+}
+
+transition unilateral_abort () from Created {
+  called by shipper or receiver
+
+  to Aborted
+  with effect {
+    transfer incentiveR to receiver;
+    transfer payment to receiver;
+    transfer incentiveS to receiver
+  }
+}
+
+transition[%signedbyall [shipper, receiver]%] abort () from Signed {
+  called by shipper or receiver
+
+  to Aborted
+  with effect {
+    transfer incentiveR to receiver;
+    transfer payment to receiver;
+    transfer incentiveS to receiver
+  }
+}
+
+transition confirm () from Signed {
+  called by receiver
+
+  to Delivered
+  with effect {
+     deliveryDate := now;
+     transfer incentiveR to receiver;
+     transfer payment to shipper;
+     transfer incentiveS to receiver
+  }
+}
+
+transition success () from Delivered {
+  called by shipper
+
+  to Success
+  when { now > (deliveryDate + businessDays) }
+}
+
+transition fail () from Delivered {
+  called by receiver
+
+  to Fail
+  when { now <= deliveryDate + businessDays }
+}

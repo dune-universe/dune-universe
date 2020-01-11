@@ -1,0 +1,17 @@
+archetype erc721
+
+constant name : string = "name"
+
+constant symbol : string = "my_token"
+
+asset token {
+  id : string;
+  owner[%delegable%] : role;
+}
+
+action transfer_ (k : role, tk : token) {
+  called by tk.owner
+  effect {
+    tk.owner := k
+  }
+}

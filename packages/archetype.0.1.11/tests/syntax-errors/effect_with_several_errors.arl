@@ -1,7 +1,0 @@
-archetype effect_with_several_errors
-
-action ident {
-  effect {
-    to; f(); when
-  }
-}

@@ -1,0 +1,15 @@
+archetype test_action_empty
+
+action myaction () {
+  specification {
+  }
+  accept transfer
+  called by any
+  require {
+  }
+  failif {
+  }
+  effect {
+    ()
+  }
+}

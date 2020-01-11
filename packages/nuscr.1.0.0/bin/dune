@@ -1,8 +1,0 @@
-(executables
- (names main)
- (libraries nuscrlib base stdio))
-
-(install
- (section bin)
- (files
-  (main.exe as nuscr)))
