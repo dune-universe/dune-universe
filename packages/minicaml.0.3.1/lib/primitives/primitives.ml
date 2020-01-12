@@ -1,1 +1,0 @@
-let table = Dictp.table @ Listp.table
