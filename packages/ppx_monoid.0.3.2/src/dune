@@ -1,0 +1,7 @@
+(library
+ (name        ppx_monoid)
+ (public_name ppx_monoid)
+ (libraries   ocaml-migrate-parsetree)
+ (kind        ppx_rewriter)
+ (flags       (:standard -w -9))
+ (preprocess  (pps ppx_tools_versioned.metaquot_404)))

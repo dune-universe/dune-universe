@@ -1,0 +1,9 @@
+(executable
+  (name anzad)
+  (libraries cmdliner str asak)
+  (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+)
+
+(install
+ (section bin)
+ (files (anzad.exe as anzad)))

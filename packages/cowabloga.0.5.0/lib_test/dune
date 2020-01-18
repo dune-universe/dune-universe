@@ -1,0 +1,3 @@
+(executables
+ (names serve)
+ (libraries cohttp cohttp-lwt-unix cowabloga cow))
