@@ -1,0 +1,4 @@
+(test 
+    (name test) 
+    (libraries gobba alcotest)
+    (package gobba))
