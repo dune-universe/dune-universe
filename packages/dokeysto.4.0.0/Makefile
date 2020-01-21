@@ -23,15 +23,15 @@ doc:
 
 test:
 	\rm -f rwdb rwdb.idx
-	dune build _build/default/src/test.exe
+	dune build -p dokeysto _build/default/src/test.exe
 	_build/default/src/test.exe
 
 test_lz4:
 	\rm -f rwdb_lz4 rwdb_lz4.idx
-	dune build _build/default/src/test_lz4.exe
+	dune build -p dokeysto_lz4 _build/default/src/test_lz4.exe
 	_build/default/src/test_lz4.exe
 
 test_camltc:
 	\rm -f rwdb_camltc rwdb_camltc.idx
-	dune build _build/default/src/test_camltc.exe
+	dune build -p dokeysto_camltc _build/default/src/test_camltc.exe
 	_build/default/src/test_camltc.exe
