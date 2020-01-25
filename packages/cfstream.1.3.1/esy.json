@@ -1,0 +1,27 @@
+{
+  "name": "cfstream",
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    "buildDev": "refmterr dune build @all --profile dev",
+    "buildsInSource": "_build"
+  },
+  "scripts": {
+    "format": "sh -c 'ocamlformat --inplace app/*.ml lib/*.ml lib/*.mli'",
+    "utop": "dune utop",
+    "clean": "dune clean",
+    "distclean": "sh -c 'esy clean; rm -rf _esy; rm -rf node_modules'"
+  },
+  "dependencies": {
+    "ocaml": ">=4.04.1 <4.08.0",
+    "@opam/dune": "*",
+    "@opam/core_kernel": ">=v0.11.0",
+    "@opam/ounit": "*"
+  },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "@opam/ocamlformat": "*",
+    "@opam/odoc": "*",
+    "refmterr": "*",
+    "@opam/utop": "*"
+  }
+}

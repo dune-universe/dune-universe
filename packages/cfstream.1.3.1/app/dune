@@ -1,0 +1,11 @@
+(alias
+ (name runtest)
+ (deps (:x cfstream_test.exe))
+ (action (run %{x}))
+)
+
+(executable
+ (name cfstream_test)
+ (libraries cfstream oUnit)
+ (modules cfstream_test)
+)
