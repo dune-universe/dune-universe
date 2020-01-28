@@ -1,0 +1,5 @@
+(test
+ (name test_re)
+ (libraries regenerate regenerate.segments re)
+ (action  (run %{test} -v --long))
+)

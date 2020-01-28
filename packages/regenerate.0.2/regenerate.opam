@@ -1,0 +1,35 @@
+version: "0.2"
+opam-version: "2.0"
+maintainer: "Drup <drupyog@zoho.com>"
+authors: "Drup <drupyog@zoho.com>"
+license: "ISC"
+homepage: "https://github.com/regex-generate/regenerate"
+bug-reports: "https://github.com/regex-generate/regenerate/issues"
+dev-repo: "git+https://github.com/regex-generate/regenerate.git"
+doc: "https://regex-generate.github.io/regenerate/doc/0.2/"
+
+depends: [
+  "dune" {build}
+  "cmdliner"
+  "fmt"
+  "containers"
+  "mtime"
+  "oseq"
+  "iter"
+  "qcheck"
+  "re" {with-test}
+  "ocaml" {>= "4.03"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+synopsis:
+  "Regenerate is a tool to generate test-cases for regular expression engines"
+description: """
+Regenerate takes a regular expression and generates strings that match it.
+It handles most posix extended regular expressions along with
+complement (~a) and intersection (a&b).
+Since it handles complement, it can also generate strings that
+*don't* match a given regular expression."""

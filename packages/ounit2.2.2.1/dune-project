@@ -1,4 +1,0 @@
-(lang dune 1.11)
-(name ounit)
-(version v2.2.1)
-(explicit_js_mode)
