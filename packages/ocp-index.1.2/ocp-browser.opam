@@ -1,5 +1,5 @@
+version: "1.2"
 opam-version: "2.0"
-version: "1.1.9"
 maintainer: "louis.gesbert@ocamlpro.com"
 synopsis: "Console browser for the documentation of installed OCaml libraries"
 description: """
@@ -23,4 +23,5 @@ depends: [
   "ocp-index" {= version}
   "cmdliner"
   "lambda-term"
+  "zed" { >= "2.0.0" }
 ]
