@@ -1,0 +1,14 @@
+build-and-test:
+  image: ocaml/opam2:alpine-3.10-ocaml-4.08
+  script:
+    - opam pin --no-action json-data-encoding .
+    - opam pin --no-action json-data-encoding-browser .
+    - opam pin --no-action json-data-encoding-bson .
+    - opam depext json-data-encoding-browser json-data-encoding-bson json-data-encoding
+    - opam install --deps-only .
+    - dune build
+    - opam depext --dry-run crowbar alcotest
+    - opam install --deps-only --with-test .
+    - dune runtest
+    - opam install .
+

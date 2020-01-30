@@ -1,0 +1,56 @@
+(* $Id$ *)
+
+prefix "Gtk"
+initializer "ml_gtkrange_init"
+
+header {
+open Gtk
+}
+
+classes {
+  GtkAdjustment "Gtk.adjustment obj"
+}
+
+class Range abstract set wrap wrapsig : Widget {
+  "adjustment"           GtkAdjustment        : Read / Write / Construct
+  "fill-level"           gdouble              :	Read / Write
+  "inverted"             gboolean             : Read / Write
+  "restrict-to-fill-level" gboolean           : Read / Write
+  "round-digits"         gint                 :	Read / Write
+  "show-fill-level"      gboolean             :	Read / Write
+  "lower-stepper-sensitivity" GtkSensitivityType : Read / Write
+  "upper-stepper-sensitivity" GtkSensitivityType : Read / Write
+  "orientation"          GtkOrientation       : Read / Write / NoSet
+  signal adjust_bounds : gdouble
+  signal move_slider : GtkScrollType
+  signal change_value : GtkScrollType gdouble
+  signal value_changed
+}
+
+class Scale hv set wrap : Range {
+  "digits"               gint                 : Read / Write
+  "draw-value"           gboolean             : Read / Write
+  "has-origin"           gboolean             :	Read / Write
+  "value-pos"            GtkPositionType      : Read / Write
+  signal format_value : gdouble -> string
+}
+
+class Scrollbar hv : Range {}
+
+(* deprecated
+class Progress abstract : Widget {
+  "activity-mode"        gboolean             : Read / Write
+  "show-text"            gboolean             : Read / Write
+  "text-xalign"          gfloat               : Read / Write / NoSet
+  "text-yalign"          gfloat               : Read / Write / NoSet
+} *)
+
+class ProgressBar : Widget {
+  "fraction"             gdouble              : Read / Write / Wrap
+  "inverted"             gboolean             :	Read / Write / Wrap
+  "show-text"            gboolean             :	Read / Write / Wrap
+  "pulse-step"           gdouble              : Read / Write / Set / Wrap
+  "text"                 gchararray           : Read / Write / Wrap
+  "ellipsize"            PangoEllipsizeMode   : Read / Write / Wrap
+  method pulse
+}

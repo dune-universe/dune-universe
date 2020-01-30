@@ -1,0 +1,18 @@
+(executables
+ (names test_generated)
+ (libraries json-data-encoding crowbar)
+ (flags :standard))
+
+(alias
+ (name buildtest)
+ (deps test_generated.exe))
+
+(alias
+ (name runtest_test_generated)
+ (action
+  (run %{exe:test_generated.exe})))
+
+(alias
+ (name runtest)
+ (deps
+  (alias runtest_test_generated)))
