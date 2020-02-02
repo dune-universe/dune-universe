@@ -1,5 +1,0 @@
-(executable
-  (name HashConsDemo)
-  (libraries fix)
-  (flags "-w" "A")
-)

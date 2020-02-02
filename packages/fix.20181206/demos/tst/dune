@@ -1,5 +1,0 @@
-(executable
-  (name Test)
-  (libraries fix)
-  (flags "-w" "A")
-)
