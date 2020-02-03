@@ -1,0 +1,98 @@
+; The final FFI module, containing all the OCaml bits, and linked with libuv.
+(library
+ (name luv_c)
+ (public_name luv.c)
+ (wrapped false)
+ (modules Luv_c_generated_functions)
+ (libraries ctypes luv_c_function_descriptions threads)
+ (foreign_stubs
+  (language c)
+  (names c_generated_functions helpers)
+  (include_dirs vendor/libuv/include))
+ (foreign_archives uv))
+
+
+
+; The vendored libuv.
+(rule
+ (targets libuv.a dlluv.so)
+ (deps (source_tree vendor) link-gyp.ml copy-so.ml)
+ (action (progn
+  (run ocaml link-gyp.ml)
+  (chdir vendor/libuv
+   (run python3 gyp_uv.py -f make -Duv_library=static_library))
+  (setenv CFLAGS -fPIC
+   (setenv BUILDTYPE Release
+    (run make -C vendor/libuv/out libuv)))
+  (run cp vendor/libuv/out/Release/libuv.a libuv.a)
+  (chdir vendor/libuv
+   (run python3 gyp_uv.py -f make -Duv_library=shared_library))
+  (setenv CFLAGS -fPIC
+   (setenv BUILDTYPE Release
+    (run make -C vendor/libuv/out libuv)))
+  (run ocaml copy-so.ml))))
+
+(data_only_dirs vendor)
+
+
+
+; Everything below is the bindings generation process using ctypes. It produces
+; two OCaml modules, Luv_c_generated_functions and Luv_c_generated_types.
+
+; Type bindings (Luv_c_generated_types).
+(library
+ (name luv_c_type_descriptions)
+ (public_name luv.c_type_descriptions)
+ (modules Luv_c_type_descriptions)
+ (libraries ctypes))
+
+(executable
+ (name generate_types_start)
+ (modules Generate_types_start)
+ (libraries ctypes.stubs luv_c_type_descriptions))
+
+(rule
+ (with-stdout-to generate_types_step_2.c
+  (run ./generate_types_start.exe)))
+
+; Based partially on
+;   https://github.com/avsm/ocaml-yaml/blob/master/types/stubgen/jbuild#L20
+(rule
+ (targets generate_types_step_2.exe)
+ (deps (:c generate_types_step_2.c) helpers.h)
+ (action (bash "\
+  %{cc} %{c} \
+  -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` \
+  -I %{ocaml_where} \
+  -I vendor/libuv/include -o %{targets}")))
+
+(rule
+ (with-stdout-to luv_c_generated_types.ml
+  (run ./generate_types_step_2.exe)))
+
+; Function bindings.
+(library
+ (name luv_c_function_descriptions)
+ (public_name luv.c_function_descriptions)
+ (flags (:standard -w -9-16-27))
+ (wrapped false)
+ (modules Luv_c_generated_types Luv_c_function_descriptions Luv_c_types)
+ (libraries ctypes luv_c_type_descriptions))
+
+(executable
+ (name generate_c_functions)
+ (modules Generate_c_functions)
+ (libraries ctypes.stubs luv_c_function_descriptions))
+
+(executable
+ (name generate_ml_functions)
+ (modules Generate_ml_functions)
+ (libraries ctypes.stubs luv_c_function_descriptions))
+
+(rule
+ (with-stdout-to c_generated_functions.c
+  (run ./generate_c_functions.exe luv_stub)))
+
+(rule
+ (with-stdout-to luv_c_generated_functions.ml
+  (run ./generate_ml_functions.exe luv_stub)))
