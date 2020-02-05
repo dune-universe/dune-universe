@@ -1,0 +1,13 @@
+environment:
+  global:
+    OPAM: True
+install:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - appveyor DownloadFile "https://raw.githubusercontent.com/madroach/ocaml-appveyor/master/opam_init.cmd"
+  - opam_init.cmd
+build_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - opam install --yes alcotest
+  - dune build @install
+test_script:
+  - dune runtest

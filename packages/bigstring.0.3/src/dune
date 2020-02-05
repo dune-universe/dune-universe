@@ -1,0 +1,24 @@
+(executable
+ (name configure)
+ (modules Configure))
+
+(rule
+ (targets bigstring_compat.ml)
+ (action (with-stdout-to %{targets}
+  (run ./configure.bc))))
+
+(library
+ (name bigstring)
+ (public_name bigstring)
+ (modules Bigstring)
+ (synopsis "Bigstring built on top of bigarrays, and convenient functions.")
+ (libraries bytes bigarray))
+
+(library
+ (name bigstring_unix)
+ (public_name bigstring-unix)
+ (modules Bigstring_compat Bigstring_unix)
+ (flags :standard -warn-error -3) ; deprecation
+ (c_names bigstring_unix_stubs)
+ (synopsis "Bigstrings from Unix memory mapping.")
+ (libraries bigarray unix))

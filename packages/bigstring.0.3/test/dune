@@ -1,0 +1,12 @@
+(test
+ (name test)
+ (modules test)
+ (flags :standard -thread)
+ (libraries alcotest bigstring bigstring-unix threads)
+ (action
+  ; This enables runtime checks for use-after-free and double-free.
+  (setenv MALLOC_CHECK_ 3
+    (setenv MALLOC_PERTURB_ 195
+      (run %{test} --color=always -q)))
+ )
+)

@@ -1,8 +1,0 @@
-(ocamllex query)
-
-(library
-(name ppx_rapper)
-(public_name ppx_rapper)
-(kind ppx_rewriter)
-(libraries core ppxlib pg_query)
-(preprocess (pps ppxlib.metaquot)))
