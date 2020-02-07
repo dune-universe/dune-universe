@@ -1,0 +1,11 @@
+(library
+  (name multipart_form_data)
+  (public_name multipart-form-data)
+  (libraries
+    lwt
+    stringext
+  )
+  (preprocess
+    (pps
+      lwt_ppx
+    )))
