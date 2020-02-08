@@ -1,0 +1,7 @@
+(library
+  (name VisitorsRuntime)
+  (public_name visitors.runtime)
+  (synopsis "Runtime support for the generated visitors")
+  (libraries result)
+  (wrapped false)
+)

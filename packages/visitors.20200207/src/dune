@@ -1,0 +1,27 @@
+(library
+  (name ppx_deriving_visitors)
+  (public_name visitors.ppx)
+  (synopsis "Compile-time support for generating visitors")
+  (kind ppx_deriver)
+  (libraries result compiler-libs.common ppx_tools ppx_deriving.api)
+  (ppx_runtime_libraries visitors.runtime)
+)
+
+(rule
+  (targets VisitorsCompatibility.ml)
+  (deps VisitorsCompatibility.cppo.ml)
+  (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{deps} -o %{targets})))
+
+(env
+  (dev (flags
+    :standard
+    -safe-string
+    -g
+    -w @A-4-44
+  ))
+  (release (flags
+    :standard
+    -safe-string
+    -g
+  ))
+)

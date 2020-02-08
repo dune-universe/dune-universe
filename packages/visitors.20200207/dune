@@ -1,0 +1,5 @@
+(install
+  (files Makefile.preprocess)
+  (section lib)
+  (package visitors)
+)

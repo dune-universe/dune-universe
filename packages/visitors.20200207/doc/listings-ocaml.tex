@@ -1,0 +1,24 @@
+% Configuring listings for OCaml.
+
+% Comments in blue.
+\newcommand{\ocamlcommentstyle}{\color{blue}}
+
+\lstdefinelanguage{ocaml}[Objective]{Caml}{
+  % Fix errors in the default definition of ocaml.
+  deletekeywords={closed,ref},
+  morekeywords={initializer},
+  % General settings.
+  flexiblecolumns=false,
+  showstringspaces=false,
+  framesep=5pt,
+  commentstyle=\ocamlcommentstyle,
+  % By default, we use a small font.
+  basicstyle=\tt\small,
+  numberstyle=\footnotesize,
+  % LaTeX escape.
+  escapeinside={$}{$},
+}
+
+% An abbreviation for \lstinline, with a normal font size.
+% To be used in the text of the paper.
+\def\oc{\lstinline[language=ocaml,basicstyle=\tt,flexiblecolumns=true]}

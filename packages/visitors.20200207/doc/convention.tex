@@ -1,0 +1,49 @@
+\begin{figure}[p]
+\begin{mdframed}[backgroundcolor=green!10]
+\begin{lstlisting}
+class ['self] iter : object ('self)
+  method private visit_list: 'env 'a .
+    ('env -> 'a -> unit) -> 'env -> 'a list -> unit
+end
+class ['self] map : object ('self)
+  method private visit_list: 'env 'a 'b .
+    ('env -> 'a -> 'b) -> 'env -> 'a list -> 'b list
+end
+class ['self] endo : object ('self)
+  method private visit_list: 'env 'a .
+    ('env -> 'a -> 'a) -> 'env -> 'a list -> 'a list
+end
+class virtual ['self] reduce : object ('self)
+  inherit ['s] monoid
+  method private visit_list: 'env 'a .
+    ('env -> 'a -> 's) -> 'env -> 'a list -> 's
+end
+class virtual ['self] mapreduce : object ('self)
+  inherit ['s] monoid
+  method private visit_list: 'env 'a 'b .
+    ('env -> 'a -> 'b * 's) -> 'env -> 'a list -> 'b list * 's
+end
+class ['self] iter2 : object ('self)
+  method private visit_list: 'env 'a 'b .
+    ('env -> 'a -> 'b -> unit) -> 'env -> 'a list -> 'b list -> unit
+end
+class ['self] map2 : object ('self)
+  method private visit_list: 'env 'a 'b 'c .
+    ('env -> 'a -> 'b -> 'c) -> 'env -> 'a list -> 'b list -> 'c list
+end
+class virtual ['self] reduce2 : object ('self)
+  inherit ['s] monoid
+  method private visit_list: 'env 'a 'b .
+    ('env -> 'a -> 'b -> 's) -> 'env -> 'a list -> 'b list -> 's
+end
+class virtual ['self] mapreduce2 : object ('self)
+  inherit ['s] monoid
+  method private visit_list: 'env 'a 'b 'c .
+    ('env -> 'a -> 'b -> 'c * 's) ->
+    'env -> 'a list -> 'b list -> 'c list * 's
+end
+\end{lstlisting}
+\end{mdframed}
+\caption{Conventional types of polymorphic visitor methods}
+\label{fig:convention}
+\end{figure}

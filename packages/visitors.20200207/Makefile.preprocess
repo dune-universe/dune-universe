@@ -1,0 +1,45 @@
+# This Makefile allows running visitors as a preprocessor,
+# so as to inspect the generated code and possibly include
+# it in a TeX document.
+
+# This assumes the visitors package is installed.
+
+# The rewriting command.
+PPX          := `ocamlfind query ppx_deriving`/ppx_deriving \
+                `ocamlfind query visitors`/ppx/ppx_deriving_visitors.cma
+REWRITE      := ocamlfind ppx_tools/rewriter -ppx '$(PPX)'
+
+# Use GNU sed to extract the generated code.
+# This requires GNU sed 3.95 or above, I am told.
+SED          := $(shell if command -v gsed >/dev/null ; then echo gsed ; else echo sed ; fi)
+EXTRACT      := $(SED) -e '/VISITORS.BEGIN/,/VISITORS.END/!d;//d'
+
+# Fix some deficiencies of OCaml's code printer.
+# -- Force a space after a comma.
+# -- Force a space after an ordinary letter and before [=].
+# -- Replace multiple consecutive spaces with a single space.
+#    This destroys indentation; we restore it afterwards.
+# -- Remove a space before a comma or closing parenthesis.
+# -- Force a line break after [in], unless there is one already.
+# -- Force a line break after [| ... ->] on a line by itself, unless there is one already.
+# -- Force a line break after [method ... =], unless there is one already.
+# -- Remove the line break between [=] and [object].
+# -- Replace [fun x y -> fun ] with [fun x y ], so multiple-argument functions are prettier.
+#    Do this twice, so we can handle functions of arity up to 3. (Yes, this is very ad hoc.)
+BEAUTIFY     := \
+              | $(SED) -e 's/,/, /g' \
+              | $(SED) -e 's/\([a-zA-Z_)]\)=/\1 =/g' \
+              | $(SED) -e 's/  / /g' \
+              | $(SED) -e 's/ \([,)]\)/\1/g' \
+              | $(SED) -e 's/ in / in\n/g' \
+              | $(SED) -e 's/^\( *|.* ->\) /\1\n/g' \
+              | $(SED) -e 's/\(method[^=]*=\) /\1\n/g' \
+              | perl -0777 -pe 's/=\n *object/= object/gs' \
+              | perl -0777 -pe "s/fun ([a-zA-Z0-9_' ]+) ->\n *fun /fun \1 /gs" \
+              | perl -0777 -pe "s/fun ([a-zA-Z0-9_' ]+) ->\n *fun /fun \1 /gs" \
+
+# Use ocp-indent to beautify the generated code.
+INDENT       := ocp-indent --config=JaneStreet,match_clause=4
+
+%.processed.ml: %.ml
+	$(REWRITE) $< | $(EXTRACT) $(BEAUTIFY) | $(INDENT) > $@

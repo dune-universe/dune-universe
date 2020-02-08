@@ -1,0 +1,38 @@
+\begin{figure}[t]
+\begin{mdframed}[backgroundcolor=green!10]
+\begin{lstlisting}
+class virtual ['self] iter : object ('self)
+  constraint 'self =
+    < visit_EAdd : 'env -> expr -> expr -> unit;
+      visit_EConst : 'env -> int -> unit;
+      visit_expr : 'env -> expr -> unit;
+      .. >
+  method visit_EAdd : 'env -> expr -> expr -> unit
+  method visit_EConst : 'env -> int -> unit
+  method visit_expr : 'env -> expr -> unit
+  (* These methods are inherited from [VisitorsRuntime.iter]: *)
+  method private visit_array :
+    'env 'a. ('env -> 'a -> unit) -> 'env -> 'a array -> unit
+  method private visit_bool : 'env. 'env -> bool -> unit
+  method private visit_bytes : 'env. 'env -> bytes -> unit
+  (* ... and many more ... *)
+end
+\end{lstlisting}
+\end{mdframed}
+\caption{An inferred type for the \iter visitor of \fref{fig:expr00}}
+\label{fig:inferred}
+\end{figure}
+
+\begin{figure}[t]
+\begin{mdframed}[backgroundcolor=green!10]
+\begin{lstlisting}
+class virtual ['self] iter : object ('self)
+  method visit_EAdd   : 'monomorphic. 'env -> expr -> expr -> unit
+  method visit_EConst : 'monomorphic. 'env -> int -> unit
+  method visit_expr   : 'monomorphic. 'env -> expr -> unit
+end
+\end{lstlisting}
+\end{mdframed}
+\caption{A simplified type for the \iter visitor of \fref{fig:expr00}}
+\label{fig:simplified}
+\end{figure}

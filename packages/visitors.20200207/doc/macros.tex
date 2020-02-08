@@ -1,0 +1,126 @@
+% ------------------------------------------------------------------------------
+% Including a source code file foo.ml:
+%   \orig{foo}
+
+\mdfsetup{%
+  linewidth=0pt,%
+  skipabove=\baselineskip,%
+  skipbelow=.4\baselineskip,%
+  innertopmargin=0pt,%
+  innerbottommargin=0pt,%
+}
+
+\newenvironment{origenv}{%
+  \begin{mdframed}[backgroundcolor=gray!10]%
+}{%
+  \end{mdframed}%
+}
+
+\newcommand{\orig}[1]{%
+\begin{origenv}
+\lstinputlisting{#1.ml}
+\end{origenv}
+}
+
+\newcommand{\origfirstline}[2]{%
+\begin{origenv}
+\lstinputlisting[firstline=#2]{#1.ml}
+\end{origenv}
+}
+
+%% \newcommand{\codefollowupgeneral}[1]{%
+%% \begin{center}
+%% (This code fragment follows up on #1.)
+%% \end{center}
+%% \vspace{-\baselineskip}
+%% }
+
+\newcommand{\codefollowupgeneral}[1]{%
+\marginnote{\footnotesize This follows #1.}[5mm]%
+}
+
+\newcommand{\codefollowup}[1]{%
+  \codefollowupgeneral{\fref{fig:#1}}%
+}
+
+% ------------------------------------------------------------------------------
+% Including the corresponding auto-generated code:
+%   \processed{foo}
+
+\newenvironment{processedenv}{%
+  \begin{mdframed}[backgroundcolor=yellow!40]%
+}{%
+  \end{mdframed}%
+}
+
+\newcommand{\processed}[1]{%
+\begin{processedenv}
+\lstinputlisting{#1.processed.ml}
+\end{processedenv}
+}
+
+% ------------------------------------------------------------------------------
+% Various macros.
+
+\newcommand{\fref}[1]{Figure~\ref{#1}}
+\newcommand{\sref}[1]{\S\ref{#1}}
+\newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+% ------------------------------------------------------------------------------
+% Abbreviations.
+
+\newcommand{\merlin}{\href{https://github.com/ocaml/merlin}{Merlin}\xspace}
+\newcommand{\ocamlbuild}{\href{https://github.com/ocaml/ocamlbuild/blob/master/manual/manual.adoc}{\texttt{ocamlbuild}}\xspace}
+\newcommand{\ocamlfind}{\texttt{ocamlfind}\xspace}
+\newcommand{\opam}{\href{https://opam.ocaml.org/}{\texttt{opam}}\xspace}
+\newcommand{\ppxderiving}{\href{https://github.com/whitequark/ppx_deriving}{\texttt{ppx\_deriving}}\xspace}
+\newcommand{\ppximport}{\href{https://github.com/whitequark/ppx_import}{\texttt{ppx\_import}}\xspace}
+\newcommand{\dune}{\href{https://github.com/ocaml/dune}{Dune}\xspace}
+
+\newcommand{\hashconsRepoURL}{https://github.com/backtracking/ocaml-hashcons}
+\newcommand{\hashcons}{\href{\hashconsRepoURL}{\texttt{hashcons}}\xspace}
+\newcommand{\hashconsRepoFile}[1]{\href{\hashconsRepoURL/blob/master/#1}{\texttt{#1}}}
+
+\newcommand{\repoURL}{https://gitlab.inria.fr/fpottier/visitors}
+\newcommand{\repoFile}[1]{\href{\repoURL/blob/master/#1}{\texttt{#1}}}
+% \newcommand{\srcFile}[1]{\href{\repoURL/blob/master/src/#1}{\texttt{#1}}}
+\newcommand{\runtimeFile}[1]{\href{\repoURL/blob/master/runtime/#1}{\texttt{#1}}}
+
+\newcommand{\iter}{\texttt{iter}\xspace}
+\newcommand{\map}{\texttt{map}\xspace}
+\newcommand{\mapendo}{\texttt{endo}\xspace}
+\newcommand{\reduce}{\texttt{reduce}\xspace}
+\newcommand{\mapreduce}{\texttt{mapreduce}\xspace}
+\newcommand{\fold}{\texttt{fold}\xspace}
+\newcommand{\itertwo}{\texttt{iter2}\xspace}
+\newcommand{\maptwo}{\texttt{map2}\xspace}
+\newcommand{\reducetwo}{\texttt{reduce2}\xspace}
+\newcommand{\mapreducetwo}{\texttt{mapreduce2}\xspace}
+\newcommand{\foldtwo}{\texttt{fold2}\xspace}
+\newcommand{\unit}{\texttt{unit}\xspace}
+\newcommand{\visitors}{\texttt{visitors}\xspace}
+\newcommand{\derivingvisitors}{\texttt{[@@deriving visitors \{ ...\ \}]}\xspace}
+\newcommand{\runtime}[1]{\oc|VisitorsRuntime.#1|}
+
+\newcommand{\tyconvisitor}[1]{\texttt{visit\_#1}}
+\newcommand{\dataconvisitor}[1]{\texttt{visit\_#1}}
+\newcommand{\tyconfail}[1]{\texttt{fail\_#1}}
+\newcommand{\dataconascendingmethod}[1]{\texttt{build\_#1}}
+\newcommand{\tyconascendingmethod}[1]{\texttt{build\_#1}}
+
+\newcommand{\refconvention}{\sref{sec:intro:parameterized:poly}, \sref{sec:intro:nonlocal},
+\fref{fig:convention}}
+
+% Options.
+\newcommand{\ancestors}{\texttt{ancestors}\xspace}
+\newcommand{\concrete}{\texttt{concrete}\xspace}
+\newcommand{\irregular}{\texttt{irregular}\xspace}
+\newcommand{\name}{\texttt{name}\xspace}
+\newcommand{\public}{\texttt{public}\xspace}
+\newcommand{\variety}{\texttt{variety}\xspace}
+\newcommand{\data}{\texttt{data}\xspace}
+\newcommand{\nude}{\texttt{nude}\xspace}
+\newcommand{\polymorphic}{\texttt{polymorphic}\xspace}
+\newcommand{\visitprefix}{\texttt{visit\_prefix}\xspace}
+\newcommand{\buildprefix}{\texttt{build\_prefix}\xspace}
+\newcommand{\failprefix}{\texttt{fail\_prefix}\xspace}
