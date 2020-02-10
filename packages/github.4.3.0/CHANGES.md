@@ -1,7 +1,14 @@
+## 4.3.0 (2020-07-20)
+
+- Remove deprecated authentication method as GitHub has removed
+  support for it (#230 @Aaylor)
+- Reintroduce `user_type` to distinguish organisations and
+  users (#228 @Aaylor)
+
 ## 4.2.0 (2019-06-17)
 
 - Add repository permissions support (#226 @Aaylor)
-- Regenerate opam files automatically via dune-project (#227 @avsm)
+- Regenerate opam files automatically via dune-project (@avsm)
 
 ## 4.1.0 (2019-06-03)
 

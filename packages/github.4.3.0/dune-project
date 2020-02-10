@@ -1,6 +1,6 @@
 (lang dune 1.10)
 (name github)
-(version 4.2.0)
+(version 4.3.0)
 
 (generate_opam_files true)
 
