@@ -1,0 +1,4 @@
+(executables
+  (names example friends parents lovers map_coloring murder_mystery)
+  (public_names example friends parents lovers map_coloring murder_mystery)
+  (libraries logical base))
