@@ -1,0 +1,4 @@
+(library
+  (name mock)
+  (public_name mock)
+)

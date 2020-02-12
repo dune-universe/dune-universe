@@ -1,0 +1,21 @@
+opam-version: "2.0"
+maintainer: ["Cryptosense <opensource@cryptosense.com>"]
+authors: ["Cryptosense <opensource@cryptosense.com>"]
+homepage: "https://github.com/cryptosense/ocaml-mock"
+bug-reports: "https://github.com/cryptosense/ocaml-mock/issues"
+license: "BSD-2"
+dev-repo: "git+https://github.com/cryptosense/ocaml-mock.git"
+doc: "https://cryptosense.github.io/ocaml-mock/doc"
+build: [
+  [ "dune" "build" "-p" name "-j" jobs ]
+]
+run-test: [
+  [ "dune" "runtest" "-p" name "-j" jobs ]
+]
+depends: [
+  "dune"
+  "mock"
+  "ounit"
+  "ppx_deriving" {with-test}
+]
+synopsis: "OUnit wrapper for OCaml mock"

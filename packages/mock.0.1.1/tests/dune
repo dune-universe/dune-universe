@@ -1,0 +1,13 @@
+(test
+  (name test_suite)
+  (libraries
+    oUnit
+    mock
+    mock-ounit
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+    )
+  )
+)
