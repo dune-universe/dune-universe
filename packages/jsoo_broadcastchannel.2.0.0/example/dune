@@ -1,0 +1,39 @@
+(library
+ (name common)
+ (libraries lwt js_of_ocaml)
+ (wrapped false)
+ (modules common)
+ (preprocess (pps js_of_ocaml-ppx)))
+
+
+(executable
+ (name send)
+ (promote (until-clean))
+ (js_of_ocaml
+  (flags :standard --opt 3)
+ )
+ (modules send)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries
+   common
+   jsoo_broadcastchannel
+   js_of_ocaml
+   js_of_ocaml-lwt
+ )
+)
+
+(executable
+ (name receive)
+ (promote (until-clean))
+ (js_of_ocaml
+  (flags :standard --opt 3)
+ )
+ (modules receive)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries
+   common
+   jsoo_broadcastchannel
+   js_of_ocaml
+   js_of_ocaml-lwt
+ )
+)

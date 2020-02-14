@@ -1,0 +1,98 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: sans-serif;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+button {
+  background-color: black; 
+  color: white; 
+  font-weight: 900;
+  padding: 8px;
+  border-style: none; 
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#clear {
+  background-color: red;
+}
+
+#app > div {
+  padding: 8px;
+  color: white; 
+}
+
+.insert {
+  background-color: green;
+}
+
+.update > span:first-child::after,
+.insert > span:first-child::after {
+  content: " = "
+}
+
+.insert > span:nth-child(2) {
+  font-weight: 900;
+}
+
+.update {
+  background-color: orange;
+  color: black;
+}
+
+.remove {
+  background-color: red;
+}
+
+.remove > span {
+  color: yellow;
+  text-decoration: line-through double;
+}
+
+.update > span:nth-child(2) {
+  margin: 12px;
+  color: red;
+  text-decoration: line-through;
+  font-weight: 100;
+}
+
+.update > span:nth-child(3) {
+  color: green;
+  font-weight: 900;
+}
+
+.update > span:nth-child(3)::before {
+  content: "~>"
+}
+
+.insert::before {
+  content: "[INSERT] - ";
+}
+
+.remove::before {
+  content: "[REMOVE] - ";
+}
+
+.update::before {
+  content: "[UPDATE] - ";
+}
+
+.clear {
+  background-color: black;
+}
+
+.clear::before {
+  content: "[CLEAR]";
+}

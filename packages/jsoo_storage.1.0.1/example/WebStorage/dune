@@ -1,0 +1,4 @@
+(executables
+ (names event index)
+ (libraries js_of_ocaml-lwt jsoo_storage)
+ (preprocess (pps js_of_ocaml-ppx)))

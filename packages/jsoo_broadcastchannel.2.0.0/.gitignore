@@ -1,0 +1,11 @@
+_build
+*~
+\.\#*
+\#*#
+*.native
+*.byte
+*.install
+_tests/
+.merlin
+*.bc
+*.bc.js

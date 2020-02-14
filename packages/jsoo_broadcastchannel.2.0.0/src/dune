@@ -1,0 +1,6 @@
+(library
+ (name broadcastchannel)
+ (public_name jsoo_broadcastchannel)
+ (libraries lwt js_of_ocaml)
+ (wrapped false)
+ (preprocess (pps js_of_ocaml-ppx)))

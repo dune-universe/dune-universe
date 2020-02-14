@@ -1,0 +1,4 @@
+A small example of the usage of Jsoo_storage.
+
+- `make` to build the JS files 
+- `make run` to run a local server (using Python simpleHTTPserver)
