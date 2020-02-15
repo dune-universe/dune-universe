@@ -1,4 +1,0 @@
-(lang dune 2.0)
-
-(name owl-symbolic)
-(version 0.1.0)
