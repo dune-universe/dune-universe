@@ -1,9 +1,0 @@
-(executable
-	(name test)
-	(libraries alcotest alcotest-lwt httpaf httpaf-lwt-unix lwt lwt.unix cohttp cohttp-lwt-unix re naboris)
-)
-(include_subdirs unqualified)
-(alias
-	(name runtest)
-	(deps test.exe)
-	(action (run %{deps} --verbose --color=always)))
