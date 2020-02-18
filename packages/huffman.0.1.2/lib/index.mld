@@ -1,0 +1,15 @@
+{0 Huffman index}
+This package provides a simple way to generate Huffman trees based on the description of an emitter.
+
+{1 Example}
+{[
+  open Huffman
+  (* A simple emitter capable to emit characters 'a' 'b' or 'c' with frequencies .1, .2 and .7 *)
+  let emitter = ['a',0.1; 'b',0.2; 'c',0.7]
+  let _ = emitter |> huffman |> dump_as_dot "test.dot"
+]}
+
+
+{1 Library huffman}
+The entry point of this library is the module:
+{!module-Huffman}.

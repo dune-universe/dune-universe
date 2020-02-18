@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name redis_lwt)
-  (wrapped false)
-  (public_name redis-lwt)
-  (flags (:standard -safe-string))
-  (libraries (redis lwt.unix lwt))))

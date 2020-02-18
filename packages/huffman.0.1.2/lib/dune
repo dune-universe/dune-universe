@@ -1,0 +1,6 @@
+(library
+  (name huffman)
+  (public_name huffman)
+  (modules huffman))
+
+(documentation)

@@ -1,0 +1,5 @@
+(library
+ (name redis)
+ (public_name redis)
+ (flags :standard -safe-string -warn-error -3-32-34)
+ (libraries re.str uuidm unix))

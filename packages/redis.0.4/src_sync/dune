@@ -1,0 +1,6 @@
+(library
+ (name redis_sync)
+ (wrapped false)
+ (public_name redis-sync)
+ (flags :standard -safe-string)
+ (libraries redis unix))
