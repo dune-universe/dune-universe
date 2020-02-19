@@ -1,0 +1,12 @@
+(library
+  (name kat)
+  (public_name netkat.kat)
+  (wrapped true)
+  (libraries
+    base
+    idds
+  )
+  (preprocess (pps
+    ppx_jane
+  ))
+)

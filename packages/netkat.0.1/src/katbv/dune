@@ -1,0 +1,18 @@
+(ocamllex (modules lexer))
+(menhir (modules menhir_parser))
+
+(library
+  (name katbv_lib)
+  (public_name netkat.katbv_lib)
+  (wrapped true)
+  (libraries
+    base
+    netkat.kat
+    netkat.katbb_lib
+    tables
+  )
+  (preprocess (pps
+    ppx_jane
+  ))
+  (inline_tests)
+)

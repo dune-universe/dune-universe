@@ -1,0 +1,13 @@
+(executables
+ (names katbb katbv)
+ (public_names katbb katbv)
+ (libraries 
+    async
+    core
+    netkat.katbb_lib
+    idds
+    netkat.repl
+    netkat.katbv_lib
+ )
+ (preprocess (pps ppx_jane))
+ )
