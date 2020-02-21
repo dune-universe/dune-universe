@@ -1,0 +1,6 @@
+(library
+  (name snappy)
+  (public_name snappy)
+  (c_names snappy_stubs)
+  (c_library_flags -lstdc++ -lsnappy)
+  (c_flags -g -x c++))
