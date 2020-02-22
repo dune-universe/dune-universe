@@ -35,23 +35,22 @@ If you are using dune, add `ppx_deriving_json` to the `preprocess` entry, and `p
 Syntax
 ------
 
-_deriving yojson_ generates three functions per type:
+_deriving yojson_ generates two functions per type:
 
 ``` ocaml
 # #require "ppx_deriving_yojson";;
 # type ty = .. [@@deriving yojson];;
 val ty_of_yojson : Yojson.Safe.t -> (ty, string) Result.result
-val ty_of_yojson_exn : Yojson.Safe.t -> ty
 val ty_to_yojson : ty -> Yojson.Safe.t
 ```
 
 When the deserializing function returns <code>\`Error loc</code>, `loc` points to the point in the JSON hierarchy where the error has occurred.
 
-It is possible to generate only serializing or deserializing functions by using `[@@deriving to_yojson]` or `[@@deriving of_yojson]`. It is also possible to generate an expression for serializing or deserializing a type by using `[%to_yojson:]` or `[%of_yojson:]`; non-conflicting versions `[%derive.to_yojson:]` or `[%derive.of_yojson:]` are available as well.
+It is possible to generate only serializing or deserializing functions by using `[@@deriving to_yojson]` or `[@@deriving of_yojson]`. It is also possible to generate an expression for serializing or deserializing a type by using `[%to_yojson:]` or `[%of_yojson:]`; non-conflicting versions `[%derive.to_yojson:]` or `[%derive.of_yojson:]` are available as well. Custom or overriding serializing or deserializing functions can be provided on a per-field basis via `[@to_yojson]` and `[@of_yojson]` attributes.
 
 If the type is called `t`, the functions generated are `{of,to}_yojson` instead of `t_{of,to}_yojson`.
 
-The `ty_of_yojson_exn` function raises `Failure err` on error instead of returning an `'a or_error`
+Using the option `[@@deriving yojson { exn = true }]` will also generate a function `ty_of_yojson_exn : Yojson.Safe.t -> ty` which raises `Failure err` on error instead of returning an `'a or_error`.
 
 Semantics
 ---------
@@ -140,6 +139,31 @@ type pagination = {
 ```
 
 Fields with default values are not required to be present in inputs and will not be emitted in outputs.
+
+#### [@to_yojson] / [@of_yojson]
+
+One can provide custom serialization or deserialization functions, either
+overriding the default derivation or to provide support for abstract, functor,
+or other types that aren't otherwise amenable to derivation (similar to the
+`@printer` option provided by [ppx_deriving's `show` plugin](https://github.com/ocaml-ppx/ppx_deriving#plugin-show)):
+
+```ocaml
+# module StringMap = Map.Make(struct type t = string let compare = compare end);;
+# let yojson_of_stringmap m = StringMap.bindings m
+                           |> [%to_yojson: (string * string) list];;
+# type page = { number : int [@to_yojson fun i -> `Int (i + 1)]
+              ; bounds : (int * int * int * int)
+              ; attrs  : string StringMap.t [@to_yojson yojson_of_stringmap]}
+              [@@deriving to_yojson];;
+# { number = 0
+  ; bounds = (0, 0, 792, 612)
+  ; attrs  = StringMap.add "foo" "bar" StringMap.empty }
+  |> page_to_yojson
+  |> Yojson.Safe.to_string
+  |> print_endline
+
+{"number":1,"bounds":[0,0,792,612],"attrs":[["foo","bar"]]}
+```
 
 #### `Yojson_meta` module
 

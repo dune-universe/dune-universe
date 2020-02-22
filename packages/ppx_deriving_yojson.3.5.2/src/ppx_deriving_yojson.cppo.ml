@@ -22,6 +22,13 @@ open Parsetree
 open Ast_helper
 open Ast_convenience
 
+
+#if OCAML_VERSION >= (4, 10, 0)
+let mod_mknoloc x = mknoloc (Some x)
+#else
+let mod_mknoloc x = mknoloc x
+#endif
+
 let deriver = "yojson"
 let raise_errorf = Ppx_deriving.raise_errorf
 
@@ -42,6 +49,10 @@ let attr_string name default attrs =
 
 let attr_key  = attr_string "key"
 let attr_name = attr_string "name"
+let attr_ser attrs =
+  Ppx_deriving.(attrs |> attr ~deriver "to_yojson" |> Arg.(get_attr ~deriver expr))
+let attr_desu attrs =
+  Ppx_deriving.(attrs |> attr ~deriver "of_yojson" |> Arg.(get_attr ~deriver expr))
 
 let attr_default attrs =
   Ppx_deriving.attr ~deriver "default" attrs |>
@@ -78,8 +89,14 @@ let poly_fun names expr =
       [%expr fun [%p pvar ("poly_"^name)] -> [%e expr]]
     ) names expr
 
+let type_add_attrs typ attributes = 
+  { typ with ptyp_attributes = typ.ptyp_attributes @ attributes }
 
 let rec ser_expr_of_typ typ =
+  match attr_ser typ.ptyp_attributes with
+    | Some e -> e
+    | None -> ser_expr_of_only_typ typ
+and ser_expr_of_only_typ typ =
   let attr_int_encoding typ =
     match attr_int_encoding typ with `String -> "String" | `Int -> "Intlit"
   in
@@ -172,6 +189,10 @@ let rec desu_fold ~path f typs =
     [%expr [%e y] >>= fun [%p pvar (argn i)] -> [%e x]])
     [%expr Result.Ok [%e f (List.mapi (fun i _ -> evar (argn i)) typs)]]
 and desu_expr_of_typ ~path typ =
+  match attr_desu typ.ptyp_attributes with
+    | Some e -> e
+    | None -> desu_expr_of_only_typ ~path typ
+and desu_expr_of_only_typ ~path typ =
   let error = [%expr Result.Error [%e str (String.concat "." path)]] in
   let decode' cases =
     Exp.function_ (
@@ -318,7 +339,7 @@ let ser_str_of_record varname labels =
     labels |> List.mapi (fun _i { pld_name = { txt = name }; pld_type; pld_attributes } ->
       let field  = Exp.field (evar varname) (mknoloc (Lident name)) in
       let result = [%expr [%e str (attr_key name pld_attributes)],
-                    [%e ser_expr_of_typ pld_type] [%e field]] in
+                    [%e ser_expr_of_typ @@ type_add_attrs pld_type pld_attributes] [%e field]] in
       match attr_default (pld_type.ptyp_attributes @ pld_attributes) with
       | None ->
           [%expr [%e result] :: fields]
@@ -348,7 +369,7 @@ let ser_str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
       let ser = ser_expr_of_typ manifest in
       let lid = Ppx_deriving.mangle_lid (`PrefixSuffix ("M", "to_yojson")) lid in
       let orig_mod = Mod.ident (mknoloc lid) in
-      ([Str.module_ (Mb.mk (mknoloc mod_name) orig_mod)],
+      ([Str.module_ (Mb.mk (mod_mknoloc mod_name) orig_mod)],
        [Vb.mk (pvar to_yojson_name)
               (polymorphize [%expr ([%e ser] : [%t typ] -> Yojson.Safe.t)])],
        [])
@@ -381,7 +402,7 @@ let ser_str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
       let flid = lid (Printf.sprintf "%s.f" mod_name) in
       let field = Exp.field (Exp.ident flid) (flid) in
       let mod_ =
-        Str.module_ (Mb.mk (mknoloc mod_name)
+        Str.module_ (Mb.mk (mod_mknoloc mod_name)
                     (Mod.structure [
           Str.type_ Nonrecursive [typ];
           Str.value Nonrecursive [record];
@@ -520,7 +541,9 @@ let desu_str_of_record ~is_strict ~error ~path wrap_record labels =
     (labels |> List.mapi (fun i { pld_name = { txt = name }; pld_type; pld_attributes } ->
         let path = path @ [name] in
         let thunks = labels |> List.mapi (fun j _ ->
-             if i = j then app (desu_expr_of_typ ~path pld_type) [evar "x"] else evar (argn j)) in
+             if i = j
+             then app (desu_expr_of_typ ~path @@ type_add_attrs pld_type pld_attributes) [evar "x"]
+             else evar (argn j)) in
         Exp.case [%pat? ([%p pstr (attr_key name pld_attributes)], x) :: xs]
           [%expr loop xs [%e tuple thunks]])) @
     [Exp.case [%pat? []] record;
@@ -559,7 +582,7 @@ let desu_str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
       let lid = Ppx_deriving.mangle_lid (`PrefixSuffix ("M", "of_yojson")) lid in
       let orig_mod = Mod.ident (mknoloc lid) in
       let poly_desu = polymorphize [%expr ([%e wrap_runtime desu] : Yojson.Safe.t -> _)] in
-      ([Str.module_ (Mb.mk (mknoloc mod_name) orig_mod)],
+      ([Str.module_ (Mb.mk (mod_mknoloc mod_name) orig_mod)],
        [Vb.mk (pvar of_yojson_name) poly_desu],
        [])
     | Some _ ->
@@ -585,7 +608,7 @@ let desu_str_of_type ~options ~path ({ ptype_loc = loc } as type_decl) =
       let flid = lid (Printf.sprintf "%s.f" mod_name) in
       let field = Exp.field (Exp.ident flid) flid in
       let mod_ =
-        Str.module_ (Mb.mk (mknoloc mod_name)
+        Str.module_ (Mb.mk (mod_mknoloc mod_name)
                     (Mod.structure [
           Str.type_ Nonrecursive [typ];
           Str.value Nonrecursive [record];
@@ -721,7 +744,7 @@ let ser_sig_of_type ~options ~path type_decl =
     in
     let record = Val.mk (mknoloc "f") (Typ.constr (lid "t_to_yojson") []) in
     let mod_ =
-      Sig.module_ (Md.mk (mknoloc mod_name)
+      Sig.module_ (Md.mk (mod_mknoloc mod_name)
                   (Mty.signature [
         Sig.type_ Nonrecursive [typ];
         Sig.value record;
@@ -763,7 +786,7 @@ let desu_sig_of_type ~options ~path type_decl =
     in
     let record = Val.mk (mknoloc "f") (Typ.constr (lid "t_of_yojson") []) in
     let mod_ =
-      Sig.module_ (Md.mk (mknoloc mod_name)
+      Sig.module_ (Md.mk (mod_mknoloc mod_name)
                   (Mty.signature [
         Sig.type_ Nonrecursive [typ];
         Sig.value record;
@@ -791,7 +814,7 @@ let yojson_str_fields ~options ~path:_ type_decl =
         fields [%expr []]
       in
         [
-          Str.module_ (Mb.mk (mknoloc (Ppx_deriving.mangle_type_decl (`Prefix "Yojson_meta") type_decl))
+          Str.module_ (Mb.mk (mod_mknoloc (Ppx_deriving.mangle_type_decl (`Prefix "Yojson_meta") type_decl))
                       (Mod.structure [
             Str.value Nonrecursive [Vb.mk [%expr [%e pvar "keys"]] [%expr [%e flist]]]
           ; Str.value Nonrecursive [Vb.mk [%expr [%e pvar "_"]] [%expr [%e evar "keys"]]]
@@ -807,7 +830,7 @@ let yojson_sig_fields ~options ~path:_ type_decl =
     match kind, type_decl.ptype_manifest with
     | Ptype_record _, _ ->
       [
-        Sig.module_ (Md.mk (mknoloc (Ppx_deriving.mangle_type_decl (`Prefix "Yojson_meta") type_decl))
+        Sig.module_ (Md.mk (mod_mknoloc (Ppx_deriving.mangle_type_decl (`Prefix "Yojson_meta") type_decl))
                     (Mty.signature [
           Sig.value (Val.mk (mknoloc "keys") [%type: string list]) ]))
       ]
