@@ -1,4 +1,0 @@
-(install
- (section share_root)
- (files (complete.sh as bash-completion/completions/learn-ocaml))
-)
