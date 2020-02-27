@@ -1,6 +1,6 @@
 opam-version: "2.0"
-name: "altgr-ergo"
-version: "2.3.0"
+name: "alt-ergo-parsers"
+version: "2.3.1"
 authors: "Alt-Ergo developers"
 maintainer: "OCamlPro <alt-ergo@ocamlpro.com>"
 license: "OCamlPro Non-Commercial Purpose License, version 1"
@@ -12,19 +12,18 @@ build: [
 depends: [
   "ocaml" {>="4.04.0"}
   "dune" { build }
-  "lablgtk"
-  "conf-gtksourceview"
-  "alt-ergo" { = "2.3.0" }
-  "alt-ergo-lib" { = "2.3.0" }
-  "alt-ergo-parsers" { = "2.3.0" }
+  "alt-ergo-lib" { = "2.3.0+" }
+  "psmt2-frontend" { >= "0.2" }
+  "camlzip"
+  "menhir"
 ]
 homepage: "http://alt-ergo.ocamlpro.com/"
 dev-repo: "git+https://github.com/OCamlPro/alt-ergo.git"
 bug-reports: "https://github.com/OCamlPro/alt-ergo/issues"
 
-synopsis: "The Alt-Ergo SMT prover (graphical interface)"
+synopsis: "The Alt-Ergo SMT prover parser library"
 description:
-"Altgr-Ergo is the graphical interface for the Alt-Ergo SMT prover.
+"This is the parser library used in the Alt-Ergo SMT solver.
 
 Alt-Ergo is an automatic theorem prover of mathematical formulas. It was developed at LRI, and is now maintained at OCamlPro.
 

@@ -29,12 +29,10 @@
 (* WARNING: a "cut" is performed on the following file in the Makefile.
    DO NOT CHANGE its format *)
 
-let _version="2.3.0"
+let _version="2.3.1"
 
 let _release_commit = "(not released)"
 
 let _release_date   = "(not released)"
 
 
-let _release_commit = "83c7b2130f2a73f9ac5160e931414e336ad2b878"
-let _release_date = "Mon Feb 11 17:43:50 CET 2019"
