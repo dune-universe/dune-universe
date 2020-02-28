@@ -1,0 +1,11 @@
+% Monoid
+
+X = X & Y = Y & Z = Z => dot(dot(X, Y), Z) = dot(X, dot(Y, Z)).
+
+X = X => dot(X, one) = X.
+
+X = X => dot(one, X) = X.
+
+X = X => X = one | X = two.
+
+one = two => false.

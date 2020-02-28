@@ -1,0 +1,19 @@
+% Abelian Group
+
+X = X & Y = Y & Z = Z => dot(dot(X, Y), Z) = dot(X, dot(Y, Z)).
+
+X = X => dot(X, one) = X.
+
+X = X => dot(one, X) = X.
+
+X = X => dot(X, inv(X)) = one.
+
+X = X & Y = Y => dot(X, Y) = dot(Y, X).
+
+X = X => X = one | X = two | X = three.
+
+one = two => false.
+
+two = three => false.
+
+three = one => false.
