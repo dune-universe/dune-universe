@@ -1,0 +1,5 @@
+(test
+  (name sub_holes)
+  (preprocess (pps metapp.ppx))
+  (flags -open Stdcompat)
+  (libraries metapp test_framework stdcompat))

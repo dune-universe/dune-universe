@@ -1,0 +1,6 @@
+(library
+   (public_name metapp)
+   (preprocess (pps metapp.ppx))
+   (library_flags -linkall)
+   (flags -open Stdcompat)
+   (libraries metapp_preutils stdcompat))

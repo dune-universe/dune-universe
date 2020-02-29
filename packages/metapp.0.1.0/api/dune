@@ -1,0 +1,4 @@
+(library
+  (name metapp_api)
+  (public_name metapp.api)
+  (libraries compiler-libs metapp_preutils))

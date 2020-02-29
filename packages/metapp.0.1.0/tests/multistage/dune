@@ -1,0 +1,4 @@
+(test
+  (name multistage)
+  (preprocess (pps metapp.ppx))
+  (libraries metapp.preutils test_framework))

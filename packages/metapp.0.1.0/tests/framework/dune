@@ -1,0 +1,3 @@
+(library
+  (public_name metapp.test_framework)
+  (name test_framework))

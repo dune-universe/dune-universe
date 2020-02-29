@@ -1,0 +1,5 @@
+(test
+  (name test_utils)
+  (preprocess (pps metapp metapp.ppx))
+  (flags -open Stdcompat)
+  (libraries test_framework metapp stdcompat))

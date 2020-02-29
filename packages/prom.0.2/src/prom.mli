@@ -1,15 +1,17 @@
+open Containers
+
 module SMap : Map.S with type key := string
+
 module FSet : Set.S with type elt := float
+
 module FMap : Map.S with type key := float
+
 module KLL : Kll.S with type elt := float
 
-type 'a complex = {
-  count: int ;
-  sum: float ;
-  data: 'a ;
-}
+type 'a complex = { count : int; sum : float; data : 'a }
 
 type histogram = int FMap.t complex
+
 type summary = (KLL.t * FSet.t) complex
 
 val cumulate : int FMap.t -> int FMap.t
@@ -37,7 +39,7 @@ type 'a metric = 'a series LabelsMap.t
 (** Type of a metric. A metric associates a time series to a set of
     labels. *)
 
-and 'a series = { ts: Ptime.t option ; v: 'a }
+and 'a series = { ts : Ptime.t option; v : 'a }
 (** Type of a time series. Contains an optional timestamp. *)
 
 val create_series : ?ts:Ptime.t -> 'a -> 'a series
@@ -52,9 +54,20 @@ val add_labels : (string * string) list -> t -> t
 val merge : t -> t -> t
 
 val pp : t Fmt.t
+
 val pp_list : t list Fmt.t
 
-val counter   : ?help:string -> string -> ((string * string) list * float series) list -> t
-val gauge     : ?help:string -> string -> ((string * string) list * float series) list -> t
-val histogram : ?help:string -> string -> ((string * string) list * histogram series) list -> t
-val summary   : ?help:string -> string -> ((string * string) list * summary series) list -> t
+val counter :
+  ?help:string -> string -> ((string * string) list * float series) list -> t
+
+val gauge :
+  ?help:string -> string -> ((string * string) list * float series) list -> t
+
+val histogram :
+  ?help:string ->
+  string ->
+  ((string * string) list * histogram series) list ->
+  t
+
+val summary :
+  ?help:string -> string -> ((string * string) list * summary series) list -> t
