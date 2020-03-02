@@ -1,5 +1,0 @@
-(lang dune 1.7)
-(using fmt 1.1)
-
-(name owl)
-(version 0.4.1-170-gdccd0cd1)

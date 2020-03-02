@@ -1,0 +1,17 @@
+(rule
+ (alias regression)
+ (deps
+  (package electrod)
+  (glob_files *.elo)
+  (:mds
+   (glob_files *.md))
+  ;
+  (:md1 hotel-badsafety-3.md)
+  (:md2 ring-badliveness-4.md))
+ (action
+  (progn
+   (run ocaml-mdx test %{md1})
+   (diff? %{md1} %{md1}.corrected)
+   ;
+   (run ocaml-mdx test %{md2})
+   (diff? %{md2} %{md2}.corrected))))

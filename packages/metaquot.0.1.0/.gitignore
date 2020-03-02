@@ -1,0 +1,6 @@
+*~
+/_build/
+/*.opam
+.merlin
+/metapp.install
+/metaquot.install

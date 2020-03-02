@@ -1,0 +1,7 @@
+(tests
+ (names test_runner)
+ (libraries alcotest owl stdlib-shims)
+ (flags
+  (:standard -safe-string))
+ (action
+  (run %{test})))
