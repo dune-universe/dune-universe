@@ -1,0 +1,4 @@
+(executables
+ (names get_line)
+ (public_names get_line)
+ (libraries batteries))

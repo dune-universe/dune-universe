@@ -1,4 +1,0 @@
-(lang dune 1.8)
-(name merlin)
-(version 73e9771b)
-(using menhir 2.0)
