@@ -1,3 +1,8 @@
+## v0.7 (2020-03-03)
+
+- switch float representation to OCaml's default `"%f"` (#22, @toots)
+- use `Gc.quick_stat` for faster stats (#25, @talex5)
+
 ## v0.6 (2019-11-23)
 
 - upgrade build to dune (@talex5)

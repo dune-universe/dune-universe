@@ -1,4 +1,4 @@
-version: "0.6"
+version: "0.7"
 opam-version: "2.0"
 synopsis: "Client library for Prometheus monitoring"
 maintainer: "talex5@gmail.com"
@@ -10,7 +10,7 @@ bug-reports: "https://github.com/mirage/prometheus/issues"
 depends: [
   "ocaml" {>= "4.02.3"}
   "dune" {>= "1.0"}
-  "prometheus"
+  "prometheus" {=version}
   "fmt"
   "re"
   "cohttp" {>= "1.0.0"}

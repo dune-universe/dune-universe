@@ -1,26 +1,20 @@
-version: "7.0.0"
 opam-version: "2.0"
-synopsis: "A library to deal with RPCs in OCaml - Async interface"
+synopsis: "A library to deal with RPCs in OCaml - Bindings for js_of_ocaml"
 maintainer: "thomas@gazagnaire.org"
 authors: "Thomas Gazagnaire, Jon Ludlam"
 tags: ["org:mirage" "org:xapi-project"]
 homepage: "https://github.com/mirage/ocaml-rpc"
-doc: "https://mirage.github.io/ocaml-rpc/rpclib-async"
+doc: "https://mirage.github.io/ocaml-rpc/rpclib-js"
 bug-reports: "https://github.com/mirage/ocaml-rpc/issues"
 depends: [
   "ocaml"
-  "alcotest" {with-test}
   "dune" {>= "1.5.0"}
   "rpclib" {=version}
-  "async"
+  "js_of_ocaml" {>= "3.5.0"}
+  "js_of_ocaml-ppx" {>= "3.5.0"}
+  "lwt"
 ]
-conflicts: [
-  "core" {< "v0.9.0"}
-]
-build: [
-  ["dune" "build" "-p" name "-j" jobs]
-  ["dune" "runtest" "-p" name] {with-test}
-]
+build: ["dune" "build" "-p" name "-j" jobs]
 dev-repo: "git://github.com/mirage/ocaml-rpc"
 description: """
 `ocaml-rpc` is a library that provides remote procedure calls (RPC)

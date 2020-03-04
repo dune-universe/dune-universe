@@ -1,0 +1,9 @@
+_build
+idl_test_gen.ml
+*.gen.ml
+
+*.install
+.merlin
+**/.merlin
+
+_opam

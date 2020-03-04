@@ -1,31 +1,24 @@
-version: "7.0.0"
 opam-version: "2.0"
-synopsis: "A library to deal with RPCs in OCaml - meta-package"
+synopsis: "A library to deal with RPCs in OCaml - Async interface"
 maintainer: "thomas@gazagnaire.org"
 authors: "Thomas Gazagnaire, Jon Ludlam"
 tags: ["org:mirage" "org:xapi-project"]
 homepage: "https://github.com/mirage/ocaml-rpc"
-doc: "https://mirage.github.io/ocaml-rpc/rpc"
+doc: "https://mirage.github.io/ocaml-rpc/rpclib-async"
 bug-reports: "https://github.com/mirage/ocaml-rpc/issues"
 depends: [
-  "ocaml" {>= "4.04.0"}
+  "ocaml"
+  "alcotest" {with-test}
   "dune" {>= "1.5.0"}
   "rpclib" {=version}
-  "rpclib-async" {=version}
-  "rpclib-lwt" {=version}
-  "ppx_deriving_rpc" {=version}
-  "async" {>= "v0.9.0"}
-  "lwt"
-  "alcotest" {with-test}
-  "alcotest-lwt" {with-test}
-  "md2mld" {with-doc & >= "0.3.0"}
+  "async"
 ]
 conflicts: [
   "core" {< "v0.9.0"}
 ]
 build: [
-    ["dune" "runtest" "-p" name] {with-test}
-    ["dune" "build" "@doc"] {with-doc}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
 ]
 dev-repo: "git://github.com/mirage/ocaml-rpc"
 description: """
@@ -36,6 +29,4 @@ bindings, ...
 
 The transport mechanism itself is outside the scope of this library
 as all conversions are from and to strings.
-
-This is a dummy package installing the main library components.
 """
