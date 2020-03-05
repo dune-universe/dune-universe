@@ -1,0 +1,22 @@
+(library
+ (name oS)
+ (public_name mirage-solo5)
+ (private_modules lifecycle main mM time solo5)
+ (libraries mirage-runtime bheap lwt cstruct metrics)
+ (foreign_archives mirage-solo5_bindings))
+
+(foreign_library
+ (archive_name mirage-solo5_bindings)
+ (language c)
+ (names alloc_pages_stubs clock_stubs mm_stubs atomic_stubs cstruct_stubs
+        solo5_block_stubs barrier_stubs main solo5_console_stubs checksum_stubs
+        solo5_net_stubs)
+ (flags (:include cflags.sexp) -O2 -std=c99 -Wall -Werror))
+
+(include_subdirs unqualified)
+
+(rule (with-stdout-to cflags.sexp (run ./cflags.sh)))
+
+(install
+ (section lib)
+ (files (bindings/mirage-solo5.pc as ../pkgconfig/mirage-solo5.pc)))
