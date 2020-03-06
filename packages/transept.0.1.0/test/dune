@@ -1,0 +1,4 @@
+(test
+ (name parser_test)
+ (libraries alcotest transept.utils transept.core transept.stream
+   transept.json transept.extension))

@@ -1,0 +1,5 @@
+(library
+ (name transept)
+ (public_name transept)
+ (libraries transept.utils transept.specs transept.core transept.stream
+   transept.extension transept.json))

@@ -1,0 +1,28 @@
+(tests
+ (package owl-ode)
+ (names damped custom_rk45)
+ (libraries owl owl-ode owl-plplot)
+ (modules damped custom_rk45)
+ (action
+  (run %{test})))
+
+(test
+ (package owl-ode-sundials)
+ (name van_der_pol_sundials)
+ (libraries owl owl-ode owl-ode-sundials owl-plplot)
+ (modules van_der_pol_sundials)
+ (action
+  (run %{test})))
+
+(test
+ (package owl-ode-odepack)
+ (name van_der_pol_odepack)
+ (libraries owl owl-ode owl-ode-odepack owl-plplot)
+ (modules van_der_pol_odepack)
+ (action
+  (run %{test})))
+
+(env
+ (_
+  (env-vars
+   (QT_QPA_PLATFORM offscreen))))

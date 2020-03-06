@@ -1,4 +1,0 @@
-archetype typetuple
-
-variable v : (int * string) = (1, "")
-

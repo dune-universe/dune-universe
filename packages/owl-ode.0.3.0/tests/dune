@@ -1,0 +1,6 @@
+(test
+ (package owl-ode)
+ (name tests)
+ (libraries alcotest owl owl-ode)
+ (action
+  (run %{test})))
