@@ -1,0 +1,3 @@
+(lang dune 2.0)
+(name plplot)
+(version v5.11.0-1)

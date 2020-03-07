@@ -1,0 +1,5 @@
+# 5.11.0-1
+
+* Port to dune2
+* Port to opam2
+* Added more depexts
