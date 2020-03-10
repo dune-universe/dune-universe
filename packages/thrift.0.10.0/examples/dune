@@ -1,0 +1,10 @@
+
+(executables
+  (names client server)
+  (flags :standard -safe-string -warn-error -a)
+  (libraries thrift containers unix))
+
+(rule
+  (deps tutorial.thrift)
+  (targets tutorial_types.ml tutorial_types.mli Calculator.ml Calculator.mli)
+  (action (run thrift --gen ocaml -out . %{deps} )))

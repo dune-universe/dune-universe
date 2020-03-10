@@ -1,0 +1,6 @@
+snapshot:
+  only:
+    refs:
+      - master
+  script:
+    - ./snapshot.sh

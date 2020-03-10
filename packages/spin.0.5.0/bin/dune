@@ -1,0 +1,13 @@
+(executable
+ (name spin_app)
+ (libraries base stdio cmdliner lwt.unix spin.lib)
+ (flags -open Base)
+ (modules (:standard)))
+
+(install
+ (section bin)
+ (package spin)
+ (files
+  (spin_app.exe as spin)))
+
+(include_subdirs unqualified)
