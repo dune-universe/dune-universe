@@ -1,0 +1,43 @@
+use
+    partial_order
+end
+
+
+deferred class LO:LINEAR_ORDER
+
+(<=) (a,b:LO): BOOLEAN    deferred end
+
+all(a,b,c:LO)
+    ensure
+        a <= b or b <= a
+        a <= b ==> b <= a ==> a = b
+        a <= b ==> b <= c ==> a <= c
+    deferred
+    end
+
+{:
+is_lower_bound (a:LO, p:LO?): ghost BOOLEAN
+    -> all(x) x in p ==> a <= x
+:}
+min (a,b:LO): LO  -> if a <= b then a else b
+max (a,b:LO): LO  -> if a <= b then b else a
+
+
+all(a:LO)
+    ensure
+        a <= a
+    end
+
+
+deferred class LINEAR_ORDER
+inherit        PARTIAL_ORDER end
+
+all(a,b:LO)
+    ensure
+        not (a <= b) ==>  b < a
+        not (a < b)  ==>  b <= a
+        a /= b  ==>  a < b or b < a
+
+        min(a,b).is_least({a,b})
+        max(a,b).is_greatest({a,b})
+    end

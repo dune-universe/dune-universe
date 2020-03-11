@@ -1,0 +1,29 @@
+use core end
+
+all(a,b,c:BOOLEAN)
+    ensure
+        -- elimination of negated implication
+        not (a ==> b) ==> a
+        not (a ==> b) ==> not b
+        not (a ==> not b) ==> b
+
+        a or b ==> b or a             -- commutativity of 'or'
+
+        -- de Morgan 1
+        not (a or b) ==> not a
+        not (a or b) ==> not b
+        not a ==> not b ==> not (a or b)
+
+        -- de Morgan 2
+        not (a and b)  ==> not a or not b
+        not a or not b ==> not (a and b)
+
+
+        -- associativity of 'or'
+        (a or b) or c ==> a or (b or c)
+        a or (b or c) ==> (a or b) or c
+
+        a or b ==> not a ==> b        -- 'or' and '==>'
+        (not a ==> b) ==> a or b
+
+    end

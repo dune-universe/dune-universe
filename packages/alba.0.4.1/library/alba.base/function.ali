@@ -1,0 +1,243 @@
+use
+    predicate
+end
+
+A: ANY
+B: ANY
+
+
+
+{: General properties
+   ================== :}
+
+
+all(f,g:A->B, p,q:{A}, a:A)
+    ensure
+        disjoint(f.domain, g.domain) ==> consistent(f,g)
+
+        f[p+q] = f[p] + f[q]
+
+        a in f.domain ==> f[{a}] = {f(a)}
+
+    end
+
+
+
+{: Override
+   ======== :}
+
+(+) (f:A->B, e:(A,B)): (A->B)
+    -> agent (a)
+           require
+               a = e.first or a in f.domain
+           ensure
+               -> if a = e.first then e.second else f(a)
+           end
+
+
+(+) (f,g:A->B): ghost (A->B)
+    -> agent (a:A): B
+           require
+               a in (g.domain + f.domain)
+           ensure
+               -> if a in g.domain then g(a) else f(a)
+           end
+
+
+all(f,g:A->B, a,x:A, b:B)
+    ensure
+        (f + (a,b))(a) = b
+        x in f.domain ==> x /= a ==> (f + (a,b))(x) = f(x)
+
+        x in g.domain ==> (f + g)(x) = g(x)
+        consistent(f,g) ==> x in f.domain ==> (f + g)(x) = f(x)
+
+        consistent(f,g) ==> f + g = g + f
+    end
+
+
+
+
+{: Order Structure
+   =============== :}
+
+(<=) (f,g:A->B): ghost BOOLEAN
+        -- Is 'f' a subfunction of 'g'?
+    -> f.domain <= g.domain
+       and
+       consistent(f,g)
+
+
+(<) (f,g:A->B): ghost BOOLEAN
+        -- Is 'f' a proper subfunction of 'g'?
+    -> f <= g
+       and
+       some(a) a in g.domain and a /in f.domain
+
+
+all(f,g,h:A->B)
+    ensure
+        f <= f                              -- reflexive
+        f <= g  ==>  g <= h  ==> f <= h     -- transitive
+        f <= g  ==>  g <= f  ==> f = g      -- antisymmetric
+
+        f < g ==> f /= g
+        f <= g ==> f /= g ==> f < g
+
+        g <= f + g
+        consistent(f,g) ==> f <= f + g
+
+        f <= h  ==>  g <= h  ==>  consistent(f,g)
+        consistent(f,g) ==> (some(h) f <= h and g <= h)
+
+        f <= g ==> f.range <= g.range
+    end
+
+
+
+
+
+{: Domain restriction
+   ================== :}
+
+
+(|) (f:A->B, p:{A}): (A->B)
+        -- The function 'f' whose domain is restricted to the arguments which are
+        -- also in 'p'.
+    -> agent (x)
+           require
+               x in f.domain
+               x in p
+           ensure
+               -> f(x)
+           end
+
+
+(-) (f:A->B, a:A): (A->B)
+        -- The function 'f' with 'a' removed from its domain.
+    -> agent (x)
+           require
+               x in f.domain
+               x /= a
+           ensure
+               -> f(x)
+           end
+
+
+all(a,b:A, f:A->B, p:{A})
+    ensure
+        (f|p).range <= f.range
+
+        f - a - b = f - b - a
+
+        a in f.domain ==> f = f - a + (a,f(a))
+    end
+
+
+{: Injectivity
+   ===========
+
+   A function is injective if it is one to one. I.e. each value in the range of
+   the function has a unique origin.
+
+:}
+
+
+is_injective (f:A->B): ghost BOOLEAN
+    -> all(x,y) x in f.domain
+                ==> y in f.domain
+                ==> f(x) = f(y)
+                ==> x = y
+
+
+(>->) (p:{A}, q:{B}): ghost BOOLEAN
+        -- Is there an injection from the set 'p' into the set 'q'?
+    -> some(f:A->B)
+           f.is_injective and
+           f.domain = p and
+           f.range <= q
+
+
+(<->) (p:{A}, q:{B}): ghost BOOLEAN
+        -- Are the sets 'p' and 'q' equipotent i.e. is there a one to one
+        -- correpondence between all elements of 'p' and 'q'?
+    -> some(f:A->B)
+           f.is_injective and
+           f.domain = p and
+           f.range  = q
+
+
+
+
+all(f,g:A->B, p:{A})
+    ensure
+        f.is_injective ==> (f|p).is_injective
+
+        f.is_injective
+        ==> g.is_injective
+        ==> disjoint(f.domain,g.domain)
+        ==> disjoint(f.range, g.range)
+        ==> (f + g).is_injective
+
+        g.is_injective ==> f <= g ==> f.is_injective
+    end
+
+
+
+{: The inverse of a function
+   ========================= :}
+
+
+origin(b:B, f:A->B): ghost A
+        -- The argument of the injective function 'f' which maps to 'b'.
+    require
+        f.is_injective
+        b in f.range
+    ensure
+        Result in f.domain
+        f(Result) = b
+    end
+
+
+inverse (f:A->B): ghost (B -> A)
+        -- The inverse of the injective function 'f'.
+    require
+        f.is_injective
+    ensure
+        Result.domain = f.range
+        all(x) x in f.domain ==> Result(f(x)) = x
+    end
+
+
+all(f,g:A->B, y:B)
+    ensure
+        g.is_injective
+        ==> f <= g
+        ==> y in f.range
+        ==> y.origin(f) = y.origin(g)
+    end
+
+
+{:# Fixpoints
+:}
+
+fixpoints(f:A->A): ghost {A}
+        -- The fixpoints of the function 'f'.
+    -> {x: x in f.domain and f(x) = x}
+
+
+is_idempotent(f:A->A): ghost BOOLEAN
+        -- Is the function 'f' idempotent i.e. is f(x) = f(f(x)) valid?
+    -> all(x) x in f.domain ==> f(x) in f.fixpoints
+
+
+
+
+{:# Choice Function
+:}
+
+is_choice(f:{A}->A, p:{A}): ghost BOOLEAN
+        -- Is 'f' a choice function for the set 'p'?
+    -> (all(q) q.has_some ==> q <= p ==> q in f.domain)
+       and
+       (all(q) q.has_some ==> q <= p ==> f(q) in q)

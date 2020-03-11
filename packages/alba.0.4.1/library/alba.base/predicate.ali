@@ -1,0 +1,156 @@
+use
+    boolean
+end
+
+
+G: ANY
+
+{: Set order
+   ========= :}
+
+
+all(p,q,r:{G})
+    ensure
+        p <= p
+        (p <= q) ==> (q <= p) ==> (p = q)
+        (p <= q) ==> (q <= r) ==> (p <= r)
+    end
+
+
+{: Proper subset
+   ============= :}
+
+
+(<)  (p,q:{G}): ghost BOOLEAN
+    -> p <= q and some(x) x /in p and x in q
+
+all(p,q,r:{G})
+    ensure
+        p < q ==> q.has_some
+        p < q ==> p /= q
+        p <= q ==> p /= q ==> p < q
+
+        p < q  ==> q <= r ==> p < r
+        p <= q ==> q < r  ==> p < r
+    end
+
+
+
+{: Singleton set
+   ============= :}
+
+singleton (a:G): {G}
+        -- The singleton set containing only the element 'a'
+        --    Note: '{a}' is an abbreviation for 'a.singleton' or 'singleton(a)'
+        --          '{a,b,...}' is an abbreviation for '{a} + {b} + ...'
+    -> {x: x = a}
+
+
+all(x:G,p:{G})
+    ensure
+        p(x) ==> {x} <= p
+        {x}.has_some
+        p < {x} ==> p.is_empty
+    end
+
+
+
+
+{: De Morgan
+   ========= :}
+
+all(p:{G})
+    ensure
+        not (some(x) x in p) ==> all(x) x /in p
+        not (all(x)  x in p) ==> (some(x) x /in p)
+        (all(x)  x /in p)    ==> not (some(x) x in p)
+        (some(x) x /in p)    ==> not (all(x)  x in p)
+    end
+
+
+
+{: Set algebra
+   =========== :}
+
+(+)  (p,q:{G}): {G}
+        -- The union of the sets 'p' and 'q'
+    -> {x: p(x) or q(x)}
+
+(*)  (p,q:{G}): {G}
+        -- The intersection of the sets 'p' and 'q'
+    -> {x: p(x) and q(x)}
+
+(-)  (p,q:{G}): {G}
+        -- The set 'p' without the elements of the set 'q'
+    -> {x: x in p and x /in q}
+
+(-)  (p:{G}): {G}
+        -- The complement of the set 'p'
+    -> {x: not p(x)}
+
+
+disjoint(p,q:{G}): ghost BOOLEAN
+        -- Are the sets 'p' and 'q' disjoint?
+    -> (p*q).is_empty
+
+all(a:G, p,q,r:{G})
+    ensure
+        p.has_some ==> (p + q).has_some
+        p + q <= r ==> p <= r
+        p + q <= r ==> q <= r
+        p <= r ==> q <= r ==> p + q <= r
+
+        p + q + r   <= p + (q + r)
+        p + (q + r) <= p + q + r
+
+        q <= p ==> p - (p - q) = q
+
+        not (p <= q) ==> some(x) x in p - q
+
+        a /in p - q ==> a in p ==> a in q
+
+        disjoint(p,q) ==> disjoint(q,p)
+        disjoint(p,q) ==> a in p ==> a /in q
+        not disjoint(p,q) ==> (p*q).has_some
+
+        q < p ==> (p - q).has_some
+    end
+
+
+
+{: Union and intersection of collections of sets
+   ============================================= :}
+
+
+(+)  (ps:{{G}}): ghost {G}
+        -- The union of all sets of the collection of sets 'ps'
+    -> {x: some(p) p in ps and x in p}
+
+(*)  (ps:{{G}}): ghost {G}
+        -- The intersection of all sets of the collection of sets 'ps'
+    -> {x: all(p) p in ps ==> x in p}
+
+
+all(p:{G}, ps:{{G}})
+    ensure
+        p in ps ==> p <= + ps
+    end
+
+
+
+
+{: Quantifier Transformations
+   ========================== :}
+
+A: ANY
+
+all(p,q:{A}, e:BOOLEAN)
+    ensure
+        ((all(x) p(x)) or e) = (all(x) p(x) or e)
+
+        ((some(x) x in p) ==> e) = (all(x) x in p ==> e)
+
+        (some(x) x in p and e) = ((some(x) x in p) and e)
+
+        (some(x) p(x)) or (some(x) q(x)) = (some(x) p(x) or q(x))
+    end

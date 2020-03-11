@@ -1,0 +1,811 @@
+use
+    endorelation
+    function
+end
+
+A: ANY
+B: ANY
+
+
+{:
+# Preorder, partial order and linear order
+:}
+
+is_preorder(r:{A,A}): ghost BOOLEAN
+    -> r.is_reflexive and
+       r.is_transitive
+
+
+is_partial_order(r:{A,A}): ghost BOOLEAN
+    -> r.is_reflexive and
+       r.is_transitive and
+       r.is_antisymmetric
+
+
+is_linear_order(r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order and
+       r.is_dichotomic
+
+
+all(r,s:{A,A})
+    ensure
+        r.is_partial_order ==> s.is_partial_order ==> (r*s).is_partial_order
+    end
+
+
+{:
+# Upper and lower bounds
+:}
+
+
+is_lower_bound(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' a lower bound for the set 'p' with respect to the relation 'r'?
+    -> a in r.carrier and all(x) x in p ==> r(a,x)
+
+is_upper_bound(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' an upper bound for the set 'p' with respect to the relation 'r'?
+    -> a in r.carrier and all(x) x in p ==> r(x,a)
+
+lower_bounds(p:{A}, r:{A,A}): ghost {A}
+        -- The set of all lower bounds of the set 'p' with respect to the
+        -- relation 'r'.
+    -> {a: a.is_lower_bound(p,r)}
+
+upper_bounds(p:{A}, r:{A,A}): ghost {A}
+        -- The set of all upper bounds of the set 'p' with respect to the
+        -- relation 'r'.
+    -> {a: a.is_upper_bound(p,r)}
+
+
+all(a,b:A, p:{A}, r:{A,A})
+    ensure
+        a.is_lower_bound(p,r.inverse) ==> a.is_upper_bound(p,r)
+        a.is_upper_bound(p,r.inverse) ==> a.is_lower_bound(p,r)
+
+        r.is_partial_order ==>
+        r(a,b) ==>
+        b.is_lower_bound(p,r)
+        ==>
+        a.is_lower_bound(p,r)
+
+        r.is_partial_order ==>
+        r(a,b) ==>
+        a.is_upper_bound(p,r)
+        ==>
+        b.is_upper_bound(p,r)
+    end
+
+
+
+{:
+# Maximal elements
+:}
+
+is_maximal(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- 'a' is maximal in 'p' iff there is no greater element in 'p'.
+    -> a in p and all(b) b in p ==> r(a,b) ==> a = b
+
+
+has_maximal(p:{A}, r:{A,A}): ghost BOOLEAN
+    -> some(a) a.is_maximal(p,r)
+
+
+all(a:A, p:{A}, r:{A,A})
+        -- Every subset of a partial order which does not have maximal elements
+        -- has elements strictly above each of its members.
+    require
+        r.is_partial_order
+        p <= r.carrier
+        not p.has_maximal(r)
+        a in p
+    ensure
+        some(b) b in p and r(a,b) and a /= b
+    end
+
+
+
+
+
+
+
+{:
+# Least elements
+:}
+
+is_least(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' the least element of set 'p' with respect to the relation 'r'?
+    -> a in p and a.is_lower_bound(p,r)
+
+has_least(p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Does the set 'p' have a least element?
+    -> some(x) x.is_least(p,r)
+
+
+least(p:{A}, r:{A,A}): ghost A
+        -- The least element of the set 'p' in the partial order 'r'.
+    require
+        r.is_partial_order
+        p.has_least(r)
+    ensure
+        Result.is_least(p,r)
+    end
+
+
+is_least(a:A,r:{A,A}): ghost BOOLEAN
+        -- Is 'a' the least element of the carrier of 'r'?
+    -> all(x) r(a,x)
+
+
+has_least(r:{A,A}): ghost BOOLEAN
+        -- Does the carrier of 'r' have a least element?
+    -> some(a) a.is_least(r)
+
+
+least(r:{A,A}): ghost A
+        -- The least element of the carrier of 'r'.
+    require
+        r.is_partial_order
+        r.has_least
+    ensure
+        Result.is_least(r)
+    end
+
+
+
+
+
+{:
+# Greatest elements
+:}
+
+is_greatest(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' the greatest element of set 'p' with respect to the relation 'r'?
+    -> a in p and a.is_upper_bound(p,r)
+
+has_greatest(p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Does the set 'p' have a greatest element?
+    -> some(x) x.is_greatest(p,r)
+
+
+
+greatest(p:{A}, r:{A,A}): ghost A
+        -- The greatest element of the set 'p' in the partial order 'r'.
+    require
+        r.is_partial_order
+        p.has_greatest(r)
+    ensure
+        Result.is_greatest(p,r)
+    end
+
+
+all(a:A, p:{A}, r:{A,A})
+    ensure
+        a.is_greatest(p,r) ==> a.is_least(p,r.inverse)
+
+        a.is_least(p,r)    ==> a.is_greatest(p,r.inverse)
+    end
+
+
+all(a:A, p:{A}, r:{A,A})
+        -- In a partial order every greatest element is maximal
+    require
+        r.is_partial_order
+        a.is_greatest(p,r)
+    ensure
+        a.is_maximal(p,r)
+    end
+
+
+
+all(a:A, p:{A}, r:{A,A})
+        -- Every subset of a linear order which does not have a greatest element
+        -- has elements strictly above each of its members.
+    require
+        r.is_linear_order
+        p <= r.carrier
+        not p.has_greatest(r)
+        a in p
+    ensure
+        some(b) b in p and r(a,b) and a /= b
+    end
+
+
+
+{:
+# Infimum and supremum
+:}
+
+is_infimum(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' an infimum i.e. a greatest lower bound of the set 'p' with
+        -- respect to the relation 'r'
+    -> a.is_greatest(p.lower_bounds(r),r)
+
+is_supremum(a:A, p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Is 'a' a supremum i.e. a least upper bound of the set 'p' with
+        -- respect to the relation 'r'
+    -> a.is_least(p.upper_bounds(r),r)
+
+has_infimum(p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Does the set 'p' have a greatest lower bound?
+    -> some(a) a.is_infimum(p,r)
+
+has_supremum(p:{A}, r:{A,A}): ghost BOOLEAN
+        -- Does the set 'p' have a least upper bound?
+    -> some(a) a.is_supremum(p,r)
+
+infimum(p:{A}, r:{A,A}): ghost A
+        -- The greatest lower bound of the set 'p' in the partial order 'r'.
+    require
+        r.is_partial_order
+        p.has_infimum(r)
+    ensure
+        Result.is_infimum(p,r)
+    end
+
+supremum(p:{A}, r:{A,A}): ghost A
+        -- The least upper bound of the set 'p' in the partial order 'r'.
+    require
+        r.is_partial_order
+        p.has_supremum(r)
+    ensure
+        Result.is_supremum(p,r)
+    end
+
+
+
+{:
+# Up- and downclosed sets
+:}
+
+is_downclosed(p:{A}, r:{A,A}): ghost BOOLEAN
+    -> p <= r.carrier
+       and
+       all(x,y) r(x,y) ==> y in p ==> x in p
+
+is_upclosed(p:{A}, r:{A,A}): ghost BOOLEAN
+    -> p <= r.carrier
+       and
+       all(x,y) r(x,y) ==> x in p ==> y in p
+
+
+all(ps:{{A}}, r:{A,A})
+        -- An arbitrary union of downclosed sets is downclosed
+    require
+        all(p) p in ps ==> p.is_downclosed(r)
+    ensure
+        (+ ps).is_downclosed(r)
+    end
+
+all(r:{A,A}, p:{A}, a:A)
+        -- Adding the least element of the complement of a downclosed set to
+        -- the set in a partial order gives a downclosed set.
+    require
+        r.is_partial_order
+        p.is_downclosed(r)
+        a.is_least(r.carrier - p, r)
+    ensure
+        (p + {a}).is_downclosed(r)
+    end
+
+
+
+all(r:{A,A}, p:{A})
+        -- In a linear order the complement of a downclosed set is upclosed.
+    require
+        r.is_linear_order
+        p.is_downclosed(r)
+
+    ensure
+        (r.carrier - p).is_upclosed(r)
+    end
+
+
+
+
+{:
+# Upper and lower set
+:}
+
+
+upper_set(a:A, r:{A,A}): ghost {A}
+        -- The set of all elements starting from 'a' and following the
+        -- relation 'r' in upward direction.
+    require
+        a in r.carrier
+    ensure
+        -> {(p): a in p,
+                 all(x,y) r(x,y) ==> x in p ==> y in p}
+    end
+
+
+lower_set(a:A, r:{A,A}): ghost {A}
+        -- The set of all elements starting from 'a' and following the
+        -- relation 'r' in downward direction.
+    require
+        a in r.carrier
+    ensure
+        -> {(p): a in p,
+                 all(x,y) r(x,y) ==> y in p ==> x in p}
+    end
+
+
+lower_sets(r:{A,A}): ghost {{A}}
+        -- The collection of all lower sets of the relation 'r'.
+    -> {p: some(a) a in r.carrier and p = a.lower_set(r)}
+
+
+strict_lower_set(a:A, r:{A,A}): ghost {A}
+        -- 'a.lower_set(r)' without 'a'.
+    require
+        a in r.carrier
+    ensure
+        -> {x: x in a.lower_set(r) and x /= a}
+    end
+
+
+
+strict_lower_sets(p:{A}, r:{A,A}): ghost {{A}}
+        -- The collection of all strict lower sets of the elements in 'p'.
+    require
+        p <= r.carrier
+    ensure
+        -> {q: some(x) x in p and q = x.strict_lower_set(r)}
+    end
+
+
+
+
+
+
+all(a,b:A, r:{A,A})
+    ensure
+        r.is_preorder ==>
+        r(a,b) ==>
+        a.lower_set(r) <= b.lower_set(r)
+
+        a in r.carrier ==> b in a.lower_set(r) ==> b in r.carrier
+
+        r.is_preorder ==>
+        b in r.carrier ==>
+        a in b.lower_set(r) ==>
+        r(a,b)
+
+        a in r.carrier ==> a.strict_lower_set(r) + {a} = a.lower_set(r)
+        a in r.carrier ==> a.strict_lower_set(r) < r.carrier
+
+        r.is_partial_order ==> a in r.carrier ==>
+        a.strict_lower_set(r).is_downclosed(r)
+
+        r.is_linear_order ==> a in r.carrier ==>
+        a.is_least(r.carrier - a.strict_lower_set(r), r)
+    end
+
+
+all(r:{A,A}, p:{A}, b:A)
+        -- All lower sets of elements in a downclosed set are subsets
+        -- of the downclosed set.
+    require
+        p.is_downclosed(r)
+        b in p
+    ensure
+        b.lower_set(r) <= p
+    end
+
+
+
+all(ps:{{A}}, r:{A,A})
+        -- The union of all lower sets is the carrier.
+    require
+        ps = {p: some(a) a in r.carrier and p = a.lower_set(r)}
+    ensure
+        + ps = r.carrier
+    end
+
+
+
+all(b:A, r:{A,A})
+        -- The union of all strict lower sets of a strict lower set is fully
+        -- contained in the outer strict lower set.
+    require
+        r.is_partial_order
+        b in r.carrier
+    ensure
+        + b.strict_lower_set(r).strict_lower_sets(r) <= b.strict_lower_set(r)
+    end
+
+
+
+all(r:{A,A}, a,b:A)
+        -- Transitivity of strict lower sets.
+    require
+        r.is_partial_order
+        r(a,b)
+    ensure
+        a.strict_lower_set(r) <= b.strict_lower_set(r)
+    end
+
+
+
+all(r:{A,A}, a,b,c:A)
+        -- Transitivity of strict lower sets.
+    require
+        r.is_partial_order
+        c in r.carrier
+        b in c.strict_lower_set(r)
+        r(a,b)
+    ensure
+        a in c.strict_lower_set(r)
+    end
+
+
+
+all(r:{A,A}, a,b:A)
+        -- If a strict lower set has a greatest element, then the lower set of
+        -- this greatest element is a superset of the strict lower set.
+    require
+        r.is_partial_order
+        b in r.carrier
+        a.is_greatest(b.strict_lower_set(r), r)
+    ensure
+        b.strict_lower_set(r) <= a.lower_set(r)
+    end
+
+
+all(a,b:A, r:{A,A})
+        -- All elements of an upper set are in the carrier.
+    require
+        a in r.carrier
+        b in a.upper_set(r)
+    ensure
+        b in r.carrier
+    end
+
+
+
+all(a,b:A, r:{A,A})
+        -- The upper sets are sufficient to reconstruct the relation.
+    require
+        r.is_preorder
+        a in r.carrier
+        b in a.upper_set(r)
+    ensure
+        r(a,b)
+    end
+
+
+
+all(r:{A,A}, p:{A}, a:A)
+        -- If 'a' is the least element of the set 'p' then 'p' is a subset of
+        -- the upper set of 'a'.
+    require
+        a.is_least(p,r)
+    ensure
+        p <= a.upper_set(r)
+    end
+
+
+
+all(r:{A,A}, p:{A}, a:A)
+        -- In a preorder the upper set of a least element of an upclosed set
+        -- is is fully contained in the set.
+    require
+        r.is_preorder
+        p.is_upclosed(r)
+        a.is_least(p,r)
+    ensure
+        a.upper_set(r) <= p
+    end
+
+
+all(r:{A,A}, p:{A}, a,b:A)
+        -- In a partial order all elements strictly below the least element of
+        -- a set are not in the set.
+    require
+        r.is_partial_order
+        b.is_least(p,r)
+        a in b.strict_lower_set(r)
+    ensure
+        a /in p
+    end
+
+
+
+all(r:{A,A}, p:{A}, b:A)
+        -- If 'b' is the least element of elements which are not in 'p' then
+        -- all elements of the strict lower set of 'b' are in 'p'.
+    require
+        r.is_partial_order
+        b.is_least(r.carrier - p, r)
+    ensure
+        b.strict_lower_set(r) <= p
+    end
+
+
+all(r:{A,A}, a:A)
+        -- The complement of a strict lower set is the corresponding upper set
+        -- in a linear order.
+    require
+        r.is_linear_order
+        a in r.carrier
+    ensure
+        r.carrier - a.strict_lower_set(r) = a.upper_set(r)
+    end
+
+
+all(r:{A,A}, a:A)
+        -- The complement of an upper set is the corresponding strict lower set
+        -- in a linear order.
+    require
+        r.is_linear_order
+        a in r.carrier
+    ensure
+        r.carrier - a.upper_set(r) = a.strict_lower_set(r)
+    end
+
+
+
+all(r:{A,A}, p:{A}, a:A)
+        -- In a linear order if the complement of a downclosed set has a least
+        -- element then the downclosed set can be represented as the strict lower
+        -- set of this least element.
+    require
+        r.is_linear_order
+        p.is_downclosed(r)
+        a.is_least(r.carrier - p, r)
+    ensure
+        p = a.strict_lower_set(r)
+    end
+
+
+
+
+
+{:
+# Directed sets
+:}
+
+is_updirected(d:{A}, r:{A,A}): ghost BOOLEAN
+    -> d.has_some
+       and
+       all(x,y)
+           {x,y} <= d ==>
+           some(z) z.is_upper_bound({x,y},r)
+
+
+
+
+
+{:
+# Monotonic functions
+
+A monotonic function is between two order relations is a function which
+preserves the order.
+
+
+:}
+
+
+is_monotonic(f:A->B, r1:{A,A}, r2:{B,B}): ghost BOOLEAN
+    -> f.is_total(r1)
+       and
+       all(x,y)
+           {x,y} <= r1.carrier
+           ==>
+           r1(x,y)
+           ==>
+           r2(f(x), f(y))
+
+
+is_monotonic(f:A->A, r:{A,A}): ghost BOOLEAN
+    -> f.is_monotonic(r,r)
+
+
+is_reflecting(f:A->B, r:{A,A}, s:{B,B}): ghost BOOLEAN
+    -> f.is_total(r)
+       and
+       all(x,y)
+           {x,y} <= r.carrier ==>
+           s(f(x), f(y)) ==>
+           r(x,y)
+
+is_embedding(f:A->B, r:{A,A}, s:{B,B}): ghost BOOLEAN
+    -> f.is_total(r)
+       and
+       f.is_injective
+       and
+       f.is_monotonic(r,s)
+       and
+       f.inverse.is_monotonic(s,r)
+
+
+{:
+# Continuous functions
+
+An upcontinuous function preserves suprema i.e.
+
+    x.is_supremum(p,r1) ==> f(x).is_supremum(f[p],r2)
+
+and a downcontiunous function presevers infima
+
+    x.is_infimum(p,r1) ==> f(x).is_infimum(f[p],r2)
+:}
+
+is_upcontinuous(f:A->B, r1:{A,A}, r2:{B,B}): ghost BOOLEAN
+    -> r1.carrier <= f.domain
+       and
+       all(p,s)
+           s.is_supremum(p,r1)
+           ==>
+           f(s).is_supremum(f[p],r2)
+
+
+is_upcontinuous(f:A->A, r:{A,A}): ghost BOOLEAN
+    -> f.is_upcontinuous(r,r)
+
+is_prefixpoint(a:A, f:A->A, r:{A,A}): ghost BOOLEAN
+    -> a in f.domain and r(a,f(a))
+
+is_increasing(f:A->A, r:{A,A}): ghost BOOLEAN
+    -> f.is_total(r) and all(x) x in r.carrier ==> r(x,f(x))
+
+
+
+
+{:
+# Complete partial order
+:}
+
+is_complete_partial_order(r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order
+       and
+       all(d) d.is_updirected(r) ==> d.has_supremum(r)
+
+
+
+
+{:
+# Wellorder
+:}
+
+
+
+nonempty_has_least(r:{A,A}): ghost BOOLEAN
+        -- Do all nonempty subsets of the carrier have a least element?
+    -> all(p) p <= r.carrier ==> p.has_some ==> some(x) x.is_least(p,r)
+
+
+is_wellorder(r:{A,A}): ghost BOOLEAN
+        -- Is 'r' a wellorder i.e. a linear order where every nonempty set
+        -- has a least element?
+    -> r.is_linear_order
+       and
+       r.nonempty_has_least
+
+all(r:{A,A})
+    ensure
+        r.nonempty_has_least ==> r.is_dichotomic
+    end
+
+
+
+{:
+# Wellfounded
+:}
+
+
+accessibles (r:{A,A}): ghost {A}
+        -- The elements which are accessible by the relation 'r' i.e. all
+        -- elements in the carrier of 'r' which have no predecessor or whose
+        -- predecessors are all accessible.
+    -> {(p): all(y) y in r.carrier ==> (all(x) r(x,y) ==> x in p) ==> y in p}
+
+
+is_wellfounded (r:{A,A}): ghost BOOLEAN
+        -- Is the relation 'r' wellfounded i.e. are all its elements accessible?
+    -> r.carrier <= r.accessibles
+
+
+all(r:{A,A})
+    ensure
+        r.accessibles <= r.carrier
+    end
+
+
+{:
+# Closure system
+
+A closure system in a partial order is a subset of the carrier such that all
+subsets of the closure system have an infimum in the closure system. I.e. the
+closure system is "closed" with respect to the infimum operation.
+
+Because of this property it is always possible to find a least element in the
+closure system which is above another element of the carrier.
+
+A weak closure system is not completely closed with respect to the infimum
+operation. Empty subsets of the closure system are excluded. However a weak
+closure system must be big enough to contain arbitrarily large elements. The
+last property is implicit in a normal closure system.
+
+:}
+
+is_weak_closure_system (p:{A}, r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order
+       and
+       p <= r.carrier
+       and
+       (all(x) x in r.carrier ==> (p * x.upper_set(r)).has_some)
+       and
+       all(q)
+           q <= p ==> q.has_some
+           ==>
+           some(x) x.is_infimum(q,r) and x in p
+
+
+
+is_closure_system (p:{A}, r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order
+       and
+       p <= r.carrier
+       and
+       all(q)
+           q <= p
+           ==>
+           some(x) x.is_infimum(q,r) and x in p
+
+
+is_closure_map (f:A->A, r:{A,A}): ghost BOOLEAN
+    -> f.is_total(r) and
+       f.is_increasing(r) and
+       f.is_monotonic(r) and
+       f.is_idempotent
+
+
+
+all(a:A, p:{A}, r:{A,A})
+    ensure
+        p.is_closure_system(r) ==> p.is_weak_closure_system(r)
+
+        p.is_weak_closure_system(r) ==>
+        a in r.carrier ==>
+        (p * a.upper_set(r)).has_least(r)
+
+    end
+
+
+
+closed(a:A, p:{A}, r:{A,A}): ghost A
+        -- The least element above 'a' of the closure system 'p' in the
+        -- partial order 'r'.
+    require
+        p.is_weak_closure_system(r)
+        a in r.carrier
+    ensure
+        -> least (p * a.upper_set(r), r)
+    end
+
+
+
+
+{:# Interior systems
+:}
+
+
+is_interior_system (p:{A}, r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order
+       and
+       p <= r.carrier
+       and
+       all(q) q <= p ==> some(x) x.is_supremum(q,r) and x in p
+
+
+is_weak_interior_system (p:{A}, r:{A,A}): ghost BOOLEAN
+    -> r.is_partial_order
+       and
+       p <= r.carrier
+       and
+       (all(x) x in r.carrier ==> (p * x.lower_set(r)).has_some)
+       and
+       all(q)
+           q <= p ==> q.has_some
+           ==>
+           some(x) x.is_supremum(q,r) and x in p

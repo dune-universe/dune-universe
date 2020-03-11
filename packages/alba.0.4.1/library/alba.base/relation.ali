@@ -1,0 +1,121 @@
+use
+    predicate
+end
+
+A: ANY
+B: ANY
+
+
+all(r,s:{A,B})
+    require
+        all(a,b) r(a,b) ==> s(a,b)
+    ensure
+        r <= s
+    end
+
+
+{: Domain and range
+   ================ :}
+
+domain (r:{A,B}): ghost {A}         -> {a: some(b) r(a,b)}
+range  (r:{A,B}): ghost {B}         -> {b: some(a) r(a,b)}
+
+
+domains (rs:{{A,B}}): ghost {{A}}
+        -- The collection of all domains of the relations in 'rs'.
+    -> {p: some(r) r in rs and p = r.domain}
+
+ranges  (rs:{{A,B}}): ghost {{B}}
+        -- The collection of all ranges of the relations in 'rs'.
+    -> {p: some(r) r in rs and p = r.range}
+
+
+
+
+all(r,s:{A,B})
+    ensure
+        (r*s).domain <= r.domain
+        (r*s).domain <= s.domain
+
+        (r*s).range <= r.range
+        (r*s).range <= s.range
+    end
+
+all(rs:{{A,B}})
+    ensure
+        -- The domain of a union of relations is the union of the domains
+        (+ rs).domain = + rs.domains
+
+        -- The range of a union of relations is the union of the ranges
+        (+ rs).range  = + rs.ranges
+    end
+
+
+
+
+{: Domain and range restriction
+   ============================ :}
+
+(|) (p:{A}, r:{A,B}): {A,B}
+        -- The relation 'r' whose domain is restricted to elements in  'p'.
+    -> {x,y: x in p and r(x,y)}
+
+(|) (r:{A,B}, q:{B}): {A,B}
+        -- The relation 'r' whose range is restricted to elements in  'q'.
+    -> {x,y: r(x,y) and y in q}
+
+
+
+
+{: Image and preimage
+   ================== :}
+
+[] (r:{A,B}, p:{A}): ghost {B}
+        -- The image of the set 'p' via the relation 'r'.
+    -> {b: some(a) a in p and r(a,b)}
+
+
+image    (p:{A}, r:{A,B}): ghost {B} -> {b: some(a) a in p and r(a,b)}
+preimage (p:{B}, r:{A,B}): ghost {A} -> {a: some(b) b in p and r(a,b)}
+
+
+
+
+{: Inverse of a relation
+   ===================== :}
+
+
+inverse (r:{A,B}): {B,A}          -> {b,a: r(a,b)}
+
+
+all(r:{A,B}, rs:{{A,B}})
+    ensure
+        range(r)  = domain(inverse(r))
+        domain(r) = range (inverse(r))
+        range (inverse(r))  = domain(r)
+        domain(inverse(r))  = range (r)
+
+        r.inverse.inverse = r
+
+        (+ rs).inverse = + {r: r.inverse in rs}
+    end
+
+
+{: Relations which are functions
+   ============================= :}
+
+is_function(r:{A,B}): ghost BOOLEAN
+        -- Is the relation 'r' a function?
+    -> all(x,y1,y2) r(x,y1) ==> r(x,y2) ==> y1 = y2
+
+
+
+[] (r:{A,B}, x:A): ghost B
+        -- The relation 'r' (which is a function) applied to the element 'x'
+        -- of its domain.
+    require
+        r.is_function
+        x in r.domain
+    ensure
+        r(x,Result)
+    end

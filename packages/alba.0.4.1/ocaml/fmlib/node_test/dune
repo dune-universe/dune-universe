@@ -1,0 +1,8 @@
+(executable
+  (libraries fmlib fmlib_node)
+  (js_of_ocaml
+      (flags (--custom-header "#!/usr/bin/env node"
+              ;--disable genprim
+              ;--disable=debugger
+              )))
+  (name test))

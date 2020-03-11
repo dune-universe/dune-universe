@@ -1,0 +1,176 @@
+use
+    natural
+end
+
+
+G:ANY
+H:ANY
+
+
+
+length (a:[G]): NATURAL
+    -> inspect
+           a
+       case [] then
+           0
+       case x ^ xs then
+           xs.length + 1
+
+
+[] (a:[G], i:NATURAL): G
+        -- The ith element of the list 'a'.
+    require
+        i < a.length
+    ensure
+        -> inspect
+               a
+           case x ^ xs then
+               inspect
+                   i
+               case 0 then
+                   x
+               case j.successor then
+                   xs[j]
+    end
+
+
+head (a:[G]): G
+        -- The first element of the list 'a'.
+    require
+        a as x ^ t
+    ensure
+        -> inspect
+               a
+           case h ^ _ then
+               h
+    end
+
+tail (a:[G]): [G]
+        -- The list 'a' with the first element removed.
+    require
+        a as x ^ t
+    ensure
+        -> inspect
+               a
+           case _ ^ t then
+               t
+    end
+
+
+(in) (x:G, a:[G]): BOOLEAN
+        -- Is the element 'x' contained in the list 'a'?
+    -> inspect
+           a
+       case [] then
+           false
+       case h ^ t then
+           x = h or x in t
+
+
+
+elements (a:[G]): {G}
+        -- The set of elements of the list 'a'.
+    -> {x: x in a}
+
+
+
+permutation: ghost {[G],[G]}
+   = {(r):
+           r([],[])                                  -- empty list
+           ,
+           all(x,a,b) r(a,b) ==> r(x ^ a, x ^ b)     -- prefix element
+           ,
+           all(x,y,a) r(x ^ y ^ a, y ^ x ^ a)        -- swap adjacent
+           ,
+           all(a,b,c) r(a,b) ==> r(b,c) ==> r(a,c)   -- transitive
+     }
+
+
+(+) (a,b: [G]): [G]
+        -- The concatenation of the lists 'a' and 'b'.
+    -> inspect
+           a
+       case [] then
+           b
+       case h ^ t then
+           h ^ (t + b)
+
+
+(-) (a:[G]): [G]
+        -- The reversed list 'a'.
+    -> inspect
+           a
+       case [] then
+           a
+       case h ^ t then
+           - t + [h]
+
+
+folded (f:(H,G)->H, b:H, l:[G]): H
+        -- The function 'f' folded with start value 'b' over the list 'l'.
+    require
+        f.is_total
+    ensure
+        -> inspect
+               l
+           case [] then
+               b
+           case h ^ t then
+               f.folded(f(b,h), t)
+    end
+
+
+is_prefix (a,b:[G]): BOOLEAN
+    -> inspect a, b
+       case [] , _   then true
+       case _  , []  then false
+       case x^a, y^b then x = y and a.is_prefix(b)
+
+
+
+
+all(a,b,c:[G], x:G)
+    ensure
+        -- list length
+        a as _ ^ _ ==> 0 < a.length
+        a as _ ^ _ ==> 1 <= a.length
+        a as [_]   ==> a as _ ^ _
+
+        -- concatenation of lists
+        a   + []  =  a
+
+        (a + b) + c  =  a + (b + c)
+
+        -- list reversal
+        x ^ (-a) = - (a + [x])
+
+        (-(a + b))  =  -b + -a
+
+        (- -a) = a
+
+        -- permutation
+        permutation(a,a)
+        permutation(a,b) ==> permutation(b,a)
+
+        -- folding
+        a + b = ((a,x) -> x ^ a).folded(b,-a)
+    end
+
+
+
+{:
+# Mapping of Lists
+:}
+
+[] (f:G->H, a:[G]): [H]
+        -- The list 'a' where all elements are mapped by 'f'.
+    require
+        a.elements <= f.domain
+    ensure
+        -> inspect
+               a
+           case [] then
+               []
+           case h ^ t then
+               f(h) ^  f[t]
+    end

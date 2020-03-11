@@ -1,0 +1,226 @@
+use
+    predicate
+end
+
+deferred class PO:PARTIAL_ORDER
+
+PO2: PARTIAL_ORDER
+
+
+-- Deferred functions and axioms
+
+(<=) (a,b:PO): BOOLEAN   deferred end
+
+
+all(a,b,c:PO)
+    ensure
+        a <= a                               -- reflexive
+        (a <= b) ==> (b <= a) ==> (a = b)    -- antisymmetric
+        (a <= b) ==> (b <= c) ==> (a <= c)   -- transitive
+    deferred
+    end
+
+
+-- More function definitions
+
+(<)  (a,b:PO): BOOLEAN -> a /= b and a <= b
+
+(>=) (a,b:PO): BOOLEAN -> b <= a
+
+(>)  (a,b:PO): BOOLEAN -> b < a
+
+is_lower_bound (a:PO, p:{PO}): ghost BOOLEAN -> all(x) p(x) ==> a <= x
+
+is_upper_bound (a:PO, p:{PO}): ghost BOOLEAN -> all(x) p(x) ==> x <= a
+
+is_least (a:PO, p:{PO}): ghost BOOLEAN    -> p(a) and a.is_lower_bound(p)
+
+is_greatest (a:PO, p:{PO}): ghost BOOLEAN -> p(a) and a.is_upper_bound(p)
+
+has_least (p:{PO}): ghost BOOLEAN -> some(x) x.is_least(p)
+
+has_greatest (p:{PO}): ghost BOOLEAN -> some(x) x.is_greatest(p)
+
+is_minimal (a:PO, p:{PO}): ghost BOOLEAN  -> p(a) and all(x) x < a ==> not p(x)
+
+is_maximal (a:PO, p:{PO}): ghost BOOLEAN  -> p(a) and all(x) a < x ==> not p(x)
+
+upper_bounds (p:{PO}): ghost {PO} -> {x: x.is_upper_bound(p)}
+
+lower_bounds (p:{PO}): ghost {PO} -> {x: x.is_lower_bound(p)}
+
+is_infimum (a:PO, p:{PO}): ghost BOOLEAN  -> a.is_greatest(p.lower_bounds)
+
+is_supremum (a:PO, p:{PO}): ghost BOOLEAN -> a.is_least(p.upper_bounds)
+
+has_infimum (p:{PO}): ghost BOOLEAN -> some(x) x.is_infimum(p)
+
+has_supremum (p:{PO}): ghost BOOLEAN -> some(x) x.is_supremum(p)
+
+least(p:{PO}): ghost PO
+        -- The least element of the set 'p'.
+    require
+        some(x) x.is_least(p)
+    ensure
+        Result.is_least(p)
+    end
+
+greatest(p:{PO}): ghost PO
+        -- The greatest element of the set 'p'.
+    require
+        some(x) x.is_greatest(p)
+    ensure
+        Result.is_greatest(p)
+    end
+
+
+
+
+(*) (a,b:PO): ghost PO
+        -- The greatest lower bound of 'a' and 'b'.
+    require
+        some(x) x.is_infimum({a,b})
+    ensure
+        Result.is_infimum({a,b})
+    end
+
+
+(*) (p:{PO}): ghost PO
+        -- The greatest lower bound of the set 'p'.
+    require
+        some(x) x.is_infimum(p)
+    ensure
+        Result.is_infimum(p)
+    end
+
+
+
+
+{:
+(+) (a,b:PO): ghost PO
+        -- The least upper bound of 'a' and 'b'.
+    require
+        some(x) x.is_supremum({a,b})
+    ensure
+        Result.is_supremum({a,b})
+    end
+:}
+
+(+) (p:{PO}): ghost PO
+        -- The least upper bound of the set 'p'.
+    require
+        some(x) x.is_supremum(p)
+    ensure
+        Result.is_supremum(p)
+    end
+
+all(p:{PO})
+    ensure
+        p.has_supremum ==> (+ p).is_supremum(p)
+        p.has_infimum  ==> (* p).is_infimum(p)
+    end
+
+
+
+is_monotonic(f:PO->PO2): ghost BOOLEAN ->
+    all(a,b:PO) {a,b} <= f.domain ==> a <= b ==> f(a) <= f(b)
+
+is_antitonic(f:PO->PO2): ghost BOOLEAN ->
+    all(a,b:PO) {a,b} <= f.domain ==> a <= b ==> f(b) <= f(a)
+
+is_increasing(f:PO->PO): ghost BOOLEAN ->
+    all(a) (f.domain)(a) ==> a <= f(a)
+
+is_decreasing(f:PO->PO): ghost BOOLEAN ->
+    all(a) (f.domain)(a) ==> f(a) <= a
+
+
+
+all(a,b:PO)
+    ensure
+        a.is_lower_bound({a})
+        a <= b ==> a.is_lower_bound({b})
+    end
+
+all(a,b,c:PO, p,q:{PO})
+    ensure
+        a <= b ==> b < c  ==> a /= c
+        a < b  ==> b <= c ==> a /= c
+        a < b  ==> b < c  ==> a < c
+
+        a = b   ==>  b <= c  ==> a <= c
+        a <= b  ==>  b =  c  ==> a <= c
+
+        a.is_least(p)     ==> b.is_least(p)      ==> a = b
+        a.is_greatest(p)  ==> b.is_greatest(p)   ==> a = b
+        a.is_infimum(p)   ==> b.is_infimum(p)    ==> a = b
+        a.is_supremum(p)  ==> b.is_supremum(p)   ==> a = b
+
+        a <= b ==> b.is_lower_bound(p) ==> a.is_lower_bound(p)
+
+        a.is_lower_bound(p) ==> a.is_lower_bound(q) ==> ((p + q).lower_bounds)(a)
+
+        ((p + q).lower_bounds)(a) ==> a.is_lower_bound(p)
+        ((p + q).lower_bounds)(a) ==> a.is_lower_bound(q)
+
+        a.is_infimum(p) ==> b.is_infimum(q) ==> p <= q ==> b <= a
+
+        a.is_least(p) ==> a.is_infimum(p)
+        a.is_infimum(p) ==> a in p ==> a.is_least(p)
+
+        p.has_infimum ==> q.has_infimum ==> p <= q ==> *q <= *p
+
+        p.has_least ==> q.has_least ==> p <= q ==> least(q) <= least(p)
+
+        a.is_infimum({x: a <= x})
+    end
+
+
+
+{: Directed Sets and Continuous Functions
+   ======================================
+:}
+
+is_updirected (d:{PO}): ghost BOOLEAN
+        -- Is 'd' not empty and do all pair of elements of 'd' have an
+        -- upper bound in 'd'?
+    -> d.has_some
+       and
+       all(a,b)  {a,b} <= d
+                 ==>
+                 some(x) x in d
+                 and
+                 x.is_upper_bound({a,b})
+
+
+is_upcontinuous (f:PO->PO2): ghost BOOLEAN
+        -- Does 'f' map suprema to suprema?
+    -> all(set,sup)
+           set <= f.domain
+           ==>
+           sup in f.domain
+           ==>
+           sup.is_supremum(set)
+           ==>
+           f(sup).is_supremum(f[set])
+
+
+
+{: Chains
+   ======
+:}
+
+
+is_chain(p:{PO}): ghost BOOLEAN
+        -- Is the set 'p' a chain?
+    -> all(a,b) {a,b} <= p ==> a <= b or b <= a
+
+
+all(p:{PO}, a,b:PO)
+        -- All pairs in a chain have an upper bound
+    require
+        p.is_chain
+        {a,b} <= p
+    ensure
+        some(x) x in p and a <= x and b <= x
+    end

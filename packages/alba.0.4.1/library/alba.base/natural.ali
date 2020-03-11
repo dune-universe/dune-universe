@@ -1,0 +1,205 @@
+use
+    core
+end
+
+
+class
+    NATURAL
+create
+    0
+    successor (predecessor:NATURAL)
+end
+
+1: NATURAL = 0.successor
+2: NATURAL = 1.successor
+3: NATURAL = 2.successor
+4: NATURAL = 3.successor
+5: NATURAL = 4.successor
+6: NATURAL = 5.successor
+7: NATURAL = 6.successor
+8: NATURAL = 7.successor
+9: NATURAL = 8.successor
+
+(<=) (a,b:NATURAL): BOOLEAN
+    -> inspect
+           a, b
+       case 0,_ then
+           true
+       case successor(a), successor(b) then
+           a <= b
+       case _, _ then
+           false
+
+(<)  (a,b:NATURAL): BOOLEAN -> a <= b and a /= b
+
+is_least(a:NATURAL, p:{NATURAL}): ghost BOOLEAN
+    -> a in p and (all(x) x in p ==> a <= x)
+
+least(p:{NATURAL}): ghost NATURAL
+    require
+        p.has_some
+    ensure
+        Result.is_least(p)
+    end
+
+
+
+
+(+) (a,b: NATURAL):  NATURAL
+    -> inspect
+           b
+       case 0 then
+           a
+       case n.successor then
+           (a + n).successor
+
+(-)  (a,b:NATURAL): NATURAL
+    require
+        b <= a
+    ensure
+        -> inspect
+               a,b
+           case    _, 0 then
+               a
+           case    successor(a), successor(b) then
+               a - b
+    end
+
+(*) (a,b: NATURAL):  NATURAL
+    -> inspect a
+       case 0           then 0
+       case n.successor then n*b + b
+
+
+(/) (n,d:NATURAL): NATURAL
+    require
+        d /= 0
+    ensure
+        -> inspect
+               n
+           case 0 then
+               0
+           case successor(m) then
+               if n = (m / d + 1) * d then
+                   m / d + 1
+               else
+                   m / d
+    end
+
+
+(^) (a,b: NATURAL):  NATURAL
+    -> inspect b
+       case 0           then 1
+       case n.successor then a^n * a
+
+predecessor (n:NATURAL): NATURAL
+    require
+        n as _.successor
+    ensure
+        -> inspect n
+           case    m.successor then m
+    end
+
+
+all(a,b,c,x:NATURAL,p:{NATURAL})
+    ensure
+        -- successor
+        a /= 0 ==> some(x) a = successor(x)
+        (some(x) a = successor(x)) ==> a /= 0
+
+        -- addition
+        a + b.successor = a.successor + b
+        a + 0 = a
+        0 + a = a
+        a + b.successor = (a + b).successor
+        a + 1 = a.successor
+
+        a + b = b + a
+        a + b + c = a + (b + c)
+        a + x = b + x  ==>  a = b
+        x + a = x + b  ==>  a = b
+        a + x = a      ==>  x = 0
+
+        a + b = 0  ==> a = 0
+        a + b = 0  ==> b = 0
+
+        -- order
+        a <= 0     ==>  a = 0
+        a <= 0 ==> a as successor(_) ==> false
+
+        a <= b     ==>  a < b + 1
+        a < b + 1  ==>  a <= b
+        a + 1 <= b ==>  a < b
+        a < b      ==>  a + 1 <= b
+        a <= b  ==> some(x) a + x = b
+        a + x = b ==> a <= b
+        a < a + 1
+
+        a < b ==> 1 <= b
+
+        not (a < b) ==> not (a = b) ==> b < a
+        not (a < b) ==> not (a = b) ==> 0 < a
+
+        a <= b  ==> a + x <= b + x
+        a + x <= b + x ==> a <= b
+
+        a <= a + b
+        b <= a + b
+
+        a <= b or b <= a
+        a <= b or b < a
+        not (a <= b) ==> b <= a
+
+        a <= a
+        a <= b  ==>  b <= a  ==> a = b
+        a <= b  ==>  b <= c  ==> a <= c
+
+
+        -- least elements and wellorder
+        a.is_least(p) ==> b.is_least(p) ==> a = b
+
+        a in p ==> not a.is_least(p) ==> some(x) x in p and x < a
+
+        p.has_some ==> some(x) x.is_least(p)
+
+
+        -- difference
+        a - a = 0
+
+        b <= a ==> a - b + b = a
+
+        c <= a ==> a - c + b = a + b - c
+
+        c <= a ==> a - c = b ==> a = b + c
+        c <= a ==> a = b + c ==> a - c = b
+
+        c <= a ==> a - c <= b ==> a <= b + c
+
+        a /= 0 ==> a <= b ==> a - 1 < b
+
+        not (a < b) ==> not (a = b) ==> 0 < a
+
+        -- multiplication
+        a * 0 = 0
+        0 * a = 0
+        a.successor * b = a*b + b
+        1 * a = a
+
+        -- distributive laws
+        a * (b + c) = a*b + a*c
+
+        -- division
+        b /= 0 ==> a / b * b <= a
+
+        -- exponentiation
+        a^0 = 1
+        a ^ b.successor = a^b * a
+    end
+
+all(p:{NATURAL},y:NATURAL)
+        -- '<'  is a wellfounded relation
+    require
+        all(y) (all(x) x < y ==> x in p) ==> y in p
+    ensure
+        y in p
+    end

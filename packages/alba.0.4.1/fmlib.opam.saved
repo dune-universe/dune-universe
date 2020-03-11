@@ -1,0 +1,17 @@
+opam-version: "2.0"
+name: "fmlib"
+synopsis: "Functional monadic library"
+maintainer: "Helmut Brandl <helmut.brandl@gmx.net>"
+authors: "Helmut Brandl <helmut.brandl@gmx.net>"
+license: "BSD-3"
+dev-repo: "git+https://github.com/hbr/albatross.git"
+bug-reports: "http://github.com/hbr/albatross"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" {>= "4.05.0"}
+  "ocamlfind" {build}
+  "dune" {build}
+  "ppx_inline_test" {build}
+]

@@ -1,0 +1,4 @@
+(library
+  (libraries unix linenoise fmlib)
+  (public_name alba.fmlib_native)
+  (name fmlib_native))

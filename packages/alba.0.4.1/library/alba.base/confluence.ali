@@ -1,0 +1,64 @@
+use
+    endorelation
+end
+
+
+A: ANY
+
+{:
+
+A relation 'r' has the diamond property if for all three elements 'a,b,c'
+there exists another element 'd' such that the following diagram is valid:
+
+    a --->  c
+    |       |
+    |       |
+    v       v
+    b --->  d
+
+The property is called _diamond property_ because the diagramm tilted by 45
+degrees has the form of a diamond.
+
+:}
+
+is_diamond (r:{A,A}): ghost BOOLEAN
+        -- Does the relation 'r' have the strong diamond property?
+    -> all(a,b,c) r(a,b) ==> r(a,c) ==> some(d) r(b,d) and r(c,d)
+
+
+
+all(r:{A,A})
+    ensure
+        r.is_diamond ==> r.reflexive.is_diamond
+        r.is_diamond ==> (+r).is_diamond
+    end
+
+
+{: Confluence
+   ==========
+
+A relation is confluent if all initially deviating paths allways join i.e. in
+a confluent relation if starting from an element 'a' you can reach the
+elements 'b' and 'c' directly or indirectly, then no matter how far you go,
+there is always a forth element 'd' where the paths will join.
+
+    a ----->  c
+    |         .
+    |         .
+    v         v
+    b . . .>  d
+:}
+
+is_confluent(r:{A,A}): ghost BOOLEAN
+        -- Is the relation confluent i.e. starting from an element 'a' and stepping
+        -- form 'a' to 'b' and from 'a' to 'c', is there an element 'd' so that 'd'
+        -- can be reached from 'b' and 'c' in zero or more steps?
+    -> all(a,b,c)
+           r(a,b)
+           ==> r(a,c)
+           ==> some(d) d in b.closed(r) and d in c.closed(r)
+
+all(r:{A,A})
+    ensure
+        r.is_diamond ==> r.is_confluent
+    end

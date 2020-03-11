@@ -1,0 +1,302 @@
+{:-----------------------------------------------------------------------:}
+class BOOLEAN
+deferred class A:ANY
+{:-----------------------------------------------------------------------:}
+
+class
+    BOOLEAN
+inherit
+    ANY
+end
+
+
+false: BOOLEAN
+true:  BOOLEAN
+(==>) (a,b:BOOLEAN): BOOLEAN
+(and) (a,b:BOOLEAN): BOOLEAN
+(or)  (a,b:BOOLEAN): BOOLEAN
+(not) (a:BOOLEAN):   BOOLEAN -> a ==> false
+(=)   (a,b:BOOLEAN): BOOLEAN -> (a ==> b) and (b ==> a)
+
+(=)  (a,b:A): BOOLEAN   deferred end
+(/=) (a,b:A): BOOLEAN   -> not (a = b)
+
+all(a,b:A)
+    ensure
+        a = a
+        a /= a ==> false
+        a = b or a /= b
+    end
+
+all(a,b,c:BOOLEAN)
+    ensure
+        true
+
+        -- negation
+        (not a ==> false) ==> a       -- indirect proof
+        false ==> a                   -- ex falso quodlibet
+
+        -- conjunction
+        a and b ==> a                 -- and elimination
+        a and b ==> b
+        a ==> b ==> a and b           -- and introduction
+
+        -- disjunction
+        a ==> a or b                  -- or introduction
+        b ==> a or b
+
+        a or b
+        ==> (a ==> c)
+        ==> (b ==> c)
+        ==> c                         -- or elimination
+
+        a or not a                    -- excluded middle
+
+        a or a ==> a                  -- idempotence of 'or'
+    end
+
+
+{:------------------------------------------------------------------------:}
+class PREDICATE[A]
+{:------------------------------------------------------------------------:}
+
+class
+    PREDICATE[A]
+inherit
+    ghost ANY
+end
+
+
+(in)  (a:A, p:{A}): BOOLEAN
+        -- Is 'a' an element of the set 'p'?
+        --     Note: The expressions 'a in p' and 'p(a)' are equivalent
+
+(/in) (a:A, p:{A}): BOOLEAN
+        -- Is 'a' not an element of the set 'p'?
+    -> not p(a)
+
+(<=) (p,q:{A}): ghost BOOLEAN
+        -- Is 'p' a subset of 'q'?
+    -> all(x) x in p ==> x in q
+
+(=)  (p,q:{A}): ghost BOOLEAN
+        -- Are 'p' and 'q' equal sets?
+    -> p <= q and q <= p
+
+has_some (p:{A}): ghost BOOLEAN
+        -- Does the set 'p' have elements?
+    -> some(x) x in p
+
+is_empty (p:{A}): ghost BOOLEAN
+        -- Is the set 'p' empty?
+    -> not p.has_some
+
+is_universal (p:{A}): ghost BOOLEAN
+        -- Is the set 'p' the universal set?
+    -> all(x) x in p
+
+empty:{A}
+        -- The empty set
+    = {x: false}
+
+universal:{A}
+        -- The universal set
+    = {x: true}
+
+
+
+all(a,b,c:A, p:{A})
+    ensure
+        p = p                        -- reflexivity
+        a = b  ==>  p(a)  ==>  p(b)  -- leibniz rule
+
+        a = b ==> b = a              -- symmetry of equality
+        a = b ==> b = c ==> a = c    -- transitivity of equality
+
+        p.is_empty ==> all(a) a /in p   -- empty set does not have elements
+
+        (a /in p ==> false) ==> a in p  -- indirect proof
+    end
+
+
+
+
+
+{:------------------------------------------------------------------------:}
+B: ANY
+class FUNCTION[A,B]
+{:------------------------------------------------------------------------:}
+
+class
+    FUNCTION[A,B]
+inherit
+    ghost ANY
+end
+
+
+{: Basic functions
+   =============== :}
+
+domain(f:A->B): ghost {A}
+
+consistent (f,g:A->B): ghost BOOLEAN
+        -- Do 'f' and 'g' have the same values on its common domain?
+    -> all(x) x in f.domain  ==>  x in g.domain  ==> f(x) = g(x)
+
+
+(=) (f,g:A->B): ghost BOOLEAN
+        -- Are the functions 'f' and 'g' equal?
+    -> f.domain = g.domain and consistent(f,g)
+
+undefined: (A->B)
+
+
+is_total (f:A->B): ghost BOOLEAN
+    -> f.domain.is_universal
+
+
+all(f,g:A->B)
+    ensure
+        consistent(undefined,f)
+        consistent(f,g) ==> consistent(g,f)
+        consistent(f,f)
+        f = f
+    end
+
+
+
+{: Range, image and origin
+   ======================= :}
+
+
+range (f:A->B): ghost {B}
+        -- The range of the function 'f'.
+    -> {y: some(x) x in f.domain and f(x) = y}
+
+[] (f:A->B, p:{A}): ghost {B}
+        -- f[p] is the image of the set 'p' under the function 'f'.
+    -> {y: some(x) x in p and x in f.domain and f(x) = y}
+
+
+origin (q:{B}, f:A->B): ghost {A}
+     -> {x: x in f.domain and f(x) in q}
+
+
+all(x:A, p,q:{A}, f:A->B)
+    ensure
+       x in f.domain ==> f(x) in f.range
+
+       f[f.domain] <= f.range
+       f.range <= f[f.domain]
+
+       f.domain <= f.range.origin(f)
+       f.range.origin(f) <= f.domain
+
+       p <= q ==> f[p] <= f[q]
+    end
+
+
+
+
+
+{:------------------------------------------------------------------------:}
+class
+    TUPLE[A,B]
+create
+    tuple(first:A, second:B)
+end
+{:------------------------------------------------------------------------:}
+
+first (t:(A,B)): A
+        -- The first element of the tuple 't'.
+    -> inspect
+           t
+       case (a,_) then
+           a
+
+second (t:(A,B)): B
+        -- The second element of the tuple 't'.
+    -> inspect
+           t
+       case (_,b) then
+           b
+
+
+
+
+{:------------------------------------------------------------------------:}
+class
+    LIST[A]
+create
+    []
+    (^) (head:A, tail:[A])   -- [A] is a shorthand for LIST[A]
+end
+{:------------------------------------------------------------------------:}
+
+
+{:------------------------------------------------------------------------: }
+class
+    MAYBE[A]
+create
+    nothing
+    just (item:A)
+end
+{ :------------------------------------------------------------------------:}
+
+
+
+
+
+
+{:------------------------------------------------------------------------:}
+class NAT
+{:------------------------------------------------------------------------:}
+
+
+class
+    NAT
+inherit
+    ANY
+end
+
+0: NAT
+greatest: NAT
+successor (n:NAT): NAT
+predecessor (n:NAT): NAT
+(+)  (a,b:NAT): NAT
+(-)  (a,b:NAT): NAT
+(*)  (a,b:NAT): NAT
+(mod)(a,b:NAT): NAT
+(/)  (a,b:NAT): NAT
+    require
+        b /= 0
+    end
+
+
+(=)  (a,b:NAT): BOOLEAN
+(<=) (a,b:NAT): BOOLEAN
+
+upper_set (n:NAT): ghost {NAT}
+    -> {(p): n in p,
+             all(n) n /= greatest ==> n in p ==> n.successor in p}
+
+
+
+all(a,b,n:NAT, p:{NAT})
+    ensure
+        n /= n.successor
+        n = greatest ==> n.successor = 0
+        n.successor.predecessor = n
+
+        0 in p
+        ==> (all(n) n /= greatest ==> n in p ==> n.successor in p)
+        ==> n in p
+
+        a + 0 = a
+        a + b.successor = (a + b).successor
+
+        a * 0 = 0
+        a * b.successor = (a * b) + a
+
+        (a <= b) = (b in a.upper_set)
+    end

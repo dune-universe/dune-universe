@@ -1,0 +1,15 @@
+(executable
+  (libraries fmlib albalib fmlib_node)
+  (js_of_ocaml
+      (flags (;--custom-header "#!/usr/bin/env node"
+              ;--disable genprim
+              ;--disable=debugger
+              )))
+  (modes js)
+  (name alba_node))
+
+ (env
+   (dev
+    (flags (:standard -warn-error -A))
+   )
+ )

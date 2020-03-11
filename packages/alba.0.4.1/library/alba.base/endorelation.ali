@@ -1,0 +1,228 @@
+use
+    predicate
+    relation
+end
+
+A: ANY
+B: ANY
+
+{: Basics
+   ====== :}
+
+carrier (r:{A,A}): ghost {A}
+        -- The carrier of the relation 'r' i.e. the union of its domain
+        -- and range.
+    -> domain(r) + range(r)
+
+
+identity: {A,A}
+        -- The identity relation.
+    = {x,y: x = y}
+
+diagonal(p:{A}): {A,A}
+        -- The identity relation restricted to the set 'p'
+    -> {x,y: x = y and x in p}
+
+is_total(f:A->B, r:{A,A}): ghost BOOLEAN
+        -- Is 'f' total on the carrier of 'r'?
+    -> r.carrier <= f.domain
+
+
+is_antisymmetric(r:{A,A}): ghost BOOLEAN
+        -- Is the relation 'r' antisymmetric?
+    -> all(a,b) r(a,b) ==> r(b,a) ==> a = b
+
+is_dichotomic(r:{A,A}): ghost BOOLEAN
+        -- Is the relation 'r' dichotomic i.e. for all pairs of the carrier either
+        -- the first one relates to the second or vice versa?
+    -> all(a,b) {a,b} <= r.carrier ==> r(a,b) or r(b,a)
+
+
+all(p:{A}, r,s:{A,A})
+    ensure
+        r.carrier <= r.inverse.carrier
+        r.inverse.carrier <= r.carrier
+
+        (r * s).carrier <= r.carrier
+        (r * s).carrier <= s.carrier
+
+        r.is_antisymmetric ==> s.is_antisymmetric ==> (r * s).is_antisymmetric
+
+        p in (<=).carrier
+    end
+
+
+
+all(rs:{{A,A}}, a:A)
+    require
+        a in (+ rs).carrier
+    ensure
+        some(r) r in rs and a in r.carrier
+    end
+
+
+all(r,s:{A,A})
+    require
+        r <= s
+    ensure
+        r.carrier <= s.carrier
+    end
+
+
+
+{: Closure
+   ======= :}
+
+
+closed(a:A, r:{A,A}): ghost {A}
+    -> {(p): a in p, all(x,y) x in p ==> r(x,y) ==> y in p}
+
+
+closed(p:{A}, r:{A,A}): ghost {A}
+    -> {(q): all(x) x in p ==> x in q,
+             all(x,y) x in q ==> r(x,y) ==> y in q}
+
+
+all(a:A, r:{A,A})
+    ensure
+        a.closed(r)   <= {a}.closed(r)
+        {a}.closed(r) <= a.closed(r)
+    end
+
+
+
+
+
+{: Reflexivity
+   =========== :}
+
+
+is_reflexive (r:{A,A}): ghost BOOLEAN
+        -- Is the relation 'r' reflexive?
+    -> (all(x,y) r(x,y) ==> r(x,x)) and
+       (all(x,y) r(x,y) ==> r(y,y))
+
+
+
+
+all(r:{A,A})
+    require
+        r.is_reflexive
+    ensure
+        all(a) a in r.carrier ==> r(a,a)
+
+        r.domain  <= r.range
+        r.range   <= r.domain
+        r.carrier <= r.domain
+        r.carrier <= r.range
+    end
+
+
+all(r:{A,A})
+        -- Every dichotomic relation is reflexive.
+    require
+        r.is_dichotomic
+    ensure
+        r.is_reflexive
+    end
+
+
+to_reflexive (p:{A}): {A,A}
+        -- The least reflexive relation with the carrier 'p'.
+    -> {x,y: x=y and p(x)}
+
+
+all(p:{A})
+    ensure
+        inverse(p.to_reflexive) = p.to_reflexive
+        domain(p.to_reflexive)  = p
+        range(p.to_reflexive)   = p
+        carrier(p.to_reflexive) = p
+    end
+
+
+
+
+reflexive (r:{A,A}): ghost {A,A}
+        -- The least reflexive relation which contains 'r'.
+    -> {(s): all(a,b) r(a,b) ==> s(a,b),
+             all(a,b) r(a,b) ==> s(a,a),
+             all(a,b) r(a,b) ==> s(b,b)}
+
+all(a,b:A, r:{A,A})
+    ensure
+        (r.reflexive)(a,b) ==> (r.reflexive)(a,a)
+        (r.reflexive)(a,b) ==> (r.reflexive)(b,b)
+        r.reflexive.is_reflexive
+    end
+
+
+
+
+{: Symmetry
+   ======== :}
+
+symmetric (r:{A,A}): {A,A}
+        -- The least symmetric relation which contains 'r'.
+    -> r + r.inverse
+
+
+
+
+
+{: Transitivity
+   ============ :}
+
+is_transitive(r:{A,A}): ghost BOOLEAN
+        -- Is the relation 'r' transitive?
+    -> all(a,b,c) r(a,b) ==> r(b,c) ==> r(a,c)
+
+
+(+) (r:{A,A}): ghost {A,A}
+        -- The least transitive relation which contains 'r'.
+    -> {(s): all(x,y)   r(x,y) ==> s(x,y),
+             all(x,y,z) s(x,y) ==> r(y,z) ==> s(x,z)}
+
+all(a,b,c:A, r:{A,A})
+    ensure
+        (+r)(a,b) ==> (+r)(b,c) ==> (+r)(a,c)
+        (+r).is_transitive
+    end
+
+
+
+{: Reflexive transitive closure
+   ============================ :}
+
+(*) (r:{A,A}): ghost {A,A}
+        -- The least reflexive transitive relation which contains 'r'.
+    -> {(s):
+           all(a,b) r(a,b) ==> s(a,a)
+           ,
+           all(a,b) r(a,b) ==> s(b,b)
+           ,
+           all(a,b,c) s(a,b) ==> r(b,c) ==> s(a,c)
+       }
+
+all(a,b,c:A, r,s:{A,A})
+    ensure
+        a in r.carrier ==> (*r)(a,a)             -- reflexivity
+        (*r)(a,b) ==> (*r)(b,c) ==> (*r)(a,c)    -- transitive
+
+        r <= *r                    -- increasing
+        r <= s ==> *r <= *s        -- monotonic
+        (* * r) = * r              -- idempotent
+
+        (*r).carrier <= r.carrier  -- does not increase carrier
+        s <= *r ==> *s <= *r
+        (+r) <= *r
+    end
+
+
+
+{: Equivalence
+   =========== :}
+
+equivalence (r:{A,A}): ghost {A,A}
+        -- The least equivalence relation which contains 'r'.
+    -> + r.reflexive.symmetric

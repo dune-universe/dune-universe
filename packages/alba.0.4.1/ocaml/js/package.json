@@ -1,0 +1,20 @@
+{
+    "name": "alba",
+    "version": "0.0.1",
+    "license": "BSD-3-Clause",
+    "files": [
+        "alba-serve.js",
+        "albamode.js",
+        "alba_web.js",
+        "alba_web.map",
+        "web_gui.html",
+        "web_gui.css"
+    ],
+    "main": "alba-serve.js",
+    "bin": {
+        "alba-serve": "alba-serve.js"
+    },
+    "dependencies": {
+        "codemirror": "^5.32.0"
+    }
+}

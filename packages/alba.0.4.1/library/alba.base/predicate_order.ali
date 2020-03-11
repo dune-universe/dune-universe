@@ -1,0 +1,23 @@
+use
+    predicate
+    partial_order
+end
+
+
+
+
+A: ANY
+
+
+class
+    PREDICATE[A]
+inherit
+    ghost PARTIAL_ORDER
+end
+
+
+all(ps:{{A}})
+    ensure
+        (+ ps).is_supremum(ps)
+        (* ps).is_infimum(ps)
+    end

@@ -1,0 +1,40 @@
+(install
+  (section lib)
+  (files
+    (core.ali as alba.base/core.ali)
+    (core.al  as alba.base/core.al)
+
+    (boolean.ali as alba.base/boolean.ali)
+    (boolean.al  as alba.base/boolean.al)
+
+    (predicate.ali as alba.base/predicate.ali)
+    (predicate.al  as alba.base/predicate.al)
+
+    (function.ali as alba.base/function.ali)
+    (function.al  as alba.base/function.al)
+
+    (list.ali as alba.base/list.ali)
+    (list.al  as alba.base/list.al)
+
+    (natural.ali as alba.base/natural.ali)
+    (natural.al  as alba.base/natural.al)
+
+    (relation.ali as alba.base/relation.ali)
+    (relation.al  as alba.base/relation.al)
+
+    (endorelation.ali as alba.base/endorelation.ali)
+    (endorelation.al  as alba.base/endorelation.al)
+
+    (order_relation.ali as alba.base/order_relation.ali)
+    (order_relation.al  as alba.base/order_relation.al)
+
+    (partial_order.ali as alba.base/partial_order.ali)
+    (partial_order.al  as alba.base/partial_order.al)
+
+    (linear_order.ali as alba.base/linear_order.ali)
+    (linear_order.al  as alba.base/linear_order.al)
+
+    (predicate_order.ali as alba.base/predicate_order.ali)
+    (predicate_order.al  as alba.base/predicate_order.al)
+  )
+)

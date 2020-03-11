@@ -1,0 +1,53 @@
+use partial_order end
+
+deferred class
+    SL: SEMILATTICE
+
+(*)  (a,b:SL): SL      deferred end
+(<=) (a,b:SL): BOOLEAN -> a = a * b
+
+all(a,b,c:SL)
+    ensure
+        a * a = a
+
+        a * b = b * a
+
+        a * b * c = a * (b * c)
+    deferred end
+
+
+all(a,b,c:SL)
+    ensure
+        a <= a
+
+        a <= b ==> b <= a ==> a = b
+
+        a <= b ==> b <= c ==> a <= c
+    end
+
+deferred class SEMILATTICE
+inherit        PARTIAL_ORDER end
+
+
+all(a,b,c:SL)
+    ensure
+        a * b <= a
+        a * b <= b
+
+        c <= a  ==> c <= b ==> c <= a * b
+    end
+
+
+all(a,b:SL)
+    ensure
+        (a * b).is_infimum({a,b})
+    end
+
+
+G: ANY
+
+class
+    core.PREDICATE[G]
+inherit
+    ghost SEMILATTICE
+end

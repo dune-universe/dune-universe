@@ -1,0 +1,8 @@
+(executable
+    (libraries fmlib albalib fmlib_native)
+    (modes byte exe)
+    (public_name alba2)
+    (name alba2))
+
+ (env (dev
+    (flags (:standard -warn-error -A))))

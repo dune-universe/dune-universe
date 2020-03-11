@@ -1,0 +1,44 @@
+use
+    list
+end
+
+G:ANY
+
+class
+    BINARY_TREE[G]
+create
+    leaf
+    tree(info:G, left,right:BINARY_TREE[G])
+end
+
+
+preorder (t:BINARY_TREE[G]): [G]
+    -> inspect t
+       case leaf        then []
+       case tree(i,l,r) then i ^ (l.preorder + r.preorder)
+
+inorder (t:BINARY_TREE[G]): [G]
+    -> inspect t
+       case leaf        then []
+       case tree(i,l,r) then l.inorder + i ^ r.inorder
+
+postorder (t:BINARY_TREE[G]): [G]
+    -> inspect t
+       case leaf        then []
+       case tree(i,l,r) then l.postorder + r.postorder + [i]
+
+
+(-) (t:BINARY_TREE[G]): BINARY_TREE[G]
+    -> inspect t
+       case leaf        then leaf
+       case tree(i,l,r) then tree(i, -r, -l)
+
+
+
+
+all(t:BINARY_TREE[G])
+    ensure
+        (- - t) = t
+        (-t).inorder  = - t.inorder
+        (-t).preorder = - t.postorder
+    end

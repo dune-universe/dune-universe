@@ -1,0 +1,8 @@
+(library
+  (libraries fmlib js_of_ocaml js_of_ocaml-ppx)
+  (js_of_ocaml
+      (flags (--disable genprim
+              --disable=debugger)))
+  (preprocess (pps js_of_ocaml-ppx))
+  (public_name alba.fmlib_node)
+  (name fmlib_node))
