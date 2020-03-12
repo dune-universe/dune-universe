@@ -1,0 +1,11 @@
+(executable
+ (name main)
+ (libraries tcpip cstruct checkseum.c base64 bechamel bechamel.js))
+
+(rule
+ (targets output.json)
+ (action (with-stdout-to %{targets} (run ./main.exe))))
+
+(rule
+ (targets output.html)
+ (action (system "bechamel-html < %{dep:output.json} > %{targets}")))
