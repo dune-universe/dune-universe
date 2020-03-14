@@ -1,0 +1,9 @@
+(executable
+ (name test)
+ (modules test)
+ (libraries overlap alcotest))
+
+(rule
+ (alias runtest)
+ (deps (:test test.exe))
+ (action (run %{test} --color=always)))

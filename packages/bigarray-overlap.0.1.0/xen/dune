@@ -1,0 +1,12 @@
+(library
+ (name overlap_stubs_xen)
+ (public_name bigarray-overlap.stubs.xen)
+ (modules overlap_stubs)
+ (optional)
+ (libraries bigarray-compat mirage-xen-posix)
+ (foreign_stubs (language c) (names overlap)))
+
+(rule (copy ../native/overlap.c overlap.c))
+(rule (copy ../native/overlap_stubs.ml overlap_stubs.ml))
+
+(rule (with-stdout-to cflags.sexp (run ./cflags.sh)))

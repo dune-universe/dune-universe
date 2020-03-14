@@ -1,0 +1,4 @@
+(library
+ (name overlap)
+ (public_name bigarray-overlap)
+ (libraries overlap_stubs))

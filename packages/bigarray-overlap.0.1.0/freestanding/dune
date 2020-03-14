@@ -1,0 +1,12 @@
+(library
+ (name overlap_stubs_freestanding)
+ (public_name bigarray-overlap.stubs.freestanding)
+ (modules overlap_stubs)
+ (optional)
+ (libraries bigarray-compat ocaml-freestanding)
+ (foreign_stubs (language c) (names overlap)))
+
+(rule (copy ../native/overlap.c overlap.c))
+(rule (copy ../native/overlap_stubs.ml overlap_stubs.ml))
+
+(rule (with-stdout-to cflags.sexp (run ./cflags.sh)))
