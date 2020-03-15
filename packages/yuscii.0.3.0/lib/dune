@@ -1,0 +1,3 @@
+(library
+ (name yuscii)
+ (public_name yuscii))

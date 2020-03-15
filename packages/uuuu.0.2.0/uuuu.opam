@@ -1,0 +1,26 @@
+version: "0.2.0"
+opam-version: "2.0"
+name:         "uuuu"
+maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
+authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
+homepage:     "https://github.com/mirage/uuuu"
+bug-reports:  "https://github.com/mirage/uuuu/issues"
+dev-repo:     "git+https://github.com/mirage/uuuu.git"
+doc:          "https://mirage.github.io/uuuu/"
+license:      "MIT"
+synopsis:     "Mapper of ISO-8859-* to Unicode"
+description: """A simple mapper between ISO-8859-* to Unicode. Useful for
+a translation between ISO-8859-* and Unicode"""
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune"
+  "re" {>= "1.7.2"}
+  "menhir"
+  "angstrom" {>= "0.11.0"}
+]

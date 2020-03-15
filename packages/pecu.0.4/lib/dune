@@ -1,0 +1,3 @@
+(library
+ (name pecu)
+ (public_name pecu))

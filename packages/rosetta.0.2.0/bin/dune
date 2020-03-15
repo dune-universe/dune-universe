@@ -1,5 +1,0 @@
-(executable
- (name rosetta_to_utf8)
- (package rosetta)
- (public_name rosetta.to_utf8)
- (libraries cmdliner uutf fmt rresult rosetta))

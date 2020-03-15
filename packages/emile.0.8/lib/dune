@@ -1,0 +1,12 @@
+(library
+ (name emile_cmdliner)
+ (modules emile_cmdliner)
+ (public_name emile.cmdliner)
+ (optional)
+ (libraries emile cmdliner))
+
+(library
+ (name emile)
+ (modules emile)
+ (public_name emile)
+ (libraries base64 angstrom uutf pecu ipaddr))

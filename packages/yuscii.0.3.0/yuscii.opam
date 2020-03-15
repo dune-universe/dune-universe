@@ -1,0 +1,26 @@
+version: "0.3.0"
+opam-version: "2.0"
+name:         "yuscii"
+maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
+authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
+homepage:     "https://github.com/mirage/yuscii"
+bug-reports:  "https://github.com/mirage/yuscii/issues"
+dev-repo:     "git+https://github.com/mirage/yuscii.git"
+doc:          "https://mirage.github.io/yuscii/"
+license:      "MIT"
+synopsis:     "Mapper of UTF-7 to Unicode"
+description: """A simple mapper between UTF-7 to Unicode according RFC2152.
+Useful for a translation between UTF-7 and Unicode"""
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune"
+  "fmt" {with-test}
+  "uutf" {with-test}
+  "alcotest" {with-test}
+]

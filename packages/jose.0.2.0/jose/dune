@@ -1,0 +1,4 @@
+(library
+ (name Jose)
+ (public_name jose)
+ (libraries astring yojson mirage-crypto x509 base64 zarith))

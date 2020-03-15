@@ -1,0 +1,35 @@
+(test
+ (name tests)
+ (package dns)
+ (libraries dns alcotest)
+ (modules tests))
+
+(test
+ (name server)
+ (package dns-server)
+ (libraries base64 dns-server dns-tsig alcotest mirage-crypto-rng.unix)
+ (modules server))
+
+(test
+ (name tsig)
+ (package dns-tsig)
+ (libraries dns-tsig alcotest)
+ (modules tsig))
+
+(test
+ (name resolver)
+ (package dns-resolver)
+ (libraries dns-resolver alcotest)
+ (modules resolver))
+
+(test
+ (name client)
+ (package dns-client)
+ (libraries dns-client alcotest)
+ (modules client))
+
+(test
+ (name cache)
+ (package dns)
+ (libraries dns.cache alcotest)
+ (modules cache))
