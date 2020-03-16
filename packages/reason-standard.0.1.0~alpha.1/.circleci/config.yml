@@ -1,0 +1,111 @@
+version: 2
+
+esy_cache_key: &esy_cache_key
+  key: esy-cache-{{ checksum "package.json" }}-{{ checksum "esy.lock/index.json" }}
+
+esy_post_build_cache_key: &esy_post_build_cache_key
+  key: esy-post-build-cache-{{ checksum "package.json" }}-{{ checksum "esy.lock/index.json" }}
+
+
+jobs:
+  bucklescript-build-and-test:
+    docker:
+      - image: circleci/node:12
+
+    environment:
+      CI: true
+      NODE_ENV: test
+
+    working_directory: ~/repo
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          keys:
+            - v2-bucklescript-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v2-bucklescript-dependencies-{{ .Branch }}-
+            - v2-bucklescript-dependencies-
+
+      - run: yarn install
+      - run: yarn build
+      - run: yarn test
+
+      - save_cache:
+          key: v2-bucklescript-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/repo/node_modules
+
+  native-build-and-test:
+    docker:
+      - image: circleci/node:12
+    environment:
+      CI: true
+    working_directory: ~/repo
+    steps:
+      - checkout:
+          path: ~/repo
+      # m4 is a system dependency required by conf-m4 -> ocamlfind -> fmt -> alcotest
+      - run: sudo apt-get install -y m4
+      - restore_cache:
+          <<: *esy_cache_key
+      - restore_cache:
+          <<: *esy_post_build_cache_key
+      # Installing without setting a prefix leads to permission errors
+      - run: 
+          name: "Install esy"
+          command: |
+            mkdir -p ~/.npm-global
+            npm config set prefix ~/.npm-global
+            npm install -g esy
+
+      - run: ~/.npm-global/bin/esy install
+      - save_cache:
+          <<: *esy_cache_key
+          paths:
+            - ~/.npm-global
+            - ~/.esy
+      - run: ~/.npm-global/bin/esy build
+      - run: ~/.npm-global/bin/esy test
+      - run: ~/.npm-global/bin/esy doc
+      # - run: ~/.npm-global/bin/esy dune build @fmt
+      # Use both pre and post build caches so that we're more likely
+      # to have dependencies cached. `esy build` is more likely to fail,
+      # so this will make the push that fixes the build faster
+      - save_cache:
+          <<: *esy_post_build_cache_key
+          paths:
+            - ~/.esy      
+
+  website-build:
+    docker:
+      - image: circleci/node:12
+
+    environment:
+      CI: true
+      NODE_ENV: test
+
+    working_directory: ~/repo/website
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          keys:
+            - v1-website-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-website-dependencies-{{ .Branch }}-
+            - v1-website-dependencies-
+
+      - run: yarn install
+      - run: yarn build      
+
+      - save_cache:
+          key: v1-website-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/repo/website/node_modules
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - bucklescript-build-and-test
+      - native-build-and-test
+      - website-build

@@ -1,9 +1,0 @@
-(executable
- (name mr)
- (modules mr)
- (libraries fpath rresult cmdliner mrmime))
-
-(executable
- (name maker)
- (modules maker)
- (libraries ptime.clock.os fpath rresult mrmime))

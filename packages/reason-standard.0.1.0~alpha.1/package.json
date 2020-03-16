@@ -1,0 +1,37 @@
+{
+  "name": "reason-standard",
+  "description": "A portable standard library enhancement for Reason and OCaml.",
+  "version": "0.1.0-alpha.1",
+  "repository": "https://github.com/Dean177/reason-standard",
+  "author": "Dean Merchant <deanmerchant@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "BuckleScript",
+    "ReasonML"
+  ],
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@glennsl/bs-jest": "0.4.9",
+    "bs-platform": "7.1.1"
+  },
+  "Jest 25 is required for BigInt support": "",
+  "resolutions": {
+    "@glennsl/bs-jest/jest": "25.1.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/*Test.bs.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/_esy"
+    ]
+  }
+}

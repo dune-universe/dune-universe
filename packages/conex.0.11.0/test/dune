@@ -1,4 +1,0 @@
-(test
-  (name tests)
-  (package conex-nocrypto)
-  (libraries conex conex-nocrypto conex.openssl alcotest nocrypto.unix))

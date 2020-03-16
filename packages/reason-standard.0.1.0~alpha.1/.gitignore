@@ -1,0 +1,17 @@
+.DS_Store
+.code 
+.idea
+.merlin
+_build
+_esy
+experimental
+node_modules
+reason-standard.install
+/bucklescript/.bsb.lock
+/bucklescript/coverage
+/lib
+*-error.log
+*.byte
+*.bs.js
+*.install
+*.native
