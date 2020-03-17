@@ -1,0 +1,186 @@
+{1:top Lambda_streams}
+
+{i Lambda_streams} is a streaming library based on using lambdas as a basis for writing simple,
+composable streams. It's inspired by {{:https://github.com/callbag/callbag}callbag} (see
+{{:#differences-from} differences}).
+
+{2 Introduction}
+
+Lambda streams themselves are simple functions. The types are refined with the [private] keyword
+so that they can be distinguished by the type system as being streams. They can be upcast back to
+their function form with [:>] or explicitly lowered by constructing them with the [make] functions.
+
+For example:
+
+{ul
+{- A [unit -> 'a] function represents a synchronous input stream.}
+{- A ['a -> unit] function represents a synchronous output stream.}
+{- A [('a -> unit) -> unit] function represents an asynchronous input or output stream.}
+{- A [{ input: unit -> 'a; close: unit -> unit }] record represents a
+{{:https://risto-stevcev.github.io/lambda-streams/lambda_streams/Lambda_streams/Connection/index.html#type-t}connection}-based synchronous stream.}
+}
+
+
+{2 Generic Streams}
+{3 Behaviors}
+Behaviors{{:#references}{^ 1}} are streams that are continuous functions. They always have a
+current value. {!Lambda_streams.Sync} streams are synchronous behavior streams. These are useful
+in modeling things like synchronous IO, (in)finite series, current mouse position, etc.
+
+{3 Sync}
+{!Lambda_streams.Sync} streams
+
+[Pull-based], [Synchronous], [Behaviors]
+
+{3 Async}
+{!Lambda_streams.Async} streams
+
+[Push-based], [Asynchronous], [Continuations]
+
+
+{2 Finite Streams}
+
+Finite streams are streams that will eventually end. They are modeled with
+{!Lambda_streams.Signal}s.
+
+{3 Finite.Sync}
+{!Lambda_streams.Finite.Sync} streams
+
+{3 Finite.Async}
+{!Lambda_streams.Finite.Async} streams
+
+{2 Simulating Talkbacks }
+Talkback semantics are simulated {i explicitly} with {!Lambda_streams.Connection}s rather than being
+baked implicitly into the streams. This makes readable streams much simpler and more predictable.
+
+{ul
+{- {i To simulate a talkback}, write a function that returns a connection:
+  {[
+  (** Reads a file line by line *)
+  val read_file : path:string -> (string Finite.Sync.input, unit Sync.output) Connection.t
+  ]}
+  In this case, writing to the output stream would close the file descriptor and end the stream.
+  Subsequent writes to the output stream would just be ignored.
+
+  A simpler alternative function for this use case would be to just close the file descriptor and
+  end the stream at [EOF]:
+  {[
+  val read_file : path:string -> string Finite.Sync.input
+  ]}
+}
+
+{- {i To simulate propagating a talkback}, write a function that takes and returns a connection:
+  {[
+  (** Combines two connection-based streams *)
+  val pair : ('a, unit Sync.output) Connection.t -> ('b, unit Sync.output) Connection.t -> ('a * 'b, unit Sync.output) Connection.t
+  ]}
+  In this case, calling the output stream that's returned would call the two output streams that
+  were provided as inputs to the function to close their connections. The side-effects are
+  propagated upstream in an explicit way.
+}
+}
+
+{2 Lwt and Async Helpers }
+{ul
+  {- {{:https://opam.ocaml.org/packages/lwt}Lwt} helpers are in the
+     {{:https://risto-stevcev.github.io/lambda-streams/lambda_streams_lwt}[Lambda_streams_lwt]}
+     package.
+  }
+  {- {{:https://opam.ocaml.org/packages/async}Async} helpers are in the
+     {{:https://risto-stevcev.github.io/lambda-streams/lambda_streams_async}[Lambda_streams_async]}
+     package.
+  }
+}
+
+{2 Javascript Promise Helpers }
+The {{:https://github.com/Risto-Stevcev/lambda-streams-promise}lambda-streams-promise} package
+provides javascript promise helpers. See the docs
+{{:https://risto-stevcev.github.io/lambda-streams-promise}here}.
+
+{2 Differences From }
+There are many streaming libraries out there in many languages, so why yet another one?
+
+{3 Rx(Js)/Most/Xstream/Kefir}
+These are older streaming libraries. They're all different from each other, but the main sore point
+with all of them is that the underlying implementations are relatively complex. This means that
+subtle differences in behavior can potentially be a real pain to debug and fix and it's not that
+easy to implement new streams from scratch.
+
+{3 Stream/Lwt/Async}
+{{:https://caml.inria.fr/pub/docs/manual-ocaml/libref/Stream.html}Stream} is the builtin Ocaml
+streaming library.
+{{:https://ocsigen.org/lwt/dev/api/Lwt_stream}Lwt} and
+{{:https://ocaml.janestreet.com/ocaml-core/latest/doc/async_kernel/Async_kernel__/Async_stream}Async}
+streams differ from the builtin library in that they provide direct multi-threading support.
+All of these are designed for native and they all have support for JS compilation as well.
+
+These streams are very useful but they run into the same limitations as non-callbag streams:
+implementations are relatively complex and potentially hard to debug.
+
+Lwt and Async are still recommended because they provide multi-threading support, which is why
+{{:#lwt-and-async-helpers}helpers} are provided to convert these to and from lambda streams.
+
+{3 Wonka}
+Wonka is a Bucklescript/Reason implementation of callbags. It uses Ocaml's nice algebraic data
+types instead of JS. The benefit is that it makes the implementations much easier to read and
+follow compared to callbag's JS implementations. The drawback is that you can't directly leverage
+already built callbags because they're not compatible with Wonka -- you have to reimplement them in
+Ocaml. There are direct FFI bindings to callbags with
+{{:https://github.com/Risto-Stevcev/bs-callbag}bs-callbag} and
+{{:https://github.com/Risto-Stevcev/bs-callbag-basics}bs-callbag-basics} to address this problem
+if it's an issue for you. Since these are essentially the same as callbags, they run into the same
+pitfalls as callbags.
+
+{3 Callbag}
+Callbags simplify the notion of a stream into a single async callback function called a callbag.
+They're nice and intuitive, easy to learn, and it's very easy to build your own callbags. It's very
+useful for functional programming because you get transducers for free and a {i mostly} purely
+functional approach to imperative and side-effecting code.
+
+The downsides are:
+
+{ul
+{- The callbag implementation includes/allows talkbacks.
+
+This can be convenient in some cases, but it's also a major sore point. A callbag using a talkback
+can have an implicit state associated with it, which makes it's more like an
+imperative/side-effecting construct than a purely functional one.
+
+For example, callbags sources that are shared need to be {i potentially} split with
+{{:https://github.com/staltz/callbag-share}share}. Some callbags would work without it and some
+won't.}
+
+{- Callbags generalize over multiple different kinds of streams, which makes callbag behavior much
+harder to predict because it's not explicit. For example, some callbags are {i pullable}, some are
+{i listenable}, and some callbags only work on one or the other, or both. This leads to a lot of
+unnecessary complexity.}
+
+{- Some callbag implementations can be hard to read as a result of the implicit talkbacks and having
+to deal with callbags that might have talkbacks. This can make debugging and implementing new
+streams with similar behaviors a pain.}
+
+{- Callbags are asynchronous by default with implicit push and pull semantics baked in, which means
+synchronous stream-like constructs are out of the picture, and implementing behavior streams can
+get awkward.}
+}
+
+Lambda streams were built to address this issue of talkbacks by providing predictable readable
+streams that can be multicast without worrying about how internal state is managed. This simplifies
+implementations significantly, since stream authors don't have to worry about managing potential
+upstream effects with talkbacks. Any situation normally requiring talkbacks is managed
+{i explicitly} by providing a pair or readable and writable streams called a
+{!Lambda_streams.Connection}. Stream authors and end users can then decide directly
+{{:#simulating-talkbacks}how to manage} connections without it being baked into the readable stream
+semantics.
+
+Another difference is that lambda-streams includes other kinds of function streams, such as
+{!Lambda_streams.Sync} streams, which are much better suited for {{:#behaviors}certain tasks} like
+manipulating lists and arrays, or reading data that always has a current value such as the browser
+viewport's current mouse position.
+
+{2 References}
+
+{ol
+{- Elliott, Conal (2009), {{:http://conal.net/papers/push-pull-frp}Push-pull functional reactive
+programming}.}
+}

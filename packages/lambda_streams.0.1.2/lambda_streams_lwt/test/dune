@@ -1,0 +1,5 @@
+(tests
+ (names test_lambda_streams_lwt)
+ (package lambda_streams_lwt)
+ (libraries alcotest alcotest-lwt lwt lwt.unix lambda_streams lambda_streams_lwt)
+ (action (run %{test})))

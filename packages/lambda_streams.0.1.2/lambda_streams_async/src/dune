@@ -1,0 +1,7 @@
+(library
+ (name lambda_streams_async)
+ (public_name lambda_streams_async)
+ (libraries lambda_streams async async_kernel))
+
+(documentation
+ (package lambda_streams_async))

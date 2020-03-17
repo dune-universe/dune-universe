@@ -1,4 +1,0 @@
-(library
- (name colombe)
- (public_name colombe)
- (libraries rresult fmt ipaddr angstrom))

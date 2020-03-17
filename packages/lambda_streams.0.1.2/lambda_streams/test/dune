@@ -1,0 +1,5 @@
+(tests
+ (names test_lambda_streams)
+ (package lambda_streams)
+ (libraries alcotest fmt lambda_streams)
+ (action (run %{test})))

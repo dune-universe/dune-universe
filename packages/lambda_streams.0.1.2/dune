@@ -1,0 +1,10 @@
+(rule
+ (alias runtest)
+ (package lambda_streams)
+ (deps
+  (package lambda_streams)
+  (:x README.md))
+ (action
+  (progn
+   (run ocaml-mdx test %{x})
+   (diff? %{x} %{x}.corrected))))

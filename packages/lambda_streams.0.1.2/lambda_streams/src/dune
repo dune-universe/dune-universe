@@ -1,0 +1,7 @@
+(library
+ (name lambda_streams)
+ (public_name lambda_streams))
+
+(documentation
+ (package lambda_streams)
+ (mld_files ("index")))

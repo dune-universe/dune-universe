@@ -1,0 +1,14 @@
+(tests
+ (names test_lambda_streams_async)
+ (package lambda_streams_async)
+ (libraries
+   alcotest
+   alcotest-async
+   async
+   async_kernel
+   async_unix
+   core
+   core_kernel
+   lambda_streams
+   lambda_streams_async)
+ (action (run %{test})))

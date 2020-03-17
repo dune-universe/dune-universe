@@ -1,0 +1,28 @@
+version: "0.2.0"
+opam-version: "2.0"
+license:      "MIT"
+authors:      [ "Charles-Edouard Lecat" "Romain Calascibetta <romain.calascibetta@gmail.com>" ]
+maintainer:   [ "Charles-Edouard Lecat" "Romain Calascibetta <romain.calascibetta@gmail.com>" ]
+homepage:     "https://github.com/mirage/colombe"
+bug-reports:  "https://github.com/mirage/colombe/issues"
+dev-repo:     "git+https://github.com/mirage/colombe.git"
+doc:          "https://mirage.github.io/colombe/"
+synopsis:     "Implementation of the sendmail command"
+description: """A library to be able to send an email."""
+
+build: [
+  [ "dune" "build" "-p" name "-j" jobs ]
+  [ "dune" "runtest" "-p" name "-j" jobs ] {with-test}
+]
+
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune"
+  "colombe" {= version}
+  "tls"
+  "base64"
+  "logs"
+  "emile" {>= "0.8" & with-test}
+  "mrmime" {>= "0.2.0" & with-test}
+  "alcotest" {with-test}
+]

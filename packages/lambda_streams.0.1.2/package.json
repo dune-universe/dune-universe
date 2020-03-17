@@ -1,0 +1,14 @@
+{
+  "name": "lambda-streams",
+  "version": "0.1.2",
+  "description": "Lambda-based streaming library",
+  "main": "index.js",
+  "repository": "https://github.com/Risto-Stevcev/lambda-streams.git",
+  "author": "Risto Stevcev <me@risto.codes>",
+  "license": "BSD-3-Clause",
+  "private": false,
+  "dependencies": {},
+  "devDependencies": {
+    "bs-platform": "^7.1.1"
+  }
+}
