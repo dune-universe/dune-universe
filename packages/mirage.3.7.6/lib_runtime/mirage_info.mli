@@ -16,7 +16,7 @@
 
 (** Runtime information about the application.
 
-    {e Release v3.7.5 } *)
+    {e Release v3.7.6 } *)
 
 type t = Functoria_info.info = {
   name     : string;

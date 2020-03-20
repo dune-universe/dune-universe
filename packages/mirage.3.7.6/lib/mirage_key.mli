@@ -16,7 +16,7 @@
 
 (** Mirage keys.
 
- {e Release v3.7.5 } *)
+ {e Release v3.7.6 } *)
 
 module Arg : sig
   include module type of struct include Functoria_key.Arg end

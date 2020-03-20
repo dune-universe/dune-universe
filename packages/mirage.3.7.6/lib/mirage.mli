@@ -21,7 +21,7 @@
     portable applications across all platforms that MirageOS
     supports.
 
-   {e Release v3.7.5 } *)
+   {e Release v3.7.6 } *)
 
 
 (** Configuration keys. *)

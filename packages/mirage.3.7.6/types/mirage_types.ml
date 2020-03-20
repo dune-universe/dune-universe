@@ -44,7 +44,7 @@
        descriptions for details. }
     }
 
-    {e Release v3.7.5 } *)
+    {e Release v3.7.6 } *)
 
 module type DEVICE = Mirage_device.S
 [@@ocaml.deprecated "This will be removed from MirageOS 4.0, use Mirage_device.S."]

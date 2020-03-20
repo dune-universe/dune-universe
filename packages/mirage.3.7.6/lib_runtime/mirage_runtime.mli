@@ -16,7 +16,7 @@
 
 (** Mirage run-time utilities.
 
-    {e Release v3.7.5 } *)
+    {e Release v3.7.6 } *)
 
 (** {2 Log thresholds} *)
 

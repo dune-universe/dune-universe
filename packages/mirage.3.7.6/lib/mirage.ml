@@ -195,7 +195,7 @@ open Mirage_clean
 
 module Project = struct
   let name = "mirage"
-  let version = "v3.7.5"
+  let version = "v3.7.6"
   let prelude =
     "open Lwt.Infix\n\
      let return = Lwt.return\n\
@@ -218,7 +218,7 @@ module Project = struct
         Key.(abstract no_depext);
       ]
       method! packages =
-        (* XXX: use 3.7.5 here instead of hardcoding a version? *)
+        (* XXX: use 3.7.6 here instead of hardcoding a version? *)
         let min = "3.7.0" and max = "3.8.0" in
         let common = [
           package ~build:true ~min:"4.06.0" "ocaml";
