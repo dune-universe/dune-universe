@@ -1,0 +1,3 @@
+(library
+ (name pla)
+ (public_name pla))

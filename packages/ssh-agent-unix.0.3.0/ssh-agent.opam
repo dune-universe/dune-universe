@@ -1,0 +1,26 @@
+version: "0.3.0"
+opam-version: "2.0"
+synopsis: "Ssh-agent protocol parser and serialization implementation"
+maintainer: "Reynir Björnsson <reynir@reynir.dk>"
+author: "Reynir Björnsson <reynir@reynir.dk>"
+dev-repo: "git://github.com/reynir/ocaml-ssh-agent.git"
+homepage: "https://github.com/reynir/ocaml-ssh-agent/"
+bug-reports: "https://github.com/reynir/ocaml-ssh-agent/issues/"
+license: "BSD-2-clause"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "ocaml" {>= "4.04.0"}
+  "dune" {>= "1.0"}
+  "ppx_cstruct" {build}
+  "ppx_sexp_conv"
+  "angstrom" {>= "0.10" & < "0.13"}
+  "faraday" {>= "0.6" & < "0.8"}
+  "mirage-crypto"
+  "mirage-crypto-pk"
+  "cstruct"
+  "sexplib"
+  "alcotest" {with-test}
+]
