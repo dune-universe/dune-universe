@@ -1,0 +1,9 @@
+build-and-test:
+  image: ocaml/opam2:alpine-3.10-ocaml-4.08
+  script:
+    - opam pin --no-action lwt-pipeline.dev .
+    - opam depext data-encoding
+    - opam install --deps-only lwt-pipeline
+    - dune build
+    - dune runtest
+    - opam install .

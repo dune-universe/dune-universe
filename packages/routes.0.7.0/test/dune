@@ -1,0 +1,4 @@
+(test
+ (name routing_test)
+ (modules routing_test)
+ (libraries alcotest routes))

@@ -1,0 +1,23 @@
+(executables
+ (names test_basic test_more)
+ (libraries
+   lwt
+   lwt.unix
+   lwt-pipeline)
+ (flags :standard))
+
+(alias
+ (name runtest_basic)
+ (action
+  (run %{exe:test_basic.exe})))
+
+(alias
+ (name runtest_more)
+ (action
+  (run %{exe:test_more.exe})))
+
+(alias
+ (name runtest)
+ (deps
+  (alias runtest_basic)
+  (alias runtest_more)))
