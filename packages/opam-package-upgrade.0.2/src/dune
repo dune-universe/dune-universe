@@ -1,0 +1,18 @@
+(executable
+ (name packageUpgradeMain)
+ (public_name opam-package-upgrade)
+ (libraries cmdliner opam-client))
+
+(rule
+ (targets opam-package-upgrade.1)
+ (deps
+  (:< packageUpgradeMain.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{<} --help=groff))))
+
+(install
+ (package opam-package-upgrade)
+ (section man)
+ (files opam-package-upgrade.1))
