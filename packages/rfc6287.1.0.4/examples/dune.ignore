@@ -1,0 +1,4 @@
+(executable
+  (name ocra_tool)
+  (public_name ocra-tool)
+  (libraries rfc6287 cmdliner mirage-crypto-rng.unix))
