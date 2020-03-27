@@ -1,4 +1,0 @@
-
-(executables
-  (names echo)
-  (libraries tiny_httpd))

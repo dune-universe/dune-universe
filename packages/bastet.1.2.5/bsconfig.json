@@ -1,0 +1,38 @@
+{
+  "name": "bs-bastet",
+  "version": "1.2.5",
+  "refmt": 3,
+  "namespace": true,
+  "bsc-flags": ["-bs-super-errors"],
+  "warnings": {
+    "error" : "+101+25+8+9+27",
+    "number": "-102-48-3"
+  },
+  "sources": [{
+    "dir": "bastet/src",
+    "subdirs": true
+  }, {
+    "dir": "bastet_js/src",
+    "subdirs": true
+  }, {
+    "dir": "bastet_js/test",
+    "type": "dev",
+    "subdirs": true
+  }],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": false
+  },
+  "suffix": ".bs.js",
+  "bs-dependencies": [
+    "bisect_ppx"
+  ],
+  "bs-dev-dependencies": [
+    "bs-jsverify",
+    "bs-mocha",
+    "bs-chai"
+  ],
+  "ppx-flags": [
+    "bisect_ppx/ppx"
+  ]
+}
