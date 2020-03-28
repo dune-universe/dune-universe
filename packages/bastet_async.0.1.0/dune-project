@@ -1,0 +1,27 @@
+(lang dune 2.4.0)
+(name bastet_async)
+(source (github Risto-Stevcev/bastet-async))
+(license BSD-3-Clause)
+(authors "Risto Stevcev")
+(maintainers "me@risto.codes")
+(generate_opam_files true)
+(implicit_transitive_deps false)
+(using mdx 0.1)
+
+(package
+ (name bastet_async)
+ (synopsis "Async implementations for bastet")
+ (documentation "https://risto-stevcev.github.io/bastet-async")
+ (tags
+  ("category theory" "abstract algebra" "algebra" "cats" "async"))
+ (depends
+  (ocaml (>= 4.06.1))
+  (bastet (>= 1.2.5))
+  (async_kernel (>= v0.12.0))
+  (async_unix (and (>= v0.12.0) :with-test))
+  (core (and (>= v0.12.0) :with-test))
+  (alcotest (and (>= 1.0.1) :with-test))
+  (alcotest-async (and (>= 1.0.1) :with-test))
+  (mdx (and (>= 1.6.0) :with-test))
+  (odoc (and (>= 1.5.0) :with-doc))
+  (dune (>= 2.4.0))))

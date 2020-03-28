@@ -1,0 +1,5 @@
+(tests
+ (names test_bastet_lwt)
+ (package bastet_lwt)
+ (libraries alcotest alcotest-lwt lwt lwt.unix bastet bastet_lwt)
+ (action (run %{test})))

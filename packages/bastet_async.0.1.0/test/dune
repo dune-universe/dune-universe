@@ -1,0 +1,5 @@
+(tests
+ (names test_bastet_async)
+ (package bastet_async)
+ (libraries alcotest alcotest-async async_kernel async_unix core bastet bastet_async)
+ (action (run %{test})))

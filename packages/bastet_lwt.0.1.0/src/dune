@@ -1,0 +1,8 @@
+(library
+ (name bastet_lwt)
+ (public_name bastet_lwt)
+ (wrapped false)
+ (libraries bastet lwt))
+
+(documentation
+ (package bastet_lwt))
