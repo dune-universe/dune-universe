@@ -1,0 +1,14 @@
+(library
+ (name cry)
+ (public_name cry)
+ (libraries
+  bytes
+  unix
+  (select
+   cry_https.ml
+   from
+   (ssl -> cry_https.ssl.ml)
+   (osx-secure-transport -> cry_https.osx_secure_transport.ml)
+   (-> cry_https.noop.ml)))
+ (synopsis
+   "OCaml client for the various icecast & shoutcast source protocols"))
