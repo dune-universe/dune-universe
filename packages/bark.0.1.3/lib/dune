@@ -1,0 +1,14 @@
+( library
+  ( name
+      bark
+  )
+  ( public_name
+      bark
+  )
+  ( libraries
+      str
+  )
+  ( flags
+      (-w +a-4-42-48 -warn-error -a+1..66-3-33)
+  )
+)

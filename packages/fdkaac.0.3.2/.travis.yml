@@ -1,0 +1,12 @@
+language: c
+dist: bionic
+sudo: false
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - libfdk-aac-dev
+    - ffmpeg
+
+script: ./bootstrap && ./configure && make && make test
