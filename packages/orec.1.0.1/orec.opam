@@ -1,0 +1,17 @@
+name: "orec"
+version:"1.0.1"
+opam-version: "2.0"
+maintainer: "octa@polychoron.fr"
+authors: "octa@polychoron.fr"
+dev-repo: "git+https://github.com/Octachron/orec"
+homepage: "https://github.com/Octachron/orec"
+bug-reports: "https://github.com/Octachron/orec/issues"
+synopsis: "Open record implementation based on heterogeneous map"
+build:[
+ ["dune" "build" "-p" name "-j" jobs]
+ [ "dune" "build" "-p" name "-j" jobs "@doc" ] {with-doc}
+]
+
+depends: [
+  "dune" {>= "1.0" }
+  ]

@@ -1,0 +1,7 @@
+(library
+ (name salsa20_core)
+ (public_name salsa20-core)
+ (libraries cstruct)
+ (modules salsa20_core)
+ (c_names salsa-core)
+ (c_flags (:include cflags.sexp)))

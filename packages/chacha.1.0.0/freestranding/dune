@@ -1,0 +1,11 @@
+(copy_files# ../src/chacha-core.c)
+
+(library
+ (name chacha_freestanding)
+ (public_name chacha.freestanding)
+ (optional)
+ (libraries ocaml-freestanding)
+ (c_flags (:include ../src/cflags.sexp) (:include cflags-freestanding.sexp))
+ (c_names chacha-core))
+
+(rule (with-stdout-to cflags-freestanding.sexp (run ./cflags.sh)))

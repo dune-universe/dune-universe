@@ -1,0 +1,4 @@
+(test
+ (name salsa20_core_tests)
+ (modules salsa20_core_tests)
+ (libraries salsa20-core alcotest))

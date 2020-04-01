@@ -1,0 +1,11 @@
+(copy_files# ../src/salsa-core.c)
+
+(library
+ (name salsa20_core_xen)
+ (public_name salsa20-core.xen)
+ (optional)
+ (libraries mirage-xen-posix)
+ (c_flags (:include ../src/cflags.sexp) (:include cflags-xen.sexp))
+ (c_names salsa-core))
+
+(rule (with-stdout-to cflags-xen.sexp (run ./cflags.sh)))

@@ -1,0 +1,11 @@
+(copy_files# ../src/salsa-core.c)
+
+(library
+ (name salsa20_core_freestanding)
+ (public_name salsa20-core.freestanding)
+ (optional)
+ (libraries ocaml-freestanding)
+ (c_flags (:include ../src/cflags.sexp) (:include cflags-freestanding.sexp))
+ (c_names salsa-core))
+
+(rule (with-stdout-to cflags-freestanding.sexp (run ./cflags.sh)))

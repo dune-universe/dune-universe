@@ -1,0 +1,10 @@
+(library
+ (name scrypt_kdf)
+ (public_name scrypt-kdf)
+ (modules scrypt_kdf)
+ (libraries cstruct mirage-crypto pbkdf salsa20-core))
+
+(test
+ (name scrypt_kdf_tests)
+ (modules scrypt_kdf_tests)
+ (libraries scrypt-kdf alcotest))

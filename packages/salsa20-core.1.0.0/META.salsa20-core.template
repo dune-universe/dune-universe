@@ -1,0 +1,4 @@
+# DUNE_GEN
+
+xen_linkopts = "-l:xen/libsalsa20_core_xen_stubs.a"
+freestanding_linkopts = "-l:freestanding/libsalsa20_core_freestanding_stubs.a"
