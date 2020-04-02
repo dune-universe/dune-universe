@@ -1,0 +1,8 @@
+(executable
+  (name       test_all)
+  (libraries  apero-core alcotest))
+
+(alias
+ (name runtest)
+  (deps test_all.exe)
+  (action (run %{exe:test_all.exe} -q --color=always)))

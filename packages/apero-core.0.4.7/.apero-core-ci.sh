@@ -1,0 +1,2 @@
+sh .travis-opam.sh
+

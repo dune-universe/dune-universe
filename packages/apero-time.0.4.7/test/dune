@@ -1,0 +1,11 @@
+(executable
+  (name      test)
+  (modules   test test_time)
+  (libraries apero_time alcotest lwt lwt.unix logs logs.lwt logs.fmt logs.cli fmt fmt.cli fmt.tty)
+  (preprocess
+    (pps ppx_deriving.show ppx_deriving.ord lwt_ppx)))
+
+(alias
+ (name runtest)
+  (deps test.exe)
+  (action (run %{exe:test.exe} -q --color=always)))

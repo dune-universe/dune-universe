@@ -1,0 +1,7 @@
+(library
+  (name            apero_net)
+  (public_name     apero-net)  
+  (wrapped        false)
+  (libraries    apero-core lwt lwt.unix websocket websocket-lwt websocket-lwt.cohttp logs logs.lwt logs.fmt logs.cli fmt fmt.cli fmt.tty cmdliner)
+  (preprocess (pps ppx_deriving.show ppx_deriving.ord lwt_ppx)))
+  

@@ -1,0 +1,12 @@
+language: c
+sudo: required
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-opam.sh
+script: bash -ex .apero-net-ci.sh
+env:
+    global:
+    - DEPOPTS="lwt dune logs fmt cmdliner cmdliner ppx_deriving uuidm lwt_ppx"
+    - PINS="apero-net:. apero-net:."
+    - PACKAGE=apero-net 
+    matrix:
+    - OCAML_VERSION=4.07
+    - OCAML_VERSION=4.06

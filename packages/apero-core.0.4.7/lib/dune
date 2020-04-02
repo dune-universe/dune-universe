@@ -1,0 +1,15 @@
+(library
+  (name            apero_core)
+  (public_name     apero-core)
+  (modules         (:standard \ sys))
+  (wrapped         false)
+  (libraries       astring uuidm lwt lwt.unix bigstringaf logs logs.lwt logs.fmt logs.cli yojson ppx_deriving_yojson.runtime fmt fmt.cli fmt.tty cmdliner ppx_deriving dynlink)
+  (preprocess (pps ppx_deriving.show ppx_deriving.ord ppx_deriving_yojson lwt_ppx)))
+
+(library
+  (name            dynload_sys)
+  (public_name     dynload-sys)
+  (modules         sys)
+  (wrapped         false)
+  (libraries       apero-core))
+

@@ -1,0 +1,4 @@
+(executable
+ (name    echo)
+  (libraries apero-core apero-net lwt lwt.unix logs logs.lwt logs.fmt logs.cli fmt fmt.cli fmt.tty cmdliner)
+  (preprocess (pps lwt_ppx ppx_deriving.show ppx_deriving.ord)))

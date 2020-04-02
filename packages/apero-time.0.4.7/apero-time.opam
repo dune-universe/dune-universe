@@ -1,0 +1,30 @@
+opam-version: "2.0"
+version:"0.4.7"
+maintainer:   ["contact@adlink-labs.tech"]
+authors:      ["Julien Enoch"]
+homepage:     "https://github.com/atolab"
+bug-reports:  "https://github.com/atolab/apero-time/issues/"
+dev-repo:     "git+https://github.com/atolab/apero-time.git"
+
+license: "Apache-2.0"
+
+build: [
+ ["dune" "build" "--only" "apero-time" "--root" "." "-j" jobs "@install"]
+]
+
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune" {= "2.3.0" }
+  "fmt"  {= "0.8.8" }
+  "logs"  {= "0.7.0" }
+  "lwt" {= "5.1.1" }
+  "ppx_deriving"  {= "4.4" }
+  "lwt_ppx"  {= "2.0.0" }
+  "apero-core" {= "0.4.7"}
+]
+
+
+synopsis : "OCaml Time Stamping Library"
+description: """
+apero-time is collection of OCaml modules that define an abstract time-stamping service along
+with a Hybrid Logical Clock implementation."""
