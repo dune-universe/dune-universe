@@ -1,0 +1,4 @@
+example/oraft-*/oraft.log
+example/oraft-*/state/*
+chaos_test/docker/oraft-*/oraft.log
+chaos_test/docker/oraft-*/state/*
