@@ -1,0 +1,4 @@
+(lang dune 1.9)
+(name current)
+(version v0.2)
+(implicit_transitive_deps false)

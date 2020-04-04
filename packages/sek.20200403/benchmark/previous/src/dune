@@ -1,0 +1,4 @@
+(executable
+  (name Main)
+  (libraries str unix sek)
+)

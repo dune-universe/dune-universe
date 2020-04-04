@@ -1,0 +1,96 @@
+type source = [
+  | `No_context
+  | `Git of Current_git.Commit.t Current.t
+]
+
+type repo_id = string
+
+module type DOCKER = sig
+  module Image : sig
+    include Current_cache.S.WITH_DIGEST
+    include Current_cache.S.WITH_MARSHAL with type t := t
+
+    val hash : t -> string
+    val pp : t Fmt.t
+  end
+
+  val pull : ?label:string -> schedule:Current_cache.Schedule.t -> string -> Image.t Current.t
+  (** [pull ~schedule tag] ensures that the latest version of [tag] is cached locally, downloading it if not.
+      @param schedule Controls how often we check for updates. If the schedule
+                      has no [valid_for] limit then we will only ever pull once. *)
+
+  val build :
+    ?schedule:Current_cache.Schedule.t ->
+    ?timeout:Duration.t ->
+    ?squash:bool ->
+    ?label:string ->
+    ?dockerfile:[`File of Fpath.t | `Contents of Dockerfile.t] Current.t ->
+    ?pool:Current.Pool.t ->
+    ?build_args:string list ->
+    pull:bool ->
+    source ->
+    Image.t Current.t
+  (** [build ~pull src] builds a Docker image from source.
+      @param timeout If set, abort builds that take longer than this.
+      @param squash If set to [true], pass "--squash" to "docker build".
+      @param dockerfile If present, this is used as the contents of the Dockerfile.
+      @param pull If [true], always check for updates and pull the latest version.
+      @param pool Rate limit builds by requiring a resource from the pool. *)
+
+  val run :
+    ?label:string ->
+    ?pool:Current.Pool.t ->
+    ?run_args:string list ->
+    Image.t Current.t -> args:string list ->
+    unit Current.t
+  (** [run image ~args] runs [image args] with Docker.
+      @param run_args List of additional arguments to pass to the "docker
+                      run" subcommand. *)
+
+  val pread :
+    ?label:string ->
+    ?pool:Current.Pool.t ->
+    ?run_args:string list ->
+    Image.t Current.t -> args:string list ->
+    string Current.t
+  (** [pread image ~args] runs [image args] with Docker the same way than [run]
+      does but returns its stdout as a string. *)
+
+  val tag : tag:string -> Image.t Current.t -> unit Current.t
+  (** [tag image ~tag] does "docker tag image tag" *)
+
+  val push : ?auth:(string * string) -> tag:string -> Image.t Current.t -> repo_id Current.t
+  (** [push image ~tag] does "docker tag image tag && docker push tag".
+      @param auth If give, do a "docker login" using this username/password pair before pushing. *)
+
+  val service : name:string -> image:Image.t Current.t -> unit -> unit Current.t
+  (** [service ~name ~image ()] keeps a Docker SwarmKit service up-to-date. *)
+
+  module Cmd : sig
+    (** Building Docker commands. This is useful for creating custom pipeline stages. *)
+
+    type t = Lwt_process.command
+
+    val docker : string list -> t
+    (** [docker args] is a command to run docker, with the "--context" argument added (if necessary).
+        e.g. [docker ["run"; image]] *)
+
+    val with_container :
+      kill_on_cancel:bool ->
+      job:Current.Job.t -> t ->
+      (string -> 'a Current.or_error Lwt.t) ->
+      'a Current.or_error Lwt.t
+    (** [with_container ~kill_on_cancel ~job t fn] runs [t] to create a new container
+        (the output is the container ID), then calls [fn id].
+        When [fn] returns, it removes the container (killing it first if necessary).
+        If [fn] raises an exception, it catches it and turns it into an error return.
+        @param kill_on_cancel "docker kill" the container if the the job is cancelled. *)
+
+    val pp : t Fmt.t
+  end
+end
+
+module type HOST = sig
+  val docker_context : string option
+  (** The value to pass to Docker via the "--context" argument ([None] for no argument). *)
+end

@@ -1,0 +1,38 @@
+digraph pipeline {
+  node [shape="box"]
+  rankdir=LR
+  n3 [label="current-test",fillcolor="#90ee90",style="filled"]
+  n2 [label="choose pipeline",fillcolor="#90ee90",style="filled"]
+  n9 [label="head",fillcolor="#90ee90",style="filled"]
+  n8 [label="fetch",fillcolor="#90ee90",style="filled"]
+  n7 [label="build",fillcolor="#90ee90",style="filled"]
+  n6 [label="docker run make test",fillcolor="#90ee90",style="filled"]
+  n10 [label="get-revdeps",fillcolor="#90ee90",style="filled"]
+  n5 [label="",fillcolor="#90ee90",style="filled",shape="circle"]
+  subgraph cluster_4 {
+  n19 [label="example.org/bar#222",fillcolor="#90ee90",style="filled"]
+  n18 [label="fetch",fillcolor="#ffa500",style="filled"]
+  n17 [label="build",fillcolor="#d3d3d3",style="filled"]
+  n16 [label="docker run make test",fillcolor="#d3d3d3",style="filled"]
+  n23 [label="example.org/foo#111",fillcolor="#90ee90",style="filled"]
+  n22 [label="fetch",fillcolor="#ffa500",style="filled"]
+  n21 [label="build",fillcolor="#d3d3d3",style="filled"]
+  n20 [label="docker run make test",fillcolor="#d3d3d3",style="filled"]
+  }
+  n21 -> n20
+  n22 -> n21
+  n23 -> n22
+  n5 -> n23
+  n17 -> n16
+  n18 -> n17
+  n19 -> n18
+  n5 -> n19
+  n10 -> n5
+  n6 -> n5 [style="dashed"]
+  n8 -> n10
+  n7 -> n6
+  n8 -> n7
+  n9 -> n8
+  n2 -> n9
+  n3 -> n2
+  }

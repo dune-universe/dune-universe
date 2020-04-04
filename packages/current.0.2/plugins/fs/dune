@@ -1,0 +1,12 @@
+(library
+  (public_name current.fs)
+  (name current_fs)
+ (libraries
+   bos
+   current
+   current.term
+   current_incr
+   fmt
+   fpath
+   logs
+   result))

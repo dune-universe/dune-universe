@@ -1,0 +1,8 @@
+(library
+ (public_name current.term)
+ (name current_term)
+ (libraries
+   bos
+   fmt
+   current_incr)
+ (preprocess (pps ppx_deriving.std)))

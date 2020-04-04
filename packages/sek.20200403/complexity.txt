@@ -1,0 +1,223 @@
+This is a work-in-progress file.
+
+Make sure to first read the contents of [Sek.mli].
+
+# Overview
+
+   Elements are stored internally in {i chunks}, that is, arrays of a fixed
+   capacity {i K}.
+
+   The chunks are organized in fancy tree data structure, whose nodes are
+   themselves represented using chunks, whose elements are chunk pointers.
+   These chunks have a capacity named {i K'}. For all practical purposes
+   {i K' <= K}. This assumption is exploited to simplify the analysis.
+
+   In fact {i K'} is always set to a small constant. Thus {i O(K' log_K' n)}
+   is approximated in [Sek.mli] as {i O(log n)}. For example, with K' set
+   to 16, {i log_K' n} for n equal to 1 billion at most 7, while {log n} is
+   equal to 30. Thus, the value of {i K' log_K'} is only 3.7 times bigger than
+   that of {i log n}.
+
+   The cost of concatenation, splitting,
+   and random access operations ([get] and [set], when not using an iterator)
+   grow in proportion to {i O(log_K' n)}, that is, the logarithm of the length
+   of the sequence, computed in base K'. A practical value of {i K} is, e.g.
+   16. The representation of a sequence of 1 billion elements, with parameters
+   {i K} set to 128 and {i K'} set to 16, involves a tree whose depth does
+   not exceed 7. (See the technical appendix near the end of this file for
+   details on the analysis.)
+
+   For persistent sequences, the value of {i T} should be set to a value similar
+   to {i K}.
+
+# Time bounds for ephemeral sequences.
+
+   - {!E.create} has complexity {i O(K)}.
+
+   - {!E.default}, {!E.length}, {!E.is_empty} have complexity {i O(1)}.
+
+   - {!E.clear} has complexity {i O(K)},
+     unless {!DoNotOverwriteEmptySlots} was passed as an argument to {!Make},
+     in which case {!E.clear} has complexity {i O(1)}.
+
+   - {!E.assign} has complexity {i O(K)}.
+
+   - {!E.push} and {!E.pop} have amortized complexity {i O(1 + 1/K * log{_K'} n)}.
+     They have worst-case complexity {i O(log{_K'} n)}.
+     If consecutive {!E.push} operations are performed and are not intermixed
+     with {!E.pop} operations, then their amortized complexity is only {i O(1)}.
+     Likewise for {!E.pop} operations not intermixed with {!E.push} operations.
+
+   - {!E.peek} has complexity {i O(1)}.
+
+   - {!E.get} and {!E.set} have complexity {i O(K' log{_K'} n)}. More precisely,
+     [E.get s i] has complexity {i O(K' log{_K'} (min (i, n - i)))},
+     which means that accessing an element near the beginning or end of the
+     sequence is cheap, whereas accessing an element somewhere in the middle
+     is more expensive.
+
+   - {!E.split} and {!E.carve} have complexity {i O(K + K' log{_K'} n)}.
+     Like for {!E.get}, the argument {i n} of the logarithm can be replaced
+     with the distance to the side.
+
+   - {!E.concat} and {!E.append} have complexity {i O(K + K' log{_K'} max(n1,n2))},
+     where {!n1} and {!n2} denote the lengths of the two sequences involved
+     in the concatenation.
+
+   - {!E.iter} and {!E.iteri}, {!E.fold_left}, {!E.fold_right} have complexity
+     {i O(n)}, that is, {i O(1)} per element, not counting the cost of the calls
+     to the user function [f].
+
+   - {!E.to_list} and {!E.to_array} have complexity {i O(n)}.
+
+   - {!E.make}, {!E.init}, {!E.of_array_segment} and {!E.of_array} have complexity
+     {i O(n + K)}, where [n] is the length of the sequence that is constructed.
+     In the case of {!E.init},
+     this does not count the cost of the calls to the user function [f].
+
+
+# Time bounds for persistent sequences.
+
+   A persistent sequence whose length is no greater than a certain threshold
+   {i T} is represented in a simple and compact way: in short, it is
+   represented as an immutable array of length {i n} (actually, there are special
+   constructors for sequence of length zero or one). The value of {i T} should
+   be set to a value similar to {i K}.
+
+   Below this threshold {i T}, all operations have cost {i O(n)}, where {! n}
+   denotes the length of the sequence, except {!P.create}, {!P.peek} and {!P.get},
+   which have complexity {i O(1)}. Observe that it costs {i O(T^2)} to build a
+   sequence of length {i T}.
+
+   Above this threshold {i T}, the time complexity of the operations on persistent
+   sequences is as follows:
+
+   - {!P.create} has complexity {i O(1)}. It builds an empty sequence, thus
+     is always below the threshold T.
+
+   - {!P.default}, {!P.length}, {!P.is_empty} have complexity {i O(1)}.
+
+   - {!P.push} has worst-case complexity {i O(K + K' log{_K'} n)}, however this worst-case
+     complexity is extremely unlikely to be observed. The cost for a number of
+     {i r} successive {!P.push} operations is bounded by {i O(K + K' log{_K'} n + r)}.
+     Furthermore, if only push operations are performed starting from an empty
+     sequence, the cost is only {i O(1)} amortized per push operation---no copy-on-write
+     is ever required in that use case.
+
+   - {!P.pop} has worst-case complexity {i O(log{_K'} n)}. The cost for a number of
+     {i r} successive {!P.pop} operations is bounded by {i O(log{_K'} n + r)}.
+     Note that the {!P.pop} operations never triggers any copy-on-write.
+
+   - {!P.peek} has complexity {i O(1)}.
+
+   - {!P.get} and {!P.set} have complexity {i O(K' log{_K'} n)}. More precisely,
+     [P.get s i] has complexity {i O(K' log{_K'} (min (i, n - i)))},
+     which means that accessing an element near the beginning or end of the
+     sequence is cheap, whereas accessing an element somewhere in the middle
+     is more expensive.
+
+   - {!P.split} has complexity {i O(K + K' log{_K'} n)}.
+     Like for {!E.get}, the argument {i n} of the logarithm can be replaced
+     with the distance to the side.
+
+   - {!P.concat} has complexity {i O(K + K' log{_K'} max(n1,n2))},
+     where {!n1} and {!n2} denote the lengths of the two sequences involved
+     in the concatenation.
+
+   - {!P.iter}, {!P.iteri}, {!P.fold_left}, {!P.fold_right} have complexity {i O(n)},
+     that is, {i O(1)} per element,
+     not counting the cost of the calls to the user function [f].
+
+   - {!P.to_list} and {!P.to_array} have complexity {i O(n)}.
+
+   - {!P.make}, {!P.init}, {!P.of_array_segment} and {!P.of_array} have complexity
+     {i O(n)}, where [n] is the length of the sequence that is constructed.
+     For {!P.init}, this does not count the cost of the calls to the user function [f].
+     Technically, the complexity is {i O(n + K)}, but because {i T} is {i O(K)},
+     for a sequence of length greater than {i T}, the bound simplifies to {i O(n)}.
+
+
+# Time bounds for copies conversion operations
+
+   The time complexity of the conversion operations,
+
+   - {!E.copy} has complexity {i O(K)}. However, this function causes both the
+     original sequence and its copy to lose the unique ownership of their chunks.
+     This implies that many subsequent operations on the original sequence
+     and on its copy will be slower than they could have been if no copy had
+     taken place.
+
+   - {!snapshot_and_clear} is {i O(K)}.
+
+   - {!edit} is {i O(K)}.
+
+   - {!snapshot} is {i O(K)}. The operation [snapshot s] is in fact a short-hand
+     for [snapshot_and_clear (copy s)]. Therefore, it is slightly slower
+     than [snapshot_and_clear s].
+
+
+# Space bounds
+
+  - Space usage of an ephemeral chunk of capacity {i K}: {i K + 5} words.
+
+  - Space usage of an shareable chunk of capacity {i K}: {i K + 10} words,
+    including {i 5} words for the object plus the ephemeral chunk used as support.
+
+  - Space usage of a shareable sequence with chunks of capacity {i K}:
+    - of length 0: {i 3} words.
+    - of length 1 or 2: {i 2K + 29} words. (Details: 6 + 2 schunks + an empty shareable sequence.)
+    - above: {i 2n * (1 + 12/(K-2)) + O(K * log_(K/2)(n))}.
+
+      Details: {i (2n/K + 3) * (K + 10) + 6 + a shareable sequence with (1+2n/K) elements},
+      equal to {i C(n) + shareable sequence with (1+2n/K) elements}, with {i C(n)} defined
+      as {i (1 + 10/K) * 2n + 3K + 36}.
+
+      Let {i S'(n)} the space usage of a sequence with {i n+1} elements.
+      In the base case, {i S'(0) = 2K+29}.
+      In the recursive case, {i S'(n) = C(n) + S'(n / (K/2))}. Note that we exploit
+      the fact that at least one element is not stored in the middle sequence.
+      Thus, the number of levels with more than one element is bounded by {i O(log_(K/2)(n))}.
+      Computing a geometric series to sum up {i C(n) + C(n/(K/2)) + C(n/(K/2)^n)...},
+      and adding the cost of a sequence of length 1, we get for the total cost something
+      like: {i 2n * (1 + 12/(K-2)) + (3K + 36) * (1 + log_(K/2)(n))}.
+
+  - Space usage of a shareable sequence with chunks of capacity {i K} at level 0
+    and {i K'} at deeper levels, including possibly-shared chunks:
+    - of length 0: {i 3} words.
+    - of length 1 or 2: {i 2K + 29} words.
+    - above: {i 2n * (1 + 10/K) + O(K + K' * log_(K'/2)(n)} assuming {i K <= K'}.
+
+  - Space usage of a persistent sequence: {i 3} plus the cost of a shareable sequence.
+
+  - Space usage of a shareable sequence: {i 5} plus the cost of a shareable sequence,
+    (that is, {i 2} plus the cost of a persistent sequence).
+
+  - Space usage of a {PSek} sequence with chunks of capacity {i K} at
+    depth zero and {i K'} for deeper chunks, including possibly-shared chunks:
+    maximum of either {i n+4} words or {i 3} plus the cost of a shareable sequence.
+
+  - Space usage of an {ESek} sequence with chunks of capacity {i K} at depth zero
+    and {i K'} for deeper chunks, including possibly-shared chunks:
+    {i 2n * (1 + 10/K) + O(K + K' * log_(K'/2)(n)} words.
+
+   When no concatenation operation is used, many chunks are full. In that case,
+   the leading factor 2 in the space bounds may be dropped. If few concatenation
+   operations are used, and only ephemeral sequences are manipulated, the space
+   usage increases at most by {i O(K)} per concatenation compared with the bound
+   that assumes to concatenation operations to be performed.
+
+# Additional information
+
+   Some operations on chunks do not care whether the chunk is unique or
+   shared. A [get] operation, for instance, needs only read access to a chunk,
+   so does not care how many participants have access to it. More
+   surprisingly, a [push] operation can push a new element into an existing
+   chunk (provided there is space) without creating a copy of this chunk, even
+   if it is shared. Indeed, changing an empty slot into an occupied slot
+   cannot affect the {i view} of the other co-owners of this chunk: a view is
+   always restricted to a chunk {i segment} that consists solely of occupied
+   slots. Perhaps surprisingly as well, a [pop] operation on a shared chunk
+   does not need to modify the chunk: restricting one's view of the chunk
+   suffices. Still, some operations, such as [set], do require modifying a
+   chunk. If the chunk is uniquely owned, then it is modified in place; if it
+   is shared, it must be copied first. This is a {i copy-on-write} mechanism.

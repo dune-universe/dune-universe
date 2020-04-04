@@ -1,0 +1,5 @@
+(executable
+  (name Main)
+  (flags (:standard -w A -g))
+  (libraries sek core core.time_stamp_counter)
+)
