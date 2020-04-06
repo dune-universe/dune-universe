@@ -1,9 +1,0 @@
-(library
- (name async_uri)
- (public_name async-uri)
- (libraries
-   uri
-   uri.services
-   core
-   async
-   async_ssl))
