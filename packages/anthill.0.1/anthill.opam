@@ -1,0 +1,27 @@
+version: "0.1"
+opam-version: "2.0"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" {>= "4.06"}
+  "dune" {>= "1.0"}
+  "core"
+  "pcre"
+  "mparser"
+  "lwt"
+  "lambda-term"
+]
+
+author: "Martin DeMello"
+maintainer: "martindemello@gmail.com"
+homepage: "https://github.com/martindemello/anthill"
+bug-reports: "https://github.com/martindemello/anthill/issues"
+dev-repo: "git+https://github.com/martindemello/anthill"
+doc: "https://martindemello.github.io/anthill/"
+license: "MIT"
+synopsis: "Word search library and utility"
+description: """
+Anthill is a library and command-line repl to perform word searches (anagram,
+pattern and build).
+"""

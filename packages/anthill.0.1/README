@@ -1,0 +1,78 @@
+About:
+------
+
+  Anthill has two main aims:
+
+  1. As a shell to perform quick word searches (build, anagram and pattern),
+  mostly duplicating the functionality of the late lamented Lexpert
+  [http://www.valuecube.com/lexpert/].
+
+  2. To explore the idea of a language to perform complex word queries, somewhat
+  akin to zyzzyva [http://www.zyzzyva.net], but based on scripts rather than a GUI
+
+  Ideally, I would like to achieve feature parity with nutrimatic [http://nutrimatic.org/]
+
+Features:
+---------
+
+  * Anagram
+  * Build
+  * Pattern
+  * Single character wildcard (.)
+  * Multi character wildcard (*)
+  * Character class wildcard ([abc] matches a, b or c)
+  * Basic set operations (and, or, diff)
+
+Examples:
+---------
+
+  * Find all the anagrams of RETINAS
+
+  anagram > retinas  <-- note that we are in anagram mode by default
+  anestri
+  antsier
+  nastier
+  ratines
+  resiant
+  retains
+  retinas
+  retsina
+  stainer
+  starnie
+  stearin
+
+  * AEIDCST + ? = 
+  anagram > aeidcst.
+  acidiest
+  acridest
+  cadgiest
+  citadels
+  danciest
+  dialects
+  dictates
+  distance
+  misacted
+  scaithed
+  spicated
+
+  * How many words start with A and end with B?
+  anagram > p a*b
+  ab
+  abb
+  abcoulomb
+  absorb
+  acerb
+  adsorb
+  adverb
+  aerobomb
+  alb
+  aldicarb
+  antisnob
+  aplomb
+  arb
+  ardeb
+  athrob
+
+Acknowledgements:
+-----------------
+Thanks to Gabriel Scherer for helping move to ocamlbuild.

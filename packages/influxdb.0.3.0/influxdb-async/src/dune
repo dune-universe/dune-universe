@@ -1,0 +1,4 @@
+(library
+ (name influxdb_async)
+ (public_name influxdb-async)
+ (libraries base cohttp-async influxdb))

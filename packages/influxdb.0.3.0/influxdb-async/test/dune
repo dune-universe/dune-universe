@@ -1,0 +1,3 @@
+(test
+ (name influxdb_async_test)
+ (libraries influxdb_async alcotest-async))

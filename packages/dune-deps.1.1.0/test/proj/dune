@@ -1,0 +1,55 @@
+; Main test dune file
+;
+; Add test cases as needed.
+;
+
+(executable
+  (name prog1)
+  (libraries lib1 lib2 lib3)
+)
+
+(executables
+  (names prog2 prog3)
+  (libraries lib1 lib3 ext1)
+)
+
+(executable
+  (public_name prog4)
+  (libraries (lib4))
+)
+
+(library
+  (names lib2 lib3)
+  (libraries lib4 lib5 ext2)
+)
+
+(libraries
+  (public_name (lib1))
+  (name priv_lib1)
+)
+
+(library
+  (public_names lib4 lib5)
+  (libraries lib1 ext3)
+)
+
+(library
+  (name lib-or-exe)
+)
+
+(executable
+  (name lib-or-exe)
+  (libraries lib-or-exe)
+)
+
+(executable
+  (name test)
+  (libraries lib1)
+)
+
+; Other executable with the same path. Don't know if that's even possible
+; with dune.
+(executable
+  (name test)
+  (libraries lib1-alt)
+)

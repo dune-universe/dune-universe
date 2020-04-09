@@ -1,0 +1,6 @@
+(library
+ (name anthill)
+ (public_name anthill)
+ (modules_without_implementation engine)
+ (libraries core pcre mparser mparser.pcre lwt lambda-term)
+ (preprocess (pps lwt_ppx)))
