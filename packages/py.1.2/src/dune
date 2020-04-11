@@ -1,4 +1,0 @@
-(library
-  (name py)
-  (public_name py)
-  (libraries ctypes ctypes.foreign))

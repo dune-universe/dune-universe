@@ -1,0 +1,26 @@
+opam-version: "2.0"
+
+name: "calendars"
+
+version: "1.0.0"
+
+synopsis: "Convert dates between gregorian/julian/french/hebrew calendars"
+
+authors: [ "Daniel de Rauglaudre" ]
+
+maintainer: "Julien Sagot <julien.sagot@geneanet.org>"
+
+license: "GNU GPL"
+
+homepage: "https://github.com/geneweb/calendars"
+
+bug-reports: "https://github.com/geneweb/calendars/issues"
+
+dev-repo: "git+https://github.com/geneweb/calendars.git"
+
+depends: [
+  "dune" { >= "1.11" }
+  "ocaml" { >= "4.05" }
+  ]
+
+build: [ [ "dune" "build" "-p" name "-j" jobs] ]

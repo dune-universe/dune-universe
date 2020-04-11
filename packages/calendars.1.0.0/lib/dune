@@ -1,0 +1,5 @@
+(library
+ (name calendars)
+ (public_name calendars)
+ (modules calendars)
+)
