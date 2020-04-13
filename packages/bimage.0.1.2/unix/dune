@@ -1,5 +1,0 @@
-(library
-    (name bimage_unix)
-    (public_name bimage-unix)
-    (c_names stb)
-    (libraries unix ctypes.foreign bimage))
