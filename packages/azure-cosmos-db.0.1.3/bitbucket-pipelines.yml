@@ -1,0 +1,8 @@
+image: mknaack/azure-cosmos-db-base:0.5
+
+pipelines:
+  default:
+    - step:
+        script:
+          - eval $(opam config env)
+          - dune runtest

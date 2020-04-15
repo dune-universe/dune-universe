@@ -1,0 +1,84 @@
+type create_database = {
+  id: string;
+}
+
+type database = {
+  id: string;
+  _rid: string;
+  _self: string;
+  _etag: string;
+  _colls: string;
+  _users: string;
+  _ts: int;
+}
+
+type list_databases = {
+  _rid: string;
+  databases <json name="Databases">: database list;
+  _count: int;
+}
+
+type indexes = {
+  dataType: string;
+  precision: int;
+  kind: string;
+}
+
+type included_paths = {
+  path: string;
+  indexes: indexes list;
+}
+
+type indexing_policy = {
+  automatic: bool;
+  indexing_mode <json name="indexingMode">: string;
+  included_paths <json name="includedPaths">: included_paths list;
+}
+
+type partitionKey_result = {
+    paths: string list;
+    kind: string;
+}
+
+type create_partition_key = {
+    paths: string list;
+    kind: string;
+    ?version: int option;
+}
+
+type create_collection = {
+  id: string;
+  ?indexing_policy <json name="indexingPolicy">: indexing_policy option;
+  ?partition_key <json name="partitionKey">: create_partition_key option;
+}
+
+type collection = {
+  id: string;
+  indexing_policy <json name="indexingPolicy">: indexing_policy;
+  ?partition_key <json name="partitionKey">: partitionKey_result option;
+  rid <json name="_rid">: string;
+  ts <json name="_ts">: int;
+  self <json name="_self">: string;
+  etag <json name="_etag">: string;
+  docs <json name="_docs">: string;
+  sprocs <json name="_sprocs">: string;
+  triggers <json name="_triggers">: string;
+  udfs <json name="_udfs">: string;
+  conflicts <json name="_conflicts">: string;
+}
+
+type list_collections = {
+  rid <json name="_rid">: string;
+  document_collections <json name="DocumentCollections">: collection list;
+  count <json name="_count">: int;
+}
+
+type parameter = {
+  name: string;
+  value: string;
+}
+
+type query = {
+  query: string;
+  parameters: parameter list;
+}

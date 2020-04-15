@@ -1,0 +1,38 @@
+FROM ocaml/opam2:4.08
+
+#RUN sudo apk update
+
+# RUN opam depext -i conf-gmp.1
+# RUN opam depext -i eliom
+
+RUN opam depext -i dune lwt atdgen ocsigenserver base64 uri alcotest-lwt cohttp cohttp-lwt-unix lwt_ppx
+
+# ENV CAML_LD_LIBRARY_PATH="/home/opam/.opam/4.03.0/lib/stublibs"
+# ENV PERL5LIB="/home/opam/.opam/4.03.0/lib/perl5"
+# ENV OCAML_TOPLEVEL_PATH="/home/opam/.opam/4.03.0/lib/toplevel"
+# ENV PATH="/home/opam/.opam/4.03.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# USER opam
+# RUN groups
+# RUN echo $PATH
+# RUN opam config env
+# RUN eval $(opam config env)
+# RUN echo $PATH
+
+
+
+#RUN sudo chown -R opam:opam /home/opam
+#WORKDIR /home/opam
+
+
+#COPY --chown=opam . /home/opam
+
+# open for port 8080
+# EXPOSE 8080
+
+# RUN sudo chmod a+rw local/var/
+# RUN sudo chmod a+rw local/var/www/
+# RUN sudo chmod a+rw local/var/www/product_discovery
+# RUN sudo chmod a+rw local/var/www/product_discovery/eliom
+
+# CMD make test.byte

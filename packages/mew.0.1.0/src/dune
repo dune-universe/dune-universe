@@ -1,0 +1,5 @@
+(library
+  (name mew)
+  (public_name mew)
+  (libraries result trie)
+  (flags (:standard -safe-string)))

@@ -1,0 +1,5 @@
+(library
+  (name mew_vi)
+  (public_name mew_vi)
+  (libraries mew react)
+  (flags (:standard -safe-string)))

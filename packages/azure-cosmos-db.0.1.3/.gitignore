@@ -1,0 +1,14 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+*.omc
+*.a
+*.annot
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.o
+*.opt
+*.merlin
+_build
+*.install
+*~
