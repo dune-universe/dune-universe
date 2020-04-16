@@ -1,0 +1,22 @@
+===== kind =====
+show_kind upper: Argon2d
+show_kind upper: Argon2i
+show_kind upper: Argon2id
+show_kind lower: argon2d
+show_kind lower: argon2i
+show_kind lower: argon2id
+Argon2i: hash:
+ec6891c09fc1461720e508485da42b2087ca9a708185d9dc890539a33cd2af6f
+Argon2i: encoded:
+$argon2i$v=19$m=65536,t=2,p=1$MDAwMDAwMDAwMDAwMDAwMA$7GiRwJ/BRhcg5QhIXaQrIIfKmnCBhdnciQU5ozzSr28
+Argon2i: verify OK
+Argon2id: hash:
+36477de377e451ad8a9e38cac8feaa58b5c7e6ee972a4f7ce5fb9df6f5356042
+Argon2id: encoded:
+$argon2id$v=19$m=65536,t=2,p=1$MDAwMDAwMDAwMDAwMDAwMA$Nkd943fkUa2KnjjKyP6qWLXH5u6XKk985fud9vU1YEI
+Argon2id: verify OK
+Argon2d: hash:
+30f5e9f2584e962bba213cc256dcf9ccdce18d8f67a6cbf8e012e0619b6d52d2
+Argon2d: encoded:
+$argon2d$v=19$m=65536,t=2,p=1$MDAwMDAwMDAwMDAwMDAwMA$MPXp8lhOliu6ITzCVtz5zNzhjY9npsv44BLgYZttUtI
+Argon2d: verify OK

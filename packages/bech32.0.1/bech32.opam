@@ -1,0 +1,25 @@
+version: "0.1"
+opam-version: "2.0"
+name: "bech32"
+maintainer: "Vincent Bernardoff <vb@luminar.eu.org>"
+authors: ["Vincent Bernardoff <vb@luminar.eu.org>"]
+homepage: "https://github.com/vbmithr/ocaml-bech32"
+license: "ISC"
+dev-repo: "git+https://github.com/vbmithr/ocaml-bech32.git"
+doc: "https://vbmithr.github.io/ocaml-bech32/doc"
+bug-reports: "https://github.com/vbmithr/ocaml-bech32/issues"
+tags: ["bitcoin"]
+build:    [ "dune" "build" "-j" jobs "-p" name ]
+run-test: [ "dune" "runtest" "-j" jobs "-p" name ]
+depends: [
+  "dune" {>= "2.3.1"}
+  "rresult" {>= "0.6.0"}
+  "astring" {>= "0.8.3"}
+  "hex" {with-test & >= "1.4.0"}
+  "alcotest" {with-test & >= "1.1.0"}
+]
+synopsis: "Bech32 addresses for OCaml (see
+https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki)"
+description:"""This package implements parsing and pretty-printing of
+Bech32 addresses, used in Bitcoin as well as other blockchains
+projects, i.e. Zilliqa."""

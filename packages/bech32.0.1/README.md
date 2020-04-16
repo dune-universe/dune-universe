@@ -1,0 +1,1 @@
+# ocaml-bech32 [![Build Status](https://api.travis-ci.com/vbmithr/ocaml-bech32.svg?branch=master)](https://travis-ci.com/github/vbmithr/ocaml-bech32)

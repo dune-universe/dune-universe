@@ -1,0 +1,37 @@
+(executables
+ (names test_collection test_tabler test_cache test_weakness)
+ (libraries ringo)
+ (flags :standard))
+
+(alias
+ (name runtest_collection)
+ (action
+  (run %{exe:test_collection.exe})))
+
+(alias
+ (name runtest_tabler)
+ (action
+  (run %{exe:test_tabler.exe})))
+
+(alias
+ (name runtest_cache)
+ (action
+  (run %{exe:test_cache.exe})))
+
+(alias
+ (name runtest_weakness)
+ (action
+  (setenv OCAMLRUNPARAM "o=20,h=16,s=16,i=2"
+   (run %{exe:test_weakness.exe}))))
+
+(alias
+ (name runtest)
+ (deps
+  (alias runtest_collection)
+  (alias runtest_tabler)
+  (alias runtest_cache)))
+
+(alias
+  (name runleaktest)
+  (deps
+    (alias runtest_weakness)))
