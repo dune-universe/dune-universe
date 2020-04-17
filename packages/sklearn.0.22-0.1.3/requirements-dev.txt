@@ -1,0 +1,10 @@
+flake8
+ghp-import
+jedi
+ipython
+mkdocs
+mkdocs-material
+mkdocs-pymdownx-material-extras
+scikit-learn
+pytest
+yapf
