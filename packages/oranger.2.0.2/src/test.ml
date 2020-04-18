@@ -33,9 +33,9 @@ let main () =
   match preds with
   | None -> assert(false)
   | Some score_stddevs ->
-    L.iter (fun (mean, stddev) ->
-        Log.info "%f %f" mean stddev
-      ) score_stddevs;
+    (* L.iter (fun (mean, stddev) ->
+     *     Log.info "%f %f" mean stddev
+     *   ) score_stddevs; *)
     let labels = [true; true; true; true; true;
                   false; false; false; false; false] in
     let scores = L.map fst score_stddevs in
@@ -108,17 +108,16 @@ let main () =
          20.6;
          50.0;
          22.0]
-        in
-      begin
-        L.iter (fun (mean, stddev) ->
-            Log.info "%f %f" mean stddev
-          ) score_stddevs;
-        Oranger.Utls.with_out_file "toplot" (fun out ->
-            L.iter (fun (x, y) ->
-                fprintf out "%f %f\n" x y
-              ) (L.combine actual (L.map fst (BatOption.get preds)))
-          );
-        let _ret = Sys.command "\
+      in
+      (* L.iter (fun (mean, stddev) ->
+       *     Log.info "%f %f" mean stddev
+       *   ) score_stddevs; *)
+      Oranger.Utls.with_out_file "toplot" (fun out ->
+          L.iter (fun (x, y) ->
+              fprintf out "%f %f\n" x y
+            ) (L.combine actual (L.map fst (BatOption.get preds)))
+        );
+      let _ret = Sys.command "\
 gnuplot --persist <<EOF\n\
 set xlabel 'actual'\n\
 set ylabel 'predicted'\n\
@@ -126,7 +125,10 @@ f(x) = a*x + b\n\
 fit f(x) 'toplot' u 1:2 via a,b\n\
 set key left\n\
 plot 'toplot' u 1:2 t 'preds', f(x) t 'linear fit'\n\
-EOF\n" in ()
-      end
+EOF\n" in
+      let r2 =
+        let pred_vals = L.map fst score_stddevs in
+        Cpm.RegrStats.r2 actual pred_vals in
+      Log.info "R2: %.3f\n" r2
 
 let () = main ()

@@ -1,3 +1,16 @@
+v6.4.0 2020-04-16 Lockdown At Home
+----------------------------------
+
+- Permute the order of Yum groupinstall/install to workaround
+  a build issue in CentOS 8 under OverlayFS/Docker. (@avsm)
+- Do not install `yum-ovl-plugin` workaround on CentOS 8. (@avsm)
+- Add Fedora 31 and Ubuntu 19.10 (@XVilka @talex5)
+- Add Alpine 3.11 and Ubuntu 20.04 (@avsm)
+- Remove Ubuntu 19.04 from the supported distro list (@avsm).
+- Add a `clone_opam_repo` optional argument to `gen_opam2_distro`
+  to let the caller decide whether or not to have the git clone
+  present in the container (@avsm @talex5).
+
 v6.3.0 2019-08-11 Cambridge
 ---------------------------
 

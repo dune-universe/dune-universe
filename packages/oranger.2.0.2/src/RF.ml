@@ -83,7 +83,8 @@ let predict
     (nb_trees: int)
     (data_fn: filename)
     (model_fn: filename): (float * float) list option =
-  let predictions_fn = Filename.temp_file "oranger_" "" in
+  let tmp_out_dir = Utls.mktemp_dir "oranger" in
+  let predictions_fn = tmp_out_dir ^ "/out" in
   let cmd =
     sprintf
       "ml_rf_ranger %s \
@@ -100,6 +101,8 @@ let predict
   | WEXITED 0 ->
     begin
       let raw_preds_fn = predictions_fn ^ ".prediction" in
-      Some (read_raw_class_predictions nb_trees raw_preds_fn)
+      let res = Some (read_raw_class_predictions nb_trees raw_preds_fn) in
+      let (_: int) = Sys.command ("rm -rf " ^ tmp_out_dir) in
+      res
     end
   | _ -> None

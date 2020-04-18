@@ -1,3 +1,4 @@
+open Printf
 
 module L = BatList
 
@@ -33,3 +34,13 @@ let lines_of_file fn =
 
 let filter_lines_of_file fn p =
   L.filter p (lines_of_file fn)
+
+(* create tmp dir with name like: /tmp/[prfx]_XXXXXX *)
+let mktemp_dir prfx =
+  let ret_code, res =
+    BatUnix.run_and_read
+      (sprintf "mktemp -d %s/%s_XXXXXX"
+         (Filename.get_temp_dir_name ())
+         prfx) in
+  assert(ret_code = Unix.WEXITED 0);
+  BatString.strip res (* get rid of trailing '\n' *)

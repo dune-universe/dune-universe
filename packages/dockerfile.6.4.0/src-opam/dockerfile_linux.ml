@@ -57,9 +57,9 @@ module RPM = struct
     run "chmod 700 .ssh"
 
   let dev_packages ?extra () =
-    install "sudo passwd bzip2 patch rsync nano gcc-c++ git tar curl xz libX11-devel bubblewrap which%s"
-      (match extra with None -> "" | Some x -> " " ^ x) @@
-    groupinstall "\"Development Tools\""
+    groupinstall "\"Development Tools\"" @@
+    install "sudo passwd bzip2 patch rsync nano gcc-c++ git tar curl xz libX11-devel bubblewrap which m4 diffutils findutils%s"
+      (match extra with None -> "" | Some x -> " " ^ x)
 
   let install_system_ocaml =
     install "ocaml ocaml-camlp4-devel ocaml-ocamldoc"
@@ -131,6 +131,11 @@ module Apk = struct
 
   let install_system_ocaml =
     run "apk add ocaml camlp4"
+
+  let add_repository ?tag url =
+    match tag with
+    | None -> run "echo '%s' >> /etc/apk/repositories" url
+    | Some tag -> run "echo '@%s %s' >> /etc/apk/repositories" tag url
 end
 
 (* Zypper (opensuse) rules *)
