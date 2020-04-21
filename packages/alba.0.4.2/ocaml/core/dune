@@ -1,0 +1,9 @@
+(library
+    (libraries fmlib)
+    (inline_tests)
+    (preprocess (pps ppx_inline_test))
+    (public_name alba.core)
+    (name alba_core))
+
+(env (dev
+   (flags (:standard -warn-error -A))))

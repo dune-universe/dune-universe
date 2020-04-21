@@ -1,0 +1,19 @@
+{
+    "name":
+        "alba",
+    "version":
+        "0.0.3",
+    "license":
+        "BSD-3-Clause",
+    "files": [
+        "alba-node"
+    ],
+    "main":
+        "alba-node",
+    "engines": {
+        "node": ">=12.16.1"
+    },
+    "bin": {
+        "alba-node": "alba-node"
+    }
+}

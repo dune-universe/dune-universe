@@ -1,0 +1,20 @@
+(executable
+    (name alba_web)
+    (modules alba_web)
+    (libraries albalib fmlib fmlib_js)
+    (modes byte js))
+
+(rule
+    (targets alba_web.js)
+    (mode (promote (until-clean)))
+    (action
+        (run %{bin:cp} %{dep:alba_web.bc.js} %{targets})))
+
+
+;   (alias
+;       (name default)
+;       (deps alba_web.js index.html))
+
+(env
+    (dev
+        (flags (:standard -warn-error -A))))

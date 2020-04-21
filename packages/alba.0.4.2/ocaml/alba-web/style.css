@@ -1,0 +1,61 @@
+.main-block {
+    display: inline-block;
+    width:   48%;
+    height: 100%;
+    vertical-align: top;
+}
+
+
+.editor-area {
+    color: white;
+    background-color: black;
+    font-family: "Courier New";  /* or monospace */
+    font-size: 80%;
+    width: 100%;
+    height: 90%;
+    overflow: auto;
+    resize: none;
+    border: none;
+}
+
+
+.menu {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu-item {
+    display: inline-block;
+    margin: 0px;
+    padding-left:  5px;
+    padding-right: 5px;
+}
+
+.menu-item:hover {
+    background-color: yellow;
+}
+
+
+.output-result {
+    font-family: "Courier New";  /* or monospace */
+    font-size: 80%;
+    margin: 0px;
+    overflow: scroll;
+}
+
+.output-error {
+    color: white;
+    background-color: black;
+    overflow: scroll;
+    margin: 0px;
+}
+
+.output-info {
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+    margin: 0px;
+    padding-left: 10px;
+    font-size: 80%;
+}
