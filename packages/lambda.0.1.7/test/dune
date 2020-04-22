@@ -1,0 +1,7 @@
+(executable
+ (name test)
+ (libraries oUnit lambda))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

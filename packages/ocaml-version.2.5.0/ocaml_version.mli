@@ -49,6 +49,11 @@ val of_string_exn : string -> t
 (** [of_string_exn t] behaves as {!of_string} but raises
     [Invalid_argument] if the string cannot be parsed. *)
 
+val equal : t -> t -> bool
+(** [equal a b] is the equality function for two OCaml
+    version strings. Returns [true] if they are equal,
+    [false] if they are not. *)
+
 val compare : t -> t -> int
 (** [compare a b] is the comparison function for two OCaml
     version strings. Returns [-1] if [a<b], [0] if they are
@@ -56,7 +61,7 @@ val compare : t -> t -> int
     comparison for the major, minor and patch versions, and
     lexical comparison for any extra version strings present. *)
 
-val pp : Format.formatter -> t -> unit
+val pp : Format.formatter -> t -> unit [@@ocaml.toplevel_printer]
 (** [pp fmt t] will output a human-readable version string of
     [t] to the [fmt] formatter. *)
 
@@ -228,6 +233,9 @@ module Releases : sig
 
   val v4_09_0 : t
   (** Version 4.09.0 *)
+
+  val v4_09_1 : t
+  (** Version 4.09.1 *)
 
   val v4_09 : t
   (** Latest release in the 4.09.x series *)

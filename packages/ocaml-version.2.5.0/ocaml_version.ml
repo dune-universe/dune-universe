@@ -56,6 +56,12 @@ let ( ++ ) x fn =
   | 0 -> fn ()
   | r -> r
 
+let equal {major; minor; patch; extra} a =
+  (major : int) = a.major &&
+  (minor : int) = a.minor &&
+  (patch : int option) = a.patch &&
+  (extra : string option) = a.extra
+
 let compare {major; minor; patch; extra} a =
   compare major a.major ++ fun () ->
     compare minor a.minor ++ fun () ->
@@ -108,28 +114,32 @@ module Releases = struct
   let v4_08 = v4_08_1
 
   let v4_09_0 = of_string_exn "4.09.0"
-  let v4_09 = v4_09_0
+  let v4_09_1 = of_string_exn "4.09.1"
+  let v4_09 = v4_09_1
 
   let v4_10_0 = of_string_exn "4.10.0"
   let v4_10 = v4_10_0
+
+  let v4_11_0 = of_string_exn "4.11.0"
+  let v4_11 = v4_11_0
 
 
   let all_patches = [
     v4_00_1; v4_01_0; v4_02_0; v4_02_1; v4_02_2;
     v4_02_3; v4_03_0; v4_04_0; v4_04_1; v4_04_2;
     v4_05_0; v4_06_0; v4_06_1; v4_07_0; v4_07_1;
-    v4_08_0; v4_08_1; v4_09_0; v4_10_0 ]
+    v4_08_0; v4_08_1; v4_09_0; v4_09_1; v4_10_0 ]
 
   let all = [ v4_00; v4_01; v4_02; v4_03; v4_04;
               v4_05; v4_06; v4_07; v4_08; v4_09; v4_10 ]
 
-  let unreleased_betas = [ of_string_exn "4.10.0+beta1" ]
+  let unreleased_betas = []
 
-  let recent = [ v4_02; v4_03; v4_04; v4_05; v4_06; v4_07; v4_08; v4_09 ]
+  let recent = [ v4_02; v4_03; v4_04; v4_05; v4_06; v4_07; v4_08; v4_09; v4_10 ]
 
-  let latest = v4_09
+  let latest = v4_10
 
-  let dev = [ v4_10 ]
+  let dev = [ v4_11 ]
 
   let is_dev t =
     let t = with_just_major_and_minor t in
