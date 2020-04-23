@@ -1,0 +1,14 @@
+(library
+ (name lmdb)
+ (public_name lmdb)
+ (synopsis "Bindings for LMDB, a fast in-file database with ACID transactions")
+ (flags :standard -safe-string -thread)
+ (libraries bigstringaf)
+ (c_flags
+  :standard
+  (:include "%{project_root}/cflags.sexp")
+  -Wall -Wextra -Wno-unused-parameter -pedantic -std=c99
+ )
+ (c_names lmdb_stubs)
+ (c_library_flags (:include "%{project_root}/clibs.sexp"))
+)

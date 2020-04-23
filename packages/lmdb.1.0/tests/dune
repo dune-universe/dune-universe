@@ -1,0 +1,29 @@
+(executable
+ (name simple_db)
+ (modules simple_db)
+ (libraries lmdb)
+)
+
+(executable
+ (name bench)
+ (modules bench)
+ (libraries benchmark lmdb)
+)
+
+(test
+ (name test)
+ (modules pr test)
+ (flags :standard -thread)
+ (libraries alcotest lmdb threads)
+ (action
+  (setenv MALLOC_CHECK_ 3
+    (setenv MALLOC_PERTURB_ 195
+      (run %{test} --color=always -q)))
+ )
+)
+
+(alias
+ (name bench)
+ (deps bench.exe (universe))
+ (action (run ./bench.exe))
+)
