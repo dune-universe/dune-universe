@@ -1,0 +1,13 @@
+(executable
+ (name calculator)
+ (preprocess
+  (pps ppx_variants_conv ppx_deriving.show))
+  (modules calculator)
+ (libraries libnacc))
+
+ (executable
+ (name logic)
+ (preprocess
+  (pps ppx_variants_conv ppx_deriving.show))
+ (modules logic)
+ (libraries libnacc))

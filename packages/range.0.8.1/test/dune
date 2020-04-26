@@ -1,4 +1,0 @@
-(tests
- (names testrange)
- (libraries oUnit range)
- (action (run %{test})))
