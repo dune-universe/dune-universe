@@ -1,0 +1,48 @@
+{0 Quests}
+Quests is an HTTP/1.1 client library using {{: https://github.com/mirage/ocaml-cohttp} Cohttp}. The API is closely inspired by Python's {{: https://requests.readthedocs.io/en/master} requests}.
+
+{1 Cookbook}
+A [GET] request with parameters:
+{[
+Quests.get "http://httpbin.org/get" ~params:[ ("key1", "value1"); ("key2", "value2") ]
+]}
+
+A [POST] request with form-encoded data:
+{[
+Quests.post "http://httpbin.org/post" ~data:(Form [ ("key1", "value1"); ("key2", "value2") ])
+]}
+
+A [POST] request with JSON:
+{[
+Quests.get "http://httpbin.org/post" ~data:(Json [%yojson { key = "value" }])
+]}
+
+Custom headers:
+{[
+Quests.get "https://example.com" ~headers:([ ("Accept-Language", "French") ])
+]}
+
+Basic authentication:
+{[
+Quests.get "https://postman-echo.com/basic-auth" ~auth:(Basic ("username", "password"))
+]}
+
+Bearer authentication:
+{[
+Quests.get "https://postman-echo.com/basic-auth" ~auth:(Bearer "a token")
+]}
+
+Sessions (connection pooling):
+{[
+let open Quests in
+let s = Session.create () in
+let response = Session.get s "https://example.com" in
+let%lwt () = Session.close s in
+response
+]}
+
+{1 Documentation}
+- {{!module:Quests} Library reference}
+
+{1 Other links}
+- {{: https://github.com/roddyyaga/quests} GitHub}
