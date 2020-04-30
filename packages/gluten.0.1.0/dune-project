@@ -1,4 +1,0 @@
-(lang dune 1.0)
-
-(name gluten)
-(version 0.1.0)
