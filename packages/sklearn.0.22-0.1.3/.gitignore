@@ -1,9 +1,0 @@
-*~
-.merlin
-_build/
-.venv/
-.mypy_cache
-_disabled
-compile_commands.json
-doc/
-html_doc/

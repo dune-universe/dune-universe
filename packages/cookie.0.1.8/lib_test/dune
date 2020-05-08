@@ -1,0 +1,10 @@
+(dirs fixtures)
+
+(data_only_dirs fixtures)
+
+(test
+ (libraries cookie base alcotest junit junit_alcotest)
+ (modules :standard)
+ (deps
+  (glob_files fixtures/*))
+ (name test_cookie))

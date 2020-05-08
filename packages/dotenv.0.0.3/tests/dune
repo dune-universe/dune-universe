@@ -1,0 +1,4 @@
+(test
+ (name dotenv_test)
+ (deps .env)
+ (libraries dotenv))

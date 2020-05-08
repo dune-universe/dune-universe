@@ -1,0 +1,12 @@
+(test
+ (name ic)
+ (modules ic)
+ (preprocess
+  (pps ppx_defer)))
+
+(test
+ (name ic_lwt)
+ (modules ic_lwt)
+ (preprocess
+  (pps ppx_defer lwt_ppx))
+ (libraries lwt.unix))

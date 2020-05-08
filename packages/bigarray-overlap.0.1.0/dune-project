@@ -1,3 +1,0 @@
-(lang dune 2.3)
-(name bigarray-overlap)
-(version v0.1.0)

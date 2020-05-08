@@ -1,0 +1,8 @@
+HELLO=World
+DEBUG=true
+MULTISPACE=a a a a
+WORKS=
+JSON={"foo": "bar"}
+WHITESPACE=nope
+SINGLE_QUOTE="quoted"
+VAR="    some value "

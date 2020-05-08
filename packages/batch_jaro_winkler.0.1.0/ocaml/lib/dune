@@ -1,0 +1,10 @@
+(include_subdirs unqualified)
+
+(library
+ (name            batch_jaro_winkler)
+ (public_name     batch_jaro_winkler)
+ (c_library_flags -pthread)
+ (foreign_stubs
+  (language c)
+  (names batch_jaro_winkler_stubs batch_jaro_winkler)
+  (flags -pthread -O3)))

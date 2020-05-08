@@ -1,0 +1,10 @@
+(executable
+  (name test)
+  (modules test)
+  (optional)
+  (promote)
+  (libraries
+     (select test.ml from
+       (test_suite ANSITerminal cmdliner str unix -> test.real.ml)
+       (-> test.dummy.ml)))
+)

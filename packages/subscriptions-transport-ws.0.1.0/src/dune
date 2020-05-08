@@ -1,0 +1,4 @@
+(library
+ (name subscriptions_transport_ws)
+ (public_name subscriptions-transport-ws)
+ (libraries websocketaf graphql_parser graphql))

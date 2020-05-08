@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (modes js)
+ (optional)
+ (libraries bigarray-overlap))
