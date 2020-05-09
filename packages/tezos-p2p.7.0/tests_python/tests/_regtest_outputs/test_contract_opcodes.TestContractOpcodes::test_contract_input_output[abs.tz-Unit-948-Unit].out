@@ -1,0 +1,40 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[abs.tz-Unit-948-Unit]
+
+storage
+  Unit
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 6 (remaining gas: 1039585 units remaining)
+    [ (Pair 948 Unit)  	 ]
+  - location: 7 (remaining gas: 1039585 units remaining)
+    [ 948  	@parameter ]
+  - location: 8 (remaining gas: 1039585 units remaining)
+    [ 948  	@parameter
+      948  	@parameter ]
+  - location: 9 (remaining gas: 1039583 units remaining)
+    [ -948  	
+      948  	@parameter ]
+  - location: 10 (remaining gas: 1039582 units remaining)
+    [ 948  	
+      948  	@parameter ]
+  - location: 11 (remaining gas: 1039581 units remaining)
+    [ 0  	 ]
+  - location: 13 (remaining gas: 1039580 units remaining)
+    [ True  	 ]
+  - location: 15 (remaining gas: 1039579 units remaining)
+    [  ]
+  - location: -1 (remaining gas: 1039579 units remaining)
+    [  ]
+  - location: 20 (remaining gas: 1039579 units remaining)
+    [ Unit  	 ]
+  - location: 21 (remaining gas: 1039578 units remaining)
+    [ {}  	
+      Unit  	 ]
+  - location: 23 (remaining gas: 1039578 units remaining)
+    [ (Pair {} Unit)  	 ]
+  - location: -1 (remaining gas: 1039578 units remaining)
+    [ (Pair {} Unit)  	 ]
+

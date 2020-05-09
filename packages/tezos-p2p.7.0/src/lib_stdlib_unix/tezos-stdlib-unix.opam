@@ -1,0 +1,27 @@
+opam-version: "2.0"
+maintainer: "contact@tezos.com"
+authors: [ "Tezos devteam" ]
+homepage: "https://www.tezos.com/"
+bug-reports: "https://gitlab.com/tezos/tezos/issues"
+dev-repo: "git+https://gitlab.com/tezos/tezos.git"
+license: "MIT"
+depends: [
+  "tezos-tooling" { with-test }
+  "base-unix"
+  "dune" { >= "1.11" }
+  "data-encoding" { = "0.2" }
+  "tezos-error-monad"
+  "tezos-event-logging"
+  "tezos-rpc"
+  "tezos-stdlib"
+  "lwt" { >= "3.0.0" }
+  "ptime" { >= "0.8.4" }
+  "mtime" { >= "1.0.0" }
+  "conf-libev"
+  "ipaddr" { >= "4.0.0" }
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+synopsis: "Tezos: yet-another local-extension of the OCaml standard library (unix-specific fragment)"

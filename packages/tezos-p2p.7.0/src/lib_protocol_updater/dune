@@ -1,0 +1,23 @@
+(library
+ (name tezos_protocol_updater)
+ (public_name tezos-protocol-updater)
+ (libraries tezos-base
+            tezos-stdlib-unix
+            tezos-micheline
+            tezos-shell-services
+            tezos-protocol-environment
+            tezos-shell-context
+            tezos-protocol-compiler.registerer
+            tezos-protocol-compiler.native
+            tezos-storage
+            dynlink)
+ (flags (:standard -open Tezos_base__TzPervasives
+                   -open Tezos_stdlib_unix
+                   -open Tezos_micheline
+                   -open Tezos_shell_services
+                   -open Tezos_storage)))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

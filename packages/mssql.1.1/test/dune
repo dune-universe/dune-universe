@@ -1,9 +1,0 @@
-(executables
- (names test_mssql)
- (libraries mssql oUnit)
- (preprocess (pps ppx_jane)))
-
-(alias
- (name runtest)
- (package mssql)
- (action (run ./test_mssql.exe)))

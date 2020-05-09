@@ -1,0 +1,19 @@
+(* -*- tuareg -*- *)
+
+let preprocess =
+  match Sys.getenv "BISECT_ENABLE" with
+  | "yes" -> "bisect_ppx"
+  | _ -> ""
+  | exception Not_found -> ""
+
+let () = Jbuild_plugin.V1.send @@ {|
+(library
+ (public_name mssql)
+ (libraries core_kernel async_unix freetds iter bignum logs text)
+ (preprocess
+  (pps ppx_jane |} ^ preprocess ^ {|)))
+
+(ocamllex query_lexer)
+
+(ocamlyacc query_parser)
+|}

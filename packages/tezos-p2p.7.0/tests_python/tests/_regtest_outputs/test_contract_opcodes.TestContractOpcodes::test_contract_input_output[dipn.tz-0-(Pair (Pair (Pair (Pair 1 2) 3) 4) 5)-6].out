@@ -1,0 +1,170 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[dipn.tz-0-(Pair (Pair (Pair (Pair 1 2) 3) 4) 5)-6]
+
+storage
+  6
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 14 (remaining gas: 1038783 units remaining)
+    [ (Pair (Pair (Pair (Pair (Pair 1 2) 3) 4) 5) 0)  	 ]
+  - location: 15 (remaining gas: 1038783 units remaining)
+    [ (Pair (Pair (Pair (Pair 1 2) 3) 4) 5)  	@parameter ]
+  - location: 18 (remaining gas: 1038782 units remaining)
+    [ (Pair (Pair (Pair (Pair 1 2) 3) 4) 5)  	@parameter
+      (Pair (Pair (Pair (Pair 1 2) 3) 4) 5)  	@parameter ]
+  - location: 19 (remaining gas: 1038782 units remaining)
+    [ (Pair (Pair (Pair 1 2) 3) 4)  	
+      (Pair (Pair (Pair (Pair 1 2) 3) 4) 5)  	@parameter ]
+  - location: 22 (remaining gas: 1038781 units remaining)
+    [ 5  	 ]
+  - location: 21 (remaining gas: 1038781 units remaining)
+    [ 5  	 ]
+  - location: 20 (remaining gas: 1038781 units remaining)
+    [ (Pair (Pair (Pair 1 2) 3) 4)  	
+      5  	 ]
+  - location: -1 (remaining gas: 1038781 units remaining)
+    [ (Pair (Pair (Pair 1 2) 3) 4)  	
+      5  	 ]
+  - location: 16 (remaining gas: 1038780 units remaining)
+    [ (Pair (Pair (Pair 1 2) 3) 4)  	
+      5  	 ]
+  - location: 25 (remaining gas: 1038780 units remaining)
+    [ (Pair (Pair (Pair 1 2) 3) 4)  	
+      (Pair (Pair (Pair 1 2) 3) 4)  	
+      5  	 ]
+  - location: 26 (remaining gas: 1038779 units remaining)
+    [ (Pair (Pair 1 2) 3)  	
+      (Pair (Pair (Pair 1 2) 3) 4)  	
+      5  	 ]
+  - location: 29 (remaining gas: 1038778 units remaining)
+    [ 4  	
+      5  	 ]
+  - location: 28 (remaining gas: 1038778 units remaining)
+    [ 4  	
+      5  	 ]
+  - location: 27 (remaining gas: 1038778 units remaining)
+    [ (Pair (Pair 1 2) 3)  	
+      4  	
+      5  	 ]
+  - location: -1 (remaining gas: 1038778 units remaining)
+    [ (Pair (Pair 1 2) 3)  	
+      4  	
+      5  	 ]
+  - location: 23 (remaining gas: 1038778 units remaining)
+    [ (Pair (Pair 1 2) 3)  	
+      4  	
+      5  	 ]
+  - location: 32 (remaining gas: 1038777 units remaining)
+    [ (Pair (Pair 1 2) 3)  	
+      (Pair (Pair 1 2) 3)  	
+      4  	
+      5  	 ]
+  - location: 33 (remaining gas: 1038776 units remaining)
+    [ (Pair 1 2)  	
+      (Pair (Pair 1 2) 3)  	
+      4  	
+      5  	 ]
+  - location: 36 (remaining gas: 1038776 units remaining)
+    [ 3  	
+      4  	
+      5  	 ]
+  - location: 35 (remaining gas: 1038775 units remaining)
+    [ 3  	
+      4  	
+      5  	 ]
+  - location: 34 (remaining gas: 1038775 units remaining)
+    [ (Pair 1 2)  	
+      3  	
+      4  	
+      5  	 ]
+  - location: -1 (remaining gas: 1038775 units remaining)
+    [ (Pair 1 2)  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 30 (remaining gas: 1038775 units remaining)
+    [ (Pair 1 2)  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 39 (remaining gas: 1038774 units remaining)
+    [ (Pair 1 2)  	
+      (Pair 1 2)  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 40 (remaining gas: 1038774 units remaining)
+    [ 1  	
+      (Pair 1 2)  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 43 (remaining gas: 1038773 units remaining)
+    [ 2  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 42 (remaining gas: 1038773 units remaining)
+    [ 2  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 41 (remaining gas: 1038773 units remaining)
+    [ 1  	
+      2  	
+      3  	
+      4  	
+      5  	 ]
+  - location: -1 (remaining gas: 1038773 units remaining)
+    [ 1  	
+      2  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 37 (remaining gas: 1038772 units remaining)
+    [ 1  	
+      2  	
+      3  	
+      4  	
+      5  	 ]
+  - location: 47 (remaining gas: 1038771 units remaining)
+    [ 6  	 ]
+  - location: 46 (remaining gas: 1038771 units remaining)
+    [ 6  	 ]
+  - location: 44 (remaining gas: 1038771 units remaining)
+    [ 1  	
+      2  	
+      3  	
+      4  	
+      5  	
+      6  	 ]
+  - location: 50 (remaining gas: 1038771 units remaining)
+    [ 2  	
+      3  	
+      4  	
+      5  	
+      6  	 ]
+  - location: 51 (remaining gas: 1038770 units remaining)
+    [ 3  	
+      4  	
+      5  	
+      6  	 ]
+  - location: 52 (remaining gas: 1038770 units remaining)
+    [ 4  	
+      5  	
+      6  	 ]
+  - location: 53 (remaining gas: 1038769 units remaining)
+    [ 5  	
+      6  	 ]
+  - location: 54 (remaining gas: 1038769 units remaining)
+    [ 6  	 ]
+  - location: 55 (remaining gas: 1038768 units remaining)
+    [ {}  	
+      6  	 ]
+  - location: 57 (remaining gas: 1038768 units remaining)
+    [ (Pair {} 6)  	 ]
+  - location: -1 (remaining gas: 1038768 units remaining)
+    [ (Pair {} 6)  	 ]
+

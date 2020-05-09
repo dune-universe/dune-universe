@@ -1,0 +1,29 @@
+(library
+ (name tezos_base)
+ (public_name tezos-base)
+ (flags (:standard -open Tezos_stdlib
+                   -open Tezos_crypto
+                   -open Data_encoding
+                   -open Tezos_error_monad
+                   -open Tezos_rpc
+                   -open Tezos_clic
+                   -open Tezos_micheline
+                   -open Tezos_event_logging
+                   ))
+ (libraries tezos-stdlib
+            tezos-crypto
+            data-encoding
+            tezos-error-monad
+            tezos-event-logging
+            tezos-rpc
+            tezos-clic
+            tezos-micheline
+            ptime
+            ezjsonm
+            lwt
+            ipaddr))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

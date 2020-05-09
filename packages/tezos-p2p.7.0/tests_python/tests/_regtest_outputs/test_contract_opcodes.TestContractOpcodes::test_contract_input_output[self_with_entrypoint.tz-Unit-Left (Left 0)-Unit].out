@@ -1,0 +1,112 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[self_with_entrypoint.tz-Unit-Left (Left 0)-Unit]
+
+storage
+  Unit
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 12 (remaining gas: 1038203 units remaining)
+    [ (Pair (Left (Left 0)) Unit)  	 ]
+  - location: 13 (remaining gas: 1038203 units remaining)
+    [  ]
+  - location: 14 (remaining gas: 1038203 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%A"  	@self ]
+  - location: 15 (remaining gas: 1038114 units remaining)
+    [ 0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked ]
+  - location: 16 (remaining gas: 1038114 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self
+      0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked ]
+  - location: 17 (remaining gas: 1038025 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked
+      0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked ]
+  - location: 18 (remaining gas: 1038025 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked
+      0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked ]
+  - location: 21 (remaining gas: 1038024 units remaining)
+    [ 0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 20 (remaining gas: 1038024 units remaining)
+    [ 0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 19 (remaining gas: 1038024 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked
+      0x050a00000017011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe60041  	@Apacked
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 24 (remaining gas: 1038023 units remaining)
+    [ -1  	
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 25 (remaining gas: 1038022 units remaining)
+    [ True  	
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: -1 (remaining gas: 1038022 units remaining)
+    [ True  	
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 27 (remaining gas: 1038021 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: -1 (remaining gas: 1038021 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 32 (remaining gas: 1038021 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 33 (remaining gas: 1037932 units remaining)
+    [ 0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@selfpacked
+      0x050a00000016011d23c1d3d2f8a4ea5e8784b8f7ecf2ad304c0fe600  	@defpacked ]
+  - location: 36 (remaining gas: 1037931 units remaining)
+    [ 0  	 ]
+  - location: 37 (remaining gas: 1037930 units remaining)
+    [ True  	 ]
+  - location: -1 (remaining gas: 1037930 units remaining)
+    [ True  	 ]
+  - location: 39 (remaining gas: 1037930 units remaining)
+    [  ]
+  - location: -1 (remaining gas: 1037929 units remaining)
+    [  ]
+  - location: 44 (remaining gas: 1037929 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%A"  	@self ]
+  - location: 45 (remaining gas: 1037929 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%A"  	@self ]
+  - location: 48 (remaining gas: 1037928 units remaining)
+    [  ]
+  - location: 49 (remaining gas: 1037928 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%B"  	@self ]
+  - location: 50 (remaining gas: 1037927 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%B"  	@self ]
+  - location: 53 (remaining gas: 1037927 units remaining)
+    [  ]
+  - location: 54 (remaining gas: 1037927 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%maybe_C"  	@self ]
+  - location: 55 (remaining gas: 1037926 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%maybe_C"  	@self ]
+  - location: 60 (remaining gas: 1037926 units remaining)
+    [  ]
+  - location: 61 (remaining gas: 1037925 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%Z"  	@self ]
+  - location: 62 (remaining gas: 1037925 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi%Z"  	@self ]
+  - location: 65 (remaining gas: 1037924 units remaining)
+    [  ]
+  - location: 66 (remaining gas: 1037924 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self ]
+  - location: 67 (remaining gas: 1037924 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self ]
+  - location: 76 (remaining gas: 1037923 units remaining)
+    [  ]
+  - location: 77 (remaining gas: 1037923 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self ]
+  - location: 78 (remaining gas: 1037922 units remaining)
+    [ "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi"  	@self ]
+  - location: 87 (remaining gas: 1037922 units remaining)
+    [  ]
+  - location: 88 (remaining gas: 1037922 units remaining)
+    [ Unit  	 ]
+  - location: 89 (remaining gas: 1037921 units remaining)
+    [ {}  	
+      Unit  	 ]
+  - location: 91 (remaining gas: 1037921 units remaining)
+    [ (Pair {} Unit)  	 ]
+  - location: -1 (remaining gas: 1037920 units remaining)
+    [ (Pair {} Unit)  	 ]
+

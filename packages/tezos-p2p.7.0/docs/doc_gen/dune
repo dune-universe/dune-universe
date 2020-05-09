@@ -1,0 +1,24 @@
+(executables
+ (names rpc_doc
+        p2p_doc)
+ (libraries tezos-base
+            tezos-stdlib-unix
+            tezos-shell
+            tezos-protocol-updater
+            tezos-embedded-protocol-alpha
+            re)
+ (flags (:standard -open Tezos_base__TzPervasives
+                   -open Tezos_stdlib_unix
+                   -open Tezos_shell
+                   -open Tezos_protocol_updater
+                   -linkall)))
+
+(alias
+ (name buildtest)
+ (deps rpc_doc.exe
+       p2p_doc.exe))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

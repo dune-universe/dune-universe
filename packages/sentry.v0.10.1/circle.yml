@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ocaml/opam2:4.08
+        environment:
+          TERM: xterm
+    steps:
+      - run:
+          name: Update opam
+          command: |
+            opam remote remove --all default
+            opam remote add default https://opam.ocaml.org
+      - checkout
+      - run:
+          name: Pin packages
+          command: |
+            opam pin add -y -n sentry .
+      - run:
+          name: Install system dependencies
+          command: sudo apt-get update && opam depext -y sentry
+      - run:
+          name: Install OCaml dependencies
+          command: opam install --deps-only -y sentry
+      - run:
+          # This is a separate step so we don't run tests for all of these ^
+          name: Install OCaml test dependencies
+          command: opam install --deps-only -t -y sentry
+      - run:
+          name: Build
+          command: opam config exec -- make
+      - run:
+          name: Test
+          command: opam config exec -- make coverage
+      - run:
+          name: Upload coverage report
+          command: |
+            opam config exec -- bisect-ppx-report send-to Coveralls

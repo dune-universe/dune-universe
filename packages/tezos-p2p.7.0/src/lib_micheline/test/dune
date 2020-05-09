@@ -1,0 +1,23 @@
+(executables
+ (names test_parser)
+ (libraries tezos-micheline
+            alcotest-lwt)
+ (flags (:standard -open Tezos_micheline)))
+
+(alias
+  (name buildtest)
+  (deps test_parser.exe))
+
+(alias
+  (name runtest_micheline_parser)
+  (action (run %{exe:test_parser.exe})))
+
+(alias
+  (name runtest)
+  (package tezos-micheline)
+  (deps (alias runtest_micheline_parser)))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

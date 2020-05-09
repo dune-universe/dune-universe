@@ -1,0 +1,41 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[reverse.tz-{""}-{ "c" ; "b" ; "a" }-{ "a" ; "b" ; "c" }]
+
+storage
+  { "a" ; "b" ; "c" }
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 8 (remaining gas: 1039628 units remaining)
+    [ (Pair { "c" ; "b" ; "a" } { "" })  	 ]
+  - location: 9 (remaining gas: 1039628 units remaining)
+    [ { "c" ; "b" ; "a" }  	@parameter ]
+  - location: 10 (remaining gas: 1039628 units remaining)
+    [ {}  	
+      { "c" ; "b" ; "a" }  	@parameter ]
+  - location: 12 (remaining gas: 1039627 units remaining)
+    [ { "c" ; "b" ; "a" }  	@parameter
+      {}  	 ]
+  - location: 15 (remaining gas: 1039626 units remaining)
+    [ { "c" }  	 ]
+  - location: 14 (remaining gas: 1039626 units remaining)
+    [ { "c" }  	 ]
+  - location: 15 (remaining gas: 1039625 units remaining)
+    [ { "b" ; "c" }  	 ]
+  - location: 14 (remaining gas: 1039625 units remaining)
+    [ { "b" ; "c" }  	 ]
+  - location: 15 (remaining gas: 1039624 units remaining)
+    [ { "a" ; "b" ; "c" }  	 ]
+  - location: 14 (remaining gas: 1039624 units remaining)
+    [ { "a" ; "b" ; "c" }  	 ]
+  - location: 13 (remaining gas: 1039624 units remaining)
+    [ { "a" ; "b" ; "c" }  	 ]
+  - location: 16 (remaining gas: 1039623 units remaining)
+    [ {}  	
+      { "a" ; "b" ; "c" }  	 ]
+  - location: 18 (remaining gas: 1039623 units remaining)
+    [ (Pair {} { "a" ; "b" ; "c" })  	 ]
+  - location: -1 (remaining gas: 1039623 units remaining)
+    [ (Pair {} { "a" ; "b" ; "c" })  	 ]
+

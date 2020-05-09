@@ -1,0 +1,5 @@
+(tests
+ (names test_mssql)
+ (libraries alcotest-async mssql)
+ (preprocess
+  (pps ppx_jane)))

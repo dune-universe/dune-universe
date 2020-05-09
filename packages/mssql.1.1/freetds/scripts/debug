@@ -1,3 +1,0 @@
-#!/bin/bash
-echo run -I +dbi "$@" > .gdb_tmp
-gdb ./freetds.top -x .gdb_tmp

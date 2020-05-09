@@ -1,0 +1,35 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[empty_map.tz-{}-Unit-{ Elt "hello" "world" }]
+
+storage
+  { Elt "hello" "world" }
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 8 (remaining gas: 1039618 units remaining)
+    [ (Pair Unit {})  	 ]
+  - location: 9 (remaining gas: 1039618 units remaining)
+    [  ]
+  - location: 10 (remaining gas: 1039618 units remaining)
+    [ {}  	 ]
+  - location: 13 (remaining gas: 1039617 units remaining)
+    [ "world"  	
+      {}  	 ]
+  - location: 16 (remaining gas: 1039617 units remaining)
+    [ (Some "world")  	
+      {}  	 ]
+  - location: 17 (remaining gas: 1039616 units remaining)
+    [ "hello"  	
+      (Some "world")  	
+      {}  	 ]
+  - location: 20 (remaining gas: 1039616 units remaining)
+    [ { Elt "hello" "world" }  	 ]
+  - location: 21 (remaining gas: 1039615 units remaining)
+    [ {}  	
+      { Elt "hello" "world" }  	 ]
+  - location: 23 (remaining gas: 1039615 units remaining)
+    [ (Pair {} { Elt "hello" "world" })  	 ]
+  - location: -1 (remaining gas: 1039615 units remaining)
+    [ (Pair {} { Elt "hello" "world" })  	 ]
+

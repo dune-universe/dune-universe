@@ -1,5 +1,0 @@
-(library
- (name hxd_lwt)
- (modules hxd_lwt)
- (optional)
- (libraries lwt hxd))

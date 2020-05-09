@@ -1,0 +1,45 @@
+tests/test_contract_opcodes.py::TestContractOpcodes::test_contract_input_output[list_concat_bytes.tz-0xabcd-{}-0xabcd]
+
+storage
+  0xabcd
+emitted operations
+  
+big_map diff
+  
+trace
+  - location: 7 (remaining gas: 1039595 units remaining)
+    [ (Pair {} 0xabcd)  	 ]
+  - location: 10 (remaining gas: 1039595 units remaining)
+    [ (Pair {} 0xabcd)  	
+      (Pair {} 0xabcd)  	 ]
+  - location: 11 (remaining gas: 1039594 units remaining)
+    [ {}  	@parameter
+      (Pair {} 0xabcd)  	 ]
+  - location: 14 (remaining gas: 1039593 units remaining)
+    [ 0xabcd  	@storage ]
+  - location: 13 (remaining gas: 1039593 units remaining)
+    [ 0xabcd  	@storage ]
+  - location: 12 (remaining gas: 1039593 units remaining)
+    [ {}  	@parameter
+      0xabcd  	@storage ]
+  - location: -1 (remaining gas: 1039593 units remaining)
+    [ {}  	@parameter
+      0xabcd  	@storage ]
+  - location: 8 (remaining gas: 1039593 units remaining)
+    [ {}  	@parameter
+      0xabcd  	@storage ]
+  - location: 15 (remaining gas: 1039592 units remaining)
+    [ 0xabcd  	@storage
+      {}  	@parameter ]
+  - location: 16 (remaining gas: 1039592 units remaining)
+    [ { 0xabcd }  	 ]
+  - location: 17 (remaining gas: 1039591 units remaining)
+    [ 0xabcd  	 ]
+  - location: 18 (remaining gas: 1039591 units remaining)
+    [ {}  	
+      0xabcd  	 ]
+  - location: 20 (remaining gas: 1039590 units remaining)
+    [ (Pair {} 0xabcd)  	 ]
+  - location: -1 (remaining gas: 1039590 units remaining)
+    [ (Pair {} 0xabcd)  	 ]
+

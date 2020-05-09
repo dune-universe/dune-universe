@@ -1,0 +1,96 @@
+; This file abuses the alternative dependency mecanism of dune to
+; implement optional dependendies.
+; The semantic of `(select a from (b -> c) (-> d))` is: if libraries
+; `b` are present, `cp c a` and link `b` else `cp d a`. Here, we don't
+; care about the cp part as we are not using the file optained at
+; all. So, we give them names only meant to not clash with anything
+; and copy always the same (generated itself) empty file
+; "void_for_linking".
+
+(executable
+ (name main)
+ (public_name tezos-node)
+ (package tezos-node)
+ (libraries tezos-base
+            tezos-version
+            tezos-stdlib-unix
+            tezos-shell-services
+            tezos-workers
+            tezos-rpc-http-server
+            tezos-p2p
+            tezos-shell
+            tezos-storage
+            tezos-validator
+            tezos-shell-context
+            tezos-protocol-updater
+            (select void_for_linking-genesis from
+              (tezos-embedded-protocol-genesis -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-genesis-carthagenet from
+              (tezos-embedded-protocol-genesis-carthagenet -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-demo-noops from
+              (tezos-embedded-protocol-demo-noops -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-demo-counter from
+              (tezos-embedded-protocol-demo-counter -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-alpha from
+              (tezos-embedded-protocol-alpha -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-000-Ps9mPmXa from
+              (tezos-embedded-protocol-000-Ps9mPmXa -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-001-PtCJ7pwo from
+              (tezos-embedded-protocol-001-PtCJ7pwo -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-002-PsYLVpVv from
+              (tezos-embedded-protocol-002-PsYLVpVv -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-003-PsddFKi3 from
+              (tezos-embedded-protocol-003-PsddFKi3 -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-004-Pt24m4xi from
+              (tezos-embedded-protocol-004-Pt24m4xi -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-005-PsBABY5H from
+              (tezos-embedded-protocol-005-PsBABY5H -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-005-PsBabyM1 from
+              (tezos-embedded-protocol-005-PsBabyM1 -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-006-PsCARTHA from
+              (tezos-embedded-protocol-006-PsCARTHA -> void_for_linking)
+              (-> void_for_linking))
+            (select void_for_linking-006-PsCARTHA-mempool from
+              (tezos-mempool-006-PsCARTHA -> void_for_linking)
+              (-> void_for_linking))
+            cmdliner
+            tls)
+ (flags (:standard -open Tezos_base__TzPervasives
+                   -open Tezos_stdlib_unix
+                   -open Tezos_shell_services
+                   -open Tezos_rpc_http
+                   -open Tezos_rpc_http_server
+                   -open Tezos_p2p
+                   -open Tezos_shell
+                   -open Tezos_storage
+                   -open Tezos_validator
+                   -open Tezos_shell_context
+                   -open Tezos_workers
+                   -open Tezos_protocol_updater
+                   -linkall)))
+
+(rule
+  (target void_for_linking)
+  (action (write-file ${target} "")))
+
+(install
+ (package tezos-node)
+ (section bin)
+ (files (tezos-sandboxed-node.sh as tezos-sandboxed-node.sh)))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

@@ -1,0 +1,22 @@
+(library
+ (name tezos_crypto)
+ (public_name tezos-crypto)
+ (flags (:standard -open Tezos_stdlib
+                   -open Data_encoding
+                   -open Tezos_error_monad
+                   -open Tezos_rpc))
+ (libraries tezos-stdlib
+            data-encoding
+            tezos-error-monad
+            tezos-rpc
+            lwt
+            blake2
+            hacl
+            secp256k1-internal
+            uecc
+            zarith))
+
+(alias
+ (name runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))
