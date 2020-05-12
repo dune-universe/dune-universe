@@ -1,0 +1,4 @@
+(test
+  (name test_lazy)
+  (preprocess (pps refl.ppx))
+  (libraries refl))

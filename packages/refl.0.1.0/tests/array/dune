@@ -1,0 +1,4 @@
+(test
+  (name test_array)
+  (preprocess (pps refl.ppx))
+  (libraries refl))

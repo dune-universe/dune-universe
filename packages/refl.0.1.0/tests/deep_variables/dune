@@ -1,0 +1,4 @@
+(test
+  (name deep_variables)
+  (preprocess (pps refl.ppx))
+  (libraries refl))

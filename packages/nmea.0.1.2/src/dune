@@ -1,0 +1,12 @@
+(library
+ (public_name nmea)
+ (name nmea)
+ (modules ("coord" "parse" "sentence" "parser" "lexer")))
+
+(ocamllex lexer)
+
+(menhir (modules parser))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

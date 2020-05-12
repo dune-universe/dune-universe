@@ -1,0 +1,8 @@
+(executable
+ (name test)
+ (libraries oUnit nmea)
+ (modules ("test")))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

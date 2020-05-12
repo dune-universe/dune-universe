@@ -1,0 +1,7 @@
+(executables
+ (names pgx_async_example)
+ (libraries pgx_async))
+
+(alias
+ (name examples)
+ (deps pgx_async_example.exe))

@@ -1,0 +1,4 @@
+(test
+  (name poly)
+  (preprocess (pps refl.ppx))
+  (libraries refl))
