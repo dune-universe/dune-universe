@@ -1,0 +1,4 @@
+(tests
+ (names test_global_memory_limit
+        test_allocation_limit)
+ (libraries memprof-limits))

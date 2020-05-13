@@ -1,0 +1,39 @@
+opam-version: "2.0"
+name: "memprof-limits"
+version: "0.1"
+maintainer: "Guillaume Munch-Maccagnoni <Guillaume.Munch-Maccagnoni@inria.fr>"
+authors: [
+  "Guillaume Munch-Maccagnoni <Guillaume.Munch-Maccagnoni@inria.fr>"
+]
+license: "LGPL-3.0-only"
+homepage: "https://gitlab.com/gadmm/memprof-limits"
+bug-reports: "https://gitlab.com/gadmm/memprof-limits/issues"
+depends: [
+  "ocaml"
+  "ocaml-variants" {>="4.11.0"}
+  "dune" {build & >= "1.0"}
+]
+build: ["dune" "build" "-p" name "-j" jobs]
+dev-repo: "git+https://gitlab.com/gadmm/memprof-limits.git"
+synopsis: "Memory limits based on memprof"
+description: """
+Memprof-limits provides per-thread global memory limits, and
+per-thread allocation limits à la Haskell, compatible with systhreads.
+
+Per-thread global memory limits let you bound the memory consumption
+of specific parts of your program, in terms of memory used by the
+whole program.
+
+Per-thread allocation limits let you bound the execution of parts of
+the program measured in number of allocation, analogous to the same
+feature in Haskell. Allocation limits count allocations but not
+deallocations, and is therefore a measure of the work done which can
+be more suitable than execution time.
+
+The implementation uses memprof with a low sampling rate that does not
+affect performance. A reimplementation of the memprof interface
+compatible with memprof-limits running at the same time is provided
+for profiling needs.
+
+THIS PACKAGE IS EXPERIMENTAL
+"""
