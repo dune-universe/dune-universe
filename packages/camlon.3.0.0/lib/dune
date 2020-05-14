@@ -1,0 +1,9 @@
+(ocamllex lexer)
+
+(ocamlyacc parser)
+
+(library
+ (name camlon)
+ (public_name camlon)
+ (flags :standard -w -9)
+ (libraries))

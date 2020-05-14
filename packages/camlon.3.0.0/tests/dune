@@ -1,0 +1,5 @@
+(executables
+ (names test_arb)
+ (preprocess (pps ppx_typerep_conv ppx_sexp_conv))
+ (libraries qcheck_of_typerep camlon sexplib))
+

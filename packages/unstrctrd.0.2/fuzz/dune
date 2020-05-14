@@ -1,0 +1,3 @@
+(executable
+ (name fuzz)
+ (libraries fmt rresult unstrctrd unstrctrd.parser crowbar))

@@ -1,8 +1,0 @@
-(library
- ((name ppxx)
-  (public_name ppxx)
-  (synopsis "A small extension library for writing PPX preprocessors")
-  (flags (:standard -w -9))
-  (libraries ( ppx_tools_versioned
-  	       compiler-libs
-	       ocaml-migrate-parsetree ))))

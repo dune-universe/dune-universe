@@ -1,0 +1,4 @@
+(test
+ (name test)
+ (package blake2)
+ (libraries blake2 hex alcotest))

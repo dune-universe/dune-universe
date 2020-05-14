@@ -1,0 +1,13 @@
+(library
+ (name unstrctrd)
+ (public_name unstrctrd)
+ (modules unstrctrd pp lexer)
+ (libraries uutf))
+
+(library
+ (name unstrctrd_parser)
+ (public_name unstrctrd.parser)
+ (modules unstrctrd_parser)
+ (libraries angstrom unstrctrd))
+
+(ocamllex lexer)

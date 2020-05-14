@@ -1,0 +1,11 @@
+(test
+ (name test)
+ (package uecc)
+ (modules Test)
+ (libraries alcotest uecc))
+
+(test
+ (name test_vectors)
+ (package uecc)
+ (modules Vectors Test_vectors)
+ (libraries cstruct hex alcotest uecc))

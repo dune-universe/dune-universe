@@ -1,6 +1,0 @@
-depends: [
-  "jbuilder"
-]
-available: [ ocaml-version >= "4.03.0"]
-homepage: "https://bitbucket.org/camlspotter/camlon"
-

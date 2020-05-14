@@ -1,0 +1,7 @@
+(library
+ (name            blake2)
+ (public_name     blake2)
+ (foreign_stubs
+   (language c)
+   (names    blake2b-ref blake2b-bindings)
+   (flags (-O3))))

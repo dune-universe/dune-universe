@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "hacl"
+authors: [ "Vincent Bernardoff <vb@luminar.eu.org>" "Marco Stronati <marco@stronati.org>" ]
+maintainer: "contact@tezos.com"
+synopsis: "Tezos binding for Hacl*"
+homepage: "https://gitlab.com/nomadic-labs/ocaml-hacl"
+bug-reports: "https://gitlab.com/nomadic-labs/ocaml-hacl/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/ocaml-hacl.git"
+license: "MIT"
+depends: [
+  "dune" {>= "2.0"}
+  "bigstring" {>= "0.1.1"}
+  "ocplib-endian" {>= "1.0"}
+  "zarith" {>= "1.7"}
+  "alcotest" {with-test & >= "0.8.1"}
+  "hex" {with-test & >= "1.4.0"}
+  "base"
+  "stdio"
+]
+build: [
+  ["dune" "build" "-j" jobs "-p" name "@install"]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]

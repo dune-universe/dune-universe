@@ -1,0 +1,8 @@
+/target/
+**/*.rs.bk
+*.a
+benchs
+*.install
+_build
+*.exe
+.merlin

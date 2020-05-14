@@ -1,0 +1,9 @@
+build-and-test:
+  image: ocaml/opam2:debian-stable
+  script:
+    - opam pin --no-action hacl .
+    - opam depext hacl
+    - opam install --deps-only -t .
+    - dune build
+    - dune runtest
+    - opam install .
