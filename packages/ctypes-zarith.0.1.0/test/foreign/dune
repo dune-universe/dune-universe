@@ -1,0 +1,3 @@
+(library
+ (name test_foreign)
+ (libraries ctypes ctypes-zarith ctypes.foreign))

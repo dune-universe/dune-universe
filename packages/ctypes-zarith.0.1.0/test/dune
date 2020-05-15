@@ -1,0 +1,15 @@
+(executable
+ (name run_tests)
+ (libraries
+  alcotest
+  ctypes-zarith
+  ctypes.foreign
+  test_stubgen
+  test_foreign
+  test_ppx
+))
+
+(alias
+ (name runtest)
+ (deps run_tests.exe)
+ (action (run %{deps} -q --color=always)))

@@ -1,0 +1,10 @@
+(rule
+  (targets test_ppx.ml test_ppx_stubs.c)
+  (deps (:first-dep test_ppx.c.ml) ../../lib/c_flags.lines)
+  (action (chdir %{workspace_root} (run %{bin:ppx_cstubs} -pkg ctypes-zarith %{first-dep} -o %{targets} -- %{read-lines:../../lib/c_flags.lines}))))
+
+(library
+ (name test_ppx)
+ (c_names test_ppx_stubs)
+ (c_flags (:include ../../lib/c_flags.sexp))
+ (libraries ctypes ppx_cstubs ctypes-zarith))

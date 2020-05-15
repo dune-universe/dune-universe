@@ -1,0 +1,3 @@
+(library
+ (name ctypes_zarith_test_stubs)
+ (libraries ctypes ctypes-zarith))

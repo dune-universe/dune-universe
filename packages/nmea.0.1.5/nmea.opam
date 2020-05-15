@@ -1,0 +1,30 @@
+opam-version: "2.0"
+name: "nmea"
+version: "0.1.5"
+synopsis: "Nmea parser"
+description: """
+NMEA sentence parser library for OCaml
+"""
+maintainer: "Davide Gessa <gessadavide@gmail.com>"
+authors: [
+  "Davide Gessa <gessadavide@gmail.com>"
+]
+
+homepage: "https://github.com/dakk/nmea"
+bug-reports: "https://github.com/dakk/nmea/issues"
+license: "MIT"
+dev-repo: "git+https://github.com/dakk/nmea.git"
+build: ["dune" "build" "-p" name "-j" jobs]
+
+depends: [
+  "ocaml" {>= "4.05.0"}
+  
+  "dune" {>= "2.5.0"}
+  "menhir" {>= "20200211"}
+
+  "ounit" {with-test & >= "2.0.8"}
+  "odoc" {with-test & >= "1.3.0"}
+]
+
+depexts: [
+]

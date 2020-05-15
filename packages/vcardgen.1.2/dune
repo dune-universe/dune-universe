@@ -1,0 +1,15 @@
+(library
+ (name vcardgen)
+ (public_name vcardgen)
+ (libraries batteries)
+ (modules vcardgen))
+
+(executable
+ (modes byte exe)
+ (name example)
+ (libraries batteries vcardgen)
+ (modules example))
+
+(install
+ (section doc)
+ (files example.ml botero.jpeg))

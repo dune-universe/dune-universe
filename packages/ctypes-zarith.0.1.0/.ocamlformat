@@ -1,0 +1,12 @@
+margin=80
+break-sequences=true
+break-cases=fit
+doc-comments=before
+field-space=loose
+let-and=sparse
+infix-precedence=parens
+cases-exp-indent=2
+type-decl=sparse
+wrap-comments=false
+break-infix=fit-or-vertical
+break-string-literals=never

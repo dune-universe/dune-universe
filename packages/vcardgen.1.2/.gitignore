@@ -1,0 +1,16 @@
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.omc
+*.cmx
+*.cmxs
+*.cmxa
+.merlin
+
+# dune working directory
+_build/
+
+vcardgen.install
