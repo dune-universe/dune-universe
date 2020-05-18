@@ -1,0 +1,5 @@
+(test
+ (name test)
+ (modules Test)
+ (libraries cstruct buffer-pool crowbar)
+ (action (run ./test.exe)))

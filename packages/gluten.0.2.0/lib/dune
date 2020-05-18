@@ -1,4 +1,0 @@
-(library
- (name gluten)
- (public_name gluten)
- (libraries bigstringaf httpaf))
