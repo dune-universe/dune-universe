@@ -1,0 +1,4 @@
+(executable
+  (name package_type)
+  (preprocess (staged_pps override metaquot refl.ppx ppx_deriving.std))
+  (libraries compiler-libs.common metapp))

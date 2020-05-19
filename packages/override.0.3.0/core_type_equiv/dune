@@ -1,0 +1,7 @@
+(library
+  (name core_type_equiv)
+  (public_name override.core_type_equiv)
+  (preprocess (staged_pps boot refl.ppx))
+; -32: unused value (seems that the attribute is ignored in OCaml 4.03.0)
+  (flags -w -32)
+  (libraries compiler-libs.common refl))

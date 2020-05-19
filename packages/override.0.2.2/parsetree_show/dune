@@ -1,5 +1,0 @@
-(library
-  (name parsetree_show)
-  (public_name override.parsetree_show)
-  (preprocess (staged_pps override ppxlib.metaquot ppx_deriving.std))
-  (libraries compiler-libs.common))

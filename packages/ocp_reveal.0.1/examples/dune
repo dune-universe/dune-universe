@@ -1,0 +1,23 @@
+(executable
+ (name example)
+ (modules example)
+ (modes js)
+ (libraries ocp_reveal))
+
+(executable
+ (name example_2)
+ (modules example_2)
+ (modes js)
+ (libraries ocp_reveal))
+
+(alias
+ (name example)
+ (deps example.bc.js example.html js/highlight.js js/head.min.js js/reveal.js
+   js/marked.js js/markdown.js js/notes.js js/maths.js js/zoom.js
+   css/reveal.css tux.png))
+
+(alias
+ (name example_2)
+ (deps example_2.bc.js example_2.html js/highlight.js js/head.min.js
+   js/reveal.js js/marked.js js/markdown.js js/notes.js js/maths.js
+   js/zoom.js css/reveal.css))

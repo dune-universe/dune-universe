@@ -1,0 +1,5 @@
+(library
+  (name parsetree_show)
+  (public_name override.parsetree_show)
+  (preprocess (staged_pps override metaquot))
+  (libraries compiler-libs.common metapp))

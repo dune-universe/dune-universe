@@ -1,0 +1,7 @@
+(library
+  (name parsetree_of_types)
+  (public_name override.parsetree_of_types)
+  (preprocess (pps metapp.ppx metaquot.ppx))
+; -warning 40: Constructor or label name used out of scope. (OCaml <=4.06.0)
+  (flags -open Stdcompat -w -40)
+  (libraries compiler-libs.common metaquot stdcompat))

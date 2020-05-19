@@ -1,0 +1,4 @@
+(executable
+  (name typedtree_collect_texp_apply)
+  (preprocess (staged_pps metapp.ppx override refl.ppx))
+  (libraries compiler-libs.common refl))

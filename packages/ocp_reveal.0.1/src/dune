@@ -1,0 +1,6 @@
+(library
+ (public_name ocp_reveal)
+ (modules external_js slides reveal html)
+ (libraries omd js_of_ocaml)
+ (preprocess
+  (pps js_of_ocaml-ppx)))

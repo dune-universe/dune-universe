@@ -1,4 +1,0 @@
-(executable
-  (name package_type)
-  (preprocess (staged_pps override ppxlib.metaquot ppx_show))
-  (libraries compiler-libs.common ppx_show.runtime))
