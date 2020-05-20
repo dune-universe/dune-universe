@@ -1,0 +1,5 @@
+(library
+ (name foo)
+ (inline_tests)
+ (libraries loga)
+ (preprocess (pps ppx_expect loga.ppx)))

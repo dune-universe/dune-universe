@@ -1,0 +1,28 @@
+addons:
+  firefox: "73.0"
+  apt:
+    packages:
+      - nodejs
+sudo: required
+language: c
+install:
+  - sudo -H pip install selenium==3.141.0
+  - ./test/helpers/setup_geckodriver.sh
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-opam.sh
+script:
+  - bash -ex .travis-opam.sh
+  - bash -ex .travis-extra-tests.sh
+env:
+  global:
+    - PACKAGE=webtest-js
+    - PINS="webtest:."
+    - secure: "O+w29/dBBnYDjWRwgQWkoVH8qqvlSQATgb/vHvL5MIlIPnodUm9ScZUAgtsLDC9WlrACRi8UCiK6V7hLYdpb4H6iMhSq5/a62RoOrfjmsaHAKozjKgzYEPnxqkSJV0P+4vAQRe/6KYJfcgaNBZmbsLfMphoJs49VCpMB8cBowyo1OUDZ6Jj2aegR7zhQ4e78AlDiBjr1fXPt5vp+v5qlG0KhM3ZhhOdyRo8n11W2uCp+bJqTHLdc5MS05AGTQG6jwOUcDRUcedcYqAn5KbbcKrszph+ViJ4vxvbKCOy1P7Dn/I6wydwcmkp/jPMVq5MBA//uDdK8xwrftsFJ7FzLqIPVePF2LJkvaPHkS6kSpU/tfbhaltjGl3xleAWlcIA1qNj3ccs4rsOnLAKygx1JOttIXzXfKtPjq99Aze5nksAnHUpslI47x01CKIg0GVWaHVRy/kS/VlzC6ENWY/aLGjwBN2wFPYDngUN1ff7il/DkEi4Dw50NmrzA8+2zXz8iQv8mJcIA/FidAmK7qDiA+Q/XAaNlzBBPIhXIFNXH01EYc+u/wjn7+t4cmHYhrzuyx6aH0SHXuROI4y2avR7elybyWNWXpJm/vAj4zP6fT9qdwjt64vivMZJrB6sZKbM8z9LB5d+VCn2X9p1uvzxamomYNDYYDFSJI7E1XrtoBbw="
+  matrix:
+    - OCAML_VERSION=4.02
+    - OCAML_VERSION=4.03 DOCS=true KEEP=false
+    - OCAML_VERSION=4.04
+    - OCAML_VERSION=4.05
+    - OCAML_VERSION=4.06
+    - OCAML_VERSION=4.07
+    - OCAML_VERSION=4.08
+    - OCAML_VERSION=4.09

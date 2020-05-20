@@ -1,0 +1,5 @@
+(library
+ (name loga)
+ (public_name loga)
+ (libraries unix)
+ (preprocess no_preprocessing))

@@ -1,0 +1,5 @@
+(library
+ (name ringo_lwt)
+ (public_name ringo-lwt)
+ (libraries ringo lwt)
+ (flags :standard))

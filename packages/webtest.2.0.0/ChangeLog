@@ -1,0 +1,19 @@
+2.0.0 (16-May-2020):
+ * Convert build to dune
+ * Split into two opam packages, webtest and webtest-js
+
+1.2.0 (02-Jul-2017):
+ * Convert to js_of_ocaml 3.0.0
+
+1.1.0 (31-Mar-2017):
+ * Add support for running a test suite under nodejs
+ * Add logging of test run times
+
+1.0.2 (16-Jan-2017):
+ * Add internal modules to installed package
+
+1.0.1 (15-Jan-2017):
+ * Add support for custom equality functions in assert_equal
+
+1.0.0 (02-Nov-2016):
+ * first public release

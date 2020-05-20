@@ -1,0 +1,5 @@
+(library
+  (name test_common)
+  (modules test_assert test_async test_sync test_utils)
+  (wrapped false)
+  (libraries webtest))

@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: ocaml/opam2:alpine-3.10-ocaml-4.10
+    steps:
+      - checkout
+      - run: opam update
+      - run: opam install dune
+      - run: make install-deps
+      - run: make test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test

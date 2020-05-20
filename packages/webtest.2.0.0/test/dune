@@ -1,0 +1,32 @@
+(test
+  (name run_tests_ocaml)
+  (modules run_tests_ocaml)
+  (libraries test_common))
+
+(executable
+  (name run_tests_nodejs)
+  (modes js)
+  (modules run_tests_nodejs)
+  (preprocess (pps js_of_ocaml-ppx))
+  (libraries test_common test_common_js webtest-js))
+
+(alias
+  (name nodetest)
+  (deps
+    (:x run_tests_nodejs.bc.js)
+    (source_tree helpers))
+  (action (run node run_tests_nodejs.bc.js)))
+
+(executable
+  (name run_tests_browser)
+  (modes js)
+  (modules run_tests_browser)
+  (preprocess (pps js_of_ocaml-ppx))
+  (libraries test_common test_common_js webtest-js))
+
+(alias
+  (name firefoxtest)
+  (deps
+    (:x run_tests_browser.bc.js)
+    (source_tree helpers))
+  (action (run helpers/test_driver.py)))

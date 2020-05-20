@@ -1,0 +1,5 @@
+(library
+  (name test_common_js)
+  (modules test_js)
+  (wrapped false)
+  (libraries js_of_ocaml test_common webtest))
