@@ -1,0 +1,4 @@
+(library
+  (name clangml_config)
+  (library_flags -linkall)
+  (public_name clangml.config))

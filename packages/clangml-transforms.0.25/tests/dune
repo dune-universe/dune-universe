@@ -1,0 +1,4 @@
+(test
+  (name tests)
+  (preprocess (pps refl.ppx))
+  (libraries clangml-transforms refl))

@@ -1,7 +1,0 @@
-(library
-  (name clangml_compare)
-  (public_name clangml.compare)
-  (preprocess (staged_pps override ppx_deriving.std))
-  (libraries clangml)
-; -warning 30: Constructor defined in several types
-  (flags -w -30))

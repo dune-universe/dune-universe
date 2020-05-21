@@ -1,5 +1,0 @@
-(library
-  (name clangml_lift)
-  (public_name clangml.lift)
-  (preprocess (staged_pps override ppxlib.metaquot ppxlib.traverse))
-  (libraries ppxlib.metaquot ppxlib.metaquot_lifters clangml))

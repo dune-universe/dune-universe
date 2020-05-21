@@ -1,3 +1,0 @@
-(library
-  (name clangml_config)
-  (public_name clangml.config))

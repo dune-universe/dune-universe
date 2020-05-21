@@ -1,0 +1,6 @@
+(library
+  (name clangml_transforms)
+  (public_name clangml-transforms)
+  (preprocess (pps refl.ppx))
+  (wrapped false)
+  (libraries clangml refl dolog traverse))

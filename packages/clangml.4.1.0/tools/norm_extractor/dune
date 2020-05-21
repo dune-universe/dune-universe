@@ -1,0 +1,7 @@
+(executable
+  (name norm_extractor)
+  (preprocess (pps metaquot.ppx refl.ppx))
+  (libraries stdcompat cmdliner clangml refl clangml_tools_common)
+  (flags -open Stdcompat))
+
+(ocamllex (modules tex_lexer aux_lexer))

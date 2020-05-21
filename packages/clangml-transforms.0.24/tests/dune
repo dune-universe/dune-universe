@@ -1,3 +1,0 @@
-(executable
-  (name tests)
-  (libraries clangml-transforms clangml.compare clangml.show))

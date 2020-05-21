@@ -1,0 +1,9 @@
+(test
+  (name c17)
+  (preprocess (pps clangml.ppx pattern.ppx refl.ppx))
+; -warning 9: the following labels are not bound in this record pattern
+; +warning 32: Unused value declaration.
+; +warning 34: Unused type declaration.
+; -warning 40: Constructor or label name used out of scope. (OCaml <=4.06.0)
+  (flags -open Stdcompat -w -9+32+34-40)
+  (libraries clangml clangml_config pattern refl))

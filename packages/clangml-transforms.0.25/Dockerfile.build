@@ -1,0 +1,9 @@
+FROM clangml-transforms
+RUN git pull
+RUN cd /home/opam/memcad && git pull
+RUN cd /home/opam/clangml-transforms && git pull
+RUN . /home/opam/.profile && cd /home/opam/clangml-transforms && \
+    dune build clangml-transforms.opam
+RUN opam update && opam upgrade && opam install clangml-transforms
+RUN cd /home/opam/memcad && git pull
+RUN eval $(opam env) && make -C /home/opam/memcad

@@ -1,5 +1,0 @@
-let llvm_config = "@LLVM_CONFIG@"
-
-let version = "@LLVM_VERSION@"
-
-let includedir = "@LLVM_INCLUDEDIR@"

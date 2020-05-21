@@ -1,0 +1,5 @@
+(executable
+  (name print_tree)
+  (preprocess (pps refl.ppx))
+  (flags -open Stdcompat)
+  (libraries stdcompat clangml cmdliner refl clangml_tools_common))
