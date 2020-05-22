@@ -1,0 +1,3 @@
+(library
+ (name canonical)
+ (libraries compiler-libs.common))

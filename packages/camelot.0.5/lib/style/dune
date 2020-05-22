@@ -1,0 +1,3 @@
+(library
+(name style)
+(libraries compiler-libs.common canonical utils str))

@@ -1,0 +1,3 @@
+(library
+ (name report)
+ (libraries compiler-libs.common ANSITerminal canonical))
