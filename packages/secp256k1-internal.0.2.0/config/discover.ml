@@ -1,12 +1,4 @@
-let output_defines ppf symbols =
-  let pp_sep ppf () = Format.pp_print_char ppf ' ' in
-  let pp_symbol ppf sym =
-    match sym with
-    | None -> ()
-    | Some (sym, None) -> Format.fprintf ppf "-D%s" sym
-    | Some (sym, Some def) -> Format.fprintf ppf "-D%s=%s" sym def in
-  let pp = Format.pp_print_list ~pp_sep pp_symbol in
-  Format.fprintf ppf "(%a)%!" pp symbols
+module C = Configurator.V1
 
 let hw = Config.hw_identifier ()
 let sixtyfour = Sys.word_size = 64
@@ -31,8 +23,30 @@ let symbols = [
   Some ("ENABLE_MODULE_RECOVERY", None) ;
 ]
 
+let generate_defines symbols =
+  let gen_symbol sym =
+    match sym with
+    | None -> None
+    | Some (sym, None) -> Some (Printf.sprintf "-D%s" sym)
+    | Some (sym, Some def) -> Some (Printf.sprintf "-D%s=%s" sym def)
+  in
+  List.filter_map gen_symbol symbols
+
+let defines = generate_defines symbols
+
+let get_config c =
+  let open C.Pkg_config in
+  let default = {libs = ["-lgmp"]; cflags = []} in
+  let pkg_conf =
+    Option.value
+      (Option.bind (get c) (fun pc -> query pc ~package:"gmp"))
+      ~default in
+  {libs = pkg_conf.libs;
+   cflags = List.append pkg_conf.cflags defines}
+
 let () =
-  let oc = open_out "c_flags.sexp" in
-  let ppf = Format.formatter_of_out_channel oc in
-  output_defines ppf symbols ;
-  close_out oc
+  C.main ~name:"discover" (fun c ->
+      let conf = get_config c
+      in
+      C.Flags.write_sexp "c_flags.sexp" conf.cflags ;
+      C.Flags.write_sexp "c_library_flags.sexp" conf.libs )

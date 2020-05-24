@@ -14,8 +14,10 @@ build: [
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
 depends: [
+  "ocaml" {>= "4.08.0"}
   "conf-gmp" {build}
-  "dune" {build & >= "1.0.1"}
+  "dune" {>= "2"}
+  "dune-configurator"
   "cstruct" {>= "3.2.1"}
   "bigstring" {>= "0.1.1"}
   "hex" {with-test & >= "1.4.0"}

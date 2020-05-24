@@ -1,0 +1,4 @@
+(test
+ (name test)
+ (package secp256k1-internal)
+ (libraries hex libsecp256k1 alcotest))
