@@ -817,8 +817,7 @@ CAMLprim value PQgetvalue_stub(value v_res, intnat tup_num, intnat field_num)
   else {
     /* Assume binary format! */
     size_t len = PQgetlength(res, tup_num, field_num);
-    v_str = len ? caml_alloc_string(len) : v_empty_string;
-    memcpy(String_val(v_str), str, len);
+    v_str = len ? caml_alloc_initialized_string(len, str) : v_empty_string;
   }
   CAMLreturn(v_str);
 }
@@ -872,8 +871,7 @@ static value unescape_bytea(const char *str)
   char *buf = (char *) PQunescapeBytea((unsigned char*) str, &res_len);
   if (buf == NULL) caml_failwith("Postgresql: illegal bytea string");
   else {
-    value v_res = caml_alloc_string(res_len);
-    memcpy(String_val(v_res), buf, res_len);
+    value v_res = caml_alloc_initialized_string(res_len, buf);
     PQfreemem(buf);
     return v_res;
   }
@@ -924,8 +922,7 @@ CAMLprim value PQgetescval_stub(value v_res, intnat tup_num, intnat field_num)
   } else {
     /* Assume binary format! */
     size_t len = PQgetlength(res, tup_num, field_num);
-    v_str = len ? caml_alloc_string(len) : v_empty_string;
-    memcpy(String_val(v_str), str, len);
+    v_str = len ? caml_alloc_initialized_string(len, str) : v_empty_string;
   }
   CAMLreturn(v_str);
 }
@@ -1104,9 +1101,20 @@ CAMLprim value PQgetResult_stub(value v_conn)
 }
 
 noalloc_conn_info_intnat(PQconsumeInput)
-noalloc_conn_info(PQisBusy, Val_bool)
+
 noalloc_conn_info_intnat(PQflush)
 noalloc_conn_info_intnat(PQsocket)
+
+CAMLprim value PQisBusy_stub(value v_conn)
+{
+  CAMLparam1(v_conn);
+  PGconn *conn = get_conn(v_conn);
+  bool res;
+  caml_enter_blocking_section();
+    res = PQisBusy(conn);
+  caml_leave_blocking_section();
+  CAMLreturn(Val_bool(res));
+}
 
 CAMLprim value PQCancel_stub(value v_conn)
 {
@@ -1138,8 +1146,7 @@ CAMLprim value PQescapeStringConn_stub(
     caml_stat_free(buf);
     caml_failwith("Postgresql.escape_string_conn: failed to escape string");
   } else {
-    value v_res = caml_alloc_string(n_written);
-    memcpy(String_val(v_res), buf, n_written);
+    value v_res = caml_alloc_initialized_string(n_written, buf);
     caml_stat_free(buf);
     return v_res;
   }
@@ -1161,8 +1168,7 @@ CAMLprim value PQescapeByteaConn_stub(
     (char *) PQescapeByteaConn(
       get_conn(v_conn),
       (unsigned char *) String_val(v_from) + pos_from, len, &res_len);
-  value v_res = caml_alloc_string(--res_len);
-  memcpy(String_val(v_res), buf, res_len);
+  value v_res = caml_alloc_initialized_string(--res_len, buf);
   PQfreemem(buf);
   return v_res;
 }
@@ -1287,8 +1293,7 @@ CAMLprim value PQgetCopyData_stub(value v_conn, intnat async)
     case -2:
       CAMLreturn(Val_int(2)); /* Get_copy_error */
     default:
-      v_buf = caml_alloc_string(res);
-      memcpy(String_val(v_buf), buf, res);
+      v_buf = caml_alloc_initialized_string(res, buf);
       PQfreemem(buf);
       v_res = caml_alloc_small(1, 0); /* Get_copy_data */
       Field(v_res, 0) = v_buf;
@@ -1398,9 +1403,9 @@ CAMLprim value PQendcopy_stub_bc(value v_conn)
 static inline void notice_ml(void *cb, const char *msg)
 {
   value v_msg;
-  /* CR mmottl for mmottl: this is not reliable and can lead to segfaults,
-     because the runtime lock may already be held (but not usually).
-     A runtime feature is needed to fully support this. */
+  /* CR mmottl for mmottl: this is not reliable and can lead to deadlocks or
+     other unintended behavior, because the runtime lock may already be held
+     (but not usually).  A runtime feature is needed to fully support this. */
   caml_leave_blocking_section();
     v_msg = make_string(msg);
     caml_callback(((np_callback *) cb)->v_cb, v_msg);
@@ -1415,6 +1420,31 @@ CAMLprim value PQsetNoticeProcessor_stub(value v_conn, value v_cb)
   return Val_unit;
 }
 
+static void np_quiet(void __unused *arg, const char __unused *message)
+{
+}
+
+static void np_stderr(void __unused *arg, const char *message)
+{
+    fprintf(stderr, "%s", message);
+}
+
+CAMLprim value PQsetNoticeProcessor_num(value v_conn, value v_cb_num)
+{
+  np_decr_refcount(get_conn_cb(v_conn));
+  set_conn_cb(v_conn, NULL);
+  switch (Int_val(v_cb_num)) {
+    case 0:
+      PQsetNoticeProcessor(get_conn(v_conn), np_stderr, NULL);
+      break;
+    case 1:
+      PQsetNoticeProcessor(get_conn(v_conn), np_quiet, NULL);
+      break;
+    default:
+      break;
+  }
+  return Val_unit;
+}
 
 /* Large objects */
 

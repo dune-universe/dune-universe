@@ -91,7 +91,7 @@ module Current_module_path = struct
     | fname ->
         let base = Filename.basename fname in
         let chopped = try Filename.chop_extension base with _ -> base in
-        let mn = String.capitalize chopped in
+        let mn = String.capitalize_ascii chopped in
         match !Clflags.for_package with
         | None -> Lident mn
         | Some p -> Ldot (Lident p, mn) 

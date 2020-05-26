@@ -17,3 +17,4 @@ opam/generated
 _build
 \.merlin$
 .*\.install$
+dune-project

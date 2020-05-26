@@ -1,5 +1,0 @@
-(library
- ((kind ppx_rewriter)
-  (name ppx_test_plugin)
-  (public_name ppx_test.ppx)
-  (libraries ( re compiler-libs.common ppx_test.runtime ocaml-migrate-parsetree ppxx))))

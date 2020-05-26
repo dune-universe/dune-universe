@@ -87,8 +87,8 @@ module Config = struct
   let is_go conf n =
     let s = Name.to_string n in
     List.fold_left (fun st -> function
-      | Do rex when Re_pcre.pmatch ~rex s -> true
-      | Dont rex when Re_pcre.pmatch ~rex s -> false
+      | Do rex when Re.Pcre.pmatch ~rex s -> true
+      | Dont rex when Re.Pcre.pmatch ~rex s -> false
       | _ -> st) conf.default_go conf.args
 end
   
@@ -97,8 +97,8 @@ open Config
 let arg_specs = 
   let open Arg in
   let open Config in      
-  [ "--test-go",   String (fun s -> rev_args +::= Do   (Re_pcre.regexp s)), "<string>: Perform tests match with the string";
-    "--test-skip", String (fun s -> rev_args +::= Dont (Re_pcre.regexp s)), "<string>: Skip tests match with the string";
+  [ "--test-go",   String (fun s -> rev_args +::= Do   (Re.Pcre.regexp s)), "<string>: Perform tests match with the string";
+    "--test-skip", String (fun s -> rev_args +::= Dont (Re.Pcre.regexp s)), "<string>: Skip tests match with the string";
     "--test-verbose", Set test_verbose, ": Print out what is being tested.";
     "--test-show", Set show_tests, ": List all the tests. Do not perform any test.";
     "--test-print-immediately", Set print_failure_immediately, ": Show test errors immediately";

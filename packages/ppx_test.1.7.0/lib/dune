@@ -1,0 +1,8 @@
+(library
+ (name ppx_test)
+ (public_name ppx_test)
+ (libraries re.pcre)
+ (flags :standard -w -9)
+ (inline_tests.backend
+  (generate_runner
+   (echo "Ppx_test.Test.collect ();;"))))

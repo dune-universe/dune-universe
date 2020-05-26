@@ -1,6 +1,6 @@
 (lang dune 1.10)
 (name postgresql)
-(version 4.5.2)
+(version 4.6.0)
 
 (generate_opam_files true)
 
@@ -25,6 +25,7 @@ Postgresql offers library functions for accessing PostgreSQL databases.")
   (depends
     (ocaml (>= 4.08))
     (dune (>= 1.10))
+    dune-configurator
     (base :build)
     (stdio :build)
     (conf-postgresql :build)

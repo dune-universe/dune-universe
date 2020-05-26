@@ -1,0 +1,16 @@
+(executables
+ (names test1 test2 test3 fail)
+ (link_flags -linkall)
+ (preprocess
+  (pps ppx_test.ppx))
+ (libraries ppx_test.runtime))
+
+(alias
+ (name runtest)
+ (deps test1.exe test2.exe test3.exe fail.exe)
+ (action
+  (progn
+   (run %{project_root}/test/test1.exe)
+   (run %{project_root}/test/test2.exe)
+   (run %{project_root}/test/test3.exe)
+   (run %{project_root}/test/fail.exe))))

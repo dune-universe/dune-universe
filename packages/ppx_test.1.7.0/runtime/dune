@@ -1,0 +1,4 @@
+(library
+ (name ppx_test_runtime)
+ (public_name ppx_test.runtime)
+ (libraries ppx_test))
