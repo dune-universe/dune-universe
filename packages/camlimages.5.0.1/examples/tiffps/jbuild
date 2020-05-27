@@ -1,3 +1,0 @@
-(executable
- ((name tiffps)
-  (libraries (camlimages.core camlimages.jpeg camlimages.tiff))))

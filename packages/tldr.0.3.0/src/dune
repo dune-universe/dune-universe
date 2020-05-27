@@ -1,0 +1,13 @@
+(executable
+  (name tldr)
+  (public_name tldr)
+  (libraries base cohttp-lwt-unix ssl ANSITerminal angstrom stdio cmdliner))
+
+(rule
+ (with-stdout-to tldr.1
+   (run tldr --help=groff)))
+
+(install
+ (section man)
+ (package tldr)
+ (files tldr.1))

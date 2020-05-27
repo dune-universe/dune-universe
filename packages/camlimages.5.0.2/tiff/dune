@@ -1,0 +1,16 @@
+(library
+ (name camlimages_tiff)
+ (public_name camlimages.tiff)
+ (wrapped false)
+ (c_names tiffwrite tiffread)
+ (libraries camlimages.core)
+ (library_flags -linkall)
+ (c_flags
+  (:include ../config/tiff_c_flags.sexp))
+ (c_library_flags
+  (:include ../config/tiff_c_library_flags.sexp)))
+
+; jbuild cannot permit to have a directly only with headers
+
+(rule
+ (copy ../include/oversized.h oversized.h))

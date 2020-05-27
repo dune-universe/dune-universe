@@ -1,0 +1,4 @@
+(executable
+ (name imgstat)
+ (libraries camlimages.core camlimages.gif camlimages.jpeg camlimages.png
+   camlimages.tiff camlimages.xpm))

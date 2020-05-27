@@ -1,0 +1,10 @@
+(library
+ (name camlimages_freetype)
+ (public_name camlimages.freetype)
+ (wrapped false)
+ (c_names ftintf)
+ (libraries camlimages.core)
+ (c_flags
+  (:include ../config/freetype_c_flags.sexp))
+ (c_library_flags
+  (:include ../config/freetype_c_library_flags.sexp)))

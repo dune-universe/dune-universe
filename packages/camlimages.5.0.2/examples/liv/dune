@@ -1,0 +1,4 @@
+(executable
+ (name liv)
+ (libraries camlimages.core camlimages.gif camlimages.jpeg camlimages.png
+   camlimages.tiff camlimages.xpm camlimages.lablgtk2 threads))

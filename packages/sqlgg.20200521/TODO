@@ -1,0 +1,14 @@
+* native-type annotations in queries
+* allow to parametrize SQL syntax itself (ORDER BY ASC|DESC) : unsafe/enumeration/option params
+* ocaml ppx syntax extension for inline sql
+* allow to tolerate errors in query
+* support BULK INSERTs (how?)
+* provide ways to extend lexer with tokens in runtime
+* choose better names for some common cases (WHERE id = ? etc)
+* use prepared statements in all traits
+* check all generated names for uniqueness and validity with regard to target language
+* support/test other SQL engines
+* generate code for more languages
+* read SQL spec
+* distinguish predicates and expressions
+* type check expressions

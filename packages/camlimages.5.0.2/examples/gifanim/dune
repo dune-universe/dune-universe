@@ -1,0 +1,3 @@
+(executable
+ (name gifanim)
+ (libraries camlimages.core camlimages.gif camlimages.lablgtk2 threads))

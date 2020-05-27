@@ -1,0 +1,17 @@
+(library
+ (name camlimages_png)
+ (public_name camlimages.png)
+ (wrapped false)
+ (flags -w -37)
+ (c_names pngwrite pngread)
+ (libraries camlimages.core)
+ (library_flags -linkall)
+ (c_flags
+  (:include ../config/png_c_flags.sexp))
+ (c_library_flags
+  (:include ../config/png_c_library_flags.sexp)))
+
+; jbuild cannot permit to have a directly only with headers
+
+(rule
+ (copy ../include/oversized.h oversized.h))

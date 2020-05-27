@@ -1,0 +1,6 @@
+(library
+ (name camlimages_lablgtk2)
+ (public_name camlimages.lablgtk2)
+ (optional)
+ (wrapped false)
+ (libraries lablgtk2 camlimages.core))

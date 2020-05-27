@@ -1,0 +1,41 @@
+(executable
+ (name test)
+ (modules test)
+ (libraries camlimages.core camlimages.gif camlimages.jpeg camlimages.png
+   camlimages.tiff camlimages.xpm camlimages.graphics camlimages.freetype))
+
+(executable
+ (name test2)
+ (modules test2)
+ (libraries camlimages.core camlimages.gif camlimages.jpeg camlimages.png
+   camlimages.tiff camlimages.xpm camlimages.graphics camlimages.freetype))
+
+(executable
+ (name jpgmark)
+ (modules jpgmark)
+ (libraries camlimages.core camlimages.jpeg))
+
+(executable
+ (name jpgexif)
+ (modules jpgexif)
+ (libraries camlimages.core camlimages.jpeg camlimages.exif))
+
+(executable
+ (name dyn)
+ (modules dyn)
+ (libraries camlimages.core dynlink))
+
+; XXX runtest does not work for now some data files are required
+
+(alias
+ (name runtest)
+ ;  (deps (test.exe test2.exe jpgmark.exe jpgexif.exe))
+ (deps jpgmark.exe jpgexif.exe)
+ (action
+  (progn
+   ;	    (run ${SCOPE_ROOT}/test/test.exe) ; requires graphics
+   ;	    (run ${SCOPE_ROOT}/test/test2.exe) ; requires graphics
+   (run %{project_root}/test/jpgmark.exe)
+   (run %{project_root}/test/jpgexif.exe)
+   ;	    (run ${SCOPE_ROOT}/test/dyn.exe)
+   )))

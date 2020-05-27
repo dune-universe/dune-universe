@@ -1,0 +1,9 @@
+(executable
+ (name main)
+ (public_name omigrate)
+ (libraries omigrate omigrate.postgres cmdliner fmt fmt.tty logs.fmt logs.cli
+   lwt lwt.unix)
+ (flags
+  (:standard -open StdLabels)))
+
+(include_subdirs unqualified)

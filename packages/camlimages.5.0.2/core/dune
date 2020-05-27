@@ -1,0 +1,14 @@
+(library
+ (name camlimages)
+ (public_name camlimages.core)
+ (wrapped false)
+ (flags -w -3)
+ (library_flags -linkall))
+
+(rule
+ (targets camlimages.ml)
+ (deps
+  (:< camlimages.cppo.ml)
+  ../config/config.h)
+ (action
+  (run %{bin:cppo} %{<} -o %{targets})))
