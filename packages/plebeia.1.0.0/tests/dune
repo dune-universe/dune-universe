@@ -1,0 +1,22 @@
+(tests
+  (names
+   test_api
+   test_storage
+   test_chunk
+   test_roots
+   test_subtree
+   test_copy
+   test_extender
+   test_full_random
+   test_full_deep_random
+   test_lock
+   test_remove_empty_bud
+   test_remove_up_disk
+   test_reader
+   test_merkle_proof
+   test_traverse
+   test_blake2b28
+   test_segment_encoding_for_hash
+   test_hash
+	)
+  (libraries plebeia))

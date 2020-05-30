@@ -1,3 +1,0 @@
-(library
-(name traverse)
-(libraries compiler-libs.common canonical style))

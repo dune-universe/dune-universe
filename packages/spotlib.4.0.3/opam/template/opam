@@ -1,7 +1,0 @@
-depends: [
-  "ocamlfind" { build }
-  "jbuilder" { build }
-  "ppx_test" {>= "1.6.0"}
-]
-available: [ ocaml-version >= "4.04.0"]
-homepage: "https://bitbucket.org/camlspotter/spotlib"

@@ -1,0 +1,8 @@
+(library
+ (name spotlib_curl)
+ (public_name spotlib.curl)
+ (flags -w -9)
+ (preprocess
+  (pps ppx_test.ppx))
+ (optional)
+ (libraries unix str ppx_test.runtime curl))

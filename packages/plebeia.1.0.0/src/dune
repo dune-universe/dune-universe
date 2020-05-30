@@ -1,0 +1,8 @@
+(library
+  (name plebeia)
+  (public_name plebeia)
+  (libraries bigstring blake2 cstruct stdint hex data-encoding zarith
+  	     ptime.clock.os)
+  (flags :standard -warn-error -9-32-34-37)
+  (library_flags (-linkall))
+  )

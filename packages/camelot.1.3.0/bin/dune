@@ -1,0 +1,6 @@
+(executable
+ (name camelot)
+ (public_name camelot)
+ (libraries compiler-libs.common arthur canonical traverse style report) 
+ (modes exe)
+)

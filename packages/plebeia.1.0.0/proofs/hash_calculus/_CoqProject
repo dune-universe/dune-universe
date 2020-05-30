@@ -1,0 +1,5 @@
+-R . PlebeiaHash
+src/Premise.v
+src/NodeHash.v
+src/NodeHashSpec.v
+src/Extr.v

@@ -1,0 +1,255 @@
+4.1.0
+--------------
+
+- Port to OCaml 4.08 and dune 2
+- Use of ppx_test inline_tests
+- Renamed Spotlib.Spot.Set.unsafe_binary to Spotlib.Spot.Set.unsafe_top_node
+- Added Spotlib.Spot.Set.unsafe_find_node
+- Added Spotlib.Spot.Filename.concats
+- Added Spotlib_curl
+
+4.0.3
+--------------
+
+- using jbuilder
+
+4.0.2
+--------------
+
+- safe-string ready
+- Added Spot.Bytes
+- Added (!>$) and (!<$) for string-bytes conversions
+- Added with_return
+
+4.0.1
+--------------
+
+- Ported to ppx_test.1.5.0
+- New OMyMakefile
+
+4.0.0
+--------------
+
+Lots of incompatible changes maily related with the introduction of result type,
+i.e. type ('a, 'b) result = Ok of 'a | Error of 'b in OCaml's standard library.
+
+* Polymorphic variant result type `[`Ok of 'a | `Error of 'b]` is now retired.
+  All the functions using this type are modified with the normal variant
+  `result` type.
+* Spotlib.Spot.Result is now for the normal variant `result` type. The older
+  version of the module for the polymorphic variant result type is now
+  Spotlib.Spot.Poly_result.
+* Removed module Channel, which is inusable
+* Module Command and Shell are refactored largely
+* Exportation of functions in module Exn is revised largely.
+* Introduced Vresult.IsExn exception for the error of `from_Ok`.
+
+3.1.2
+--------------
+
+- Build file updates
+
+3.1.1
+--------------
+
+- Shell.V2 with the same interface as Command is added.
+- Shell is now uses Command and works in MinGW.
+- added List.uniq_dup_sorted
+- Renamed URL.ml* => uRL.ml*, it may cause compilation troubles w/o cleaning.
+- added Exn.raisef
+- added Base.add_if_not_mem
+- Fixed the bug of File.to_string
+
+3.1.0
+--------------
+
+- Added Spot.timed_message and Spot.memoize_gen
+- Renamed Stream back to SpotStream, which is available as Spot.Stream anyway
+* Rewrote Command module
+* Unix.Command is renamed as Unix.CommandDeprecated, suggesting to use Command
+
+3.0.0
+--------------
+
+Lots of rewrite.
+
+* Rewriting List and String so that they can share the same API names as possible
+* Monad_intf and Monad are unified. Monad now uses one unified functor instead of two identical but independent functors to implement of monads with one parameter and two parameters.
+* map is removed from Monad interfaces. Use fmap instead.
+* Open modules of monads are renamed to Infix and non operators are removed from them.
+* Removed function labels of functions defined in At module
+* Once is overwritten by Backref, and Backref is now gone
+* Added Hashtbl.create_with
+
+2.5.4
+--------------
+
+- Build fix for Cygwin OPAM + MinGW OCaml
+- Added String.of_char
+
+2.5.3
+--------------
+
+- Added Unix.Find.fold, pure version of Unix.Find.find
+* Cleaned Base. imp and imp_ are now renamed to with_ref and with_ref_ respectively. The old with_ref is no more.
+- Internally SpotStream is renamed as Stream.
+* Changed types of mkdir
+
+2.5.2
+--------------
+
+- Moved Result.Pervasives.Error to Result.Error
+- Spot.Stream.filter_map is added
+- Spot.Command is added to replace Spot.Unix.Command
+- Fixed linking order of Result and Option
+
+2.5.1
+--------------
+
+- Added List.uniq_dup
+- Added Monad*.mapM_
+- Added Unix.Find.files
+- Fixed off-by-one error of String.scani_left
+- Added Xlexing.from_string_with_position
+- Added Freem
+
+2.5.0
+---------------
+
+- Moved to 4.02.0
+- Stopped using CamlP4 and pa_ounit and now uses ppx_test
+- Levenshtein is now moved to levenshtein package
+- Removed lib/phantom*.ml*
+- Added String.split1
+- Added Filename.is_root
+- Added Base.(+=) and Base.(-=)
+- Added Base.find_by_iter and Base.find_in_tree
+* Type change from exn to `Exn of exn at Exn.catch and the other exn result error types 
+- Added Option.to_result
+- Added Gc.used_words. Gc.with_compacts has changed its type.
+- Added Array.shuffle
+- Added (!++)
+- Added List.zip, Haskell style combine
+
+2.4.1
+---------------
+
+- Added Levenshtein for Levenshtein distance for arrays
+- String.Levenshtein.distance is rewritten using an imperative algorithm.
+
+2.4.0
+---------------
+
+- Added Option.iter
+- Added Option.(>>=!), Result.(>>=!) for bindE. Result.(>>|!) for mapE.
+- Added UniqueID
+- Added Once
+- Added Backref
+- Hashtbl.of_list and to_list accept double bindings
+- Added List.accum, List.(+::=) and Spot.(+::=)
+- Lazy.(!!) is also in Lazy.Open(!!)
+- Unix.mkdir can be recursive now
+- Added Shell, commands via shell commands
+- Added SpotStream.map
+- Added String.{sub', replace_chars, find}
+- Added Filepath
+- Added String.is_space_or_tab and String.is_newline_or_return
+- Added Sys.with_chdir
+- Added Result.at_Error
+- Added Option.(//) which works like Option.default
+- Added Base.flipf and Base.filp
+* Largely rewritten Xunix's command/shell execution.
+* Added Shell for the shell command like functions
+* Added labels to At functions.
+* Stream.fold_right and fold_right1 were wrong. Shameful.
+* Removed String.split_by_newline since it is buggy. Added String.lines instead.
+* String.chop_newline is now renamed as String.chop_eols with a bug fix
+* Greatly simplyfied Exn
+* Changed type of Result.from_Ok
+
+2.3.0
+------------
+
+- Added with_ic, (|-), (~~) to Base
+* Removed lots of ~f labels.
+- Added Exn.protect'_with and Exn.tee
+- Added Hashset.Make
+- Added Result.map_error
+- Added Monadic interface for Stream
+- Added Array.foldi_{left,right}
+- Added Format.of_out_channel
+- Added Gc.with_compacts
+- Added List.assoc_opt, rev_filter_map, group, splits_by and TR (tail recursive)
+* Renamed String.contains to String.is_substring to avoid the collision with stdlib's String.contains
+- Added Unix.with_chdir
+
+2.2.0
+------------
+
+- Added Unix.shell_command'
+- Added Unix.command'
+* Changed type of Unix.shell_command
+* Changed type of Unix.command
+- Added Base.try_default
+- Added Tuple
+- Added Exn
+- Exposed some more functions into Spotlib.Spot name space
+- Added Temporal
+- Renamed Stream to SpotStream
+- Workaround of CamlP4 bug around `True and `False
+- Dependency on pa_ounit (version: 109.11.00)
+- Added (--) like List.from_to
+- Added List.{partition, partition_map}
+- Tweaked String.{is_prefix, is_postfix} labels
+- Added String.{is_prefix', is_postfix', drop_postfix}
+- Added ok, ng, !!%
+- Added (*>)
+- Unix.{file, mkdtemp, with_dtemp} added
+- Unix.mkdir is overridden
+* Renamed Unix.find to Added Unix.Find.find with poly record interface
+- Added Format.to_string
+- Added URL
+
+2.1.2
+------------
+
+- Added String.split
+- Added Monad.{liftM, liftM2, fmap2}
+- Removed Monad.ignore. Use Monad.void
+- Added scan*_left functions
+- Added Dllist for doubly linked list
+- Added Result in Spot
+- Added Base.{result, from_Some, from_Ok, from_Result, memoize_rec} 
+- Added String.Levenstein.dist_non_tco
+- Added Stream.{split_at, split_at'}
+- Added Hashtbl.concat
+- Added List.{assoc_all, scani_left}
+- Added String.{index_opt, sub_from_to, split, index_opt, scani_left, foldi_left}
+
+2.1.1
+------------
+
+- String.make1 added
+- (%!) (= Printf.sprintf) is added
+- ( ** ) is overridden and now a functional composition
+- Older functional compositions (^.) (&.) (@@) are removed.
+- Added Result.
+- Added Option.catch and Result.catch (and catch_exn)
+- Added Base.with_final
+
+2.1.0
+------------
+
+- Generic Monad is added
+- Monad.ignore is deprecated and removed
+- Mtypes for {Print, Compar, Hash}able is added
+- Stream is enhanced (ported from Planck)
+- Hashtbl.{memoize, find_default}
+- chop_newline and split_by_newline are available in Base
+- StringSet and StringInt are available in Base
+- Simple memoization for Base.memoize added
+
+2.0.1
+------------
+
+- Seq is now obsolete. Use Stream.

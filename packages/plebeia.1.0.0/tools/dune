@@ -1,0 +1,16 @@
+(executables
+ (public_names
+  pleb_count_buds
+  pleb_count_cache
+  pleb_count_branches
+  pleb_count_leaves
+  pleb_traverse
+  pleb_copy
+  pleb_traverse2
+  pleb_diff
+  pleb_count_caching_values
+  latest_extenders
+  latest_commit_stats
+ )
+ (flags :standard -warn-error -32-34-37)
+ (libraries plebeia))
