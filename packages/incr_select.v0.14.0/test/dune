@@ -1,0 +1,4 @@
+(library (name incr_select_test)
+ (libraries core_kernel incremental incr_select expect_test_helpers_core
+  incremental_debug)
+ (preprocess (pps ppx_jane)))

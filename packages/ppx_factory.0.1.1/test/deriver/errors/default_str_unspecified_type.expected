@@ -1,0 +1,4 @@
+File "default_str_unspecified_type.ml", line 1, characters 18-20:
+1 | type 'a t = int * 'a
+                      ^^
+Error: ppx_factory: can't derive default for unspecified type

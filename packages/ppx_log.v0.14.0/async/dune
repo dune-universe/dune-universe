@@ -1,0 +1,2 @@
+(library (name ppx_log_async) (public_name ppx_log.async)
+ (libraries core async_unix ppx_log_types) (preprocess no_preprocessing))

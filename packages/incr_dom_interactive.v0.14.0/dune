@@ -1,0 +1,4 @@
+(library (name incr_dom_interactive) (public_name incr_dom_interactive)
+ (preprocess (pps js_of_ocaml-ppx ppx_jane))
+ (libraries async_kernel async_js virtual_dom.css_gen js_of_ocaml incr_dom
+  incremental incr_map incr_select splay_tree))

@@ -1,0 +1,8 @@
+(rule (targets header_protocol.ml header_protocol.mli)
+ (deps ../protogen/header_protocol_dsl.exe %{workspace_root}/bin/apply-style)
+ (action (bash ../protogen/header_protocol_dsl.exe)) (mode fallback))
+
+(library (name core_profiler) (public_name core_profiler)
+ (libraries textutils.ascii_table core.bigstring_unix core
+  core_profiler_disabled core_kernel.iobuf core.time_stamp_counter)
+ (preprocess (pps ppx_jane -check-doc-comments)))

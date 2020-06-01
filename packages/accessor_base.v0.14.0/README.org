@@ -1,0 +1,3 @@
+
+The ~Accessor_base~ library extends ~Accessor~ with convenience functions for
+working with various types in ~Base~.

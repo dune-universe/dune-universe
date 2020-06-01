@@ -1,0 +1,3 @@
+
+The ~Accessor_async~ library extends ~Accessor_core~ with convenience functions
+for working with various types in ~Async~.

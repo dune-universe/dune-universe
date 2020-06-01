@@ -1,0 +1,2 @@
+(library (name bigint_benchmarks) (libraries core bigint core_kernel.iobuf)
+ (preprocess (pps ppx_jane)))

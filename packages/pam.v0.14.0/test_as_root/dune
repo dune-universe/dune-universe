@@ -1,0 +1,4 @@
+(library (name pam_test_as_root)
+ (libraries async core expect_test_helpers_async expect_test_helpers_core pam
+  pam_test)
+ (preprocess (pps ppx_jane)))

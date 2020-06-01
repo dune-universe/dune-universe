@@ -1,0 +1,4 @@
+(library (name command_rpc_test)
+ (libraries async command_rpc command_rpc_test_protocol core
+  expect_test_helpers_async expect_test_helpers_core)
+ (preprocess (pps ppx_jane)))

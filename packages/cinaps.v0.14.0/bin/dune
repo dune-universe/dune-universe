@@ -1,0 +1,2 @@
+(executables (names main) (public_names cinaps) (libraries cinaps)
+ (preprocess no_preprocessing))

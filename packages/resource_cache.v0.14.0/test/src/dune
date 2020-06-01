@@ -1,0 +1,3 @@
+(library (name test_resource_cache)
+ (libraries core async expect_test_helpers_core resource_cache)
+ (preprocess (pps ppx_jane)))

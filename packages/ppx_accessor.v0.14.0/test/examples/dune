@@ -1,0 +1,2 @@
+(library (name ppx_accessor_test_examples) (libraries accessor_base base)
+ (preprocess (pps ppx_accessor)))

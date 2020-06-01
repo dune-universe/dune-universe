@@ -1,0 +1,2 @@
+(library (public_name re2_stable) (name re2_stable) (libraries core re2)
+ (preprocess (pps ppx_jane)))

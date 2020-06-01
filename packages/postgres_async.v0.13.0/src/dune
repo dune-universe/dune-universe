@@ -1,2 +1,0 @@
-(library (name postgres_async) (public_name postgres_async)
- (libraries core async) (preprocess (pps ppx_jane)))

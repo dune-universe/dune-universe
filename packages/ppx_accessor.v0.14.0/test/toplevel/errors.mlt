@@ -1,0 +1,58 @@
+type abstract [@@deriving accessors]
+
+[%%expect {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: abstract type
+|}]
+
+type open_ = .. [@@deriving accessors]
+
+[%%expect {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: open type
+|}]
+
+type variant_gt = [> `tag ] [@@deriving accessors]
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: non-simple polymorphic variant
+|}]
+
+type ('a, 'b) fn = 'a -> 'b [@@deriving accessors]
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: manifest type that is not a polymorphic variant
+|}]
+
+type intersection = [ `foo of int & string ] [@@deriving accessors]
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: intersection type
+|}]
+
+type non_simple_type_cons =
+  [ `foo
+  | int bar
+  ]
+[@@deriving accessors]
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: ppx_accessor: unsupported: non-simple type constructor in polymorphic variant
+|}]
+
+type gadt = T : _ -> gadt [@@deriving accessors]
+
+[%%expect
+  {|
+Line _, characters _-_:
+Error: This expression has type $T but an expression was expected of type 'a
+       The type constructor $T would escape its scope
+|}]

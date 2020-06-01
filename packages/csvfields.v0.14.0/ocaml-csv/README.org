@@ -1,0 +1,4 @@
+This is a copy of a old version of ocaml-csv. It should disappear
+soon.
+
+Please use Delimited in the new code.

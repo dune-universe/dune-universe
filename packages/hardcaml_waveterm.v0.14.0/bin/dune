@@ -1,0 +1,7 @@
+(executables
+ (names test_notty_rendering test_notty_interactive test_notty_hierarchy
+  test_scrollbar test_sim)
+ (libraries expect_test_helpers_core hardcaml_waveterm
+  hardcaml_waveterm_interactive hardcaml_waveterm_test notty notty_async
+  notty.unix)
+ (preprocess (pps ppx_jane)))

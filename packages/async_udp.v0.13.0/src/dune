@@ -1,2 +1,0 @@
-(library (name async_udp) (public_name async_udp) (libraries async)
- (preprocess (pps ppx_jane)))

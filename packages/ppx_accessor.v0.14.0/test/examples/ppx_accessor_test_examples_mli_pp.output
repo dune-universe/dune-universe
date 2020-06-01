@@ -1,0 +1,826 @@
+open! Base
+open! Import
+
+module Simple_record : sig
+  type t =
+    { foo : int
+    ; bar : string
+    ; baz : float
+    }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__004_ mapping__005_ ->
+               (Accessor.field
+                  ~get:(fun t__003_ -> t__003_.foo)
+                  ~set:(fun t__001_ foo__002_ -> { t__001_ with foo = foo__002_ }))
+               .f
+                 dictionary__004_
+                 mapping__005_)
+        }
+      ;;
+
+      let bar =
+        { Accessor.f =
+            (fun dictionary__009_ mapping__010_ ->
+               (Accessor.field
+                  ~get:(fun t__008_ -> t__008_.bar)
+                  ~set:(fun t__006_ bar__007_ -> { t__006_ with bar = bar__007_ }))
+               .f
+                 dictionary__009_
+                 mapping__010_)
+        }
+      ;;
+
+      let baz =
+        { Accessor.f =
+            (fun dictionary__014_ mapping__015_ ->
+               (Accessor.field
+                  ~get:(fun t__013_ -> t__013_.baz)
+                  ~set:(fun t__011_ baz__012_ -> { t__011_ with baz = baz__012_ }))
+               .f
+                 dictionary__014_
+                 mapping__015_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Simple_inline_record : sig
+  type t =
+    | T of
+        { foo : int
+        ; bar : string
+        ; baz : float
+        }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__020_ mapping__021_ ->
+               (Accessor.field
+                  ~get:(fun (T t__019_) -> t__019_.foo)
+                  ~set:(fun t__016_ foo__017_ ->
+                    let (T t__018_) = t__016_ in
+                    T { t__018_ with foo = foo__017_ }))
+               .f
+                 dictionary__020_
+                 mapping__021_)
+        }
+      ;;
+
+      let bar =
+        { Accessor.f =
+            (fun dictionary__026_ mapping__027_ ->
+               (Accessor.field
+                  ~get:(fun (T t__025_) -> t__025_.bar)
+                  ~set:(fun t__022_ bar__023_ ->
+                    let (T t__024_) = t__022_ in
+                    T { t__024_ with bar = bar__023_ }))
+               .f
+                 dictionary__026_
+                 mapping__027_)
+        }
+      ;;
+
+      let baz =
+        { Accessor.f =
+            (fun dictionary__032_ mapping__033_ ->
+               (Accessor.field
+                  ~get:(fun (T t__031_) -> t__031_.baz)
+                  ~set:(fun t__028_ baz__029_ ->
+                    let (T t__030_) = t__028_ in
+                    T { t__030_ with baz = baz__029_ }))
+               .f
+                 dictionary__032_
+                 mapping__033_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Record_with_polymorphism : sig
+  type ('a, 'b) t =
+    { foo : int
+    ; bar : 'a
+    ; baz : 'b
+    }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__037_ mapping__038_ ->
+               (Accessor.field
+                  ~get:(fun t__036_ -> t__036_.foo)
+                  ~set:(fun t__034_ foo__035_ -> { t__034_ with foo = foo__035_ }))
+               .f
+                 dictionary__037_
+                 mapping__038_)
+        }
+      ;;
+
+      let bar =
+        { Accessor.f =
+            (fun dictionary__042_ mapping__043_ ->
+               (Accessor.field
+                  ~get:(fun t__041_ -> t__041_.bar)
+                  ~set:(fun t__039_ bar__040_ -> { t__039_ with bar = bar__040_ }))
+               .f
+                 dictionary__042_
+                 mapping__043_)
+        }
+      ;;
+
+      let baz =
+        { Accessor.f =
+            (fun dictionary__047_ mapping__048_ ->
+               (Accessor.field
+                  ~get:(fun t__046_ -> t__046_.baz)
+                  ~set:(fun t__044_ baz__045_ -> { t__044_ with baz = baz__045_ }))
+               .f
+                 dictionary__047_
+                 mapping__048_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_record : sig
+  type t = { foo : int } [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__051_ mapping__052_ ->
+               (Accessor.isomorphism
+                  ~get:(fun t__050_ -> t__050_.foo)
+                  ~construct:(fun foo__049_ -> { foo = foo__049_ }))
+               .f
+                 dictionary__051_
+                 mapping__052_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_inline_record : sig
+  type t = T of { foo : int } [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__055_ mapping__056_ ->
+               (Accessor.isomorphism
+                  ~get:(fun (T t__054_) -> t__054_.foo)
+                  ~construct:(fun foo__053_ -> T { foo = foo__053_ }))
+               .f
+                 dictionary__055_
+                 mapping__056_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_record_with_polymorphism : sig
+  type 'a t = { foo : 'a option } [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__059_ mapping__060_ ->
+               (Accessor.isomorphism
+                  ~get:(fun t__058_ -> t__058_.foo)
+                  ~construct:(fun foo__057_ -> { foo = foo__057_ }))
+               .f
+                 dictionary__059_
+                 mapping__060_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Recursive_record : sig
+  type t =
+    { label : string
+    ; children : t list
+    }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let label =
+        { Accessor.f =
+            (fun dictionary__064_ mapping__065_ ->
+               (Accessor.field
+                  ~get:(fun t__063_ -> t__063_.label)
+                  ~set:(fun t__061_ label__062_ -> { t__061_ with label = label__062_ }))
+               .f
+                 dictionary__064_
+                 mapping__065_)
+        }
+      ;;
+
+      let children =
+        { Accessor.f =
+            (fun dictionary__069_ mapping__070_ ->
+               (Accessor.field
+                  ~get:(fun t__068_ -> t__068_.children)
+                  ~set:(fun t__066_ children__067_ ->
+                    { t__066_ with children = children__067_ }))
+               .f
+                 dictionary__069_
+                 mapping__070_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Recursive_records : sig
+  type tree =
+    { children : node list
+    ; next : tree
+    }
+
+  and node =
+    { host : tree
+    ; id : int
+    }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let children =
+        { Accessor.f =
+            (fun dictionary__074_ mapping__075_ ->
+               (Accessor.field
+                  ~get:(fun tree__073_ -> tree__073_.children)
+                  ~set:(fun tree__071_ children__072_ ->
+                    { tree__071_ with children = children__072_ }))
+               .f
+                 dictionary__074_
+                 mapping__075_)
+        }
+      ;;
+
+      let next =
+        { Accessor.f =
+            (fun dictionary__079_ mapping__080_ ->
+               (Accessor.field
+                  ~get:(fun tree__078_ -> tree__078_.next)
+                  ~set:(fun tree__076_ next__077_ ->
+                    { tree__076_ with next = next__077_ }))
+               .f
+                 dictionary__079_
+                 mapping__080_)
+        }
+      ;;
+
+      let host =
+        { Accessor.f =
+            (fun dictionary__084_ mapping__085_ ->
+               (Accessor.field
+                  ~get:(fun node__083_ -> node__083_.host)
+                  ~set:(fun node__081_ host__082_ ->
+                    { node__081_ with host = host__082_ }))
+               .f
+                 dictionary__084_
+                 mapping__085_)
+        }
+      ;;
+
+      let id =
+        { Accessor.f =
+            (fun dictionary__089_ mapping__090_ ->
+               (Accessor.field
+                  ~get:(fun node__088_ -> node__088_.id)
+                  ~set:(fun node__086_ id__087_ -> { node__086_ with id = id__087_ }))
+               .f
+                 dictionary__089_
+                 mapping__090_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Basic_variant_type : sig
+  type t =
+    | A of int
+    | B of string * bool
+    | C
+    | D of (float * float)
+    | E of
+        { x : float
+        ; y : float
+        }
+    | F of { z : float }
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let a =
+        { Accessor.f =
+            (fun dictionary__093_ mapping__094_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | A a__092_ -> First a__092_
+                    | (B _ | C | D _ | E _ | F _) as bt -> Second bt)
+                  ~construct:(fun a__091_ -> A a__091_))
+               .f
+                 dictionary__093_
+                 mapping__094_)
+        }
+      ;;
+
+      let b =
+        { Accessor.f =
+            (fun dictionary__099_ mapping__100_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | B (b__098_, b__097_) -> First (b__098_, b__097_)
+                    | (A _ | C | D _ | E _ | F _) as bt -> Second bt)
+                  ~construct:(fun (b__096_, b__095_) -> B (b__096_, b__095_)))
+               .f
+                 dictionary__099_
+                 mapping__100_)
+        }
+      ;;
+
+      let c =
+        { Accessor.f =
+            (fun dictionary__101_ mapping__102_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | C -> First ()
+                    | (A _ | B _ | D _ | E _ | F _) as bt -> Second bt)
+                  ~construct:(fun () -> C))
+               .f
+                 dictionary__101_
+                 mapping__102_)
+        }
+      ;;
+
+      let d =
+        { Accessor.f =
+            (fun dictionary__105_ mapping__106_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | D d__104_ -> First d__104_
+                    | (A _ | B _ | C | E _ | F _) as bt -> Second bt)
+                  ~construct:(fun d__103_ -> D d__103_))
+               .f
+                 dictionary__105_
+                 mapping__106_)
+        }
+      ;;
+
+      module E = struct
+        let x =
+          { Accessor.f =
+              (fun dictionary__111_ mapping__112_ ->
+                 (Accessor.optional
+                    ~match_:(function
+                      | E t__110_ -> First t__110_.x
+                      | (A _ | B _ | C | D _ | F _) as bt -> Second bt)
+                    ~set:(fun t__107_ x__108_ ->
+                      match t__107_ with
+                      | E e__109_ -> E { e__109_ with x = x__108_ }
+                      | (A _ | B _ | C | D _ | F _) as bt -> bt))
+                 .f
+                   dictionary__111_
+                   mapping__112_)
+          }
+        ;;
+
+        let y =
+          { Accessor.f =
+              (fun dictionary__117_ mapping__118_ ->
+                 (Accessor.optional
+                    ~match_:(function
+                      | E t__116_ -> First t__116_.y
+                      | (A _ | B _ | C | D _ | F _) as bt -> Second bt)
+                    ~set:(fun t__113_ y__114_ ->
+                      match t__113_ with
+                      | E e__115_ -> E { e__115_ with y = y__114_ }
+                      | (A _ | B _ | C | D _ | F _) as bt -> bt))
+                 .f
+                   dictionary__117_
+                   mapping__118_)
+          }
+        ;;
+      end
+
+      module F = struct
+        let z =
+          { Accessor.f =
+              (fun dictionary__121_ mapping__122_ ->
+                 (Accessor.variant
+                    ~match_:(function
+                      | F t__120_ -> First t__120_.z
+                      | (A _ | B _ | C | D _ | E _) as bt -> Second bt)
+                    ~construct:(fun z__119_ -> F { z = z__119_ }))
+                 .f
+                   dictionary__121_
+                   mapping__122_)
+          }
+        ;;
+      end
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_variant : sig
+  type t = T of int [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let t =
+        { Accessor.f =
+            (fun dictionary__125_ mapping__126_ ->
+               (Accessor.isomorphism
+                  ~get:(fun (T t__124_) -> t__124_)
+                  ~construct:(fun t__123_ -> T t__123_))
+               .f
+                 dictionary__125_
+                 mapping__126_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_variant_with_polymorphism : sig
+  type 'a t = T of 'a [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let t =
+        { Accessor.f =
+            (fun dictionary__129_ mapping__130_ ->
+               (Accessor.isomorphism
+                  ~get:(fun (T t__128_) -> t__128_)
+                  ~construct:(fun t__127_ -> T t__127_))
+               .f
+                 dictionary__129_
+                 mapping__130_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Basic_variant_type_with_polymorphism : sig
+  type 'a t =
+    | A of 'a
+    | B
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let a =
+        { Accessor.f =
+            (fun dictionary__133_ mapping__134_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | A a__132_ -> First a__132_
+                    | B as bt -> Second bt)
+                  ~construct:(fun a__131_ -> A a__131_))
+               .f
+                 dictionary__133_
+                 mapping__134_)
+        }
+      ;;
+
+      let b =
+        { Accessor.f =
+            (fun dictionary__135_ mapping__136_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | B -> First ()
+                    | A _ as bt -> Second bt)
+                  ~construct:(fun () -> B))
+               .f
+                 dictionary__135_
+                 mapping__136_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Recursive_variant : sig
+  type 'a t =
+    | Nil
+    | Cons of 'a * 'a t
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let nil =
+        { Accessor.f =
+            (fun dictionary__137_ mapping__138_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | Nil -> First ()
+                    | Cons _ as bt -> Second bt)
+                  ~construct:(fun () -> Nil))
+               .f
+                 dictionary__137_
+                 mapping__138_)
+        }
+      ;;
+
+      let cons =
+        { Accessor.f =
+            (fun dictionary__143_ mapping__144_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | Cons (cons__142_, cons__141_) -> First (cons__142_, cons__141_)
+                    | Nil as bt -> Second bt)
+                  ~construct:(fun (cons__140_, cons__139_) ->
+                    Cons (cons__140_, cons__139_)))
+               .f
+                 dictionary__143_
+                 mapping__144_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Basic_polymorphic_variant : sig
+  type t =
+    [ `Foo
+    | `Bar of int
+    | `Baz of string * float
+    ]
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__145_ mapping__146_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | `Foo -> First ()
+                    | (`Bar _ | `Baz _) as bt -> Second bt)
+                  ~construct:(fun () -> `Foo))
+               .f
+                 dictionary__145_
+                 mapping__146_)
+        }
+      ;;
+
+      let bar =
+        { Accessor.f =
+            (fun dictionary__149_ mapping__150_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | `Bar bar__148_ -> First bar__148_
+                    | (`Foo | `Baz _) as bt -> Second bt)
+                  ~construct:(fun bar__147_ -> `Bar bar__147_))
+               .f
+                 dictionary__149_
+                 mapping__150_)
+        }
+      ;;
+
+      let baz =
+        { Accessor.f =
+            (fun dictionary__153_ mapping__154_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | `Baz baz__152_ -> First baz__152_
+                    | (`Foo | `Bar _) as bt -> Second bt)
+                  ~construct:(fun baz__151_ -> `Baz baz__151_))
+               .f
+                 dictionary__153_
+                 mapping__154_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Polymorphic_variant_with_inherit : sig
+  type 'a t =
+    [ `Wibble
+    | `Wobble of 'a
+    | Basic_polymorphic_variant.t
+    ]
+  [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let wibble =
+        { Accessor.f =
+            (fun dictionary__155_ mapping__156_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | `Wibble -> First ()
+                    | (`Wobble _ | #Basic_polymorphic_variant.t) as bt -> Second bt)
+                  ~construct:(fun () -> `Wibble))
+               .f
+                 dictionary__155_
+                 mapping__156_)
+        }
+      ;;
+
+      let wobble =
+        { Accessor.f =
+            (fun dictionary__159_ mapping__160_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | `Wobble wobble__158_ -> First wobble__158_
+                    | (`Wibble | #Basic_polymorphic_variant.t) as bt -> Second bt)
+                  ~construct:(fun wobble__157_ -> `Wobble wobble__157_))
+               .f
+                 dictionary__159_
+                 mapping__160_)
+        }
+      ;;
+
+      let basic_polymorphic_variant_t =
+        { Accessor.f =
+            (fun dictionary__161_ mapping__162_ ->
+               (Accessor.variant
+                  ~match_:(function
+                    | #Basic_polymorphic_variant.t as a -> First a
+                    | (`Wibble | `Wobble _) as bt -> Second bt)
+                  ~construct:(fun (#Basic_polymorphic_variant.t as bt) -> bt))
+               .f
+                 dictionary__161_
+                 mapping__162_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Singleton_polymorphic_variant : sig
+  type t = [ `Foo of int ] [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let foo =
+        { Accessor.f =
+            (fun dictionary__165_ mapping__166_ ->
+               (Accessor.isomorphism
+                  ~get:(fun (`Foo foo__164_) -> foo__164_)
+                  ~construct:(fun foo__163_ -> `Foo foo__163_))
+               .f
+                 dictionary__165_
+                 mapping__166_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Polymorphization : sig
+  val swapped
+    : ('i -> 'a * 'b -> 'c * 'd, 'i -> 'b * 'a -> 'd * 'c, [< isomorphism ]) Accessor.t
+end
+
+module Gadt_syntax : sig
+  type 'a t = T : 'x * string -> 'x t [@@deriving accessors]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      let t =
+        { Accessor.f =
+            (fun dictionary__171_ mapping__172_ ->
+               (Accessor.isomorphism
+                  ~get:(fun (T (t__170_, t__169_)) -> t__170_, t__169_)
+                  ~construct:(fun (t__168_, t__167_) -> T (t__168_, t__167_)))
+               .f
+                 dictionary__171_
+                 mapping__172_)
+        }
+      ;;
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end
+
+module Simple_record_with_submodule : sig
+  type t =
+    { foo : int
+    ; bar : string
+    ; baz : float
+    }
+  [@@deriving accessors ~submodule:Foo]
+
+  include sig
+    [@@@ocaml.warning "-32"]
+
+    include module type of struct
+      module Foo = struct
+        let foo =
+          { Accessor.f =
+              (fun dictionary__176_ mapping__177_ ->
+                 (Accessor.field
+                    ~get:(fun t__175_ -> t__175_.foo)
+                    ~set:(fun t__173_ foo__174_ -> { t__173_ with foo = foo__174_ }))
+                 .f
+                   dictionary__176_
+                   mapping__177_)
+          }
+        ;;
+
+        let bar =
+          { Accessor.f =
+              (fun dictionary__181_ mapping__182_ ->
+                 (Accessor.field
+                    ~get:(fun t__180_ -> t__180_.bar)
+                    ~set:(fun t__178_ bar__179_ -> { t__178_ with bar = bar__179_ }))
+                 .f
+                   dictionary__181_
+                   mapping__182_)
+          }
+        ;;
+
+        let baz =
+          { Accessor.f =
+              (fun dictionary__186_ mapping__187_ ->
+                 (Accessor.field
+                    ~get:(fun t__185_ -> t__185_.baz)
+                    ~set:(fun t__183_ baz__184_ -> { t__183_ with baz = baz__184_ }))
+                 .f
+                   dictionary__186_
+                   mapping__187_)
+          }
+        ;;
+      end
+    end
+  end
+  [@@ocaml.doc "@inline"] [@@merlin.hide]
+end

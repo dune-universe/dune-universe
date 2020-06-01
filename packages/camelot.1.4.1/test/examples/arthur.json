@@ -1,0 +1,10 @@
+{
+    "toLint": ["./test/examples/if.ml", "./test/examples/lexical.ml"],
+    "global": {
+	"disable": ["UseMap", "UseIter", "UseFold"]
+    },
+    "locals":
+    [
+	{"not_called_test": {"disable": ["EqList"]}}
+    ]
+}

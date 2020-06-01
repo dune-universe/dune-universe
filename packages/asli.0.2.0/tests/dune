@@ -1,0 +1,4 @@
+(test (name test_asl)
+ (modes exe)
+ (flags (-cclib -lstdc++))
+ (libraries alcotest libASL))
