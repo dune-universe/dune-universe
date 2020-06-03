@@ -1,9 +1,0 @@
-.*\.(cm.*|a|o|annot|omc|exe|opt|run|rej|orig|out)$
-^OMakeroot$
-.*~$
-^\.omakedb.*
-.*\.out\.ml$
-opam/generated
-_build
-\.merlin$
-.*\.install$

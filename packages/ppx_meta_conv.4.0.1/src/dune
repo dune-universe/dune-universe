@@ -1,0 +1,9 @@
+(library
+ (kind ppx_rewriter)
+ (name ppx_meta_conv_plugin)
+ (public_name ppx_meta_conv.ppx)
+ (flags :standard -w -9 -open Migrate_parsetree)
+ (preprocess
+  (pps ppx_tools_versioned.metaquot_405))
+ (libraries ppx_deriving.api compiler-libs.common ocaml-migrate-parsetree
+   spotlib ppxx))

@@ -1,6 +1,0 @@
-(library
- ((name ppx_meta_conv_sexp)
-  (public_name ppx_meta_conv.sexp)
-  (optional)
-  (wrapped false)
-  (libraries ( ppx_meta_conv.runtime sexplib ))))

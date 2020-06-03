@@ -1,6 +1,0 @@
-(library
- ((name ppx_meta_conv_tiny_json)
-  (public_name ppx_meta_conv.tiny_json)
-  (optional)
-  (wrapped false)
-  (libraries ( ppx_meta_conv.runtime tiny_json ))))

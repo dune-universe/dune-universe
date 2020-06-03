@@ -1,0 +1,4 @@
+(library
+ (name meta_conv)
+ (public_name ppx_meta_conv.runtime)
+ (libraries ppx_deriving.runtime spotlib ppxx))
