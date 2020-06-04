@@ -1,0 +1,18 @@
+compile-each.hxml
+--main Main
+--jvm bin/jvm/Main-Debug.jar
+
+--next
+compile-each.hxml
+--main TestArguments
+--jvm bin/jvm/TestArguments-Debug.jar
+
+--next
+compile-each.hxml
+--main ExitCode
+--jvm bin/jvm/ExitCode-Debug.jar
+
+--next
+compile-each.hxml
+--main UtilityProcess
+--jvm bin/jvm/UtilityProcess-Debug.jar

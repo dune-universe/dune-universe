@@ -1,0 +1,2 @@
+--macro addGlobalMetadata('Main', '@:build(Build.build())')
+-x Main

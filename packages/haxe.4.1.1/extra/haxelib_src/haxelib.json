@@ -1,0 +1,11 @@
+{
+	"name": "haxelib",
+	"url" : "https://lib.haxe.org/documentation/",
+	"license": "GPL",
+	"tags": ["haxelib", "core"],
+	"description": "The haxelib client",
+	"classPath": "src",
+	"version": "4.0.2",
+	"releasenote": " * Fixed too strict requirements to haxelib.json data for private libs (#484)",
+	"contributors": ["HaxeFoundation", "back2dos", "ncannasse", "jason", "Simn", "nadako", "andyli"]
+}

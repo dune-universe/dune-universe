@@ -1,0 +1,19 @@
+
+compile-each.hxml
+--main Main
+-lua bin/lua/sys.lua
+
+--next
+compile-each.hxml
+--main TestArguments
+-lua bin/lua/TestArguments.lua
+
+--next
+compile-each.hxml
+--main ExitCode
+-lua bin/lua/ExitCode.lua
+
+--next
+compile-each.hxml
+--main UtilityProcess
+-lua bin/lua/UtilityProcess.lua

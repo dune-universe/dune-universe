@@ -1,0 +1,25 @@
+-p src
+-D analyzer-optimize
+-D analyzer-user-var-fusion
+--each
+
+--main TestAnalyzer
+--interp
+
+--next
+--main TestNullChecker
+-D analyzer-check-null
+--interp
+
+--next
+--main TestTreBehavior
+--interp
+
+--next
+-js testopt.js
+--macro Macro.register('Test')
+--macro Macro.register('TestJs')
+--macro Macro.register('TestLocalDce')
+--macro Macro.register('TestTreGeneration')
+--macro Macro.register('issues')
+--dce std

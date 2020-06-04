@@ -1,0 +1,1 @@
+MainFail.hx:3: characters 1-64 : @:coreType abstracts cannot be @:callable

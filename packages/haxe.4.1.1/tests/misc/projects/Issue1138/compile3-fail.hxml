@@ -1,0 +1,4 @@
+-p src1
+-p src2
+--main D
+--interp
