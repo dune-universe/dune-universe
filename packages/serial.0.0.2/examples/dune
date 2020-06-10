@@ -1,0 +1,4 @@
+(executables
+  (names send_gcodes io)
+  (libraries unix lwt lwt.unix serial)
+)
