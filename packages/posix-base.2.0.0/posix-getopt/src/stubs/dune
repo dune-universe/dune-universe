@@ -1,0 +1,16 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
+
+(library
+ (name posix_getopt_stubs)
+ (public_name posix-getopt.stubs)
+ (libraries posix-getopt.types ctypes.stubs))
+
+(rule
+ (targets posix_getopt_generated_types.ml)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ../generator/gen_types_c))))

@@ -1,0 +1,16 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
+
+(library
+ (name posix_signal_stubs)
+ (public_name posix-signal.stubs)
+ (libraries posix-signal.types ctypes.stubs))
+
+(rule
+ (targets posix_signal_generated_types.ml)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ../generator/gen_types_c))))

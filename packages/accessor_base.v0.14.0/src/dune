@@ -1,2 +1,0 @@
-(library (name accessor_base) (libraries accessor base higher_kinded)
- (preprocess (pps ppx_jane ppx_accessor)))

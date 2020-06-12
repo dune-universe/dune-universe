@@ -1,0 +1,5 @@
+(lang dune 1.11)
+(name gettext)
+(version v0.4.2)
+(explicit_js_mode)
+(using fmt 1.2)

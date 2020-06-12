@@ -1,0 +1,16 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
+
+(library
+ (name posix_time2_types)
+ (public_name posix-time2.types)
+ (libraries posix-time2.constants posix-base ctypes.stubs))
+
+(rule
+ (targets posix_time2_generated_constants.ml)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ../generator/gen_constants_c))))

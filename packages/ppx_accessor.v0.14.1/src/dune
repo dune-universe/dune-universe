@@ -1,0 +1,4 @@
+(library (name ppx_accessor) (public_name ppx_accessor)
+ (kind ppx_rewriter)
+ (ppx_runtime_libraries accessor) (libraries base ppxlib)
+ (preprocess (pps ppxlib.metaquot)))
