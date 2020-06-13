@@ -1,0 +1,16 @@
+(executable
+ (name Sinks)
+ (libraries streaming)
+ (modules Sinks))
+
+(executable
+ (name Wc)
+ (libraries streaming)
+ (modules Wc)
+ (ocamlopt_flags -unbox-closures -O3))
+
+(executable
+ (name Entropy)
+ (libraries streaming unix)
+ (modules Entropy)
+ (ocamlopt_flags -unbox-closures -O3))

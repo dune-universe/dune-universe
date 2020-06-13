@@ -1,0 +1,4 @@
+(lang dune 1.9)
+(name streaming)
+(version 0.8.0)
+(allow_approximate_merlin)
