@@ -30,6 +30,18 @@ let error2 lexbuf =
 
 (* ------------------------------------------------------------------------ *)
 
+(* [int_of_string] raises [Failure] if its argument is too large. This is
+   not a problem in practice, but causes false positives when fuzzing
+   Menhir. We hide the problem by failing gracefully. *)
+
+let int_of_string (pos : Lexing.position) i =
+  try
+    int_of_string i
+  with Failure _ ->
+    error1 pos "unreasonably large integer."
+
+(* ------------------------------------------------------------------------ *)
+
 (* This wrapper saves the current lexeme start, invokes its argument,
    and restores it. This allows transmitting better positions to the
    parser. *)
@@ -187,7 +199,7 @@ let position pos
   let subject, check =
     match i, x with
     | Some i, None ->
-        let ii = int_of_string i in (* cannot fail *)
+        let ii = int_of_string (start_of_position pos) i in
         if ii = 0 && where = WhereEnd then
           (* [$endpos($0)] *)
           Before, none
@@ -260,6 +272,10 @@ let mk_stretch pos1 pos2 parenthesize monsters =
      into other code without ambiguity. *)
   let content =
     if parenthesize then
+      (* If [parenthesize] is true then we are at the beginning of a semantic
+         action, just after the opening brace. This guarantees that we cannot
+         be at the beginning of a line, so the subtraction [_ - 1] below
+         cannot produce a negative result. *)
       (String.make (pos1.pos_cnum - pos1.pos_bol - 1) ' ') ^ "(" ^ content ^ ")"
     else
       (String.make (pos1.pos_cnum - pos1.pos_bol) ' ') ^ content
@@ -273,13 +289,38 @@ let mk_stretch pos1 pos2 parenthesize monsters =
     stretch_keywords = Misc.map_opt (fun monster -> monster.keyword) monsters
   })
 
+(* Creating a stretch from a located identifier. (This does not require the
+   input file to be currently opened.) In this variant, [parenthesize] is
+   false, [monsters] is empty. *)
+
+let stretch_of_id (id : string located) =
+  let raw_content, pos = Positions.decompose id in
+  let pos1 = Positions.start_of_position pos
+  and pos2 = Positions.end_of_position pos
+  and filename = Positions.filename_of_position pos in
+  assert (pos1 != Lexing.dummy_pos);
+  let padding = pos1.pos_cnum - pos1.pos_bol in
+  let content = String.make padding ' ' ^ raw_content in
+  Stretch.({
+    stretch_filename = filename;
+    stretch_linenum = pos1.pos_lnum;
+    stretch_linecount = pos2.pos_lnum - pos1.pos_lnum;
+    stretch_content = content;
+    stretch_raw_content = raw_content;
+    stretch_keywords = []
+  })
+
 (* ------------------------------------------------------------------------ *)
 
 (* OCaml's reserved words. *)
 
-let reserved =
+let table words =
   let table = Hashtbl.create 149 in
-  List.iter (fun word -> Hashtbl.add table word ()) [
+  List.iter (fun word -> Hashtbl.add table word ()) words;
+  table
+
+let reserved =
+  table [
     "and";
     "as";
     "assert";
@@ -336,8 +377,32 @@ let reserved =
     "lsl";
     "lsr";
     "asr";
-  ];
+  ]
+
+(* ------------------------------------------------------------------------ *)
+
+(* Menhir's percent-directives. *)
+
+let table directives =
+  let table = Hashtbl.create 149 in
+  List.iter (fun (word, token) -> Hashtbl.add table word token) directives;
   table
+
+let directives =
+  table [
+    "token", TOKEN;
+    "type", TYPE;
+    "left", LEFT;
+    "right", RIGHT;
+    "nonassoc", NONASSOC;
+    "start", START;
+    "prec", PREC;
+    "public", PUBLIC;
+    "parameter", PARAMETER;
+    "inline", INLINE;
+    "attribute", PERCENTATTRIBUTE;
+    "on_error_reduce", ON_ERROR_REDUCE;
+  ]
 
 }
 
@@ -380,30 +445,9 @@ let syntaxerror =
 (* The lexer. *)
 
 rule main = parse
-| "%token"
-    { TOKEN }
-| "%type"
-    { TYPE }
-| "%left"
-    { LEFT }
-| "%right"
-    { RIGHT }
-| "%nonassoc"
-    { NONASSOC }
-| "%start"
-    { START }
-| "%prec"
-    { PREC }
-| "%public"
-    { PUBLIC }
-| "%parameter"
-    { PARAMETER }
-| "%inline"
-    { INLINE }
-| "%attribute"
-    { PERCENTATTRIBUTE }
-| "%on_error_reduce"
-    { ON_ERROR_REDUCE }
+| "%" (identchar+ as directive)
+    { try Hashtbl.find directives directive
+      with Not_found -> error2 lexbuf "unknown directive: %s." directive }
 | "%%"
     { (* The token [PERCENTPERCENT] carries a stretch that contains
          everything that follows %% in the input file. This string
@@ -569,7 +613,8 @@ and action percent openingpos monsters = parse
     { let _, monsters = parentheses (lexeme_start_p lexbuf) monsters lexbuf in
       action percent openingpos monsters lexbuf }
 | '$' (['0'-'9']+ as i)
-    { let monster = dollar (cpos lexbuf) (int_of_string i) in
+    { let i = int_of_string (lexeme_start_p lexbuf) i in
+      let monster = dollar (cpos lexbuf) i in
       action percent openingpos (monster :: monsters) lexbuf }
 | poskeyword
     { let monster = position (cpos lexbuf) where flavor i x in
@@ -612,7 +657,8 @@ and parentheses openingpos monsters = parse
     { let _, monsters = action false (lexeme_start_p lexbuf) monsters lexbuf in
       parentheses openingpos monsters lexbuf }
 | '$' (['0'-'9']+ as i)
-    { let monster = dollar (cpos lexbuf) (int_of_string i) in
+    { let i = int_of_string (lexeme_start_p lexbuf) i in
+      let monster = dollar (cpos lexbuf) i in
       parentheses openingpos (monster :: monsters) lexbuf }
 | poskeyword
     { let monster = position (cpos lexbuf) where flavor i x in
