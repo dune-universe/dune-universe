@@ -1,0 +1,4 @@
+(executable
+ (modes byte exe)
+ (name sv_parse)
+ (libraries systemverilog unix))

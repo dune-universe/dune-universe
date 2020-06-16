@@ -1,0 +1,8 @@
+(ocamllex lexer)
+
+(menhir
+ (modules parser))
+
+(library
+ (name systemverilog)
+ (public_name systemverilog))
