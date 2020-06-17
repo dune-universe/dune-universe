@@ -1,0 +1,15 @@
+*~
+*.swp
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*.native
+*.merlin
+_build/
+smartPrint.docdir

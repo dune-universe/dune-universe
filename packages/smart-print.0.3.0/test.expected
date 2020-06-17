@@ -1,0 +1,319 @@
+GroupOne (false, "hello", Space, "world", Space, Newline, GroupOne (true, "gre", Space, GroupAll (true, "arg", Space, "arg")))
+*************************
+hello world
+gre arg arg
+*************************
+GroupOne (false, GroupOne (true, "f", Space, "x"))
+*************************
+f x
+*************************
+GroupOne (false, GroupOne (true, "fdsgoklkmeee", Space, "xdsgsdg"))
+*************************
+fdsgoklkmeee xdsgsdg
+*************************
+GroupOne (false,
+  GroupOne (true,
+    "(",
+    "fun",
+    Space,
+    "x",
+    Space,
+    "->",
+    Newline,
+    Indent (1, GroupOne (false, GroupOne (true, "fdsgo", Space, GroupOne (true, "(", "x", Space, "xdsgsdg", ")")), ")"))))
+*************************
+(fun x ->
+  fdsgo (x xdsgsdg))
+*************************
+GroupOne (false,
+  GroupOne (true,
+    "(",
+    "fun",
+    Space,
+    "x",
+    Space,
+    "->",
+    Newline,
+    Indent (1, GroupOne (false, GroupOne (true, "fdsgvbcvvfo", Newline, Indent (1, GroupOne (false, GroupOne (true, "(", "xffd", Space, "xdsgsdg", ")")))), ")"))))
+*************************
+(fun x ->
+  fdsgvbcvvfo
+    (xffd xdsgsdg))
+*************************
+GroupOne (false, "[", GroupAll (true, Space, Space, Space, Space), "]")
+*************************
+[ ]
+*************************
+GroupOne (false, "[", GroupAll (true, Space, Space, "x", ";", Space, Space, "y", Space, Space), "]")
+*************************
+[ x; y ]
+*************************
+GroupOne (false,
+  "[",
+  GroupAll (true,
+    Newline,
+    Indent (1,
+      GroupAll (false,
+        "kjh", ";", Newline, "lj", ";", Newline, "iop", ";", Newline, "rt", ";", Newline, "vbn", ";", Newline, "hjk", ";", Newline, "gkgytuuhi", Newline))),
+  "]")
+*************************
+[
+  kjh;
+  lj;
+  iop;
+  rt;
+  vbn;
+  hjk;
+  gkgytuuhi
+]
+*************************
+GroupOne (false, GroupOne (true, "let", Space, "x", Space, "=", Space, "x", Space, "in", Space, Newline, "y"))
+*************************
+let x = x in
+y
+*************************
+GroupOne (false,
+  GroupOne (true,
+    "let",
+    Space,
+    "x",
+    Space,
+    "=",
+    Newline,
+    Indent (1,
+      GroupOne (false,
+        GroupOne (true,
+          "(",
+          "fun",
+          Space,
+          "x",
+          Space,
+          "->",
+          Newline,
+          Indent (1, GroupOne (false, GroupOne (true, "fdsgo", Space, GroupOne (true, "(", "x", Space, "xdsgsdg", ")")), ")"))),
+        Space,
+        "in",
+        Space,
+        Newline,
+        Indent (-1, GroupOne (false, "y"))))))
+*************************
+let x =
+  (fun x ->
+    fdsgo (x xdsgsdg)) in
+y
+*************************
+GroupOne (false, "kjl")
+*************************
+kjl
+*************************
+GroupOne (false,
+  GroupOne (false,
+    "Lorem",
+    Space,
+    "ipsum",
+    Space,
+    "dolor",
+    Space,
+    "sit",
+    Newline,
+    "amet,",
+    Space,
+    "consectetur",
+    Newline,
+    "adipisicing",
+    Space,
+    "elit,",
+    Space,
+    "sed",
+    Space,
+    "do",
+    Newline,
+    "eiusmod",
+    Space,
+    "tempor",
+    Space,
+    "incididunt",
+    Newline,
+    "ut",
+    Space,
+    "labore",
+    Space,
+    "et",
+    Space,
+    "dolore",
+    Space,
+    "magna",
+    Newline,
+    "aliqua.",
+    Space,
+    "Ut",
+    Space,
+    "enim",
+    Space,
+    "ad",
+    Space,
+    "minim",
+    Newline,
+    "veniam,",
+    Space,
+    "quis",
+    Space,
+    "nostrud",
+    Newline,
+    "exercitation",
+    Space,
+    "ullamco",
+    Newline,
+    "laboris",
+    Space,
+    "nisi",
+    Space,
+    "ut",
+    Space,
+    "aliquip",
+    Newline,
+    "ex",
+    Space,
+    "ea",
+    Space,
+    "commodo",
+    Space,
+    "consequat.",
+    Newline,
+    "Duis",
+    Space,
+    "aute",
+    Space,
+    "irure",
+    Space,
+    "dolor",
+    Space,
+    "in",
+    Newline,
+    "reprehenderit",
+    Space,
+    "in",
+    Newline,
+    "voluptate",
+    Space,
+    "velit",
+    Space,
+    "esse",
+    Newline,
+    "cillum",
+    Space,
+    "dolore",
+    Space,
+    "eu",
+    Space,
+    "fugiat",
+    Newline,
+    "nulla",
+    Space,
+    "pariatur.",
+    Space,
+    "Excepteur",
+    Newline,
+    "sint",
+    Space,
+    "occaecat",
+    Space,
+    "cupidatat",
+    Newline,
+    "non",
+    Space,
+    "proident,",
+    Space,
+    "sunt",
+    Space,
+    "in",
+    Newline,
+    "culpa",
+    Space,
+    "qui",
+    Space,
+    "officia",
+    Newline,
+    "deserunt",
+    Space,
+    "mollit",
+    Space,
+    "anim",
+    Space,
+    "id",
+    Newline,
+    "est",
+    Space,
+    "laborum."))
+*************************
+Lorem ipsum dolor sit
+amet, consectetur
+adipisicing elit, sed do
+eiusmod tempor incididunt
+ut labore et dolore magna
+aliqua. Ut enim ad minim
+veniam, quis nostrud
+exercitation ullamco
+laboris nisi ut aliquip
+ex ea commodo consequat.
+Duis aute irure dolor in
+reprehenderit in
+voluptate velit esse
+cillum dolore eu fugiat
+nulla pariatur. Excepteur
+sint occaecat cupidatat
+non proident, sunt in
+culpa qui officia
+deserunt mollit anim id
+est laborum.
+*************************
+GroupOne (false,
+  "adipisicing elit,", Newline, "sed do eiusmod tempor", Newline, "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ")
+*************************
+adipisicing elit,
+sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+*************************
+GroupOne (false, GroupOne (true, "adipisicing elit,", Newline, Newline, "sed do eiusmod tempo incididunt ut labore et dolore"))
+*************************
+adipisicing elit,
+
+sed do eiusmod tempo incididunt ut labore et dolore
+*************************
+GroupOne (false, Indent (1, GroupOne (true, "adipisicing elit,", Newline, Newline, "sed do eiusmod tempo incididunt ut labore et dolore")))
+*************************
+  adipisicing elit,
+  
+  sed do eiusmod tempo incididunt ut labore et dolore
+*************************
+GroupOne (false,
+  Indent (1,
+    GroupOne (true,
+      "let",
+      Space,
+      "x",
+      Space,
+      "=",
+      Space,
+      "x",
+      Space,
+      "in",
+      Space,
+      Newline,
+      GroupOne (true, "let", Space, "x", Space, "=", Space, "x", Space, "in", Space, Newline, "y"))))
+*************************
+  let x = x in
+  let x = x in
+  y
+*************************
+GroupOne (false,
+  GroupOne (true, "f", Newline, Indent (1, GroupOne (false, GroupOne (true, "let", Space, "x", Space, "=", Space, "x", Space, "in", Space, Newline, "y")))))
+*************************
+f
+  let x = x in
+  y
+*************************
+GroupOne (false, "()", Space, "(", GroupOne (true, "x", ",", Space, Space, "0"), ")")
+*************************
+() (x, 0)
+*************************

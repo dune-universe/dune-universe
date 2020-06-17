@@ -1,0 +1,13 @@
+(executable
+ (name test)
+ (libraries checkseum.ocaml alcotest))
+
+(rule
+ (copy# ../test.ml test.ml))
+
+(rule
+ (alias runtest)
+ (deps
+  (:test test.exe))
+ (action
+  (run %{test} --color=always)))
