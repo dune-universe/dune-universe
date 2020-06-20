@@ -1,0 +1,30 @@
+
+Iter.update restores an index at its previous position before invalidate,
+on the same sequence
+
+------------
+
+Iter.push_front etc... modify a sequence and maintain the current iterator.
+
+------------
+
+in Sek.E.set, there is no need to invalidate all iterators.
+
+67	+	      s.middle <- SSeq.update MSWeight o (
+1362	1368	 	          SChunk.update_by_weight MUnit o f
+1363		-	        ) s.middle i in
+1364		-	      if m != s.middle then begin
+1365		-	        s.middle <- m;
+1366		-	        invalidate_iterators s;
+1367		-	      end
+1369	+	        ) s.middle i
+
+-----------
+
+in Sek.E.Iter.set
+
+we can invalidate iterators only on middle sequence changes.
+
+    (* Because the middle sequence of [s] is changed, we need to invalidate
+       all other iterators on the sequence. *)
+    invalidate_iterators s;

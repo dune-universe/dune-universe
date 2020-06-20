@@ -1,0 +1,113 @@
+
+
+Idea: if all schunks in the middle sequence are full (with [capacity depth]) elements,
+then the [reach], [get], [set] functions can be made asymptotically faster,
+and the function [split] can have its constant factors improved.
+
+
+
+----------------------------------------------------------------
+
+type measure =
+   | ..
+   | MConst of int
+
+(* operations on ephemeral sequences use [measure_init] for operations on the middle sequence *)
+
+let ESek.middle_measure_init are_all_chunk_full =
+  if are_all_chunk_full then MConst (capacity 0) else MSWeight
+
+(* operations on persistent sequences use [measure_init] for operations on the sequence *)
+
+let PSek.measure_init are_all_chunk_full =
+  if are_all_chunk_full then MConst 1 else MUnit
+
+(* [reach] uses [measure_next] to make recursive calls at the next level. *)
+
+let measure_next depth m =
+  match m with
+  | MUnit -> MSWeight
+  | MSWeight -> MSWeight
+  | MConst n -> MConst (n * capacity depth)
+
+
+----------------------------------------------------------------
+
+  type filling_of_middle_schunks =
+    | FillingForceFull
+    | FillingFull
+    | FillingArbitrary
+
+----------------------------------------------------------------
+
+Let's extend the record ['a ESek.t] with a mutable field [filling]
+of this type [filling_of_middle_schunks].
+
+   let are_middle_schunks_all_full s =
+     s.filling <> FillingArbitrary
+
+   let set_filling s f = (* internal *)
+     if filling <> s.filling then begin
+       if s.filling = FillingArbitrary
+         then raise FillingCannotBeChangedFromArbitrary;
+       s.filling <- filling;
+     end
+
+   let force_filling_of_middle_schunks s =
+      set_filling s FillingForceFull
+
+   let relax_filling_of_middle_schunks s =
+      set_filling s FillingFull
+
+(* Note: i don't think we need to expose the type [filling_of_middle_schunks] to the client. *)
+
+
+For persistent sequences, it is similar: let's extend the [Level]
+constructor from ['a PSek.t] with a field [filling] of this type.
+The API needs to be adapted because the field is not mutable.
+
+
+----------------------------------------------------------------
+
+The clear function may be patched as follows. (In fact, this action
+can be done any time the middle sequence becomes empty)
+
+   let clear s =
+      ...
+      if s.filling <> FillingForceFull
+        then s.filling <- FillingFull
+
+----------------------------------------------------------------
+
+Operations that may introduce non-full schunks in the middle sequence
+should invoke the auxiliary function [break_full_middle_schunks].
+
+    let break_full_middle_schunks op s =
+       match s.filling with
+       | FillingForceFull ->
+           invalid_arg (op ^ "is incompatible with FillingForceFull")
+       | FillingFull ->
+           s.filling <- FillingArbitrary
+       | FillingArbitrary ->
+           ()
+
+
+Currently, only the function [concat] may introduce partially-filled schunks.
+It is possible to get lucky: if the two arguments satisfy [are_middle_schunks_all_full],
+and that the concat operation does not introduce partially-filled schunks
+(typically, because one argument is short enough), then the result of their
+concatenation can have a [s.filling] set to [FillingForceFull] if both input
+have this value or [FillingFull] otherwise.
+
+It would be useful to add a function [compact_concat], which preserves [s.filling]
+in all cases.
+
+
+----------------------------------------------------------------
+
+Constructors set by default the sequence in [FillingFull] mode.
+This includes [create], [make], [init]; [of_array_segment].
+
+The [edit] and [snapshot] functions carry the flag over.
+
+For [snapshot_and_clear], see the comment about [clear].

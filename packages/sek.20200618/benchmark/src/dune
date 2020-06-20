@@ -1,0 +1,7 @@
+; We pretend that there is a library in this directory (even
+; though there isn't) so that dune generates a .merlin file.
+(library
+  (name benchmark)
+  (flags (:standard -w A-4-44))
+  (libraries str unix core core.time_stamp_counter sek)
+)

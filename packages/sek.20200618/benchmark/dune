@@ -1,0 +1,13 @@
+(env
+  (_
+    (flags
+      :standard
+      -w A-4-44
+    )
+    (ocamlopt_flags
+      -O3
+      -inline-max-depth 5
+      -inlining-report
+    )
+  )
+)

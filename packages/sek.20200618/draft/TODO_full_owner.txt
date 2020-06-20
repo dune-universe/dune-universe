@@ -1,0 +1,128 @@
+
+
+Idea: if an ephemeral sequence is exclusive owner of all its schunks,
+then the [set] operation when performed from an iterator is O(1),
+moreover the user may safely update data in place when manipulating
+arrays provided by [iter_ranges].
+
+----------------------------------------------------------------
+
+Let's extend the record ['a ESek.t] with a field named [ownership]
+of type [ownership] defined as follows.
+
+  type ownership =
+    | OwnershipForceFull
+    | OwnershipFull
+    | OwnershipShared
+
+where [OwnershipForceFull] indicates that we want to enforce full
+ownership and fail an operations that would break this property;
+[OwnershipFull] indicates that the sequence is currently owner of
+all its schunks, but this property may be lost at some point.
+[OwershipShared] indicates that the sequence potentially contains
+shared schunks.
+
+----------------------------------------------------------------
+
+The mode may be accessed, and modified according to the following
+protocol, which prevents a transition from [OwnershipShared] to
+another mode.
+
+   let is_ownership_full s =
+     s.ownership <> OwnershipShared
+
+   let get_ownership s =
+     s.ownership
+
+   let set_ownership s ownership =
+     if ownership <> s.ownership then begin
+       if s.ownership = OwnershipShared
+         then raise OwnershipSharedCannotBeChanged;
+       s.ownership <- ownership;
+     end
+
+Remark: above, if current ownership is [OwnershipForceFull], then
+it is safe to change it to [OwnershipShared], yet it is always
+better to change it instead to [OwnershipFull].
+
+----------------------------------------------------------------
+
+The clear function may be patched as follows. (In fact, this action
+can be done any time the middle sequence becomes empty)
+
+   let clear s =
+      ...
+      if s.ownership <> OwnershipForceFull
+        then s.ownership <- OwnershipFull
+
+----------------------------------------------------------------
+
+Constructors set by default the sequence in [OwnershipFull] mode.
+This includes [create], [make], [init]; [of_array_segment].
+
+The [edit] function sets the sequence in [OwnershipShared] mode,
+unless its middle sequence is empty, in which case it sets it
+to [OwnershipFull].
+
+For [snapshot_and_clear], see the comment about [clear].
+
+----------------------------------------------------------------
+
+Operations that may break full ownership should invoke the
+auxiliary function [break_full_ownership].
+
+    let break_full_ownership op s =
+       match s.ownership with
+       | OwnershipForceFull ->
+           invalid_arg (op ^ "is incompatible with OwnershipFull")
+       | OwnershipFull ->
+           s.ownership <- OwnershipShared
+       | OwnershipShared ->
+           ()
+
+For example:
+
+    let copy s =
+       break_full_ownership "copy" s
+
+Other functions concerned include [concat].
+
+
+----------------------------------------------------------------
+
+Update operations that never break full ownership include:
+
+[push]
+[pop]
+[push_range]
+[pop_range]
+[set]
+[split]
+[carve]
+[iter_ranges]
+[Iter.set]
+
+Note: the last two operations modify only the contents of array
+cells, but in case of full ownership, there is no modification
+to the tree structure nor the schunk representations.
+
+----------------------------------------------------------------
+
+Special case of [append s1 s2].
+
+The full ownership is preserved in the following cases:
+
+  - if [s1.owner = s2.owner] (* (same [owner_low] and [owner_high]) *)
+    which is typically the case if both are at level [0],
+    and [is_ownership_full s1 && is_ownership_full s2].
+
+  - if no schunk from [s2] is absorbed by [s1], typically
+    because the sequence [s2] is sufficiently short that
+    its elements are migrated into chunks from [s1].
+
+This can be implemented by invoking [break_full_ownership]
+in the right branches of the code from [break_full_ownership].
+
+
+
+

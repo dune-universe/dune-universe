@@ -1,0 +1,8 @@
+dune-workspace.local
+_results
+.result
+*.out
+.graphics
+null
+.comparison
+.benchmark

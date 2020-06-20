@@ -1,0 +1,10 @@
+;; As dune cannot use the same OCaml module in two different libraries or
+;; executables, we must copy the source files to the present directory.
+
+(copy_files# ../*.{ml,mli})
+
+(executable
+  (name Main)
+  (flags (:standard -w A-4-44 -g))
+  (libraries str unix core core.time_stamp_counter sek)
+)

@@ -1,0 +1,41 @@
+(library
+  (public_name sek)
+  (libraries pprint seq)
+)
+
+;; Warnings are enabled (and fatal) during development,
+;; but are disabled in releases.
+
+;; Runtime assertions are enabled during development and testing,
+;; but are disabled in releases.
+
+(env
+  (dev
+    (flags
+      :standard
+      -safe-string
+      -w @1..66-41-44-60
+    )
+  )
+  (release
+    (flags
+      :standard
+      -safe-string
+      -noassert
+    )
+    (ocamlopt_flags
+      -O3
+    )
+  )
+)
+
+;; Some files require preprocessing by cppo.
+;; We define the symbol "dev" or "release"
+;; according to the current profile.
+;; This allows the code to contain #if directives
+;; that distinguish between these profiles.
+
+(rule
+  (targets ShareableChunk.ml)
+  (deps ShareableChunk.cppo.ml)
+  (action (run %{bin:cppo} -D %{profile} %{deps} -o %{targets})))

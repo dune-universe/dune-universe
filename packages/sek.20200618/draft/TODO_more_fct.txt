@@ -1,0 +1,34 @@
+-----------------------------------------------------------------
+Destructive iteration
+
+Introduce "destructive iterator" object, one per level, with mutable fields to
+keep track of what remains. A destructive iterator differs from a normal
+iterator in that it destroys the sequence on the fly, thus guaranteeing
+that the chunks become unreachable as soon as possible.
+
+Usage of a destructive iterator:
+          let it = DestructiveIter.destructive_create Front s in
+          begin try while true do
+            let segment = DestructiveIter.next_segment it in
+             ...
+          done with End -> () end
+
+fp: I think this may be overkill! But it seems acceptable if we provide just
+this API (and not a `destructive_` variant of every API function).
+
+fp: We should maintain the property that the sequence remains well-formed
+at all times. (We don't to give the user any way of shooting themselves in
+the foot.) But this suggests that we don't need destructive iterators at
+all; all we need is a way of popping a segment off a sequence.
+
+-----------------------------------------------------------------
+searching
+
+  (in Iter)
+  [Iter.find pov it p] moves the iterator to the first element satisfying [p],
+  starting from the current position of the iterator, inclusive.
+  It returns the element found, or raises [End].
+  (It could also just return unit.)
+
+  => can be implemented using get_segment_and_jump and jump
+     (if found, jump back)

@@ -1,0 +1,97 @@
+
+# Remove use of notation for arrays (once and for all)
+
+   for simplicity in following transformations,
+   manually edit sek/src/* to replace accesses "t.(i)"
+   with Array.get/set.
+   (fp: done, 3a8d37f)
+
+   For [||], there is no function Array.create_empty,
+   so we have to leave it this way.
+
+
+# Specialize for level 0
+
+   create a folder sek/generated/level0
+   copy all sources files from sek/src into it
+   copy EphemeralChunk as EphemeralChunkWeighted
+   copy ShareableChunk as ShareableChunkWeighted
+   move ShareableSequence to ShareableSequenceWeighted
+   modify EphemeralSequence to use ShareableSequenceWeighted as middle sequence
+   specialize ShareableChunk to UnitWeight, and remove the weight field
+   replace the file PersistentSequence with a specialized version of ShareableSequence:
+      - specializing ShareableSequenceWeighted to UnitWeight
+      - replace recursive calls with calls to functions from ShareableSequenceWeighted
+      - representing a persistent sequence as the record
+         {
+            owner : Owner.t; (* bound on the schunks versions *)
+            weight : weight;
+            front : 'a schunk;
+            middle : 'a schunk t;
+            back : 'a schunk;
+            depth : depth;
+          }
+      -> this saves a costly indirection and a costly allocation in operations
+         on persistent sequences.
+   this code should be the one exported as module "Sek" to the outside world
+   we keep the presentation sek/src as a way to better factorize the code
+   this specialization for level0 is required for specializatio to strings (see below)
+
+
+# Removing defaults: step common to the next three transformations
+
+   remove all default record fields in the level0 code (non-Weighted)
+   remove all default arguments everywhere in the level0 code (non-Weighted)
+   where a default value is needed, provide an appropriate value (see below)
+
+
+# Specialize for pointer values
+
+   copy sek/generated/level0 as sek/generated/pointer
+   specialize overwrite_default_value to true
+   define [null : 'a] as [Obj.magic (ref ())]
+   use [null] as default value for the module Sek
+   offer the client a simple module SekPointer without any functor to instantiate
+    (when using the default chunk capacities)
+   for users allergic to magic, it is still possible to use the plain module Sek,
+   this module is provided for those who can't be bothered providing default value
+
+
+# Specialize for base values
+
+   copy sek/generated/level0 as sek/generated/base
+   specialize overwrite_default_value to false
+   follow the convention that an empty sequence is represented using dummy chunks,
+    which can be allocated without a default element at hand
+    (distinguish from fubar by making fubar use [Owner.fubar = -3] as owner)
+   carefully tweak the code to implement the transitions from empty to nonempty
+    following essentially the same mechanism as lazy_reinit, except that it would
+    take as argument an arbitrary value at hand to initialize the chunks.
+    (in push, we have it, in concat if one of the two sequences is nonempty, we have
+    an element, and so on...). Ideally, the patch should be just a couple dozen lines.
+   offer the client the module SekBase with any functor to instantiate
+    (when using the default chunk capacities)
+
+
+# Specialize for strings
+
+   copy sek/generated/level0 as sek/generated/strings
+   specialize overwrite_default_value to false
+   for every file without "Weighted" in its name:
+      replace 'a with char
+      replace "char array" with "bytes"
+      replace "Array" with "Bytes"
+      replace "[||]" with Bytes.empty
+      rename "of_array" to "of_bytes"
+      add next to it [of_string s] defined as [of_bytes (Bytes.unsafe_of_string s)]
+      rename "to_array" to "to_bytes"
+      add next to it [to_string s] defined as [Bytes.unsafe_to_string (to_bytes s)]
+   offer the client a simple module SekStr without any functor to instantiate
+    (when using the default chunk capacities)
+
+
+# Additional optimization (LATER)
+
+   In EphemeralChunks, one could use Array.unsafe_get and unsafe_set,
+   given that the bounds are already checked in the high-level API.
+   Of course, this requires strong trust in the correctness of the Sek code.
