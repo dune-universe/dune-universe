@@ -1,0 +1,11 @@
+(library
+ (name SCamLib)
+ (public_name scaml.scamlib)
+ (wrapped false)
+ (flags -w -9)
+ (preprocess (pps ppx_typerep_conv))
+ (libraries zarith ptime typerep blake2 hex
+	    data-encoding tezos-micheline hacl bigstring
+	    spotlib compiler-libs.common
+	    )
+)

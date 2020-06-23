@@ -1,0 +1,6 @@
+(tests
+ (names
+  test_crypto
+  )
+ (preprocess (pps ppx_typerep_conv ppx_deriving ))
+ (libraries typerep scaml.compiler scaml.scamlib))

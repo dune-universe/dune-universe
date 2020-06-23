@@ -1,0 +1,50 @@
+FROM dailambda/ocaml:4.09.1.1 AS ocaml
+MAINTAINER Jun FURUSE <jun.furuse@dailambda.jp>
+
+# SCaml
+ 
+WORKDIR /
+RUN opam update
+RUN git clone https://gitlab.com/dailambda/scaml.git
+WORKDIR /scaml
+RUN git pull
+RUN git checkout @COMMIT@
+RUN apt install -y --no-install-recommends libgmp-dev
+RUN git submodule init
+RUN git submodule update
+RUN opam update
+RUN eval $(opam env) && env && opam install -y ./scaml.opam
+
+# Cleanup
+WORKDIR /
+RUN du -sh /usr /scaml /root /var
+
+# Under /root/.opam destorying the switch
+
+RUN opam clean -a
+RUN rm -rf /root/.opam/4.09.1/.opam-switch
+RUN tar zcf /tmp/opam.tgz /root/.opam/4.09.1/lib/stublibs /root/.opam/4.09.1/lib/ocaml/stdlib.cmi /root/.opam/4.09.1/bin/scamlc /root/.opam/4.09.1/lib/scaml
+RUN rm -rf /root/.opam
+
+FROM ubuntu:18.04
+COPY --from=ocaml /tmp/opam.tgz /tmp
+COPY --from=ocaml /scaml/tests/app_vote.ml /tmp
+
+RUN tar xvf /tmp/opam.tgz
+RUN rm /tmp/opam.tgz
+ENV SCAMLIB /root/.opam/4.09.1/lib/scaml/scamlib
+
+# Clean and destroy APT
+
+RUN rm -rf /usr/local
+RUN apt remove -y '*-dev' > /dev/null 2>&1
+RUN apt-get clean
+RUN apt autoremove -y
+RUN rm -rf /var/lib/apt
+
+RUN du -sh /usr /root /var
+
+RUN /root/.opam/4.09.1/bin/scamlc /tmp/app_vote.ml && echo OK
+WORKDIR /work
+ENV PATH /root/.opam/4.09.1/bin::/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CMD [ "scamlc", "--scaml-version"  ]

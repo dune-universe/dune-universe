@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -x
+
+ROOT=$(realpath $(dirname "$0"))/..
+# echo "ROOT from $0 is $ROOT"
+
+if [[ $(git status -s) ]]; then
+    echo "There are some uncommitted changes, finish them:"
+    git status -s
+    exit 1
+fi
+
+"$ROOT/lib/build-doc"
+"$ROOT/lib/build-notebooks"
+ghp-import -np "$ROOT/html_doc/"

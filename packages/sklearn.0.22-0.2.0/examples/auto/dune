@@ -1,5 +1,0 @@
-(library
- (name examples)
- (inline_tests)
- (libraries sklearn owl pyml re)
- (preprocess (pps ppx_expect)))

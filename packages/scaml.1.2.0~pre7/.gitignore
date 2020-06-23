@@ -1,0 +1,10 @@
+*~
+*.cm*
+.merlin
+*.install
+src/tests/*.iml
+_build
+_opam
+\#*\#
+.\#*
+docker/Dockerfile

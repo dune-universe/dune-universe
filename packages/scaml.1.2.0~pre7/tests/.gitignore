@@ -1,0 +1,6 @@
+*__link.iml*
+_build
+*.scaml
+*.tz
+\#*
+.#*

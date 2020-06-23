@@ -1,0 +1,11 @@
+*~
+.merlin
+_build/
+.ipynb_checkpoints/
+.venv/
+.venv*
+.mypy_cache
+_disabled
+compile_commands.json
+doc/
+html_doc/

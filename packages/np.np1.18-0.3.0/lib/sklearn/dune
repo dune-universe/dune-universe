@@ -1,0 +1,101 @@
+(library
+ (public_name sklearn)
+ (libraries bigarray pyml scipy np))
+
+;; 58 is due to pyml, not sure what to do about it
+;; Warning 58: no cmx file was found in path for module Numpy, and its interface was not compiled with -opaque
+(env
+ (dev
+  (flags (:standard -w -58))))
+
+(rule (targets
+       Base.ml
+       Base.mli
+       Calibration.ml
+       Calibration.mli
+       Cluster.ml
+       Cluster.mli
+       Compose.ml
+       Compose.mli
+       Conftest.ml
+       Conftest.mli
+       Covariance.ml
+       Covariance.mli
+       Cross_decomposition.ml
+       Cross_decomposition.mli
+       Datasets.ml
+       Datasets.mli
+       Decomposition.ml
+       Decomposition.mli
+       Discriminant_analysis.ml
+       Discriminant_analysis.mli
+       Dummy.ml
+       Dummy.mli
+       Ensemble.ml
+       Ensemble.mli
+       Exceptions.ml
+       Exceptions.mli
+       Experimental.ml
+       Experimental.mli
+       Externals.ml
+       Externals.mli
+       Feature_extraction.ml
+       Feature_extraction.mli
+       Feature_selection.ml
+       Feature_selection.mli
+       Gaussian_process.ml
+       Gaussian_process.mli
+       Impute.ml
+       Impute.mli
+       Inspection.ml
+       Inspection.mli
+       Isotonic.ml
+       Isotonic.mli
+       Kernel_approximation.ml
+       Kernel_approximation.mli
+       Kernel_ridge.ml
+       Kernel_ridge.mli
+       Linear_model.ml
+       Linear_model.mli
+       Manifold.ml
+       Manifold.mli
+       Metrics.ml
+       Metrics.mli
+       Mixture.ml
+       Mixture.mli
+       Model_selection.ml
+       Model_selection.mli
+       Multiclass.ml
+       Multiclass.mli
+       Multioutput.ml
+       Multioutput.mli
+       Naive_bayes.ml
+       Naive_bayes.mli
+       Neighbors.ml
+       Neighbors.mli
+       Neural_network.ml
+       Neural_network.mli
+       Pipeline.ml
+       Pipeline.mli
+       Preprocessing.ml
+       Preprocessing.mli
+       Random_projection.ml
+       Random_projection.mli
+       Semi_supervised.ml
+       Semi_supervised.mli
+       Setup.ml
+       Setup.mli
+       Svm.ml
+       Svm.mli
+       Tests.ml
+       Tests.mli
+       Tree.ml
+       Tree.mli
+       Utils.ml
+       Utils.mli
+       wrap_version.ml
+       skdoc.log)
+
+      (deps ../version.sh ../skdoc.sh ../skdoc.py)
+      (action (run bash ../skdoc.sh build sklearn))
+      (mode fallback))

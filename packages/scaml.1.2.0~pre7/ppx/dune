@@ -1,0 +1,6 @@
+(library
+ (kind ppx_rewriter)
+ (name SCamlPPX)
+ (public_name scaml.ppx)
+ (flags :standard)
+ (libraries compiler-libs.common ppxlib scaml.compiler))

@@ -1,0 +1,11 @@
+image: ocaml/opam2:4.09
+
+build:
+  stage: build
+  script:
+  - sudo apt install -y m4 libgmp-dev
+  - git submodule init
+  - git submodule update
+  - opam remote add official https://opam.ocaml.org/
+  - opam update
+  - opam install -y ./scaml.opam
