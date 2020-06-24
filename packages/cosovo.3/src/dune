@@ -1,0 +1,5 @@
+(executable
+  (name csvcat)
+  (public_name csvcat)
+  (libraries re cosovo cmdliner)
+)
