@@ -1,0 +1,5 @@
+(lang dune 1.11)
+(name index)
+(version 1.2.1)
+(using fmt 1.1)
+(implicit_transitive_deps false)

@@ -1,0 +1,47 @@
+(executables
+ (names
+   test_basic
+   test_cancellations
+   test_overflow
+   test_opt_res
+   test_race_condition_weakly_held
+   test_weakness
+ )
+ (libraries ringo ringo-lwt lwt.unix)
+ (flags :standard))
+
+(alias
+ (name runtest_basic)
+ (action (setenv OCAMLRUNPARAM "b" (run %{exe:test_basic.exe}))))
+
+(alias
+ (name runtest_cancellations)
+ (action (setenv OCAMLRUNPARAM "b" (run %{exe:test_cancellations.exe}))))
+
+(alias
+ (name runtest_overflow)
+ (action (setenv OCAMLRUNPARAM "b" (run %{exe:test_overflow.exe}))))
+
+(alias
+ (name runtest_race_condition_weakly_held)
+ (action (setenv OCAMLRUNPARAM "b" (run %{exe:test_race_condition_weakly_held.exe}))))
+
+(alias
+ (name runtest_opt_res)
+ (action (setenv OCAMLRUNPARAM "b" (run %{exe:test_opt_res.exe}))))
+
+(alias
+ (name runleaktest)
+ (action
+  (setenv OCAMLRUNPARAM "o=20,h=16,s=16,i=2"
+   (run %{exe:test_weakness.exe}))))
+
+(alias
+ (name runtest)
+ (deps
+  (alias runtest_basic)
+  (alias runtest_cancellations)
+  (alias runtest_overflow)
+  (alias runtest_opt_res)
+  (alias runtest_race_condition_weakly_held)
+ ))
