@@ -1,0 +1,17 @@
+{
+  "name": "binaryen.ml",
+  "version": "0.0.0",
+  "esy": {
+    "build": "dune build @all @install",
+    "buildEnv": {
+      "DUNE_BUILD_DIR": "#{self.target_dir}"
+    }
+  },
+  "scripts": {
+    "test": "dune runtest --force"
+  },
+  "dependencies": {
+    "ocaml": "~4.9.0",
+    "@opam/dune": "2.6.0"
+  }
+}
