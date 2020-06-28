@@ -1,0 +1,14 @@
+archetype state_var
+
+states =
+| Created initial
+
+entry exec () {
+  require {
+    r1: state = Created;
+  }
+  effect {
+    var a : int = 0;
+    a := 1
+  }
+}

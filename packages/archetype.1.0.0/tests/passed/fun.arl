@@ -1,0 +1,12 @@
+archetype fun
+
+function f (i : int) : int {
+  return i
+}
+
+entry exec () {
+  effect {
+    var res : int = f(0);
+    ()
+  }
+}

@@ -1,0 +1,18 @@
+archetype same_field_name
+
+variable v : int = 1
+
+asset asset1 {
+  id: string;
+}
+
+asset asset2 {
+  id: string;
+}
+
+entry anaction () {
+  effect {
+    var a : int = 0;
+    a := 1
+  }
+}

@@ -1,7 +1,0 @@
-archetype contract_empty
-
-action exec () {
-  effect {
-    ()
-  }
-}

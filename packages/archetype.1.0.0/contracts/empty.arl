@@ -1,0 +1,15 @@
+archetype empty
+
+entry myaction () {
+  specification {
+  }
+  accept transfer
+  called by any
+  require {
+  }
+  failif {
+  }
+  effect {
+    ()
+  }
+}

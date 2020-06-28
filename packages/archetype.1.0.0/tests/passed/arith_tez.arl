@@ -1,0 +1,13 @@
+archetype arith_tez
+
+constant a : tez = 1tz
+
+entry exec (r : role) {
+  accept transfer
+  effect {
+    var c : int = 0;
+    var b : tez = c * a;
+
+    transfer b to r
+  }
+}

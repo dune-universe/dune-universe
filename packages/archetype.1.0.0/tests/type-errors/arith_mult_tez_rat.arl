@@ -1,0 +1,7 @@
+archetype arith_mult_tez_rat
+
+entry main () {
+  effect {
+    var v = 1tz * (1 / 2)
+  }
+}

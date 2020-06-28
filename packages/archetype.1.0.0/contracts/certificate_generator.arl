@@ -1,0 +1,35 @@
+archetype certificate_generator
+
+variable admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+
+variable admin_tmp : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+
+asset certificate identified by id {
+  id : string;
+  description : string;
+  formula : string;
+  url : string;
+  hash : string;
+}
+
+entry add (cid : string, cdescription : string, cformula : string, curl : string, chash : string) {
+  called by admin
+
+  effect {
+    certificate.add({cid; cdescription; cformula; curl; chash})
+  }
+}
+
+entry assign_new_admin (newrole : role) {
+  called by admin
+  effect {
+    admin_tmp := newrole;
+  }
+}
+
+entry confirm_admin () {
+  called by admin_tmp
+  effect {
+    admin := admin_tmp;
+  }
+}

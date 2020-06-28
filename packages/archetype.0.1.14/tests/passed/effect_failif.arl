@@ -1,7 +1,0 @@
-archetype effect_failif
-
-action exec () {
-  effect {
-    failif (false)
-  }
-}

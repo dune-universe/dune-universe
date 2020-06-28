@@ -1,0 +1,7 @@
+archetype nothing
+
+entry exec () {
+  effect {
+    ()
+  }
+}

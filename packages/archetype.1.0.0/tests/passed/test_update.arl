@@ -1,0 +1,17 @@
+archetype test_update
+
+asset myasset {
+  id : int;
+  v : string;
+}
+
+asset myasset2 {
+  i : int;
+  k : int;
+}
+
+entry exec () {
+  effect {
+    myasset.update(myasset2[1].k, { v = "value" })
+  }
+}

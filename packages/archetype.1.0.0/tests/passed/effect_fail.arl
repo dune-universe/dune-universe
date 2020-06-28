@@ -1,0 +1,7 @@
+archetype effect_fail
+
+entry exec () {
+  effect {
+    fail ("message")
+  }
+}

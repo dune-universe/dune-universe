@@ -1,0 +1,25 @@
+archetype test_error
+
+entry main () {
+  effect {
+    when
+  }
+}
+
+entry main2 () {
+  effect {
+    f(); to
+  }
+}
+
+entry main3 () {
+  effect {
+    definition; f()
+  }
+}
+
+entry main4 () {
+  effect {
+    f(); transition; g()
+  }
+}

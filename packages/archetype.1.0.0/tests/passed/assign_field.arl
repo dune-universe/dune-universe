@@ -1,0 +1,18 @@
+archetype assign_field
+
+asset myasset identified by id {
+  id : int;
+  str : string;
+} initialized by {
+  {0; ""}
+}
+
+entry exec () {
+  specification {
+    s0: let some v = myasset[0] in v.str = "mystr" otherwise false;
+  }
+  effect {
+    myasset[0].str := "mystr";
+    require (myasset[0].str = "mystr")
+  }
+}

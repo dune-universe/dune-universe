@@ -1,0 +1,7 @@
+archetype contract_empty
+
+entry exec () {
+  effect {
+    ()
+  }
+}

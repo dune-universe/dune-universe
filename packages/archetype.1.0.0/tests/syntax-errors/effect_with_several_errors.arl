@@ -1,0 +1,7 @@
+archetype effect_with_several_errors
+
+entry ident () {
+  effect {
+    to; f(); when
+  }
+}

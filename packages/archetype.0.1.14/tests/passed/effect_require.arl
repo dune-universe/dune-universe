@@ -1,7 +1,0 @@
-archetype effect_require
-
-action exec () {
-  effect {
-    require (true)
-  }
-}

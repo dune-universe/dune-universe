@@ -1,7 +1,0 @@
-archetype effect_fail
-
-action exec () {
-  effect {
-    fail ("message")
-  }
-}

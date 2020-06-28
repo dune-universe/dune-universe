@@ -1,0 +1,19 @@
+archetype get_in_require_failif
+
+asset myasset {
+  id: string;
+  value: int;
+}
+
+entry exec () {
+  require {
+    r1: myasset["myid"].value = 0;
+  }
+  failif {
+    f1: myasset["myid"].value <> 0;
+  }
+  effect {
+    var a : int = 0;
+    a := 1
+  }
+}

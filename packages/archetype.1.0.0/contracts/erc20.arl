@@ -1,0 +1,61 @@
+archetype erc20
+
+constant name : string = "mytoken"
+
+constant total : int = 1000
+with {
+  i0: total > 0
+}
+
+asset allowance {
+    a_id    : int;
+    allowed : address;
+    amount  : int;
+} with {
+    i2 : amount > 0;
+}
+
+asset tokenHolder identified by holder {
+    holder     : address;
+    tokens     : int;
+    allowances : allowance aggregate;
+} with {
+    i1: tokens >= 0;
+    i3: allowances.sum(the.amount) <= tokens;
+} initialized by {
+  { holder = caller; tokens = total; allowances = [] }
+}
+
+entry dotransfer (dest : pkey of tokenHolder, value : int) {
+
+  specification {
+    p1 : before.tokenHolder.sum(tokens) = tokenHolder.sum(tokens);
+    p2 : let some th = tokenHolder[dest] in
+         let some bth = before.tokenHolder[dest] in
+         th.tokens = bth.tokens + value
+         otherwise true
+         otherwise true;
+    p3 : let some thc = tokenHolder[caller] in
+         let some bthc = before.tokenHolder[caller] in
+         thc.tokens = bthc.tokens - value
+         otherwise true
+         otherwise true;
+    p4 : let some th = tokenHolder[dest] in
+         forall t in tokenHolder,
+         forall bt in before.tokenHolder,
+         t.holder <> th.holder ->
+         t.holder <> caller ->
+         t.tokens = bt.tokens
+         otherwise true;
+  }
+
+  failif {
+    f0 : value < 0;
+    f1 : tokenHolder[caller].tokens < value
+  }
+
+  effect {
+    tokenHolder.update( tokenHolder[dest].holder, { tokens += value });
+    tokenHolder.update( caller, { tokens -= value })
+  }
+}
