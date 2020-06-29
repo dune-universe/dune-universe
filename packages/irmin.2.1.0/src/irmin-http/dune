@@ -1,4 +1,0 @@
-(library
- (name        irmin_http)
- (public_name irmin-http)
- (libraries   irmin cohttp-lwt webmachine))

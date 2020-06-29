@@ -1,0 +1,24 @@
+version: "2.2.0"
+opam-version: "2.0"
+maintainer: "Craig Ferguson <craig@tarides.com>"
+author: "Craig Ferguson <craig@tarides.com>"
+homepage: "https://github.com/mirage/irmin"
+bug-reports: "https://github.com/mirage/irmin/issues"
+license: "ISC"
+dev-repo: "git+https://github.com/mirage/irmin.git"
+
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
+]
+
+depends: [
+  "dune"
+  "ocaml" {>= "4.06.0"}
+  "ocaml-syntax-shims"
+  "ppxlib" {= "0.12.0"}
+  "irmin" {with-test & >= "2.0.0"}
+]
+
+synopsis: "PPX deriver for Irmin generics"
