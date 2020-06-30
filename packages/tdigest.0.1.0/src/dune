@@ -1,0 +1,10 @@
+(library
+  (name tdigest)
+  (public_name tdigest)
+  (libraries
+    core_kernel
+  ))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

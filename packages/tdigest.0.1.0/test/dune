@@ -1,0 +1,12 @@
+(tests
+  (names
+    test_discrete
+    test_tdigest
+  )
+  (libraries
+    tdigest
+    alcotest
+    yojson
+  )
+  (ocamlopt_flags -Oclassic)
+)
