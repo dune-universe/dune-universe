@@ -1,0 +1,11 @@
+(library
+ (name odnnr)
+ (public_name odnnr)
+ (modules utls DNNR)
+ (libraries dolog batteries))
+
+(executable
+ (name model)
+ (public_name odnnr_model)
+ (modules model gnuplot)
+ (libraries dolog minicli cpm batteries odnnr parany))

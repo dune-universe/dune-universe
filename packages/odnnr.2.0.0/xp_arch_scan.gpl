@@ -1,0 +1,13 @@
+
+set ticslevel 0
+
+set zrange [0.5:1]
+
+set xlabel 'layer size'
+set ylabel '#layers'
+set zlabel '5xCV avg(AUC)'
+
+# best data point
+set label '0.87 (50 epochs)' at 512,5,0.9
+
+splot 'data/xp_network_archi_chembl1868_pFP.txt' u 1:2:4:4 w imp lc palette
