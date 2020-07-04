@@ -1,3 +1,8 @@
+## v1.13.1 (2020-07-01)
+* MirageOS (mirage-net) defines the MTU as the link-level payload size, adjust from 1514 to 1500 (@hannesm, #98)
+* Only pass the sub-buffer of requested size to the fill function (solves mirage/qubes-mirage-firewall#111, @hannesm, #98)
+* listen: do not catch out of memory exception (@hannesm, #97)
+
 ## v1.13.0 (2019-11-01)
 * Adapt to mirage-xen 5.0.0 API changes (@hannesm, #95)
 * Adapt to mirage-net 3.0.0 API changes (@hannesm, #95)
