@@ -1,0 +1,17 @@
+"Generate co's" 
+
+include "cross.cat"
+
+let invrf = rf^-1
+let cobase = co0
+with co from generate_orders(W\SPEC,cobase)
+
+(* From now, co is a coherence order *)
+let coi = co & int
+let coe = co \ coi
+
+(* Compute fr *)
+let fr = ([EXEC]; invrf ; co; [EXEC]) \ id
+let fri = fr & int
+let fre = fr \ fri
+

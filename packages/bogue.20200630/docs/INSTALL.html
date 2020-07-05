@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INSTALL</title>
+</head>
+<body>
+  <div style="float: right;">
+    <a href="https://github.com/sanette/bogue">Find bogue on
+      <img 
+	src="images/github.svg" 
+	alt="Github"
+	height="42px"
+	width="42px" style="vertical-align: middle;"/></a>
+  </div>
+<h1 id="bogue-how-to-install-bogue"><img src="images/bogue-icon.png" alt="BOGUE" /> How to install BOGUE</h1>
+<p><code>Bogue</code> is a GUI library for the programming language <a href="https://ocaml.org/"><code>ocaml</code></a>.</p>
+<p>You can install it easily with</p>
+<pre><code>opam install bogue</code></pre>
+<p>To discover how to use Bogue, read the <a href="Principles.html">introduction</a>, the <a href="Bogue.html">documentation</a> (API), or a simple <a href="Bogue.html#example">example</a>.</p>
+<p>The library is constantly evolving. If you want to use the latest development version, it's quite easy, read below. The source code is hosted in <a href="https://github.com/sanette/bogue">github</a>.</p>
+<p>Bogue uses the cross-platform library <a href="http://www.libsdl.org/">SDL</a>, so in principle it can be used everywhere SDL and ocaml can be installed: Linux, Mac OS, Windows... However, it has only be tested for Linux, and a few tweaks will certainly be necessary to port it to other platforms. Any help on this matter will be greatly appreciated.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You need a working <code>ocaml</code> installation with <code>opam</code>, see the <a href="https://ocaml.org/docs/install.html">ocaml doc</a>. Then, make sure you have <code>dune</code>, <code>tsdl</code>, <code>tsdl-image</code> and <code>tsdl-ttf</code>:</p>
+<pre><code>opam install dune tsdl tsdl-image tsdl-ttf</code></pre>
+<h2 id="using-the-git-repository">Using the git repository</h2>
+<p>Download the latest <a href="https://github.com/sanette/bogue/archive/master.zip">git archive</a>, unzip it, cd into the <code>bogue-master</code> dir, and then:</p>
+<pre><code>dune build
+opam install .</code></pre>
+<h2 id="detailed-procedure-for-ubuntu-14.04---16.04">Detailed procedure for Ubuntu 14.04 - 16.04</h2>
+<p>See <a href="INSTALL-14.04.html">this</a>.</p>
+<h2 id="detailed-procedure-for-ubuntu-18.04">Detailed procedure for Ubuntu 18.04</h2>
+<p>If you have the standard SDL2 ubuntu package, you cannot use the latest version of <code>tsdl</code>. Instead, use:</p>
+<pre><code>opam install tsdl.0.9.6</code></pre>
+<p>and <strong>then</strong> you may:</p>
+<pre><code>opam install bogue</code></pre>
+  <div style="float: right;">
+    <a href="https://github.com/sanette/bogue">Find bogue on
+      <img 
+	src="images/github.svg" 
+	alt="Github"
+	height="42px"
+	width="42px" style="vertical-align: middle;"/></a>
+  </div>
+  
+<br></body></html>

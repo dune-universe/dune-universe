@@ -1,8 +1,0 @@
-(executable
- (name fuzz)
- (libraries duff crowbar))
-
-(alias
- (name runfuzz)
- (deps (:fuzzer fuzz.exe))
- (action (run %{fuzzer})))

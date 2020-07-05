@@ -1,0 +1,5 @@
+(library
+ (name encore)
+ (public_name encore)
+ (modules either bij lavoisier encore)
+ (libraries fmt bigstringaf angstrom))

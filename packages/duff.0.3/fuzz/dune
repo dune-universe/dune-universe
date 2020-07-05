@@ -1,0 +1,10 @@
+(executable
+ (name fuzz)
+ (libraries duff bigstringaf hxd.string crowbar))
+
+(rule
+ (alias runtest)
+ (deps
+  (:fuzzer fuzz.exe))
+ (action
+  (run %{fuzzer})))

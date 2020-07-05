@@ -1,4 +1,0 @@
-(library
- (name duff)
- (public_name duff)
- (libraries fmt cstruct))

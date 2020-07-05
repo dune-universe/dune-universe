@@ -1,0 +1,4 @@
+(library
+ (name duff)
+ (public_name duff)
+ (libraries stdlib-shims fmt bigarray-compat))

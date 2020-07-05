@@ -1,4 +1,0 @@
-(library
- (name Encore)
- (public_name encore)
- (libraries bigarray-overlap ke angstrom fmt bigstringaf bigarray-compat))
