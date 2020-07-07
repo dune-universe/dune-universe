@@ -1,0 +1,9 @@
+(executable
+  (name sgftrip)
+  (public_name sgftrip)
+  (libraries sgf rresult))
+
+(alias
+  (name runtest)
+  (deps easy.sgf 2009-05-19-6.sgf)
+  (action (run ./sgftrip.exe %{deps})))

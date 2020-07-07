@@ -1,0 +1,53 @@
+(env
+ (_
+  (flags (:standard -w +a-4-41-44-45-48))))
+
+(library
+ (name mjs)
+ (public_name vue-jsoo.mjs)
+ (modules mjs)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml lwt))
+
+(library
+ (name vue_component)
+ (public_name vue-jsoo.component)
+ (modules vue_component)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries mjs))
+
+(library
+ (name vue_router)
+ (public_name vue-jsoo.router)
+ (modules vue_router)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries mjs vue_component))
+
+(library
+ (name vuex)
+ (public_name vue-jsoo.vuex)
+ (modules vuex)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries mjs))
+
+(library
+ (name vue_js)
+ (public_name vue-jsoo)
+ (modules vue_js)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries mjs vue_router vuex))
+
+(library
+ (name vue_tyx)
+ (public_name vue-jsoo.tyx)
+ (modules vue_tyx)
+ (optional)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries mjs js_of_ocaml-tyxml))
+
+(library
+ (name vue_chartjs)
+ (public_name vue-jsoo.chartjs)
+ (modules vue_chartjs)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries vue_js))

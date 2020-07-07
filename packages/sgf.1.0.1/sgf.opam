@@ -1,0 +1,22 @@
+version: "1.0.1"
+opam-version: "2.0"
+maintainer: "Vincent Bernardoff <vb@luminar.eu.org>"
+authors: "Vincent Bernardoff <vb@luminar.eu.org>"
+homepage: "https://github.com/vbmithr/ocaml-sgf"
+dev-repo: "git+https://github.com/vbmithr/ocaml-sgf"
+bug-reports: "https://github.com/vbmithr/ocaml-sgf/issues"
+doc: "https://vbmithr.github.io/ocaml-sgf/doc"
+license: "ISC"
+build: ["dune" "build" "-p" name "-j" jobs]
+run-test: ["dune" "runtest" "-p" name "-j" jobs]
+depends: [
+  "ocaml" {>= "4.02.0"}
+  "dune" {>= "1.0"}
+  "sedlex" {>= "2.0"}
+  "menhir"
+  "rresult"
+]
+synopsis: "Parser and pretty printer for SGF files"
+description: """The Smart Game Format (SGF) is a computer file format
+used for storing records of board games. Go is the game that is most
+commonly represented in this format and is the default."""

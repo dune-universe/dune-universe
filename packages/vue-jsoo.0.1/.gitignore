@@ -1,0 +1,4 @@
+_build/
+_obuild/
+test/*.js
+*.merlin

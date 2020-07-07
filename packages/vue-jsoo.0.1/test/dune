@@ -1,0 +1,44 @@
+(executable
+ (name test_vue)
+ (modules test_vue)
+ (libraries vue_js vue_component)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js)
+ (js_of_ocaml (flags :standard ../js/vue.js)))
+
+(executable
+ (name test_router)
+ (modules test_router)
+ (libraries vue_js vue_component vue_router)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js))
+
+(executable
+ (name test_chart)
+ (modules test_chart)
+ (libraries vue_js vue_chartjs)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js))
+
+(executable
+ (name test_vuex)
+ (modules test_vuex)
+ (libraries vue_js vuex)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js))
+
+(executable
+ (name test_vuex2)
+ (modules test_vuex2)
+ (libraries vue_js)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js))
+
+(executable
+ (name test_project)
+ (modules test_project)
+ (libraries vue_js)
+ (preprocess (pps js_of_ocaml-ppx))
+ (modes js)
+ (js_of_ocaml
+  (flags (:standard --pretty))))

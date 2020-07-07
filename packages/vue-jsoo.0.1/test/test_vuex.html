@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Vuex</title>
+    <meta charset="utf-8">
+
+    <!-- Loaded scripts -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex/dist/vuex.js"></script>
+    <script src="test-vuex.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h4>Test mutation</h4>
+        <input v-model="payload"/>
+        <button @click="increment(payload)">increment</button>
+        <span>state: {{ count }}</span>
+      </div>
+
+      <div>
+        <h4>Test getters</h4>
+        <div>{{ doneTodos }}</div>
+        <div>{{ getTodoById(2) }}</div>
+      </div>
+
+      <div>
+        <h4>Test action</h4>
+        <input v-model="payload_async"/>
+        <button @click="incrementAsync(payload_async)">increment</button>
+        <span>state: {{ count }}</span>
+      </div>
+
+    </div>
+  </body>
+</html>

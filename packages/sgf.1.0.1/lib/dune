@@ -1,0 +1,7 @@
+(menhir (modules parser))
+
+(library
+  (name sgf)
+  (public_name sgf)
+  (preprocess (pps sedlex.ppx))
+  (libraries menhirLib rresult))
