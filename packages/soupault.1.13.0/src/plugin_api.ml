@@ -138,13 +138,13 @@ module Html = struct
   let select_any_of soup selectors =
     let* soup = soup in
     let* n =
-      try to_general soup |> Utils.select_any_of selectors
+      try to_general soup |> Html_utils.select_any_of selectors
       with Utils.Soupault_error msg -> raise (Plugin_error msg)
     in Some (ElementNode n)
 
   let select_all_of soup selectors =
     let* soup = soup in
-    try to_general soup |> Utils.select_all selectors |> List.map (fun x -> ElementNode x) |> return
+    try to_general soup |> Html_utils.select_all selectors |> List.map (fun x -> ElementNode x) |> return
     with Utils.Soupault_error msg ->
       raise (Plugin_error msg)
 
@@ -251,9 +251,9 @@ module Html = struct
   let replace_content node child =
     let child = to_general child in
     match node with
-    | ElementNode n -> Utils.replace_content n child
+    | ElementNode n -> Html_utils.replace_content n child
     | SoupNode _ -> raise (Plugin_error "Cannot use replace_content with a document node")
-    | GeneralNode _ as n -> Utils.replace_content (to_element n) child
+    | GeneralNode _ as n -> Html_utils.replace_content (to_element n) child
 
   let delete_content node =
     match node with
@@ -292,16 +292,24 @@ module Html = struct
   let inner_html node =
     match node with
     | None -> ""
-    | Some node -> to_general node |> Utils.inner_html
+    | Some node -> to_general node |> Html_utils.inner_html
 
   let strip_tags node =
     match node with
     | None -> ""
-    | Some node -> to_general node |> Utils.get_element_text |> CCOpt.get_or ~default:""
+    | Some node -> to_general node |> Html_utils.get_element_text |> CCOpt.get_or ~default:""
 
   let clone_content node =
     let* node = node in
-    SoupNode (to_general node |> Utils.child_nodes) |> return
+    SoupNode (to_general node |> Html_utils.child_nodes) |> return
+
+  let get_heading_level node =
+    let* node = node in
+    match node with
+    | ElementNode n ->
+      if not (Html_utils.is_heading n) then None
+      else Some (Html_utils.get_heading_level n)
+    | _ -> None
   
   let tname = "html"
   let eq _ = fun x y -> Soup.equal_modulo_whitespace (to_general x) (to_general y)
@@ -326,6 +334,26 @@ struct
     module Map = struct
       let html = HtmlV.makemap V.userdata V.projection
     end (* Map *)
+
+    let get_headings_tree soup =
+      match soup with
+      | None -> []
+      | Some soup -> begin
+        let open Rose_tree in
+        let trees =
+          Html_utils.find_headings (Html.to_general soup) |>
+          Rose_tree.from_list Html_utils.get_heading_level
+        in
+        let rec lua_of_tree t =
+          let value = Map.html.embed (Html.from_element t.value) in
+          match t.children with
+          | [] -> ["heading", value; "children", V.unit.embed ()]
+          | cs ->
+            let children = List.map (fun c -> V.Table.of_list @@ lua_of_tree c) cs in
+            let children_table = (V.list V.table).embed children in
+            ["heading", value; "children", children_table]
+        in List.map (fun t -> lua_of_tree t |> V.Table.of_list |> V.table.embed) trees
+      end
    
     let init g = 
       C.register_module "HTML" [
@@ -365,6 +393,8 @@ struct
         "clone_content", V.efunc (V.option Map.html **->> V.option Map.html) Html.clone_content;
         "strip_tags", V.efunc (V.option Map.html **->> V.string) Html.strip_tags;
         "is_element", V.efunc (V.option Map.html **->> V.bool) Html.is_element;
+        "get_headings_tree", V.efunc (V.option Map.html **->> V.list V.value) get_headings_tree;
+        "get_heading_level", V.efunc (V.option Map.html **->> V.option V.int) Html.get_heading_level;
       ] g;
       
       C.register_module "Regex" [
@@ -405,6 +435,7 @@ struct
        "truncate", V.efunc (V.string **-> V.int **->> V.string) (fun s l -> try String.sub s 0 l with Invalid_argument _ -> s);
        "slugify_ascii", V.efunc (V.string **->> V.string) Utils.slugify;
        "join", V.efunc (V.string **-> V.list V.string **->> V.string) String.concat;
+       "to_number", V.efunc (V.string **->> V.option V.float) (fun s -> try Some (float_of_string s) with _ -> None);
      ] g
   end (* M *)
 end (* MakeLib *)
@@ -436,16 +467,16 @@ let rec lua_of_value v =
   match v with
   | `Bool b -> I.Value.bool.embed b
   | `Int i -> I.Value.int.embed i
+  | `Float f -> I.Value.float.embed f
   | `String s -> I.Value.string.embed s
   | `A vs -> (List.map lua_of_value vs) |> (I.Value.list I.Value.value).embed
+  | `O vs ->
+    List.map (fun (k, v) -> (k, lua_of_value v)) vs |>
+    I.Value.Table.of_list |> I.Value.table.embed
   | `Null -> I.Value.unit.embed ()
 
 let lua_of_config c =
-  let cs = Config.assoc_of_table2 Config.get_whatever c in
-  let cs = List.map (fun (k, v) -> (k, lua_of_value v)) cs in
-  let config_hash = I.Value.Table.of_list cs in
-  I.Value.table.embed config_hash
-  
+  Toml_utils.assoc_of_table c |> lua_of_value
 
 let run_plugin filename lua_code env config soup =
   let open Defaults in

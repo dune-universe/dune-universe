@@ -1,7 +1,7 @@
 (** global settings that can be updated from config file or command line options *)
 type index_field = {
   field_name : string;
-  field_selector : string;
+  field_selectors : string list;
   select_all : bool;
   default_field_value : string option;
   extract_attribute : string option;
@@ -185,7 +185,7 @@ let default_settings = {
   plugin_discovery = true;
 }
 
-let version = (1, 12, 0, None)
+let version = (1, 13, 0, None)
 
 let version_to_string v =
   let major, minor, patch, suffix = v in

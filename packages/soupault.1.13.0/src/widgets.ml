@@ -35,7 +35,7 @@ let get_widget_config config widget =
    failwith @@ Printf.sprintf "Trying to lookup a non-existent widget %s" widget
 
 let list_widgets config =
-  let ws = Config.get_table Defaults.widgets_table config >>= (fun x -> Some (Config.list_config_keys x)) in
+  let ws = Config.get_table Defaults.widgets_table config >>= (fun x -> Some (Toml_utils.list_table_keys x)) in
   match ws with
   | None -> []
   | Some ws' -> ws'
@@ -82,7 +82,7 @@ let rec _load_widgets settings config plugins ws hash =
                   in
                   let () = Hashtbl.add plugins name (Plugin_api.run_plugin name lua_source) in
                   let () = Logs.debug @@ fun m -> m "Widget %s is loaded from plugin file %s" name plugin_file in
-                  let () = add_widget hash w (find_widget plugins name |> Utils.unwrap_option) widget_config in
+                  let () = add_widget hash w (find_widget plugins name |> Option.get) widget_config in
                    _load_widgets settings config plugins ws' hash
             end
           | Some wf ->

@@ -71,7 +71,7 @@ let make_page_dir_name settings target_dir page_name =
 
 let load_html settings file =
   let ext = Utils.get_extension file in
-  let preprocessor = CCList.assoc_opt ~eq:(=) ext settings.preprocessors in
+  let preprocessor = List.assoc_opt ext settings.preprocessors in
   try
     match preprocessor with
     | None -> Ok (Soup.read_file file |> Soup.parse)
@@ -84,6 +84,10 @@ let load_html settings file =
 let save_html settings soup file =
   try
     let html_str = Soup.pretty_print soup in
+    (* lambdasoup 0.7.1 adds an HTML5 doctype whether you want it or not.
+       Until it stops doing that or adds an option to choose a doctype,
+       we have to remove it so that we can add a doctype from the config. *)
+    let html_str = Re.replace  ~f:(fun _ -> "") (Re.Perl.compile_pat ~opts:[`Caseless] "^(<!DOCTYPE[^>]*>\\s*)") html_str in
     let chan = open_out file in
     (* lambdasoup doesn't include the doctype even if it was present
        in the source, so we have to do it ourselves *)
@@ -370,14 +374,19 @@ let initialize () =
   } in
   let () =
     begin
-      let () = if not settings.generator_mode then
-        Logs.info @@ fun m -> m "Running in HTML processor mode, not using the page template"
-      in
-      let () = if settings.index_only && not (settings.index && (settings.dump_json <> None)) then
-        Logs.warn @@ fun m -> m "--index-only is useless without index=true and dump_json options in the config!"
-      in ()
+      if not settings.generator_mode then
+        Logs.info @@ fun m -> m "Running in HTML processor mode, not using the page template";
+      if settings.index_only && not (settings.index && (settings.dump_json <> None)) then
+        Logs.warn @@ fun m -> m "--index-only is useless without index=true and dump_json options in the config!";
+      if settings.build_dir = "" then
+      (* Treating build_dir="" as "build in the current dir" wasn't a part of the design.
+         I suppose it should be disabled in 2.0.
+       *)
+      Logs.warn @@ fun m -> m "Build directory is set to empty string, using current working directory for output"
     end
-  in Ok (config, widgets, settings, default_env)
+  in
+  if settings.site_dir = "" then (Error "site_dir must be a directory path, not an empty string")
+  else (Ok (config, widgets, settings, default_env))
 
 let dump_index_json settings index =
   match settings.dump_json with

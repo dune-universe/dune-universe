@@ -12,19 +12,9 @@ type toc_settings = {
   link_here_append: bool;
   use_text: bool;
   use_slugs: bool;
-  strip_tags: bool
+  strip_tags: bool;
+  valid_html: bool;
 }
-
-let is_heading e =
-  match (Soup.name e) with
-  | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" -> true
-  | _ -> false
-
-let find_headings soup =
-  let open Soup in
-  soup |> descendants |> elements |> filter is_heading |> to_list
-
-let get_heading_level e = String.sub (Soup.name e) 1 1 |> int_of_string
 
 let make_counter seed =
   let counter = ref seed in
@@ -37,7 +27,7 @@ let get_heading_id settings counter heading =
   | None ->
     if not (settings.use_slugs || settings.use_text)
     then counter () |> string_of_int else
-    let text =  Utils.get_element_text heading in
+    let text =  Html_utils.get_element_text heading in
     begin
       match text with
       | None -> counter () |> string_of_int
@@ -61,10 +51,10 @@ let add_item settings counter heading container =
   let li = Soup.create_element "li" in
   let heading_id = get_heading_id settings counter heading in
   let h_link = Soup.create_element ~attributes:["href", "#" ^ heading_id] "a" in
-  let h_content = Utils.child_nodes heading in
+  let h_content = Html_utils.child_nodes heading in
   (* Strip tags if configured *)
   let h_content =
-    if settings.strip_tags then Utils.get_element_text h_content |> CCOpt.get_or ~default:"" |> Soup.parse
+    if settings.strip_tags then Html_utils.get_element_text h_content |> CCOpt.get_or ~default:"" |> Soup.parse
     else h_content
   in
   Soup.append_child h_link h_content;
@@ -76,52 +66,44 @@ let add_item settings counter heading container =
     let link_text = Soup.parse settings.link_here_text in
     let link_here = Soup.create_element ~attributes:["href", "#" ^ heading_id] "a" in
     let () = Soup.append_child link_here link_text in
-    Utils.add_class settings.link_here_class link_here;
+    Html_utils.add_class settings.link_here_class link_here;
     if settings.link_here_append then Soup.append_child heading link_here
     else Soup.prepend_child heading link_here
-  end
+  end;
+  (* Return the generated <li> element *)
+  li
 
 let make_toc_container settings level =
   let tag = if settings.numbered_list then "ol" else "ul" in
   let toc_list = Soup.create_element tag in
   let toc_class = make_toc_class settings level in
-  Utils.add_class toc_class toc_list;
+  Html_utils.add_class toc_class toc_list;
   toc_list
 
-let rec _make_toc settings counter soup container cur_level headings =
-  match headings with
-  | [] -> []
-  | h :: hs ->
-    begin
-      let level = get_heading_level h in
-      if (level < settings.min_level) || (level > settings.max_level)
-      then _make_toc settings counter soup container cur_level hs 
-      else match level, cur_level with
-      | _ when level = cur_level ->
-        (* Same level, just add a new item and go ahead *)
-        add_item settings counter h container;
-        _make_toc settings counter soup container cur_level hs
-      | _ when level > cur_level ->
-        (* Hello Mr. Tyler, going down?
-           This is a deeper level. We call _make_toc on the list tail --
-           it will return remaining items list when the level increases, then call it again
-           on the list it returns.
-         *)
-        let container' = make_toc_container settings level in
-        let () = add_item settings counter h container' in 
-        let hs' = _make_toc settings counter soup container' level hs in
-        let () = Soup.append_child container container' in
-        _make_toc settings counter soup container cur_level hs'
-      | _ ->
-        (* The level goes up. We need to return this heading
-           and all remaining headings to the caller at the upper level *)
-        h :: hs
-    end
+let rec _make_toc settings depth counter parent tree =
+  let heading = Rose_tree.(tree.value) in
+  let children = Rose_tree.(tree.children) in
+  let level = Html_utils.get_heading_level heading in
+  if level > settings.max_level then () else
+  if level < settings.min_level then List.iter (_make_toc settings depth counter parent) children else
+  let item = add_item settings counter heading parent in
+  match children with
+  | [] -> ()
+  | _ ->
+    let container = make_toc_container settings depth in
+    (* According to the HTML specs, and contrary to the popular opinion,
+       a <ul> or <ul> cannot contain another <ul> or <ul>.
+       Nested lists must be inside its <li> elements.
+       With valid_html the user can force that behaviour.
+     *)
+    if settings.valid_html then Soup.append_child item container
+    else Soup.append_child parent container;
+    List.iter (_make_toc settings (depth + 1) counter container) children
 
 let toc _ config soup =
   let valid_options = List.append Config.common_widget_options
     ["selector"; "min_level"; "max_level"; "toc_list_class"; "toc_class_levels"; "numbered_list";
-     "heading_links"; "heading_link_text"; "heading_link_class"; "heading_links_append";
+     "heading_links"; "heading_link_text"; "heading_link_class"; "heading_links_append"; "valid_html";
      "use_heading_text"; "use_heading_slug"; "use_header_text"; "use_header_slug"; "strip_tags"; "action"]
   in
   let () = Config.check_options valid_options config "widget \"toc\"" in
@@ -138,6 +120,7 @@ let toc _ config soup =
     use_text = Config.get_bool_default false "use_heading_text" config;
     use_slugs = Config.get_bool_default false "use_heading_slug" config;
     strip_tags = Config.get_bool_default false "strip_tags" config;
+    valid_html = Config.get_bool_default false "valid_html" config;
   } in
   let selector = Config.get_string_result "Missing required option \"selector\"" "selector" config in
   let action = Config.get_string_default "append_child" "action" config in
@@ -157,9 +140,14 @@ let toc _ config soup =
       | Some container ->
       begin
         let counter = make_counter 0 in
-        let toc_container = make_toc_container settings settings.min_level in
-        let headings = find_headings soup in
-        let _ = _make_toc settings counter soup toc_container settings.min_level headings in
-        Ok (Utils.insert_element action container toc_container)
+        let headings = Html_utils.find_headings soup |> Rose_tree.from_list Html_utils.get_heading_level in
+        match headings with
+        | [] ->
+          let () = Logs.debug @@ fun m -> m "Page has no headings, nothing to build a ToC from" in
+          Ok ()
+        | _ ->
+          let toc_container = make_toc_container settings 1 in
+          let _ = List.iter (_make_toc settings 2 counter toc_container) headings in
+          Ok (Html_utils.insert_element action container toc_container)
       end
     end

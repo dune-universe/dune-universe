@@ -2,12 +2,6 @@ open Defaults
 
 let default d o = CCOpt.get_or ~default:d o
 
-(* List all keys of a TOML table
-   This is used to retrieve a list of widgets to call
- *)
-let list_config_keys table =
-  TomlTypes.Table.fold (fun k _ ks -> (TomlTypes.Table.Key.to_string k) :: ks ) table []
-
 (** Checks if config file exists.
     When config doesn't exist, soupault uses default settings,
     so this is considered a normal condition.
@@ -46,7 +40,7 @@ let check_options ?(fmt=bad_option_msg) valid_options config ident =
     let suggestion = Spellcheck.get_suggestion index opt in
     Logs.warn @@ fun m -> m "%s" (fmt opt ident suggestion)
   in
-  let keys = list_config_keys config in
+  let keys = Toml_utils.list_table_keys config in
   List.iter (check_option valid_options) keys
 
 (** Read and parse a TOML file *)
@@ -82,45 +76,15 @@ let get_strings k tbl = TomlLenses.(get tbl (key k |-- array |-- strings))
 let get_strings_default default_value k tbl = get_strings k tbl |> default default_value
 let get_strings_result err k tbl = get_strings k tbl |> CCOpt.to_result err
 
-(* For passing options to plugins *)
-let get_whatever_as_string k tbl =
-  (* A "maybe not" "monad" *)
-  let (>>=) v f =
-    match v with
-    | None -> f v
-    | Some _ as v -> v
-  in
-  get_string k tbl >>=
-  (fun _ -> get_int k tbl |> CCOpt.map string_of_int) >>=
-  (fun _ -> get_bool k tbl |> CCOpt.map string_of_bool)
-
-let get_whatever k tbl =
-  match (get_string k tbl) with
-  | Some s -> `String s
-  | None ->
-    (match (get_int k tbl) with
-    | Some i -> `Int i
-    | None ->
-      (match (get_bool k tbl) with
-       | Some b -> `Bool b
-       | None ->
-         (match (get_strings k tbl) with
-          | Some ss -> `A (List.map (fun x -> `String x) ss)
-          | None -> `Null)))
-
 (** Converts a TOML table to an assoc list using a given value retrieval function,
     ignoring None's it may return.
   *)
 let assoc_of_table f tbl =
   let has_value (_, v) = match v with Some _ -> true | None -> false in
-  let keys = list_config_keys tbl in
+  let keys = Toml_utils.list_table_keys tbl in
   List.fold_left (fun xs k -> (k, f k tbl ) :: xs) [] keys |>
   List.filter has_value |>
-  List.map (fun (k, v) -> k, Utils.unwrap_option v)
-
-let assoc_of_table2 f tbl =
-  let keys = list_config_keys tbl in
-  List.fold_left (fun xs k -> (k, f k tbl ) :: xs) [] keys
+  List.map (fun (k, v) -> k, Option.get v)
 
 (** Tries to get a string list from a config
     If there's actually a string list, just returns it.
@@ -137,10 +101,6 @@ let get_strings_relaxed ?(default=[]) k tbl =
       | Some str -> [str]
       | None -> default
     end
-
-let string_of_assoc xs =
-  let xs = List.map (fun (k, v) -> Printf.sprintf "%s = %s" k v) xs in
-  String.concat ", " xs
 
 let get_path_options config =
   {
@@ -167,7 +127,7 @@ let _get_index_queries index_table =
   let (let*) = Stdlib.Result.bind in
   let get_query k queries =
     let* qt = get_table_result "value is not an inline table" k queries in
-    let* selector = get_string_result "selector option is missing or value is not a string" "selector" qt in
+    let selectors = get_strings_relaxed "selector" qt in
     let default_value = get_string "default" qt in
     let extract_attribute = get_string "extract_attribute" qt in
     let select_all = get_bool_default false "select_all" qt in
@@ -175,11 +135,14 @@ let _get_index_queries index_table =
       if (Option.is_some default_value) && select_all then
       Logs.warn @@ fun m -> m "default is ignored when select_all is true"
     in
-    Ok {
-      field_name = k; field_selector = selector;
-      select_all = select_all; default_field_value = default_value;
-      extract_attribute = extract_attribute;
-    }
+    (match selectors with
+    | [] -> Error "selector option is required and must be a string or a list of strings"
+    | _ ->
+      Ok {
+        field_name = k; field_selectors = selectors;
+        select_all = select_all; default_field_value = default_value;
+        extract_attribute = extract_attribute;
+      })
   in
   let rec get_queries ks queries acc =
     match ks with
@@ -197,7 +160,7 @@ let _get_index_queries index_table =
   let qt = get_table "custom_fields" index_table in
   match qt with
   | None -> []
-  | Some qt -> get_queries (list_config_keys qt) qt []
+  | Some qt -> get_queries (Toml_utils.list_table_keys qt) qt []
 
 let valid_index_options = [
   "custom_fields"; "views"; (* subtables rather than options *)
@@ -269,7 +232,7 @@ let _get_index_views index_table =
   match vt with
   | None -> views
   | Some vt -> 
-    let custom_views = get_views (list_config_keys vt) vt [] in
+    let custom_views = get_views (Toml_utils.list_table_keys vt) vt [] in
     List.append views custom_views
 
 let _get_index_settings settings config =
@@ -323,7 +286,7 @@ let update_page_template_settings settings config =
   match tt with
   | None -> settings
   | Some tt ->
-    let ks = list_config_keys tt in
+    let ks = Toml_utils.list_table_keys tt in
     List.fold_left (fun s k -> get_template k s tt) settings ks
 
 let valid_settings = [
@@ -348,8 +311,8 @@ let _update_settings settings config =
        verbose = get_bool_default settings.verbose "verbose" st;
        debug = get_bool_default settings.debug "debug" st;
        strict = get_bool_default settings.strict "strict" st;
-       site_dir = get_string_default settings.site_dir "site_dir" st;
-       build_dir = get_string_default settings.build_dir "build_dir" st;
+       site_dir = get_string_default settings.site_dir "site_dir" st |> String.trim;
+       build_dir = get_string_default settings.build_dir "build_dir" st |> String.trim |> Utils.normalize_path;
        content_selector = get_string_default settings.content_selector "content_selector" st;
        doctype = get_string_default settings.doctype "doctype" st;
        index_page = get_string_default settings.index_page "index_page" st;

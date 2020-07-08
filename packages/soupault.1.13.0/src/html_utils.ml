@@ -1,87 +1,25 @@
+include Soupault_common
 
-exception Soupault_error of string
+(** Parse HTML in specific context.
 
-let soupault_error s = raise (Soupault_error s)
+  HTML parser behaviour depends on context. For example, when the result is supposed to be
+  a complete document, it must insert <head> or <body> elements if they are missing.
+  If the result is supposed to be a fragment, it must not do that.
 
-(** Reads a file and return its content *)
-let get_file_content file =
-  try Ok (Soup.read_file file)
-  with Sys_error msg -> Error msg
-
+  lambdasoup doesn't provide a context-aware parsing function, so we turn to lower level
+  Markup.ml for that.
+ *)
 let parse_html ?(body=true) str =
   let context = if body then `Fragment "body" else `Fragment "head" in
   Markup.string str |> Markup.parse_html ~context:context |> Markup.signals |> Soup.from_signals
 
-(* Result wrapper for FileUtil.cp *)
-let cp fs d =
-  try Ok (FileUtil.cp fs d)
-  with FileUtil.CpError msg -> Error msg
-
+(* Result-aware element selection functions *)
 let wrap_select f selector soup =
   try Ok (f selector soup)
   with Soup.Parse_error msg -> Error (Printf.sprintf "Invalid CSS selector '%s', parse error: %s" selector msg)
 
 let select selector soup = wrap_select Soup.select selector soup
 let select_one selector soup = wrap_select Soup.select_one selector soup
-
-(** Executes an external program and returns its stdout *)
-let get_program_output ?(input=None) command env_array =
-  (* open_process_full does not automatically pass the existing environment
-     to the child process, so we need to add it to our custom environment. *)
-  let env_array = Array.append (Unix.environment ()) env_array in
-  let std_out, std_in, std_err = Unix.open_process_full command env_array in
-  let () =
-    match input with
-    | None -> ()
-    | Some i ->
-      let () = Logs.debug @@ fun m -> m "Data sent to program \"%s\": %s" command i in
-      Printf.fprintf std_in "%s" i
-  in
-  (* close stdin to flag end of input *)
-  let () = close_out std_in in
-  let output = Soup.read_channel std_out in
-  let err = Soup.read_channel std_err in
-  let res = Unix.close_process_full (std_out, std_in, std_err) in
-  match res with
-  | Unix.WEXITED 0 -> Ok output
-  | _ -> Error (Printf.sprintf "Failed to execute \"%s\": %s%s" command output err)
-
-(** Exception-safe list tail function that assumes that empty list's
-    tail is an empty list. Used for breadcrumbs. *)
-let safe_tl xs =
-    match xs with
-    | [] -> []
-    | _ :: xs' -> xs'
-
-(** Removes the last element of a list *)
-let drop_tail xs = List.rev xs |> safe_tl |> List.rev
-
-(** Shortcut for checking if a list has this element *)
-let in_list xs x = List.exists ((=) x) xs
-
-(** Extracts keys from an assoc list *)
-let assoc_keys xs = List.fold_left (fun acc (x, _) -> x :: acc) [] xs
-
-(** Unsafely unwraps an option type.
-    There are many places where None is easy to prove to not happen *)
-let unwrap_option o =
-  match o with
-  | Some v -> v
-  | None -> raise (Failure "values of beta will give rise to dom!")
-
-(** Result-aware iteration *)
-let rec iter ?(ignore_errors=false) ?(fmt=(fun x -> x)) f xs =
-  match xs with
-  | [] -> Ok ()
-  | x :: xs ->
-    let res = f x in
-    begin
-      match res with
-      | Ok _ -> iter f xs
-      | Error msg as e  ->
-        if ignore_errors then let () = Logs.warn @@ fun m -> m "%s" (fmt msg) in Ok ()
-        else e
-    end
 
 (** Checks if a "template" has a specific element in it.
     For checking if there's any element at all, use "*" selector *)
@@ -119,6 +57,7 @@ let get_element_text e =
     let text = String.concat "" texts |> String.trim in
     if text = "" then None else Some text
 
+(** Select the first element matching any of given selectors *)
 let rec select_any_of selectors soup =
   match selectors with
   | [] -> None
@@ -133,6 +72,7 @@ let rec select_any_of selectors soup =
       | None -> select_any_of ss soup
     end
 
+(* Select all elements matching any of given selectors *)
 let select_all selectors soup =
   let rec aux selectors soup acc =
     match selectors with
@@ -142,7 +82,7 @@ let select_all selectors soup =
           try Soup.select s soup
           with Soup.Parse_error msg -> Printf.ksprintf soupault_error "Invalid CSS selector '%s', parse error: %s" s msg
         in
-        let acc = List.append (Soup.to_list nodes) acc in
+	let acc = List.append (Soup.to_list nodes) acc in
         aux ss soup acc
   in aux selectors soup []
 
@@ -191,7 +131,7 @@ let is_empty node =
   let children = children node in
   match (Soup.count children) with
   | 0 -> true
-  | 1 -> (children |> first |> unwrap_option |> to_string |> String.trim) = ""
+  | 1 -> (children |> first |> Option.get |> to_string |> String.trim) = ""
   | _ -> false
 
 (** Inserts a node into the page at desired position *)
@@ -206,47 +146,21 @@ let insert_element action container content =
   match action_fun with
   | Some f -> f container content
   | None ->
-    let index = Spellcheck.make_index (assoc_keys actions) in
+    let index = Spellcheck.make_index (Utils.assoc_keys actions) in
     let suggestion = Spellcheck.get_suggestion index action in
     let suggestion = (match suggestion with Some s -> (Printf.sprintf " Did you mean \"%s?\"" s) | None -> "") in
     let () = Logs.warn @@ fun m -> m "Invalid action \"%s\", using default (append child).%s" action suggestion in
     Soup.append_child container content
 
-(** Just a convenience function for Re.matches *)
-let get_matching_strings r s =
-  try
-    let re = Re.Perl.compile_pat r in
-    Ok (Re.matches re s)
-  with Re__Perl.Parse_error -> Error (Printf.sprintf "Failed to parse regex %s" r)
+(* Checks if an element is a heading *)
+let is_heading e =
+  match (Soup.name e) with
+  | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" -> true
+  | _ -> false
 
-(** Just prints a hardcoded program version *)
-let print_version () =
-  Printf.printf "soupault %s\n" Defaults.version_string;
-  print_endline "Copyright 2020 Daniil Baturin";
-  print_endline "Soupault is free software distributed under the MIT license";
-  print_endline "Visit https://soupault.neocities.org/reference-manual for documentation"
+(* Returns the number from <h1> etc. *)
+let get_heading_level e = String.sub (Soup.name e) 1 1 |> int_of_string
 
-(** Warns about a deprecated option *)
-let deprecation_warning f opt msg config =
-  let value = f opt config in
-  match value with
-  | None -> ()
-  | Some _ -> Logs.warn @@ fun m -> m "Deprecated option %s: %s" opt msg
-
-(* Replaces all URL-unsafe characters with hyphens *)
-let slugify s =
-  Re.Str.global_replace (Re.Str.regexp "[^a-zA-Z0-9\\-]") "-" s |>
-  String.lowercase_ascii
-
-let profile_matches profile build_profile =
-  (* Processing steps should run unless they have a "profile" option
-     and it doesn't match the current build profile. *)
-  match profile, build_profile with
-  | None, _ -> true
-  | Some _, None -> false
-  | Some p, Some bp -> p = bp
-
-(** Fixup for FilePath.get_extension raising Not_found for files without extensions *)
-let get_extension file =
-  try FilePath.get_extension file
-  with Not_found -> ""
+let find_headings soup =
+  let open Soup in
+  soup |> descendants |> elements |> filter is_heading |> to_list
