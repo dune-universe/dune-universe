@@ -1,0 +1,36 @@
+version: "0.3"
+opam-version: "2.0"
+synopsis: "Test web UI for OCurrent"
+description: """
+OCurrent provides an OCaml eDSL for writing CI/CD pipelines.
+
+This package provides a basic web UI for service administrators.
+It shows the current pipeline visually and allows viewing job
+logs and configuring the log analyser."""
+maintainer: "talex5@gmail.com"
+authors: "talex5@gmail.com"
+homepage: "https://github.com/ocurrent/ocurrent"
+bug-reports: "https://github.com/ocurrent/ocurrent/issues"
+dev-repo: "git+https://github.com/ocurrent/ocurrent.git"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "current" {= version}
+  "current_ansi" {= version}
+  "ocaml" {>= "4.08.0"}
+  "base64"
+  "session"
+  "session-cohttp-lwt"
+  "mirage-crypto-rng"
+  "fmt"
+  "bos"
+  "lwt"
+  "cmdliner"
+  "prometheus-app"
+  "cohttp-lwt-unix" {>= "2.2.0"}
+  "tyxml"
+  "routes" {>= "0.8.0"}
+  "dune" {>= "2.0"}
+]

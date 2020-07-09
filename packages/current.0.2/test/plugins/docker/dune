@@ -1,9 +1,0 @@
-(library
- (name current_docker_test)
- (libraries
-   current
-   current.cache
-   fmt
-   fpath
-   logs
-   lwt))

@@ -1,0 +1,40 @@
+(library
+ (public_name current_web)
+ (libraries
+   astring
+   base64
+   bos
+   cmdliner
+   cohttp
+   cohttp-lwt
+   cohttp-lwt-unix
+   conduit-lwt-unix
+   cstruct
+   current
+   current.cache
+   current.term
+   current_ansi
+   fmt
+   fpath
+   logs
+   lwt
+   lwt.unix
+   mirage-crypto
+   mirage-crypto-rng
+   mirage-crypto-rng.unix
+   ppx_sexp_conv.runtime-lib
+   prometheus
+   prometheus-app
+   re
+   result
+   routes
+   session
+   session-cohttp-lwt
+   sexplib
+   sqlite3
+   tyxml
+   tyxml.functor
+   ppx_deriving_yojson.runtime
+   yojson
+   uri)
+ (preprocess (pps ppx_deriving.std ppx_deriving_yojson)))

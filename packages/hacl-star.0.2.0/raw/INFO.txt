@@ -1,4 +1,0 @@
-This code was generated with the following toolchain.
-F* version: 48baf7e08475cf27646d73e36d2e5841acb843fb
-KreMLin version: 0f08f1243331ffc62ba3f1b8d8b06e4de8479943
-Vale version: 0.3.13
