@@ -1,0 +1,20 @@
+(executable
+ (name test)
+ (modules test)
+ (libraries fmt alcotest digestif.ocaml))
+
+(rule
+ (alias runtest)
+ (deps
+  (:test test.exe)
+  ../blake2b.test
+  ../blake2s.test
+  ../sha3_224_fips_202.txt
+  ../sha3_256_fips_202.txt
+  ../sha3_384_fips_202.txt
+  ../sha3_512_fips_202.txt)
+ (action
+  (run %{test} --color=always)))
+
+(rule
+ (copy# ../test.ml test.ml))

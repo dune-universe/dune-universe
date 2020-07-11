@@ -1,0 +1,3 @@
+(lang dune 2.6)
+(name digestif)
+(version v0.9.0)
