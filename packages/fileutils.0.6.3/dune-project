@@ -1,0 +1,4 @@
+(lang dune 1.11)
+(name fileutils)
+(version v0.6.3)
+(explicit_js_mode)
