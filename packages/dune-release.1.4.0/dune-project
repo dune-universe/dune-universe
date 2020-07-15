@@ -1,0 +1,5 @@
+(lang dune 2.4)
+(name dune-release)
+(version 1.4.0)
+
+(using mdx 0.1)
