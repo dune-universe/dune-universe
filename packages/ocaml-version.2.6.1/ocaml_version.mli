@@ -69,7 +69,7 @@ val pp : Format.formatter -> t -> unit [@@ocaml.toplevel_printer]
     These definitions cover the CPU architectures that OCaml
     runs and is supported on. *)
 
-type arch = [ `X86_64 | `Aarch64 | `Aarch32 | `Ppc64le ]
+type arch = [ `I386 | `X86_64 | `Aarch64 | `Aarch32 | `Ppc64le ]
 (** Type of CPU architectures.
     TODO: This is currently an incomplete list, and lists just
     those used by the opam test systems. Contributions welcome
@@ -95,6 +95,10 @@ val arch_of_string : string -> (arch, [> `Msg of string ]) Result.result
 val arch_of_string_exn: string -> arch
 (** [arch_of_string_exn t] is the same as {!arch_of_string},
     except that it raises [Invalid_argument] in case of error. *)
+
+val arch_is_32bit: arch -> bool
+(** [arch_is_32bit t] will return [true] if the architecture has
+     a 32-bit wordsize. *)
 
 (** {2 Accessors} *)
 
@@ -246,6 +250,14 @@ module Releases : sig
   val v4_10 : t
   (** Latest release in the 4.10.x series *)
 
+  val v4_11_0 : t
+  (** Version 4.11.0 *)
+
+  val v4_11 : t
+  (** Latest release in the 4.11.x series *)
+
+  val v4_12 : t
+  (** Latest release in the 4.12.x series *)
 
   val all_patches : t list
   (** [all_patches] is an enumeration of all OCaml releases, including every patch release.

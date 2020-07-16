@@ -123,23 +123,27 @@ module Releases = struct
   let v4_11_0 = of_string_exn "4.11.0"
   let v4_11 = v4_11_0
 
+  let v4_12_0 = of_string_exn "4.12.0"
+  let v4_12 = v4_12_0
 
   let all_patches = [
     v4_00_1; v4_01_0; v4_02_0; v4_02_1; v4_02_2;
     v4_02_3; v4_03_0; v4_04_0; v4_04_1; v4_04_2;
     v4_05_0; v4_06_0; v4_06_1; v4_07_0; v4_07_1;
-    v4_08_0; v4_08_1; v4_09_0; v4_09_1; v4_10_0 ]
+    v4_08_0; v4_08_1; v4_09_0; v4_09_1; v4_10_0;
+    v4_11_0; v4_12_0 ]
 
   let all = [ v4_00; v4_01; v4_02; v4_03; v4_04;
-              v4_05; v4_06; v4_07; v4_08; v4_09; v4_10 ]
+              v4_05; v4_06; v4_07; v4_08; v4_09;
+              v4_10; v4_11; v4_12 ]
 
-  let unreleased_betas = []
+  let unreleased_betas = [ v4_11 ]
 
   let recent = [ v4_02; v4_03; v4_04; v4_05; v4_06; v4_07; v4_08; v4_09; v4_10 ]
 
   let latest = v4_10
 
-  let dev = [ v4_11 ]
+  let dev = [ v4_11; v4_12 ]
 
   let is_dev t =
     let t = with_just_major_and_minor t in
@@ -150,18 +154,22 @@ module Releases = struct
 
 end
 
-type arch = [`X86_64 | `Aarch64 | `Ppc64le | `Aarch32 ]
-let arches = [ `X86_64; `Aarch64; `Ppc64le; `Aarch32 ]
+type arch = [ `I386 | `X86_64 | `Aarch64 | `Ppc64le | `Aarch32 ]
+let arches = [ `I386; `X86_64; `Aarch64; `Ppc64le; `Aarch32 ]
+
+let arch_is_32bit = function `I386 | `Aarch32 -> true |_ -> false
 
 let string_of_arch = function
   | `Aarch64 -> "arm64"
   | `Aarch32 -> "arm32v7"
   | `X86_64 -> "amd64"
   | `Ppc64le -> "ppc64le"
+  | `I386 -> "i386"
 
 let arch_of_string = function
   | "arm64" | "aarch64" -> Result.Ok `Aarch64
   | "amd64" | "x86_64" -> Result.Ok `X86_64
+  | "i386"  | "i686" | "686" | "386" -> Result.Ok `I386
   | "arm32" | "arm32v7" | "aarch32" -> Result.Ok `Aarch32
   | "ppc64le" -> Result.Ok `Ppc64le
   | arch -> Result.Error (`Msg ("Unknown architecture " ^ arch))
@@ -176,6 +184,7 @@ module Since = struct
 
   let arch (a:arch) =
     match a with
+    | `I386 -> Releases.v4_06_0 (* TODO can be ealier *)
     | `Aarch32 -> Releases.v4_06_0
     | `Aarch64 -> Releases.v4_05_0
     | `Ppc64le -> Releases.v4_06_0
@@ -226,6 +235,8 @@ end
 
 let compiler_variants arch {major; minor; _} =
     match major,minor,arch with
+    | 4,12,`X86_64 -> [[]; [`Afl]; [`Flambda]]
+    | 4,11,`X86_64 -> [[]; [`Afl]; [`Flambda]]
     | 4,10,`X86_64 -> [[]; [`Afl]; [`Flambda]]
     | 4,9,`X86_64 -> [[]; [`Afl]; [`Flambda]; [`Frame_pointer]; [`Frame_pointer;`Flambda]; [`Default_unsafe_string]]
     | 4,8,`X86_64 -> [[]; [`Afl]; [`Flambda]; [`Frame_pointer]; [`Frame_pointer;`Flambda]; [`Default_unsafe_string]; [`Force_safe_string]]
@@ -240,7 +251,7 @@ let compiler_variants arch {major; minor; _} =
     | _ -> [[]]
 
 module Sources = struct
-  let trunk = Releases.v4_10
+  let trunk = Releases.v4_12
 
   let git_tag ({major; minor; patch; _ } as ov) =
     match major, minor, patch with
