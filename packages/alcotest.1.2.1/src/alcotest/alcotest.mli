@@ -25,7 +25,7 @@
     only faulty runs are fully displayed at the end of the run (with the full
     logs ready to inspect).
 
-    {e Release 1.2.0} *)
+    {e Release 1.2.1} *)
 
 include Alcotest_engine.Cli.S with type return = unit
 

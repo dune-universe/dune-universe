@@ -1,3 +1,11 @@
+### 1.2.1 (2020-07-15)
+
+- Surround pretty-printed diffs with quotes to make trailing whitespace more
+  obvious. (#261, @CraigFe)
+  
+- Allow `.` characters to appear unescaped in symlinks and test directories.
+  (#259, @CraigFe)
+
 ### 1.2.0 (2020-07-13)
 
 - Add an `alcotest-mirage` package, allowing the construction of MirageOS

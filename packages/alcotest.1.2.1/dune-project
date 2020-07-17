@@ -3,7 +3,7 @@
 (generate_opam_files true)
 
 (name alcotest)
-(version 1.2.0)
+(version 1.2.1)
 (source (github mirage/alcotest))
 (license ISC)
 (authors "Thomas Gazagnaire")

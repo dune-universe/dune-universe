@@ -144,6 +144,6 @@ let expect_failure =
 let term =
   Term.
     ( const main $ package $ expect_failure $ libraries,
-      info ~version:"1.2.0" "gen_dune_rules" )
+      info ~version:"1.2.1" "gen_dune_rules" )
 
 let () = Term.(exit @@ eval term)
