@@ -1,0 +1,182 @@
+= Le parseur de Wikitexte =
+
+TABLE DES MATIÈRES :
+
+__TOC__
+
+== Introduction ==
+
+'''Wikitexte''' est un langage léger pour mettre en page du texte dans une page web.
+
+Il contient peu de mot-clés ce qui le rend facile à prendre en main
+et plus lisible que du code HTML plein de balises.<br>
+Ce parseur a pour but de transformer du code '''Wikitexte''' en '''HTML'''
+afin de pouvoir être visualisé dans une page web.
+
+== Format du texte ==
+
+; '''Gras''' et ''italique'' :
+: Pour écrire une portion de texte en gras ou en italique : '''<nowiki>'''gras''' et ''italique''</nowiki>'''.
+; '''''Gras et italique à la fois''''' :
+: On peut bien-sûr cumuler les apostrophes pour écrire à la fois en gras et en italique.
+; Pour échapper des chaînes de caractères :
+: La balise <'''nowiki'''>texte échappé<'''/nowiki'''> est utilisée pour échapper du texte qui serait autrement interprété par le parseur.
+; Liens vers des pages extérieures :
+: Placer l'url suivi d'un espace et du texte voulu, le tout entre crochet.
+: <nowiki>[https://www.google.com lien vers google.com]</nowiki> donnera [https://www.google.com lien vers google.com]
+: <nowiki>[https://www.google.com]</nowiki> donnera [https://www.google.com]
+
+''Il est possible de personnaliser son texte en utilisant des balises HTML.''
+
+== Titres et table des matières ==
+
+En général on écrit un unique grand titre et plusieurs sous-titres. le grand-titre est donc
+ignoré dans la table des matières.<br>
+On peut choisir d'ajouter ou non une table des matières en plaçant "__TOC__" précédé et suivi d'une ligne vide.<br>
+La table des matières peut être placée n'importe-où dans le document.
+
+'''Exemple :'''<br>
+Lorem ipsum.
+
+<nowiki>
+__TOC__
+</nowiki>
+
+Dolores sit amet.
+
+== Les listes ==
+=== Listes à puces ===
+
+On déclare un élément d'une liste en commençant une ligne par le caractère '''*'''.
+
+On peut construire des sous-listes et des sous-sous-listes en ajoutant une ou plusieurs étoiles au début.
+
+'''Exemple :'''<br>
+<nowiki>
+* Item 1<br>
+** Item 1.1<br>
+* Item 2<br>
+</nowiki>
+
+* Item 1
+** item 1.1
+* Item 2
+
+=== Listes numérotées ===
+
+On peut construire des listes numérotées de la même manière en commençant la ligne
+par 1 ou plusieurs caractères '''#'''.
+
+'''Exemple :'''<br>
+<nowiki>
+# Item<br>
+## sub-item<br>
+## sub-item<br>
+# Item
+</nowiki>
+
+# Item
+## Item
+## Item
+# Item
+
+=== Listes mixtes ===
+
+Il est possible de mélanger listes à puce et listes numérotée à condition que leurs niveaux de profondeur soient
+différents.
+
+'''Exemple :'''<br>
+<nowiki>
+* liste à puce 1<br>
+## sous-liste numérotée<br>
+## sous-liste numérotée
+</nowiki>
+
+* liste à puce 1
+## sous-liste numérotée
+## sous-liste numérotée
+
+Si on a un élément de liste à puce de niveau 1 suivi d'un élément de liste numérotée de niveau 1,
+cela crééra deux listes séparées.
+
+'''Exemple :'''<br>
+<nowiki>
+* Liste à puce<br>
+# Liste numérotée
+</nowiki>
+
+* Liste à puce
+# Liste numérotée
+
+=== Listes de termes / définitions ===
+
+'''Exemple :'''<br>
+<nowiki>
+; Terme<br>
+: Definition1<br>
+: Definition2<br>
+: Definition3<br>
+: Definition4
+</nowiki>
+
+; Terme
+: Definition1
+: Definition2
+: Definition3
+: Definition4
+
+=== Indentations ===
+
+Si vous commencez un paragraphe avec un ou plusieurs ":", il sera indenté à gauche sur un ou plusieurs niveaux.
+
+'''Exemple :'''<br>
+<nowiki>
+: Une indentation.<br>
+:: Deux indentations.<br>
+::: Trois indentations.
+</nowiki>
+
+: Une indentation.
+:: Deux indentations.
+::: Trois indentations.
+
+== Tableaux ==
+
+Un tableau est décrit entre les lignes "'''<nowiki>{|</nowiki>'''" et "'''<nowiki>|}</nowiki>''',
+chacun sur une ligne qui leur est dédiée.<br>
+On peut donner un titre au tableau juste après avoir ouvert le tableau avec '''<nowiki>|+</nowiki>'''.
+
+Chaque fois que l'on veut déclarer une nouvelle ligne dans le tableau,<br>
+on utilise '''<nowiki>|-</nowiki>''' avec au moins un tiret
+(on peut ajouter des tirets pour que le code soit plus lisible).
+
+Il y a deux types de cases dans le tableau, les cases "headers" et les cases "normales"
+
+; Pour déclarer une case "header" :
+: Si on est en début de ligne : '''<nowiki>!</nowiki>'''
+: Si on n'est pas en début de ligne : '''<nowiki>!!</nowiki>'''
+
+; Pour déclarer une case "normale" :
+: Si on est en début de ligne : '''<nowiki>|</nowiki>'''
+: Si on n'est pas en début de ligne : '''<nowiki>||</nowiki>'''
+
+'''Exemple :'''<br>
+<nowiki>
+{|<br>
+|+ '''Titre'''<br>
+! Orange !! Pomme<br>
+|-<br>
+| Pain || Tarte<br>
+|-<br>
+| Beurre || Crème glacée <br>
+|}<br>
+</nowiki>
+
+{|
+|+ '''Titre'''
+! Orange !! Pomme
+|-
+| Pain || Tarte
+|-
+| Beurre || Crème glacée 
+|}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OCaml-Wikitext</title>
+    <style>
+      #input, #output {
+      position: fixed ;
+      overflow: auto ;
+      width: 50vw ;
+      height: 100vh ;
+      top: 0 ;
+      box-sizing: border-box ;
+      }
+      #input {
+      left: 0 ;
+      background-color: black ;
+      color: white ;
+      padding: 10px ;
+      border: none ;
+      outline: none ;
+      box-shadow: none ;
+      }
+      #output {
+      right: 0 ;
+      padding: 20px 30px ;
+      white-space: pre ;
+      font-family: monospace ;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="input" spellcheck="false">Enter ''wikitext'' here!</textarea>
+    <div id="output"></div>
+    <script type="text/javascript" src="wikitext.js"></script>
+  </body>
+</html>

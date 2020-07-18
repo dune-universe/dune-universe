@@ -1,0 +1,36 @@
+sudo: required
+
+language: c
+
+jobs:
+  fast_finish: true
+  include:
+  - os: linux
+    env: OCAML_VERSION=4.05
+  - os: linux
+    env: OCAML_VERSION=4.06
+  - os: linux
+    env: OCAML_VERSION=4.07
+  - os: linux
+    env: OCAML_VERSION=4.08
+  - os: linux
+    env: OCAML_VERSION=4.09
+  - os: linux
+    env: OCAML_VERSION=4.10
+  - os: osx
+    env: OCAML_VERSION=4.09
+  - os: freebsd
+    env: OCAML_VERSION=4.09
+
+install:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-ocaml.sh
+
+script:
+  - bash -ex .travis-ocaml.sh ;
+    set -ex ;
+    export OPAMYES=1 ;
+    eval $(opam config env) ;
+    opam update ;
+    opam pin add wikitext . --no-action ;
+    opam install wikitext --with-test --deps-only ;
+    make runtest ;

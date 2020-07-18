@@ -1,0 +1,102 @@
+Testing Basic bitmask...
+Physical equality on add: PASSED
+Physical equality on remove: PASSED
+Physical equality on map: PASSED
+Physical equality on mapping empty set: PASSED
+elements: PASSED
+cardinal: PASSED
+min_elt raises Not_found for empty: PASSED
+min_elt_opt returns None for empty: PASSED
+max_elt raises Not_found for empty: PASSED
+max_elt_opt returns None for empty: PASSED
+min_elt lowest element: PASSED
+min_elt non-lowest element: PASSED
+min_elt_opt: PASSED
+max_elt: PASSED
+max_elt_opt: PASSED
+find_elt_opt returns None for Not_found: PASSED
+find_elt_opt: PASSED
+fold: PASSED
+iter: PASSED
+find_first: PASSED
+find_last: PASSED
+find_first_opt: PASSED
+find_last_opt: PASSED
+find_first_opt returns None for Not_found: PASSED
+find_last_opt returns None for Not_found: PASSED
+split: PASSED
+exists: PASSED
+for_all: PASSED
+filter: PASSED
+partition: PASSED
+of_seq / to_seq: PASSED
+add_seq: PASSED
+to_seq_from: PASSED
+Testing Evil bitmask...
+Physical equality on add: PASSED
+Physical equality on remove: PASSED
+Physical equality on map: PASSED
+Physical equality on mapping empty set: PASSED
+elements: PASSED
+cardinal: PASSED
+min_elt raises Not_found for empty: PASSED
+min_elt_opt returns None for empty: PASSED
+max_elt raises Not_found for empty: PASSED
+max_elt_opt returns None for empty: PASSED
+min_elt lowest element: PASSED
+min_elt non-lowest element: PASSED
+min_elt_opt: PASSED
+max_elt: PASSED
+max_elt_opt: PASSED
+find_elt_opt returns None for Not_found: PASSED
+find_elt_opt: PASSED
+fold: PASSED
+iter: PASSED
+find_first: PASSED
+find_last: PASSED
+find_first_opt: PASSED
+find_last_opt: PASSED
+find_first_opt returns None for Not_found: PASSED
+find_last_opt returns None for Not_found: PASSED
+split: PASSED
+exists: PASSED
+for_all: PASSED
+filter: PASSED
+partition: PASSED
+of_seq / to_seq: PASSED
+add_seq: PASSED
+to_seq_from: PASSED
+Testing Devilish bitmask...
+Physical equality on add: PASSED
+Physical equality on remove: PASSED
+Physical equality on map: PASSED
+Physical equality on mapping empty set: PASSED
+elements: PASSED
+cardinal: PASSED
+min_elt raises Not_found for empty: PASSED
+min_elt_opt returns None for empty: PASSED
+max_elt raises Not_found for empty: PASSED
+max_elt_opt returns None for empty: PASSED
+min_elt lowest element: PASSED
+min_elt non-lowest element: PASSED
+min_elt_opt: PASSED
+max_elt: PASSED
+max_elt_opt: PASSED
+find_elt_opt returns None for Not_found: PASSED
+find_elt_opt: PASSED
+fold: PASSED
+iter: PASSED
+find_first: PASSED
+find_last: PASSED
+find_first_opt: PASSED
+find_last_opt: PASSED
+find_first_opt returns None for Not_found: PASSED
+find_last_opt returns None for Not_found: PASSED
+split: PASSED
+exists: PASSED
+for_all: PASSED
+filter: PASSED
+partition: PASSED
+of_seq / to_seq: PASSED
+add_seq: PASSED
+to_seq_from: PASSED

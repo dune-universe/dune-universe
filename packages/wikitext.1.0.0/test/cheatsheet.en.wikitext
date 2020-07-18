@@ -1,0 +1,177 @@
+= The Wikitext parser =
+
+TABLE OF CONTENTS :
+
+__TOC__
+
+== Introduction ==
+
+''Wikitext'' is a light language for text formatting, usually in a webpage.
+
+It contains only a few keywords, making it more user-friendly than HTML.<br>
+This parser is meant to process ''wikitext'' and output HTML code.
+
+== Text formatting ==
+
+; '''Bold''' and ''italic'' :
+: To write bold or italic text : '''<nowiki>'''bold''' et ''italic''</nowiki>'''.
+; '''''Both bold and italic''''' :
+: Cumulating quotes to make bold and italic at the same time is possible.
+; Escaping portions of text :
+: The tag <'''nowiki'''><'''/nowiki'''> is used to escape portions of text. It causes the parser to completely ignore its content.
+; External links :
+: Between brackets, place the URL followed by a space and the text you want to display or just the URL.
+: <nowiki>[https://www.google.com link to google.com]</nowiki> gives [https://www.google.com link to google.com]
+: <nowiki>[https://www.google.com]</nowiki> gives [https://www.google.com]
+
+''It is possible to use any html tag you want if you need more options.''
+
+== Titles and table of contents ==
+
+One can choose to add a table of contents by placing the line "'''__TOC__'''"
+preceded and followed by empty lines.<br>
+There is usually only one big title per article, so it is ignored in the generated table of contents.
+
+'''Example :'''<br>
+Lorem ipsum.
+
+<nowiki>
+__TOC__
+</nowiki>
+
+Dolores sit amet.
+
+== Lists ==
+=== Bulleted lists ===
+
+A bulleted lists is declared by starting a line with the character '''*'''.<br>
+It is possible to build sub-lists and sub-sub-lists by adding one or more stars at the beginning of the line.
+
+'''Example :'''<br>
+<nowiki>
+* Item 1<br>
+** Item 1.1<br>
+* Item 2<br>
+</nowiki>
+
+* Item 1
+** item 1.1
+* Item 2
+
+=== Numbered lists ===
+
+Numbered lists are declared the same way as for bulleted ones, exept for the star '''*''',
+that is replaced by a sharp '''#'''.
+
+'''Example :'''<br>
+<nowiki>
+# Item<br>
+## sub-item<br>
+## sub-item<br>
+# Item
+</nowiki>
+
+# Item
+## Item
+## Item
+# Item
+
+=== Mixed lists ===
+
+It is possible to mix numbered and bulleted lists if their depth levels differ.
+
+'''Example :'''<br>
+<nowiki>
+* Bulleted list<br>
+## Numbered sub-list<br>
+## Numbered sub-list
+</nowiki>
+
+* Bulleted list
+## Numbered sub-list
+## Numbered sub-list
+
+If a bulleted list item of depth level 1 is followed by a numbered list item of depth level 1, it will create
+two independant lists.
+
+'''Example :'''<br>
+<nowiki>
+* Bulleted list<br>
+# Numbered lsit
+</nowiki>
+
+* Bulleted list
+# Numbered lsit
+
+=== Term/Description lists ===
+
+'''Example :'''<br>
+<nowiki>
+; Term<br>
+: Definition1<br>
+: Definition2<br>
+: Definition3<br>
+: Definition4
+</nowiki>
+
+; Term
+: Definition1
+: Definition2
+: Definition3
+: Definition4
+
+=== Indentations ===
+
+If a paragraph starts with one or more ":", it will be indented on the left.
+
+'''Example :'''<br>
+<nowiki>
+: One indentation.<br>
+:: Two indentations.<br>
+::: Three indentations.
+</nowiki>
+: One indentation.
+:: Two indentations.
+::: Three indentations.
+
+== Tables ==
+
+Tables are described between the lines "'''<nowiki>{|</nowiki>'''" and "'''<nowiki>|}</nowiki>'''".
+
+A title can be given to the current table just after opening it with "'''<nowiki>{|</nowiki>'''",<br>
+by placing '''<nowiki>|+</nowiki>''' on the next line, followed by the title.
+
+Each new table row has to be declared with the line '''<nowiki>|-</nowiki>''' with at least one dash,<br>
+but more an be added as it can improve readability.
+
+Tables contain two types of boxes : "header" and "classic" boxes.
+Header boxes are often used to write column and row titles.
+
+; To declare a "header" box :
+: At the beginning of a line : '''<nowiki>!</nowiki>'''
+: Else : '''<nowiki>!!</nowiki>'''
+
+; To declare a "classic" box :
+: At the beginning of a line : '''<nowiki>|</nowiki>'''
+: Else : '''<nowiki>||</nowiki>'''
+
+'''Example:'''<br>
+<nowiki>
+{|<br>
+|+ '''Title'''<br>
+! Orange !! Apple<br>
+|-<br>
+| Bread || Pie<br>
+|-<br>
+| Butter || Ice cream <br>
+|}<br>
+</nowiki>
+
+{|
+|+ '''Title'''
+! Orange !! Apple
+|-
+| Bread || Pie
+|-
+| Butter || Ice cream 
+|}

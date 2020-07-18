@@ -1,0 +1,19 @@
+(executable
+  (name test)
+  (libraries ppx_deriving.show oUnit wikitext)
+  (modules test)
+  (preprocess (staged_pps ppx_import ppx_deriving.show))
+)
+
+(executable
+  (name wikitext_js)
+  (js_of_ocaml (flags +toplevel.js +dynlink.js))
+  (preprocess (pps js_of_ocaml-ppx))
+  (libraries wikitext js_of_ocaml js_of_ocaml-ppx)
+  (modules wikitext_js)
+)
+
+(alias
+  (name runtest)
+  (action (run ./test.exe) )
+)
