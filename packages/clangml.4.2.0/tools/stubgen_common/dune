@@ -1,0 +1,3 @@
+(library
+  (name stubgen_common)
+  (libraries cmdliner pcre))

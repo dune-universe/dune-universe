@@ -1,0 +1,5 @@
+build: [
+  ["./configure" "--prefix=%{prefix}%" "--with-llvm-config=%{conf-libclang:config}%"]
+  ["dune" "build" "-p" name "-j" jobs "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}]]

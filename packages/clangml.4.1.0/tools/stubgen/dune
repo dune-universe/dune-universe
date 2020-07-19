@@ -1,6 +1,0 @@
-(executable
-  (name stubgen)
-  (flags -open Stdcompat)
-  (preprocess (pps metaquot.ppx))
-  (libraries unix stdcompat compiler-libs.common pcre clangml cmdliner
-    clangml_printer metapp))

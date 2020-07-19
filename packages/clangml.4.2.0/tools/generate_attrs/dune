@@ -1,0 +1,5 @@
+(executable
+  (name generate_attrs)
+  (flags -open Stdcompat)
+  (preprocess (pps metaquot.ppx refl.ppx))
+  (libraries stdcompat metapp clangml stubgen_common compiler-libs.common refl))

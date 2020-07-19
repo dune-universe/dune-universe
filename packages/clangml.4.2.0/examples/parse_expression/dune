@@ -1,0 +1,4 @@
+(test
+  (name parse_expression)
+  (flags -open Stdcompat)
+  (libraries clangml clangml.printer redirect stdcompat))
