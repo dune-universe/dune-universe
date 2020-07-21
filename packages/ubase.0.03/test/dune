@@ -1,0 +1,14 @@
+(executable
+ (name test)
+ (libraries ubase))
+
+(alias
+ (name buildtest)
+ (deps test.exe))	
+
+(alias
+ (name runtest)	
+ (action	
+  (run %{exe:test.exe})
+  ))	
+  

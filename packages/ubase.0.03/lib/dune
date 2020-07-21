@@ -1,0 +1,5 @@
+(library
+ (name ubase)
+ (public_name ubase)
+ (private_modules ubase_custom ubase_data) 
+ (libraries str uutf))
