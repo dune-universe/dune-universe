@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name dockerfile)
-(version v6.4.0)

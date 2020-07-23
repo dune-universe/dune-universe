@@ -1,0 +1,21 @@
+(menhir
+  (flags --explain)
+  (modules wktxt_parser) )
+
+(ocamllex (modules wktxt_lexer) )
+
+(library
+  (public_name wikitext)
+  (modules  wktxt_parser wktxt_lexer
+            wktxt_type wktxt_mapper
+            wktxt_parsing_functions
+            wktxt_output wikitext)
+)
+
+(executable
+  (name wktxt_cmdline)
+  (public_name wktxt_cmdline)
+  (package wikitext)
+  (modules wktxt_cmdline)
+  (libraries wikitext)
+)
