@@ -1,0 +1,16 @@
+(rule
+ (targets Version.ml)
+ (deps (universe))
+ (action
+  (run ocaml %{dep:../tools/gen_version.mlt} Version.ml))
+ (mode fallback))
+
+(ocamllex Literal_lexer)
+
+(library
+ (name ocamlformat_lib)
+ (flags
+  (:standard -open Import -open Compat))
+ ;;INSERT_BISECT_HERE;;
+ (libraries format_ import ocaml-migrate-parsetree odoc.model odoc.parser
+   parse_wyc re uuseg uuseg.string compat))
