@@ -1,0 +1,9 @@
+univ : { a$1 .. a$5 }
+
+const r : {} univ->univ
+
+const s : {} univ
+
+run
+
+eventually one disj x, y : r | x.y.s in s.x.y

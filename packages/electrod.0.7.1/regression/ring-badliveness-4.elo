@@ -1,0 +1,112 @@
+univ : { Id$0 Id$1 Id$2 Id$3 Process$0 Process$1 Process$2 Process$3 ordering##Ord$0 };
+
+const Int##next :2 { };
+const this##Id :1 { ( Id$0 ) ( Id$1 ) ( Id$2 ) ( Id$3 ) };
+const ordering##Ord#Last :1 { ( Id$3 ) };
+const seq##Int :1 { };
+const ordering##Ord :1 { ( ordering##Ord$0 ) };
+const String :1 { };
+const this##Process :1 { } { ( Process$0 ) ( Process$1 ) ( Process$2 ) ( Process$3 ) };
+const this##Process#succ :2 { } { ( Process$0 Process$0 ) ( Process$0 Process$1 ) ( Process$0 Process$2 ) ( Process$0 Process$3 ) ( Process$1 Process$0 ) ( Process$1 Process$1 ) ( Process$1 Process$2 ) ( Process$1 Process$3 ) ( Process$2 Process$0 ) ( Process$2 Process$1 ) ( Process$2 Process$2 ) ( Process$2 Process$3 ) ( Process$3 Process$0 ) ( Process$3 Process$1 ) ( Process$3 Process$2 ) ( Process$3 Process$3 ) };
+const ordering##Ord#Next :2 { ( Id$0 Id$1 ) ( Id$1 Id$2 ) ( Id$2 Id$3 ) };
+const ordering##Ord#First :1 { ( Id$0 ) };
+var this##elected :1 { } { ( Process$0 ) ( Process$1 ) ( Process$2 ) ( Process$3 ) };
+var this##Process#toSend :2 { } { ( Process$0 Id$0 ) ( Process$0 Id$1 ) ( Process$0 Id$2 ) ( Process$0 Id$3 ) ( Process$1 Id$0 ) ( Process$1 Id$1 ) ( Process$1 Id$2 ) ( Process$1 Id$3 ) ( Process$2 Id$0 ) ( Process$2 Id$1 ) ( Process$2 Id$2 ) ( Process$2 Id$3 ) ( Process$3 Id$0 ) ( Process$3 Id$1 ) ( Process$3 Id$2 ) ( Process$3 Id$3 ) };
+const this##Process#id :2 { } { ( Process$0 Id$0 ) ( Process$0 Id$1 ) ( Process$0 Id$2 ) ( Process$0 Id$3 ) ( Process$1 Id$0 ) ( Process$1 Id$1 ) ( Process$1 Id$2 ) ( Process$1 Id$3 ) ( Process$2 Id$0 ) ( Process$2 Id$1 ) ( Process$2 Id$2 ) ( Process$2 Id$3 ) ( Process$3 Id$0 ) ( Process$3 Id$1 ) ( Process$3 Id$2 ) ( Process$3 Id$3 ) };
+const ints :1 { };
+
+sym
+[ ( this##Process Process$0 ) ( this##elected Process$0 ) ( this##Process#id Process$0 Id$0 ) ( this##Process#id Process$0 Id$1 ) ( this##Process#id Process$0 Id$2 ) ( this##Process#id Process$0 Id$3 ) ( this##Process#succ Process$0 Process$0 ) ( this##Process#succ Process$0 Process$1 ) ( this##Process#succ Process$0 Process$2 ) ( this##Process#succ Process$0 Process$3 ) ( this##Process#succ Process$2 Process$0 ) ( this##Process#succ Process$3 Process$0 ) ( this##Process#toSend Process$0 Id$0 ) ( this##Process#toSend Process$0 Id$1 ) ( this##Process#toSend Process$0 Id$2 ) ( this##Process#toSend Process$0 Id$3 )  <=  ( this##Process Process$1 ) ( this##elected Process$1 ) ( this##Process#id Process$1 Id$0 ) ( this##Process#id Process$1 Id$1 ) ( this##Process#id Process$1 Id$2 ) ( this##Process#id Process$1 Id$3 ) ( this##Process#succ Process$1 Process$1 ) ( this##Process#succ Process$1 Process$0 ) ( this##Process#succ Process$1 Process$2 ) ( this##Process#succ Process$1 Process$3 ) ( this##Process#succ Process$2 Process$1 ) ( this##Process#succ Process$3 Process$1 ) ( this##Process#toSend Process$1 Id$0 ) ( this##Process#toSend Process$1 Id$1 ) ( this##Process#toSend Process$1 Id$2 ) ( this##Process#toSend Process$1 Id$3 ) ];
+[ ( this##Process Process$1 ) ( this##elected Process$1 ) ( this##Process#id Process$1 Id$0 ) ( this##Process#id Process$1 Id$1 ) ( this##Process#id Process$1 Id$2 ) ( this##Process#id Process$1 Id$3 ) ( this##Process#succ Process$0 Process$1 ) ( this##Process#succ Process$1 Process$0 ) ( this##Process#succ Process$1 Process$1 ) ( this##Process#succ Process$1 Process$2 ) ( this##Process#succ Process$1 Process$3 ) ( this##Process#succ Process$3 Process$1 ) ( this##Process#toSend Process$1 Id$0 ) ( this##Process#toSend Process$1 Id$1 ) ( this##Process#toSend Process$1 Id$2 ) ( this##Process#toSend Process$1 Id$3 )  <=  ( this##Process Process$2 ) ( this##elected Process$2 ) ( this##Process#id Process$2 Id$0 ) ( this##Process#id Process$2 Id$1 ) ( this##Process#id Process$2 Id$2 ) ( this##Process#id Process$2 Id$3 ) ( this##Process#succ Process$0 Process$2 ) ( this##Process#succ Process$2 Process$0 ) ( this##Process#succ Process$2 Process$2 ) ( this##Process#succ Process$2 Process$1 ) ( this##Process#succ Process$2 Process$3 ) ( this##Process#succ Process$3 Process$2 ) ( this##Process#toSend Process$2 Id$0 ) ( this##Process#toSend Process$2 Id$1 ) ( this##Process#toSend Process$2 Id$2 ) ( this##Process#toSend Process$2 Id$3 ) ];
+[ ( this##Process Process$2 ) ( this##elected Process$2 ) ( this##Process#id Process$2 Id$0 ) ( this##Process#id Process$2 Id$1 ) ( this##Process#id Process$2 Id$2 ) ( this##Process#id Process$2 Id$3 ) ( this##Process#succ Process$0 Process$2 ) ( this##Process#succ Process$1 Process$2 ) ( this##Process#succ Process$2 Process$0 ) ( this##Process#succ Process$2 Process$1 ) ( this##Process#succ Process$2 Process$2 ) ( this##Process#succ Process$2 Process$3 ) ( this##Process#toSend Process$2 Id$0 ) ( this##Process#toSend Process$2 Id$1 ) ( this##Process#toSend Process$2 Id$2 ) ( this##Process#toSend Process$2 Id$3 )  <=  ( this##Process Process$3 ) ( this##elected Process$3 ) ( this##Process#id Process$3 Id$0 ) ( this##Process#id Process$3 Id$1 ) ( this##Process#id Process$3 Id$2 ) ( this##Process#id Process$3 Id$3 ) ( this##Process#succ Process$0 Process$3 ) ( this##Process#succ Process$1 Process$3 ) ( this##Process#succ Process$3 Process$0 ) ( this##Process#succ Process$3 Process$1 ) ( this##Process#succ Process$3 Process$3 ) ( this##Process#succ Process$3 Process$2 ) ( this##Process#toSend Process$3 Id$0 ) ( this##Process#toSend Process$3 Id$1 ) ( this##Process#toSend Process$3 Id$2 ) ( this##Process#toSend Process$3 Id$3 ) ];
+
+run
+always (one ordering##Ord);
+always (this##elected in this##Process);
+always (all BadLiveness_this: this##Process { 
+  one (BadLiveness_this . this##Process#succ) and 
+  (BadLiveness_this . this##Process#succ) in this##Process
+  });
+always ((this##Process#succ . univ) in this##Process);
+always (all BadLiveness_this: this##Process { 
+  (BadLiveness_this . this##Process#toSend) in this##Id
+  });
+always ((this##Process#toSend . univ) in this##Process);
+always (all BadLiveness_this: this##Process { 
+  one (BadLiveness_this . this##Process#id) and 
+  (BadLiveness_this . this##Process#id) in this##Id
+  });
+always ((this##Process#id . univ) in this##Process);
+always (all BadLiveness_this: this##Process { 
+  this##Process#id in (this##Process -> this##Id) and 
+  (all v0: this##Process { 
+    (v0 . this##Process#id) in this##Id
+    }) and 
+  (all v1: this##Id { 
+    lone (this##Process#id . v1) and 
+    (this##Process#id . v1) in this##Process
+    })
+  });
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#First)) in this##Id);
+always ((ordering##Ord . (ordering##Ord -> ordering##Ord#Next)) in (this##Id -> 
+ this##Id));
+one ordering##Ord#First;
+one ordering##Ord#Last;
+ordering##Ord#Last in this##Id;
+this##Id = (ordering##Ord#First . *ordering##Ord#Next);
+no (ordering##Ord#Next . ordering##Ord#First);
+no (ordering##Ord#Last . ordering##Ord#Next);
+(all eordering##Ord#Next: this##Id - ordering##Ord#Last { 
+  one (eordering##Ord#Next . ordering##Ord#Next)
+  });
+all BadLiveness_p: this##Process { 
+ this##Process in (BadLiveness_p . ^this##Process#succ)
+ };
+no this##elected;
+always (((this##elected)' ) = ({BadLiveness_p: this##Process { 
+  after ((BadLiveness_p . this##Process#id) in (BadLiveness_p . 
+   this##Process#toSend)) and 
+  !((BadLiveness_p . this##Process#id) in (BadLiveness_p . this##Process#toSend)
+    )
+ }}));
+all init_p: this##Process { 
+ (init_p . this##Process#toSend) = (init_p . this##Process#id)
+ };
+always (all BadLiveness_p: this##Process { 
+  (some step_id_: BadLiveness_p . this##Process#toSend { 
+    (BadLiveness_p . (this##Process#toSend)' ) = ((BadLiveness_p . 
+    this##Process#toSend) - step_id_) and 
+    ((BadLiveness_p . this##Process#succ) . (this##Process#toSend)' ) = (((
+    BadLiveness_p . this##Process#succ) . this##Process#toSend) + (step_id_ - ((
+    (BadLiveness_p . this##Process#succ) . this##Process#id) . ^(~
+    ordering##Ord#Next))))
+    }) or 
+  (some step_id_: (BadLiveness_p . ~this##Process#succ) . this##Process#toSend { 
+    ((BadLiveness_p . ~this##Process#succ) . (this##Process#toSend)' ) = (((
+    BadLiveness_p . ~this##Process#succ) . this##Process#toSend) - step_id_) and 
+    (((BadLiveness_p . ~this##Process#succ) . this##Process#succ) . (
+    this##Process#toSend)' ) = ((((BadLiveness_p . ~this##Process#succ) . 
+    this##Process#succ) . this##Process#toSend) + (step_id_ - ((((BadLiveness_p . 
+    ~this##Process#succ) . this##Process#succ) . this##Process#id) . ^(~
+    ordering##Ord#Next))))
+    }) or 
+  (BadLiveness_p . (this##Process#toSend)' ) = (BadLiveness_p . 
+  this##Process#toSend)
+  });
+!(some this##Process implies 
+  eventually (some this##elected));
+Int##next = Int##next;
+this##Id = this##Id;
+ordering##Ord#Last = ordering##Ord#Last;
+seq##Int = seq##Int;
+ordering##Ord = ordering##Ord;
+String = String;
+this##Process = this##Process;
+this##Process#succ = this##Process#succ;
+ordering##Ord#Next = ordering##Ord#Next;
+ordering##Ord#First = ordering##Ord#First;
+this##elected = this##elected;
+this##Process#toSend = this##Process#toSend;
+this##Process#id = this##Process#id;
+
+expect sat
