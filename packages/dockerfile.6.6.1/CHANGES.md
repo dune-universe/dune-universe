@@ -1,3 +1,10 @@
+v6.6.1 2020-07-25 Cambridge
+---------------------------
+
+- Ensure debconf remains non-interactive (@avsm)
+- Do not build ppc64le on Debian:9 as upstream has stopped
+  providing images. Debian 10 ppc64le remains unchanged. (@avsm).
+
 v6.6.0 2020-07-21 Cambridge
 ---------------------------
 

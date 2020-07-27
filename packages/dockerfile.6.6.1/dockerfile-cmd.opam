@@ -1,27 +1,29 @@
-version: "6.6.0"
+version: "6.6.1"
 opam-version: "2.0"
-synopsis: "Dockerfile eDSL -- opam support"
+synopsis: "Dockerfile eDSL - generation support"
 description: """
 This library provides a typed OCaml interface to generating Dockerfiles
 programmatically without having to resort to lots of shell scripting and
 awk/sed-style assembly.
 
-The opam subpackage provides opam and Linux-specific distribution
-support for generating dockerfiles."""
+This sublibrary has support functions for generating arrays of Dockerfiles
+programmatically."""
 maintainer: "Anil Madhavapeddy <anil@recoil.org>"
 authors: "Anil Madhavapeddy <anil@recoil.org>"
 license: "ISC"
 tags: ["org:mirage" "org:ocamllabs"]
 homepage: "https://github.com/avsm/ocaml-dockerfile"
-doc: "https://avsm.github.io/ocaml-dockerfile/"
+doc: "https://avsm.github.io/ocaml-dockerfile/doc"
 bug-reports: "https://github.com/avsm/ocaml-dockerfile/issues"
 depends: [
   "ocaml" {>= "4.02.3"}
   "dune" {>="2.0.0"}
-  "dockerfile" {= version}
-  "ocaml-version" {>= "1.0.0"}
+  "dockerfile-opam" {=version}
   "cmdliner"
-  "astring"
+  "fmt"
+  "logs"
+  "bos"
+  "ppx_sexp_conv" {>="v0.9.0"}
 ]
 build: [
   ["dune" "subst"] {pinned}
