@@ -1,0 +1,13 @@
+(executable
+ (name wycheproof_hacl)
+ (libraries hacl_x25519 wycheproof))
+
+(rule
+ (with-stdout-to
+  wycheproof_hacl.output
+  (run ./wycheproof_hacl.exe)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff wycheproof_hacl.expected wycheproof_hacl.output)))

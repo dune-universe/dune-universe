@@ -1,0 +1,43 @@
+{
+  "name": "@reason-native-web/jose",
+  "version": "0.5.1",
+  "description": "JOSE implementation in native Reason",
+  "esy": {
+    "build": "dune build -p jose",
+    "buildDev": "dune build --root=. @default @runtest --no-buffer"
+  },
+  "scripts": {
+    "test": "dune runtest --no-buffer",
+    "test:watch": "dune runtest --root=. --no-buffer --watch",
+    "fmt": "dune build @fmt --auto-promote --root .",
+    "docs": "dune build @doc --root .",
+    "docs:path": "esy echo #{self.target_dir / 'default' / '_doc' / '_html'}",
+    "docs:open": "open #{self.target_dir / 'default' / '_doc' / '_html' / 'index.html'}"
+  },
+  "dependencies": {
+    "@opam/astring": "*",
+    "@opam/base64": ">=3.0.0",
+    "@opam/cstruct": ">=4.0.0",
+    "@opam/dune": ">=1.11.0",
+    "@opam/eqaf": ">=0.7",
+    "@opam/mirage-crypto": ">=0.8.1",
+    "@opam/mirage-crypto-pk": ">=0.8.1",
+    "@opam/mirage-crypto-rng": ">=0.8.1",
+    "@opam/x509": "^0.11.0",
+    "@opam/yojson": "*",
+    "@opam/zarith": "*",
+    "ocaml": ">=4.7.0"
+  },
+  "devDependencies": {
+    "@opam/alcotest": "*",
+    "@opam/bisect_ppx": "^2.3.0",
+    "@opam/containers": "*",
+    "@opam/lwt": "*",
+    "@opam/merlin": "*",
+    "@opam/ocamlformat": "*",
+    "@opam/odoc": "*",
+    "@opam/junit": "*",
+    "@opam/junit_alcotest": "*",
+    "@opam/ocaml-lsp-server": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam"
+  }
+}

@@ -1,0 +1,10 @@
+(library
+ (public_name hacl_x25519)
+ (libraries cstruct eqaf)
+ (foreign_stubs
+  (language c)
+  (names hacl_x25519_stubs Hacl_Hash Hacl_Curve25519_51 Hacl_Ed25519)
+  (flags
+   (:standard -I . -I kremlin/include -I kremlin/kremlib/dist/minimal))
+  (include_dirs kremlin))
+ (wrapped false))

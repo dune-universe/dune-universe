@@ -1,0 +1,14 @@
+(executable
+ (name bench)
+ (libraries hacl_x25519 benchmark stdlib-shims))
+
+(rule
+ (alias bench)
+ (action
+  (run ./bench.exe --all)))
+
+(rule
+ (alias runtest)
+ (deps ./bench.exe)
+ (action
+  (run ./bench.exe)))
