@@ -1,0 +1,10 @@
+(library
+ (public_name qiskit)
+ (name qiskit)
+ (libraries pyml)
+ (modules qiskit))
+
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

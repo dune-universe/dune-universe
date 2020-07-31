@@ -1,0 +1,30 @@
+opam-version: "2.0"
+name: "qiskit"
+version: "0.1.0"
+synopsis: "Qiskit for OCaml"
+description: """
+An OCaml wrapper for the Qiskit quantum computing toolkit
+"""
+maintainer: "Davide Gessa <gessadavide@gmail.com>"
+authors: [
+  "Davide Gessa <gessadavide@gmail.com>"
+]
+
+homepage: "https://github.com/dakk/caml_qiskit"
+bug-reports: "https://github.com/dakk/caml_qiskit/issues"
+license: "MIT"
+dev-repo: "git+https://github.com/dakk/caml_qiskit.git"
+build: ["dune" "build" "-p" name "-j" jobs]
+
+depends: [
+  "ocaml" {>= "4.05.0"}
+  
+  "dune" {>= "2.5.0"}
+  "pyml" {>= "20200518"}
+
+#   "ounit" {with-test & >= "2.0.8"}
+#   "odoc" {with-test & >= "1.3.0"}
+]
+
+depexts: [
+]
