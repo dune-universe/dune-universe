@@ -1,0 +1,7 @@
+(executables
+ (names gen)
+ (package js_of_ocaml-webidl)
+ (public_names jsoo-webidl)
+ (libraries core async js_of_ocaml_webidl ppx_deriving.runtime)
+ (preprocess
+  (pps ppx_jane)))

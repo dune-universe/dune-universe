@@ -1,0 +1,9 @@
+(library
+ (name webidl)
+ ;; CR-someday: hide this entirely once allowed, see
+ ;; https://github.com/ocaml/dune/issues/1017
+ (public_name js_of_ocaml-webidl.private-webidl)
+ (libraries core stdlib webidl_syntax)
+ (preprocess
+  (pps ppx_jane))
+  )

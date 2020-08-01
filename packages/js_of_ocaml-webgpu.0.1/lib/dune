@@ -1,0 +1,6 @@
+(library
+ (name js_of_ocaml_webidl)
+ (public_name js_of_ocaml-webidl)
+ (libraries core async webidl ppx_deriving.runtime js_of_ocaml js_of_ocaml-lwt)
+ (preprocess
+  (pps ppx_jane js_of_ocaml-ppx)))

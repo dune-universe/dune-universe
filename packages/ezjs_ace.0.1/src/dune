@@ -1,0 +1,7 @@
+(library
+ (public_name ezjs_ace)
+ (modules_without_implementation ace_types)
+ (modules ace_types ace)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml))

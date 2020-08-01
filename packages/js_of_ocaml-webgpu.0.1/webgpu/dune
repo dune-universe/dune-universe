@@ -1,0 +1,11 @@
+(library
+ (name webgpu)
+ (public_name js_of_ocaml-webgpu)
+ (libraries js_of_ocaml js_of_ocaml-lwt js_of_ocaml-webidl)
+ (preprocess
+  (pps ppx_jane js_of_ocaml-ppx)))
+
+(rule
+ (targets raw.ml raw.mli)
+ (deps    WebGPU.webidl)
+ (action  (run jsoo-webidl WebGPU.webidl -errors-file errors.out -output-module raw)))

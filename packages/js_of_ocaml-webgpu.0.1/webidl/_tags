@@ -1,0 +1,7 @@
+<src/syntax/tokens.mlypack>: only_tokens
+<src/syntax/{parser,parser_extend,non_standard}.mlypack>: external_tokens(Tokens)
+true: package(ppx_deriving.show), use_menhir, linkpkg, linkall, bin_annot
+<src/syntax/{lexer,parser,parser_extend,keyword,ast}.cmx>: for-pack(Syntax),for-pack(Webidl.Syntax)
+<src/{syntax/syntax,lib/parse,lib/data,lib/ast_to_data}.cmx>: for-pack(Webidl)
+"src/syntax": include
+"src/lib": include

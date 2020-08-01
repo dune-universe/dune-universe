@@ -1,0 +1,27 @@
+(library
+ (name webidl_syntax)
+ (public_name js_of_ocaml-webidl.private-webidl_syntax)
+ (libraries core)
+ (preprocess
+  (pps ppx_jane))
+ (flags (:standard -w +a-4-40-41-42-44-45-48-33))
+)
+
+(ocamllex lexer)
+
+(menhir
+  (modules tokens parser non_standard parser_basic_ext)
+  (merge_into parser_extend)
+  (flags --unused-tokens --external-tokens Tokens)
+)
+
+(menhir
+  (modules tokens)
+  (flags --only-tokens)
+)
+
+(menhir
+  (modules tokens parser non_standard parser_custom_ext)
+  (merge_into parser)
+  (flags --unused-tokens --external-tokens Tokens)
+)

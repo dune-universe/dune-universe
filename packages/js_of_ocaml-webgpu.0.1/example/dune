@@ -1,0 +1,9 @@
+(executables
+ (names index)
+ (libraries base lwt js_of_ocaml js_of_ocaml-lwt webgpu)
+ (modes js)
+ (js_of_ocaml
+  (flags +weak.js)
+  )
+ (preprocess
+  (pps ppx_jane js_of_ocaml-ppx)))
