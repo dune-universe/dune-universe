@@ -1,0 +1,16 @@
+(library
+ (name webgpu)
+ (public_name js_of_ocaml-webgpu)
+ (libraries js_of_ocaml js_of_ocaml-lwt js_of_ocaml-webidl)
+ (preprocess
+  (pps ppx_jane js_of_ocaml-ppx)))
+
+(rule
+ (targets api.ml api.mli)
+ (deps    WebGPU.webidl)
+ (mode    promote) 
+ (action  (progn
+    (run jsoo-webidl WebGPU.webidl -errors-file errors.out -output-module api)
+    (run ocamlformat --profile=janestreet --enable-outside-detected-project --inplace api.ml)
+    (run ocamlformat --profile=janestreet --enable-outside-detected-project --inplace api.mli)
+                )))

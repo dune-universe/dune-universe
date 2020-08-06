@@ -1,0 +1,17 @@
+(executable
+  (name mkflags)
+  (modules mkflags)
+  (libraries dune.configurator))
+
+(env
+  (_ (flags :standard -warn-error -3)))
+
+(rule
+  (targets flambda.flags)
+  (mode fallback)
+  (action (run ./mkflags.exe)))
+
+(executable
+  (name mdx_runner)
+  (libraries containers)
+  (modules mdx_runner))

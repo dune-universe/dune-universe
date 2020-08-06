@@ -1,0 +1,7 @@
+(executable
+ (name example_timeline)
+ (modules example_timeline)
+ (libraries ezjsonm ezjs_timeline)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (modes js))

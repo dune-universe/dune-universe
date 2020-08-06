@@ -1,0 +1,7 @@
+(library
+ (public_name ezjs_d3pie)
+ (modules_without_implementation d3pie_types)
+ (modules d3pie_types d3pie)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml))

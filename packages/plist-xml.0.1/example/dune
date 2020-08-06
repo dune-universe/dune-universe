@@ -1,0 +1,3 @@
+(executable
+  (name copycat)
+  (libraries plist-xml markup))

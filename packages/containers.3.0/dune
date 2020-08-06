@@ -1,0 +1,9 @@
+(rule
+ (targets README.md.corrected)
+ (deps (package containers-data) ./src/mdx_runner.exe)
+ (action (run ./src/mdx_runner.exe)))
+
+(alias
+ (name runtest)
+ (package containers-data)
+ (action (diff README.md README.md.corrected)))

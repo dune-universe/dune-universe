@@ -1,0 +1,6 @@
+(lang dune 2.0)
+
+(name ezjsonm)
+(version v1.2.0)
+
+(formatting disabled)

@@ -1,0 +1,46 @@
+(lang dune 2.2)
+(using menhir 2.1)
+(generate_opam_files true)
+(formatting (enabled_for ocaml))
+(license  BSD-3-Clause)
+(authors "Misha Aizatulin <mihhail.aizatulin@gmail.com>")
+(maintainers "Misha Aizatulin <mihhail.aizatulin@gmail.com>")
+(name js_of_ocaml-webgpu)
+(version dc98f03)
+(homepage https://github.com/tari3x/webgpu)
+(bug_reports https://github.com/tari3x/webgpu)
+(documentation https://tari3x.github.io/webgpu)
+(source (github tari3x/webgpu))
+(package
+  (name js_of_ocaml-webidl)
+  (synopsis "Generate js_of_ocaml bindings from webidl definitions")
+  (description "Generate js_of_ocaml bindings from webidl definitions")
+  (depends
+   (ocaml (>= "4.08"))
+   (core  (>= "v0.12"))
+   (async (>= "v0.12"))
+   webidl
+   ppx_deriving
+   js_of_ocaml
+   js_of_ocaml-lwt
+   js_of_ocaml-ppx
+   ppx_jane
+   )
+ )
+(package
+  (name js_of_ocaml-webgpu)
+  (synopsis "Js_of_ocaml bindings for webgpu")
+  (description "Js_of_ocaml bindings for webgpu")
+  (depends
+   (ocaml (>= "4.08"))
+   (core  (>= "v0.12"))
+   (async (>= "v0.12"))
+   ppx_deriving
+   js_of_ocaml
+   js_of_ocaml-lwt
+   js_of_ocaml-ppx
+   ppx_jane
+   ocamlformat
+   (js_of_ocaml-webidl (= version))
+  )
+ )

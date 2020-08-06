@@ -1,0 +1,4 @@
+(library
+ (name httpaf_caged)
+ (libraries async core httpaf-async uri)
+ (preprocess (pps ppx_jane)))

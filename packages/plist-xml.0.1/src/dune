@@ -1,0 +1,11 @@
+(library
+  (name plist_xml)
+  (public_name plist-xml)
+  (libraries base64 base64.rfc2045 ISO8601 markup)
+  (modules plist_xml))
+
+(library
+  (name plist_xml_lwt)
+  (public_name plist-xml-lwt)
+  (libraries lwt markup-lwt plist-xml)
+  (modules plist_xml_lwt))

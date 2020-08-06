@@ -1,0 +1,7 @@
+(executable
+ (name example_fetch)
+ (modules example_fetch)
+ (libraries ezjs_fetch)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (modes js))
