@@ -1,0 +1,15 @@
+archetype no_container_aggregate_var
+
+asset et identified by cid { cid: int; }
+
+asset e identified by eid {
+	eid			: string;
+	cells		: aggregate<et>;
+}
+
+entry start () {
+	effect {
+		var ev : aggregate<et> = [];
+		dorequire (ev.count() = 0)
+	}
+}

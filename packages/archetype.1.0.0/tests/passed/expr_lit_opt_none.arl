@@ -1,9 +1,0 @@
-archetype expr_lit_opt_none
-
-variable res : int option = none
-
-entry exec () {
-  effect {
-    res := none
-  }
-}

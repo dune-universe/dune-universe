@@ -1,0 +1,20 @@
+archetype lang_cst
+
+entry exec () {
+  effect {
+    var a : tez      = balance;       (* BALANCE *)
+    dorequire(a = a);
+    var b : address  = caller;        (* SENDER *)
+    dorequire(b = b);
+    var c : date     = now;           (* NOW *)
+    dorequire(c = c);
+    var d : address  = source;        (* SOURCE *)
+    dorequire(d = d);
+    var e : tez      = transferred;   (* AMOUNT *)
+    dorequire(e = e);
+    var f : chain_id = chainid;       (* CHAIN_ID *)
+    // require(f = f);                // not comparable
+    var g : address  = selfaddress;   (* SELF; ADDRESS *)
+    dorequire(g = g);
+  }
+}

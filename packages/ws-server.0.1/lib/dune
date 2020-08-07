@@ -1,0 +1,5 @@
+(library
+ (name ws)
+ (libraries websocket-lwt-unix)
+ (preprocess
+  (pps lwt_ppx)))

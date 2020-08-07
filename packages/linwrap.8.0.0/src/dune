@@ -1,0 +1,6 @@
+
+(executables
+  (names        linwrap)
+  (public_names linwrap)
+  (libraries batteries cpm dolog minicli parany dokeysto_camltc)
+  (modules utls linwrap gnuplot perf))

@@ -1,0 +1,12 @@
+archetype expr_arith_mult_tez_int
+
+variable res : tez = 0tz
+
+entry exec () {
+  specification {
+    s0: res = 2tz;
+  }
+  effect {
+    res := 1tz * 2i
+  }
+}

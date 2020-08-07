@@ -1,0 +1,13 @@
+archetype decl_no_asset_aggregate
+
+asset my_asset {
+  id : string;
+}
+
+variable a : aggregate<my_asset> = []
+
+entry exec() {
+  effect {
+    ()
+  }
+}

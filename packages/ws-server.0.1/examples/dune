@@ -1,0 +1,5 @@
+(executable
+ (name chat)
+ (libraries ws)
+ (preprocess
+  (pps lwt_ppx)))

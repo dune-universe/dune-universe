@@ -1,0 +1,13 @@
+archetype duplicated_action
+
+entry main () {
+  effect {
+    ()
+  }
+}
+
+entry main () {
+  effect {
+    ()
+  }
+}

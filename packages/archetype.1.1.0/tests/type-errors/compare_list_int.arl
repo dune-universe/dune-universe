@@ -1,0 +1,9 @@
+archetype compare_list_int
+
+entry exec() {
+  effect {
+    var a : list<int> = [0i];
+    var b : int = 1;
+    dorequire (a = b)
+  }
+}

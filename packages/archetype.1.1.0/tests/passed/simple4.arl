@@ -1,0 +1,9 @@
+archetype simple4
+
+entry exec() {
+  effect {
+    var a : int = 0;
+    var b : int = 1;
+    dorequire (a <> b)
+  }
+}

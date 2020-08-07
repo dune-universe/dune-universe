@@ -1,0 +1,11 @@
+archetype field_method
+
+asset an_asset {
+  id : string;
+}
+
+entry a () {
+  effect {
+    var l = an_asset.count;
+  }
+}

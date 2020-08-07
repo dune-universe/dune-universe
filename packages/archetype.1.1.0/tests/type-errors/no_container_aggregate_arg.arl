@@ -1,0 +1,14 @@
+archetype no_container_aggregate_arg
+
+asset et identified by cid { cid: int; }
+
+asset e identified by eid {
+	eid			: string;
+	cells		: aggregate<et>;
+}
+
+entry start (cl: aggregate<et>) {
+	effect {
+		()
+	}
+}

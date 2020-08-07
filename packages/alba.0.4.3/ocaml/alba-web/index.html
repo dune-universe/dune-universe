@@ -1,0 +1,40 @@
+<html>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        name="keywords"
+        content="programming language, web application, functional language,
+        alba"
+    >
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="alba_web.js"> </script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168044895-2"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-168044895-2');
+        </script>
+
+
+    </head>
+    <body id="alba">
+        Loading ...
+    </body>
+    <script>
+        const alba_repo = 'https://cdn.jsdelivr.net/gh/hbr/albatross'
+        const branch    = '@feature/'
+        const path      = 'ocaml/alba-web/expression.md'
+        Alba.init({
+            node: 'alba'
+            , data: 'https://hbr.github.io/albatross/try/expression.md'
+            //, data: alba_repo + branch + path
+        })
+    </script>
+</html>

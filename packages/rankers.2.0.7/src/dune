@@ -1,0 +1,6 @@
+
+(executables
+  (names bwmine bwexploit)
+  (public_names rankers_bwmine rankers_bwexploit)
+  (flags (:standard -g))
+  (libraries molenc cpm nlopt parany minicli))

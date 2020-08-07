@@ -1,0 +1,124 @@
+archetype lang_cmp
+
+variable res : bool = false
+
+entry exec () {
+  effect {
+
+    /* nat nat */
+    res := 1 =  2;
+    res := 1 <> 2;
+    res := 1 <  2;
+    res := 1 <= 2;
+    res := 1 >  2;
+    res := 1 >= 2;
+
+    /* int int */
+    res := 1i =  2i;
+    res := 1i <> 2i;
+    res := 1i <  2i;
+    res := 1i <= 2i;
+    res := 1i >  2i;
+    res := 1i >= 2i;
+
+    /* rat rat */
+    res := 0.5 =  1.5;
+    res := 0.5 <> 1.5;
+    res := 0.5 <  1.5;
+    res := 0.5 <= 1.5;
+    res := 0.5 >  1.5;
+    res := 0.5 >= 1.5;
+
+    /* nat int */
+    res := 1 =  2i;
+    res := 1 <> 2i;
+    res := 1 <  2i;
+    res := 1 <= 2i;
+    res := 1 >  2i;
+    res := 1 >= 2i;
+
+    /* int nat */
+    res := 1i =  2;
+    res := 1i <> 2;
+    res := 1i <  2;
+    res := 1i <= 2;
+    res := 1i >  2;
+    res := 1i >= 2;
+
+    /* rat nat */
+    res := 0.5 =  2;
+    res := 0.5 <> 2;
+    res := 0.5 <  2;
+    res := 0.5 <= 2;
+    res := 0.5 >  2;
+    res := 0.5 >= 2;
+
+    /* nat rat */
+    res := 1 =  1.5;
+    res := 1 <> 1.5;
+    res := 1 <  1.5;
+    res := 1 <= 1.5;
+    res := 1 >  1.5;
+    res := 1 >= 1.5;
+
+    /* rat int */
+    res := 0.5 =  2i;
+    res := 0.5 <> 2i;
+    res := 0.5 <  2i;
+    res := 0.5 <= 2i;
+    res := 0.5 >  2i;
+    res := 0.5 >= 2i;
+
+    /* int rat */
+    res := 1i =  1.5;
+    res := 1i <> 1.5;
+    res := 1i <  1.5;
+    res := 1i <= 1.5;
+    res := 1i >  1.5;
+    res := 1i >= 1.5;
+
+    /* tez tez */
+    res := 1tz =  2tz;
+    res := 1tz <> 2tz;
+    res := 1tz <  2tz;
+    res := 1tz <= 2tz;
+    res := 1tz >  2tz;
+    res := 1tz >= 2tz;
+
+    /* dur dur */
+    res := 1h =  2h;
+    res := 1h <> 2h;
+    res := 1h <  2h;
+    res := 1h <= 2h;
+    res := 1h >  2h;
+    res := 1h >= 2h;
+
+    /* date date */
+    res := 2020-01-01 =  2020-12-31;
+    res := 2020-01-01 <> 2020-12-31;
+    res := 2020-01-01 <  2020-12-31;
+    res := 2020-01-01 <= 2020-12-31;
+    res := 2020-01-01 >  2020-12-31;
+    res := 2020-01-01 >= 2020-12-31;
+
+    /* address address */
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg =  @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <  @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <= @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg >  @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+    res := @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg >= @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+
+    /* string string */
+    res := "a" =  "b";
+    res := "a" <> "b";
+    res := "a" <  "b";
+    res := "a" <= "b";
+    res := "a" >  "b";
+    res := "a" >= "b";
+
+    /* bool bool */
+    res := true =  false;
+    res := true <> false;
+  }
+}
