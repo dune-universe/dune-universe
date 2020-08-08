@@ -1,0 +1,11 @@
+(executable
+ (name MorphOidcClient)
+ (package morph-oidc-client)
+ (public_name MorphOidcClient)
+ (libraries lwt logs logs.fmt fmt.tty morph-oidc-client.library oidc morph
+   archi archi-lwt mirage-crypto-rng.unix piaf routes))
+
+(env
+ (docker
+  (flags
+   (:standard -ccopt -static))))
