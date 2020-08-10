@@ -1,0 +1,3 @@
+(executable
+ (name output)
+ (libraries alsa unix))

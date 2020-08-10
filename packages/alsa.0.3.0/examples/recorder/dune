@@ -1,0 +1,3 @@
+(executable
+ (name recorder)
+ (libraries alsa))

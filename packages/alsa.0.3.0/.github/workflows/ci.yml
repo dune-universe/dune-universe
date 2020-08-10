@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup OCaml
+      uses: avsm/setup-ocaml@v1.0
+    - name: Install depext module
+      run: opam install -y depext
+    - name: Pin locally
+      run: opam pin -y add --no-action .
+    - name: Install locally
+      run: opam depext -y -i alsa
+    - name: Build locally
+      run: eval $(opam env) && dune build
+    - name: Run tests locally
+      run: eval $(opam env) && dune runtest

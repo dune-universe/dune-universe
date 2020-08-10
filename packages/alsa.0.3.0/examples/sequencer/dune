@@ -1,0 +1,3 @@
+(executable
+ (name sequencer)
+ (libraries alsa))
