@@ -1,0 +1,8 @@
+(library
+ (name winsvc)
+ (public_name winsvc)
+ (libraries threads)
+ (foreign_stubs
+  (language c)
+  (names winsvc_stubs))
+ (synopsis "Library to make OCaml program act as a Windows service."))

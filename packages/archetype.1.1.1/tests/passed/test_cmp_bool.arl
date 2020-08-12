@@ -1,0 +1,12 @@
+archetype test_cmp_bool
+
+entry exec() {
+  effect {
+    dorequire (true = true, "ko");
+    dorequire ((true = true) = true, "ko");
+
+    var a : bool = true;
+    var b : bool = false;
+    dorequire (a <> b, "ko");
+  }
+}

@@ -1,7 +1,0 @@
-archetype effect_dorequire
-
-entry exec () {
-  effect {
-    dorequire (true)
-  }
-}

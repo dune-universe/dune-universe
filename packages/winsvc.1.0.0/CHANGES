@@ -1,0 +1,12 @@
+1.0.0 (11-08-2020)
+=====
+* Cleanup C code.
+* Convert to dune.
+
+0.1.1 (12-16-2017)
+=====
+* Fix META file.
+
+0.1.0 (12-10-2017)
+=====
+* Moved to the mainstream savonet build system.

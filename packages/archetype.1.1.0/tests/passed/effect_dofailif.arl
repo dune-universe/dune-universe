@@ -1,7 +1,0 @@
-archetype effect_dofailif
-
-entry exec () {
-  effect {
-    dofailif (false)
-  }
-}

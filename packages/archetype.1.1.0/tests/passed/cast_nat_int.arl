@@ -1,8 +1,0 @@
-archetype cast_nat_int
-
-entry exec () {
-  effect {
-    var a : int = 1;
-    dorequire(a = 1i)
-  }
-}

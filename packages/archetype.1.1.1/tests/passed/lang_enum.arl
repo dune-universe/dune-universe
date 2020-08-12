@@ -1,0 +1,17 @@
+archetype lang_enum
+
+enum my_enum =
+| One
+| Two
+| Three
+
+entry exec () {
+  effect {
+    var e : my_enum = One;
+    dofailif(e = Two and e <> One, "ko");
+    match e with
+    | One -> e := Two
+    | _ -> fail ("")
+    end
+  }
+}

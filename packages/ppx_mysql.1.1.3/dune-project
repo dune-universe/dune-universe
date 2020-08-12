@@ -1,0 +1,4 @@
+(lang dune 1.4)
+(using fmt 1.0)
+(name ppx_mysql)
+(version 1.1.3)
