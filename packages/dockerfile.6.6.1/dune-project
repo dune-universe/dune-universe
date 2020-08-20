@@ -1,6 +1,0 @@
-(lang dune 2.0)
-
-(name dockerfile)
-(version v6.6.1)
-
-(formatting disabled)
