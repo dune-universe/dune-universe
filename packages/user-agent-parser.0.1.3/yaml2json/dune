@@ -1,0 +1,3 @@
+(executable
+  (name yaml2json)
+  (libraries yaml yojson stdio))

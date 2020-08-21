@@ -1,0 +1,54 @@
+module Diff = struct
+  let get_add_diff_test_name s = Printf.sprintf "add_diff_test_%s" s
+
+  let get_sub_diff_test_name s = Printf.sprintf "sub_diff_test_%s" s
+
+  let get_sub_diff_is_inverse_of_add_diff_test_name s =
+    Printf.sprintf "sub_diff_is_inverse_of_add_diff_test_%s" s
+
+  let get_add_diff_is_inverse_of_sub_diff_test_name s =
+    Printf.sprintf "add_diff_is_inverse_of_sub_diff_test_%s" s
+
+  let print_add_diff_test ~name ~gen ~f_diff ~f_add_diff ~f_equal =
+    let name = get_add_diff_test_name name in
+    Printf.printf "let %s =\n" name;
+    Printf.printf "QCheck.Test.make ~count:50 ~name:\"%s\"\n" name;
+    Printf.printf "QCheck.(pair %s %s)\n" gen gen;
+    Printf.printf "(fun (old, x) -> \n";
+    Printf.printf "let diff = %s ~old x in\n" f_diff;
+    Printf.printf "%s (%s diff old) x\n" f_equal f_add_diff;
+    Printf.printf ")\n"
+
+  let print_sub_diff_test ~name ~gen ~f_diff ~f_sub_diff ~f_equal =
+    let name = get_sub_diff_test_name name in
+    Printf.printf "let %s =\n" name;
+    Printf.printf "QCheck.Test.make ~count:50 ~name:\"%s\"\n" name;
+    Printf.printf "QCheck.(pair %s %s)\n" gen gen;
+    Printf.printf "(fun (old, x) -> \n";
+    Printf.printf "let diff = %s ~old x in\n" f_diff;
+    Printf.printf "%s (%s diff x) old\n" f_equal f_sub_diff;
+    Printf.printf ")\n"
+
+  let print_sub_diff_is_inverse_of_add_diff_test ~name ~gen ~f_diff ~f_add_diff
+      ~f_sub_diff ~f_equal =
+    let name = get_sub_diff_is_inverse_of_add_diff_test_name name in
+    Printf.printf "let %s =\n" name;
+    Printf.printf "QCheck.Test.make ~count:50 ~name:\"%s\"\n" name;
+    Printf.printf "QCheck.(pair %s %s)\n" gen gen;
+    Printf.printf "(fun (old, x) -> \n";
+    Printf.printf "let diff = %s ~old x in\n" f_diff;
+    Printf.printf "%s (%s diff (%s diff old)) old\n" f_equal f_sub_diff
+      f_add_diff;
+    Printf.printf ")\n"
+
+  let print_add_diff_is_inverse_of_sub_diff_test ~name ~gen ~f_diff ~f_add_diff
+      ~f_sub_diff ~f_equal =
+    let name = get_add_diff_is_inverse_of_sub_diff_test_name name in
+    Printf.printf "let %s =\n" name;
+    Printf.printf "QCheck.Test.make ~count:50 ~name:\"%s\"\n" name;
+    Printf.printf "QCheck.(pair %s %s)\n" gen gen;
+    Printf.printf "(fun (old, x) -> \n";
+    Printf.printf "let diff = %s ~old x in\n" f_diff;
+    Printf.printf "%s (%s diff (%s diff x)) x\n" f_equal f_add_diff f_sub_diff;
+    Printf.printf ")\n"
+end

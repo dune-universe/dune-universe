@@ -1,0 +1,65 @@
+(rule
+  (targets user_agent_regexes.yaml)
+  (deps %{project_root}/uap-core/regexes.yaml)
+  (action
+    (with-stdout-to %{targets}
+    (system "sed -e '/^os_parsers:/,$d' %{deps}"))))
+
+(rule
+  (targets os_regexes.yaml)
+  (deps %{project_root}/uap-core/regexes.yaml)
+  (action
+    (with-stdout-to %{targets}
+    (system "sed -n '/^os_parsers:/,/^device_parsers:/p' %{deps} | sed '/^device_parsers:/d'"))))
+
+(rule
+  (targets device_regexes.yaml)
+  (deps %{project_root}/uap-core/regexes.yaml)
+  (action
+    (with-stdout-to %{targets}
+    (system "sed -n '/^device_parsers:/,$p' %{deps}"))))
+
+(rule
+  (targets user_agent_regexes.ml)
+  (deps
+    (:yaml user_agent_regexes.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (progn
+      (echo "let yojson_from_string str = try Ok (Yojson.Safe.from_string str) with _ -> Error (`Msg \"Yojson.Safe.from_string\")\n")
+      (echo "let json = yojson_from_string {json_parser_definitions|")
+      (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml}))
+      (echo "|json_parser_definitions}")))))
+
+(rule
+  (targets os_regexes.ml)
+  (deps
+    (:yaml os_regexes.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (progn
+      (echo "let yojson_from_string str = try Ok (Yojson.Safe.from_string str) with _ -> Error (`Msg \"Yojson.Safe.from_string\")\n")
+      (echo "let json = yojson_from_string {json_parser_definitions|")
+      (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml}))
+      (echo "|json_parser_definitions}")))))
+
+(rule
+  (targets device_regexes.ml)
+  (deps
+    (:yaml device_regexes.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (progn
+      (echo "let yojson_from_string str = try Ok (Yojson.Safe.from_string str) with _ -> Error (`Msg \"Yojson.Safe.from_string\")\n")
+      (echo "let json = yojson_from_string {json_parser_definitions|")
+      (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml}))
+      (echo "|json_parser_definitions}")))))
+
+(library
+  (name user_agent_parser)
+  (libraries base yojson re stdio)
+  (preprocess (pps ppx_let ppx_deriving.eq ppx_deriving.show))
+  (public_name user-agent-parser))

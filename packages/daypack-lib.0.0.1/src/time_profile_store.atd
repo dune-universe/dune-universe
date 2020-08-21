@@ -1,0 +1,5 @@
+type data <ocaml from="Time_profile"> = abstract
+
+type profile <ocaml from="Time_profile" t="t"> = abstract
+
+type t = profile list

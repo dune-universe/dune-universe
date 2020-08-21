@@ -1,0 +1,28 @@
+2020-08-19 David Allsopp <david.allsopp -at- metastack.dot.com>
+  Version 1.3.0
+* Harden build against Stdlib.Set.S changing (@kit-ty-kate)
+* Add new filter_map function introduced in OCaml 4.11.0
+
+2020-07-15 David Allsopp <david.allsopp -at- metastack.dot.com>
+  Version 1.2.0
+* Migrate build system to Dune
+* Use stdlib-shims
+* Add missing Seq.t functions introduced in OCaml 4.07.0 (using seq package for compatibility with
+  OCaml 4.06.1 and earlier)
+* Add missing disjoint function introduced in OCaml 4.08.0
+
+2017-12-15 David Allsopp <david.allsopp -at- metastack.dot.com>
+  Version 1.1.0
+* Switch build system to Jbuilder
+* Ensure physical equality maintained in add and remove (as in OCaml 4.03.0)
+* Add missing functions introduced in OCaml 4.04.0 and 4.05.0
+* Correct documentation of BitMask.topbit
+* Fix incorrect use of Mask.shifts when Mask.lowest <> Mask.one
+* Allow the sign bit to be included in a bitmask (affects fold, for_all, exists, filter, partition,
+  cardinal, elements, min_elt, max_elt and split)
+* Reduce BitMask signature to requiring only the type and the mask and calculate the other values
+  automatically.
+
+2014-03-16 David Allsopp <david.allsopp -at- metastack.dot.com>
+  Version 1.0.0
+* Initial release

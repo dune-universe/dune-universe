@@ -1,0 +1,3 @@
+type int64 <ocaml from="Int64"> = abstract
+
+type time_slot = (int64 * int64)

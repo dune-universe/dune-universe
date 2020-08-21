@@ -1,0 +1,21 @@
+type int64 <ocaml from="Int64"> = abstract
+
+type weekday <ocaml from="Time"> = abstract
+
+type month <ocaml from="Time"> = abstract
+
+type days = [
+  | Weekdays of weekday list
+  | Month_days of int list
+]
+
+type time_pattern = {
+  years : int list;
+  months : month list;
+  weekdays : weekday list;
+  month_days : int list;
+  hours : int list;
+  minutes : int list;
+  seconds : int list;
+  unix_seconds : int64 list;
+}

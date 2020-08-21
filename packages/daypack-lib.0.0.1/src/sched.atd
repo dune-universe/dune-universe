@@ -1,0 +1,155 @@
+type int64 <ocaml from="Int64"> = abstract
+
+(* corresponds to Map_utils
+*)
+type ('k, 'v) diff <ocaml from="Map_utils"> = abstract
+
+type ('k, 'v) diff_bucketed <ocaml from="Map_utils"> = abstract
+
+(* corresponds to Set_utils
+*)
+type 'a set_diff <ocaml from="Set_utils" t="diff"> = abstract
+
+(* corresponds to Time_slot
+*)
+type time_slot <ocaml from="Time_slot"> = abstract
+
+(* corresponds to Sched_req_data_unit_skeleton
+*)
+type ('a, 'b) fixed <ocaml from="Sched_req_data_unit_skeleton"> =  abstract
+
+type ('a, 'b) split_even <ocaml from="Sched_req_data_unit_skeleton"> = abstract
+
+type ('a, 'b, 'c) sched_req_data_unit_skeleton <ocaml from="Sched_req_data_unit_skeleton"> = abstract
+
+(* corresponds to Task
+*)
+type arith_seq <ocaml from="Task"> = abstract
+
+type user_id <ocaml from="Task"> = abstract
+
+type task_id <ocaml from="Task"> = abstract
+
+type task_inst_id <ocaml from="Task"> = abstract
+
+type task_seg_id <ocaml from="Task"> = abstract
+
+type task <ocaml from="Task"> = abstract
+
+type task_data <ocaml from="Task"> = abstract
+
+type task_type <ocaml from="Task"> = abstract
+
+type recur <ocaml from="Task"> = abstract
+
+type sched_req_template <ocaml from="Task"> = abstract
+
+type recur_data <ocaml from="Task"> = abstract
+
+type task_inst <ocaml from="Task"> = abstract
+
+type task_inst_data <ocaml from="Task"> = abstract
+
+type task_inst_type <ocaml from="Task"> = abstract
+
+type task_seg <ocaml from="Task"> = abstract
+
+type task_seg_alloc_req <ocaml from="Task"> = abstract
+
+type task_seg_size <ocaml from="Task"> = abstract
+
+type task_seg_place <ocaml from="Task"> = abstract
+
+type progress <ocaml from="Task"> = abstract
+
+(* corresponds to Sched_req
+*)
+type sched_req_id <ocaml from="Sched_req"> = abstract
+
+type sched_req <ocaml from="Sched_req"> = abstract
+
+type sched_req_data_unit <ocaml from="Sched_req"> = abstract
+
+type sched_req_data <ocaml from="Sched_req"> = abstract
+
+type sched_req_record <ocaml from="Sched_req"> = abstract
+
+type sched_req_record_data_unit <ocaml from="Sched_req"> = abstract
+
+type sched_req_record_data <ocaml from="Sched_req"> = abstract
+
+(* corresponds to Sched
+*)
+type sched_id = int
+
+type task_seg_part_sub = (int64 * int64 option)
+
+type store = {
+  task_uncompleted_list : task list;
+  task_completed_list : task list;
+  task_discarded_list : task list;
+  task_inst_uncompleted_list : task_inst list;
+  task_inst_completed_list : task_inst list;
+  task_inst_discarded_list : task_inst list;
+  task_seg_uncompleted_list : task_seg list;
+  task_seg_completed_list : task_seg list;
+  task_seg_discarded_list : task_seg list;
+  user_id_to_task_ids : (user_id * int64 list) list;
+  task_id_to_task_inst_ids : (task_id * int64 list) list;
+  task_inst_id_to_task_seg_ids : (task_inst_id * task_seg_part_sub list) list;
+  sched_req_ids : sched_req_id list;
+  sched_req_pending_list : sched_req list;
+  sched_req_discarded_list : sched_req list;
+  sched_req_record_list : sched_req_record list;
+  quota : (task_inst_id * int64) list;
+  task_seg_id_to_progress : (task_seg_id * progress) list;
+  task_inst_id_to_progress : (task_inst_id * progress) list;
+}
+
+type store_diff = {
+  task_uncompleted_list_diff : (task_id, task_data) diff;
+  task_completed_list_diff : (task_id, task_data) diff;
+  task_discarded_list_diff : (task_id, task_data) diff;
+  task_inst_uncompleted_list_diff : (task_inst_id, task_inst_data) diff;
+  task_inst_completed_list_diff : (task_inst_id, task_inst_data) diff;
+  task_inst_discarded_list_diff : (task_inst_id, task_inst_data) diff;
+  task_seg_uncompleted_list_diff : (task_seg_id, task_seg_size) diff;
+  task_seg_completed_list_diff : (task_seg_id, task_seg_size) diff;
+  task_seg_discarded_list_diff : (task_seg_id, task_seg_size) diff;
+  user_id_to_task_ids_diff : (user_id, int64) diff_bucketed;
+  task_id_to_task_inst_ids_diff : (task_id, int64) diff_bucketed;
+  task_inst_id_to_task_seg_ids_diff : (task_inst_id, task_seg_part_sub) diff_bucketed;
+  sched_req_ids_diff : int64 set_diff;
+  sched_req_pending_list_diff : (sched_req_id, sched_req_data) diff;
+  sched_req_discarded_list_diff : (sched_req_id, sched_req_data) diff;
+  sched_req_record_list_diff : (sched_req_id, sched_req_record_data) diff;
+  quota_diff : (task_inst_id, int64) diff;
+  task_seg_id_to_progress_diff : (task_seg_id, progress) diff;
+  task_inst_id_to_progress_diff : (task_inst_id, progress) diff;
+}
+
+type agenda = {
+  indexed_by_task_seg_id : (task_seg_id * (int64 * int64)) list;
+  indexed_by_start : (int64 * task_seg_id list) list;
+  indexed_by_end_exc : (int64 * task_seg_id list) list;
+}
+
+type agenda_diff = {
+  indexed_by_task_seg_id_diff : (task_seg_id, time_slot) diff;
+  indexed_by_start_diff : (int64, task_seg_id) diff_bucketed;
+  indexed_by_end_exc_diff : (int64, task_seg_id) diff_bucketed;
+}
+
+type sched_data = {
+  store : store;
+  agenda : agenda;
+}
+
+type sched_data_diff = {
+  store_diff : store_diff;
+  agenda_diff : agenda_diff;
+}
+
+type sched = (sched_id * sched_data)
+
+type sched_diff = (sched_id * sched_id * sched_data_diff)

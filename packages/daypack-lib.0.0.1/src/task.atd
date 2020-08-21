@@ -1,0 +1,78 @@
+type int64 <ocaml from="Int64"> = abstract
+
+type time_slot <ocaml from="Time_slot"> = abstract
+
+type time_pattern <ocaml from="Time_pattern" t="time_pattern"> = abstract
+
+type arith_seq = {
+  start : int64;
+  end_exc : int64 option;
+  diff : int64;
+}
+
+type user_id = int64
+
+type task_id = (user_id * int64)
+
+type task_inst_id = (user_id * int64 * int64)
+
+type task_seg_id = (user_id * int64 * int64 * int64 * int64 option)
+
+type task = (task_id * task_data)
+
+type task_data = {
+  splittable : bool;
+  parallelizable : bool;
+  task_type : task_type;
+  name : string;
+}
+
+type task_type = [
+  | One_off
+  | Recurring of recur
+]
+
+type recur_type = [
+  | Arithmetic_seq of (arith_seq * recur_data)
+  | Time_pattern_match of (time_pattern * recur_data)
+]
+
+type recur = {
+  excluded_time_slots : time_slot list;
+  recur_type : recur_type;
+}
+
+type ('a, 'b, 'c) sched_req_data_unit_skeleton <ocaml from ="Sched_req_data_unit_skeleton"> = abstract
+
+type sched_req_template_data_unit = (task_seg_size, int64, time_slot) sched_req_data_unit_skeleton
+
+type sched_req_template = sched_req_template_data_unit list
+
+type recur_data = {
+  task_inst_data : task_inst_data;
+  sched_req_template : sched_req_template;
+}
+
+type task_inst = (task_inst_id * task_inst_data)
+
+type task_inst_data = {
+  task_inst_type : task_inst_type;
+}
+
+type task_inst_type = [
+  | Reminder
+  | Reminder_quota_counting of int64
+  | Passing
+]
+
+type task_seg = (task_seg_id * task_seg_size)
+
+type task_seg_alloc_req = (task_inst_id * task_seg_size)
+
+type task_seg_size = int64
+
+type task_seg_place = (task_seg_id * int64 * int64)
+
+type progress = {
+  chunks : (int64 * int64) list;
+}

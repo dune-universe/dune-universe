@@ -1,0 +1,12 @@
+type ('k, 'v) diff = {
+  (* common : ('k * 'v) list; *)
+  (* updated : ('k * ('v * 'v)) list; *)
+  added : ('k * 'v) list;
+  removed : ('k * 'v) list;
+}
+
+type ('k, 'v) diff_bucketed = {
+  (* common : ('k * 'v list) list; *)
+  added : ('k * 'v list) list;
+  removed : ('k * 'v list) list;
+}

@@ -1,0 +1,38 @@
+(rule
+  (targets test_ua.json)
+  (deps
+    (:yaml %{project_root}/uap-core/tests/test_ua.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml})))))
+
+(rule
+  (targets test_os.json)
+  (deps
+    (:yaml %{project_root}/uap-core/tests/test_os.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml})))))
+
+(rule
+  (targets test_device.json)
+  (deps
+    (:yaml %{project_root}/uap-core/tests/test_device.yaml)
+    (:yaml2json %{project_root}/yaml2json/yaml2json.exe))
+  (action
+    (with-stdout-to %{targets}
+    (setenv OCAMLRUNPARAM 'l=256M,s=256M' (run %{yaml2json} %{yaml})))))
+
+(executable
+  (name test)
+  (preprocess (pps ppx_let ppx_deriving.eq ppx_deriving.show))
+  (libraries alcotest user-agent-parser yojson))
+
+(alias
+  (name runtest)
+  (deps (:test test.exe) test_ua.json test_os.json test_device.json)
+  (action
+    (setenv TEST_DIR ./
+    (run %{test} --json --color=always))))
