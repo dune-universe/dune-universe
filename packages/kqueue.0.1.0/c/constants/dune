@@ -1,0 +1,4 @@
+(library
+ (name kqueue_constants)
+ (public_name kqueue.constants)
+ (libraries ctypes.stubs))
