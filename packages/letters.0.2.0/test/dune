@@ -1,0 +1,17 @@
+(executable
+ (name test)
+ (libraries
+  letters
+  alcotest
+  alcotest-lwt
+  lwt
+ )
+)
+
+(rule
+ (alias runtest)
+ (action (run ./test.exe)))
+
+(rule
+ (alias runtest-all)
+ (action (run ./test.exe)))

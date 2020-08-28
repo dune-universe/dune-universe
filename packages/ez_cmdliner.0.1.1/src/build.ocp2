@@ -1,0 +1,10 @@
+
+OCaml.library("ezCmdliner",
+  ocaml + {
+    files = [
+      "ezCmdliner.ml";
+    ];
+    requires = [
+      "cmdliner";
+    ];
+  });

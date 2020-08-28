@@ -1,0 +1,29 @@
+[package]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+kind = "library"
+license = "LGPL2"
+min-edition = "4.03.0"
+name = "ez_cmdliner"
+synopsis = "Easy interface to Cmdliner à la Arg.parse with sub-commands"
+version = "0.1.1"
+
+[package]
+description = """
+ez_cmdliner is a simple layer on top of Cmdliner to provide an interface
+à la Arg.parse with an extension for simple sub-commands.
+"""
+
+[drom]
+skip = ""
+
+[dependencies]
+cmdliner = "1.0.0"
+
+[tools]
+dune = "2.6.0"
+
+[package]
+wrapped = false

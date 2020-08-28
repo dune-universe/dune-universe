@@ -1,0 +1,41 @@
+
+build_tests = true;
+try {
+  build_tests = Features_get("tests", false).enabled;
+} catch("unknown-variable",y){
+  build_tests = true;
+}
+
+if( build_tests ){
+
+OCaml.program("test_parse",
+  ocaml + {
+    files = [
+      "test_parse.ml";
+    ];
+    requires = [
+      "ezcmd";
+    ];
+  });
+
+OCaml.program("test_subcmds",
+  ocaml + {
+    files = [
+      "test_subcmds.ml";
+    ];
+    requires = [
+      "ezcmd";
+    ];
+  });
+
+OCaml.program("test_cmd",
+  ocaml + {
+    files = [
+      "test_cmd.ml";
+    ];
+    requires = [
+      "ezcmd";
+    ];
+  });
+
+}

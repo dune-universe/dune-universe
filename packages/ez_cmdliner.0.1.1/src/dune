@@ -1,0 +1,7 @@
+
+(library
+ (name ez_cmdliner)
+ (public_name ez_cmdliner)
+ (wrapped false)
+ (libraries cmdliner)
+)

@@ -1,0 +1,31 @@
+(* -*- tuareg -*- *)
+
+let () =
+  let ocaml_version =
+    try
+      String.sub Sys.ocaml_version 0 6
+    with _ -> failwith "Wrong ocaml version"
+  in
+  let version =
+    if ocaml_version < "4.02.0" then
+      "3_12_1"
+    else
+    if ocaml_version < "4.03.0" then
+      "4_02_0"
+    else
+      "4_03_0"
+  in
+
+  Printf.kprintf
+    Jbuild_plugin.V1.send
+    "(library
+ (public_name ocplib_stuff)
+ (name ocplib_stuff)
+ (wrapped false)
+ (libraries
+    (select ezCompat.ml from ( -> ezCompat.%s.ml))
+    unix
+  )
+)
+"
+    version
