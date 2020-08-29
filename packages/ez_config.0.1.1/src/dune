@@ -1,0 +1,7 @@
+
+(library
+ (name ezConfig)
+ (public_name ez_config)
+ (wrapped false)
+ (libraries ez_file)
+)

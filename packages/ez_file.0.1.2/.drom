@@ -1,0 +1,25 @@
+# Keep this file in your GIT repo to help drom track generated files
+ac2aab1d8f78befbbfca730668f71e8d .github/workflows/ci.ml
+ecc81f6e7397d471ae02b1a8a2a79472 .github/workflows/workflow.yml
+ad3289a3ff6fdac282e549432114f82b .gitignore
+d41d8cd98f00b204e9800998ecf8427e .ocamlformat
+7a038eccc259630a7aaa876eceb826ba CHANGES.md
+bccf2d5b83a2ff0d2c284afea0d49e16 LICENSE.md
+2ecfa2e801979053f133aa390b6b00a0 Makefile
+b437ded55955d885b421f442f61f59bb README.md
+d41d8cd98f00b204e9800998ecf8427e docs/.nojekyll
+ed35af3f1c2d1d82a802ef41b86f5e66 docs/doc/index.html
+c78c4051e699f3e0816b370bd5b26c58 docs/index.html
+1e6c3e88922aed0893fc5d8e6f0e5b3e docs/sphinx/index.html
+a95f1ab7d178b468eff6188a527535d9 docs/style.css
+b1167bfb1bfcf1fcd7ee75d1642c5a05 drom.toml
+1c801097a4f972113126747d760525a7 dune-project
+6949ed8f885961a74050bfa2208a5e8a ez_file.opam
+d41d8cd98f00b204e9800998ecf8427e sphinx/_static/css/fixes.css
+0a65b84882d7bfac6dfd92446a14d397 sphinx/about.rst
+7fc362a114a753ad223794b8224b6320 sphinx/conf.py
+77fa1242b28f25053a536bad70222656 sphinx/index.rst
+7a55c1afcb8550e133050638108c6244 sphinx/install.rst
+86782b9deab3da02e4116e79f0390be6 sphinx/license.rst
+cd7a86ab6edbdcf86ee543fbf40796bd src/dune
+4245587cec9b76cbe6fe82cac1049d08 src/main.ml

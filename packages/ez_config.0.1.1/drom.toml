@@ -1,0 +1,41 @@
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+dir = "src"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+kind = "library"
+license = "LGPL2"
+min-edition = "4.03.0"
+mode = "binary"
+name = "ez_config"
+synopsis = "Easy management of configuration files"
+version = "0.1.1"
+
+# keys that you could also define:
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+EzConfig can be used to manage a configuration file with OCaml lexing
+conventions (string escaping, comments). It was initially used by 
+MLdonkey and is close to ocaml-config.
+"""
+
+[drom]
+skip = ""
+
+[dependencies]
+ez_file = "0.1.0"
+
+[tools]
+dune = "2.6.0"
+[project]
+pack = "ezConfig"
+pack-modules = false
+

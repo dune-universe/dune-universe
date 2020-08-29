@@ -1,0 +1,7 @@
+
+(library
+ (name ezFile)
+ (public_name ez_file)
+ (wrapped false)
+ (libraries re ocplib_stuff unix)
+)

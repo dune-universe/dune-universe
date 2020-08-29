@@ -1,0 +1,42 @@
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+dir = "src"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+kind = "library"
+license = "LGPL2"
+min-edition = "4.03.0"
+mode = "binary"
+name = "ez_file"
+synopsis = "Easy file manipulation (read_file, write_file, etc.)"
+version = "0.1.2"
+
+# keys that you could also define:
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+This library provides some modules to read and write files, and create 
+and scan directories.
+"""
+
+[drom]
+skip = ""
+
+[dependencies]
+base-unix = "base unix"
+ocplib_stuff = "0.1.0"
+re = "1.0.0"
+
+[tools]
+dune = "2.6.0"
+[project]
+pack = "EzFile"
+pack-modules = false
+
