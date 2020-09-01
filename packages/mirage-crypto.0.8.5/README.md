@@ -1,6 +1,6 @@
 # mirage-crypto - Cryptographic primitives for MirageOS
 
-v0.8.4
+v0.8.5
 
 mirage-crypto is a small cryptographic library that puts emphasis on the
 applicative style and ease of use. It includes basic ciphers (AES, 3DES, RC4,
