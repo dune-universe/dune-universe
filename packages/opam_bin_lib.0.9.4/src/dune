@@ -1,0 +1,6 @@
+
+(library
+ (name opam_bin)
+ (public_name opam_bin_lib)
+ (libraries re opam-file-format ocplib-json-typed ezjsonm ez_config ez_cmdliner)
+)

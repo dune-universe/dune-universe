@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Commands &mdash; opam-bin z-2020-08-29-use-drom
+ (d97e44e
+) (2020/08/31 06:55) documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/fixes.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributed Binary Repositories" href="repositories.html" />
+    <link rel="prev" title="Sharing Packages" href="sharing-packages.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> opam-bin
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                z-2020-08-29-use-drom
+ (d97e44e
+)
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic-concepts.html">Basic Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="local-usage.html">Local Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sharing-packages.html">Sharing Packages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-clean">opam-bin clean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-config">opam-bin config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-help">opam-bin help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-install">opam-bin install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-list">opam-bin list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-pull">opam-bin pull</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-push">opam-bin push</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-search">opam-bin search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-bin-uninstall">opam-bin uninstall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opam-hooks">OPAM Hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">Contributed Binary Repositories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="f-a-q.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about-and-thanks.html">About, Thanks and Funding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Copyright and License</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ocamlpro/opam-bin">Devel and Issues on Github</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">opam-bin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Commands</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/commands.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<p>You can use <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> to list all available commands, and
+<code class="code docutils literal notranslate"><span class="pre">opam-bin</span> <span class="pre">COMMAND</span> <span class="pre">--help</span></code> for usage of a specific command.</p>
+<div class="section" id="opam-bin-clean">
+<h2>opam-bin clean<a class="headerlink" href="#opam-bin-clean" title="Permalink to this headline">¶</a></h2>
+<p>Clear the log, remove all packages and archives from the cache and
+store (internal repository), and call <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">update</span></code> to
+synchronize <code class="code docutils literal notranslate"><span class="pre">opam</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">clean</span>
+</pre></div>
+</div>
+<p>You can limit the cleaning by adding these arguments:</p>
+<ul class="simple">
+<li><code class="code docutils literal notranslate"><span class="pre">all</span></code>: clean everything as described above</li>
+<li><code class="code docutils literal notranslate"><span class="pre">log</span></code>: clean only the internal log
+(<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/opam-bin.log</span></code>)</li>
+<li><code class="code docutils literal notranslate"><span class="pre">store</span></code>: clean only the store (packages and archives) and call
+<code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">update</span></code></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">clean</span> <span class="n">log</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-bin-config">
+<h2>opam-bin config<a class="headerlink" href="#opam-bin-config" title="Permalink to this headline">¶</a></h2>
+<p>Configure options from the command line. <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> options are stored in
+<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/config</span></code>.</p>
+<p>To display most options:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">config</span>
+<span class="n">opam</span><span class="o">-</span><span class="n">bin</span> <span class="mi">0</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span> <span class="n">by</span> <span class="nc">OCamlPro</span> <span class="nc">SAS</span> <span class="o">&lt;</span><span class="n">contact</span><span class="o">@</span><span class="n">ocamlpro</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
+<span class="nc">Current</span> <span class="n">options</span> <span class="o">(</span><span class="n">from</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/.</span><span class="n">opam</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">opam</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">config</span><span class="o">):</span>
+  <span class="n">base_url</span> <span class="o">:</span> <span class="o">/</span><span class="n">change</span><span class="o">-</span><span class="n">this</span><span class="o">-</span><span class="n">option</span>
+  <span class="n">rsync_url</span> <span class="o">:</span> <span class="nc">None</span>
+  <span class="n">patches_url</span> <span class="o">:</span> <span class="n">file</span><span class="o">:///</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="nc">GIT</span><span class="o">/</span><span class="n">relocation</span><span class="o">-</span><span class="n">patches</span>
+  <span class="n">title</span> <span class="o">:</span> <span class="nc">Repository</span> <span class="k">of</span> <span class="nc">Binary</span> <span class="nc">Packages</span>
+  <span class="n">enabled</span> <span class="o">:</span> <span class="bp">true</span>
+  <span class="n">create_enabled</span> <span class="o">:</span> <span class="bp">false</span>
+  <span class="n">all_switches</span> <span class="o">:</span> <span class="bp">true</span>
+  <span class="n">version</span> <span class="o">:</span> <span class="mi">1</span>
+  <span class="n">switches</span> <span class="o">:</span>
+  <span class="n">protected_switches</span> <span class="o">:</span>
+</pre></div>
+</div>
+<p>To display arguments that can be used to change the options:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">config</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>Here are some common arguments:</p>
+<ul>
+<li><p class="first"><code class="code docutils literal notranslate"><span class="pre">--enable</span></code>/<code class="code docutils literal notranslate"><span class="pre">--disable</span></code>: when disabled, <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code>
+will neither patch sources, nor create new binary archives, nor
+re-use cached ones.</p>
+</li>
+<li><p class="first"><code class="code docutils literal notranslate"><span class="pre">--enable-create</span></code>/<code class="code docutils literal notranslate"><span class="pre">--disable-create</span></code>: can be used to
+enable/disable creation of new binary archives. When disabled,
+existing binary archives will still be used when possible</p>
+</li>
+<li><p class="first"><code class="code docutils literal notranslate"><span class="pre">--base-url</span> <span class="pre">URL</span></code>: the base url that will be used when creating
+opam files to specify from where the binary archive should be
+downloaded. For example, if you specify <code class="code docutils literal notranslate"><span class="pre">https://x/y</span></code>, the
+urls in the opam files will look like
+<code class="code docutils literal notranslate"><span class="pre">https://x/y/archives/package.version.tar.gz</span></code></p>
+<p>Note that, when this argument is used, <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> will
+automatically modify all the existing opam files in
+<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/repo</span></code> to use the new URLs,
+so this argument can be used after creating the packages to relocate
+them.</p>
+</li>
+<li><p class="first"><code class="code docutils literal notranslate"><span class="pre">--patches-url</span> <span class="pre">URL</span></code>: the URL specifying the location of the
+patches to make packages relocatable. It can be an archive over
+https (<code class="code docutils literal notranslate"><span class="pre">https://</span></code>), a Git repository (<code class="code docutils literal notranslate"><span class="pre">git&#64;</span></code>) or a local
+directory (<code class="code docutils literal notranslate"><span class="pre">file://</span></code>).</p>
+<p>Default is
+<code class="code docutils literal notranslate"><span class="pre">https://www.typerex.org/opam-bin/relocation-patches.tar.gz</span></code>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="opam-bin-help">
+<h2>opam-bin help<a class="headerlink" href="#opam-bin-help" title="Permalink to this headline">¶</a></h2>
+<p>Display help about <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> and its sub-commands:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-bin-install">
+<h2>opam-bin install<a class="headerlink" href="#opam-bin-install" title="Permalink to this headline">¶</a></h2>
+<p>Install <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> in opam. It performs the following steps:</p>
+<ul class="simple">
+<li>Install the binary of <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">bin</span></code> in opam to be used as a
+plugin and for hooks
+(<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/opam-bin.exe</span></code> with a link from
+<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/bin/opam-bin</span></code>)</li>
+<li>Install hooks to call <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> while building, installing
+and removing packages (modify <code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/config</span></code>)</li>
+<li>Install the internal repository of <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> as a repository,
+called <code class="code docutils literal notranslate"><span class="pre">local-bin</span></code>, where <code class="code docutils literal notranslate"><span class="pre">opam</span></code> can lookup packages.
+The internal repo is <code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/repo</span></code></li>
+<li>Download and extract the set of relocation patches</li>
+</ul>
+<p>All these actions can be called indiviually using the following
+arguments, respectivelly: <code class="code docutils literal notranslate"><span class="pre">exe</span></code>, <code class="code docutils literal notranslate"><span class="pre">hooks</span></code>, <code class="code docutils literal notranslate"><span class="pre">repos</span></code>,
+<code class="code docutils literal notranslate"><span class="pre">patches</span></code>.</p>
+<p>For example, to install a newly built version of <cite>opam-bin</cite>, you can
+just use:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="o">./</span><span class="n">opam</span><span class="o">-</span><span class="n">bin</span> <span class="n">install</span> <span class="n">exe</span>
+</pre></div>
+</div>
+<p>If you want <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> to re-download its set of patches because
+a new version is available:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">install</span> <span class="n">patches</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-bin-list">
+<h2>opam-bin list<a class="headerlink" href="#opam-bin-list" title="Permalink to this headline">¶</a></h2>
+<p>List binary packages created on this computer:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="kt">list</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-bin-pull">
+<h2>opam-bin pull<a class="headerlink" href="#opam-bin-pull" title="Permalink to this headline">¶</a></h2>
+<p>Pull binary packages from the remote server specified by the
+<code class="code docutils literal notranslate"><span class="pre">rsync_url</span></code> option (set by <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">bin</span> <span class="pre">config</span> <span class="pre">--rsync-url</span>
+<span class="pre">URL</span></code>).</p>
+<p>This command will copy all files from the URL specified in option
+<code class="code docutils literal notranslate"><span class="pre">rsync_url</span></code> to the <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> store
+(<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/</span></code>). Since no <code class="code docutils literal notranslate"><span class="pre">--delete</span></code>
+option is given to <code class="code docutils literal notranslate"><span class="pre">rsync</span></code>, the new content will be added over
+the existing content. It may be useful to use <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">bin</span> <span class="pre">clean</span>
+<span class="pre">store</span></code> before to get rid of existing content if you don’t want a
+merge.</p>
+</div>
+<div class="section" id="opam-bin-push">
+<h2>opam-bin push<a class="headerlink" href="#opam-bin-push" title="Permalink to this headline">¶</a></h2>
+<p>Push binary packages to the remote server, specified by the
+<code class="code docutils literal notranslate"><span class="pre">rsync_url</span></code> option (set by <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">bin</span> <span class="pre">config</span> <span class="pre">--rsync-url</span>
+<span class="pre">URL</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">push</span>
+</pre></div>
+</div>
+<p>It will perform the following actions:</p>
+<ul class="simple">
+<li>Generate an HTML index (<code class="code docutils literal notranslate"><span class="pre">index.html</span></code>) and an opam index
+(<code class="code docutils literal notranslate"><span class="pre">index.tar.gz</span></code>) in every repository present in the store
+(<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/*</span></code> where a sub-dir
+<code class="code docutils literal notranslate"><span class="pre">packages</span></code> exists)</li>
+<li>Copy the files from the store to the remote server, adding the
+<code class="code docutils literal notranslate"><span class="pre">--delete</span></code> option to <code class="code docutils literal notranslate"><span class="pre">rsync</span></code> to get rid of former files if
+necessary.</li>
+</ul>
+<p>If the <code class="code docutils literal notranslate"><span class="pre">--merge</span></code> argument is provided:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">push</span> <span class="o">--</span><span class="n">merge</span>
+</pre></div>
+</div>
+<p>the index files are not generated and the <code class="code docutils literal notranslate"><span class="pre">--delete</span></code> option is
+not passed to <code class="code docutils literal notranslate"><span class="pre">rsync</span></code>, resulting in a merge of the stores. You
+may have to call <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">admin</span> <span class="pre">index</span></code> on the remote server for the
+opam index to take into account the new packages.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">--local-only</span></code> argument can be provided to only generate the
+index and not copy the files:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">push</span> <span class="o">--</span><span class="n">local</span><span class="o">-</span><span class="n">only</span>
+</pre></div>
+</div>
+<p>Finally, you can extract a set of packages from the current repository
+(<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/repo</span></code>) that are compatible
+with a binary package (i.e. not conflicting with it or its
+dependencies), using <code class="code docutils literal notranslate"><span class="pre">--extract</span> <span class="pre">NAME:PACKAGE.VERSION</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">push</span> <span class="o">--</span><span class="n">extract</span> <span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span><span class="o">:</span><span class="n">ocaml</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">compiler</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>will generate a new repository
+<code class="code docutils literal notranslate"><span class="pre">$OPAMROOT/plugins/opam-bin/store/4.07.1</span></code> containing only the
+packages compatible with the binary packages with prefix
+<code class="code docutils literal notranslate"><span class="pre">ocaml-base-compiler.4.07.1</span></code> (resulting in this example in a
+repository containing only 4.07.1 packages). Index files will be
+generated too. A later call to <code class="code docutils literal notranslate"><span class="pre">opam</span> <span class="pre">bin</span> <span class="pre">push</span></code> will push all the
+store, including the archives and all the repositories.</p>
+</div>
+<div class="section" id="opam-bin-search">
+<h2>opam-bin search<a class="headerlink" href="#opam-bin-search" title="Permalink to this headline">¶</a></h2>
+<p>Search binary packages for information.</p>
+<p>For example, to locate which package installs a particular file:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">search</span> <span class="o">:</span><span class="n">bin</span><span class="o">/</span><span class="n">opam</span><span class="o">-</span><span class="n">user</span>
+<span class="n">user</span><span class="o">-</span><span class="n">setup</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mi">2952509</span><span class="n">c</span><span class="o">+</span><span class="mi">02303</span><span class="n">a0a</span><span class="o">:</span><span class="n">file</span><span class="o">:</span><span class="mi">003390664</span><span class="o">:</span><span class="n">reg</span><span class="o">:</span><span class="n">bin</span><span class="o">/</span><span class="n">opam</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">setup</span>
+</pre></div>
+</div>
+<p>To locate which package depends on another package:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">search</span> <span class="o">:</span><span class="n">depend</span><span class="o">:</span><span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mf">0de601</span><span class="n">c3</span><span class="o">+</span><span class="n">b837d4ad</span><span class="o">:</span><span class="n">depend</span><span class="o">:</span><span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span><span class="o">:</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mi">46</span><span class="n">bc9b0d</span><span class="o">+</span><span class="n">e15bd9c3</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span><span class="o">+</span><span class="n">bin</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">:</span><span class="n">depend</span><span class="o">:</span><span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span><span class="o">:</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mi">46</span><span class="n">bc9b0d</span><span class="o">+</span><span class="n">e15bd9c3</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">parsers</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="n">e7404faa</span><span class="o">+</span><span class="mi">00</span><span class="n">c3ebc6</span><span class="o">:</span><span class="n">depend</span><span class="o">:</span><span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span><span class="o">:</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mi">46</span><span class="n">bc9b0d</span><span class="o">+</span><span class="n">e15bd9c3</span>
+</pre></div>
+</div>
+<p>To locate the installed size of an archive:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">search</span> <span class="n">nbytes</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">alt</span><span class="o">-</span><span class="n">ergo</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mf">0de601</span><span class="n">c3</span><span class="o">+</span><span class="n">b837d4ad</span><span class="o">:</span><span class="n">total</span><span class="o">:</span><span class="mi">013055077</span><span class="o">:</span><span class="n">nbytes</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">lib</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="mi">46</span><span class="n">bc9b0d</span><span class="o">+</span><span class="n">e15bd9c3</span><span class="o">:</span><span class="n">total</span><span class="o">:</span><span class="mi">033822968</span><span class="o">:</span><span class="n">nbytes</span>
+<span class="n">alt</span><span class="o">-</span><span class="n">ergo</span><span class="o">-</span><span class="n">parsers</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">+</span><span class="n">bin</span><span class="o">+</span><span class="n">e7404faa</span><span class="o">+</span><span class="mi">00</span><span class="n">c3ebc6</span><span class="o">:</span><span class="n">total</span><span class="o">:</span><span class="mi">009382175</span><span class="o">:</span><span class="n">nbytes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-bin-uninstall">
+<h2>opam-bin uninstall<a class="headerlink" href="#opam-bin-uninstall" title="Permalink to this headline">¶</a></h2>
+<p>Un-install <code class="code docutils literal notranslate"><span class="pre">opam-bin</span></code> hooks from <code class="code docutils literal notranslate"><span class="pre">opam</span></code> config. Note that
+it does not currently remove the <code class="code docutils literal notranslate"><span class="pre">local-bin</span></code> directory, so you
+may have to do it yourself if you want to:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">$</span> <span class="n">opam</span> <span class="n">bin</span> <span class="n">uninstall</span>
+<span class="o">$</span> <span class="n">opam</span> <span class="n">remote</span> <span class="n">remove</span> <span class="o">--</span><span class="n">all</span> <span class="o">--</span><span class="n">set</span><span class="o">-</span><span class="n">default</span> <span class="n">local</span><span class="o">-</span><span class="n">bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opam-hooks">
+<h2>OPAM Hooks<a class="headerlink" href="#opam-hooks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>opam-bin pre-build: Check the sources before building the package to
+decide whether to use an existing binary package</li>
+<li>opam-bin wrap-build:
+Exec or not build commands</li>
+<li>opam-bin pre-install:
+Install cached binary archives if available</li>
+<li>opam-bin wrap-install
+Exec or not install commands</li>
+<li>opam-bin post-install:
+Create a binary archive from installed built artefacts</li>
+<li>opam-bin pre-remove:
+Remove binary install artefacts</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="repositories.html" class="btn btn-neutral float-right" title="Contributed Binary Repositories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sharing-packages.html" class="btn btn-neutral float-left" title="Sharing Packages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, OCamlPro &amp; Origin Labs SAS. &lt;contact@ocamlpro.com&gt;
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

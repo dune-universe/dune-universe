@@ -1,0 +1,2 @@
+all:
+	sphinx-build . doc
