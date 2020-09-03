@@ -1,3 +1,11 @@
+v2.4+1
+------
+
+*2020-09-01*
+
+- Upgrade to `zxcvbn-c` version 2.4.
+- Fix compatibility with Dune 2.7.0.
+
 v2.3+2
 ------
 

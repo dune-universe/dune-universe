@@ -1,0 +1,9 @@
+(library
+ (public_name ptset)
+ (modules ptset)
+ (libraries stdlib-shims))
+
+(test
+ (name test)
+ (modules test)
+ (libraries ptset))

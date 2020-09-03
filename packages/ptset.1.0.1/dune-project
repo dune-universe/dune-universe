@@ -1,0 +1,4 @@
+(lang dune 2.0)
+(name ptset)
+(version 1.0.1)
+(formatting (enabled_for dune))

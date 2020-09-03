@@ -1,7 +1,7 @@
 (library
   (public_name zxcvbn)
   (c_names zxcvbn_stubs zxcvbn)
-  (c_flags (:standard "-I ."))
+  (c_flags (:standard -I .))
   (preprocess
     (pps
       ppx_deriving.std
