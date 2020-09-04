@@ -54,6 +54,44 @@
   let get_lex_line lexbuf =
     let pos = lexbuf.Lexing.lex_start_p in
     pos.Lexing.pos_lnum
+
+  (* https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements *)
+  let html_block =
+    [ "address"
+    ; "article"
+    ; "aside"
+    ; "blockquote"
+    ; "details"
+    ; "dialog"
+    ; "dd"
+    ; "div"
+    ; "dl"
+    ; "dt"
+    ; "fieldset"
+    ; "figcaption"
+    ; "figure"
+    ; "footer"
+    ; "form"
+    ; "h1"
+    ; "h2"
+    ; "h3"
+    ; "h4"
+    ; "h5"
+    ; "h6"
+    ; "header"
+    ; "hgroup"
+    ; "hr"
+    ; "li"
+    ; "main"
+    ; "nav"
+    ; "ol"
+    ; "p"
+    ; "pre"
+    ; "section"
+    ; "table"
+    ; "ul"
+    ]
+
 }
 
 let hrule = "----" ['-']*
@@ -68,6 +106,7 @@ let cell_inline = "||"
 let header_cell_inline = "!!"
 let cell = "|"
 let header_cell = "!"
+
 
 (*
   When editing these lexing rules, do not forget to use and update the newline reference.
@@ -85,10 +124,31 @@ rule nowiki buf = parse
       nowiki buf lexbuf
     }
 
+and comment = parse
+  | "-->" {
+      newline := false;
+      main lexbuf
+    }
+
+  | _ as c {
+      update_lex_new_line lexbuf c ;
+      comment lexbuf
+    }
+
 and main = parse
   | "<nowiki>" {
     nowiki (Buffer.create 1024) lexbuf
   }
+  | "<!--" {
+      comment lexbuf
+    }
+  | ("<" '/'? (['A'-'Z''a'-'z']+ as t) [^'>']* ">" as s) {
+      newline := false;
+      String.iter (update_lex_new_line lexbuf) s ;
+      if List.mem (String.lowercase_ascii t) html_block
+      then HTML_BLOCK s
+      else STRING s
+    }
   | "<" {
       newline := false ;
       STRING "<"

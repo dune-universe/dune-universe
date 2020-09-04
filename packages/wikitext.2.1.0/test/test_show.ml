@@ -1,0 +1,10 @@
+type order = [%import: Wikitext.Type.order] [@@deriving show { with_path = false }]
+and def_and = [%import: Wikitext.Type.def_type] [@@deriving show { with_path = false }]
+and table_cell = [%import: Wikitext.Type.table_cell] [@@deriving show { with_path = false }]
+and document = [%import: Wikitext.Type.document] [@@deriving show { with_path = false }]
+and block = [%import: Wikitext.Type.block] [@@deriving show { with_path = false }]
+and table_block = [%import: Wikitext.Type.table_block] [@@deriving show { with_path = false }]
+and def_block = [%import: Wikitext.Type.def_block] [@@deriving show { with_path = false }]
+and inline = [%import: Wikitext.Type.inline] [@@deriving show { with_path = false }]
+
+let printer = [%derive.show: document]

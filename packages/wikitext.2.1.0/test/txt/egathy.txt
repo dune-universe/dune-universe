@@ -1,0 +1,26 @@
+Woonplaats: Opheers.<br />Gedurende zijn bekende leven, tot zijn testament en dan zijn overlijden, werd zijn achternaam altijd <b>Jancis</b> geschreven, en nooit Jansis (en ook zó zélfs voor zijn kinderen).<br />Ondanks dat de gemeente Opheers nu zich in het Vlaams Gewest bevindt (hoewel slechts ongeveer 1,6 km van de dichtstbijzijnde taalgrens), zijn de meeste identiteiten vrijwillig "in het Frans" geschreven omdat:<br />– de peetouders van zijn kinderen waren ongetwijfeld franstalig; en<br />– zijn testament werd in het Frans geschreven en ontegenzeggelijk zó door hem handgetekend (en de schrijver: Bartholomeus Frambach, priester, was tweetalig).<br />Hij zou vrijwel zeker de peetvader geweest zijn van twee kinderen van het echtpaar Mathieu Jancis - Jeanne Marie Heusdens gedoopt te Jeuk: het is heel duidelijk zijn echtgenote «&nbsp;<i>margareta sors uxor Lamberti jansis</i>&nbsp;» die de peetmoeder was geweest bij de doop van hun eerste kind Lambert, in februari 1718; daarvan <u>stelde</u> ik dan dat de zogenaamde «&nbsp;<i>Matias Jancis</i>&nbsp;» die zijn testament medeondertekende degene was die hierboven werd genoemd.<div style = "margin: 0.50em 95% 0.50em 0; border: none; height: 1px; background: black;"></div>Domicile: Opheers.<br />Durant sa vie connue, jusqu'à son testament puis à son décès, son patronyme s'était toujours écrit <b>Jancis</b>, et jamais Jansis (et ainsi aussi même pour ses enfants).<br />Malgré que la commune d'Opheers se trouve maintenant en Région Flamande (bien qu'à environ 1,6 km seulement de la frontière linguistique la plus proche), la plupart des identités ont été écrites "en français" car:<br />– les parrains et marraines de ses enfants étaient indubitablement francophones; et<br />– son testament avait été rédigé en français et indéniablement signé ainsi par lui (et le rédacteur: Bartholomeus Frambach, prêtre, était bilingue).<br />Il aurait, quasi certainement, été le parrain de deux enfants du couple Mathieu Jancis - Jeanne Marie Heusdens baptisés à Jeuk: c'est très clairement son épouse «&nbsp;<i>margareta sors uxor Lamberti jansis</i>&nbsp;» qui avait été la marraine au baptême de leur premier enfant Lambert, en février 1718; de cela, j'ai alors <u>posé</u> que le dénommé «&nbsp;<i>Matias Jancis</i>&nbsp;» qui a cosigné son testament était celui précité.
+<div style = "margin: 0.50em 0 0.50em 0; border: none; height: 5px; background: black;"></div>
+<!--
+###########################
+essai en "full HTML + CSS":
+###########################
+-->
+<div style = "color: maroon;">
+  <p style = "line-height: 1.20em; font-size: inherit;">
+    Woonplaats: Opheers.<br />
+    Gedurende zijn bekende leven, tot zijn testament en dan zijn overlijden, werd zijn achternaam altijd <b>Jancis</b> geschreven, en nooit Jansis (en ook zó zélfs voor zijn kinderen).<br />
+    Ondanks dat de gemeente Opheers nu zich in het Vlaams Gewest bevindt (hoewel slechts ongeveer 1,6 km van de dichtstbijzijnde taalgrens), zijn de meeste identiteiten vrijwillig "in het Frans" geschreven   omdat:<br />
+    – de peetouders van zijn kinderen waren ongetwijfeld franstalig; en<br />
+    – zijn testament werd in het Frans geschreven en ontegenzeggelijk zó door hem handgetekend (en de schrijver: Bartholomeus Frambach, priester, was tweetalig).<br />
+    Hij zou vrijwel zeker de peetvader geweest zijn van twee kinderen van het echtpaar Mathieu Jancis - Jeanne Marie Heusdens gedoopt te Jeuk: het is heel duidelijk zijn echtgenote «&nbsp;<i>margareta sors uxor Lamberti jansis</i>&nbsp;» die de peetmoeder was geweest bij de doop van hun eerste kind Lambert, in februari 1718; daarvan <u>stelde</u> ik dan dat de zogenaamde «&nbsp;<i>Matias Jancis</i>&nbsp;» die zijn testament medeondertekende degene was die hierboven werd genoemd.
+  </p>
+  <div style = "margin: 0 95% 1em 0; border: none; height: 1px; background: maroon;"></div>
+  <p style = "line-height: 1.20em; font-size: inherit;">
+    Domicile: Opheers.<br />
+    Durant sa vie connue, jusqu'à son testament puis à son décès, son patronyme s'était toujours écrit <b>Jancis</b>, et jamais Jansis (et ainsi aussi même pour ses enfants).<br />
+    Malgré que la commune d'Opheers se trouve maintenant en Région Flamande (bien qu'à environ 1,6 km seulement de la frontière linguistique la plus proche), la plupart des identités ont été écrites "en français" car:<br />
+    – les parrains et marraines de ses enfants étaient indubitablement francophones; et<br />
+    – son testament avait été rédigé en français et indéniablement signé ainsi par lui (et le rédacteur: Bartholomeus Frambach, prêtre, était bilingue).<br />
+    Il aurait, quasi certainement, été le parrain de deux enfants du couple Mathieu Jancis - Jeanne Marie Heusdens baptisés à Jeuk: c'est très clairement son épouse «&nbsp;<i>margareta sors uxor Lamberti jansis</i>&nbsp;» qui avait été la marraine au baptême de leur premier enfant Lambert, en février 1718; de cela, j'ai alors <u>posé</u> que le dénommé «&nbsp;<i>Matias Jancis</i>&nbsp;» qui a cosigné son testament était celui précité.
+  </p>
+</div>

@@ -24,5 +24,9 @@ js:
 	$(DUNE) build test/wikitext_js.bc.js
 	cp _build/default/test/wikitext_js.bc.js test/wikitext.js
 
+dump:
+	$(DUNE) build test/dumptree.exe
+	_build/default/test/dumptree.exe $(FILE)
+
 clean:
 	dune clean

@@ -1,8 +1,20 @@
+(library
+  (name test_show)
+  (modules test_show)
+  (libraries ppx_deriving.show wikitext)
+  (preprocess (staged_pps ppx_import ppx_deriving.show))
+)
+
 (executable
   (name test)
-  (libraries ppx_deriving.show oUnit wikitext)
+  (libraries test_show oUnit wikitext)
   (modules test)
-  (preprocess (staged_pps ppx_import ppx_deriving.show))
+)
+
+(executable
+  (name dumptree)
+  (libraries test_show wikitext)
+  (modules dumptree)
 )
 
 (executable

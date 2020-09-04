@@ -5,6 +5,7 @@
 
 %}
 
+%token<string> HTML_BLOCK
 %token<int> HEADER
 %token<Wktxt_type.order * int> LIST
 %token<Wktxt_type.def_type * int> DEFLIST
@@ -48,14 +49,19 @@ block:
   | l = pair(DEFLIST, inline(regular)+)+ EMPTYLINE* {
       [DefList (get_def_blocks l 1)]
     }
+  | s = HTML_BLOCK EMPTYLINE* {
+      [ NoWikiBlock s ]
+    }
   | HRULE EMPTYLINE* {
       [ Hrule ]
     }
   | i = inline(regular)+ EMPTYLINE* {
-      [ match (List.flatten i) with
-        | [ NoWiki s ] -> NoWikiBlock s
-        | x -> Paragraph x
-      ]
+     match List.flatten i with
+     | [ NoWiki s ] -> [ NoWikiBlock s ]
+     | x ->
+        if List.for_all (function String s -> String.trim s = "" | _ -> false) x
+        then []
+        else [ Paragraph x ]
     }
 ;
 
