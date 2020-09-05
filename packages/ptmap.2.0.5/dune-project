@@ -1,0 +1,4 @@
+(lang dune 2.0)
+(name ptmap)
+(version 2.0.5)
+(formatting (enabled_for dune))

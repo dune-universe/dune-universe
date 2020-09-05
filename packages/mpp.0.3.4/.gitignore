@@ -1,0 +1,6 @@
+_build/
+*.merlin
+*.install
+testing/*.mpp
+testing/*.expected
+testing/*.out

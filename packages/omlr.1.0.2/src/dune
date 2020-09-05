@@ -1,0 +1,13 @@
+
+(library
+  (name omlr)
+  (public_name omlr)
+  (modules MLR utls gnuplot)
+  (libraries batteries dolog))
+
+;; installed executables
+(executables
+  (names model)
+  (public_names omlr_model)
+  (modules model)
+  (libraries omlr batteries dolog minicli cpm))

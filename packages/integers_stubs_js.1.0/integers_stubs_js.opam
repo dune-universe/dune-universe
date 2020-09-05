@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name: "integers_stubs_js"
+version: "1.0"
+maintainer: "opensource@o1labs.org"
+authors: ["O(1) Labs, LLC <opensource@o1labs.org>"]
+homepage: "https://github.com/o1-labs/integers_stubs_js"
+bug-reports: "https://github.com/o1-labs/integers_stubs_js/issues"
+dev-repo: "git+https://github.com/o1-labs/integers_stubs_js.git"
+license: "MIT"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "js_of_ocaml" {>= "3.6.0"}
+  "zarith_stubs_js"
+  "dune"                {build & >= "1.6"}
+]
+synopsis: "Javascript stubs for the integers library in js_of_ocaml"
+description: "
+Javascript stubs for the integers library in js_of_ocaml.
+"
+
