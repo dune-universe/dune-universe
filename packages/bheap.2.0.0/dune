@@ -1,0 +1,9 @@
+(library
+ (public_name bheap)
+ (name binary_heap)
+ (modules binary_heap))
+
+(test
+ (name test)
+ (modules test)
+ (libraries stdlib-shims bheap))

@@ -1,0 +1,23 @@
+version: "2.0.0"
+opam-version: "2.0"
+maintainer: "Jean-Christophe.Filliatre@lri.fr"
+authors: "Jean-Christophe Filliâtre"
+synopsis: "Priority queues"
+description: """
+Traditional implementation using a binary heap encoded in a resizable array
+"""
+license: "LGPL-2.1"
+homepage: "https://github.com/backtracking/bheap"
+doc: "https://backtracking.github.io/bheap"
+bug-reports: "https://github.com/backtracking/bheap/issues"
+depends: [
+  "ocaml"
+  "stdlib-shims" {with-test}
+  "dune" {>= "2.0.0"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
+]
+dev-repo: "git+https://github.com/backtracking/bheap.git"

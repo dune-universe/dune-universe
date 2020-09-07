@@ -1,0 +1,12 @@
+language: c
+dist: xenial
+sudo: false
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - libmp3lame-dev
+    - ffmpeg
+
+script: ./bootstrap && ./configure && make && make test
