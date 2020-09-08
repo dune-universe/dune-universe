@@ -1,0 +1,18 @@
+(library
+ (public_name raylib.types)
+ (name raylib_generated_types)
+ (modules raylib_generated_types)
+ (preprocess
+  (pps ppx_cstubs.merlin))
+ (libraries ctypes ppx_cstubs))
+
+(rule
+ (targets raylib_generated_types.ml)
+ (deps
+  (:first-dep raylib_types.ml)
+  (alias %{project_root}/src/c/build-raylib))
+ (action
+  (chdir
+   %{project_root}
+   (run %{bin:ppx_cstubs} %{first-dep} -o %{targets} -I
+     %{project_root}/src/c/vendor/src))))

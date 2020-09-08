@@ -1,0 +1,10 @@
+(executable
+ (flags     (-w "+a-4-9-29-37-40-42-44-48-50-32"))
+ (public_name telltime)
+ (name telltime)
+ (libraries daypack-lib
+            cmdliner
+            ptime.clock.os
+            oseq
+            )
+ )

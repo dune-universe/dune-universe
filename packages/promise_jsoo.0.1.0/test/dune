@@ -1,0 +1,12 @@
+(executable
+ (name test_promise)
+ (libraries promise_jsoo js_of_ocaml js_of_ocaml-ppx webtest webtest-js)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (modes js))
+
+(rule
+ (alias runtest)
+ (deps test_promise.bc.js)
+ (action
+  (run node test_promise.bc.js)))
