@@ -1,0 +1,5 @@
+
+(executables
+  (names QCheck_ounit_test QCheck_test)
+  (libraries qcheck ounit2 qcheck-ounit)
+  )
