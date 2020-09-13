@@ -1,0 +1,33 @@
+0.1.5 (10-09-2020)
+======
+* Switch to dune
+* Depends on OCaml >= 4.03.0
+
+0.1.4 (03-08-2015)
+=====
+* Switched deprecated String.lowercase API
+  to String.lowercase_ascii
+
+0.1.3 (02-07-2011)
+=====
+* Register string_of_exception in Printexc
+  when available (i.e. ocaml version >= 3.12)
+* Exported a new [detect_format] function.
+* Added an optional argument to [tracks] that
+  allows to force the format detection.
+
+0.1.2 (12-10-2009)
+=====
+* Added support for --enable-debugging configure option
+* Fixed Makefile for BSD: call $(MAKE) for generating documentation.
+* Now using xmlm instead of xml-light.
+* Make sure that order of tracks is preserved when parsing the
+  playlists.
+
+0.1.1 (16-04-2008)
+=====
+* Install .cmx file
+
+0.1.0 (01-11-2007)
+=====
+* Initial release

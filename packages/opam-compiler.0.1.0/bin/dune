@@ -1,0 +1,4 @@
+(executable
+ (public_name opam-compiler)
+ (name main)
+ (libraries opam_compiler))

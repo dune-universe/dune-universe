@@ -1,0 +1,9 @@
+(tests
+ (names fa12)
+ (libraries typerep scaml.scamlib scaml.compiler)
+ (preprocess (staged_pps ppx_typerep_conv scaml.ppx)))
+
+(rule
+ (target fa12.tz)
+ (deps ./fa12.exe)
+ (action (run ./fa12.exe)))

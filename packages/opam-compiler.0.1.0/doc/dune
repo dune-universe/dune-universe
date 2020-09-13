@@ -1,0 +1,19 @@
+(rule
+ (with-stdout-to
+  opam-compiler.txt.gen
+  (run opam-compiler --help=plain)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff opam-compiler.txt opam-compiler.txt.gen)))
+
+(rule
+ (with-stdout-to
+  create.txt.gen
+  (run opam-compiler create --help=plain)))
+
+(rule
+ (alias runtest)
+ (action
+  (diff create.txt create.txt.gen)))

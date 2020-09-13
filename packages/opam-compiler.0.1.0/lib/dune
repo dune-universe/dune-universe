@@ -1,0 +1,3 @@
+(library
+ (name opam_compiler)
+ (libraries bos cmdliner github-unix re))

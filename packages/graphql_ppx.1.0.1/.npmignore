@@ -1,0 +1,11 @@
+/_build
+/_esy
+/.vscode
+/node_modules
+/ppx
+/.github
+/tests
+/esy.lock
+/402.esy.lock
+/binaries
+esy.json

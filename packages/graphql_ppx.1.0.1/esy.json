@@ -1,0 +1,30 @@
+{
+  "name": "graphql_ppx",
+  "description": "Used for native Reason/OCaml using latest version of OCaml",
+  "scripts": {
+    "format": "esy dune build @fmt --auto-promote",
+    "release-static": "dune build --root . --only-packages '#{self.name}' --ignore-promoted-rules --no-config --profile release-static",
+    "test": "dune exec tests_bucklescript/tests/RunTests.exe --"
+  },
+  "dependencies": {
+    "@opam/dune": "*",
+    "@opam/ocaml-migrate-parsetree": ">=1.6.0",
+    "@opam/ppx_tools_versioned": "5.2.3",
+    "@opam/reason": ">=3.6.0",
+    "@opam/yojson": "*"
+  },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "@opam/alcotest": "*",
+    "ocaml": "~4.9.0",
+    "refmterr": "*",
+    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam#a83bd09",
+    "@reason-native/rely": "*"
+  },
+
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    "buildDev": "refmterr dune build --promote-install-files --root .",
+    "buildsInSource": "_build"
+  }
+}

@@ -1,0 +1,23 @@
+version: "a92b377-dirty"
+version: "a92b377-dirty"
+opam-version: "2.0"
+version:"1.0"
+maintainer: "Ghiles Ziat <ghiles.ziat@isae-supaero.fr"
+authors: ["Ghiles Ziat <ghiles.ziat@isae-supaero.fr"]
+homepage: "https://github.com/ghilesZ/apronext"
+bug-reports: "https://github.com/ghilesZ/apronext/issues"
+dev-repo: "git+https://github.com/ghilesZ/apronext"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs]
+]
+depends: [
+  "dune" {build}
+  "ocaml" {>= "4.08"}
+  "apron"
+]
+synopsis: "Apron extension"
+description: "An extension for the OCaml interface of the Apron library"

@@ -1,0 +1,37 @@
+NAME
+       opam-compiler-create - Create a switch from a compiler source
+
+SYNOPSIS
+       opam-compiler create [OPTION]... SOURCE
+
+DESCRIPTION
+       There are several ways to specify where to find a compiler:
+
+       Github branch
+           user/repo:branch
+
+       Github branch (short form)
+           user:branch (repo defaults to "ocaml")
+
+       Github pull request
+           user/repo#number
+
+       Github pull request (short form)
+           #number (repo defaults to "ocaml/ocaml")
+ARGUMENTS
+       SOURCE (required)
+           Where to fetch the compiler.
+
+OPTIONS
+       --configure-command=COMMAND
+           Use this instead of "./configure".
+
+       --help[=FMT] (default=auto)
+           Show this help in format FMT. The value FMT must be one of `auto',
+           `pager', `groff' or `plain'. With `auto', the format is `pager` or
+           `plain' whenever the TERM env var is `dumb' or undefined.
+
+       --switch=SWITCH_NAME
+           Use this name for the switch. If omitted, a name is inferred from
+           the source.
+

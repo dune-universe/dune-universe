@@ -1,0 +1,10 @@
+language: c
+sudo: false
+addons:
+  apt:
+    sources:
+    - avsm
+    packages:
+    - opam
+
+script: bash -ex .travis-ci.sh

@@ -1,0 +1,8 @@
+(library
+ (name ezcmdliner_ppx)
+ (public_name ezcmdliner-ppx)
+ (modules ezcmdliner_ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib cmdliner fmt)
+ (preprocess (pps ppxlib.metaquot))
+)

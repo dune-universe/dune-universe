@@ -1,0 +1,5 @@
+(test
+ (name test)
+ (action
+  (run %{test} --compact))
+ (libraries alcotest opam_compiler))
