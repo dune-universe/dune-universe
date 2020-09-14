@@ -1,0 +1,6 @@
+(library
+  (public_name simple63)
+  (libraries unix)
+  (inline_tests)
+  (preprocess (pps ppx_inline_test))
+)

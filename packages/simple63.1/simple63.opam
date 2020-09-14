@@ -1,0 +1,34 @@
+version: "1"
+opam-version: "2.0"
+synopsis: "Integer compression and decompression module"
+description:
+  "Simple63 implements a module for compression and decompression of
+   non-negative integer sequences. It is similar to the Simple-8b
+   technique, adapted to work with OCaml's 63-bit integers."
+maintainer: ["mika@illouz.net"]
+authors: ["Mika Illouz"]
+license: "BSD"
+homepage: "https://github.com/barko/simple63"
+doc: "https://barko.github.io/simple63/"
+bug-reports: "https://github.com/barko/simple63/issues"
+depends: [
+  "dune" {> "2.6"}
+  "ocaml" {>= "4.08.0"}
+  "ppx_inline_test"
+]
+build: [
+  ["dune" "subst"] {pinned}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
+
+dev-repo: "git+https://github.com/barko/simple63.git"
