@@ -1,0 +1,11 @@
+(library
+ (name            prom)
+ (public_name     prom)
+ (modules         prom kll)
+ (libraries       fmt ptime containers))
+
+(library
+ (name            prom_cfg)
+ (public_name     prom.cfg)
+ (modules         prom_cfg))
+
