@@ -1,0 +1,15 @@
+;; generate lexer
+(ocamllex
+  (modules lexer))
+
+;; generate parser
+(menhir
+  (modules parser)
+  (flags (-v --external-tokens Tokens)))
+
+(library
+  (name        lua_parser)
+  (public_name lua_parser.lib)
+  (libraries sexplib sexp_pretty) ;; Add menhirLib for parsing
+  (preprocess (per_module
+               ((pps ppx_sexp_conv ppx_deriving.show) ast tokens))))

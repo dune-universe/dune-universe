@@ -1,0 +1,12 @@
+/* TEST ACTIONS */
+
+// Signatures
+
+%agent: A(x,y)
+%agent: B(x)
+%agent: C(x{u},y{p})
+
+// Rules
+
+'r0' A(x[_]),. -> .,B(x[.]) @ 1
+'r1' C(x{u}[#]),. -> .,A(x[.]) @ 1

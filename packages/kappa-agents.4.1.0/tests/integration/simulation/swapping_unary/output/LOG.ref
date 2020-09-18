@@ -1,0 +1,21 @@
+Parsing 584.ka...
+done
++ simulation parameters
++ Sanity checks
++ Compiling...
++ Building initial simulation conditions...
+	 -variable declarations
+	 -rules
+	 -interventions
+	 -observables
+	 -update_domain construction
+	 7 (sub)observables 8 navigation steps
+	 -initial conditions
++ Building initial state (4 agents)
+Done
++ Command line to rerun is: 'KaSim' '-mode' 'batch' '584.ka' '-l' '20' '-u' 'event' '-seed' '337511021' '-d' 'output'
+______________________________________________________________________
+######################################################################
+Simulation ended
+71.43% of event loops were productive. Null event cause:
+	Clashing instance: 100.00%

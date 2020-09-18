@@ -1,0 +1,9 @@
+#Command-line:
+"${KAPPABIN}"KaSim pseudo.ka -seed 924556145 -var n_a 1000 -u e -l 10000 -d output --time-independent -p 100 -syntax 4 || exit 0
+
+#This is the classical abc model.
+#3 stories are expected, but one is very unlikly.
+#1) the first site of C get activated
+#2) Both sites of C have been activated by the same A
+#   It may happen only in case of low population.
+#3) Both sites of C have been activated but by different A(s)

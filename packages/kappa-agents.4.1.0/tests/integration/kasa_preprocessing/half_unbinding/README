@@ -1,0 +1,2 @@
+#Command-line:
+"${KAPPABIN}"KaSa haft_unbinding.ka --debugging-mode --output-directory output -syntax 4 || exit 0

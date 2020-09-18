@@ -1,0 +1,5 @@
+#Command-line:
+"${KAPPABIN}"KaDE unary4.ka  -d output --max-size-for-species 10  -syntax 4 || exit 0
+
+#the rule should apply creating some C()s.
+#only binary application should be considered.

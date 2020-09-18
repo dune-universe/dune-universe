@@ -1,0 +1,1 @@
+"${KAPPABIN}KaSim" big_0.ka big_1.ka big_2.ka -t 100 -p 1000

@@ -1,0 +1,7 @@
+
+{1 Library opam_bin_lib}
+
+opam-binary is a simple framework to use `opam` with binary packages.
+
+
+The entry point of this library is the module: {!Opam_bin_lib}.

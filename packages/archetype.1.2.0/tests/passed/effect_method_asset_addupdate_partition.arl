@@ -1,0 +1,19 @@
+archetype effect_method_asset_addupdate_partition
+
+asset o_asset identified by oid {
+  oid : int;
+  v : int;
+}
+
+asset my_asset identified by id {
+  id     : string;
+  col    : partition<o_asset>;
+} initialized by {
+  {"id0"; []};
+  {"id1"; []};
+  {"id2"; []}
+}
+
+entry exec () {
+  my_asset["id0"].col.addupdate(0, {v = 2})
+}

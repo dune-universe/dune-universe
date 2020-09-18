@@ -1,0 +1,40 @@
+Parsing side-effects.ka...
+done
+Compiling...
+Generating the raw contact map...
+Generating the raw influence map...
+Refining the influence map...
+Reachability analysis...
+
+------------------------------------------------------------
+* There are some non applyable rules
+------------------------------------------------------------
+rule File "side-effects.ka", line 8, characters 0-32: will never be applied.
+rule File "side-effects.ka", line 10, characters 0-38: will never be applied.
+------------------------------------------------------------
+every agent may occur in the model
+
+------------------------------------------------------------
+* Non relational properties:
+------------------------------------------------------------
+A(x) => [ A(x[.]) v A(x[a.C]) ]
+A(y) => A(y[y.B])
+A(z) => [ A(z{u}) v A(z{p}) ]
+B(x) => [ B(x[.]) v B(x[a.C]) ]
+B(y) => B(y[y.A])
+C(a) => [ C(a[x.A]) v C(a[x.B]) ]
+C(b) => C(b{u})
+
+------------------------------------------------------------
+* Relational properties:
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties in connected agents
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of pairs of bonds
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of counters
+------------------------------------------------------------
+execution finished without any exception

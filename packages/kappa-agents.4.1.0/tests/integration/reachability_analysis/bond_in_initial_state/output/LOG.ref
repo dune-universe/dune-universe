@@ -1,0 +1,147 @@
+Parsing initial_state.ka...
+done
+Compiling...
+Generating the raw contact map...
+Generating the raw influence map...
+Refining the influence map...
+Reachability analysis...
+			(rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:)) should be investigated
+			(rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:)) should be investigated
+				(rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:)) should be investigated 
+
+				(rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:)) should be investigated 
+				(rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:)) should be investigated 
+				(rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:)) should be investigated 
+
+	Views in initial state:
+
+		A(x{u},x[x.B])
+
+	Views in initial state:
+
+		B(x[x.A],x{u})
+
+
+		A(x{u}[1]),B(x{u}[1])
+		B(x{u}[1]),A(x{u}[1])			(rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:)) should be investigated
+			(rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:)) should be investigated
+
+	Applying rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:):
+		the precondition is satisfied
+
+		rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:) is applied for the first time
+
+	Applying rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:):
+		the precondition is not satisfied yet
+
+	Applying rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:):
+		the precondition is not satisfied yet
+
+	Applying rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:):
+		the precondition is satisfied
+
+		rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:) is applied for the first time
+
+		Updating the views for A(x{},x[])
+	Dealing with side effects
+
+		B(x[.],x{u})
+
+			(rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:)) should be investigated
+			(rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:)) should be investigated
+			(rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:)) should be investigated
+			(rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:)) should be investigated
+
+	Applying rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:):
+		the precondition is satisfied
+
+	Applying rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:):
+		the precondition is satisfied
+
+		Updating the views for A(x{},x[])
+
+	Applying rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:):
+		the precondition is not satisfied yet
+
+	Applying rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:):
+		the precondition is satisfied
+
+		rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:) is applied for the first time
+
+		Updating the views for B(x[],x{})
+
+		Updating the views for B(x[],x{})
+
+		B(x[x.A],x{p})
+
+		Update information about potential sites across domain
+
+		B(x{p}[1]),A(x{u}[1])
+		A(x{u}[1]),B(x{p}[1])
+
+			(rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:)) should be investigated
+			(rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:)) should be investigated
+			(rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:)) should be investigated
+			(rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:)) should be investigated
+
+	Applying rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:):
+		the precondition is satisfied
+
+	Applying rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:):
+		the precondition is satisfied
+
+		Updating the views for A(x{},x[])
+	Dealing with side effects
+
+		B(x[.],x{p})
+
+			(rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:)) should be investigated
+			(rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:)) should be investigated
+
+	Applying rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:):
+		the precondition is satisfied
+
+		rule ., B(x{p}[.]) -> B(x{p}[.]), B(x{p}[.]) (File "initial_state.ka", line 5, characters 0-42:) is applied for the first time
+
+		Updating the views for B(x[],x{})
+
+	Applying rule B(x{u}[.]), B(x{u}[_]) -> B(x{u}[.]), B(x{p}[_]) (File "initial_state.ka", line 6, characters 0-50:):
+		the precondition is satisfied
+
+		Updating the views for B(x[],x{})
+
+		Updating the views for B(x[],x{})
+
+	Applying rule ., . -> A(x{u}[1]), B(x{u}[1]) (File "initial_state.ka", line 3, characters 0-32:):
+		the precondition is satisfied
+
+	Applying rule A(x[_]) -> . (File "initial_state.ka", line 4, characters 0-16:):
+		the precondition is satisfied
+
+		Updating the views for A(x{},x[])
+------------------------------------------------------------
+every rule may be applied
+------------------------------------------------------------
+every agent may occur in the model
+
+------------------------------------------------------------
+* Non relational properties:
+------------------------------------------------------------
+A(x) => A(x[x.B])
+A(x) => A(x{u})
+B(x) => [ B(x{u}) v B(x{p}) ]
+B(x) => [ B(x[.]) v B(x[x.A]) ]
+
+------------------------------------------------------------
+* Relational properties:
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties in connected agents
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of pairs of bonds
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of counters
+------------------------------------------------------------
+execution finished without any exception

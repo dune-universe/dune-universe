@@ -1,0 +1,15 @@
+#!/bin/sh
+
+HISTORYFILE=/tmp/ocamldebug-KaSim_history
+BUILDROOT=_build/install/default/
+
+EXEC=$1
+shift;
+
+ledit -x -h ${HISTORYFILE} ocamldebug $(ocamlfind query -r -i-format yojson) \
+       $(ocamlfind query -r -i-format logs) \
+      -I ${BUILDROOT}../../defauld/dev/.objs/byte/ \
+      -I ${BUILDROOT}../../default/grammar/.kappa_grammar.objs/byte/ \
+      -I ${BUILDROOT}../../default/cli/.kappa_cli.objs/byte/ \
+      -I ${BUILDROOT}main \
+      ${BUILDROOT}../../default/${EXEC}.bc $@

@@ -1,0 +1,19 @@
+archetype effect_method_asset_removeif_partition
+
+asset o_asset identified by oid {
+  oid : int;
+  val : int = 0;
+}
+
+asset my_asset identified by id {
+  id     : string;
+  col    : partition<o_asset>;
+} initialized by {
+  {"id0"; []};
+  {"id1"; []};
+  {"id2"; []}
+}
+
+entry exec () {
+  my_asset["id0"].col.removeif(the.val = 0)
+}

@@ -1,0 +1,8 @@
+*.cm[oia]
+*~
+bin/
+_build
+_obuild
+*.byte
+*.docdir
+.merlin

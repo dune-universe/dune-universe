@@ -1,0 +1,22 @@
+Parsing rafinements.ka...
+done
++ simulation parameters
++ Sanity checks
++ Compiling...
++ Building initial simulation conditions...
+	 -variable declarations
+	 -rules
+	 -interventions
+	 -observables
+	 -update_domain construction
+	 112 (sub)observables 233 navigation steps
+	 -initial conditions
++ Building initial state (30000 agents)
+Done
++ Command line to rerun is: 'KaSim' '-p' '0.008' '-d' 'output' 'rafinements.ka' '-o' 'data.tsv' '-mode' 'batch' '-sharing' 'max' '-syntax' '4'
+______________________________________________________________________
+######################################################################
+Simulation ended
+100.00% of event loops were productive. Null event cause:
+	Clashing instance: 83.33%
+	Perturbation interrupting time advance: 16.67%

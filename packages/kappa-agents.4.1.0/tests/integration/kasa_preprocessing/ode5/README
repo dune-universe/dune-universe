@@ -1,0 +1,2 @@
+#Command-line:
+"${KAPPABIN}"KaSa ode5.ka --debugging-mode --output-directory output -syntax 4 || exit 0

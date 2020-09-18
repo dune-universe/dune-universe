@@ -1,0 +1,47 @@
+Parsing abc-pert.ka...
+done
++ simulation parameters
++ Sanity checks
++ Compiling...
++ Building initial simulation conditions...
+	 -variable declarations
+	 -rules
+	 -interventions
+	 -observables
+	 -update_domain construction
+	 22 (sub)observables 37 navigation steps
+	 -initial conditions
++ Building initial state (2000 agents)
+Done
++ Command line to rerun is: 'KaSim' 'abc-pert.ka' '-seed' '924556145' '-u' 'e' '-l' '100000' '-p' '0' '-d' 'output' '--time-independent' '-mode' 'batch' '-syntax' '3'
+______________________________________________________________________
+######################################################################
++ Loading trace
+	- removing events occurring after the last observable: -81433 events 
++ Producing causal compressions
+	- splitting initial events: +1000 events 
+	- simplify the trace, 30577 events 
+		- start iteration 1, 30577 events remaining 
+				- alpha-conversion
+				- detecting siphons: +4031 events 
+				- alpha-conversion
+				- cutting concurrent events: -34409 events 
+				- detecting pseudo inverse events: nothing has changed 
+		- start iteration 2, 199 events remaining 
+				- alpha-conversion
+				- detecting siphons: +20 events 
+				- alpha-conversion
+				- cutting concurrent events: -20 events 
+				- detecting pseudo inverse events: nothing has changed 
+	- a fixpoint has been reached, 199 events remaining 
+	- blackboard generation 
+	- computing causal past of each observed events (10)
+
+
+	 - weak flow compression (5)
+
+______________________________________________________________________
+######################################################################
+
++ Pretty printing 1 weakly compressed flow
+Simulation ended

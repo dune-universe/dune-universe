@@ -1,0 +1,2 @@
+#Command-line:
+"${KAPPABIN}"KaSa product.ka --output-directory output --debugging-mode -syntax 4 || exit 0

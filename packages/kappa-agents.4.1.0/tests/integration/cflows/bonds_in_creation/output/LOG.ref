@@ -1,0 +1,74 @@
+Parsing bonds_in_creation.ka...
+done
++ simulation parameters
++ Sanity checks
++ Compiling...
++ Building initial simulation conditions...
+	 -variable declarations
+	 -rules
+	 -interventions
+	 -observables
+	 -update_domain construction
+	 28 (sub)observables 32 navigation steps
+	 -initial conditions
++ Building initial state (20 agents)
+Done
++ Command line to rerun is: 'KaSim' 'bonds_in_creation.ka' '-u' 'time' '-l' '40' '-p' '0.4' '-seed' '611463625' '-d' 'output' '--time-independent' '-syntax' '4'
+______________________________________________________________________
+######################################################################
++ Loading trace
+	- removing events occurring after the last observable: -7 events 
++ Producing causal compressions
+	- splitting initial events: +10 events 
+	 - blackboard generation
+	- alpha-conversion
+	 - computing causal past of each observed events (42)
+Stats:
+ number of step   : 758
+ longest story    : 538
+ average length   : 203.6
+ geometric mean   : 259.7
+
+	 - causal flow compression (42)
+
+______________________________________________________________________
+######################################################################
+
+	- simplify the trace, 757 events 
+		- start iteration 1, 757 events remaining 
+				- alpha-conversion
+				- detecting siphons: +60 events 
+				- alpha-conversion
+				- cutting concurrent events: -500 events 
+				- detecting pseudo inverse events: -70 events 
+		- start iteration 2, 247 events remaining 
+				- alpha-conversion
+				- detecting siphons: +16 events 
+				- alpha-conversion
+				- cutting concurrent events: -28 events 
+				- detecting pseudo inverse events: nothing has changed 
+		- start iteration 3, 235 events remaining 
+				- alpha-conversion
+				- detecting siphons: +11 events 
+				- alpha-conversion
+				- cutting concurrent events: -11 events 
+				- detecting pseudo inverse events: nothing has changed 
+	- a fixpoint has been reached, 235 events remaining 
+	- blackboard generation 
+	- computing causal past of each observed events (42)
+
+
+	 - weak flow compression (17)
+
+______________________________________________________________________
+######################################################################
+
+	 - strong flow compression (3)
+
+______________________________________________________________________
+######################################################################
+
++ Pretty printing 38 flows
++ Pretty printing 3 weakly compressed flows
++ Pretty printing 1 strongly compressed flow
+Simulation ended

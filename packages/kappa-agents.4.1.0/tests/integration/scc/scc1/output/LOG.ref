@@ -1,0 +1,42 @@
+Parsing scc1.ka...
+done
+Compiling...
+Generating the raw contact map...
+Reachability analysis...
+------------------------------------------------------------
+every rule may be applied
+------------------------------------------------------------
+every agent may occur in the model
+
+------------------------------------------------------------
+* Non relational properties:
+------------------------------------------------------------
+A(x) => [ A(x[.]) v A(x[y.A]) ]
+A(y) => [ A(y[.]) v A(y[x.A]) ]
+B(x) => [ B(x[.]) v B(x[y.B]) ]
+B(y) => [ B(y[.]) v B(y[x.B]) ]
+
+------------------------------------------------------------
+* Relational properties:
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties in connected agents
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of pairs of bonds
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of counters
+------------------------------------------------------------
+Potential polymerization:
+   (B,y)--(B,x); 
+
+   (B,x)--(B,y); 
+
+   (A,y)--(A,x); 
+
+   (A,x)--(A,y); 
+
+Generating the raw influence map...
+Refining the influence map...
+execution finished without any exception

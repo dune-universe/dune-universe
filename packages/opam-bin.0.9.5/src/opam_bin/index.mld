@@ -1,0 +1,5 @@
+
+{1 Program opam-bin}
+
+opam-binary is a simple framework to use `opam` with binary packages.
+

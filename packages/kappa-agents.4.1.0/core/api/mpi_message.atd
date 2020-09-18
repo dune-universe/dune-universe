@@ -1,0 +1,102 @@
+type id = int
+type 'data message = { id : id ; data : 'data }
+
+type ('ok,'error) api_result
+     <ocaml from="Api_types" t="result"> =
+     abstract
+type api_message
+     <ocaml from="Api_types" t="message"> =
+     abstract
+type 'ok result = ('ok,api_message list) api_result
+
+type environment_info <ocaml from="Api_types"> = abstract
+
+type project_parse <ocaml from="Api_types"> = abstract
+
+type project_parameter <ocaml from="Api_types"> = abstract
+
+type simulation_parameter <ocaml from="Api_types"> = abstract
+type simulation_intervention  <ocaml from="Api_types"> = abstract
+type simulation_info <ocaml from="Api_types"> = abstract
+type simulation_efficiency <ocaml module="Counter.Efficiency" t="t"> = abstract
+type file_line  <ocaml from="Api_types"> = abstract
+type file_line_detail <ocaml from="Api_types"> = abstract
+type file_line_catalog <ocaml from="Api_types"> = abstract
+
+type din_id <ocaml from="Api_types"> = abstract
+type din <ocaml from="Api_types"> = abstract
+type din_catalog <ocaml from="Api_types"> = abstract
+
+type log_message <ocaml from="Api_types"> = abstract
+
+type plot <ocaml from="Api_types"> = abstract
+type plot_parameter <ocaml from="Api_types"> = abstract
+
+type snapshot_id <ocaml from="Api_types"> = abstract
+type snapshot_detail <ocaml from="Api_types"> = abstract
+type snapshot_catalog <ocaml from="Api_types"> = abstract
+
+type simulation_artifact <ocaml from="Api_types"> = abstract
+
+type request = [
+	       | ProjectLoad of project_parse
+               | SimulationContinue of string
+               | SimulationDelete
+               | SimulationDetailFileLine of string
+               | SimulationDetailDIN of din_id
+               | SimulationDetailLogMessage
+               | SimulationDetailPlot of plot_parameter
+               | SimulationDetailSnapshot of snapshot_id
+               | SimulationInfo
+	       | SimulationEfficiency
+               | SimulationCatalogFileLine
+               | SimulationCatalogDIN
+               | SimulationCatalogSnapshot
+	       | SimulationTrace
+	       | SimulationOutputsZip
+	       | SimulationParameter
+               | SimulationPause
+               | SimulationIntervention of simulation_intervention
+               | SimulationStart of simulation_parameter
+               ]
+
+type rest_request = [
+     inherit request
+     | EnvironmentInfo
+     | ProjectCatalog
+     | ProjectCreate of project_parameter
+     | ProjectDelete of string
+     ]
+
+type response_content = [
+   | ProjectLoad
+   | SimulationDetailFileLine of string list
+   | SimulationDetailDIN of din
+   | SimulationDetailLogMessage of log_message
+   | SimulationDetailPlot of plot
+   | SimulationDetailSnapshot of snapshot_detail
+   | SimulationInfo of simulation_info
+   | SimulationEfficiency of simulation_efficiency
+   | SimulationCatalogFileLine of file_line_catalog
+   | SimulationCatalogDIN of din_catalog
+   | SimulationCatalogSnapshot of snapshot_catalog
+   | SimulationTrace of string
+   | SimulationOutputsZip of string
+   | SimulationParameter of simulation_parameter
+   | SimulationContinue
+   | SimulationDelete
+   | SimulationPause
+   | SimulationIntervention of string
+   | SimulationStart of simulation_artifact
+]
+
+type rest_response_content = [
+     inherit response_content
+     | EnvironmentInfo of environment_info
+     | ProjectCreate
+     | ProjectDelete
+     | ProjectCatalog of string list
+]
+
+type response = response_content result
+type rest_response = rest_response_content result

@@ -1,0 +1,7 @@
+(include_subdirs unqualified)
+
+(library
+  (public_name picasso)
+  (name picasso)
+  (libraries lablgtk2 apron apronext)
+)

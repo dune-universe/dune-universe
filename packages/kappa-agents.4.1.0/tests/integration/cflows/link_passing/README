@@ -1,0 +1,9 @@
+#Command-line:
+"${KAPPABIN}"KaSim link_passing.ka -seed 924556145 -u e -l 10000 -d output --time-independent -syntax 4 || exit 0
+
+#In this model K can connect to A on x. 
+#Then the link can be pass from A.x to A.y, and from A.y to A.z. 
+
+#There is only one causal flow. 
+
+#KaSim will fails if actions are not interpreted in the proper order in cflow/kappa_instantiation.ml 

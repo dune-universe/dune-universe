@@ -1,0 +1,686 @@
+Parsing missing_binding_state.ka...
+done
+Scan rules!
+Signature:
+Signature:agents:
+Signature:agents:agent_type:0:A
+Signature:agents:agent_type:1:B
+Signature:agents:agent_type:2:C
+Signature:sites:
+Signature:sites:0:
+Signature:sites:0:site_type:0->x(internal state)
+Signature:sites:0:site_type:1->x(binding state)
+Signature:sites:0:site_type:2->y(binding state)
+Signature:sites:1:
+Signature:sites:2:
+Signature:sites:2:site_type:0->x(binding state)
+Signature:states: 
+Signature:states:0:
+Signature:states:0:0:
+Signature:states:0:0:state_id:0->u
+Signature:states:0:0:state_id:1->p
+Signature:states:0:1:
+Signature:states:0:1:state_id:0->free
+Signature:states:0:1:state_id:1->agent_type:2@site_type:0
+Signature:states:0:2:
+Signature:states:0:2:state_id:0->free
+Signature:states:0:2:state_id:1->agent_type:2@site_type:0
+Signature:states:2:
+Signature:states:2:0:
+Signature:states:2:0:state_id:0->free
+Signature:states:2:0:state_id:1->agent_type:0@site_type:1
+Signature:states:2:0:state_id:2->agent_type:0@site_type:2
+Signature:duals: 
+Signature:duals:0:
+Signature:duals:0:1:
+Signature:duals:0:1:1:
+Signature:duals:0:1:1:agent_type:2,site_type:0,state_id:1
+Signature:duals:0:2:
+Signature:duals:0:2:1:
+Signature:duals:0:2:1:agent_type:2,site_type:0,state_id:2
+Signature:duals:2:
+Signature:duals:2:0:
+Signature:duals:2:0:1:
+Signature:duals:2:0:1:agent_type:0,site_type:1,state_id:1
+Signature:duals:2:0:2:
+Signature:duals:2:0:2:agent_type:0,site_type:2,state_id:1
+Compiling...
+Generating the raw contact map...
+Compilation:Compilation:agent definition:0:A:
+Compilation:agent definition:       File "missing_binding_state.ka", line 1, characters 8-9:
+Compilation:agent definition:       File "missing_binding_state.ka", line 5, characters 10-11:
+Compilation:agent definition:       File "missing_binding_state.ka", line 6, characters 10-11:
+Compilation:agent definition:       File "missing_binding_state.ka", line 7, characters 6-7:
+Compilation:agent definition:       File "missing_binding_state.ka", line 8, characters 0-1:
+Compilation:agent definition:       File "missing_binding_state.ka", line 8, characters 11-12:
+Compilation:agent definition:1:B:
+Compilation:agent definition:       File "missing_binding_state.ka", line 2, characters 8-9:
+Compilation:agent definition:       File "missing_binding_state.ka", line 5, characters 17-18:
+Compilation:agent definition:       File "missing_binding_state.ka", line 7, characters 13-14:
+Compilation:agent definition:2:C:
+Compilation:agent definition:       File "missing_binding_state.ka", line 3, characters 8-9:
+Compilation:agent definition:       File "missing_binding_state.ka", line 6, characters 23-24:
+Compilation:agent definition:       File "missing_binding_state.ka", line 6, characters 31-32:
+Compilation:rules:0:
+Compilation:rules:0:lhs:
+Compilation:rules:0:lhs:agent_id_0:
+Compilation:rules:0:lhs:agent_id_0:Ghost
+Compilation:rules:0:lhs:agent_id_1:
+Compilation:rules:0:lhs:agent_id_1:Ghost
+Compilation:rules:0:rhs:
+Compilation:rules:0:rhs:agent_id_0:
+Compilation:rules:0:rhs:agent_id_0:agent_type_0:site_type_1->state:[state_min:0;state_max:0]
+Compilation:rules:0:rhs:agent_id_0:agent_type_0:site_type_2->state:[state_min:0;state_max:0]
+Compilation:rules:0:rhs:agent_id_1:
+Compilation:rules:0:direct:
+Compilation:rules:0:direct:agent_id_0:
+Compilation:rules:0:direct:agent_id_0:agent_type_0:site_type_1->state:[state_min:0;state_max:0]
+Compilation:rules:0:direct:agent_id_0:agent_type_0:site_type_2->state:[state_min:0;state_max:0]
+Compilation:rules:0:direct:agent_id_1:
+Compilation:rules:0:reverse:
+Compilation:rules:0:actions:creation:(agent_id_0,agent_type_0)
+Compilation:rules:0:actions:creation:(agent_id_1,agent_type_1)
+Compilation:rules:1:
+Compilation:rules:1:lhs:
+Compilation:rules:1:lhs:agent_id_0:
+Compilation:rules:1:lhs:agent_id_0:agent_type_0:site_type_0->state:[state_min:0;state_max:0]
+Compilation:rules:1:rhs:
+Compilation:rules:1:rhs:agent_id_0:
+Compilation:rules:1:rhs:agent_id_0:agent_type_0:site_type_0->state:[state_min:1;state_max:1]
+Compilation:rules:1:direct:
+Compilation:rules:1:direct:agent_id_0:
+Compilation:rules:1:direct:agent_id_0:agent_type_0:site_type_0->state:[state_min:1;state_max:1]
+Compilation:rules:1:reverse:
+Compilation:rules:1:reverse:agent_id_0:
+Compilation:rules:1:reverse:agent_id_0:agent_type_0:site_type_0->state:[state_min:0;state_max:0]
+Compilation:initial_states:0:
+Compilation:initial_states:0:mixture:
+Compilation:initial_states:0:mixture:agent_id_0:
+Compilation:initial_states:0:mixture:agent_id_0:agent_type_0:site_type_1->state:[state_min:0;state_max:0]
+Compilation:initial_states:0:mixture:agent_id_0:agent_type_0:site_type_2->state:[state_min:0;state_max:0]
+Compilation:initial_states:0:mixture:agent_id_1:
+Compilation:initial_states:1:
+Compilation:initial_states:1:mixture:
+Compilation:initial_states:1:mixture:agent_id_0:
+Compilation:initial_states:1:mixture:agent_id_0:agent_type_0:site_type_1->state:[state_min:1;state_max:1]
+Compilation:initial_states:1:mixture:agent_id_0:agent_type_0:site_type_2->state:[state_min:1;state_max:1]
+Compilation:initial_states:1:mixture:agent_id_1:
+Compilation:initial_states:1:mixture:agent_id_1:agent_type_2:site_type_0->state:[state_min:1;state_max:1]
+Compilation:initial_states:1:mixture:agent_id_2:
+Compilation:initial_states:1:mixture:agent_id_2:agent_type_2:site_type_0->state:[state_min:2;state_max:2]
+Compilation:initial_states:1:mixture:bonds:agent_id_0:
+Compilation:initial_states:1:mixture:bonds:agent_id_0:site_type_1->agent_id_1.site_type_0
+Compilation:initial_states:1:mixture:bonds:agent_id_0:site_type_2->agent_id_2.site_type_0
+Compilation:initial_states:1:mixture:bonds:agent_id_1:
+Compilation:initial_states:1:mixture:bonds:agent_id_1:site_type_0->agent_id_0.site_type_1
+Compilation:initial_states:1:mixture:bonds:agent_id_2:
+Compilation:initial_states:1:mixture:bonds:agent_id_2:site_type_0->agent_id_0.site_type_2
+Generating the raw influence map...
+Quarks:Quarkify
+Quarks:Rule 0
+Quarks:TEST
+Quarks:CLEANING QUARKS FOR DEAD AGENTS
+Quarks:CREATION
+Quarks:rule_id:0,agent_type:1
+Quarks:rule_id:0,agent_type:0
+Quarks:REMOVAL
+Quarks:MODIFICATION+
+Quarks:rule_id:0,agent_type:0,site_type:1,state:0
+Quarks:rule_id:0,agent_type:0,site_type:2,state:0
+Quarks:MODIFICATION-
+Quarks:HALF BOND BREAKING
+Quarks:Rule 1
+Quarks:TEST
+Quarks:rule_id:1,agent_type:0
+Quarks:rule_id:1,agent_type:0,site_type:0,state:0
+Quarks:CLEANING QUARKS FOR DEAD AGENTS
+Quarks:CREATION
+Quarks:REMOVAL
+Quarks:MODIFICATION+
+Quarks:rule_id:1,agent_type:0,site_type:0,state:1
+Quarks:MODIFICATION-
+Quarks:rule_id:1,agent_type:0,site_type:0,state:0
+Quarks:HALF BOND BREAKING
+
+REMARKS: The notation [i] is a position of an agent in a rule/var. If a position is a negative number [-i], then it refers an agent that is connected to the agent at position (i-1) that is modified by side effects.
+Quarks:agent_test**:agent_type:0,rule:1->[0]
+Quarks:agent_modif+:agent_type:1,rule:0->[1]
+Quarks:agent_modif+:agent_type:0,rule:0->[0]
+Quarks:site_test**:agent_type:0,site_type:0,state:0,rule:1->[0]
+Quarks:site_modif+:agent_type:0,site_type:1,state:0,rule:0->[0]
+Quarks:site_modif+:agent_type:0,site_type:2,state:0,rule:0->[0]
+Quarks:site_modif+:agent_type:0,site_type:0,state:1,rule:1->[0]
+Quarks:site_modif-:agent_type:0,site_type:0,state:0,rule:1->[0]
+Refining the influence map...
+Influence_map: The notation [i -> j] means an agent at position [i] of the first rule/var has an influence to an agent at position [j] of the second rule/var.
+Influence_map:Wake_up_map:rule(0):'' .,.->A(x,y),B(x) -> rule(1):'' A(x{u})->A(x{p})[0->0]
+Reachability analysis...
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=3
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=2
+   Node(site_type:1<1)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(y[.])
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=3
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=2
+   Node(site_type:1<1)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(x[.])
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=3
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=2
+   Node(site_type:1<1)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(x{u})
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=5
+ Node(site_type:1<1)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(y[x.C])
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=5
+ Node(site_type:1<1)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(x[x.C])
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=5
+ Node(site_type:1<1)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		C(x[x.A])
+
+	Views in initial state:
+
+INTENSIONAL DESCRIPTION:
+Id=8
+ Node(site_type:1<2)
+  Id=0
+   Leaf False 
+
+  Id=7
+   Node(site_type:1<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		C(x[y.A])
+
+
+	Applying rule ., . -> A(x y), B(x) (File "missing_binding_state.ka", line 7, characters 0-20:):
+		the precondition is satisfied
+
+		rule ., . -> A(x y), B(x) (File "missing_binding_state.ka", line 7, characters 0-20:) is applied for the first time
+
+	Applying rule A(x{u}) -> A(x{p}) (File "missing_binding_state.ka", line 8, characters 0-21:):
+		the precondition is satisfied
+
+		rule A(x{u}) -> A(x{p}) (File "missing_binding_state.ka", line 8, characters 0-21:) is applied for the first time
+
+		Updating the views for A(x{})
+
+INTENSIONAL DESCRIPTION:
+Id=5
+ Node(site_type:1<1)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+		A(x{p})
+
+
+	Applying rule ., . -> A(x y), B(x) (File "missing_binding_state.ka", line 7, characters 0-20:):
+		the precondition is satisfied
+
+	Applying rule A(x{u}) -> A(x{p}) (File "missing_binding_state.ka", line 8, characters 0-21:):
+		the precondition is satisfied
+
+		Updating the views for A(x{})
+------------------------------------------------------------
+every rule may be applied
+------------------------------------------------------------
+every agent may occur in the model
+
+------------------------------------------------------------
+* Fixpoint iteration :
+------------------------------------------------------------
+agent_type:0:A:cv_id:0
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+agent_type:0:A:cv_id:1
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+agent_type:0:A:cv_id:2
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+agent_type:2:C:cv_id:0
+Id=9
+ Node(site_type:1<1)
+  Id=0
+   Leaf False 
+
+  Id=7
+   Node(site_type:1<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+
+------------------------------------------------------------
+* Non relational properties:
+------------------------------------------------------------
+INTENSIONAL DESCRIPTION:
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=11
+ Node(site_type:0<0)
+  Id=0
+   Leaf False 
+
+  Id=10
+   Node(site_type:0<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=13
+ Node(site_type:2<0)
+  Id=0
+   Leaf False 
+
+  Id=12
+   Node(site_type:2<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=15
+ Node(site_type:0<1)
+  Id=0
+   Leaf False 
+
+  Id=14
+   Node(site_type:0<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+A(x) => [ A(x[.]) v A(x[x.C]) ]
+A(x) => [ A(x{u}) v A(x{p}) ]
+A(y) => [ A(y[.]) v A(y[x.C]) ]
+C(x) => [ C(x[x.A]) v C(x[y.A]) ]
+
+------------------------------------------------------------
+* Relational properties:
+------------------------------------------------------------
+INTENSIONAL DESCRIPTION:
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=11
+ Node(site_type:0<0)
+  Id=0
+   Leaf False 
+
+  Id=10
+   Node(site_type:0<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=13
+ Node(site_type:2<0)
+  Id=0
+   Leaf False 
+
+  Id=12
+   Node(site_type:2<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=15
+ Node(site_type:0<1)
+  Id=0
+   Leaf False 
+
+  Id=14
+   Node(site_type:0<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+------------------------------------------------------------
+* Properties in connected agents
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of pairs of bonds
+------------------------------------------------------------
+------------------------------------------------------------
+* Properties of counters
+------------------------------------------------------------
+INTENSIONAL DESCRIPTION:
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=11
+ Node(site_type:0<0)
+  Id=0
+   Leaf False 
+
+  Id=10
+   Node(site_type:0<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=13
+ Node(site_type:2<0)
+  Id=0
+   Leaf False 
+
+  Id=12
+   Node(site_type:2<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=15
+ Node(site_type:0<1)
+  Id=0
+   Leaf False 
+
+  Id=14
+   Node(site_type:0<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=6
+ Node(site_type:1<0)
+  Id=0
+   Leaf False 
+
+  Id=4
+   Node(site_type:1<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=11
+ Node(site_type:0<0)
+  Id=0
+   Leaf False 
+
+  Id=10
+   Node(site_type:0<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=13
+ Node(site_type:2<0)
+  Id=0
+   Leaf False 
+
+  Id=12
+   Node(site_type:2<2)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+INTENSIONAL DESCRIPTION:
+Id=15
+ Node(site_type:0<1)
+  Id=0
+   Leaf False 
+
+  Id=14
+   Node(site_type:0<3)
+    Id=1
+     Leaf True 
+
+    Id=0
+     Leaf False 
+
+EXTENSIONAL DESCRIPTION:
+------------------------------------------------------------
+* Export Views domain - non relational properties to JSon (internal constraints_list):
+------------------------------------------------------------
+A(x)=> [
+		  A(x{u})
+		v A(x{p})]
+A(x)=> [
+		  A(x[.])
+		v A(x[x.C])]
+A(y)=> [
+		  A(y[.])
+		v A(y[x.C])]
+C(x)=> [
+		  C(x[x.A])
+		v C(x[y.A])]
+
+------------------------------------------------------------
+* Export Views domain - relational properties to JSon (internal constraints_list):
+------------------------------------------------------------
+
+------------------------------------------------------------
+* Export Connected agents to JSon (internal constraints_list):
+------------------------------------------------------------
+
+------------------------------------------------------------
+* Export Parallel bonds to JSon (internal constraints_list):
+------------------------------------------------------------
+
+------------------------------------------------------------
+* Export Counters to JSon (internal constraints_list):
+------------------------------------------------------------
+
+execution finished without any exception

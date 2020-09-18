@@ -1,0 +1,47 @@
+Parsing ../scc4/scc4.ka...
+done
+Compiling...
+Generating the raw contact map...
+Reachability analysis...
+------------------------------------------------------------
+every rule may be applied
+------------------------------------------------------------
+every agent may occur in the model
+
+------------------------------------------------------------
+* Non relational properties:
+------------------------------------------------------------
+R(x) => [ R(x[.]) v R(x[x.R]) ]
+R(y) => [ R(y[.]) v R(y[z.R]) ]
+R(z) => [ R(z[.]) v R(z[y.R]) ]
+
+------------------------------------------------------------
+* Relational properties:
+------------------------------------------------------------
+R(z[y.R]) => R(x[x.R],z[y.R])
+R(y[z.R]) => R(x[x.R],y[z.R])
+------------------------------------------------------------
+* Properties in connected agents
+------------------------------------------------------------
+R(x[1]),R(x[1]) => 
+	[
+		  R(x[1],y[z.R]),R(x[1],z[y.R])
+		v R(x[1],y[.]),R(x[1],z[.])
+	]
+------------------------------------------------------------
+* Properties of pairs of bonds
+------------------------------------------------------------
+R(x[x.R],y[z.R]) => R(x[1],y[2]),R(x[1],z[2])
+R(x[x.R],z[y.R]) => R(x[1],z[2]),R(x[1],y[2])
+R(y[z.R],z[y.R]) => [ R(y[1],z[2]),R(y[2],z[1]) v R(y[1],z[1]) ]
+------------------------------------------------------------
+* Properties of counters
+------------------------------------------------------------
+Potential polymerization:
+   (R,x)--(R,x); 
+   (R,z)--(R,y); 
+   (R,y)--(R,z); 
+
+Generating the raw influence map...
+Refining the influence map...
+execution finished without any exception

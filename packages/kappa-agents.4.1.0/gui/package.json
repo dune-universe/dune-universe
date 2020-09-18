@@ -1,0 +1,15 @@
+{
+  "name": "kappapp",
+  "version": "4.0.90",
+  "description": "Tool suite for kappa models. Documentation and binaries can be found in the release section. Try it online at http://kappalanguage.org/",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Kappa-Dev/KaSim",
+  "author": "GitHub",
+  "license": "LGPL-3.0",
+  "devDependencies": {
+    "electron": "^4.0.7"
+  }
+}

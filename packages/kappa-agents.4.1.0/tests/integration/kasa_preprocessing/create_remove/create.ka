@@ -1,0 +1,12 @@
+/* TEST ACTIONS */
+
+// Signatures
+
+%agent: A()
+%agent: B()
+%agent: C()
+
+// Rules
+
+'r0' .,A() -> B(),. @ 1
+'r1' .,B() -> C(),. @ 1

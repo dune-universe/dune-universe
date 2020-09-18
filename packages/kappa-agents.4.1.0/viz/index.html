@@ -1,0 +1,177 @@
+<!doctype html>
+
+<html>
+  <!--
+*****************************************************************************
+*  _  __ * The Kappa Language                                               *
+* | |/ / * Copyright 2010-2020 CNRS - Harvard Medical School - INRIA - IRIF *
+* | ' /  ********************************************************************
+* | . \  * This file is distributed under the terms of the                  *
+* |_|\_\ * GNU Lesser General Public License Version 3                      *
+*        *                                                                  *
+*****************************************************************************
+
+-->
+  <head>
+    <title>Kappa visualizer</title>
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+  </head>
+  <body class="flex-content">
+    <div class="container">
+      <ul class="nav nav-tabs" role="tablist">
+	<li class="nav-item">
+	  <a class="nav-link" id="plot-tab" role="tab" data-toggle="tab" onclick="activate(this.id)" href="#plot">Plot</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link active" id="snap-tab" role="tab" data-toggle="tab" onclick="activate(this.id)" href="#snap">Snapshot</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" id="contact-tab" role="tab" data-toggle="tab" onclick="activate(this.id)" href="#contact">Contact map</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" id="story-tab" role="tab" data-toggle="tab" onclick="activate(this.id)" href="#story">Story</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" id="dummy-tab" role="tab" data-toggle="tab" onclick="activate(this.id)" href="#dummy">Dummy</a>
+	</li>
+      </ul>
+    </div>
+    <div class="container-fluid flex-content tab-content" id="main">
+      <div class="tab-pane" id="plot" role="tabpanel"></div>
+      <div class="tab-pane show active" id="snap" role="tabpanel"></div>
+      <div class="tab-pane" id="contact" role="tabpanel"></div>
+      <div class="tab-pane" id="story" role="tabpanel"></div>
+      <div class="tab-pane" id="dummy" role="tabpanel"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.min.js"></script>
+
+    <script src="class.js"></script>
+    <script src="utils.js"></script>
+    <script src="tooltip-snapshot.js"></script>
+    <script src="render-snapshot.js"></script>
+    <script src="tooltip-contactmap.js"></script>
+    <script src="render-contactmap.js"></script>
+    <script src="common.js"></script>
+    <script src="plot.js"></script>
+    <script src="render-story.js"></script>
+    <script src="render-dummy.js"></script>
+    <link rel="stylesheet" href="JsSim.css"></link>
+    <script>
+      var modes = {
+	  SNAPSHOT:0,
+	  PLOT:1,
+	  CONTACTMAP:2,
+      STORY:3,
+      DUMMY:4
+      };
+      var mode = modes.SNAPSHOT;
+
+      function activate(dstId) {
+	  switch (dstId) {
+	  case "snap-tab":
+	      mode = modes.SNAPSHOT;
+	      break;
+	  case "plot-tab":
+	      mode = modes.PLOT;
+	      break;
+	  case "contact-tab":
+	      mode = modes.CONTACTMAP;
+	      break;
+	  case "story-tab":
+	      mode = modes.STORY;
+	      break;
+	  case "dummy-tab":
+	      mode = modes.DUMMY;
+	      break;
+	  default:
+	      alert("Unknown mode "+dstId+" in activate handler");
+	      break;
+	  }
+	  $("#"+dstId+" a").tab('show');
+      }
+
+      var snap = new Snapshot("snap",{});
+      var plot = new ObservablePlot("plot");
+      var cmap = new ContactMap("contact");
+      var storend = new StoryRendering("story");
+      var simplePrinter = new DummyRenderer("dummy");
+
+      var dataReader = new FileReader();
+      dataReader.addEventListener("load",function (event) {
+      try {
+	  switch (mode) {
+	      case modes.SNAPSHOT:
+              snap.setData("null",dataReader.result);
+              break;
+	      case modes.PLOT:
+	      plot.setData(dataReader.result);
+	      break;
+	      case modes.CONTACTMAP:
+	      cmap.setData(dataReader.result);
+	      break;
+	      case modes.STORY:
+	      storend.setData(dataReader.result);
+	      break;
+	      case modes.DUMMY:
+	      simplePrinter.setData(dataReader.result);
+	      break;
+	      default:
+	      alert("Unknown mode "+mode+" in drop handler");
+	      break;
+	  };
+      } catch (e) { alert (e); }
+      }, false);
+      dataReader.addEventListener("error",function (event) {
+	  alert(dataReader.error);
+      }, false);
+
+      var redraw = function () {
+	  switch (mode) {
+	  case modes.SNAPSHOT:
+	      snap.redraw();
+	      break;
+	  case modes.PLOT:
+	      plot.redraw();
+	      break;
+	  case modes.CONTACTMAP:
+	      cmap.redraw();
+	      break;
+	  case modes.STORY:
+	      storend.redraw();
+	      break;
+	  case modes.DUMMY:
+	      simplePrinter.redraw();
+	      break;
+	  default:
+	      alert("Unknown mode "+mode+" in redraw handler");
+	      break;
+	  }
+      }
+
+      // prevent default to allow drop
+      document.addEventListener("dragover", function( event ) {
+          event.preventDefault();
+      }, false);
+
+      document.addEventListener("drop", function (event) {
+          event.preventDefault();
+          data = event.dataTransfer.files[0];
+          if (data) dataReader.readAsText(data);
+      }, false);
+
+      window.addEventListener("resize", function (event) {
+          redraw();
+      }, false);
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) { redraw(); });
+
+    </script>
+  </body>
+</html>

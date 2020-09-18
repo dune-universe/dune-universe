@@ -1,0 +1,16 @@
+%def: "seed" "923639563"
+%def: "dumpIfDeadlocked" "true"
+%def: "maxConsecutiveClash" "3"
+%def: "progressBarSize" "70"
+%def: "progressBarSymbol" "#"
+%def: "plotPeriod" "1" "events"
+%def: "outputFileName" "data.csv"
+
+%agent: A(x)
+
+%plot: [T]
+'rule' A(x[.]), A(x[.])- @ 1
+
+%init: 100 A(x[.])
+
+%mod: [E] = 99 do $STOP;

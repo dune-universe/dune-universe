@@ -1,0 +1,6 @@
+#Command-line:
+"${KAPPABIN}"KaSim binding_type.ka -seed 924556145 -l 10000 -u event -d output --time-independent -syntax 4 || exit 0
+
+#In this model, intermediary steps test binding types. 
+
+#KaSim will fails if binding types are translated in a wrong way. 

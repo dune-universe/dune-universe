@@ -1,0 +1,11 @@
+(executable
+ (name main)
+ (public_name opam-bin)
+ (package opam-bin)
+ (libraries opam_bin_lib re opam-file-format ocplib-json-typed ezjsonm ez_config ez_cmdliner)
+ 
+)
+
+(documentation
+  (package opam-bin))
+
