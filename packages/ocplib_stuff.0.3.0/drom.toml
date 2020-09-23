@@ -1,0 +1,59 @@
+[project]
+drom-version = "0.1.0"
+
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+license = "LGPL2"
+min-edition = "4.07.0"
+mode = "binary"
+name = "ocplib_stuff"
+synopsis = "Basic stuff used by some OCP libraries and tools"
+version = "0.3.0"
+windows-ci = true
+
+# keys that you could also define:
+# sphinx-target = "...sphinx-target..."
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+This library contains some basic stuff that is used in some OCP libraries 
+and applications. Most of them are probably available in other extensions
+of the standard libraries (extlib, core, etc.), but we are used to these
+ones.
+"""
+
+[drom]
+skip = "src/ocplib_stuff/dune src/ocplib_stuff/main.ml CHANGES.md"
+
+[dependencies]
+
+[tools]
+dune = "2.6.0"
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+pack-modules = false
+skip-dirs = []
+
+
+[[package]]
+dir = "src/ocplib_stuff"
+kind = "library"
+name = "ocplib_stuff"
+

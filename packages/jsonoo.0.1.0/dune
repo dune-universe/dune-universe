@@ -1,0 +1,7 @@
+(library
+ (public_name jsonoo)
+ (name jsonoo)
+ (libraries js_of_ocaml js_of_ocaml-ppx gen_js_api)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (modes byte))

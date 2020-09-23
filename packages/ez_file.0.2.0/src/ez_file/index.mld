@@ -1,0 +1,8 @@
+
+{1 Library ez_file}
+
+This library provides some modules to read and write files, and create 
+and scan directories.
+
+
+This library exposes the following toplevel modules: {!modules:EzFile FileAbstract FileChannel FileDirMaker FileOS FileSelector FileSig FileString}

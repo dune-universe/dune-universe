@@ -1,0 +1,10 @@
+(executable
+ (name test_jsonoo)
+ (libraries jsonoo js_of_ocaml webtest webtest-js)
+ (modes js))
+
+(rule
+ (alias runtest)
+ (deps test_jsonoo.bc.js)
+ (action
+  (run node test_jsonoo.bc.js)))

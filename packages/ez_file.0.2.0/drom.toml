@@ -1,0 +1,64 @@
+[project]
+drom-version = "0.1.0"
+
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+license = "LGPL2"
+min-edition = "4.07.0"
+mode = "binary"
+name = "ez_file"
+synopsis = "Easy file manipulation (read_file, write_file, etc.)"
+version = "0.2.0"
+windows-ci = false
+
+# keys that you could also define:
+# sphinx-target = "...sphinx-target..."
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+This library provides some modules to read and write files, and create 
+and scan directories.
+"""
+
+[drom]
+skip = "src/ez_file/main.ml CHANGES.md test/expect-tests/test.ml"
+
+[dependencies]
+ocplib_stuff = "0.1.0"
+re = "1.8.0"
+[dependencies.base-unix]
+libname = "unix"
+version = ">=base"
+
+[tools]
+dune = "2.6.0"
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+pack = "EzFile"
+pack-modules = false
+skip-dirs = []
+
+
+[[package]]
+dir = "src/ez_file"
+kind = "library"
+name = "ez_file"
+pack = "EzFile"
+
