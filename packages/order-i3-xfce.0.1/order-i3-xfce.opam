@@ -1,0 +1,29 @@
+opam-version: "2.0"
+version: "0.1"
+synopsis: "order-i3-xfce is a small utility that allow you to keep a synchronized order between i3 tabs and the xfce pannel window buttons plugin."
+description: ""
+maintainer: "Emile Trotignon emile.trotignon@gmail.com"
+authors: "Emile Trotignon emile.trotignon@gmail.com"
+license: "MIT"
+homepage: "https://github.com/EmileTrotignon/order-i3-xfce"
+bug-reports: "https://github.com/EmileTrotignon/order-i3-xfce/issues"
+dev-repo: "git+https://github.com/EmileTrotignon/order-i3-xfce.git"
+depends: [ 
+    "ocaml" {>= "4.07.0"}
+    "dune" {>= "2.5.0"} 
+    "lwt"
+    "lwt_ppx"
+    "i3ipc"
+    ]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+url {
+  src:
+    "https://github.com/EmileTrotignon/order-i3-xfce/archive/0.1.tar.gz"
+  checksum: [
+    "md5=db3de0bbbce508e21fcbf37cfdc157ee"
+    "sha512=89b6dee06fd9a628f6fa50cd805e507b4fd497010bb486bc070078f20c1aceddbdda36a3d492ea6c3efd65c1f4e542e7f3ca6e1e44d8524b54dfb1b61884d82b"
+  ]
+}

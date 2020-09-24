@@ -1,0 +1,8 @@
+(library
+ (name bitstring)
+ (public_name bitstring)
+ (foreign_stubs
+  (language c)
+  (names bitstring_fastpath)
+  (flags -I.))
+ (libraries str unix stdlib-shims))
