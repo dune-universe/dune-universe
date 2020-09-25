@@ -1,7 +1,0 @@
-sig nested_quantified : (a) -> ()
-fun nested_quantified (x) {
-  sig f : forall a, e::Eff. (a) -e-> ()
-  fun f (x) { }
-
-  {;}
-}

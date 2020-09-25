@@ -1,0 +1,3 @@
+database_args=localhost:5432::links
+database_driver=postgresql
+relational_lenses=on
