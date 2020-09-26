@@ -1,0 +1,7 @@
+(alias
+  (name runtest)
+  (deps ../src/bin/smtlib_cat.exe (:files (source_tree ./regressions)))
+  (action (run ./check_regs.exe %{files})))
+
+(executable
+  (name check_regs))

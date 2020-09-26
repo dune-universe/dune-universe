@@ -1,0 +1,2 @@
+(library (name async_js_test_lib)
+ (libraries async_kernel async_rpc_kernel uri) (preprocess (pps ppx_jane)))

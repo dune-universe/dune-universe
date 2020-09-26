@@ -1,0 +1,4 @@
+(library (name embed_file_lib_test)
+ (libraries embed_file_lib expect_test_helpers_async
+  expect_test_helpers_core)
+ (preprocess (pps ppx_jane -annotated-ignores)))

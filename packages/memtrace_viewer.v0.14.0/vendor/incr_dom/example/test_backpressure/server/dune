@@ -1,0 +1,2 @@
+(executables (names main) (preprocess (pps ppx_jane -annotated-ignores))
+ (libraries backpressure_test_shared cohttp_static_handler simple_web_server))

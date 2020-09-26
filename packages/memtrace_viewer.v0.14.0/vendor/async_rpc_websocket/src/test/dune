@@ -1,0 +1,4 @@
+(library (name websocket_rpc_test)
+ (libraries accessor_base async cohttp_async_websocket core
+  expect_test_helpers_async expect_test_helpers_core rpc_websocket)
+ (preprocess (pps ppx_jane)))

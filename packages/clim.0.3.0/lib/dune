@@ -1,0 +1,6 @@
+(library
+ (name clim)
+ (public_name clim)
+ (modules clim)
+ (libraries cmdliner)
+)

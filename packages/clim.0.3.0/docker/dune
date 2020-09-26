@@ -1,0 +1,4 @@
+(rule
+ (deps Dockerfile)
+ (alias docker)
+ (action (run docker build ../. -f Dockerfile -t clim)))

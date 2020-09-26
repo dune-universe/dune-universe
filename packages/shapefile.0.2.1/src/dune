@@ -1,0 +1,10 @@
+(library
+ (name shapefile)
+ (public_name shapefile)
+ (libraries bitstring)
+ (preprocess (pps ppx_bitstring)))
+
+(menhir
+ (modules prj_parser))
+
+(ocamllex prj_lexer)

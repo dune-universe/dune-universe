@@ -1,0 +1,9 @@
+(library (name rpc_server)
+ (libraries async_js_test_lib cohttp_static_handler rpc_websocket_jane
+  web_testing)
+ (preprocess (pps ppx_jane)))
+
+(rule (targets embedded_files.ml embedded_files.mli)
+ (deps %{workspace_root}/app/embed-file/bin/embed_file.exe
+  ../client/main.bc.js)
+ (action (bash "%{deps} -output embedded_files")))

@@ -1,0 +1,3 @@
+(library (name rpc_websocket) (public_name async_rpc_websocket)
+ (preprocess (pps ppx_jane -annotated-ignores -check-doc-comments))
+ (libraries async_rpc_kernel cohttp-async cohttp_async_websocket))

@@ -1,0 +1,186 @@
+{0 Clim}
+
+{!Clim} stands for Command Line Interface Maker and helps making clean
+and nice command line interfaces for your binaries.
+
+There are various ways of building CLI in OCaml. The most obvious one
+is using the {{:https://caml.inria.fr/pub/docs/manual-ocaml/libref/Arg.html}Arg}
+module from the standard library. While this modules
+does the job, the result is quite basic and not as nice as one would
+expect from modern binaries.
+
+There are other libraries that help but the most effective in this job
+is probably {{:https://erratique.ch/software/cmdliner/doc/Cmdliner}Cmdliner}
+which provides a rich and nice API for builing
+CLIs. However, {{:https://erratique.ch/software/cmdliner/doc/Cmdliner}Cmdliner}'s
+API isn't very user friendly for it needs
+to define several intermediate values which introduce noise
+in the binary source code. Furthermore, the library doesn't suit well
+for CLI composition which happens quite often in my own programming
+experience.
+
+The {!Clim} library provides some layout above
+{{:https://erratique.ch/software/cmdliner/doc/Cmdliner}Cmdliner} to
+simplify the latter usage. With it, there are mainly two ways of defining CLI:
+an incremental one and a object-oriented one.
+
+{1 Incremental CLI}
+
+The incremental way allows the user to define its CLI along its code with
+few functions inherited from {{:https://erratique.ch/software/cmdliner/doc/Cmdliner}Cmdliner}.
+It uses three concepts : the {e configuration}, the {e argument} and the {e command}.
+
+{2 Configuration}
+
+A CLI is basically stored in a configuration which may be constructed very simply by:
+{[
+open Clim
+
+let cfg = create ()
+]}
+With {!Clim} binaries are constructed from such a configuration.
+
+{2 Arguments}
+
+Now arguments are specified by using functions deriving directly from
+{{:https://erratique.ch/software/cmdliner/doc/Cmdliner}Cmdliner} but in a more
+concise way to avoid intermediate object construction.
+
+For example, the following code:
+{[
+  let foo = register cfg @@ value @@ opt
+    ~doc:"Foo parameter"
+    string
+    "foo"
+    ["f"; "foo"]
+]}
+will add a optional string parameter [foo] with a default value
+["foo"] which will be customizable through the CLI with options
+[-f] or [--foo]. The main difference with [Cmdliner] is the
+[register] function which adds the parameter to [cfg] and returns
+a function whose type is [unit -> 'a] where ['a] depends on
+the given type specification. Here, [foo] is a [unit -> string]
+function and is a getter to the foo parameter value.
+
+Any function using [foo] underlying value can use it by calling it:
+{[
+  let main () = Format.printf "foo = %s@." (foo ())
+]}
+
+{2 Commands}
+
+When all arguments are defined, the final CLI can be defined
+using the {!command} function:
+{[
+   let foo_cmd = command ~cfg ~doc:"Foo printing." main
+]}
+which accepts several optional arguments customizing the resulting
+[man] page.
+
+To execute this command, you must use the run
+function:
+{[
+  let () = run foo_cmd
+]}
+and that's all. The resulting binary will respond to [--help] or
+other CLI options automatically and give a nice looking [man] page.
+
+{2 Inheritance}
+
+With the configuration system, it's possible (and encouraged) to
+share configuration between binaries in order to simplify the code
+but also give related binaries a sound CLI.
+
+When releasing a binary package, just expose its configuration and command
+so that related binaries designed to extend the previous one can inherit
+them with:
+{[
+   (* extending the previous configuration *)
+      let ext_cfg = from cfg
+]}
+
+That way, we can add the [bar] option:
+{[
+      let bar = register ext_cfg @@ value @@ opt
+          ~doc:"Bar parameter"
+          int
+          0
+          ["b"; "bar"]
+]}
+and even change the CLI behavior:
+    {[
+      let bar_cmd = {
+        foo_cmd with
+        cmd = (fun () ->
+            foo_cmd.cmd ();
+            let b = bar () in
+            Format.printf "square(bar) = %i@." (b * b));
+        doc = foo_cmd ^ " Prints also the square of bar parameter.";
+      }
+      let () = run bar_cmd
+    ]}
+As you can see, running the binary will print the [foo] value
+but also the square of [bar].
+
+{2 Lwt}
+
+[Clim] is fully compatible with Lwt. Simply give a Lwt thread
+to {!command} to produce a ['a Lwt.t command] value. Running this
+command will produce a ['a Lwt.t] value that should be passed
+to [Lwt_main.run].
+
+{1 Object-oriented CLI}
+
+While the incremental CLI definition works well for new binaries, it suits not well
+for existing ones as the migration from any old system to this one will
+likely need a complete rewriting of the CLI definition. For example,
+a binary wrote with {{:https://caml.inria.fr/pub/docs/manual-ocaml/libref/Arg.html}Arg}
+isn't easily converted to the incremental CLI definition as the former is a
+centralized definition design which likely appears in the final binary source file.
+Furthermore, it uses some kind of continuation style while the incremental definition
+simply gives accessors.
+
+The object-oriented CLI definition is somehow a merge between the incremental CLI
+definition, the centralized design with continuations and a Python [argparse] like
+usage. The resulting
+API benefits from the three systems and is very recomended for your CLI definitions.
+
+{2 Definition}
+
+To define an object-oriented CLI : simply inherit from {!Clim.cli} and define
+the entrypoint method (equivalent to the command definition) and add
+arguments in the initalizer using the {!Clim.cli.arg} or {!Clim.cli.set} methods.
+{[
+class foo = object(self)
+  inherit [_] cli
+  val mutable who = "world"
+  method entrypoint () = Format.printf "Hello %s!@." who
+  initializer
+    self#add (value @@ opt string who ~doc:"Someone" ["w"; "who"]) (fun w -> who <- w)
+end
+]}
+The command is fully customizable by defining or overloading the
+appropriate methods. If you write a generic application which will likely
+be extended, use a class or simply an direct OCaml object else.
+
+{2 Overloading}
+
+Obviously, inheriting will do the job:
+{[
+class bar = object(self)
+  inherit foo as super
+  val mutable from = "Paris"
+  method! entrypoint () = super#entrypoint (); Format.printf "(from %s)@." from
+  initializer
+    self#add (value @@ opt string who ~doc:"Where" ["f"; "from"]) (fun f -> from <- f)
+end
+]}
+
+{2 Execution}
+
+Simply call the {!Clim.cli.run} method to run the underlying command:
+{[
+  let _ = bar#run
+]}
+
+As for the incremental API, [Lwt] is fully supported by giving the result to [Lwt_main.run]

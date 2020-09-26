@@ -1,0 +1,12 @@
+(executable
+ (name pp)
+ (modules pp)
+ (libraries clim-ppx ppxlib))
+
+(executable
+ (name foo)
+ (modules foo)
+ (libraries clim fmt))
+
+(cram
+ (deps foo.exe))
