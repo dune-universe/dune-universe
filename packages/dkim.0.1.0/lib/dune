@@ -1,0 +1,5 @@
+(library
+ (name dkim)
+ (public_name dkim)
+ (libraries mrmime digestif base64 x509 mirage-crypto mirage-crypto-pk logs
+   domain-name hmap))

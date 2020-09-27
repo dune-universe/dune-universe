@@ -1,0 +1,5 @@
+(library
+ (name dkim_mirage)
+ (public_name dkim-mirage)
+ (libraries dkim mirage-random mirage-time mirage-clock mirage-stack
+   dns-client.mirage lwt))

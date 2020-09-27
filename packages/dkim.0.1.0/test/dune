@@ -1,0 +1,36 @@
+(executable
+ (name body)
+ (modules body)
+ (libraries digestif.c dkim alcotest))
+
+(executable
+ (name dkim_field)
+ (modules dkim_field)
+ (libraries digestif.c dkim alcotest))
+
+(executable
+ (name test)
+ (modules test)
+ (libraries mirage-crypto-rng.unix logs.fmt fmt.tty digestif.c dkim alcotest))
+
+(rule
+ (alias runtest)
+ (deps
+  (:body body.exe))
+ (action
+  (run %{body} --color=always)))
+
+(rule
+ (alias runtest)
+ (deps
+  (:dkim_field dkim_field.exe))
+ (action
+  (run %{dkim_field} --color=always)))
+
+(rule
+ (alias runtest)
+ (deps
+  (:test test.exe)
+  (glob_files raw/*.mail))
+ (action
+  (run %{test} --color=always)))
