@@ -49,7 +49,7 @@
         Odepack.vec(Odepack.lsoda ode init t₀ t).{1}
     ]}
 
-   @version 0.7
+   @version 0.7.1
    @author Christophe Troestler (Christophe.Troestler@umons.ac.be)
  *)
 

@@ -1,3 +1,10 @@
+0.7.1 2020-09-26
+----------------
+
+- Compile the FORTRAN code in "legacy" mode.
+- Upgrade to dune-configurator.
+- Fix compilation on FreeBSD.
+
 0.7 2019-01-21
 --------------
 

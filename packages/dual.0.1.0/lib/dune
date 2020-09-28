@@ -1,0 +1,3 @@
+(library
+ (name dual)
+ (public_name dual))

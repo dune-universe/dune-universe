@@ -16,7 +16,7 @@ test:
 	dune runtest --force
 
 doc: all
-	sed -e 's/0.7/$(PKGVERSION)/' src/odepack.mli \
+	sed -e 's/0.7.1/$(PKGVERSION)/' src/odepack.mli \
 	  > _build/default/src/odepack.mli
 	dune build @doc
 
