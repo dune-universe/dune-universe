@@ -1,0 +1,24 @@
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp -r docs/* .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
+install:
+  image: registry.ocamlpro.com/ocamlpro/ocaml-docker-images:4.10
+  cache:
+    paths:
+      - _opam/
+  script:
+    - sudo apk add m4
+    - if [ ! -d _opam ]; then opam switch create --no-install ./ 4.10.0; fi
+    - eval $(opam env)
+    - opam update
+    - opam install .
+    - opam remove .
