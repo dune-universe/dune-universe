@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-net-macosx)
-(version v1.8.0)

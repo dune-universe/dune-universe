@@ -1,3 +1,0 @@
-
-
-let parser x = EMPTY

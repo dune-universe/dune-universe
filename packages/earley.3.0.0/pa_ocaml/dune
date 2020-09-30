@@ -1,0 +1,7 @@
+(executable
+  (name pa_default)
+  (public_name pa_ocaml)
+  (package earley)
+  (modules :standard)
+  (preprocess (action (run pa_ocaml.boot %{input-file})))
+  (libraries earley.core earley.str ocaml_ast))

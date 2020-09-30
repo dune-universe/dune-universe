@@ -1,0 +1,31 @@
+{
+  "gentypeconfig": {
+    "language": "typescript",
+    "module": "es6",
+    "importPath": "relative",
+    "debug": {
+      "all": false
+    },
+    "exportInterfaces": false
+  },
+  "name": "sample-typescript-app",
+  "bsc-flags": ["-bs-super-errors"],
+  "ppx-flags": [
+    "../../_build/default/dead-code-ppx/DeadCodePPX.exe",
+    "../../_build/default/lazyload-ppx/LazyLoad.exe"
+  ],
+  "reason": { "react-jsx": 3 },
+  "bs-dependencies": ["reason-react", "@glennsl/bs-json"],
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "refmt": 3
+}
