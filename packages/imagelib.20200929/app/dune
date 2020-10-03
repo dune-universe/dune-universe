@@ -1,0 +1,4 @@
+(executable
+ (name imagetool)
+ (public_name imagetool)
+ (libraries imagelib imagelib.unix))

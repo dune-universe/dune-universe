@@ -1,0 +1,24 @@
+(library
+  (name test)
+  (libraries client)
+  (modules Config Log CheckML CheckF)
+  (flags "-w" "@1..66-4-44")
+)
+
+(test
+  (name TestF)
+  (libraries client test)
+  (modules TestF)
+)
+
+(test
+  (name TestML)
+  (libraries client test)
+  (modules TestML)
+)
+
+(test
+  (name TestMLRandom)
+  (libraries client test)
+  (modules TestMLRandom)
+)

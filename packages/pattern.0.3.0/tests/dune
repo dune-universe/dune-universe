@@ -1,0 +1,4 @@
+(test
+  (name tests)
+  (preprocess (pps pattern.ppx metaquot.ppx))
+  (libraries compiler-libs metaquot pattern))

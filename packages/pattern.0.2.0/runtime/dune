@@ -1,5 +1,0 @@
-(library
-   (name pattern)
-   (public_name pattern)
-   (preprocess (pps refl.ppx))
-   (libraries refl))

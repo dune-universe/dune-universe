@@ -1,0 +1,6 @@
+(library
+ (name imagelib_unix)
+ (public_name imagelib.unix)
+ (synopsis "Image library with unix bindings")
+ (wrapped false)
+ (libraries imagelib))

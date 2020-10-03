@@ -1,0 +1,4 @@
+(test
+  (name absent_variable)
+  (preprocess (pps refl.ppx))
+  (libraries refl))

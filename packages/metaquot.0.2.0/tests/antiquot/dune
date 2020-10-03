@@ -1,4 +1,0 @@
-(test
-  (name antiquot)
-  (preprocess (pps metaquot.ppx))
-  (libraries compiler-libs.common))

@@ -1,0 +1,34 @@
+Pierre-Étienne Meunier (2014):
+  - fixed an early PNG bug (not tracked in the new repository)
+
+Christophe Raffalli (2015):
+  - use bigarray for better performances
+
+CFCS (2017):
+  - ported imagelib to dinosaure's "decompress" (pure ocaml) library
+  - allow for reading functions not based on in_channel (pluggable)
+  - fixed several compilation warnings in early versions of OCaml
+  - implemented parsing of GIF images
+
+Frédéric Fortier (2018):
+  - accept all the officially registered PNG extensions
+
+Dan Ravensloft (2018):
+  - fixed several bugs in the PNG parser
+
+Berke Durak (2018)
+  - added code for outputting PNG images to a byte sequence
+
+Rymdhund (2019):
+  - implemented parsing of bmp images
+
+Olle Jonsson a.k.a olleolleolle (2019):
+  - wrote test suite
+  - fixed bugs in the PPM and PNG implementations
+
+Yotam Barnoy a.k.a bluddy (2020):
+  - Refactored output abstractions and fixed lack of I/O flushing
+  - Contributed documentation to undocumented interfaces
+
+Romain Calascibetta a.k.a. dinosaure (2020):
+  - ported JPG (de)compression to latest version of the decompress library

@@ -1,0 +1,7 @@
+; Add project-wide flags here.
+
+(env
+ (dev
+  (flags :standard))
+ (release
+  (flags :standard)))
