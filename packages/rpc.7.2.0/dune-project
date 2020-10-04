@@ -1,0 +1,3 @@
+(lang dune 2.0)
+(name rpclib)
+(version v7.2.0)

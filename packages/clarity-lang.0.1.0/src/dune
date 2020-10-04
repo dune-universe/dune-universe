@@ -1,0 +1,34 @@
+(ocamllex lexer)
+
+(rule
+ (targets parser.ml parser.mli)
+ (deps parser.mly)
+ (action
+  (chdir %{workspace_root}
+   (run %{bin:menhir} %{deps}))))
+
+(library
+ (public_name clarity-lang)
+ (name clarity)
+ (modules clarity)
+ (wrapped false)
+ (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (preprocessor_deps
+  compare.ml
+  compare.mli
+  grammar.ml
+  integer.ml
+  integer.mli
+  lexer.ml
+  lexer.mli
+  library.ml
+  library.mli
+  parse.ml
+  parse.mli
+  parser.ml
+  parser.mli
+  print.ml
+  print.mli
+  sexp.ml
+  sexp.mli)
+ (libraries menhirLib num))
