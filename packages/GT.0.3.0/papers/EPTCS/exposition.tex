@@ -1,0 +1,250 @@
+\section{Exposition}
+\label{expo}
+
+In this section we gradually unfold the approach we propose using a number of examples; while this exposition lacks many concrete details and can not be used as a
+precise reference, it presents the main ``ingredients'' of the solution and motivation which has drove us to identify them. From now on we use the following
+convention: we denote $\inbr{\dots}$ the representation of a certain notion in the concrete syntax of \textsc{OCaml}. For example, ``$\inbr{f_t}$`` is an encoding of instance
+of type-indexed function ``$f$'' for a type `'$t$''. In the concrete syntax it may be expressed as ``\lstinline{f_t}'' but for now we would refrain from specifying
+the exact form.
+
+We start from a simple example. Let us have the following type definition for arithmetic expressions:
+
+\begin{lstlisting}
+   type expr =
+   | Const of int
+   | Var   of string
+   | Binop of string * expr * expr
+\end{lstlisting}
+
+Recursive function ``$\inbr{show_{expr}}$'' (the first evident candidate for generic implementation) converts an expression into its string representation: 
+
+\begin{lstlisting}
+   let rec $\inbr{show_{expr}}$ = function
+   | Const  n        -> "Const " ^ string_of_int n
+   | Var    x        -> "Var " ^ x
+   | Binop (o, l, r) ->
+      Printf.sprintf "Binop (%S, %s, %s)" o ($\inbr{show_{expr}}$ l) ($\inbr{show_{expr}}$ r)
+\end{lstlisting}
+
+The representation, which ``$\inbr{show_{expr}}$'' provides, preserves the names of constructors; this can be convenient for debugging or
+serialisation purposes. However, as a rule, an alternative~--- \emph{pretty-printed}~--- representation is desirable as well. In this
+representation an expression is shown in its ``natural syntax'' with infix operators and no constructor names, where brackets are
+inserted only when they are really needed. Of course, implementing pretty-printer is easy:
+
+\begin{lstlisting}
+   let $\inbr{pretty_{expr}}$ e =
+     let rec pretty_prio p = function
+     | Const  n        -> string_of_int n
+     | Var    x        -> x
+     | Binop (o, l, r) ->
+        let po = prio o in
+        (if po <= p then br else id) @@
+        pretty_prio po l ^ " " ^ o ^ " " ^ pretty_prio po r
+     in
+     pretty_prio min_int e
+\end{lstlisting}
+
+Here we make use of functions ``\lstinline{prio}'', ``\lstinline{br}'' and ``\lstinline{id}'', defined elsewhere. ``\lstinline{prio}''
+returns the priority of a binary operator, ``\lstinline{br}'' puts its parameter in brackets and ``\lstinline{id}''
+is identity. The auxiliary function ``\lstinline{pretty_prio}'' takes additional integer parameter, which describes the priority of an enclosing
+binary operator (if any). If the priority of current operator is less of equal than that, the expression is taken into brackets (for simplicity we assume all
+operators non-associative; the same code skeleton with minor modifications can be used for the associative case as well). On the top level we supply the
+smallest representable integer as the priority to make sure no brackets will appear around the top level expression.
+
+The bodies of these two functions have very little in common~--- both return strings, but the second takes additional argument, and all the constructor cases
+are essentially different. The only identical thing is pattern matching itself. We can extract the pattern matching into a separate function and parameterise this
+function with a set of per-constructor transformations:
+
+\begin{lstlisting}
+   let $\inbr{gcata_{expr}}$ $\omega$ $\iota$ = function
+   | Const n         -> $\omega$#$\inbr{Const}$ $\iota$ n
+   | Var   x         -> $\omega$#$\inbr{Var}$   $\iota$ x
+   | Binop (o, l, r) -> $\omega$#$\inbr{Binop}$ $\iota$ o l r
+\end{lstlisting}
+
+Here we use object as a natural representation for a set of semantically connected functions. ``$\omega$'' is a \emph{transformation object} with methods corresponding to
+the constructors of type ``\lstinline{expr}''; ``$\iota$'' represents the extra parameter which may be used by functions like ``$\inbr{pretty_{expr}}$'' (and safely
+ignored by functions like ``$\inbr{show_{expr}}$'').
+
+The initial ``$\inbr{show_{expr}}$'' now can be expressed as follows\footnote{For the sake of brevity we omitted some type annotations, needed for this snippet to type check.}:
+
+\begin{lstlisting}
+   let rec $\inbr{show_{expr}}$ e = $\inbr{gcata_{expr}}$
+     object
+       method $\inbr{Const}$ _ n   = "Const " ^ string_of_int n
+       method $\inbr{Var}$  $\enspace$   _ x   = "Var " ^ x
+       method $\inbr{Binop}$ _ o l r =
+         Printf.sprintf "Binop (%S, %s, %s)" o ($\inbr{show_{expr}}$ l) ($\inbr{show_{expr}}$ r)
+     end
+     ()
+     e
+\end{lstlisting}
+
+and, of course, the same is true for $\inbr{pretty_{expr}}$.
+
+We can notice, that both objects, needed to implement these functions, can be instantiated from a common virtual class:
+
+\begin{lstlisting}
+   class virtual [$\iota$, $\sigma$] $\inbr{expr}$ =
+   object
+     method virtual $\inbr{Const}$ : $\iota$ -> int -> $\sigma$
+     method virtual $\inbr{Var}\enspace\;\;$ : $\iota$ -> string -> $\sigma$
+     method virtual $\inbr{Binop}$ : $\iota$ -> string -> expr -> expr -> $\sigma$  
+   end
+\end{lstlisting}
+
+A concrete transformation class inherits from this common ancestor; as we have to make recursive calls to the transformation 
+itself we parameterise the class by the self-transforming function ``\lstinline{fself}'' (\emph{open recursion}). The decision to
+use open recursion is vital for the support of polymorphic variant types and mutual recursion. Now we can implement, say, pretty-printing
+in isolation (not within the pretty-printing function, note the usage of ``\lstinline{fself}''):
+
+\begin{lstlisting}
+   class $\inbr{pretty_{expr}}$ (fself : $\iota$ -> expr -> $\sigma$) =
+   object inherit [int, string] $\inbr{expr}$ 
+     method $\inbr{Const}$ p n = string_of_int n
+     method $\inbr{Var}$ p x = x
+     method $\inbr{Binop}$ p o l r =
+       let po = prio o in
+       (if po <= p then fun s -> "(" ^ s ^ ")" else fun s -> s) @@
+       fself po l ^ " " ^ o ^ " " ^ fself po r
+   end
+\end{lstlisting}
+
+The pretty-printing function itself can now be easily expressed using this class and the generic transformation\footnote{As function and class names reside in
+  different namespaces in \textsc{OCaml}, we use the same name for both concrete transformation class and transformation function.}:
+
+\begin{lstlisting}
+   let $\inbr{pretty_{expr}}$ e =
+     let rec pretty_prio p e = $\inbr{gcata_{expr}}$ (new $\inbr{pretty_{expr}}$ pretty_prio) p e in
+     pretty_prio min_int e
+\end{lstlisting}
+
+Finally, we can avoid using the nested function definition by tying the recursive knot with the fix point combinator ``\lstinline{fix}'':
+
+\begin{lstlisting}
+   let $\inbr{pretty_{expr}}$ e =
+     fix (fun fself p e -> $\inbr{gcata_{expr}}$ (new $\inbr{pretty_{expr}}$ fself) p e) min_int e
+\end{lstlisting}
+
+During this demonstration we managed to extract two common features for two essentially different transformations: a generic traversal (``$\inbr{gcata_{expr}}$'')
+and a virtual class (``$\inbr{expr}$'') to represent all transformations as its instances. But, did it worth trying? In fact in this concrete example we achieved a
+very little code reuse at the price of introducing a number of extra abstractions; actually, the size of code we came up with is \emph{larger} than the initial one.
+
+We argue that in this particular case the transformations were not general enough. In order to justify our approach we consider another, more optimistic scenario. It is
+well-known, that many transformations can be represented (and for a good reason) using \emph{catamorphisms}, or ``folds''~\cite{Fold,Bananas,CalculatingFP}. Technically, to
+implement regular catamorphism we would need to abstract the type ``\lstinline{expr}'' of itself to make it a proper functor, but for now we stick with a more
+lightweight version:
+
+\begin{lstlisting}
+   class [$\iota$] $\inbr{fold_{expr}}$ (fself : $\iota$ -> expr -> $\iota$) =
+   object inherit [$\iota$, $\iota$] $\inbr{expr}$ 
+     method $\inbr{Const}$ i n = i
+     method $\inbr{Var}$ i x = i
+     method $\inbr{Binop}$ i o l r = fself (fself i l) r
+   end
+\end{lstlisting}
+
+This implementation simply threads the argument ``\lstinline{i}'' through all nodes of an expression and returns it unchanged. This seems pretty useless at a first
+glance. However, if we modify this default behaviour a little, we can obtain something useful:
+
+\begin{lstlisting}
+   let fv e =
+     fix (fun fself i e ->
+            $\inbr{gcata_{expr}}$ (object inherit [string list] $\inbr{fold_{expr}}$ fself
+                         method $\inbr{Var}$ i x = x :: i
+                       end) i e
+         ) [] e
+\end{lstlisting}
+
+This function calculates the list of all free variables in an expression (as there can be no binders this is simply the list of all variables). Immediate object we
+construct here inherits from the ``useless'' ``$\inbr{fold_{expr}}$'' and redefines only one method~--- for variables. All other code makes exactly what we need~---
+``$\inbr{gcata_{expr}}$'' traverses the expression, and all other methods of transformation object accurately pass the list of variables through. So, we indeed
+managed to implement some interesting transformation with a very small modification of existing code (provided that ``$\inbr{fold_{expr}}$'' class was already supplied).
+To avoid the impression that we carefully prepared everything to implement this particular example we can show another one:
+
+\begin{lstlisting}
+   let height e =
+     fix (fun fself i e ->
+            $\inbr{gcata_{expr}}$ (object inherit [int] $\inbr{fold_{expr}}$ fself
+                         method $\inbr{Binop}$ i _ l r = 1 + max (fself i l) (fself i r) 
+                       end) i e
+         ) 0 e
+\end{lstlisting}
+
+Now we calculated the height of an expression. We used the same ``$\inbr{fold_{expr}}$'' class as a base for another immediate object; we redefined the method for
+binary operators, which now calculates the heights of both sub expressions, takes the maximum and adds one. 
+
+Another commonly recognised generic feature is ``map'':
+
+\begin{lstlisting}
+   class $\inbr{map_{expr}}$ fself =
+   object inherit [unit, expr] $\inbr{expr}$
+     method $\inbr{Var}$ _ x = Var x
+     method $\inbr{Const}$ _ n = Const n
+     method $\inbr{Binop}$ _ o l r = Binop (o, fself () l, fself () r)
+   end
+\end{lstlisting}
+
+Again, as type ``\lstinline{expr}'' is not a functor, all we can do with ``$\inbr{map_{expr}}$'' is copying. However, by inheriting from it we
+can provide more transformations:
+
+\begin{lstlisting}
+   class simplify fself =
+   object inherit $\inbr{map_{expr}}$ fself
+     method $\inbr{Binop}$ _ o l r =
+       match fself () l, fself () r with
+       | Const l, Const r -> Const ((op o) l r)
+       | l      , r       -> Binop (o, l, r)     
+   end
+\end{lstlisting}
+
+This class performs a constant folding: if both arguments of a binary operator are reduced (by the same transformation) to constants, then in
+performs the operation. The function ``\lstinline{op}'' is defined elsewhere; it returns an integer function for evaluating given binary operator. One more:
+
+
+\begin{lstlisting}
+   class substitute fself state =
+   object inherit $\inbr{map_{expr}}$ fself
+     method $\inbr{Var}$ _ x = Const (state x)  
+   end
+\end{lstlisting}
+
+This one substitutes variables in an expression with their values in some state, represented as function ``\lstinline{state}''. Two last
+classes can be seamlessly combined to construct an evaluator:
+
+\begin{lstlisting}
+   class eval fself state =
+   object
+     inherit substitute fself state
+     inherit simplify   fself
+   end
+
+   let eval state e =
+     fix (fun fself i e -> $\inbr{gcata_{expr}}$ (new eval fself state) i e) () e  
+\end{lstlisting}
+
+In all these examples we, starting from some very common generic feature, implemented all needed transformations with a very little efforts (modulo
+the verbose \textsc{OCaml} syntax for objects and classes). In each case we needed to override only one method, and we used a single per-type generic
+function. On the other hand we dealt with a very simple type~--- for example, it was not even polymorphic, and supporting polymorphism might have
+its own issues. In the rest of the paper we show that, indeed, the sketch we presented here can be extended to a generic programming
+framework, in which all the components can be synthesised from type definitions. In particular, our approach provides the full support for:
+
+\begin{itemize}
+\item Polymorphism.
+\item Type constructor application.
+\item Mutual recursion. While there is no problem with implementation of hard-coded generic transformations, the implementation of \emph{extensible} ones
+  requires extra efforts.
+\item Polymorphic variant types. It includes the seamless integration via class inheritance of all features
+  for polymorphic variant types when these types are combined into the one.
+\item Separate compilation: we can generate code from type definitions for a module separately with no lookup into
+  modules this one depends on.
+\item Encapsulation: we support module signatures, including abstract and private type declarations. Generic functions, implemented for
+  abstract types, can be safely used outside the module, but can be neither modified nor used to ``peep'' at the internal structure of
+  the type.  
+\end{itemize}
+
+We also address some performance issues~--- as one could notice, in all preceding examples we created a whole bunch of \emph{identical} objects during a
+transformation (one per each node of a data structure); as we will see, this can be avoided via memoization. Finally, our framework provides a plugin system which can be
+used to generate a number of useful transformations (like ``\lstinline{show}'', ``\lstinline{fold}'' or ``\lstinline{map}''). The plugin system is
+extensible as well~--- end users can implement their own plugins with a very little amount of extra effort since a large part of their functionality (the traversal
+function and virtual transformation class) is already supplied by the framework. 

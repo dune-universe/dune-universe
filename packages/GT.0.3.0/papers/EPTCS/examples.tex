@@ -1,0 +1,428 @@
+\section{Examples}
+
+In this section we present some examples, written with the aid of our library. In this examples we will use \cd{camlp5} syntax extension,
+although \cd{ppxlib} plugin can be used equally. As we said, the library is a direct inheritor of our prior work~\cite{TransformationObjects}, and
+all examples from that paper can be implemented using the new version. Here we show some more.
+
+\subsection{Typed Logic Values}
+
+The first example arose in the context of our work on strongly typed logical DSL for \textsc{OCaml}~\cite{OCanren}. One of the
+most important construct there was a unification of terms with free logical variables, and dealing with such data structures
+involves a lot of tedious and error-prone work. The typical scenario of interaction between a logical and non-logical worlds
+is constructing a \emph{goal} containing a data structure with free logical variables and solving it. The solution
+provides bindings for these variables, which, in optimistic scenario, do not contain free variables anymore. To construct
+a goal one would need a systematic way to introduce logic variables in some typed data structure, and to recover answers~---
+a systematic way to return to a plan, non-logical representation.
+
+The (simplified) type for logic values can be defined as follows:
+
+\begin{lstlisting}
+   @type 'a logic =
+   | V     of int
+   | Value of 'a
+   with show, gmap
+\end{lstlisting}
+
+A logic value can either be a free logic variable (``\lstinline{V}'') or a some other value (``\lstinline{Value}'') which is not
+a free variable (but which can possibly contain free variables inside). To convert to- and from- the logic domain we can use the following
+functions:
+
+\begin{lstlisting}
+   let lift x = Value x
+  
+   let reify  = function
+   | V     _ -> invalid_arg "Free variable"
+   | Value x -> x
+\end{lstlisting}
+
+The function ``\lstinline{reify}'' raises and exception on a free variable; indeed, if an occurrence of a free variable
+is encountered the logic value can no longer be considered as a regular (non-logical) data structure and has to be interpreted
+in some other way.
+
+When we dealing with logic data structures we need to have an opportunity to put a free variable in an arbitrary
+position. This means that we have to switch to another type, ``lifted'' into the logic domain. For example,
+for arithmetic expressions, which we use as an example through the paper, we would need to construct a value like
+
+\begin{lstlisting}
+   Value (
+     Binop (
+       V 1, 
+       Value (Const (V 2)),
+       V 3
+    )
+   )
+\end{lstlisting}
+
+which has a type ``\lstinline{lexpr}'', defined as
+
+\begin{lstlisting}
+   type expr' = Var of string logic | Const of int logic | Binop of lexpr * lexpr
+   and  lexpr = expr' logic
+\end{lstlisting}
+
+We also need to implement two conversion functions. All these definitions present a typical example of boilerplate code.
+
+With our framework the solution is almost purely declarative\footnote{But we need to switch the compiler into \cd{-rectypes} mode}.
+First, we abstract the type of interest, replacing all positions, in which we may desire to place a type variable, with
+fresh type parameters:
+
+\begin{lstlisting}
+   @type ('string, 'int, 'expr) a_expr =
+   | Var   of 'string
+   | Const of 'int
+   | Binop of 'string * 'expr * 'expr with show, gmap
+\end{lstlisting}
+
+Here we abstract the type of everything, but we could equally abstract it only of itself. Note, we make use of two
+generic features~--- ``\lstinline{show}'' and ``\lstinline{gmap}''. The first one is needed for debugging purposes, while
+the second is essential for our solution.
+
+Now we can define the logical and non-logical counterparts as customised versions of the abstracted type:
+
+\begin{lstlisting}
+   @type expr  = (string, int, expr) a_expr with show, gmap
+   @type lexpr = (string logic, int logic, lexpr) a_expr logic with show, gmap
+\end{lstlisting}
+
+Note, the ``new'' type ``\lstinline{expr}'' is equivalent to the ``old'' one, thus, this transformation makes no
+harm to the existing code.
+
+Finally, the definitions of conversion functions make use of the generic ``\lstinline{gmap}'' feature the
+framework provides:
+
+\begin{lstlisting}
+   let rec to_logic   expr = gmap(a_expr) lift  lift  to_logic  expr
+   let rec from_logic expr = gmap(a_expr) reify reify from_logic @@ reify expr
+\end{lstlisting}
+
+As we can see, the support for type constructor application is vital for the success of this scenario. In our prior
+implementation~\cite{TransformationObjects} type constructor application was not supported and could not be easily added.
+
+\subsection{Conversion to a Nameless Representation}
+
+Polymorphic variant types make it possible to define composable statically typed and separately compiled data structures~\cite{PolyVarReuse}.
+Dealing with them to implement composable statically typed and separately compiled transformations looks like a natural idea. The problem of
+constructing transformations from separately compiled, strongly typed components is known as ``The Expression Problem''~\cite{ExpressionProblem}, which
+is often used as a ``litmus test'' for generic programming frameworks~\cite{ObjectAlgebras,ALaCarte}. In this section we show the solution for
+the expression problem with the aid of our framework. For a concrete problem we take the transformation from named to a nameless representations
+for lambda terms.
+
+First, we define the non-binding part of the terms:
+
+\begin{lstlisting}
+   @type ('name, 'lam) lam = [
+   | `App of 'lam * 'lam
+   | `Var of 'name
+   ] with show
+\end{lstlisting}
+
+Separating this type looks a natural idea since potentially there can be many binding constructs (lambdas, lets, etc.) and by combining them
+with the non-binding part (and with themselves) one can acquire a variety of languages with a coherent behaviour.
+
+The type ``\lstinline{lam}'' is polymorphic: the first parameter is used to represent names or de Bruijn indices, the second one is needed
+for open recursion (we here follow the known technique for describing extensible data structures with polymorphic variants~\cite{PolyVarReuse}).
+
+What would the transformation to the nameless representation look like for this type? In our terms, what the transformation class is? It is shown
+below:
+
+\begin{lstlisting}
+   class ['lam, 'nameless] lam_to_nameless
+     (flam : string list -> 'lam -> 'nameless) =
+   object
+     inherit [string list, string, int,
+              string list, 'lam, 'nameless,
+              string list, 'lam, 'nameless] $\inbr{lam}$
+     method $\inbr{App}$ env _ l r = `App (flam env l, flam env r)
+     method $\inbr{Var}$ env _ x   = `Var (index env x)
+   end
+\end{lstlisting}
+
+First, we use a list of strings as an environment, and we pass it as an inherited attribute. Then, we use a function ``\lstinline{index}'' to find a
+position of a string in the environment (thus, it translates names to the de Bruijn indices). The interesting part is the typing of the common ancestor
+class ``$\inbr{lam}$''. The first triple of its parameters describes the transformation for the first type parameter of the type. As we can see, we
+transform strings into integers, using an environment. Next, the type variable ``\lstinline{'lam}'', as we know, will be set to the open version of the ``\lstinline{lam}''.
+Finally, the result of the transformation is typed as ``\lstinline{'nameless}''. This is because the result will be, indeed, a different type, as we
+will see soon. As the type parameter ``\lstinline{'lam}'' designates the type itself, the last three parameters repeat the next to last three.
+
+Now we define a binding construct~--- abstraction:
+
+\begin{lstlisting}
+   @type ('name, 'lam) abs = [ `Abs of 'name * 'lam ] with show
+\end{lstlisting}
+
+The same reasoning applies here: we use an open recursion and a parameterization over name representation. The transformation class can be
+implemented in a similar manner:
+
+\begin{lstlisting}
+  class ['lam, 'nameless] abs_to_nameless
+    (flam : string list -> 'lam -> 'nameless) =
+  object
+    inherit [string list, string, int,
+             string list, 'lam, 'nameless,
+             string list, 'lam, 'nameless] $\inbr{abs}$
+    method $\inbr{Abs}$ env name term = `Abs (flam (name :: env) term)
+  end
+\end{lstlisting}
+
+Note, the method ``$\inbr{Abs}$'' constructs a value which has a \emph{different} type, than any parameterization of ``\lstinline{abs}''. Indeed, in a
+nameless representation abstraction does not keep any name.
+
+We can now combine two type definitions to build a type for terms with binders:
+
+\begin{lstlisting}
+   @type ('name, 'lam) term = [ ('name, 'lam) lam | ('name, 'lam) abs) ] with show
+\end{lstlisting}
+
+We can also provide two new types for named and nameless representation\footnote{We need to enable \cd{-rectypes} mode for these definitions to compile.}:
+
+\begin{lstlisting}
+   @type named    = (string, named) term with show
+   @type nameless = [ (int, nameless) lam | `Abs of nameless] with show
+\end{lstlisting}
+
+Finally, we build a transformation for converting a named to a nameless representation:
+
+\begin{lstlisting}
+   class to_nameless
+     (fself : string list -> named -> nameless) =
+   object
+     inherit [string list, named, nameless] $\inbr{named}$
+     inherit [named, nameless] lam_to_nameless fself
+     inherit [named, nameless] abs_to_nameless fself
+   end
+\end{lstlisting}
+
+This transformation is constructed by inheriting all relevant counterparts: a common ancestor class for all transformations for the type ``\lstinline{named}'' and
+two concrete transformations for its counterparts. The transformation function can be build in a standard way:
+
+\begin{lstlisting}
+   let to_nameless term =
+     transform(named) (fun fself -> new to_nameless fself) [] term
+\end{lstlisting}
+
+Thus, we constructed a solution for a type from the solutions for its counterparts. This partial solutions can be separately compiled, and the whole
+system remains strongly statically typed.
+
+\subsection{A Custom Plugin}
+\label{pluginExample}
+
+Finally we demonstrate the utilisation of the plugin system using the example of a fresh custom plugin implementation. For this purpose we
+take a well-known \emph{hash-consing} transformation~\cite{HC}. This transformation converts a data structure to its maximally shared
+representation, when structurally equal substructures are represented by the same physical object. For example, an expression tree
+
+\begin{lstlisting}
+   let t =
+     Binop ("+",
+       Binop ("-",
+         Var "b",
+         Binop ("*", Var "b", Var "a")),
+       Binop ("*", Var "b", Var "a"))
+\end{lstlisting}
+
+can be rewritten into
+
+\begin{lstlisting}
+   let t =
+     let b  = Var "b" in
+     let ba = Binop ("*", b, Var "a") in
+     Binop ("+", Binop ("-", b, ba), ba)  
+\end{lstlisting}
+
+where equal sub expressions are represented by shared sub trees.
+
+Our plugin for a type ``\lstinline|$\left\{\alpha_i\right\}$ t|'' will provide a hash-consing function ``\lstinline{hc(t)}'' of the type
+
+\begin{lstlisting}
+    $\{$ H.t -> $\alpha_i$ -> H.t * $\alpha_i$ $\}$ -> H.t -> $\left\{\alpha_i\right\}$ t -> H.t * $\left\{\alpha_i\right\}$ t
+\end{lstlisting}
+
+where ``\lstinline{H.t}''~--- a heterogeneous hash table for values of arbitrary types. The interface for the hash table is
+as follows:
+
+\begin{lstlisting}
+   module H :
+   sig
+     type t
+     val hc : t -> 'a -> t * 'a
+   end
+\end{lstlisting}
+
+The function ``\lstinline{H.hc}'' takes a hash table and some value and returns a possibly updated table and a structurally equivalent value
+of the same type. For now we postpone the description of this module implementation and consider an example of constructor transformation
+method:
+
+\begin{lstlisting}   
+   method $\inbr{Binop}$ h _ op l r =
+     let h, op = hc(string) h op in
+     let h, l  = fself h l in
+     let h, r  = fself h r in
+     H.hc h (Binop (op, l, r))
+\end{lstlisting}
+
+The method takes an inherited attribute~---this time a hash table ``\lstinline{h}'',~--- the whole expressions node (which we do not
+need in this case, hence underscore), and three arguments of the constructor: ``\lstinline{op}'' of type \lstinline{string}, and
+``\lstinline{l}'' and ``\lstinline{r}'' of type \lstinline{expr}. We first hash-cons all three arguments (which gives us a possibly updated
+hash table and three hash-consed values of the same types), then we apply the constructor and hash-cons the value again. To hash-cons
+the arguments of the constructor we can use the functions provided by the framework~--- for the type \lstinline{string} it is
+``\lstinline{hc(string)}''\footnote{Generally speaking, we would need to implement a hash-consing function for each primitive type; in
+  our case, however, we could equally use ``\lstinline{H.hc}''.}, and for both sub expressions it is ``\lstinline{fself}''.
+
+As a final component we need to decide on the type parameters for a plugin class for a type ``\lstinline|$\{\alpha_i\}$ t|''. Clearly,
+all inherited attribute types has to be ``\lstinline{H.t}'', and synthesised attribute types has to be ``\lstinline{H.t * $a$}'' for the
+type of interest ``$a$''. This gives us the following plugin class definition:
+
+\begin{lstlisting}
+   class [$\{\alpha_i\}$, $\epsilon$] $\inbr{hc_t}$ $\dots$ =
+   object
+     inherit [$\{$ H.t, $\alpha_i$, H.t * $\alpha_i$ $\}$, H.t, $\epsilon$, H.t * $\epsilon$] $\inbr{t}$
+     $\dots$
+   end
+\end{lstlisting}
+
+For simplicity we omitted the specification of functional parameters for the class since their types can be trivially
+recovered.
+
+Now we need to generate this logic using a plugin.
+
+The infrastructure code for the plugin implementation is shown below:
+
+\begin{lstlisting}
+   let trait_name = "hc"
+  
+   module Make (AstHelpers : GTHELPERS_sig.S) =
+     struct
+     
+       open AstHelpers
+
+       module P = Plugin.Make (AstHelpers)
+
+       class g tdecls =
+       object (self : 'self)
+         inherit P.with_inherited_attr tdecls as super
+         $\ldots$
+       end
+
+     end
+
+   let _ =
+     Expander.register_plugin trait_name (module Make : Plugin_intf.Plugin)
+\end{lstlisting}
+
+To implement a plugin, one needs to implement a functor parameterised by a helper module, which resembles ``\cd{Ast_builder}'' from
+\cd{ppxlib} to create \textsc{OCaml} syntax trees. We need to use a functor since we have to provide two implementations for
+a plugin~--- for \cd{camlp5} syntax extension as well as for \cd{ppxlib} itself. The main entity in the body of the functor is
+a class ``\lstinline{g}'' declaration (``generator''), which for simplicity can be inherited from one of generic classes 
+from the framework. In this case we, first, instantiate the generic plugin ``\lstinline{P}'' for ``\lstinline{AstHelpers}'' and
+then inherit from the class ``\lstinline{P.with_inherited_attr}'', which means that we are going to implement a plugin
+making use of inherited attribute. The class takes a type declaration as a parameter. Finally, we register the functor as a
+first-class module in the framework to make it accessible.
+
+Now we show what the methods of the generator class look like. First, we need to specify what are the types of inherited and
+synthesised attributes for the plugin:
+
+\begin{lstlisting}
+   method main_inh ~loc _tdecl = ht_typ ~loc
+
+   method main_syn ~loc ?in_class tdecl =
+     Typ.tuple ~loc
+       [ ht_typ ~loc
+       ; Typ.use_tdecl tdecl
+       ]
+
+   method inh_of_param tdecl _name =
+       ht_typ ~loc:(loc_from_caml tdecl.ptype_loc)
+
+   method syn_of_param ~loc s =
+     Typ.tuple ~loc
+       [ ht_typ ~loc
+       ; Typ.var ~loc s
+       ]
+\end{lstlisting}
+
+where we assume ``\lstinline{ht_typ}'' is defined as
+
+\begin{lstlisting}
+   let ht_typ ~loc =
+     Typ.of_longident ~loc (Ldot (Lident "H", "t"))
+\end{lstlisting}
+
+In other words, we say here that the type of inherited attribute is always ``\lstinline{H.t}'' and the type of a synthesised attribute for
+a type of interest ``\lstinline{t}'' is ``\lstinline{H.t * t}''.
+
+The next group of methods specifies the behaviour of plugin class type parameters:
+
+\begin{lstlisting}
+   method plugin_class_params tdecl =
+     let ps =
+       List.map tdecl.ptype_params ~f:(fun (t, _) -> typ_arg_of_core_type t)
+     in
+     ps @
+     [ named_type_arg ~loc:(loc_from_caml tdecl.ptype_loc) @@
+       Naming.make_extra_param tdecl.ptype_name.txt
+     ]
+
+   method prepare_inherit_typ_params_for_alias ~loc tdecl rhs_args =
+     List.map rhs_args ~f:Typ.from_caml
+\end{lstlisting}
+
+The first method specifies the type parameters for the plugin class itself: this time they are exactly the type parameters of the type declaration plus
+the extra parameter ``$\epsilon$''. The second one describes the method of recalculation of type parameters for application of type constructor: when
+the type declaration looks like
+
+\begin{lstlisting}
+   type $\{\alpha_i\}$ t = $\{a_i\}$ tc
+\end{lstlisting}
+
+we need to acquire the implementation of the plugin for ``\lstinline{t}'' from the implementation of the same plugin for ``\lstinline{tc}'', inheriting
+from properly instantiated corresponding class. As for our plugin the class is parameterised by the same types as the type, we just keep the parameters.
+
+The last group of methods generate the bodies of constructor transformation. As we support regular constructors with both tuple and record
+argument specifications as well as top-level tuples and records, there are four methods, which as a rule share many details of implementation. We show the
+skeleton for one of them:
+
+\begin{lstlisting}
+method on_tuple_constr ~loc ~is_self_rec ~mutual_decls ~inhe tdecl constr_info ts =
+  $\dots$ 
+  match ts with
+  | [] -> Exp.tuple ~loc [ inhe; c [] ]
+  | ts ->
+     let res_var_name = sprintf "%s_rez" in
+     let argcount = List.length ts in
+     let hfhc =
+       Exp.of_longident ~loc (Ldot (Lident "H", "hc"))
+     in
+     List.fold_right
+       (List.mapi ~f:(fun n x -> (n, x)) ts)
+       ~init:$\dots$
+       ~f:(fun (i, (name, typ)) acc ->
+            Exp.let_one ~loc
+              (Pat.tuple ~loc [ Pat.sprintf ~loc "ht%d" (i+1)
+                              ; Pat.sprintf ~loc "%s" @@ res_var_name name])
+              (self#app_transformation_expr ~loc
+                 (self#do_typ_gen ~loc ~is_self_rec ~mutual_decls tdecl typ)
+                 (if i = 0 then inhe else Exp.sprintf ~loc "ht%d" i)
+                 (Exp.ident ~loc name)
+              )
+              acc
+          )
+  $\dots$
+\end{lstlisting}
+
+This implementation makes use of the generic method ``\lstinline{self#app_transformation_expr}'' from the framework, which generates an application of
+the transformation in question for a given type.
+
+The final component for the implementation is module ``\lstinline{H}'' itself. The standard functor ``\lstinline{Hashtbl.Make}'' instantiates a
+hash table making use of some hash function and equality predicate, supplied by an end user. In a whole, we follow a conventional pattern:
+for the hash function we use polymorphic ``\lstinline{Hashtbl.hash}'' and for the equality we use physical equality ``\lstinline{==}''. There are, however, two
+subtleties:
+
+\begin{itemize}
+\item Since our hash table is heterogeneous, we have to utilise unsafe coercion ``\lstinline{Obj.magic}''.
+\item Our implementation for equality has to be a little more complex than simple ``\lstinline{==}'': we need to compare the top-level constructors and
+  the number of their arguments \emph{structurally}, and only then compare the corresponding arguments by physical equality. Technically this
+  may result in hash-consing structurally equal values of \emph{different} types.
+\end{itemize}
+
+We rely here on the follow observation: as hash-consing is only consistent with referentially-transparent data structures, we can assume
+that structurally equal data structures can be interchangeable regardless their types. The complete implementation for this plugin can be seen in the main project
+repository; it occupies 164 LOC, including comments and blank lines.

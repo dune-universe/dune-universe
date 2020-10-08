@@ -1,0 +1,44 @@
+
+; camlp5 
+(cram (deps test000.exe test001.exe test002.exe test003.exe test004.exe test005.exe test006.exe test007.exe test008.exe test009.exe test010.exe test011.exe test012.exe test013.exe test014.exe test015.exe test016.exe test017.exe test018.exe test019.exe test020.exe test021.exe test022.exe test023.exe test024.exe test025.exe test026.exe test027.exe test028.exe test029.exe test030.exe test031.exe test032.exe test036.exe test037.exe test040.exe test041.exe test042.exe test082mutal.exe test083polyvar.exe test086std.exe test087stateful.exe test089struct.exe test090eval.exe test091eval.exe test705.exe))
+(tests (names test000 test001 test002 test003 test004 test005 test006 test007 test008 test009 test010 test011 test012 test013 test014 test015 test016 test017 test018 test019 test020 test021 test022 test023 test024 test025 test026 test027 test028 test029 test030 test031 test032 test036 test037 test040 test041 test042 test082mutal test083polyvar test086std test087stateful test089struct test090eval test091eval test705 )
+            (modules test000 test001 test002 test003 test004 test005 test006 test007 test008 test009 test010 test011 test012 test013 test014 test015 test016 test017 test018 test019 test020 test021 test022 test023 test024 test025 test026 test027 test028 test029 test030 test031 test032 test036 test037 test040 test041 test042 test082mutal test083polyvar test086std test087stateful test089struct test090eval test091eval test705 )
+            (flags (:standard ))
+            (libraries GT)
+            
+      (preprocess (action (run %{workspace_root}/camlp5/pp5+gt+plugins+o.exe %{input-file})))
+      (preprocessor_deps (file %{workspace_root}/camlp5/pp5+gt+plugins+o.exe))
+          )
+
+; camlp5+rectypes
+(cram (deps test081llist.exe))
+(tests (names test081llist )
+            (modules test081llist )
+            (flags (:standard -rectypes))
+            (libraries GT)
+            
+      (preprocess (action (run %{workspace_root}/camlp5/pp5+gt+plugins+o.exe %{input-file})))
+      (preprocessor_deps (file %{workspace_root}/camlp5/pp5+gt+plugins+o.exe))
+          )
+
+; ppx
+(cram (deps test800.exe test802mutal.exe test803polyvar.exe test804polyvar.exe test805std.exe test806fmt.exe test807showT.exe test811compare.exe test812html.exe test813htmlTy.exe test815abstr.exe test816hash.exe test820spec.exe test821clab.exe test822.exe test823list.exe test824mut.exe test825tuples.exe test826antiph.exe test828combi.exe test840garrique.exe))
+(tests (names test800 test802mutal test803polyvar test804polyvar test805std test806fmt test807showT test811compare test812html test813htmlTy test815abstr test816hash test820spec test821clab test822 test823list test824mut test825tuples test826antiph test828combi test840garrique )
+            (modules test800 test802mutal test803polyvar test804polyvar test805std test806fmt test807showT test811compare test812html test813htmlTy test815abstr test816hash test820spec test821clab test822 test823list test824mut test825tuples test826antiph test828combi test840garrique )
+            (flags (:standard ))
+            (libraries GT)
+            
+    (preprocess (action (run %{workspace_root}/ppx/pp_gt.exe %{input-file})))
+    (preprocessor_deps (file %{workspace_root}/ppx/pp_gt.exe))
+          )
+
+; ppx+rectypes
+(cram (deps test798gen.exe))
+(tests (names test798gen )
+            (modules test798gen )
+            (flags (:standard -rectypes))
+            (libraries GT)
+            
+    (preprocess (action (run %{workspace_root}/ppx/pp_gt.exe %{input-file})))
+    (preprocessor_deps (file %{workspace_root}/ppx/pp_gt.exe))
+          )

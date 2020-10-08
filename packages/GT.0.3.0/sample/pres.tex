@@ -1,0 +1,163 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tcolorbox}
+
+\usepackage{DejaVuSansMono}
+\renewcommand*\familydefault{\ttdefault} 
+\usepackage[T1]{fontenc}
+
+\newcommand{\lstfont}[1]{\color{#1}\scriptsize\ttfamily}
+%-------------------------------------------------------
+% DEFFINING AND REDEFINING COMMANDS
+%-------------------------------------------------------
+
+% \lstdefinelanguage{ocaml}{
+% keywords={let, begin, end, in, match, type, and, fun, 
+% function, try, with, class, object, method, of, rec, repeat, until,
+% while, not, do, done, as, val, inherit, module, sig, @type, struct, 
+% if, then, else, open, virtual, new, fresh},
+% sensitive=true,
+%     language=[ANSI]C++,
+%     showstringspaces=false,
+%     %backgroundcolor=\color{black!90},
+%     basicstyle=\lstfont{white},
+%     identifierstyle=\lstfont{white},
+%     keywordstyle=\lstfont{magenta!40},
+%     numberstyle=\lstfont{white},
+%     stringstyle=\lstfont{cyan},
+%     commentstyle=\lstfont{yellow!30},
+%     emph={
+%         cudaMalloc, cudaFree,
+%         __global__, __shared__, __device__, __host__,
+%         __syncthreads,
+%     },
+%     emphstyle={\lstfont{green!60!white}},
+%     breaklines=true
+% }
+\lstdefinelanguage{ocaml}{
+    showstringspaces=true,
+    keywords={let, begin, end, in, match, type, and, fun, 
+    function, try, with, class, object, method, of, rec, repeat, until,
+    while, not, do, done, as, val, inherit, module, sig, @type, struct, 
+    if, then, else, open, virtual, new, fresh},
+    sensitive=true,
+    breaklines=true
+}
+\lstset{
+identifierstyle=\ttfamily,
+keywordstyle=\ttfamily\bfseries,
+fontadjust=true,
+language=ocaml
+}
+
+% colored hyperlinks
+\newcommand{\chref}[2]{
+  \href{#1}{{\usebeamercolor[bg]{Feather}#2}}
+}
+
+%-------------------------------------------------------
+% INFORMATION IN THE TITLE PAGE
+%-------------------------------------------------------
+
+\title[] % [] is optional - is placed on the bottom of the sidebar on every slide
+{ % is placed on the title page
+      \textbf{Generic transformers}
+}
+
+\subtitle[The Feather Beamer Theme]
+{
+      \textbf{v. 1.0.0}
+}
+
+\author[]
+{      \\
+      {\ttfamily 1@gmail.com}
+}
+
+\institute[]
+{
+      SPbSU
+}
+
+\date{\today}
+
+\begin{document}
+
+
+\begin{frame}[fragile]{Importing types}
+\begin{lstlisting}[language=ocaml] 
+type pattern = [%import: Typedtree.pattern]
+and pat_extra = [%import: Typedtree.pat_extra]
+and pattern_desc= [%import: Typedtree.pattern_desc]
+and expression = [%import: Typedtree.expression]
+and expression_desc = [%import: Typedtree.expression_desc]
+and exp_extra = [%import: Typedtree.exp_extra]
+... 
+(* 60 mutally recursive types from Typedtree module 
+ *)
+...
+and 'a class_infos = 
+  [%import: 'a Typedtree.class_infos]
+[@@deriving gt ~options:{ html; fmt }]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Patterns (links destination)}
+\begin{lstlisting}[language=ocaml] 
+class ['self] pattern_desc_link mut_trfs fself = 
+object
+  inherit ['self] html_pattern_desc_t_stub mut_trfs fself
+  method! c_Tpat_var () { Ident.name } nameloc =
+    let loc_str = 
+      Location.show_location nameloc.Asttypes.loc 
+    in
+    HTML.ul @@ HTML.seq
+        [ HTML.anchor loc_str @@ HTML.string @@ 
+          sprintf "%S from %s" name loc_str
+        ]
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Identifiers (links sources)}
+\begin{lstlisting}[language=ocaml] 
+class ['self] expression_with_link mut_trfs fself = 
+object
+  inherit ['self] html_expression_t_stub mut_trfs fself as super
+
+  method! do_expression () e =
+    match e.exp_desc with
+    | Texp_ident (p,lloc,vd) ->
+      let where = Location.show_t
+        (Ocaml_common.Env.find_value p e.exp_env).val_loc 
+      in
+      HTML.ref ("#" ^ where) @@ HTML.string @@
+      sprintf "%s  from %s" (Longident.show_t lloc.txt) where
+    | _ -> super#do_expression () e
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Using fixpoint}
+\begin{lstlisting}[language=ocaml] 
+let html_structure =
+  let { html_structure } = html_fix_case
+    ~expression0:
+      { html_expression_func = new expression_with_link }
+    ~pattern_desc0:
+      { html_pattern_desc_func = new pattern_desc_with_link }
+    ()
+  in
+  html_structure.html_structure_trf
+\end{lstlisting}
+\end{frame}
+
+\end{document}
+
+

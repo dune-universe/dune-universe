@@ -1,0 +1,14 @@
+\section{Future Work}
+
+There are a few possible directions for future work. First, in this paper we did not address the performance issues. As we represent
+the transformations in a very generic form with many levels of indirection, obviously, the transformations, implemented with
+our framework, are at disadvantage in comparison with hard coded ones in terms of performance. We assume that the performance of transformations
+can be essentially improved by applying some techniques like staging~\cite{Staged} or, perhaps, object-specific optimisations.
+
+Another important direction is supporting more kinds of type declarations, in the first hand, GADTs and non-regular types. Although we have some
+implementation ideas for this case, the solution we came up with so far makes the interface of the whole framework too cumbersome to use even for
+simple cases.
+
+Finally, the typeinfo structure we generate can be used to mimic the \emph{ad-hoc} polymorphism as it contains the implementation of
+type-indexed functions. This, together with some proposed extensions~\cite{ModularImplicits}, can open interesting perspectives.
+

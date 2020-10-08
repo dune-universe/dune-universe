@@ -1,0 +1,17 @@
+\ *undo-tree*
+/node_modules
+_build
+*.native
+*.byte
+Makefile
+# documentation directory
+/GT.docdir
+/_esy
+/.vscode
+.merlin
+
+/qtc-gt.*
+/qtc-GT.*
+
+*.install
+

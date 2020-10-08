@@ -1,0 +1,12 @@
+#use "topfind";;
+#rectypes;;
+#directory "_build/default/src";;
+#directory "_build/default/regression";;
+#directory "_build/default/common";;
+
+#require "base";;
+#require "ocamlgraph";;
+#require "compiler-libs.common";;
+#require "ppxlib";;
+#load_rec "_build/default/common/GTCommon.cma";;
+

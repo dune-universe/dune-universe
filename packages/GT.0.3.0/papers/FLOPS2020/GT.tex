@@ -1,0 +1,154 @@
+%\documentclass[submission,copyright,creativecommons]{eptcs}
+\documentclass[runningheads]{llncs}
+\providecommand{\event}{ML 2018}  % Name of the event you are submitting to
+\usepackage{breakurl}             % Not needed if you use pdflatex only.
+\usepackage{underscore}           % Only needed if you use pdflatex.
+
+\usepackage{marginnote}
+\usepackage{booktabs} 
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{listings}
+%\usepackage{indentfirst} % LLNCS doens't encourage this
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{stmaryrd}
+\usepackage{xspace}
+\usepackage{comment}
+\usepackage{wrapfig}
+\usepackage[caption=false]{subfig}
+\usepackage{placeins}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{soul}
+\usepackage{csquotes}
+\usepackage{inconsolata}
+
+\lstdefinelanguage{ocaml}{
+keywords={@type, function, fun, let, in, match, with, when, class, type,
+nonrec, object, method, of, rec, repeat, until, while, not, do, done, as, val, inherit, and,
+new, module, sig, deriving, datatype, struct, if, then, else, open, private, virtual, include, success, failure,
+lazy, assert, true, false, end},
+sensitive=true,
+commentstyle=\small\itshape\ttfamily,
+keywordstyle=\ttfamily\bfseries, %\underbar,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+fontadjust=true,
+literate={->}{{$\to$}}3 {===}{{$\equiv$}}1 {=/=}{{$\not\equiv$}}1 {|>}{{$\triangleright$}}3 {\\/}{{$\vee$}}2 {/\\}{{$\wedge$}}2 {>=}{{$\ge$}}1 {<=}{{$\le$}} 1,
+morecomment=[s]{(*}{*)}
+}
+
+\lstset{
+mathescape=true,
+%basicstyle=\small,
+identifierstyle=\ttfamily,
+keywordstyle=\bfseries,
+commentstyle=\scriptsize\rmfamily,
+basewidth={0.5em,0.5em},
+fontadjust=true,
+language=ocaml
+}
+
+\newcommand{\cd}[1]{\texttt{#1}}
+\newcommand{\inbr}[1]{\left<#1\right>}
+%\pagestyle{plain}
+%\sloppy
+
+\begin{document}
+	%
+	\title{Generic Programming with Combinators and Objects\thanks{This work was partially supported by the grant 18-01-00380 from the Russian Foundation for Basic Research.}}
+	%
+	%\titlerunning{Abbreviated paper title}
+	% If the paper title is too long for the running head, you can set
+	% an abbreviated paper title here
+	%
+	\author{Dmitry Kosarev\inst{1,2}\orcidID{0000-0002-6773-5322} \and
+		Dmitry Boulytchev\inst{1,2}\orcidID{1111-2222-3333-4444} 
+	}
+	%
+	\authorrunning{D. Kosarev \& D. Boulytchev}
+	% First names are abbreviated in the running head.
+	% If there are more than two authors, 'et al.' is used.
+	%
+	\institute{St. Petersburg State University, 11 Lieutenant Shmidt Emb., St Petersburg 199034, Russia \and
+		JetBrains Research, Primorskiy prospekt 70, Building 1,
+		St. Petersburg 197374, Russia\\
+		\email{Dmitrii.Kosarev@protonmail.ch} \\
+		\email{dboulytchev@math.spbu.ru}
+}
+	%
+	\maketitle              % typeset the header of the contribution
+	%
+	\begin{abstract}
+  We present a generic programming framework for \textsc{OCaml} which makes it possible to implement extensible
+  transformations for a large scale of type definitions. Our framework makes use of object-oriented features
+  of \textsc{OCaml}, utilising late binding to override the default behaviour of generated transformations. The
+  support for polymorphic variant types complements the ability to describe composable data types with the
+  ability to implement composable transformations.
+		
+		\keywords{First keyword  \and Second keyword \and Another keyword.}
+	\end{abstract}
+
+%\begin{document}
+%
+%\title{Generic Programming with Combinators and Objects\thanks{This work was partially supported by the grant 18-01-00380 from the Russian Foundation for Basic Research.}}
+%
+%%\author{Dmitry Kosarev
+%%  \institute{St. Petersburg State University\\
+%%    JetBrains Research \\
+%%    St. Petersburg, Russia}
+%%\email{Dmitrii.Kosarev@protonmail.ch}
+%%\and
+%%Dmitry Boulytchev
+%%\institute{St. Petersburg State University\\
+%%  JetBrains Research \\
+%%  St. Petersburg, Russia}
+%%\email{dboulytchev@math.spbu.ru}
+%%}
+%
+%\author{First Author\inst{1}\orcidID{0000-1111-2222-3333} \and
+%	Second Author\inst{2,3}\orcidID{1111-2222-3333-4444} \and
+%	Third Author\inst{3}\orcidID{2222--3333-4444-5555}}
+%%
+%
+%\authorrunning{D.Kosarev, D.Boulytchev}
+%
+%\institute{Princeton University, Princeton NJ 08544, USA \and
+%	Springer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany
+%	\email{lncs@springer.com}\\
+%	\url{http://www.springer.com/gp/computer-science/lncs} \and
+%	ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
+%	\email{\{abc,lncs\}@uni-heidelberg.de}}
+%
+%\def\titlerunning{Generic Programming with Combinators and Objects}
+%
+%\maketitle
+%
+%\begin{abstract}
+%  We present a generic programming framework for \textsc{OCaml} which makes it possible to implement extensible
+%  transformations for a large scale of type definitions. Our framework makes use of object-oriented features
+%  of \textsc{OCaml}, utilising late binding to override the default behaviour of generated transformations. The
+%  support for polymorphic variant types complements the ability to describe composable data types with the
+%  ability to implement composable transformations.
+%\end{abstract}
+
+\input{intro.tex}
+\input{exposition.tex}
+\input{impl.tex}
+\input{examples.tex}
+\input{related.tex}
+\input{conclusion.tex}
+
+\nocite{*}
+%\bibliographystyle{eptcs}
+\bibliographystyle{splncs04}
+\bibliography{GT-main}
+\end{document}

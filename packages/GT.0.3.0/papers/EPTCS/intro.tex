@@ -1,0 +1,58 @@
+\section{Introduction}
+
+Frederic Brooks in his seminal book on software engineering ``The Mythical Man-Month''~\cite{MMM} has characterised the essence of programming with the following words:
+
+\blockquote{``The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of the imagination. Few media of
+creation are so flexible, so easy to polish and rework, so readily capable of realising grand conceptual structures. (As we shall see later, this very tractability has its own problems.)''}
+
+Indeed, the virtuality of programs and flexibility of their representation call for structuring; the lack of proper structure easily leads to disastrous consequences
+(as it happened to some real-world industrial projects in the past). One of commonly used ways to bring a
+structure in software are \emph{data types}. Data types allow to describe the properties of data, what can and cannot be done, and to some extent they prescribe
+the semantics to data structures. Being kept in runtime, data types make it possible to implement meta-transformations by analysing types (\emph{introspection})
+or even creating new types on the fly (\emph{reflection}).
+
+However, in statically typed languages, as a rule, types are completely erased after the compilation and do not retained in runtime. This has a huge advantage over
+dynamic typing as, first, programs do not need to inspect types at runtime anymore and, second, a whole class of bad runtime behaviours~--- type errors~---
+is eliminated. The other side of the coin, however, is that now some transformations, which in untyped languages can be implemented ``once and for all'',
+can not be typed and have to be re-implemented for each type of interest. One way to overcome this deficiency is to develop a more powerful type system in
+which more functions can be typed; as an example we may mention the support for \emph{ad-hoc} polymorphism in \textsc{Haskell} in the forms of type
+classes~\cite{TypeClasses} and type families~\cite{TypeFamilies}. However, due to the totality of type checking and fundamental undecidability results there
+will always be some ``good'' programs which cannot be typed. Another approach, \emph{datatype-generic programming}~\cite{DGP}, is aimed at developing techniques for
+implementation of practically important families of type-indexed functions using existing language features. For example, types can be encoded in a substrate
+language~\cite{Hinze,InstantGenerics,GenericOCaml}, or a part of type information can be saved for runtime~\cite{SYB,SYBOCaml}, or generic functions for a given
+type can be generated at compile-time automatically~\cite{Yallop,PPXLib}. The two approaches we mentioned are in fact complementary~--- the more powerful
+type system is the more means for datatype-generic programming the language can incorporate natively. For example, parametric polymorphism makes it possible
+to natively express many generic functions like length of list of arbitrary elements, etc.
+
+We present a generic programming library \textsc{GT}\footnote{\url{https://github.com/kakadu/GT/tree/ppx}} (\emph{Generic Transformers}), which has been in an
+active development and use since 2014. One of the important observations, which motivated the development of our framework, was that many generic functions
+can be considered as a modifications of some other generic functions. While our approach is generative~--- we generate generic functionality from type definitions~---
+it also makes possible for end users to easily derive variants of generated functions by redefining some parts of their functionality. This is achieved using
+a method-per-constructor encoding for concrete transformations, which resembles the approach of object algebras~\cite{ObjectAlgebras}.
+
+The main properties of our solution are as follows:
+
+\begin{itemize}
+\item each transformation is expressed in terms of a \emph{traversal function} and a \emph{transformation object}, which encapsulate the ``interesting part''
+  of the transformation;
+\item the traversal function is unique for given type and all transformation objects for the type are instances of a unique class;
+\item both the traversal function and the class are generated from type definition; we support regular ADTs, structures, polymorphic variants and predefined types;
+\item we provide a number of plugins which generate practically important transformations in the form of concrete transformation classes;
+\item the plugin system is extensible: end users can implement their own plugins.
+\end{itemize}
+
+The library we present is an inheritor of our earlier work~\cite{SYBOCaml} on implementation of ``Scrap Your Boilerplate'' approach~\cite{SYB,SYB1,SYB2}. However,
+our experience has shown, that the expressivity and extensibility of SYB is insufficient; in addition the uniform transformations, based solely on type discrimination, turned out to be
+inconvenient to use. Our idea initially was to combine combinator and object-oriented approaches~--- the former would provide means for parameterization, while the
+latter~--- for extensibility via late binding utilisation. This idea in the form of a certain design pattern was successfully evaluated~\cite{SCICO} and then reified
+in a library and a syntax extension~\cite{TransformationObjects}. Our follow-up experience with the library~\cite{OCanren} has (once again) shown some flaws in the
+implementation. The version we present here is almost a complete re-implementation with these flaws fixed.
+
+The rest of the paper is organised as follows. In the next section we give an informal, example-driven exposition of
+the approach we use. Then we describe the implementation in more details, highlighting some aspects which we find important or
+interesting. In the following section we consider some examples, implemented with the aid of the library. Related works
+section observes the relevant approaches and frameworks and compares them to ours. The final section discusses the directions for
+future development.
+
+%Acknowledgements ...
+

@@ -1,0 +1,4 @@
+Cons(aaa, bbb)
+Cons(aaa, Cons(bbb, Nil))
+Var(5)	Value(asdf)
+Value(Cons(aaa, Value(Cons(bbb, Var(15)))))

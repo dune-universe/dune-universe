@@ -1,0 +1,43 @@
+(library
+  (name ppx)
+  (public_name GT.ppx)
+  (kind ppx_rewriter)
+  (libraries base ppxlib GTCommon)
+  (modules Ppx_deriving_gt PpxHelpers)
+  (synopsis "PPX syntax extensionon top of ppx_core")
+  (preprocess (pps ppxlib.metaquot))
+  (flags (:standard -w -27-9 -warn-error -A))
+)
+
+;(executable
+;  (name pp_gt)
+;  (modules pp_gt)
+;  (libraries ppxlib.runner ppx show gmap)
+;  (flags (:standard -linkall))
+;  )
+
+(rule
+  (targets pp_gt.exe)
+  (deps
+
+    ../common/GTCommon.cmxa
+    ppx.cmxa
+    ../plugins/show.cmxa
+    ../plugins/fmt.cmxa
+    ../plugins/gmap.cmxa
+    ../plugins/eval.cmxa
+    ../plugins/stateful.cmxa
+    ../plugins/foldl.cmxa
+    ../plugins/foldr.cmxa
+    ../plugins/compare.cmxa
+    ../plugins/eq.cmxa
+    ../plugins/html.cmxa
+    ../plugins/hash.cmxa
+    pp_gt.ml
+  )
+  (action  (run
+    ocamlfind ocamlopt -package base,ppxlib,ocamlgraph
+      %{deps}
+      -linkall -linkpkg
+      -o %{targets} ))
+)

@@ -1,5 +1,0 @@
-(library
- (name cviode)
- (public_name cviode)
- (libraries owl owl-base owl-ode)
-)

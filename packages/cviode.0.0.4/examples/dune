@@ -1,0 +1,13 @@
+(executable
+ (name damped)
+ (libraries cviode owl owl-plplot stdcompat))
+
+(rule
+ (alias runtest)
+ (action
+  (run ./damped.exe)))
+
+(env
+ (_
+  (env-vars
+   (QT_QPA_PLATFORM offscreen))))

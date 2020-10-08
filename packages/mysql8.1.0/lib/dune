@@ -1,0 +1,14 @@
+(library
+ (name mysql8)
+ (public_name mysql8)
+ (c_names mysql8_stubs)
+ (c_flags         (:include c_flags.mysqlclient))
+ (c_library_flags (:include c_library_flags.mysqlclient))
+ (inline_tests)
+ (preprocess
+  (pps ppx_inline_test)))
+
+(rule
+  (targets c_flags.mysqlclient c_library_flags.mysqlclient)
+  (deps (:discover config/discover.exe))
+  (action (run %{discover} )))
