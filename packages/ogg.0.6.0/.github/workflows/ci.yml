@@ -1,0 +1,31 @@
+name: CI
+
+on: [push]
+
+jobs:
+  cancel_previous_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.4.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    runs-on: ${{ matrix.os }}
+    needs: cancel_previous_run
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup OCaml
+      uses: avsm/setup-ocaml@v1.0
+    - name: Install depext module
+      run: opam install -y depext
+    - name: Pin locally
+      run: opam pin -y add --no-action .
+    - name: Update packages and install locally
+      run: opam depext -u -y -i ogg
+    - name: Build locally
+      run: eval $(opam env) && dune build

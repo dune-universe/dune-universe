@@ -1,0 +1,10 @@
+language: c
+sudo: false
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - libfaad-dev
+
+script: ./bootstrap && ./configure && make

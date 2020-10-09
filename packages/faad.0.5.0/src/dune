@@ -1,0 +1,21 @@
+(library
+ (name faad)
+ (public_name faad)
+ (synopsis "Ocaml bindings to libfaad")
+ (foreign_stubs
+  (language c)
+  (extra_deps config.h)
+  (names
+    faad_stubs
+    mp4atom
+    mp4ff
+    mp4meta
+    mp4sample
+    mp4tagupdate
+    mp4util)
+  (flags -DUSE_TAGGING))
+ (c_library_flags "-lfaad -lm"))
+
+(rule
+ (targets config.h)
+ (action (run ./config/discover.exe)))

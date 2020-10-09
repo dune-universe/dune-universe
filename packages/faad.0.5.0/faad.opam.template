@@ -1,0 +1,9 @@
+depexts: [
+  ["faad2-dev"] {os-distribution = "alpine"}
+  ["faad2"] {os-distribution = "arch"}
+  ["faad2-devel"] {os-distribution = "centos"}
+  ["faad2-devel"] {os-distribution = "fedora"}
+  ["faad2-devel"] {os-family = "suse"}
+  ["libfaad-dev"] {os-family = "debian"}
+  ["faad2"] {os = "macos" & os-distribution = "homebrew"}
+]

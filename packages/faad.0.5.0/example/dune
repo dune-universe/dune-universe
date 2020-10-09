@@ -1,0 +1,3 @@
+(executable
+ (name aac2wav)
+ (libraries unix faad))
