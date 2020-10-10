@@ -1,0 +1,27 @@
+version: "0.1.0"
+opam-version: "2.0"
+name:         "bechamel-notty"
+maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
+authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
+homepage:     "https://github.com/dinosaure/bechamel"
+bug-reports:  "https://github.com/dinosaure/bechamel/issues"
+dev-repo:     "git+https://github.com/dinosaure/bechamel.git"
+doc:          "https://dinosaure.github.io/bechamel/"
+license:      "MIT"
+synopsis:     "CLI generator for bechamel's output"
+description: """A simple tool to generate a CLI output with notty
+which shows results from bechamel's benchmarks (as core_bench)."""
+
+build: [
+  [ "dune" "subst" ] {pinned}
+  [ "dune" "build" "-p" name "-j" jobs ]
+  [ "dune" "runtest" "-p" name "-j" jobs ] {with-test}
+]
+
+depends: [
+  "ocaml"      {>= "4.08.0"}
+  "dune"       {>= "2.0.0"}
+  "bechamel"   {= version}
+  "notty"
+  "fmt"
+]

@@ -1,4 +1,0 @@
-(executable
-  (public_name p4pp)
-  (name main)
-  (libraries core_kernel p4pp core))

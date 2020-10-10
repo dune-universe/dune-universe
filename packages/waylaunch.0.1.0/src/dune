@@ -1,0 +1,4 @@
+(executable
+ (name main)
+ (public_name waylaunch)
+ (libraries unix bos bemenu_bindings))

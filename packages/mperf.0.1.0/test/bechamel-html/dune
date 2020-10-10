@@ -1,0 +1,12 @@
+(rule
+ (targets output.html)
+ (action
+  (with-stdout-to
+   %{targets}
+   (system "%{bin:bechamel-html} < %{dep:input.json}"))))
+
+(rule
+ (alias runtest)
+ (package bechamel-js)
+ (action
+  (diff output.html.expected output.html)))

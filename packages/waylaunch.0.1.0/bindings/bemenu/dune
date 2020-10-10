@@ -1,0 +1,52 @@
+(copy_files
+ (files client/common/*))
+
+(copy_files
+ (files lib/*))
+
+(copy_files
+ (files lib/renderers/*))
+
+(copy_files
+ (files lib/renderers/wayland/*))
+
+(library
+ (name bemenu)
+ (modules)
+ (foreign_stubs
+  (language c)
+  (names xdg-shell wlr-layer-shell-unstable-v1 wayland registry window filter
+    library util item list menu common)
+  (include_dirs lib)
+  (flags
+   (:standard
+    "-DBM_VERSION=\"0.5.0\""
+    (:include c_flags.sexp))))
+ (c_library_flags
+  (:standard
+   (:include c_library_flags.sexp))))
+
+(rule
+ (target wlr-layer-shell-unstable-v1.h)
+ (deps wlr-layer-shell-unstable-v1.xml)
+ (action
+  (run wayland-scanner client-header %{deps} %{target})))
+
+(rule
+ (target wlr-layer-shell-unstable-v1.c)
+ (deps wlr-layer-shell-unstable-v1.xml)
+ (action
+  (run wayland-scanner private-code %{deps} %{target})))
+
+;; TODO: avoid (bash ...)
+
+(rule
+ (target xdg-shell.c)
+ (action
+  (bash
+    "wayland-scanner private-code \"$(pkg-config --variable=pkgdatadir wayland-protocols)/stable/xdg-shell/xdg-shell.xml\" %{target}")))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run config/discover.exe)))

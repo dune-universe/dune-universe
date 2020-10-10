@@ -1,0 +1,3 @@
+[submodule "bemenu"]
+	path = bindings/bemenu
+	url = git://github.com/kit-ty-kate/bemenu.git
