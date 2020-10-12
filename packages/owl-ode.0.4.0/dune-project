@@ -1,4 +1,4 @@
 (lang dune 2.0)
 
 (name owl-ode)
-(version v0.3.0)
+(version v0.3.0-3-g6098ba2)

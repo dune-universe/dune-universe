@@ -1,0 +1,23 @@
+(lang dune 2.5)
+(generate_opam_files true)
+
+(name binning)
+(version v0.0.0)
+(source (github pveber/binning))
+(homepage "https://github.com/pveber/binning/")
+(bug_reports "https://github.com/pveber/binning/issues")
+(license CeCILL-B)
+(authors "Philippe Veber")
+(maintainers "philippe.veber@gmail.com")
+
+(package
+  (name binning)
+  (synopsis "A datastructure to accumulate values in bins")
+  (description "
+This library is useful for counting elements by categories,
+constructing relations and transposing them. Binning are constructed
+from streams of values. A binning can be seen as a generalized
+histogram: values are mapped to bins, and each bin keeps a summary
+value that is updated when an element is added (like a count, the list
+of elements, their mean, etc).")
+)

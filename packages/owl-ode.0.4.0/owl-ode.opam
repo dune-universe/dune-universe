@@ -1,4 +1,4 @@
-version: "0.3.0"
+version: "0.4.0"
 opam-version: "2.0"
 maintainer: "owlbarn"
 authors: [ "Marcello Seri" "Ta-Chu Calvin Kao" ]
@@ -12,12 +12,16 @@ build: [
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
 depends: [
-  "ocaml" {>= "4.06.0"}
+  "ocaml" {>= "4.10.0"}
   "dune" {>= "2.0.0"}
-  "owl-base" {>= "0.8.0" & < "0.9.0"}
+  "owl" {>= "0.9.0"}
+  "owl-ode-base" {= version}
+  "owl-plplot" {with-test}
+  "alcotest" {with-test}
 ]
 synopsis: "Owl's ODE solvers"
 description: """OwlDE: ODE Integration library
 
-The base library contains pure OCaml code and supports compilation with js_of_ocaml
+The main library contains solvers using the faster BLAS/LAPACK 
+Owl interface.
 """

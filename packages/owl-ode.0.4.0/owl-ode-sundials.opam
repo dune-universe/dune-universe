@@ -1,4 +1,4 @@
-version: "0.3.0"
+version: "0.4.0"
 opam-version: "2.0"
 maintainer: "owlbarn"
 authors: [ "Marcello Seri" "Ta-Chu Calvin Kao" ]
@@ -12,16 +12,16 @@ build: [
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
 depends: [
-  "ocaml" {>= "4.06.0"}
-  "owl" {>= "0.8.0" & < "0.9.0"}
+  "ocaml" {>= "4.10.0"}
+  "owl" {>= "0.9.0"}
   "dune" {>= "2.0.0"}
   "owl-ode" {= version}
   "owl-plplot" {with-test}
-  "odepack"
+  "sundialsml"
 ]
-synopsis: "Owl's ODE solvers, interface with ODEPACK"
+synopsis: "Owl's ODE solvers, interface with SundialsML"
 description: """OwlDE: ODE Integration library
 
-The ODEPACK library provides bindings to ODEPACK via OCaml's
-ODEPACK library.
+The sundials library provides bindings to sundials via OCaml's
+sundialsml library.
 """
