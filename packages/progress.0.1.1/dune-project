@@ -1,6 +1,6 @@
 (lang dune 2.7.1)
 (name progress)
-(version 0.1.0)
+(version 0.1.1)
 (implicit_transitive_deps false)
 
 (generate_opam_files true)

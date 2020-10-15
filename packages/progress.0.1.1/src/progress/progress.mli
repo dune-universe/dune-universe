@@ -30,7 +30,7 @@ val counter :
 
     - [?mode] specifies whether to use a UTF-8 or an ASCII encoding for the
       progress bar. The UTF-8 encoding shows a higher resolution of progress,
-      but may not be supported in all terminals. The default is [`UTF8].
+      but may not be supported in all terminals. The default is [`ASCII].
 
     - [?pp] is used to pretty-print the [<count>] segment, if passed. For
       example, {!Units.bytes} can be used for totals measured in bytes. The
@@ -66,7 +66,7 @@ val ( / ) : 'a t -> 'b t -> ('a * 'b) t
 
 (** {1 Rendering} *)
 
-val with_display : ?ppf:Format.formatter -> 'a t -> ('a -> 'b) -> 'b
+val with_reporters : ?ppf:Format.formatter -> 'a t -> ('a -> 'b) -> 'b
 (** Render a set of progress bars inside a continuation.
 
     @param ppf Defaults to {!Format.err_formatter} if [stderr] is a TTY, and is
