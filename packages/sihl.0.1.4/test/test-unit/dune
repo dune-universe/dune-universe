@@ -1,7 +1,0 @@
-(test
- (name test)
- (libraries
-  sihl
-  alcotest
-  alcotest-lwt
-))

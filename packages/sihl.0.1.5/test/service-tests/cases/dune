@@ -1,0 +1,3 @@
+(library
+ (name test_case)
+ (libraries sihl alcotest alcotest-lwt))
