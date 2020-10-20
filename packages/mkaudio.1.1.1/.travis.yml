@@ -1,0 +1,12 @@
+sudo: required
+os:
+  - linux
+  - osx
+language: c
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-opam.sh
+script: PACKAGE=mkaudio bash -ex .travis-opam.sh
+env:
+  - OCAML_VERSION=4.08
+  - OCAML_VERSION=4.09
+  - OCAML_VERSION=4.10
+  - OCAML_VERSION=4.11

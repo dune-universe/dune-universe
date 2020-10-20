@@ -1,0 +1,46 @@
+{
+  "name": "reason-promise",
+  "version": "1.1.2",
+  "description": "Light and type-safe binding to JS promises",
+  "keywords": [
+    "BuckleScript",
+    "reason",
+    "promise",
+    "async"
+  ],
+  "homepage": "https://github.com/aantron/promise",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aantron/promise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aantron/promise/issues"
+  },
+  "author": {
+    "name": "Anton Bachin",
+    "email": "antonbachin@yahoo.com",
+    "url": "https://github.com/aantron"
+  },
+  "peerDependencies": {
+    "bs-platform": ">= 7.0.0"
+  },
+  "devDependencies": {
+    "bs-platform": ">= 7.3.1",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^3.0.0"
+  },
+  "scripts": {
+    "build": "bsb -make-world",
+    "watch": "bsb -w -make-world",
+    "clean": "bsb -clean-world && rm -rf lib promise-* *.tar.gz *.tgz _release",
+    "very-clean": "rm -rf node_modules _esy _opam package-lock.json",
+    "test": "bsb -make-world && node lib/js/test/test_main.js",
+    "benchmark": "bsb -make-world && node lib/js/test/js/benchmark.js"
+  },
+  "files": [
+    "src/js/promise.rei",
+    "src/js/promise.re",
+    "bsconfig.json"
+  ]
+}

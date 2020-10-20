@@ -1,0 +1,6 @@
+(library
+ (name camlimages_graphics)
+ (public_name camlimages.graphics)
+ (optional)
+ (wrapped false)
+ (libraries camlimages.core graphics))

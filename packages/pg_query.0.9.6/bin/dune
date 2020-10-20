@@ -1,0 +1,4 @@
+(executable
+ (name pg_check)
+ (public_name pg_check)
+ (libraries ctypes ctypes.foreign cmdliner pg_query))

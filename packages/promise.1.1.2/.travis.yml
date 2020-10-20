@@ -1,0 +1,78 @@
+language: generic
+dist: bionic
+
+jobs:
+  include:
+    - env: BUILD_SYSTEM=esy
+      before_install:
+        - '[ "$TRAVIS_EVENT_TYPE" != cron ] || rm -rf ./node_modules ~/.esy'
+      install:
+        - '[ ! -f ./node_modules/.bin/esy ] || ESY_CACHED=yes'
+        - '[ "$ESY_CACHED" == yes ] || npm install --no-save esy'
+        - '[ "$ESY_CACHED" != yes ] || SKIP_UPDATE=--skip-repository-update'
+        - export PATH="$(pwd)/node_modules/.bin:$PATH"
+        - esy install $SKIP_UPDATE -P ./promise.opam
+      script:
+        - esy -P ./promise.opam dune build test/test_main.exe
+        - esy -P ./promise.opam dune exec test/test_main.exe
+      before_cache:
+        - npm cache clean --force
+        - rm -rf node_modules/.cache/_esy
+
+    - env: BUILD_SYSTEM=npm
+      before_install:
+        - '[ "$TRAVIS_EVENT_TYPE" != cron ] || rm -rf ./node_modules'
+      install:
+        - 'npx which bsb || npm install'
+      script:
+        - npm run test
+        - bash test/bundle/size.sh
+        - pushd ..
+        - git clone https://github.com/aantron/promise-example-bsb.git
+        - cd promise-example-bsb
+        - npm install
+        - npm run test
+        - cd ..
+        - git clone https://github.com/aantron/promise-example-binding.git
+        - cd promise-example-binding
+        - npm install
+        - npm run test
+        - popd
+        - pwd
+      before_cache:
+        - ./node_modules/.bin/bsb -clean-world
+        - npm cache clean --force
+
+    - env: BUILD_SYSTEM=opam
+      before_install:
+        - '[ "$TRAVIS_EVENT_TYPE" != cron ] || rm -rf ~/.opam'
+      install:
+        - VERSION=2.0.6
+        - OPAM=opam-$VERSION-x86_64-linux
+        - wget https://github.com/ocaml/opam/releases/download/$VERSION/$OPAM
+        - sudo mv $OPAM /usr/local/bin/opam
+        - sudo chmod a+x /usr/local/bin/opam
+        - opam init -ya --compiler=4.02.3 --disable-sandboxing
+        - eval `opam env`
+        - ocaml -version
+        - opam install -y --deps-only .
+      script:
+        - dune exec test/test_main.exe
+        # - BISECT_ENABLE=yes dune exec test/test_main.exe
+        # - bisect-ppx-report send-to Coveralls
+        - opam lint
+      before_cache:
+        - opam clean
+
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.esy
+    - $HOME/.opam
+    - node_modules
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always
