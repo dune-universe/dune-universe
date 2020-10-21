@@ -1,0 +1,10 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+Name: mirage-xen
+Version: 6.0.0
+URL: https://github.com/mirage/mirage-xen/
+Description: Core platform libraries for Mirage on Xen
+Libs: ${libdir}/mirage-xen/libmirage-xen_bindings.a
+Requires: ocaml-freestanding

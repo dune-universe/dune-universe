@@ -1,0 +1,3 @@
+(lang dune 2.6)
+(name mirage-xen)
+(version v5.0.0-27-g7a72265)

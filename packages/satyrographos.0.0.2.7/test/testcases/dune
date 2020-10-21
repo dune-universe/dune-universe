@@ -1,0 +1,46 @@
+(tests
+ (names
+   command_install__distWithBrokenHash
+   command_install__distWithNonHashUnderHashDir
+   command_install__emptyDist
+   command_install__missingDist
+   command_install__onlyDist
+   command_install__twoDists
+   command_install__unmanagedDirAlreadyExists
+   command_install__thirdParties
+   command_install__thirdParties_brokenDependency
+   command_install_l__autogen
+   command_install_l__dependent
+   command_install_l__simple
+   command_install_l__independentTwo
+   command_install_l__thirdParties_brokenDependency
+   command_install_l__transitive
+   command_lint__acyclic_for_each_mode
+   command_lint__cyclic_dependencies
+   command_lint__insufficient_dependencies
+   command_lint__insufficient_dependencies_for_some_modes
+   command_lint__invalid_opam_file
+   command_lint__missing_dependencies
+   command_lint__missing_file
+   command_lint__missing_opam
+   command_lint__missing_satyristes
+   command_lint__packages_for_different_modes
+   command_lint__unmatched_names
+   command_lint__unmatched_versions
+   command_lint__valid
+   command_lint__valid_in_specified_location
+   command_lint__valid_versions
+   command_opam_build__doc_satysfi
+   command_opam_install__doc
+   command_opam_install__library
+   command_opam_install__library_missingHash
+   command_opam_install__library_missingPackage
+   command_opam_install__library_recursive
+   library_write_dir__content
+ )
+ (preprocess (pps ppx_deriving.std ppx_jane))
+ (libraries core re satyrographos_command satyrographos_testlib shexp.process uri)
+ )
+
+(cram
+ (deps %{bin:satyrographos}))
