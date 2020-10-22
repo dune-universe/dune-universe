@@ -1,0 +1,16 @@
+/**************************************/
+/* mickey                             */
+/* problem from the Coconut benchmark */
+/* 2 variables                        */
+/* 2 quadratic constraints            */
+/**************************************/
+
+init{
+  real x = [-3; 3];
+  real y = [-3; 3];
+}
+
+constraints{
+  x^2 + 4*y^2 - 4 <= 0;
+  2*(y^2) - x <= 0;
+}

@@ -1,0 +1,10 @@
+/* simple example with arctan */
+
+init{
+  real x = [-20;20];
+  real y = [-50;50];
+}
+
+constraints{
+  y < atan(x);
+}

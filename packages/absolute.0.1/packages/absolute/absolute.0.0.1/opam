@@ -1,0 +1,34 @@
+url {
+  src: "https://github.com/mpelleau/AbSolute/archive/v0.0.1.tar.gz"
+}
+opam-version: "2.0"
+maintainer: "Marie Pelleau <marie.pelleau@i3s.unice.fr>"
+authors: [
+  "Marie Pelleau <marie.pelleau@i3s.unice.fr>"
+  "Ghiles Ziat <ghiles.ziat@lip6.fr>"
+]
+homepage: "https://github.com/mpelleau/AbSolute"
+bug-reports: "https://github.com/mpelleau/AbSolute/issues"
+dev-repo: "git+https://github.com/mpelleau/AbSolute"
+license: "LGPL"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "dune" {build}
+  "ocaml" {>= "4.03"}
+  "apron"
+]
+depopts: [
+  "vpl-core"
+]
+conflicts: [
+  "vpl-core" {< "0.4.2"}
+]
+
+synopsis: "AbSolute solver"
+description: "AbSolute is a constraint solver based on abstract domains from the theory of abstract interpretation."

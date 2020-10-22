@@ -1,0 +1,9 @@
+init{
+  real x = [-10; 10];
+  real y = [-4;4];
+}
+
+constraints{
+  y < sin(x) + 1;
+  y > cos(x) - 1;
+}

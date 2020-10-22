@@ -1,0 +1,17 @@
+(include_subdirs unqualified)
+
+(library
+  (name libabsolute)
+  (wrapped false)
+  (libraries bigarray gmp apron apron.polkaMPQ apron.octD apron.boxMPQ apronext picasso
+    (select vpl_domain.ml from
+      (vpl zarith -> domains/numeric/vpl_domain.ok.ml)
+      (!vpl       -> domains/numeric/vpl_domain.ko.ml)))
+  (c_names ml_float)
+  (modules (:standard \ absolute check)))
+
+(executable
+ (name absolute)
+ (public_name absolute)
+ (modules absolute)
+ (libraries libabsolute))

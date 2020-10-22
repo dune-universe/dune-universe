@@ -1,0 +1,10 @@
+/* simple example with arcsinus */
+
+init{
+  real x = [-20;20];
+  real y = [-5;5];
+}
+
+constraints{
+  y < asin(x);
+}
