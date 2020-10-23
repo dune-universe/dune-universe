@@ -1,0 +1,4 @@
+(tests
+ (names test_isecn test_cumulus_lN)
+ (modules test_isecn test_cumulus_lN)
+ (libraries cumulus))

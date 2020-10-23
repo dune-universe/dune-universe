@@ -1,0 +1,5 @@
+(test
+ (name test_ppx_yojson_lib)
+ (libraries ppx_yojson_lib alcotest)
+ (action
+  (run %{test} -e)))

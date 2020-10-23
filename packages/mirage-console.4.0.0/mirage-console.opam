@@ -1,0 +1,26 @@
+version: "4.0.0"
+opam-version: "2.0"
+maintainer: "anil@recoil.org"
+authors: ["Anil Madhavapeddy" "David Scott"]
+license: "ISC"
+tags: ["org:mirage" "org:xapi-project"]
+homepage: "https://github.com/mirage/mirage-console"
+doc: "https://mirage.github.io/mirage-console/"
+bug-reports: "https://github.com/mirage/mirage-console/issues"
+depends: [
+  "ocaml" {>= "4.08.0"}
+  "dune" {>= "1.0"}
+  "mirage-device" {>= "2.0.0"}
+  "mirage-flow" {>= "2.0.0"}
+  "lwt" {>= "4.0.0"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+dev-repo: "git+https://github.com/mirage/mirage-console.git"
+synopsis: "Implementations of Mirage console devices"
+description: """
+This is a general implementation of a console device, intended
+for use in MirageOS.
+"""

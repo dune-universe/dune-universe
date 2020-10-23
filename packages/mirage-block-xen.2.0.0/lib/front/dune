@@ -1,0 +1,8 @@
+(library
+ (name mirage_block_xen_front)
+ (public_name mirage-block-xen.front)
+ (modules Blkfront Block)
+ (libraries logs lwt cstruct mirage-block io-page
+   shared-memory-ring shared-memory-ring-lwt mirage-block-xen
+   mirage-xen)
+ (wrapped false))

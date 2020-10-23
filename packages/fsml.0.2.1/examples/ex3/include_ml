@@ -1,0 +1,13 @@
+#use "topfind";;
+#require "base";;
+#require "ppxlib";;
+#require "yojson";;
+#require "ppx_deriving.runtime";;
+#require "ppx_deriving_yojson.runtime";;
+#directory "../../_build/default/src";;
+#directory "../../_build/default/src/.fsml.objs/byte";;
+#directory "../../_build/default/src/.ppx_fsm.objs/byte";;
+#load "fsml.cma";;
+#load "ppxs.cmo";;
+
+open Fsml

@@ -1,0 +1,10 @@
+(executable
+ (name test_ppx)
+ (modules test_ppx)
+ (libraries fsml)
+ (preprocess (pps ppx_deriving.show ppx_fsm)))
+
+(executable
+ (name check_ppx)
+ (modules check_ppx)
+ (libraries fsml ppx_fsm))
