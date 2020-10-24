@@ -121,6 +121,19 @@ Matching time slots (in above time zone):
 [2020 Dec 26 00:00:00, 2020 Dec 26 23:59:00)
 ```
 
+"I want to generate time filters for Wireshark"
+
+```
+$ telltime search \
+>   --format "(frame.time >= {smon:Xxx} {smday:0X}, {syear} {shour:0X}:{smin:0X}:{ssec:0X} && frame.time < {emon:Xxx} {emday:0X}, {eyear} {ehour:0X}:{emin:0X}:{esec:0X})" \
+>   --sep " || " \
+>   "2020 . jun . 1 to 15 . 5pm to 6pm"
+Searching in time zone offset (seconds)            : 39600
+Search by default starts from (in above time zone) : 2020 Oct 21 13:18:46
+
+(frame.time >= Jun 01, 2020 17:00:00 && frame.time < Jun 01, 2020 18:00:00) || (frame.time >= Jun 02, 2020 17:00:00 && frame.time < Jun 02, 2020 18:00:00) || (frame.time >= Jun 03, 2020 17:00:00 && frame.time < Jun 03, 2020 18:00:00) || (frame.time >= Jun 04, 2020 17:00:00 && frame.time < Jun 04, 2020 18:00:00) || (frame.time >= Jun 05, 2020 17:00:00 && frame.time < Jun 05, 2020 18:00:00) || (frame.time >= Jun 06, 2020 17:00:00 && frame.time < Jun 06, 2020 18:00:00) || (frame.time >= Jun 07, 2020 17:00:00 && frame.time < Jun 07, 2020 18:00:00) || (frame.time >= Jun 08, 2020 17:00:00 && frame.time < Jun 08, 2020 18:00:00) || (frame.time >= Jun 09, 2020 17:00:00 && frame.time < Jun 09, 2020 18:00:00) || (frame.time >= Jun 10, 2020 17:00:00 && frame.time < Jun 10, 2020 18:00:00)
+```
+
 #### Get exact time after some duration from now
 
 ```

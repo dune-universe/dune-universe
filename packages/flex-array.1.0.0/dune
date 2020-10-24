@@ -1,0 +1,9 @@
+(library
+ (public_name flex-array)
+ (name flex_array)
+ (modules flex_array))
+
+(test
+ (name test)
+ (modules test)
+ (libraries flex-array alcotest))

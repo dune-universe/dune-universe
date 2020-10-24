@@ -15,7 +15,7 @@ depends: [
   "ptime"
   "cmdliner"
   "oseq"
-  "daypack-lib" {= "0.0.5"}
+  "daypack-lib" {= "0.0.6"}
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
