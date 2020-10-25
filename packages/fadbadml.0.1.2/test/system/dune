@@ -1,0 +1,57 @@
+(rule
+    (target fadcpp.exe)
+    (action (run g++ -Ifadbad++ -o fadcpp.exe fadcpp.cpp))
+    (deps (source_tree fadbad++) common.cpp fadcpp.cpp brusselator.cpp))
+
+(rule
+    (target badcpp.exe)
+    (action (run g++ -Ifadbad++ -o badcpp.exe badcpp.cpp))
+    (deps (source_tree fadbad++) common.cpp badcpp.cpp brusselator.cpp))
+
+(rule
+    (target tadcpp.exe)
+    (action (run g++ -Ifadbad++ -o tadcpp.exe tadcpp.cpp))
+    (deps (source_tree fadbad++) common.cpp tadcpp.cpp brusselator.cpp))
+
+(executables
+    (names fadml badml tadml)
+    (modes native)
+    (libraries unix fadbadml))
+
+(rule
+    (target test_fad.output)
+    (alias test_fad)
+    (action (with-stdout-to test_fad.output (run ./compare.py fad -n 1000 -j 4)))
+    (deps compare.py compare_json.py fadml.exe fadcpp.exe))
+
+(rule
+    (target test_bad.output)
+    (alias test_bad)
+    (action (with-stdout-to test_bad.output (run ./compare.py bad -n 1000 -j 4)))
+    (deps compare.py compare_json.py badml.exe badcpp.exe))
+
+(rule
+    (target test_tad.output)
+    (alias test_tad)
+    (action (with-stdout-to test_tad.output (run ./compare.py tad -n 1000 -j 4)))
+    (deps compare.py compare_json.py tadml.exe tadcpp.exe))
+
+(rule
+    (alias runtest_fad)
+    (action (diff? test_fad.output test.expected))
+    (deps test_fad.output test.expected))
+
+(rule
+    (alias runtest_bad)
+    (action (diff? test_bad.output test.expected))
+    (deps test_bad.output test.expected))
+
+(rule
+    (alias runtest_tad)
+    (action (diff? test_tad.output test.expected))
+    (deps test_tad.output test.expected))
+
+(rule 
+    (alias runtest)
+    (action (echo "OK"))
+    (deps (alias runtest_fad) (alias runtest_bad) (alias runtest_tad)))

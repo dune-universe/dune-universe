@@ -1,0 +1,3 @@
+(library
+ (name fadbad)
+ (public_name fadbadml))

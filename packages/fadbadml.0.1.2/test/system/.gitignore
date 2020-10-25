@@ -1,0 +1,10 @@
+__pycache__
+
+fadml
+fadcpp
+badml
+badcpp
+tadml
+tadcpp
+
+*.exe

@@ -1,0 +1,5 @@
+(env
+  (dev
+    (flags (:standard -w -32))))
+
+(dirs "src" "test")

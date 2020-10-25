@@ -1,0 +1,3 @@
+(tests 
+    (names run_test)
+    (libraries qcheck fadbadml))
