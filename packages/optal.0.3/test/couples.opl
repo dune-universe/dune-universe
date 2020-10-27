@@ -1,0 +1,12 @@
+dvar float x;
+dvar float y;
+dvar float z;
+
+minimize x
+
+constraints {
+
+  forall( <i, i> in couples ) x >= i;
+  forall( < i, <j,i> > in trip ) x >= i * y + j * z;
+
+}

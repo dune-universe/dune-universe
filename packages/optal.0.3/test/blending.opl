@@ -1,0 +1,30 @@
+dvar float     p[Metals];
+dvar float     r[Raws];
+dvar float     s[Scraps];
+dvar int       i[Ingos];
+dvar float     m[Metals];
+
+minimize
+  sum(j in Metals) CostMetal[j] * p[j] +
+  sum(j in Raws)   CostRaw[j]   * r[j] +
+  sum(j in Scraps) CostScrap[j] * s[j] +
+  sum(j in Ingos)  CostIngo[j]  * i[j];
+
+constraints {
+  forall( j in Metals ) p[j] >= 0;
+  forall( j in Raws )   r[j] >= 0;
+  forall( j in Scraps ) s[j] >= 0;
+  forall( j in Ingos )  i[j] >= 0;
+  forall( j in Metals )
+    m[j] >= Low[j] * Alloy &&
+    m[j] <= Up[j] * Alloy;
+
+  forall( j in Metals )
+      m[j] ==
+      p[j] +
+      sum( k in Raws )   PercRaw[j][k] * r[k] +
+      sum( k in Scraps ) PercScrap[j][k] * s[k] +
+      sum( k in Ingos )  PercIngo[j][k] * i[k];
+
+  sum( j in Metals ) m[j] == Alloy;
+}

@@ -1,0 +1,6 @@
+(executable
+ (name indexedDB_example)
+ (modules indexedDB_example)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_idb)
+ (modes js))

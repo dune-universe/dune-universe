@@ -1,0 +1,16 @@
+dvar bool chosen [edge];
+
+minimize sum (<i,j> in edge) chosen[<i,j>];
+
+constraints {
+
+    // Flow constraint on every node except source and destination
+    forall (j in vertex : j != source && j != destination)
+      sum (<i,j> in edge) chosen[<i,j>] == sum (<j,k> in edge) chosen[<j,k>];
+
+    // Flow constraint on source node
+    sum (<source, j> in edge) chosen[<source,j>] == 1;
+
+    // Flow constraint on destination node
+    sum (<j, destination> in edge) chosen[<j,destination>] == 1;
+}

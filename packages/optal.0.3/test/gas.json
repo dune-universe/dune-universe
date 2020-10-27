@@ -1,0 +1,17 @@
+
+{ "Products" : [ "gas", "chloride" ],
+  "Components" : [ "nitrogen", "hydrogen", "chlorine" ],
+  "Demand" :
+   { "gas" :
+      { "nitrogen" : 1,
+        "hydrogen" : 3,
+        "chlorine" : 0 },
+     "chloride" :
+      { "nitrogen" : 1,
+        "hydrogen" : 4,
+        "chlorine" : 1 } },
+  "Profit" : { "gas" : 30, "chloride" : 40 },
+  "Stock" :
+   { "nitrogen" : 50,
+     "hydrogen" : 180,
+     "chlorine" : 40 } }

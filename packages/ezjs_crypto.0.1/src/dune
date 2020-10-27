@@ -1,0 +1,5 @@
+(library
+ (public_name ezjs_crypto)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min)
+ (modes byte))

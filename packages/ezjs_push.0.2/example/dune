@@ -1,0 +1,13 @@
+(executable
+ (name index_example)
+ (modules index_example)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_push)
+ (modes js))
+
+(executable
+ (name sw_example)
+ (modules sw_example)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_push)
+ (modes js))

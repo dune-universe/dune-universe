@@ -1,0 +1,6 @@
+(library
+  (name toplevel)
+  (public_name ldap.toplevel)
+  (modes byte)
+  (wrapped false)
+  (libraries ldif compiler-libs))

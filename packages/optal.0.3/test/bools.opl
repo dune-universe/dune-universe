@@ -1,0 +1,17 @@
+//minimal number of variable to satisfy a formula
+
+dvar boolean x;
+dvar bool y; // same as boolean
+dvar bool z;
+
+minimize
+  x + y + z;
+
+constraints {
+
+  // should I do something to express clearly boolean constraints ?
+
+  x + y >= 1; // x \/ y
+
+}
+

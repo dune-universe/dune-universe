@@ -1,0 +1,14 @@
+dvar float Gas;
+dvar float Chloride;
+
+
+maximize
+  40 * Gas + 50 * Chloride;
+
+constraints {
+  Gas >= 0;
+  Chloride >= 0;
+  Gas + Chloride <= 50;
+  3 * Gas + 4 * Chloride <= 180;
+  Chloride <= 40;
+}

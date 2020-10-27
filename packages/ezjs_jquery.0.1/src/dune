@@ -1,0 +1,14 @@
+(library
+ (public_name ezjs_jquery)
+ (modules ezjs_jquery)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml)
+ (modes byte))
+
+(library
+ (public_name ezjs_jquery.sortable)
+ (name ezjs_sortable)
+ (modules ezjs_sortable)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_jquery)
+ (modes byte))

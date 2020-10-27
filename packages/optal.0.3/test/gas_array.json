@@ -1,0 +1,6 @@
+
+{ "Products" : [ "gas", "chloride" ],
+  "Components" : [ "nitrogen", "hydrogen", "chlorine" ],
+  "Demand" : [ [ 1, 3, 0 ], [ 1, 4, 1 ] ],
+  "Profit" : [ 30, 40 ],
+  "Stock" : [ 50, 180, 40 ] }

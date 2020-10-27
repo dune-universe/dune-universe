@@ -1,0 +1,12 @@
+dvar bool chosen [edge];
+
+minimize sum (<i,j> in edge) chosen[<i,j>];
+
+constraints {
+
+    // Flow between source and destination
+    forall (j in vertex)
+            (j == source) + sum (<i,j> in edge) chosen[<i,j>]
+       == (j == destination) + sum (<j,k> in edge) chosen[<j,k>];
+
+}

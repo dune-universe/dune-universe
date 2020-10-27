@@ -1,0 +1,14 @@
+dvar float Production[indexOf(Products)];
+
+maximize
+  sum( p in indexOf(Products) )
+    Profit[p] * Production[p];
+
+constraints {
+
+  forall( p in indexOf(Products) ) Production[p] >= 0;
+  forall( c in indexOf(Components) )
+    sum( p in indexOf(Products) )
+      Demand[p][c] * Production[p] <= Stock[c];
+
+}

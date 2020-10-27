@@ -1,0 +1,8 @@
+dvar float x;
+
+minimize x
+
+constraints {
+  1 == 2 || x >= 0;
+  1 == 1 || x >= 1;
+}

@@ -1,0 +1,7 @@
+dvar int x;
+
+minimize x;
+
+constraints {
+  forall( <i,2> in test: not (i >= 5) ) x >= i;
+}

@@ -1,0 +1,14 @@
+dvar int x;
+dvar int y;
+dvar int z;
+dvar int w;
+
+minimize x
+
+constraints {
+
+  forall( i, j in test )
+    forall( k in test: k == i + j )
+      x >= i * x + j * z + k * w;
+
+}

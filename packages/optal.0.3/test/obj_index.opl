@@ -1,0 +1,10 @@
+dvar float x;
+indexing test[couples];
+
+minimize x
+
+constraints {
+
+  forall( <i,i> in couples ) x >= test[<i,i>];
+
+}

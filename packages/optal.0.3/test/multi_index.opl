@@ -1,0 +1,10 @@
+alias arr = indexOf(test);
+dvar int v[arr][arr][truc];
+
+minimize v[3][2].chose;
+
+constraints {
+
+  forall(i,j in arr, k in truc) v[i][j][k] >= v[j][i][k];
+
+}

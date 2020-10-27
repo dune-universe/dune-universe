@@ -1,0 +1,35 @@
+//chosen[x] == true iff x the edge x is part of the path
+dvar bool chosen[edge]
+//chosen[x] == true iff x the vertex x is reached by the path
+dvar bool reached[vertex]
+
+minimize
+   sum(x in chosen) 1; // the length of the path
+
+constraints {
+
+  forall(<x,y> in edge)
+    // <x,y> in the path => y reached
+    chosen[<x,y>] <= reached[y]
+
+  forall(<x,y> in edge)
+    // <x,y> in the path => x reached
+    chosen[<x,y>] <= reached[x]
+
+  forall(y in vertex: y != source)
+    // y reached => there exists <x,y> in then path
+    // exept for the source
+    reached[y] <= sum(<x,y> in edge) chosen[<x,y>]
+
+  forall(x in vertex)
+    // there is at most one edge in the path starting from x
+    1 >= sum(<x,y> in edge) chosen[<x,y>]
+
+  forall(y in vertex)
+    // there is at most one edge in the path going to y
+    1 >= sum(<x,y> in edge) chosen[<x,y>]
+
+  reached[source] == 1;
+  reached[destination] == 1;
+
+}

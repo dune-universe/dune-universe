@@ -1,0 +1,15 @@
+//test with array.json
+
+dvar int choses[couples];
+
+maximize
+  sum(c in couples) choses[c];
+//  sum(c in choses) c;
+
+constraints {
+
+  forall(<i,j> in couples)
+    choses[<i,j>] <= i &&
+    choses[<i,j>] >= j
+
+}

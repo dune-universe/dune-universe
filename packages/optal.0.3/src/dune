@@ -1,0 +1,9 @@
+(executable
+ (public_name optal)
+ (libraries jsonm))
+
+(menhir
+ (modules parser))
+
+(ocamllex
+ (modules lexer))

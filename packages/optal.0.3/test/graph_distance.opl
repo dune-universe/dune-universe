@@ -1,0 +1,15 @@
+dvar float distance[vertex][vertex]
+
+maximize
+   distance[source][destination];
+
+constraints {
+  forall( <x,y> in edge )
+    distance[x][y] == 1;
+
+  forall( x in vertex )
+    distance[x][x] == 0;
+
+  forall( x, y, z in vertex: x != y && x != z && y != z )
+    distance[x][z] <= distance[x][y] + distance[y][z];
+}

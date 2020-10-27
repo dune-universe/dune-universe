@@ -1,0 +1,11 @@
+dvar float some_var
+
+maximize
+  some_var *
+    sum( <a1,a2> in a : a1 < a2 ) (a1 + a2)
+    /* should I change sum precedence to be lower than + ?
+       This would allow omiting parenthesis in (a1 + a2) */
+
+constraints {
+
+}

@@ -1,0 +1,12 @@
+
+dvar int Take[Items];
+
+maximize
+  sum(i in Items) Value[i] * Take[i];
+
+constraints {
+  forall( r in Resources )
+      sum( i in Items )
+        Use[r][i] * Take[i] <= Capacity[r];
+  forall( i in Items ) Take[i] >= 0;
+}

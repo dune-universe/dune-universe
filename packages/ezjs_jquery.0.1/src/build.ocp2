@@ -1,0 +1,13 @@
+OCaml.library("ocplib-jquery", ocaml + {
+  files = [
+    "jquery.ml", pp_js
+  ];
+  requires = [
+    "ocplib-utils-js";
+  ];
+});
+
+OCaml.library("ocplib-sortable", ocaml + {
+  files = [ "sortable.ml", pp_js ];
+  requires = [ "ocplib-jquery" ];
+});

@@ -1,0 +1,37 @@
+begin
+  generated = true
+  dirname = [ "%{js_of_ocaml.syntax_SRC_DIR}%" ]
+
+  begin objects "js_of_ocaml.camlp4-syntax.objects"
+    files = [ "pa_js.ml" ]
+  end
+
+  begin syntax "js_of_ocaml.camlp4-syntax"
+    requires = [ "js_of_ocaml.camlp4-syntax.objects" "camlp4o" ]
+  end
+end
+
+begin program "optal-web-client"
+  has_asm = false
+  syntax = "js_of_ocaml.camlp4-syntax"
+  files = [ "utils.ml" "webMain.ml" ]
+  requires = [ "optal-lib"  "js_of_ocaml"   "js_of_ocaml.camlp4-syntax" ]
+
+  package = "optal-web-client"
+  program_byte = %byte_exe( p = package )
+  program_js = %string( strings = [package ".js"])
+
+  build_rules = [
+    program_js (
+      sources = [ program_byte ]
+      commands = [
+        { "js_of_ocaml" program_byte "-o" program_js }
+      ]
+      build_target = true
+   )
+
+  ]
+
+
+
+end

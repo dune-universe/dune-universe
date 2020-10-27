@@ -1,0 +1,15 @@
+(library
+ (public_name ezjs_fetch)
+ (modules ezjs_fetch)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min)
+ (modes byte))
+
+(library
+ (name ezjs_fetch_lwt)
+ (public_name ezjs_fetch.lwt)
+ (optional)
+ (modules ezjs_fetch_lwt)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min.lwt ezjs_fetch)
+ (modes byte))

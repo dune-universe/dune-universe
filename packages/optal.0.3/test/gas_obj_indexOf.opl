@@ -1,0 +1,16 @@
+alias products = indexOf(Profit);
+alias components = indexOf(Stock);
+dvar float Production[products];
+
+maximize
+  sum( p in products )
+    Profit[p] * Production[p];
+
+constraints {
+
+  forall( p in products ) Production[p] >= 0;
+  forall( c in components )
+    sum( p in products )
+      Demand[p][c] * Production[p] <= Stock[c];
+
+}

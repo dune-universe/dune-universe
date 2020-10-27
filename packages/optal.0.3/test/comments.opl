@@ -1,0 +1,16 @@
+dvar float x;
+
+maximize x;
+
+
+/* some C comment
+
+/* that can be inbricated
+      and ignore // here */
+*/
+
+constraints {
+
+  x <= 10; // A C++ comment
+
+}
