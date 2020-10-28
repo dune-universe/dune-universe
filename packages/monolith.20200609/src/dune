@@ -1,5 +1,0 @@
-(library
-  (public_name monolith)
-  (flags (:standard -w A-4-44 -g))
-  (libraries afl-persistent pprint)
-)

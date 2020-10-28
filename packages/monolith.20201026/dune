@@ -1,0 +1,9 @@
+;; Install Makefile.monolith.
+
+;; We use the section [lib] because this means that `ocamlfind query monolith`
+;; will return the directory where the file is installed.
+
+(install
+  (section lib)
+  (files Makefile.monolith)
+)

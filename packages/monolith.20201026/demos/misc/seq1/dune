@@ -1,0 +1,5 @@
+(executable
+  (name Main)
+  (flags (:standard -w A-4-44 -g))
+  (libraries monolith containers)
+)
