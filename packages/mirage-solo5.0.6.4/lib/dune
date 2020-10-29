@@ -1,0 +1,21 @@
+(library
+ (name oS)
+ (public_name mirage-solo5)
+ (private_modules lifecycle main mM time solo5)
+ (libraries mirage-runtime bheap lwt cstruct metrics duration))
+
+(rule
+ (deps (source_tree bindings))
+ (target libmirage-solo5_bindings.a)
+ (action
+  (no-infer
+   (progn
+    (chdir bindings (run %{make}))
+    (copy bindings/libmirage-solo5_bindings.a libmirage-solo5_bindings.a)))))
+
+(include_subdirs unqualified)
+
+(install
+ (section lib)
+ (files (bindings/mirage-solo5.pc as ../pkgconfig/mirage-solo5.pc)
+   libmirage-solo5_bindings.a))

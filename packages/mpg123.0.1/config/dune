@@ -1,0 +1,5 @@
+; as per the instructions here
+; https://dune.readthedocs.io/en/stable/quick-start.html#defining-a-library-with-c-stubs-using-pkg-config
+(executable
+  (name discover)
+  (libraries dune.configurator))

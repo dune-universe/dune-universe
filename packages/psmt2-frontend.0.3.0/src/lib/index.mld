@@ -1,0 +1,8 @@
+
+{1 Library psmt2-frontend}
+
+An OCaml library to parse and type-check a conservative extension of the SMT-LIB 2
+standard with prenex polymorphism.
+
+
+The entry point of this library is the module: {!Psmt2Frontend}.

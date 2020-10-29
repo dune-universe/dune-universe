@@ -1,4 +1,0 @@
-(library
- (name remu_ts)
- (libraries batteries)
- (preprocess (pps ppx_deriving.show)))

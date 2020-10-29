@@ -1,0 +1,68 @@
+; This is a copy/paste from the luv bindings.
+; If you know how to make this shorter please file a bug.
+(rule
+ (targets c_flags.sexp c_flags.txt c_library_flags.sexp)
+ (action  (run ../config/discover.exe)))
+
+(library
+  (name mpg123_c_type_descriptions)
+  (public_name mpg123.c_type_descriptions)
+  (modules Mpg123_c_type_descriptions)
+  (libraries ctypes))
+
+(executable
+  (name type_gen)
+  (modules type_gen)
+  (libraries ctypes.stubs ctypes.foreign mpg123_c_type_descriptions))
+
+(rule
+  (with-stdout-to c_generated_types.c
+    (run ./type_gen.exe)))
+
+(rule
+  (targets c_generated_types.exe)
+  (deps (:c c_generated_types.c))
+  (action (system "%{cc} %{c} \
+    -I '%{lib:ctypes:.}' \
+    -I %{ocaml_where} \
+    %{read:c_flags.txt} \
+    -o %{targets}")))
+
+(rule
+  (with-stdout-to mpg123_c_generated_types.ml
+    (run ./c_generated_types.exe)))
+
+(library
+  (name mpg123_c_function_descriptions)
+  (public_name mpg123.c_function_descriptions)
+  (modules Mpg123_c_generated_types Mpg123_c_function_descriptions
+           Mpg123_c_types)
+  (wrapped false)
+  ; c_generated_types.exe emits code with unused vars and unbound record labels
+  ;  so, we supress them here
+  (flags (:standard -w -27 -w -9))
+  (libraries ctypes mpg123_c_type_descriptions))
+
+(executable
+  (name function_gen)
+  (modules Function_gen)
+  (libraries ctypes.stubs mpg123_c_function_descriptions))
+
+(rule
+  (with-stdout-to c_generated_functions.c
+    (run ./function_gen.exe c mpg123_stub)))
+
+(rule
+  (with-stdout-to mpg123_c_generated_functions.ml
+    (run ./function_gen.exe ml mpg123_stub)))
+
+(library
+  (name mpg123_c)
+  (public_name mpg123.c)
+  (libraries ctypes mpg123_c_function_descriptions)
+  (modules Mpg123_c Mpg123_c_generated_functions)
+  (foreign_stubs
+    (language c)
+    (names c_generated_functions)
+    (flags (:include c_flags.sexp)))
+  (c_library_flags (:include c_library_flags.sexp)))
