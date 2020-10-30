@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "test",
+  "version": "0.0",
+
+  "description": "test extension",
+  "icons": {
+    "16": "get_started16.png",
+    "32": "get_started32.png",
+    "48": "get_started48.png",
+    "128": "get_started128.png"
+  },
+
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "get_started16.png"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [ "activeTab", "declarativeContent", "storage" ],
+  "options_page": "options.html"
+}

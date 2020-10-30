@@ -1,0 +1,14 @@
+(library
+ (name chrome_lwt)
+ (public_name ezjs_extension.chrome-lwt)
+ (modules
+  tabs_chrome_lwt
+  windows_chrome_lwt
+  runtime_chrome_lwt
+  storage_chrome_lwt
+  i18n_chrome_lwt
+  chrome_lwt)
+ (optional)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries chrome_common ezjs_min.lwt lwt)
+ (modes byte))

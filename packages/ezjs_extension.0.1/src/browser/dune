@@ -1,0 +1,17 @@
+(library
+ (name browser_common)
+ (public_name ezjs_extension.browser-common)
+ (modules tabs_browser_common windows_browser_common runtime_browser_common
+   storage_browser_common i18n_browser_common browser_action_browser_common browser_common)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries extension_utils)
+ (modes byte))
+
+(library
+ (name browser)
+ (public_name ezjs_extension.browser)
+ (modules tabs_browser windows_browser runtime_browser storage_browser
+   i18n_browser browser_action_browser browser)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries browser_common)
+ (modes byte))

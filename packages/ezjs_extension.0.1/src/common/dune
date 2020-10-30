@@ -1,0 +1,15 @@
+(library
+ (name extension_utils)
+ (public_name ezjs_extension.common)
+ (modules browser_utils tabs_utils runtime_utils extension_utils)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min)
+ (modes byte))
+
+(library
+ (name declarative_content)
+ (public_name ezjs_extension.declarative-content)
+ (modules declarative_content)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min)
+ (modes byte))

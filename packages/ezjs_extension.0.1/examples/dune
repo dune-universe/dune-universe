@@ -1,0 +1,27 @@
+(executable
+ (name chrome_example)
+ (modules chrome_example)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_extension.chrome)
+ (modes js))
+
+(executable
+ (name chrome_background)
+ (modules chrome_background)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_extension.chrome ezjs_extension.declarative-content)
+ (modes js))
+
+(executable
+ (name chrome_options)
+ (modules chrome_options)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_extension.chrome)
+ (modes js))
+
+(executable
+ (name chrome_popup)
+ (modules chrome_popup)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_extension.chrome)
+ (modes js))
