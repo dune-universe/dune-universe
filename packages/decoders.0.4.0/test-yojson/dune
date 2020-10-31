@@ -1,6 +1,0 @@
-(test
- (name main)
- (package decoders-yojson)
- (libraries
-  decoders-yojson
-  oUnit))

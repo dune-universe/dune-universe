@@ -1,0 +1,22 @@
+(library
+ (name test_common)
+ (libraries plist-xml unix)
+ (modules test_common))
+
+(test
+ (name test_sync)
+ (package plist-xml)
+ (deps
+  (glob_files pass/*.plist)
+  (glob_files fail/*.plist))
+ (libraries plist-xml test_common unix)
+ (modules test_sync))
+
+(test
+ (name test_lwt)
+ (package plist-xml-lwt)
+ (deps
+  (glob_files pass/*.plist)
+  (glob_files fail/*.plist))
+ (libraries lwt lwt.unix markup-lwt.unix plist-xml-lwt test_common)
+ (modules test_lwt))

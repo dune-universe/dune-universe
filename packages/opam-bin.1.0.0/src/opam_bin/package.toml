@@ -1,0 +1,4 @@
+kind = "program"
+name = "opam-bin"
+[dependencies]
+opam_bin_lib = "version"

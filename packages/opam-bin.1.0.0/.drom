@@ -1,0 +1,196 @@
+# Keep this file in your GIT repo to help drom track generated files
+
+# hash of toml configuration files
+# used for generation of all files
+1efdb4e2a07dd4dc86f11c4982d95448:.
+# end context for .
+
+# begin context for .github/workflows/ci.ml
+# file .github/workflows/ci.ml
+ac2aab1d8f78befbbfca730668f71e8d:.github/workflows/ci.ml
+# end context for .github/workflows/ci.ml
+
+# begin context for .github/workflows/doc-deploy.yml
+# file .github/workflows/doc-deploy.yml
+b6f9b2d10964e8e60eb6513c2aa8459b:.github/workflows/doc-deploy.yml
+# end context for .github/workflows/doc-deploy.yml
+
+# begin context for .github/workflows/workflow.yml
+# file .github/workflows/workflow.yml
+967061010e6a4961397baf3a7de3748f:.github/workflows/workflow.yml
+# end context for .github/workflows/workflow.yml
+
+# begin context for .gitignore
+# file .gitignore
+921cf6794c5c8eb0b84c9c7c822d6e39:.gitignore
+# end context for .gitignore
+
+# begin context for .ocamlformat
+# file .ocamlformat
+258c081be13e794a822d6bf9650f29bc:.ocamlformat
+# end context for .ocamlformat
+
+# begin context for .ocamlformat-ignore
+# file .ocamlformat-ignore
+5574462426a3706b11f5cbdbb0d4ad91:.ocamlformat-ignore
+# end context for .ocamlformat-ignore
+
+# begin context for .ocp-indent
+# file .ocp-indent
+1281376e351d6c2be9ea4c576a29ebd4:.ocp-indent
+# end context for .ocp-indent
+
+# begin context for CHANGES.md
+# file CHANGES.md
+43bf2a4fa874ca34a8c11efbda9a2077:CHANGES.md
+# end context for CHANGES.md
+
+# begin context for LICENSE.md
+# file LICENSE.md
+c4217a22064a4a18f9587b930b250fbe:LICENSE.md
+# end context for LICENSE.md
+
+# begin context for Makefile
+# file Makefile
+5e6a1ca0dd8c5ed563203dfa1f9a6ab0:Makefile
+# end context for Makefile
+
+# begin context for README.md
+# file README.md
+3d6e1593ade17af234c4b21902f18526:README.md
+# end context for README.md
+
+# begin context for docs/style.css
+# file docs/style.css
+42e9a35df53b46338c20e484a27eab26:docs/style.css
+# end context for docs/style.css
+
+# begin context for drom.toml
+# file drom.toml
+c4c4fb8f9f2e4f95e65528daf6410907:drom.toml
+# end context for drom.toml
+
+# begin context for dune
+# file dune
+f7100ac43894bdb66dd659aac005a39b:dune
+# end context for dune
+
+# begin context for dune-project
+# file dune-project
+90ce4fae291eeda6e238d37b35732090:dune-project
+# end context for dune-project
+
+# begin context for opam-bin.opam
+# file opam-bin.opam
+c4cf9b2801694816325108547f1168f6:opam-bin.opam
+# end context for opam-bin.opam
+
+# begin context for opam_bin_lib.opam
+# file opam_bin_lib.opam
+a44f7aeef625ead99cd321830f70b1cc:opam_bin_lib.opam
+# end context for opam_bin_lib.opam
+
+# begin context for sphinx/_static/css/fixes.css
+# file sphinx/_static/css/fixes.css
+d41d8cd98f00b204e9800998ecf8427e:sphinx/_static/css/fixes.css
+# end context for sphinx/_static/css/fixes.css
+
+# begin context for sphinx/conf.py
+# file sphinx/conf.py
+27ebbff0d3b31496284f96e2b03e1180:sphinx/conf.py
+# end context for sphinx/conf.py
+
+# begin context for sphinx/index.rst
+# file sphinx/index.rst
+eb522bc1bb6523b514040c8801bf5f79:sphinx/index.rst
+# end context for sphinx/index.rst
+
+# begin context for sphinx/license.rst
+# file sphinx/license.rst
+cf3f86e8f7d8e90e663c3cb7e438057d:sphinx/license.rst
+# end context for sphinx/license.rst
+
+# begin context for src/opam_bin/dune
+# file src/opam_bin/dune
+ce8a9c5c63d3010f75bde286c1c09b8b:src/opam_bin/dune
+# end context for src/opam_bin/dune
+
+# begin context for src/opam_bin/index.mld
+# file src/opam_bin/index.mld
+26c01ce39a6802f7fa45248aab3a22e4:src/opam_bin/index.mld
+# end context for src/opam_bin/index.mld
+
+# begin context for src/opam_bin/main.ml
+# file src/opam_bin/main.ml
+701e0fc16b52f99c5c49e2644c208c11:src/opam_bin/main.ml
+# end context for src/opam_bin/main.ml
+
+# begin context for src/opam_bin/package.toml
+# file src/opam_bin/package.toml
+afc9f006c5ef93b31f3f6bd76d668a39:src/opam_bin/package.toml
+# end context for src/opam_bin/package.toml
+
+# begin context for src/opam_bin_lib/dune
+# file src/opam_bin_lib/dune
+a95ef3f1521695ae1f8e8a82e35de657:src/opam_bin_lib/dune
+# end context for src/opam_bin_lib/dune
+
+# begin context for src/opam_bin_lib/index.mld
+# file src/opam_bin_lib/index.mld
+a2b01fb1d6a38919e903da1727db041e:src/opam_bin_lib/index.mld
+# end context for src/opam_bin_lib/index.mld
+
+# begin context for src/opam_bin_lib/main.ml
+# file src/opam_bin_lib/main.ml
+eaf012027c27291033137371807a20d7:src/opam_bin_lib/main.ml
+# end context for src/opam_bin_lib/main.ml
+
+# begin context for src/opam_bin_lib/package.toml
+# file src/opam_bin_lib/package.toml
+1672e93a202f652d83560d91f364e212:src/opam_bin_lib/package.toml
+# end context for src/opam_bin_lib/package.toml
+
+# begin context for src/opam_bin_lib/version.ml
+# file src/opam_bin_lib/version.ml
+a54fef73e317da3c4a862d138d7a7399:src/opam_bin_lib/version.ml
+# end context for src/opam_bin_lib/version.ml
+
+# begin context for test/expect-tests/dune
+# file test/expect-tests/dune
+1d7793d71d665473ebba9125bedd400b:test/expect-tests/dune
+# end context for test/expect-tests/dune
+
+# begin context for test/expect-tests/test.ml
+# file test/expect-tests/test.ml
+734ed6b2b1cb8e0d6bce316d155bb157:test/expect-tests/test.ml
+# end context for test/expect-tests/test.ml
+
+# begin context for test/inline-tests/dune
+# file test/inline-tests/dune
+5c396562e9cc6ea2280bfd378675583e:test/inline-tests/dune
+# end context for test/inline-tests/dune
+
+# begin context for test/inline-tests/test.ml
+# file test/inline-tests/test.ml
+e001d04969100c711855223ad6c23e6a:test/inline-tests/test.ml
+# end context for test/inline-tests/test.ml
+
+# begin context for test/output-tests/dune
+# file test/output-tests/dune
+f6ec635aa16fccef450b6098111868b5:test/output-tests/dune
+# end context for test/output-tests/dune
+
+# begin context for test/output-tests/test1.expected
+# file test/output-tests/test1.expected
+f0ef7081e1539ac00ef5b761b4fb01b3:test/output-tests/test1.expected
+# end context for test/output-tests/test1.expected
+
+# begin context for test/output-tests/test2.expected
+# file test/output-tests/test2.expected
+894dddf3304cbcb0fe04f7c2bbd56073:test/output-tests/test2.expected
+# end context for test/output-tests/test2.expected
+
+# begin context for test/output-tests/test2.ml
+# file test/output-tests/test2.ml
+704ff05ffd8b0e50716542fa55b2db8a:test/output-tests/test2.ml
+# end context for test/output-tests/test2.ml

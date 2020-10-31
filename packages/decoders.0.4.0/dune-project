@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name decoders)
-(version v0.4.0)
