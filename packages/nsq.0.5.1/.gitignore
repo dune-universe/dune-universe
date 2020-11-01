@@ -1,6 +1,0 @@
-_build
-*.byte
-*.native
-*.swp
-nsq.install
-.merlin
