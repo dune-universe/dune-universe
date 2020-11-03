@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package map;
+
+message Test {
+  map<uint64, string> m = 1;
+}
+
+message Two {
+  map<uint64, string> m = 1;
+  map<sint32, float> n = 20;
+}
+
+message Map_message {
+  message Inner {
+    int64 i = 1;
+  }
+  map<uint64, Inner> m = 1;
+}
+
+message Map_message2 {
+  map<uint64, Map_message2> m = 1;
+}
+
+message Map_message3 {
+  enum Enum {
+    A = 0;
+    B = 1;
+  };
+  map<uint64, Enum> m = 1;
+}

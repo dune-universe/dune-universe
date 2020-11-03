@@ -1,6 +1,0 @@
-/_build/
-/_opam/
-/*.install
-.merlin
-node_modules
-lib
