@@ -1,0 +1,20 @@
+(library
+  (name cosmos)
+  (public_name azure-cosmos-db)
+  (libraries lwt yojson base64 uri atdgen cohttp cohttp-lwt-unix cryptokit netstring)
+  (preprocess (pps lwt_ppx))
+)
+
+(rule
+  (targets json_converter_j.ml
+           json_converter_j.mli)
+  (deps    json_converter.atd)
+  (action  (run atdgen -j -j-std %{deps}))
+)
+
+(rule
+  (targets json_converter_t.ml
+           json_converter_t.mli)
+  (deps    json_converter.atd)
+  (action  (run atdgen -t %{deps}))
+)

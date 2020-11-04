@@ -1,0 +1,14 @@
+(library
+ (name semaphore_compat)
+ (public_name semaphore-compat)
+ (modules semaphore_compat semaphore_vendored semaphore_selected
+   semaphore_intf)
+ (libraries threads.posix))
+
+(rule
+ (with-stdout-to
+  selected
+  (run %{ocaml} %{dep:which.ml} %{ocaml_version})))
+
+(rule
+ (copy# %{read:selected} semaphore_selected.ml))

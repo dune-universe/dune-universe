@@ -1,5 +1,0 @@
-FROM mknaack/azure-cosmos-db-base:0.5
-
-WORKDIR /home/opam
-COPY --chown=opam . /home/opam
-CMD dune runtest

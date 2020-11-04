@@ -1,0 +1,14 @@
+(copy_files# ../p256/p256_stubs.c)
+
+(rule
+ (deps ../p256/discover/cflags.sexp Makefile p256_stubs.c)
+ (targets libfiat_p256_freestanding_stubs.a)
+ (action
+  (no-infer
+   (progn
+    (run %{make})))))
+
+(install
+ (package fiat-p256)
+ (section lib)
+ (files libfiat_p256_freestanding_stubs.a))

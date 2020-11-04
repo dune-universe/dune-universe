@@ -1,0 +1,15 @@
+(copy_files# ../src/*.c)
+
+(rule
+ (deps Makefile hacl_x25519_stubs.c Hacl_Hash.c Hacl_Curve25519_51.c
+   Hacl_Ed25519.c)
+ (targets libhacl_x25519_freestanding_stubs.a)
+ (action
+  (no-infer
+   (progn
+    (run %{make})))))
+
+(install
+ (package hacl_x25519)
+ (section lib)
+ (files libhacl_x25519_freestanding_stubs.a))
