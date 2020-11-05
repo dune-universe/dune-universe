@@ -1,0 +1,3 @@
+(library
+ (name os_ipc)
+ (foreign_stubs (language c) (names os_ipc_stub)))

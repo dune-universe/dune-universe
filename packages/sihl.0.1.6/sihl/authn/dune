@@ -1,5 +1,0 @@
-(library
- (name authn)
- (public_name sihl.authn)
- (libraries core user session)
- (modules_without_implementation sig))
