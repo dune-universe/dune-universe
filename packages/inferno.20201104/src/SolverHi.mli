@@ -92,17 +92,19 @@ module Make
 
   (* [construct t c] is analogous to [exist c], but additionally constrains
      the type variable [v] to be equal to the type [t]. So, it is really a
-     way of constructing a variable that stands for a shallow term. *)
+     way of constructing a variable that stands for a shallow type. *)
   val construct:  variable structure -> (variable -> 'a co) -> (ty * 'a) co
 
   (* ---------------------------------------------------------------------- *)
 
-  (* Variants of the above. *)
+  (* Deep types. *)
+  type deep_ty =
+    | DeepVar of variable
+    | DeepStructure of deep_ty S.structure
 
-  (* The following variants are used when one does not need access to the
-     witness. [exist_ body] is logically equivalent to [exist body <$$> snd]. *)
-  val exist_:                           (variable -> 'a co) -> 'a co
-  val construct_: variable structure -> (variable -> 'a co) -> 'a co
+  (* [build dty c] constructs a variable [v] that stands for the deep type
+     [dty] and passes [v] to the function [c]. *)
+  val build: deep_ty -> (variable -> 'a co) -> 'a co
 
   (* ---------------------------------------------------------------------- *)
 
@@ -122,6 +124,18 @@ module Make
      application of the constraint abstraction denoted by [x] to the variable
      [v]. *)
   val instance: tevar -> variable -> ty list co
+
+  (* ---------------------------------------------------------------------- *)
+
+  (* Variants of the above. *)
+
+  (* The following variants are used when one does not need access to the
+     witness. [exist_ body] is equivalent to [exist body <$$> snd]. *)
+  val exist_:                           (variable -> 'a co) -> 'a co
+  val construct_: variable structure -> (variable -> 'a co) -> 'a co
+
+  (* [instance_ x v] is equivalent to [instance x v <$$> ignore]. *)
+  val instance_: tevar -> variable -> unit co
 
   (* ---------------------------------------------------------------------- *)
 
@@ -160,16 +174,35 @@ module Make
 
   (* ---------------------------------------------------------------------- *)
 
+  (* Correlation with the source code. *)
+
+  (* The type [range] describes a range in the source code. *)
+  type range =
+    Lexing.position * Lexing.position
+
+  (* The constraint [correlate range c] is equivalent to [c], but records
+     that this constraint is correlated with the range [range] in the
+     source code. This information is used in error reports. *)
+  val correlate: range -> 'a co -> 'a co
+
+  (* ---------------------------------------------------------------------- *)
+
   (* Evaluation. *)
 
-  (* [solve rectypes c] evaluates the constraint [c]. The flag [rectypes] tells
-     whether recursive types are considered legal. The constraint [c] is solved.
-     If a term variable [x] is out of scope, [Unbound x] is raised. If the
-     constraint is unsatisfiable, then [Unify] or [Cycle] is raised. ([Cycle]
-     can be raised only if [rectypes] is [false].) After the constraint has been
-     found to be satisfiable, it is evaluated (in particular, the functions that
-     were supplied as arguments to [map] during the construction of the
-     constraint are invoked) and a final result of type ['a] is produced. *)
+  (* [solve rectypes c] determines whether the constraint [c] is satisfiable.
+     If that is the case, then the constraint [c] is evaluated, and a result
+     of type ['a] is produced. (During this process, the functions that were
+     supplied as arguments to [map] during the construction of the constraint
+     are invoked.)
+
+     The flag [rectypes] determines whether equirecursive types are permitted.
+
+     If a term variable [x] is out of scope, [Unbound (range, x)] is raised,
+     where [range] is the range annotation that was most recently encountered
+     by the solver on the way down.
+
+     If the constraint is unsatisfiable, then [Unify] or [Cycle] is raised.
+     [Cycle] can be raised only if [rectypes] is [false]. *)
 
   (* [solve] destroys its argument. It is not permitted to call [solve] twice
      on the same constraint. *)
@@ -177,9 +210,9 @@ module Make
   (* The argument to [solve] must have an application of [let0] at its root. This
      is a way of ensuring that the final result has no free type variables. *)
 
-  exception Unbound of tevar
-  exception Unify of ty * ty
-  exception Cycle of ty
+  exception Unbound of range * tevar
+  exception Unify of range * ty * ty
+  exception Cycle of range * ty
   val solve: bool -> 'a co -> 'a
 
 end

@@ -13,13 +13,13 @@ let translate t =
   try
     Some (Infer.translate t)
   with
-  | Infer.Cycle ty ->
+  | Infer.Cycle (_range, ty) ->
       if Config.verbose then begin
         Printf.fprintf stdout "Type error: a cyclic type arose.\n";
         print_type ty
       end;
       None
-  | Infer.Unify (ty1, ty2) ->
+  | Infer.Unify (_range, ty1, ty2) ->
       if Config.verbose then begin
         Printf.fprintf stdout "Type error: type mismatch.\n";
         Printf.fprintf stdout "Type error: mismatch between the type:\n";

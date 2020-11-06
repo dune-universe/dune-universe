@@ -97,9 +97,9 @@ let (^^) (rc1, k1) (rc2, k2) =
 
 (* Existential quantification. *)
 
-let exist f =
+let exist_aux t f =
   (* Create a fresh unifier variable [v]. *)
-  let v = fresh None in
+  let v = fresh t in
   (* Pass [v] to the client. *)
   let rc, k = f v in
   (* Wrap the constraint [c] in an existential quantifier, *)
@@ -110,17 +110,11 @@ let exist f =
     let decode = env in
     (decode v, k env)
 
-(* [construct] is identical to [exist], except [None] is replaced with
-   [Some t]. We do not factor out the common code, because we wish to
-   show only [exist] in the paper. *)
+let exist f =
+  exist_aux None f
 
 let construct t f =
-  let v = fresh (Some t) in
-  let rc, k = f v in
-  CExist (v, rc),
-  fun env ->
-    let decode = env in
-    (decode v, k env)
+  exist_aux (Some t) f
 
 let exist_aux_ t f =
   let v = fresh t in
@@ -141,6 +135,45 @@ let lift f v1 t2 =
   construct_ t2 (fun v2 ->
     f v1 v2
   )
+
+(* -------------------------------------------------------------------------- *)
+
+(* Deep types. *)
+
+type deep_ty =
+  | DeepVar of variable
+  | DeepStructure of deep_ty S.structure
+
+(* Conversion of deep types to shallow types. *)
+
+(* Our API is so constrained that this seems extremely difficult to implement
+   from the outside. So, we provide it, for the user's convenience. In fact,
+   even here, inside the abstraction, implementing this conversion is slightly
+   tricky. *)
+
+let build dty f =
+  (* Accumulate a list of the fresh variables that we create. *)
+  let vs = ref [] in
+  (* [convert] converts a deep type to a variable. *)
+  let rec convert dty =
+    match dty with
+    | DeepVar v ->
+        v
+    | DeepStructure s ->
+        (* First recursively convert our children, then allocate a fresh
+           variable [v] to stand for the root. Record its existence in the
+           list [vs]. *)
+        let v = fresh (Some (S.map convert s)) in
+        vs := v :: !vs;
+        v
+  in
+  (* Convert the deep type [dty] and pass the variable that stands for its
+     root the user function [f]. *)
+  let rc, k = f (convert dty) in
+  (* Then, create a bunch of existential quantifiers, in an arbitrary order. *)
+  List.fold_left (fun rc v -> CExist (v, rc)) rc !vs,
+  (* Keep an unchanged continuation. *)
+  k
 
 (* -------------------------------------------------------------------------- *)
 
@@ -178,6 +211,15 @@ let instance x v =
        obtain the list of witnesses. Decode them, and return them to
        the user. *)
     List.map decode (WriteOnceRef.get witnesses)
+
+(* [instance_ x v] is equivalent to [instance x v <$$> ignore]. *)
+
+let instance_ x v =
+  let witnesses = WriteOnceRef.create() in
+  CInstance (x, v, witnesses),
+  fun _env ->
+    (* In the decoding phase, there is nothing to do. *)
+    ()
 
 (* -------------------------------------------------------------------------- *)
 
@@ -250,6 +292,16 @@ let let0 c1 =
 
 (* -------------------------------------------------------------------------- *)
 
+(* Correlation with the source code. *)
+
+type range =
+  Lexing.position * Lexing.position
+
+let correlate range (rc, k) =
+  CRange (range, rc), k
+
+(* -------------------------------------------------------------------------- *)
+
 (* Running a constraint. *)
 
 (* The constraint [c] should have been constructed by [let0], otherwise we
@@ -274,8 +326,8 @@ end
 (* Solving, or running, a constraint. *)
 
 exception Unbound = Lo.Unbound
-exception Unify of O.ty * O.ty
-exception Cycle of O.ty
+exception Unify of range * O.ty * O.ty
+exception Cycle of range * O.ty
 
 let solve rectypes (rc, k) =
   assert (ok rc);
@@ -289,12 +341,12 @@ let solve rectypes (rc, k) =
        that the cyclic decoder is required here, even if [rectypes] is [false],
        as recursive types can appear before the occurs check is successfully
        run. *)
-  | Lo.Unify (v1, v2) ->
+  | Lo.Unify (range, v1, v2) ->
       let decode = new_decoder true (* cyclic decoder *) in
-      raise (Unify (decode v1, decode v2))
-  | Lo.Cycle v ->
+      raise (Unify (range, decode v1, decode v2))
+  | Lo.Cycle (range, v) ->
       let decode = new_decoder true (* cyclic decoder *) in
-      raise (Cycle (decode v))
+      raise (Cycle (range, decode v))
   end;
   (* Create a suitable decoder. *)
   let decode = new_decoder rectypes in

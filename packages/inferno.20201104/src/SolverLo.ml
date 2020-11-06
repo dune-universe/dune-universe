@@ -61,7 +61,11 @@ let fresh t =
    but not in the high-level interface [SolverHi]. So, it could be easily
    modified if desired. *)
 
+type range =
+  Lexing.position * Lexing.position
+
 type rawco =
+  | CRange of range * rawco
   | CTrue
   | CConj of rawco * rawco
   | CEq of variable * variable
@@ -75,15 +79,34 @@ type rawco =
 
 (* -------------------------------------------------------------------------- *)
 
+(* The exceptions [Unify] and [Cycle], raised by the unifier, must be caught
+   and re-raised in a slightly different format, as the unifier does not know
+   about ranges. *)
+
+exception Unify of range * variable * variable
+exception Cycle of range * variable
+
+let unify range v1 v2 =
+  try
+    U.unify v1 v2
+  with U.Unify (v1, v2) ->
+    raise (Unify (range, v1, v2))
+
+let exit range rectypes state vs =
+  try
+    G.exit rectypes state vs
+  with U.Cycle v ->
+    raise (Cycle (range, v))
+
+(* -------------------------------------------------------------------------- *)
+
 (* The non-recursive wrapper function [solve] is parameterized by the flag
    [rectypes], which indicates whether recursive types are permitted. It
    expects a constraint and solves it; that is, either it fails with an
    exception, or it succeeds and fills the write-once references that are
    embedded in the syntax of the constraint. *)
 
-exception Unbound of tevar
-exception Unify = U.Unify
-exception Cycle = U.Cycle
+exception Unbound of range * tevar
 
 let solve (rectypes : bool) (c : rawco) : unit =
 
@@ -94,34 +117,38 @@ let solve (rectypes : bool) (c : rawco) : unit =
   let state = G.init() in
 
   (* The recursive function [solve] is parameterized with an environment
-     that maps term variables to type schemes. *)
+     (which maps term variables to type schemes) and with a range (it is the
+     range annotation that was most recently encountered on the way down). *)
 
-  let rec solve (env : ischeme XMap.t) (c : rawco) : unit =
+  let rec solve (env : ischeme XMap.t) range (c : rawco) : unit =
     match c with
+    | CRange (range, c) ->
+        solve env range c
     | CTrue ->
         ()
     | CConj (c1, c2) ->
-        solve env c1;
-        solve env c2
+        solve env range c1;
+        solve env range c2
     | CEq (v, w) ->
-        U.unify v w
+        unify range v w
     | CExist (v, c) ->
         (* We assume that the variable [v] has been created fresh, so it
            is globally unique, it carries no structure, and its rank is
            [no_rank]. The combinator interface enforces this property. *)
         G.register state v;
-        solve env c
+        solve env range c
     | CInstance (x, w, witnesses_hook) ->
         (* The environment provides a type scheme for [x]. *)
-        let s = try XMap.find x env with Not_found -> raise (Unbound x) in
+        let s = try XMap.find x env with Not_found -> raise (Unbound (range, x)) in
         (* Instantiating this type scheme yields a variable [v], which we unify with
            [w]. It also yields a list of witnesses, which we record, as they will be
            useful during the decoding phase. *)
         let witnesses, v = G.instantiate state s in
         WriteOnceRef.set witnesses_hook witnesses;
-        U.unify v w
+        unify range v w
     | CDef (x, v, c) ->
-        solve (XMap.add x (G.trivial v) env) c
+        let env = XMap.add x (G.trivial v) env in
+        solve env range c
     | CLet (xvss, c1, c2, generalizable_hook) ->
         (* Warn the generalization engine that we entering the left-hand side of
            a [let] construct. *)
@@ -132,14 +159,14 @@ let solve (rectypes : bool) (c : rawco) : unit =
         let vs = List.map (fun (_, v, _) -> v) xvss in
         List.iter (G.register state) vs;
         (* Solve the constraint [c1]. *)
-        solve env c1;
+        solve env range c1;
         (* Ask the generalization engine to perform an occurs check, to adjust the
            ranks of the type variables in the young generation (i.e., all of the
            type variables that were registered since the call to [G.enter] above),
            and to construct a list [ss] of type schemes for our entry points. The
            generalization engine also produces a list [generalizable] of the young
            variables that should be universally quantified here. *)
-        let generalizable, ss = G.exit rectypes state vs in
+        let generalizable, ss = exit range rectypes state vs in
         (* Fill the write-once reference [generalizable_hook]. *)
         WriteOnceRef.set generalizable_hook generalizable;
         (* Extend the environment [env] and fill the write-once references
@@ -151,10 +178,12 @@ let solve (rectypes : bool) (c : rawco) : unit =
           ) env xvss ss
         in
         (* Proceed to solve [c2] in the extended environment. *)
-        solve env c2
+        solve env range c2
 
   in
-  solve XMap.empty c
+  let env = XMap.empty
+  and range = Lexing.(dummy_pos, dummy_pos) in
+  solve env range c
 
 (* -------------------------------------------------------------------------- *)
 
@@ -223,4 +252,3 @@ let decode_scheme decode (s : ischeme) : O.scheme =
   decode (G.body s)
 
 end
-

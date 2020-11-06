@@ -26,7 +26,7 @@ module type TEVAR = sig
   (* A total ordering. *)
   val compare: tevar -> tevar -> int
 
-end  
+end
 
 (* -------------------------------------------------------------------------- *)
 
@@ -34,10 +34,11 @@ end
    follows. *)
 
 module type OUTPUT = sig
-  (* nominal type variables *)
+
+  (* The user may choose a representation of decoded type variables. *)
   type tyvar
 
-  (* The solver represents inference variables via unique integer identifiers,
+  (* The solver represents type variables as unique integer identifiers,
      and needs to be able to inject them into decoded type variables. *)
   val solver_tyvar : int -> tyvar
 
@@ -45,9 +46,10 @@ module type OUTPUT = sig
      the type ['a structure], as in the signature [Unifier.STRUCTURE]. *)
   type 'a structure
 
-  (* The solver constructs decoded types of type [ty], and never deconstructs
-     them. So, the operations that the solver requires are constructors for
-     the type [ty]. *)
+  (* The user may choose a representation of decoded types. The solver
+     constructs decoded types and never deconstructs them. So,
+     the solver requires constructors for the type [ty]: see
+     {!variable}, {!structure}, and {!mu} below. *)
   type ty
 
   (* [variable v] is a representation of the type variable [v] as a decoded

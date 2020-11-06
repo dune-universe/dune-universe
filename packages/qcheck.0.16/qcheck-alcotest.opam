@@ -2,13 +2,14 @@ opam-version: "2.0"
 maintainer: "simon.cruanes.2007@m4x.org"
 author: [ "Simon Cruanes <simon.cruanes.2007@m4x.org>" ]
 homepage: "https://github.com/c-cube/qcheck/"
+synopsis: "Alcotest backend for qcheck"
 doc: ["http://c-cube.github.io/qcheck/"]
-synopsis: "OUnit backend for qcheck"
-version: "0.15"
+version: "0.16"
 tags: [
-  "qcheck"
+  "test"
   "quickcheck"
-  "ounit"
+  "qcheck"
+  "alcotest"
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
@@ -20,7 +21,7 @@ depends: [
   "base-bytes"
   "base-unix"
   "qcheck-core" { = version }
-  "ounit2"
+  "alcotest"
   "odoc" {with-doc}
   "ocaml" {>= "4.03.0"}
 ]
