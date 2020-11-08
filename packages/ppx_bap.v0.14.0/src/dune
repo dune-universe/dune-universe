@@ -1,0 +1,8 @@
+(library
+  (name ppx_bap)
+  (public_name ppx_bap)
+  (kind ppx_rewriter)
+  (libraries ppxlib ppx_sexp_conv ppx_sexp_value ppx_compare ppx_enumerate
+    ppx_hash ppx_assert ppx_bench ppx_bin_prot ppx_fields_conv
+    ppx_here ppx_variants_conv ppx_optcomp)
+  (preprocess no_preprocessing))

@@ -1,7 +1,0 @@
-
-{
-    "ocaml.sandbox": {
-        "kind": "opam"
-        "switch": "/home/hal/OCP/AE/psmt2-frontend"
-    }
-}

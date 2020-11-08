@@ -1,0 +1,5 @@
+gen-version = "version.ml"
+kind = "library"
+name = "psmt2-frontend"
+pack = "Psmt2Frontend"
+skeleton = "library"

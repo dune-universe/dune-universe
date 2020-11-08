@@ -1,0 +1,76 @@
+# Keep this file in your GIT repo to help drom track generated files
+
+# hash of toml configuration files
+# used for generation of all files
+3c3b3922f0e74a5d78828576fae9e362:.
+# end context for .
+
+# begin context for .github/workflows/doc-deploy.yml
+# file .github/workflows/doc-deploy.yml
+0767600df8b4e1a45a4f2cccf5f2fd07:.github/workflows/doc-deploy.yml
+# end context for .github/workflows/doc-deploy.yml
+
+# begin context for .gitignore
+# file .gitignore
+7b0080fc2a9bc3479bd0f997c4d3cc32:.gitignore
+# end context for .gitignore
+
+# begin context for Makefile
+# file Makefile
+74c5ac6257deca05fe4be7263eacebfc:Makefile
+# end context for Makefile
+
+# begin context for docs/README.txt
+# file docs/README.txt
+17799aeb2a3684b565725290ec32e65b:docs/README.txt
+# end context for docs/README.txt
+
+# begin context for docs/favicon.png
+# file docs/favicon.png
+7ea9be52d489cbe8c03b43ecf6b2650f:docs/favicon.png
+# end context for docs/favicon.png
+
+# begin context for docs/index.html
+# file docs/index.html
+b5751808ae72b235dfac389615953425:docs/index.html
+# end context for docs/index.html
+
+# begin context for docs/style.css
+# file docs/style.css
+0085152add896d7bab7b1a744d2a9af7:docs/style.css
+# end context for docs/style.css
+
+# begin context for drom.toml
+# file drom.toml
+8d4c56d03a5a31875f83bff5103486a1:drom.toml
+# end context for drom.toml
+
+# begin context for dune
+# file dune
+02ae2bb9a93e7611894f35f89f15ab0e:dune
+# end context for dune
+
+# begin context for dune-project
+# file dune-project
+a32b169194a45019293892b53ef6b2bc:dune-project
+# end context for dune-project
+
+# begin context for psmt2-frontend.opam
+# file psmt2-frontend.opam
+838f443afe8490689bff5435f3abd306:psmt2-frontend.opam
+# end context for psmt2-frontend.opam
+
+# begin context for psmt2-frontend_bin.opam
+# file psmt2-frontend_bin.opam
+768232afc420ef4c1b5666ef3e42de74:psmt2-frontend_bin.opam
+# end context for psmt2-frontend_bin.opam
+
+# begin context for src/bin/package.toml
+# file src/bin/package.toml
+dea23aaee88271953b1dd68f9b719637:src/bin/package.toml
+# end context for src/bin/package.toml
+
+# begin context for src/lib/package.toml
+# file src/lib/package.toml
+d6254e79340933b17bf8900214091eb5:src/lib/package.toml
+# end context for src/lib/package.toml

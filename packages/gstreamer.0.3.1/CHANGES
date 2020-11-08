@@ -1,0 +1,37 @@
+0.3.1 (2020-11-06)
+=====
+* Correctly raise errors in pipeline_parse_launch.
+* `Buffer`: add `of_data_list`, `to_data` and `to_string`.
+* `App_sink`: add `pull_buffer`.
+* Switched to dune.
+
+0.3.0 (2018-09-09)
+=====
+* Add smarter buffer API to avoid copies.
+* Add main loop API
+* Cleanup C thread management.
+* Cleanup gst_buf management.
+* Record app{sink,src}->element dependency for proper GC cleanup.
+
+0.2.3 (2017-04-11)
+=====
+* Added timeout to Bus.timed_pop_filtered.
+* Added datetime tag support.
+
+0.2.2 (2016-06-29)
+=====
+* Added Element.duration.
+* Added App_src.push_buffer_data.
+* Completed message types.
+
+0.2.1 (2015-08-03)
+=====
+* Dummy github release.
+
+0.2.0 (2013-02-19)
+=====
+* Complete rewrite to get rid of OCamlIDL, lots of modules added.
+
+0.1.0 (2011-10-04)
+=====
+* Initial release.

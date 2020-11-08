@@ -1,0 +1,39 @@
+(executable
+ (name appsink)
+ (modules appsink)
+ (libraries gstreamer))
+
+(executable
+ (name playlist)
+ (modules playlist)
+ (libraries gstreamer))
+
+(executable
+ (name player)
+ (modules player)
+ (libraries gstreamer))
+
+(executable
+ (name caps)
+ (modules caps)
+ (libraries gstreamer))
+
+(executable
+ (name tags)
+ (modules tags)
+ (libraries gstreamer))
+
+(executable
+ (name sine)
+ (modules sine)
+ (libraries gstreamer))
+
+(executable
+ (name duration)
+ (modules duration)
+ (libraries gstreamer))
+
+(executable
+ (name webrtc)
+ (modules webrtc)
+ (libraries gstreamer))

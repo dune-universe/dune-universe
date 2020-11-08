@@ -1,0 +1,5 @@
+kind = "program"
+name = "psmt2-frontend_bin"
+skeleton = "driver"
+[dependencies]
+psmt2-frontend = "version"
