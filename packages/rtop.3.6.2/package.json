@@ -1,0 +1,29 @@
+{
+  "name": "@esy-ocaml/reason",
+  "version": "3.6.2",
+  "license": "MIT",
+  "description": "Native Compiler Support for Reason: Simple, fast & type safe code that leverages the JavaScript & OCaml ecosystems",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/reason.git"
+  },
+  "dependencies": {
+    "ocaml": " >= 4.2.0 < 4.11.0",
+    "@opam/fix": "*",
+    "@opam/ocamlfind": "*",
+    "@opam/menhir": " >= 20170418.0.0",
+    "@opam/merlin-extend": " >= 0.3",
+    "@opam/result": "*",
+    "@opam/ppx_derivers": "< 2.0.0",
+    "@opam/dune": "*"
+  },
+  "devDependencies": {
+    "@esy-ocaml/merlin": "*",
+    "ocaml": "~4.6.0"
+  },
+  "esy": {
+    "build": [
+      [ "dune", "build", "-p", "reason"]
+    ]
+  }
+}
