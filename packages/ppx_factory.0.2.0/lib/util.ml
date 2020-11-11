@@ -15,8 +15,7 @@ let core_type_from_type_decl ~loc {ptype_name; ptype_params; _} =
   Ast_builder.Default.ptyp_constr ~loc type_lident constr
 
 let is_ocamldep ctxt =
-  let omp_config = Expansion_context.Deriver.omp_config ctxt in
-  let tool_name = omp_config.Migrate_parsetree.Driver.tool_name in
+  let tool_name = Expansion_context.Deriver.tool_name ctxt in
   String.equal tool_name "ocamldep"
 
 module Expr = struct

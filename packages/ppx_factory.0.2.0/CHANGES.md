@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 _No unreleased changes at the moment_
 
+## 0.2.0 - 2020-11-09
+
+### Changed
+
+- Make compatible with (only) ppxlib >= 0.14 (@NathanReb
+  [#24](https://github.com/cryptosense/ppx_factory/pull/20))
+
 ## 0.1.1 - 2020-05-29
 
 ### Added
@@ -19,8 +26,8 @@ _No unreleased changes at the moment_
 
 ### Fixes
 
-- Raise an error when used with an abstract type, except when invoked from `ocamldep`, @NathanReb
-  [#20](https://github.com/cryptosense/ppx_factory/pull/20)
+- Raise an error when used with an abstract type, except when invoked from `ocamldep` (@NathanReb
+  [#20](https://github.com/cryptosense/ppx_factory/pull/20))
 
 ## 0.0.0 - 2019-03-07
 
