@@ -1,0 +1,50 @@
+Installing packages
+------------------------------------------------------------
+Target: build-doc
+Files under $SATYSFI_RUNTIME
+==============================
+.
+./dist
+./dist/.satyrographos
+./dist/fonts
+./dist/fonts/fonts-theano
+./dist/fonts/fonts-theano/TheanoDidot-Regular.otf
+./dist/fonts/fonts-theano/TheanoModern-Regular.otf
+./dist/fonts/fonts-theano/TheanoOldStyle-Regular.otf
+./dist/hash
+./dist/hash/fonts.satysfi-hash
+./dist/metadata
+./dist/packages
+./dist/packages/grcnum
+./dist/packages/grcnum/grcnum.satyh
+==============================
+Reading runtime dist: @@temp_dir@@/empty_dist
+Read user libraries: ()
+Reading opam libraries: (base class-greek fonts-theano grcnum)
+Not gathering system fonts
+Installing libraries: (dist fonts-theano grcnum)
+Removing destination @@build@@/satysfi/dist
+Installation completed!
+
+[1;33mCompatibility notice[0m for library fonts-theano:
+
+  Fonts have been renamed.
+  
+    TheanoDidot -> fonts-theano:TheanoDidot
+    TheanoModern -> fonts-theano:TheanoModern
+    TheanoOldStyle -> fonts-theano:TheanoOldStyle
+
+[1;33mCompatibility notice[0m for library grcnum:
+
+  Packages have been renamed.
+  
+    grcnum.satyh -> grcnum/grcnum.satyh
+------------------------------------------------------------
+@@dest_dir@@
+------------------------------------------------------------
+------------------------------------------------------------
+Command invoked:
+satysfi -C @@build@@/satysfi --version
+Command invoked:
+satysfi -C @@build@@/satysfi doc-grcnum.saty -o doc-grcnum-ja.pdf
+doc-grcnum.saty -> doc-grcnum-ja.pdf

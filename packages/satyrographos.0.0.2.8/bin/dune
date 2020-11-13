@@ -1,0 +1,32 @@
+(executable
+ (name main)
+ (public_name satyrographos)
+ (preprocess (pps ppx_deriving.std ppx_jane -allow-unannotated-ignores))
+ (libraries
+   core
+   satyrographos_template
+   satyrographos_command
+   satyrographos_lockdown
+   satyrographos_satysfi
+   shexp.process
+   uri
+ )
+ (modules
+   setup
+   renameOption
+   compatibility
+   commandBuild
+   commandDebug
+   commandLint
+   commandLockdown
+   commandMigrate
+   commandNew
+   commandInstall
+   commandLibrary
+   commandOpam
+   commandPin
+   commandSatysfi
+   commandStatus
+   commandUtil
+   main)
+ )
