@@ -1,0 +1,6 @@
+(library
+ (name        hvsock_lwt_unix)
+ (public_name hvsock.lwt-unix)
+ (libraries   lwt hvsock hvsock.lwt bytes mirage-time-lwt mirage-flow-lwt cstruct mirage-flow logs threads duration lwt.unix)
+ (flags       (:standard -safe-string -principal -strict-sequence))
+)

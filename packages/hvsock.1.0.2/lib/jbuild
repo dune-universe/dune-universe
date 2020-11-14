@@ -1,9 +1,0 @@
-(library
- ((name        hvsock)
-  (public_name hvsock)
-  (libraries   (unix))
-  (flags       (:standard -w "A-4-41-44" -warn-error "+1..49" -safe-string -principal -strict-sequence))
-  (modules     (Hvsock))
-  (c_names     (hvsock_stubs))
-  (wrapped     false)
-))

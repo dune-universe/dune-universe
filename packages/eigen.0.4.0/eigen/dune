@@ -1,0 +1,45 @@
+(* -*- tuareg -*- *)
+
+let eigen_flags =
+  match Sys.getenv "EIGEN_FLAGS" with
+  | s -> String.trim s
+  | exception Not_found -> "-O3 -Ofast -march=native -funroll-loops -ffast-math"
+
+let () = Printf.ksprintf Jbuild_plugin.V1.send {|
+(rule
+ (targets ffi_eigen_generated.ml)
+ (deps ../bindings/ffi_eigen_stubgen.exe)
+ (action
+  (with-stdout-to
+   %%{targets}
+   (run %%{deps} -ml)
+  )
+ )
+)
+
+(rule
+ (targets ffi_eigen_generated_stub.c)
+ (deps ../bindings/ffi_eigen_stubgen.exe)
+ (action
+  (with-stdout-to
+   %%{targets}
+   (run %%{deps} -c)
+  )
+ )
+)
+
+(library
+ (name eigen)
+ (public_name eigen)
+ (libraries ctypes)
+ (modules :standard ffi_eigen_generated)
+ (foreign_archives ../eigen_cpp/eigen_cpp_stubs)
+ (foreign_stubs
+  (language c)
+  (names eigen_utils_stubs ffi_eigen_generated_stub)
+  (include_dirs ../eigen_cpp/lib)
+  (flags :standard %s)
+  )
+ (c_library_flags :standard -lstdc++)
+)
+|} eigen_flags

@@ -1,0 +1,8 @@
+(library
+ (name        hvsock)
+ (public_name hvsock)
+ (libraries   unix uri cstruct uuidm base64 uutf)
+ (flags       :standard -w "A-4-41-44" -warn-error "+1..49" -safe-string -principal -strict-sequence)
+ (modules     Af_hyperv Af_vsock Af_common Hyperkit Socket)
+ (c_names     hvsock_stubs vsock_stubs)
+)

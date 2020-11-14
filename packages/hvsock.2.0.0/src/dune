@@ -1,0 +1,7 @@
+(executables
+ (names hvcat sock_stress)
+ (libraries uri sha cmdliner hvsock hvsock.lwt hvsock.lwt-unix lwt lwt.unix))
+
+(install
+ (section bin)
+ (files (hvcat.exe as hvcat) (sock_stress.exe as sock_stress)))

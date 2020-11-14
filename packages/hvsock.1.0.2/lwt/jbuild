@@ -1,7 +1,0 @@
-(library
- ((name        hvsock_lwt)
-  (public_name hvsock.lwt)
-  (libraries   (lwt hvsock bytes mirage-time-lwt mirage-flow-lwt cstruct mirage-flow logs threads duration))
-  (flags       (:standard -safe-string -principal -strict-sequence))
-  (wrapped     false)
-))

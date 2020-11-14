@@ -1,0 +1,38 @@
+(*
+ * Copyright (C) 2015 David Scott <dave.scott@unikernel.com>
+ * Copyright (C) 2016 Docker Inc
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ *)
+
+module Make(Time: Mirage_time_lwt.S)(Fn: S.FN)(Socket_family: Hvsock.Af_common.S): sig
+  (** A buffered Mirage FLOW implementation over a hypervisor socket *)
+
+  type error = [ `Unix of Unix.error ]
+
+  include Mirage_flow_lwt.SHUTDOWNABLE with type error := error
+
+  module Socket: S.SOCKET with type sockaddr = Socket_family.sockaddr
+
+  val connect: ?message_size:int -> ?buffer_size: int -> Socket.t -> flow
+  (** Construct a flow given a hypervisor socket connection.
+      ?message_size allows the maximum send/recv size to be limited.
+      ?buffer_size controls how much buffering is placed over the socket.
+
+      Note the buffer handling of this flow is different to normal: `read` and
+      `readv` will retain references to the passed buffers. They must not be
+      used again by the calling application. *)
+
+  val read_into: flow -> Cstruct.t -> (unit Mirage_flow.or_eof, error) result Lwt.t
+end
