@@ -1,0 +1,5 @@
+(library
+  (name mc2_uf)
+  (public_name mc2.uf)
+  (libraries containers mc2.core)
+  )

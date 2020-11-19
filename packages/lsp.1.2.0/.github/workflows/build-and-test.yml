@@ -1,0 +1,77 @@
+name: Build and Test
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build-and-test:
+    name: Build and Test
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+        skip_test:
+          - false
+        ocaml-version:
+          - 4.11.0
+        include:
+          - ocaml-version: 4.11.0
+            os: windows-latest
+            skip_test: true
+          - ocaml-version: 4.10.0
+            os: windows-latest
+            skip_test: true
+          - ocaml-version: 4.09.1
+            os: ubuntu-latest
+            skip_test: true
+          - ocaml-version: 4.06.1
+            os: ubuntu-latest
+            skip_test: true
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      SKIP_TEST: ${{ matrix.skip_test }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Use latest LTS Node.js release
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin -n .
+
+      - run: opam install -t . --deps-only
+        if: env.SKIP_TEST != 'true'
+
+      - run: opam install . --deps-only
+        if: env.SKIP_TEST == 'true'
+
+      - run: opam exec -- make test
+        if: env.SKIP_TEST != 'true'
+
+      - name: test source is well formatted
+        run: opam exec -- make fmt
+        if: env.OCAML_VERSION == '4.10.0' && env.OS == 'ubuntu-latest'
+
+      - run: yarn --frozen-lockfile
+        working-directory: ocaml-lsp-server/test/e2e
+        if: env.SKIP_TEST != 'true'
+
+      - run: opam exec -- yarn test
+        working-directory: ocaml-lsp-server/test/e2e
+        if: env.SKIP_TEST != 'true'

@@ -1,0 +1,5 @@
+(library
+  (name mc2_propositional)
+  (public_name mc2.propositional)
+  (libraries containers mc2.core)
+  )

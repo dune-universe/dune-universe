@@ -1,0 +1,14 @@
+_build/
+_opam
+*.annot
+*.native
+*.log
+*.status
+.*.swp
+.session
+*.html
+src/util/log.ml
+.merlin
+*.install
+snapshots
+*.exe

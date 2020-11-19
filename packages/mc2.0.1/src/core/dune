@@ -1,0 +1,7 @@
+(library
+  (name mc2_core)
+  (public_name mc2.core)
+  (synopsis "core data structures and algorithms for MC2")
+  (libraries containers iter result)
+  )
+

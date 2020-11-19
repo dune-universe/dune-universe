@@ -1,0 +1,5 @@
+(library
+  (name mc2_unin_sort)
+  (public_name mc2.unin_sort)
+  (libraries containers mc2.core)
+  )

@@ -1,0 +1,7 @@
+
+(library
+  (name mc2_lra)
+  (public_name mc2.lra)
+  (optional) ; only if deps present
+  (libraries containers mc2.core zarith)
+  )
