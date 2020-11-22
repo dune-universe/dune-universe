@@ -1,0 +1,7 @@
+(executables
+ (names discover)
+ (libraries dune.configurator))
+
+(rule
+ (targets cclib.sexp)
+ (action  (run ./discover.exe)))
