@@ -1,0 +1,6 @@
+(library
+ (name mysql_protocol)
+ (public_name mysql_protocol)
+ (libraries num cryptokit bitstring)
+ (preprocess
+  (pps ppx_bitstring)))

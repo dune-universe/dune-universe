@@ -1,0 +1,4 @@
+(executable
+ (name test)
+ (modules_without_implementation fixture)
+ (libraries oUnit mysql_protocol))

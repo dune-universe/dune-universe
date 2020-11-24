@@ -1,0 +1,3 @@
+(executable
+ (name bench)
+ (libraries mysql_protocol mysql))
