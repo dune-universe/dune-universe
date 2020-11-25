@@ -1,0 +1,6 @@
+(tests
+ (names test_generic_ff)
+ (modules test_generic_ff)
+ (libraries ff ff-pbt alcotest)
+ (package ff)
+)
