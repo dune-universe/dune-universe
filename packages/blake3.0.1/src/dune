@@ -1,0 +1,18 @@
+(rule
+ (targets libocaml_blake3.a dllocaml_blake3.so)
+ (deps (glob_files *.rs) ../Cargo.toml ../Cargo.lock ../cargo-config
+   (source_tree ../vendor))
+ (action
+  (progn
+   (run cargo build --target-dir %{project_root}/../../target --release)
+   (run sh -c
+     "mv %{project_root}/../../target/release/libocaml_blake3.so ./dllocaml_blake3.so 2> /dev/null || \
+      mv %{project_root}/../../target/release/libocaml_blake3.dylib ./dllocaml_blake3.so")
+   (run mv %{project_root}/../../target/release/libocaml_blake3.a libocaml_blake3.a))))
+
+(library
+ (name blake3)
+ (public_name blake3)
+ (foreign_archives ocaml_blake3)
+ (c_library_flags
+  (-lpthread -lc -lm)))

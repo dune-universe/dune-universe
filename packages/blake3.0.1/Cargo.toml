@@ -1,0 +1,12 @@
+[package]
+name = "ocaml-blake3"
+version = "0.1.0"
+authors = ["Yoshihiro Imai <y.imai@proof-ninja.co.jp>"]
+edition = "2018"
+
+[lib]
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+ocaml = "*"
+blake3 = { version = "0.3.7", features = ["rayon"] }
