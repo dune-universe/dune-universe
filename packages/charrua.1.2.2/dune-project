@@ -1,4 +1,0 @@
-(lang dune 1.4)
-(name charrua)
-(version v1.2.2)
-(using menhir 2.0)

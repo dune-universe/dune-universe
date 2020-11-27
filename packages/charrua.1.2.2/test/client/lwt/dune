@@ -1,5 +1,0 @@
-(test
- (name test_client_lwt)
- (package charrua-client-lwt)
- (libraries cstruct-unix alcotest charrua-client-lwt lwt.unix mirage-random
-            tcpip.unix))

@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name fat-filesystem)
-(version v0.14.0)
