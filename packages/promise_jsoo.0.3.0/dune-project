@@ -1,6 +1,7 @@
 (lang dune 2.7)
 
 (name promise_jsoo)
+(version v0.3.0)
 
 (license MIT)
 

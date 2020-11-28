@@ -1,0 +1,4 @@
+(library
+ (name tmLanguage)
+ (public_name textmate-language)
+ (libraries oniguruma))

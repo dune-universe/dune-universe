@@ -23,7 +23,7 @@ type plist =
   ]
 (** A plist document. This is the same plist type that is defined in the
     {{:https://opam.ocaml.org/packages/plist-xml/} [plist-xml]} package (as of
-    version 0.2.0), but is reproduced here as not to depend on [plist-xml]. *)
+    version 0.3.0), but is reproduced here as not to depend on [plist-xml]. *)
 
 val create : unit -> t
 (** Create an empty collection of grammars. *)
@@ -72,6 +72,9 @@ val tokenize_exn : t -> grammar -> stack -> string -> token list * stack
     - [tokens] is nonempty.
     - The [ending] of the last token in [tokens] is always [String.length line].
 
-    Throws {!exception:Error} if it tries to access a local grammar repository
-    that doesn't exist. Currently, it silently ignores inclusions of other
-    grammars that don't exist in [t]. *)
+    Raises {!exception:Error} if it tries to match a malformed [end] or [while]
+    regex.
+
+    Raises {!exception:Error} if it tries to access a local repository that
+    doesn't exist in the file. Currently, it silently ignores [include]s of
+    other grammars that don't exist in [t]. *)

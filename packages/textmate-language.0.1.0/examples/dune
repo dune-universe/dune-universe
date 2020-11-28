@@ -1,3 +1,0 @@
-(executable
-  (name term_highlight)
-  (libraries ANSITerminal markup plist-xml textmate-language))
