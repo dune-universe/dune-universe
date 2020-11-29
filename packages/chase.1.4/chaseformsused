@@ -1,0 +1,5 @@
+#! /bin/sh
+
+# Extract the formulas used during a run of Chase.
+
+fgrep '{' "$@" | sed 's/^.*{//;s/}.*$//' | sort -n | uniq

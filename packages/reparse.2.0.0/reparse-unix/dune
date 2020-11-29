@@ -1,0 +1,11 @@
+(library
+ (name reparse_unix)
+ (public_name reparse-unix)
+ (libraries reparse unix)
+ (foreign_stubs
+  (language c)
+  (names pread)))
+
+(documentation
+ (package reparse-unix)
+ (mld_files index))
