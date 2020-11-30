@@ -1,0 +1,196 @@
+# Keep this file in your GIT repo to help drom track generated files
+
+# hash of toml configuration files
+# used for generation of all files
+31f0c3654d936c8cc161684399ba4d15:.
+# end context for .
+
+# begin context for .github/workflows/doc-deploy.yml
+# file .github/workflows/doc-deploy.yml
+7bfd361c5b4796980b6f42f708a97986:.github/workflows/doc-deploy.yml
+# end context for .github/workflows/doc-deploy.yml
+
+# begin context for .github/workflows/workflow.yml
+# file .github/workflows/workflow.yml
+1358ce8b42d6e3ec6999ebe3d5bc2ab2:.github/workflows/workflow.yml
+# end context for .github/workflows/workflow.yml
+
+# begin context for .gitignore
+# file .gitignore
+dd04b06fbab0608278755e299205a67a:.gitignore
+# end context for .gitignore
+
+# begin context for .ocamlformat
+# file .ocamlformat
+be2d226b0dc658a425e86af1847a2316:.ocamlformat
+# end context for .ocamlformat
+
+# begin context for .ocamlformat-ignore
+# file .ocamlformat-ignore
+5574462426a3706b11f5cbdbb0d4ad91:.ocamlformat-ignore
+# end context for .ocamlformat-ignore
+
+# begin context for .ocp-indent
+# file .ocp-indent
+1281376e351d6c2be9ea4c576a29ebd4:.ocp-indent
+# end context for .ocp-indent
+
+# begin context for CHANGES.md
+# file CHANGES.md
+da593a4b5e79fdc2598b0e55c922bcd9:CHANGES.md
+# end context for CHANGES.md
+
+# begin context for LICENSE.md
+# file LICENSE.md
+be0301341356292d7f2151ae7bd7f23f:LICENSE.md
+# end context for LICENSE.md
+
+# begin context for Makefile
+# file Makefile
+1624511ec72220afd5a54555dd88b04d:Makefile
+# end context for Makefile
+
+# begin context for README.md
+# file README.md
+e7b55948b3da13312d7260cf69bcdfeb:README.md
+# end context for README.md
+
+# begin context for docs/.nojekyll
+# file docs/.nojekyll
+68b329da9893e34099c7d8ad5cb9c940:docs/.nojekyll
+# end context for docs/.nojekyll
+
+# begin context for docs/README.txt
+# file docs/README.txt
+17799aeb2a3684b565725290ec32e65b:docs/README.txt
+# end context for docs/README.txt
+
+# begin context for docs/doc/index.html
+# file docs/doc/index.html
+ddfe198077dea5d913146bffd4f74d56:docs/doc/index.html
+# end context for docs/doc/index.html
+
+# begin context for docs/favicon.png
+# file docs/favicon.png
+7ea9be52d489cbe8c03b43ecf6b2650f:docs/favicon.png
+# end context for docs/favicon.png
+
+# begin context for docs/index.html
+# file docs/index.html
+e59a90ba4621cdabf4df972bf1495ef9:docs/index.html
+# end context for docs/index.html
+
+# begin context for docs/sphinx/index.html
+# file docs/sphinx/index.html
+365282fd36595ca82aef66162c5c53ed:docs/sphinx/index.html
+# end context for docs/sphinx/index.html
+
+# begin context for docs/style.css
+# file docs/style.css
+0085152add896d7bab7b1a744d2a9af7:docs/style.css
+# end context for docs/style.css
+
+# begin context for drom.toml
+# file drom.toml
+c2f149656d309129e70e2c2fff74be46:drom.toml
+# end context for drom.toml
+
+# begin context for dune
+# file dune
+df544cfaf9078d1bba2f90ed1b5adf5f:dune
+# end context for dune
+
+# begin context for dune-project
+# file dune-project
+e158970f9c2a2dd7675ddec9b1cdef9d:dune-project
+# end context for dune-project
+
+# begin context for ez_subst.opam
+# file ez_subst.opam
+258d69743606190248809e34f3c70702:ez_subst.opam
+# end context for ez_subst.opam
+
+# begin context for sphinx/_static/css/fixes.css
+# file sphinx/_static/css/fixes.css
+68b329da9893e34099c7d8ad5cb9c940:sphinx/_static/css/fixes.css
+# end context for sphinx/_static/css/fixes.css
+
+# begin context for sphinx/about.rst
+# file sphinx/about.rst
+d8595f6a528f0fd43a703eaf521328e6:sphinx/about.rst
+# end context for sphinx/about.rst
+
+# begin context for sphinx/conf.py
+# file sphinx/conf.py
+edd7d4e8e30dc9f7795c93db9fdf83c3:sphinx/conf.py
+# end context for sphinx/conf.py
+
+# begin context for sphinx/index.rst
+# file sphinx/index.rst
+cf3c41f0ffb808c3006acbb1bf13df66:sphinx/index.rst
+# end context for sphinx/index.rst
+
+# begin context for sphinx/install.rst
+# file sphinx/install.rst
+a5c6c62679d055279f35b5fd458ef807:sphinx/install.rst
+# end context for sphinx/install.rst
+
+# begin context for sphinx/license.rst
+# file sphinx/license.rst
+edb58639a5f42798015f0fc9c34d0a34:sphinx/license.rst
+# end context for sphinx/license.rst
+
+# begin context for src/ez_subst/dune
+# file src/ez_subst/dune
+41469dde66ad94686bc39cf1b7cf4e98:src/ez_subst/dune
+# end context for src/ez_subst/dune
+
+# begin context for src/ez_subst/index.mld
+# file src/ez_subst/index.mld
+a9fe58e3209451cb9f1b9bd44d675e25:src/ez_subst/index.mld
+# end context for src/ez_subst/index.mld
+
+# begin context for src/ez_subst/package.toml
+# file src/ez_subst/package.toml
+de87fe697e06a0d06a0c1c66e1a57408:src/ez_subst/package.toml
+# end context for src/ez_subst/package.toml
+
+# begin context for test/expect-tests/dune
+# file test/expect-tests/dune
+9fc2bcf43820dde4ca9274296642077d:test/expect-tests/dune
+# end context for test/expect-tests/dune
+
+# begin context for test/expect-tests/test.ml
+# file test/expect-tests/test.ml
+734ed6b2b1cb8e0d6bce316d155bb157:test/expect-tests/test.ml
+# end context for test/expect-tests/test.ml
+
+# begin context for test/inline-tests/dune
+# file test/inline-tests/dune
+fbbadb13d2a89be4d4ceae8df40b572a:test/inline-tests/dune
+# end context for test/inline-tests/dune
+
+# begin context for test/inline-tests/test.ml
+# file test/inline-tests/test.ml
+e001d04969100c711855223ad6c23e6a:test/inline-tests/test.ml
+# end context for test/inline-tests/test.ml
+
+# begin context for test/output-tests/dune
+# file test/output-tests/dune
+27dfcb76f64e251f99718ec7acfccd78:test/output-tests/dune
+# end context for test/output-tests/dune
+
+# begin context for test/output-tests/test1.expected
+# file test/output-tests/test1.expected
+f0ef7081e1539ac00ef5b761b4fb01b3:test/output-tests/test1.expected
+# end context for test/output-tests/test1.expected
+
+# begin context for test/output-tests/test2.expected
+# file test/output-tests/test2.expected
+894dddf3304cbcb0fe04f7c2bbd56073:test/output-tests/test2.expected
+# end context for test/output-tests/test2.expected
+
+# begin context for test/output-tests/test2.ml
+# file test/output-tests/test2.ml
+704ff05ffd8b0e50716542fa55b2db8a:test/output-tests/test2.ml
+# end context for test/output-tests/test2.ml

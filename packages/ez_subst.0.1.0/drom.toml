@@ -1,0 +1,58 @@
+[project]
+drom-version = "0.1"
+
+[project]
+authors = ["Fabrice LE FESSANT <fabrice.le_fessant@origin-labs.com>"]
+copyright = "OCamlPro & Origin Labs"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+license = "LGPL2"
+min-edition = "4.07.0"
+mode = "binary"
+name = "ez_subst"
+synopsis = "Ez_subst is a simple module to perform string substitutions"
+version = "0.1.0"
+windows-ci = true
+
+# keys that you could also define:
+# build-profile = "...build-profile..."
+# odoc-target = "...odoc-target..."
+# sphinx-target = "...sphinx-target..."
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+Ez_subst is a simple module to perform string substitutions, like
+${brace}, $(paren), $[bracket] or $alpha. It provides many options
+to configure the substitutions.
+"""
+
+[drom]
+skip = "src/ez_subst/main.ml test/expect-tests/test.ml test/output-tests/dune test/output-tests/test1.expected"
+
+[dependencies]
+
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+generators = ["ocamllex", "ocamlyacc"]
+pack-modules = true
+share-dirs = ["share"]
+skip-dirs = []
+
+
+[[package]]
+dir = "src/ez_subst"
+
