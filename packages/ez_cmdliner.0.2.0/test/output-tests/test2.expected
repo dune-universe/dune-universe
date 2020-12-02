@@ -1,0 +1,46 @@
+NAME
+       cop - a generic build system
+
+SYNOPSIS
+       cop COMMAND ...
+
+       Hello
+
+COMMANDS
+       help
+           display help about cop and cop commands
+
+       init
+           make the current directory a repository
+
+       record
+           create a patch from unrecorded changes
+
+COMMON OPTIONS
+       These options are common to all commands.
+
+       --help[=FMT] (default=auto)
+           Show this help in format FMT. The value FMT must be one of `auto',
+           `pager', `groff' or `plain'. With `auto', the format is `pager` or
+           `plain' whenever the TERM env var is `dumb' or undefined.
+
+       --version
+           Show version information.
+
+MORE HELP
+       Use `cop COMMAND --help' for help on a single command.
+       Use `cop help patterns' for help on patch matching.
+       Use `cop help environment' for help on environment variables.
+
+EXIT STATUS
+       cop exits with the following status:
+
+       0   on success.
+
+       124 on command line parsing errors.
+
+       125 on unexpected internal errors (bugs).
+
+BUGS
+       Check bug reports at http://bugs.example.org.
+

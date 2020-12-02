@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name: "ocaml-polynomial"
+authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+synopsis: "Polynomials over finite fields"
+description: "Polynomials over finite fields"
+homepage: "https://gitlab.com/dannywillems/ocaml-polynomial"
+dev-repo: "git+https://gitlab.com/dannywillems/ocaml-polynomial.git"
+bug-reports: "https://gitlab.com/dannywillems/ocaml-polynomial/issues"
+license: "MIT"
+depends: [
+  "dune" {>= "2.0"}
+  # Has not been tested with other Zarith versions.
+  # The CI should verify it and it can then be extent
+  "zarith" {>= "1.9.1" & < "2.0.0"}
+  "ff-sig" {>= "0.5.0" & < "0.6.0"}
+  "alcotest" {with-test}
+  "ff" {with-test & >= "0.5.0" & < "0.6.0"}
+  "bisect_ppx" {with-test & >= "2.5.0"}
+]
+build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]

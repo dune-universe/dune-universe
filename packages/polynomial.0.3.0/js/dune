@@ -1,0 +1,29 @@
+(executable
+ (name test_js)
+ (libraries ff
+            polynomial
+            zarith_stubs_js
+            js_of_ocaml
+            js_of_ocaml-compiler
+            js_of_ocaml-ppx
+ )
+ (modes byte)
+ (js_of_ocaml)
+ (preprocess (pps js_of_ocaml-ppx))
+ (flags (:standard ))
+)
+
+(rule
+ (targets Polynomial.js)
+ (action
+  (run %{bin:js_of_ocaml}
+    %{lib:js_of_ocaml-compiler:toplevel.js}
+    %{lib:js_of_ocaml-compiler:dynlink.js}
+    %{lib:zarith_stubs_js:biginteger.js}
+    %{lib:zarith_stubs_js:runtime.js}
+    %{dep:test_js.bc} -o Polynomial.js
+  )
+ )
+)
+
+(alias (name default) (deps Polynomial.js))

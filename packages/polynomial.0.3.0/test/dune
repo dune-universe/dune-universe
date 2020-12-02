@@ -1,0 +1,5 @@
+(tests
+ (names test_with_finite_field)
+ (modules test_with_finite_field functors)
+ (libraries ff ff-sig alcotest polynomial)
+)

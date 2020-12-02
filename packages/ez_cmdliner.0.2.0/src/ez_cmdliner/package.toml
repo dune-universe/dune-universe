@@ -1,0 +1,5 @@
+kind = "library"
+name = "ez_cmdliner"
+[dependencies]
+ez_subst = ">=0.1"
+ocplib_stuff = ""

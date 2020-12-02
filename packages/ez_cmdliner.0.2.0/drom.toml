@@ -1,0 +1,58 @@
+[project]
+drom-version = "0.1"
+
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"]
+copyright = "OCamlPro SAS"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+license = "LGPL2"
+min-edition = "4.07.0"
+mode = "binary"
+name = "ez_cmdliner"
+synopsis = "Easy interface to Cmdliner à la Arg.parse with sub-commands"
+version = "0.2.0"
+windows-ci = true
+
+# keys that you could also define:
+# build-profile = "...build-profile..."
+# odoc-target = "...odoc-target..."
+# sphinx-target = "...sphinx-target..."
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+ez_cmdliner is a simple layer on top of Cmdliner to provide an interface
+à la Arg.parse with an extension for simple sub-commands.
+"""
+
+[drom]
+skip = "CHANGES.md src/ez_cmdliner/main.ml test/output-tests/dune test/output-tests/test1.expected test/output-tests/test2.expected test/output-tests/test2.ml"
+
+[dependencies]
+cmdliner = "1.0.0"
+
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+generators = ["ocamllex", "ocamlyacc"]
+pack-modules = false
+share-dirs = ["share"]
+skip-dirs = []
+
+
+[[package]]
+dir = "src/ez_cmdliner"
+
