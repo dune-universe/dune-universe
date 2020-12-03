@@ -1,0 +1,21 @@
+; cross-compiled GMP
+
+(library
+ (name gmp)
+ (public_name gmp)
+ (install_c_headers gmp)
+ (foreign_archives gmp))
+
+(rule
+ (targets gmp.h libgmp.a dllgmp.so)
+ (deps gmp-6.2.1.tar.xz build.sh)
+ (action
+  (run sh ./build.sh %{ocaml-config:host} "%{ocaml-config:ocamlc_cflags}"
+    %{ocaml-config:supports_shared_libraries})))
+
+(rule
+ (targets build.sh)
+ (deps build.sh.in)
+ (mode fallback)
+ (action
+  (run opam config subst "build.sh")))
