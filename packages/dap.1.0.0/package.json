@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "dependencies": {
+    "@types/jsdom": "^16.2.5",
+    "@types/node": "^14.14.10",
+    "@types/node-fetch": "^2.5.7",
+    "jsdom": "^16.4.0",
+    "lodash": "^4.17.20",
+    "node-fetch": "^2.6.1",
+    "yargs": "^16.1.1"
+  }
+}

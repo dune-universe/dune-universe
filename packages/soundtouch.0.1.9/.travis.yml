@@ -1,0 +1,14 @@
+language: c
+dist: bionic
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - libsoundtouch-dev
+
+script:
+  - ./bootstrap
+  - ./configure
+  - make
+  - make test

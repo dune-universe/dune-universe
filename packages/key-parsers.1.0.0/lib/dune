@@ -1,0 +1,16 @@
+(library
+  (name key_parsers)
+  (public_name key-parsers)
+  (libraries
+    asn1-combinators
+    hex
+    result
+    str
+    zarith
+  )
+  (preprocess
+    (pps
+      ppx_deriving.std
+    )
+  )
+)

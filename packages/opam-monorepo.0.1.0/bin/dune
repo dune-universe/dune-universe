@@ -1,0 +1,4 @@
+(executable
+ (name opam_monorepo)
+ (public_name opam-monorepo)
+ (libraries cmdliner duniverse_lib duniverse_cli))

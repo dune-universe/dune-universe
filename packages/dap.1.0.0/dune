@@ -1,0 +1,7 @@
+(data_only_dirs node_modules)
+
+(rule
+  (target debugAdapterProtocol.json)
+  (mode (promote (until-clean)))
+  (action
+    (with-stdout-to %{target} (run curl -sL https://raw.githubusercontent.com/microsoft/debug-adapter-protocol/gh-pages/debugAdapterProtocol.json))))
