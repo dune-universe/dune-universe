@@ -1,0 +1,1487 @@
+term_alone: IDENT COLON IDENT TYPE
+##
+## Ends in an error in state: 35.
+##
+## bound_term(EOI) -> IDENT . bound_term_ending(EOI) [ RPAREN EOI ]
+## type_or_term0(EOI) -> IDENT . [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> IDENT . type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+term_alone: IDENT COLON TYPE
+##
+## Ends in an error in state: 206.
+##
+## term_alone -> type_or_term(COLON) COLON . type_or_term(EOI) EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON) COLON
+##
+sig_entry_eoi: BINDER IDENT COLON TYPE
+##
+## Ends in an error in state: 145.
+##
+## term_declaration -> BINDER IDENT COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER IDENT COLON
+##
+sig_entry_eoi: BINDER IDENT EQUAL IDENT COLON TYPE
+##
+## Ends in an error in state: 143.
+##
+## term_definition -> BINDER IDENT EQUAL type_or_term(COLON) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER IDENT EQUAL type_or_term(COLON) COLON
+##
+sig_entry_eoi: IDENT EQUAL SYMBOL COLON SIG_OPEN
+##
+## Ends in an error in state: 133.
+##
+## term_definition -> IDENT EQUAL type_or_term(COLON) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## type_definition -> IDENT EQUAL type_or_term(COLON) COLON . TYPE [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT EQUAL type_or_term(COLON) COLON
+##
+term_alone: SYMBOL COLON SYMBOL SEMICOLON
+##
+## Ends in an error in state: 28.
+##
+## type_or_term0(EOI) -> SYMBOL . [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> SYMBOL . type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL
+##
+
+A type expression is expected after ':'.
+
+term_alone: IDENT SEMICOLON
+##
+## Ends in an error in state: 8.
+##
+## bound_term(COLON) -> IDENT . bound_term_ending(COLON) [ RPAREN COLON ]
+## type_or_term0(COLON) -> IDENT . [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> IDENT . type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A typing judgement in the form of ": <type>;", or a type definition with a colon ':' and the 'type' keyword in the form of ": type;" are expected in a term or a type definition.
+
+term_alone: TYPE
+##
+## Ends in an error in state: 204.
+##
+## term_alone' -> . term_alone [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+heterogenous_term_and_type: LPAREN TYPE
+##
+## Ends in an error in state: 2.
+##
+## type_or_term0(COLON) -> LPAREN . type_or_term(COLON) RPAREN [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> LPAREN . type_or_term(COLON) RPAREN type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN
+##
+
+A typing judgment in the form of "<term> : <type>" is expected.
+
+sig_entry_eoi: BINDER IDENT EQUAL SYMBOL RPAREN
+##
+## Ends in an error in state: 142.
+##
+## term_definition -> BINDER IDENT EQUAL type_or_term(COLON) . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER IDENT EQUAL type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+
+A term, a left parenthesis '(', or a colon ':' for a typing judgment in the form of ": <type>" is expected after defining a binder.
+
+sig_entry_eoi: BINDER IDENT EQUAL TYPE
+##
+## Ends in an error in state: 141.
+##
+## term_definition -> BINDER IDENT EQUAL . type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER IDENT EQUAL
+##
+
+A term is expected as right hand side of a term definition.
+
+sig_entry_eoi: BINDER IDENT TYPE
+##
+## Ends in an error in state: 140.
+##
+## term_declaration -> BINDER IDENT . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> BINDER IDENT . EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER IDENT
+##
+
+A typing judgement in the form of ": <type>" or a definition in the form of "= <term> : <type>" is expected after the declaration of a binder.
+
+sig_entry_eoi: BINDER TYPE
+##
+## Ends in an error in state: 139.
+##
+## term_declaration -> BINDER . IDENT COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> BINDER . IDENT EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## BINDER
+##
+
+An identidier (the name of the binder) is expected after the keyword 'binder'.
+
+sig_entry_eoi: IDENT COMMA IDENT TYPE
+##
+## Ends in an error in state: 137.
+##
+## separated_nonempty_list(COMMA,IDENT) -> IDENT . [ COLON ]
+## separated_nonempty_list(COMMA,IDENT) -> IDENT . COMMA separated_nonempty_list(COMMA,IDENT) [ COLON ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+sig_entry_eoi: IDENT COMMA TYPE
+##
+## Ends in an error in state: 136.
+##
+## separated_nonempty_list(COMMA,IDENT) -> IDENT COMMA . separated_nonempty_list(COMMA,IDENT) [ COLON ]
+##
+## The known suffix of the stack is as follows:
+## IDENT COMMA
+##
+sig_entry_eoi: IDENT COLON SIG_OPEN
+##
+## Ends in an error in state: 154.
+##
+## term_declaration -> separated_nonempty_list(COMMA,IDENT) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## type_declaration -> separated_nonempty_list(COMMA,IDENT) COLON . TYPE [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## separated_nonempty_list(COMMA,IDENT) COLON
+##
+sig_entry_eoi: IDENT COLON SYMBOL RPAREN
+##
+## Ends in an error in state: 202.
+##
+## sig_entry_eoi -> sig_entry . EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## sig_entry
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 61, spurious reduction of production type_or_term0(SEMICOLON) -> SYMBOL
+## In state 73, spurious reduction of production type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON)
+## In state 156, spurious reduction of production term_declaration -> separated_nonempty_list(COMMA,IDENT) COLON type_or_term(SEMICOLON)
+## In state 150, spurious reduction of production sig_entry -> term_declaration
+##
+
+After a term or type declaration of the form "<ident1>, <ident2>", a type declaration of the form ": type;" (with the keyword 'type') or a typing judgment of the form ": <type>;" is expected.
+
+sig_entry_eoi: IDENT EQUAL TYPE
+##
+## Ends in an error in state: 131.
+##
+## term_definition -> IDENT EQUAL . type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## type_definition -> IDENT EQUAL . type_or_term(COLON) COLON TYPE [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT EQUAL
+##
+
+A definition in the form of "<term> : <type>;" or a type definition of the form "<type> : type;" (with the keyword 'type') is expected after a term or a type defintion, resp.
+
+sig_entry_eoi: IDENT TYPE
+##
+## Ends in an error in state: 130.
+##
+## separated_nonempty_list(COMMA,IDENT) -> IDENT . [ COLON ]
+## separated_nonempty_list(COMMA,IDENT) -> IDENT . COMMA separated_nonempty_list(COMMA,IDENT) [ COLON ]
+## term_definition -> IDENT . EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## type_definition -> IDENT . EQUAL type_or_term(COLON) COLON TYPE [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A comma ',' or a colon ':' are expected in a type or term declaration. An equality symbol '=' is expected in a type or term definition.
+
+sig_entry_eoi: INFIX SYMBOL COLON TYPE
+##
+## Ends in an error in state: 111.
+##
+## term_declaration -> INFIX SYMBOL COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX SYMBOL COLON
+##
+sig_entry_eoi: INFIX SYMBOL EQUAL IDENT COLON TYPE
+##
+## Ends in an error in state: 109.
+##
+## term_definition -> INFIX SYMBOL EQUAL type_or_term(COLON) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX SYMBOL EQUAL type_or_term(COLON) COLON
+##
+sig_entry_eoi: PREFIX SYMBOL COLON TYPE
+##
+## Ends in an error in state: 103.
+##
+## term_declaration -> PREFIX SYMBOL COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX SYMBOL COLON
+##
+sig_entry_eoi: PREFIX SYMBOL EQUAL IDENT COLON TYPE
+##
+## Ends in an error in state: 101.
+##
+## term_definition -> PREFIX SYMBOL EQUAL type_or_term(COLON) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX SYMBOL EQUAL type_or_term(COLON) COLON
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL EQUAL SYMBOL COLON TYPE
+##
+## Ends in an error in state: 126.
+##
+## term_definition -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON) COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON) COLON
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL COLON TYPE
+##
+## Ends in an error in state: 128.
+##
+## term_declaration -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL COLON . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL COLON
+##
+
+A type is expected after the colon ':'.
+
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL EQUAL SYMBOL SEMICOLON
+##
+## Ends in an error in state: 1.
+##
+## type_or_term0(COLON) -> SYMBOL . [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> SYMBOL . type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL
+##
+
+A typing judgment in the form ": <type>;" is expected.
+
+sig_entry_eoi: INFIX SYMBOL EQUAL TYPE
+##
+## Ends in an error in state: 107.
+##
+## term_definition -> INFIX SYMBOL EQUAL . type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX SYMBOL EQUAL
+##
+sig_entry_eoi: PREFIX SYMBOL EQUAL TYPE
+##
+## Ends in an error in state: 99.
+##
+## term_definition -> PREFIX SYMBOL EQUAL . type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX SYMBOL EQUAL
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL EQUAL TYPE
+##
+## Ends in an error in state: 124.
+##
+## term_definition -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL . type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL
+##
+
+A typing judgment in the form "<term> : <type>;" is expected.
+
+sig_entry_eoi: INFIX SYMBOL TYPE
+##
+## Ends in an error in state: 106.
+##
+## term_declaration -> INFIX SYMBOL . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX SYMBOL . EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX SYMBOL
+##
+sig_entry_eoi: PREFIX SYMBOL TYPE
+##
+## Ends in an error in state: 98.
+##
+## term_declaration -> PREFIX SYMBOL . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> PREFIX SYMBOL . EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX SYMBOL
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL TYPE
+##
+## Ends in an error in state: 123.
+##
+## term_declaration -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL . EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL
+##
+
+A typing judgement in the form of ": <type>;" or a defintion in the form of "= <term>: <type>;" is expected.
+
+sig_entry_eoi: INFIX TYPE
+##
+## Ends in an error in state: 105.
+##
+## term_declaration -> INFIX . SYMBOL COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_declaration -> INFIX . LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX . SYMBOL EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX . LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET TYPE
+##
+## Ends in an error in state: 122.
+##
+## term_declaration -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET . SYMBOL COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET . SYMBOL EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET
+##
+
+A symbol or a declaration of associativity an precedence property are expected.
+
+sig_entry_eoi: INFIX LSQBRACKET SYMBOL TYPE
+##
+## Ends in an error in state: 114.
+##
+## separated_nonempty_list(COMMA,infix_option_value) -> SYMBOL . SYMBOL [ RSQBRACKET ]
+## separated_nonempty_list(COMMA,infix_option_value) -> SYMBOL . SYMBOL COMMA separated_nonempty_list(COMMA,infix_option_value) [ RSQBRACKET ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL
+##
+
+An identifier is expected.
+
+sig_entry_eoi: INFIX LSQBRACKET SYMBOL SYMBOL TYPE
+##
+## Ends in an error in state: 115.
+##
+## separated_nonempty_list(COMMA,infix_option_value) -> SYMBOL SYMBOL . [ RSQBRACKET ]
+## separated_nonempty_list(COMMA,infix_option_value) -> SYMBOL SYMBOL . COMMA separated_nonempty_list(COMMA,infix_option_value) [ RSQBRACKET ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL SYMBOL
+##
+
+A right square bracket ']' or a comma ',' followed by an associativity specification (one of the keywords 'Left', 'Right', or 'NonAssoc') are expected.
+
+sig_entry_eoi: INFIX LSQBRACKET IDENT COMMA TYPE
+##
+## Ends in an error in state: 118.
+##
+## separated_nonempty_list(COMMA,infix_option_value) -> IDENT COMMA . separated_nonempty_list(COMMA,infix_option_value) [ RSQBRACKET ]
+##
+## The known suffix of the stack is as follows:
+## IDENT COMMA
+##
+
+A precedence specification in the form of "< <sym>" where "<sym>" is an other infix symbol is expected.
+
+sig_entry_eoi: INFIX LSQBRACKET SYMBOL SYMBOL COMMA TYPE
+##
+## Ends in an error in state: 116.
+##
+## separated_nonempty_list(COMMA,infix_option_value) -> SYMBOL SYMBOL COMMA . separated_nonempty_list(COMMA,infix_option_value) [ RSQBRACKET ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL SYMBOL COMMA
+##
+
+An associativity specification (one of the keywords 'Left', 'Right', or 'NonAssoc') is expected.
+
+sig_entry_eoi: INFIX LSQBRACKET IDENT TYPE
+##
+## Ends in an error in state: 117.
+##
+## separated_nonempty_list(COMMA,infix_option_value) -> IDENT . [ RSQBRACKET ]
+## separated_nonempty_list(COMMA,infix_option_value) -> IDENT . COMMA separated_nonempty_list(COMMA,infix_option_value) [ RSQBRACKET ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A right square bracket ']' or a comma "," followed by a precedence specification in the form of "< <sym>" where "<sym>" is an other infix symbol are expected.
+
+sig_entry_eoi: INFIX LSQBRACKET TYPE
+##
+## Ends in an error in state: 113.
+##
+## term_declaration -> INFIX LSQBRACKET . separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> INFIX LSQBRACKET . separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET
+##
+
+An associativity specification (one of the keywords 'Left', 'Right', or 'NonAssoc') or a precedence specification in the form of "< <sym>" where "<sym>" is an other infix symbol are expected.
+
+sig_entry_eoi: PREFIX TYPE
+##
+## Ends in an error in state: 97.
+##
+## term_declaration -> PREFIX . SYMBOL COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## term_definition -> PREFIX . SYMBOL EQUAL type_or_term(COLON) COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX
+##
+
+A symbol is expected.
+
+sig_entry_eoi: TYPE
+##
+## Ends in an error in state: 200.
+##
+## sig_entry_eoi' -> . sig_entry_eoi [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+An identifier or a keyword ('infix', 'prefix', or 'binder') is expected.
+
+main: LEX_OPEN IDENT EQUAL IDENT COMPOSE TYPE
+##
+## Ends in an error in state: 188.
+##
+## lexicon_exp -> lexicon_exp0 COMPOSE . lexicon_exp [ SIG_OPEN RPAREN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## lexicon_exp0 COMPOSE
+##
+
+An identifier (the name of a lexicon), or an expression representing the composition of lexicons is expected.
+
+main: LEX_OPEN IDENT EQUAL IDENT TYPE
+##
+## Ends in an error in state: 187.
+##
+## lexicon_exp -> lexicon_exp0 . [ SIG_OPEN RPAREN NL_LEX_OPEN LEX_OPEN EOI ]
+## lexicon_exp -> lexicon_exp0 . COMPOSE lexicon_exp [ SIG_OPEN RPAREN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## lexicon_exp0
+##
+main: LEX_OPEN IDENT EQUAL IDENT RPAREN
+##
+## Ends in an error in state: 194.
+##
+## nonempty_list(sig_or_lex) -> sig_or_lex . [ EOI ]
+## nonempty_list(sig_or_lex) -> sig_or_lex . nonempty_list(sig_or_lex) [ EOI ]
+##
+## The known suffix of the stack is as follows:
+## sig_or_lex
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 187, spurious reduction of production lexicon_exp -> lexicon_exp0
+## In state 192, spurious reduction of production lexicon -> LEX_OPEN IDENT EQUAL lexicon_exp
+## In state 196, spurious reduction of production sig_or_lex -> lexicon
+##
+
+The composition operator '<<' is expected.
+
+main: LEX_OPEN IDENT EQUAL LPAREN IDENT EOI
+##
+## Ends in an error in state: 190.
+##
+## lexicon_exp0 -> LPAREN lexicon_exp . RPAREN [ SIG_OPEN RPAREN NL_LEX_OPEN LEX_OPEN EOI COMPOSE ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN lexicon_exp
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 187, spurious reduction of production lexicon_exp -> lexicon_exp0
+##
+
+The composition operator '<<' or a right parenthesis ')' is expected.
+
+main: LEX_OPEN IDENT EQUAL LPAREN TYPE
+##
+## Ends in an error in state: 185.
+##
+## lexicon_exp0 -> LPAREN . lexicon_exp RPAREN [ SIG_OPEN RPAREN NL_LEX_OPEN LEX_OPEN EOI COMPOSE ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN
+##
+main: LEX_OPEN IDENT EQUAL TYPE
+##
+## Ends in an error in state: 184.
+##
+## lexicon -> LEX_OPEN IDENT EQUAL . lexicon_exp [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT EQUAL
+##
+
+An expression representing the composition of lexicons is expected.
+
+main: LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL TYPE
+##
+## Ends in an error in state: 182.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL . end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL
+##
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL SYMBOL COLON_EQUAL IDENT SEMICOLON TYPE
+##
+## Ends in an error in state: 170.
+##
+## end_of_dec(lex_entry) -> lex_entry SEMICOLON . end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## option(SEMICOLON) -> SEMICOLON . [ END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## lex_entry SEMICOLON
+##
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL TYPE
+##
+## Ends in an error in state: 168.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL . end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL
+##
+
+A lexicon entry of the form "<term> := <term>;" or "<type> := <type>" is expected.
+
+main: LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT TYPE
+##
+## Ends in an error in state: 181.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT . EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT
+##
+
+An equality symbold '=' is expected.
+
+main: LEX_OPEN IDENT LPAREN IDENT RPAREN COLON TYPE
+##
+## Ends in an error in state: 180.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN IDENT RPAREN COLON . IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN IDENT RPAREN COLON
+##
+main: NL_LEX_OPEN IDENT LPAREN TYPE
+##
+## Ends in an error in state: 163.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN . IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN
+##
+main: SIG_OPEN TYPE
+##
+## Ends in an error in state: 94.
+##
+## signature -> SIG_OPEN . IDENT EQUAL end_of_dec(sig_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## SIG_OPEN
+##
+
+An identifier (the name of a signature) is expected.
+
+main: LEX_OPEN IDENT LPAREN IDENT RPAREN TYPE
+##
+## Ends in an error in state: 179.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN IDENT RPAREN . COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN IDENT RPAREN
+##
+
+A expression in the form of ": <identifier> =" where the identifier is the name of a signature is expected.
+
+main: LEX_OPEN IDENT LPAREN IDENT TYPE
+##
+## Ends in an error in state: 178.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN IDENT . RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN IDENT
+##
+
+A right parenthesis ')' is expected.
+
+main: LEX_OPEN IDENT LPAREN TYPE
+##
+## Ends in an error in state: 177.
+##
+## lexicon -> LEX_OPEN IDENT LPAREN . IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT LPAREN
+##
+
+An identifier (the name of a signature) is expected.
+
+main: LEX_OPEN IDENT TYPE
+##
+## Ends in an error in state: 176.
+##
+## lexicon -> LEX_OPEN IDENT . LPAREN IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## lexicon -> LEX_OPEN IDENT . EQUAL lexicon_exp [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN IDENT
+##
+
+A left parenthesis '(' is expected.
+
+main: LEX_OPEN TYPE
+##
+## Ends in an error in state: 175.
+##
+## lexicon -> LEX_OPEN . IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## lexicon -> LEX_OPEN . IDENT EQUAL lexicon_exp [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LEX_OPEN
+##
+
+An identifier (the name of a new lexicon) is expected
+
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL SYMBOL COLON_EQUAL IDENT EOI
+##
+## Ends in an error in state: 169.
+##
+## end_of_dec(lex_entry) -> lex_entry . option(SEMICOLON) END_OF_DEC [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## end_of_dec(lex_entry) -> lex_entry . SEMICOLON end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## lex_entry
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 68, spurious reduction of production type_or_term0(SEMICOLON) -> IDENT
+## In state 73, spurious reduction of production type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON)
+## In state 86, spurious reduction of production lex_entry -> separated_nonempty_list(COMMA,id_or_sym) COLON_EQUAL type_or_term(SEMICOLON)
+##
+
+A semi-colon ';' or the 'end' keyword are expected.
+
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT TYPE
+##
+## Ends in an error in state: 167.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT . EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON IDENT
+##
+
+An equality symbol '=' is expected.
+
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON TYPE
+##
+## Ends in an error in state: 166.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON . IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN IDENT RPAREN COLON
+##
+
+An identifier (the name of a signature) is expected.
+
+main: NL_LEX_OPEN IDENT LPAREN IDENT RPAREN TYPE
+##
+## Ends in an error in state: 165.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN IDENT RPAREN . COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN IDENT RPAREN
+##
+heterogenous_term_and_type: IDENT IDENT TYPE
+##
+## Ends in an error in state: 9.
+##
+## bound_term_ending(COLON) -> IDENT . DOT type_or_term(COLON) [ RPAREN COLON ]
+## bound_term_ending(COLON) -> IDENT . bound_term_ending(COLON) [ RPAREN COLON ]
+## type_or_term0(COLON) -> IDENT . [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> IDENT . type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A colon ':' is expected.
+
+main: NL_LEX_OPEN IDENT LPAREN IDENT TYPE
+##
+## Ends in an error in state: 164.
+##
+## lexicon -> NL_LEX_OPEN IDENT LPAREN IDENT . RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT LPAREN IDENT
+##
+
+A right parenthesis ')' is expected.
+
+main: NL_LEX_OPEN IDENT TYPE
+##
+## Ends in an error in state: 162.
+##
+## lexicon -> NL_LEX_OPEN IDENT . LPAREN IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN IDENT
+##
+
+A left parenthesis '(' is expected.
+
+main: NL_LEX_OPEN TYPE
+##
+## Ends in an error in state: 161.
+##
+## lexicon -> NL_LEX_OPEN . IDENT LPAREN IDENT RPAREN COLON IDENT EQUAL end_of_dec(lex_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## NL_LEX_OPEN
+##
+
+An identifier (the name of a new lexicon) is expected.
+
+#POS removed: main: SIG_OPEN IDENT EQUAL END_OF_DEC TYPE 
+##
+## WARNING: This sentence does NOT end with a syntax error, as it should.
+##
+main: TYPE
+##
+## Ends in an error in state: 93.
+##
+## main' -> . main [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+A declaration of a signature (keyword 'signature') or of a lexicon (keyword 'lexicon' or 'nl_lexicon') is expected.
+
+main: SIG_OPEN IDENT EQUAL IDENT COLON IDENT SEMICOLON TYPE
+##
+## Ends in an error in state: 152.
+##
+## end_of_dec(sig_entry) -> sig_entry SEMICOLON . end_of_dec(sig_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## option(SEMICOLON) -> SEMICOLON . [ END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## sig_entry SEMICOLON
+##
+main: SIG_OPEN IDENT EQUAL TYPE
+##
+## Ends in an error in state: 96.
+##
+## signature -> SIG_OPEN IDENT EQUAL . end_of_dec(sig_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## SIG_OPEN IDENT EQUAL
+##
+main: SIG_OPEN IDENT EQUAL IDENT COLON TYPE TYPE
+##
+## Ends in an error in state: 151.
+##
+## end_of_dec(sig_entry) -> sig_entry . option(SEMICOLON) END_OF_DEC [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+## end_of_dec(sig_entry) -> sig_entry . SEMICOLON end_of_dec(sig_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## sig_entry
+##
+
+A signature entry (type declaration, type definition, term declaration, or term definition) is expected.
+
+main: SIG_OPEN IDENT TYPE
+##
+## Ends in an error in state: 95.
+##
+## signature -> SIG_OPEN IDENT . EQUAL end_of_dec(sig_entry) [ SIG_OPEN NL_LEX_OPEN LEX_OPEN EOI ]
+##
+## The known suffix of the stack is as follows:
+## SIG_OPEN IDENT
+##
+
+An equality symbol '=' is expected.
+
+lex_entry_eoi: SYMBOL COLON_EQUAL IDENT ARROW TYPE
+##
+## Ends in an error in state: 77.
+##
+## type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON) ARROW . type_or_term(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(SEMICOLON) ARROW
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL IDENT LIN_ARROW TYPE
+##
+## Ends in an error in state: 74.
+##
+## type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON) LIN_ARROW . type_or_term(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(SEMICOLON) LIN_ARROW
+##
+
+A type expression is expected.
+
+lex_entry_eoi: SYMBOL COLON_EQUAL IDENT RPAREN
+##
+## Ends in an error in state: 88.
+##
+## lex_entry_eoi -> lex_entry . EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## lex_entry
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 68, spurious reduction of production type_or_term0(SEMICOLON) -> IDENT
+## In state 73, spurious reduction of production type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON)
+## In state 86, spurious reduction of production lex_entry -> separated_nonempty_list(COMMA,id_or_sym) COLON_EQUAL type_or_term(SEMICOLON)
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL SYMBOL TYPE
+##
+## Ends in an error in state: 61.
+##
+## type_or_term0(SEMICOLON) -> SYMBOL . [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> SYMBOL . type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## SYMBOL
+##
+
+An arrow ('->' or '=>'), a term, or a semi-colon are expected.
+
+heterogenous_term_and_type: SYMBOL COLON LPAREN TYPE
+##
+## Ends in an error in state: 29.
+##
+## type_or_term0(EOI) -> LPAREN . type_or_term(EOI) RPAREN [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> LPAREN . type_or_term(EOI) RPAREN type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN
+##
+heterogenous_term_and_type: SYMBOL COLON LAMBDA0 TYPE
+##
+## Ends in an error in state: 30.
+##
+## bound_term(EOI) -> LAMBDA0 . bound_term_ending(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA0
+##
+heterogenous_term_and_type: SYMBOL COLON LAMBDA0 IDENT TYPE
+##
+## Ends in an error in state: 31.
+##
+## bound_term_ending(EOI) -> IDENT . DOT type_or_term(EOI) [ RPAREN EOI ]
+## bound_term_ending(EOI) -> IDENT . bound_term_ending(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+heterogenous_term_and_type: SYMBOL COLON LAMBDA0 IDENT DOT TYPE
+##
+## Ends in an error in state: 32.
+##
+## bound_term_ending(EOI) -> IDENT DOT . type_or_term(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## IDENT DOT
+##
+heterogenous_term_and_type: SYMBOL COLON LAMBDA TYPE
+##
+## Ends in an error in state: 33.
+##
+## bound_term(EOI) -> LAMBDA . bound_term_ending(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA
+##
+heterogenous_term_and_type: SYMBOL COLON IDENT IDENT TYPE
+##
+## Ends in an error in state: 36.
+##
+## bound_term_ending(EOI) -> IDENT . DOT type_or_term(EOI) [ RPAREN EOI ]
+## bound_term_ending(EOI) -> IDENT . bound_term_ending(EOI) [ RPAREN EOI ]
+## type_or_term0(EOI) -> IDENT . [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> IDENT . type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+heterogenous_term_and_type: SYMBOL COLON LPAREN SYMBOL RPAREN TYPE
+##
+## Ends in an error in state: 49.
+##
+## type_or_term0(EOI) -> LPAREN type_or_term(EOI) RPAREN . [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> LPAREN type_or_term(EOI) RPAREN . type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(EOI) RPAREN
+##
+heterogenous_term_and_type: SYMBOL COLON SYMBOL IDENT TYPE
+##
+## Ends in an error in state: 50.
+##
+## type_or_term0(EOI) -> IDENT . [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> IDENT . type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+heterogenous_term_and_type: SYMBOL COLON SYMBOL RPAREN
+##
+## Ends in an error in state: 53.
+##
+## heterogenous_term_and_type -> type_or_term(COLON) COLON type_or_term(EOI) . EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON) COLON type_or_term(EOI)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 28, spurious reduction of production type_or_term0(EOI) -> SYMBOL
+## In state 40, spurious reduction of production type_or_term(EOI) -> type_or_term0(EOI)
+##
+
+An arrow ('->' or '=>'), a left parenthesis '(', or an end of input are expected (no more keyword or semi-colon or colon).
+
+heterogenous_term_and_type: SYMBOL COLON LPAREN SYMBOL EOI
+##
+## Ends in an error in state: 48.
+##
+## type_or_term0(EOI) -> LPAREN type_or_term(EOI) . RPAREN [ RPAREN LIN_ARROW EOI ARROW ]
+## type_or_term0(EOI) -> LPAREN type_or_term(EOI) . RPAREN type_or_term0(EOI) [ RPAREN LIN_ARROW EOI ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(EOI)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 28, spurious reduction of production type_or_term0(EOI) -> SYMBOL
+## In state 40, spurious reduction of production type_or_term(EOI) -> type_or_term0(EOI)
+##
+
+An arrow ('->' or '=>'), a right parenthesis ')', or an end of input are expected (no more keyword or semi-colon or colon).
+
+heterogenous_term_and_type: SYMBOL COLON SYMBOL LIN_ARROW TYPE
+##
+## Ends in an error in state: 41.
+##
+## type_or_term(EOI) -> type_or_term0(EOI) LIN_ARROW . type_or_term(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(EOI) LIN_ARROW
+##
+heterogenous_term_and_type: SYMBOL COLON SYMBOL ARROW TYPE
+##
+## Ends in an error in state: 44.
+##
+## type_or_term(EOI) -> type_or_term0(EOI) ARROW . type_or_term(EOI) [ RPAREN EOI ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(EOI) ARROW
+##
+
+A type or an end of input are expected (no more keyword or semi-colon or colon).
+
+lex_entry_eoi: SYMBOL COLON_EQUAL LPAREN IDENT ARROW IDENT RPAREN TYPE
+##
+## Ends in an error in state: 82.
+##
+## type_or_term0(SEMICOLON) -> LPAREN type_or_term(SEMICOLON) RPAREN . [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> LPAREN type_or_term(SEMICOLON) RPAREN . type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(SEMICOLON) RPAREN
+##
+
+An arrow ('->' or '=>'), or a semi-colon are expected.
+
+lex_entry_eoi: SYMBOL COLON_EQUAL LPAREN TYPE
+##
+## Ends in an error in state: 62.
+##
+## type_or_term0(SEMICOLON) -> LPAREN . type_or_term(SEMICOLON) RPAREN [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> LPAREN . type_or_term(SEMICOLON) RPAREN type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL TYPE
+##
+## Ends in an error in state: 60.
+##
+## lex_entry -> separated_nonempty_list(COMMA,id_or_sym) COLON_EQUAL . type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## separated_nonempty_list(COMMA,id_or_sym) COLON_EQUAL
+##
+heterogenous_term_and_type: IDENT COLON TYPE
+##
+## Ends in an error in state: 27.
+##
+## heterogenous_term_and_type -> type_or_term(COLON) COLON . type_or_term(EOI) EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON) COLON
+##
+
+A term or a type are expected.
+
+lex_entry_eoi: SYMBOL COMMA TYPE
+##
+## Ends in an error in state: 91.
+##
+## separated_nonempty_list(COMMA,id_or_sym) -> id_or_sym COMMA . separated_nonempty_list(COMMA,id_or_sym) [ COLON_EQUAL ]
+##
+## The known suffix of the stack is as follows:
+## id_or_sym COMMA
+##
+
+An identifier (i.e., a type or a term) or a symbol are expected.
+
+lex_entry_eoi: SYMBOL TYPE
+##
+## Ends in an error in state: 90.
+##
+## separated_nonempty_list(COMMA,id_or_sym) -> id_or_sym . [ COLON_EQUAL ]
+## separated_nonempty_list(COMMA,id_or_sym) -> id_or_sym . COMMA separated_nonempty_list(COMMA,id_or_sym) [ COLON_EQUAL ]
+##
+## The known suffix of the stack is as follows:
+## id_or_sym
+##
+
+A comma ',' or an interpretation symbol ':=' are expected.
+
+lex_entry_eoi: TYPE
+##
+## Ends in an error in state: 56.
+##
+## lex_entry_eoi' -> . lex_entry_eoi [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+An identifier (i.e., a type or a term) or a symbol are expected.
+
+# POS: next sequence is removed
+# heterogenous_term_and_type: IDENT IDENT DOT TYPE 
+##
+## WARNING: This sentence does NOT end with a syntax error, as it should.
+##
+heterogenous_term_and_type: LAMBDA IDENT DOT TYPE
+##
+## Ends in an error in state: 5.
+##
+## bound_term_ending(COLON) -> IDENT DOT . type_or_term(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## IDENT DOT
+##
+
+A term is expected.
+
+heterogenous_term_and_type: LAMBDA TYPE
+##
+## Ends in an error in state: 6.
+##
+## bound_term(COLON) -> LAMBDA . bound_term_ending(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA
+##
+heterogenous_term_and_type: LAMBDA0 TYPE
+##
+## Ends in an error in state: 3.
+##
+## bound_term(COLON) -> LAMBDA0 . bound_term_ending(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA0
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL LAMBDA0 TYPE
+##
+## Ends in an error in state: 63.
+##
+## bound_term(SEMICOLON) -> LAMBDA0 . bound_term_ending(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA0
+##
+
+An identifier (the name of a bound variable) is expected.
+
+heterogenous_term_and_type: LAMBDA0 IDENT TYPE
+##
+## Ends in an error in state: 4.
+##
+## bound_term_ending(COLON) -> IDENT . DOT type_or_term(COLON) [ RPAREN COLON ]
+## bound_term_ending(COLON) -> IDENT . bound_term_ending(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL LAMBDA0 IDENT TYPE
+##
+## Ends in an error in state: 64.
+##
+## bound_term_ending(SEMICOLON) -> IDENT . DOT type_or_term(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+## bound_term_ending(SEMICOLON) -> IDENT . bound_term_ending(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL LAMBDA TYPE
+##
+## Ends in an error in state: 66.
+##
+## bound_term(SEMICOLON) -> LAMBDA . bound_term_ending(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## LAMBDA
+##
+
+An identifier (the name of a bound variable) or a dot '.' are expected.
+
+
+
+heterogenous_term_and_type: LPAREN SYMBOL COLON
+##
+## Ends in an error in state: 21.
+##
+## type_or_term0(COLON) -> LPAREN type_or_term(COLON) . RPAREN [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> LPAREN type_or_term(COLON) . RPAREN type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+heterogenous_term_and_type: LPAREN SYMBOL RPAREN TYPE
+##
+## Ends in an error in state: 22.
+##
+## type_or_term0(COLON) -> LPAREN type_or_term(COLON) RPAREN . [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> LPAREN type_or_term(COLON) RPAREN . type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(COLON) RPAREN
+##
+
+A term or a right parenthesis ')' are expected.
+
+heterogenous_term_and_type: SYMBOL IDENT TYPE
+##
+## Ends in an error in state: 23.
+##
+## type_or_term0(COLON) -> IDENT . [ RPAREN LIN_ARROW COLON ARROW ]
+## type_or_term0(COLON) -> IDENT . type_or_term0(COLON) [ RPAREN LIN_ARROW COLON ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+heterogenous_term_and_type: SYMBOL RPAREN
+##
+## Ends in an error in state: 26.
+##
+## heterogenous_term_and_type -> type_or_term(COLON) . COLON type_or_term(EOI) EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+
+A term or a colon ':' are expected.
+
+heterogenous_term_and_type: TYPE
+##
+## Ends in an error in state: 0.
+##
+## heterogenous_term_and_type' -> . heterogenous_term_and_type [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL LAMBDA0 IDENT DOT TYPE
+##
+## Ends in an error in state: 65.
+##
+## bound_term_ending(SEMICOLON) -> IDENT DOT . type_or_term(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT DOT
+##
+
+A term "<term>" is expected.
+
+heterogenous_term_and_type: SYMBOL LIN_ARROW TYPE
+##
+## Ends in an error in state: 14.
+##
+## type_or_term(COLON) -> type_or_term0(COLON) LIN_ARROW . type_or_term(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(COLON) LIN_ARROW
+##
+heterogenous_term_and_type: SYMBOL ARROW TYPE
+##
+## Ends in an error in state: 17.
+##
+## type_or_term(COLON) -> type_or_term0(COLON) ARROW . type_or_term(COLON) [ RPAREN COLON ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term0(COLON) ARROW
+##
+
+A type "<type>" is expected.
+
+
+
+
+lex_entry_eoi: SYMBOL COLON_EQUAL IDENT TYPE
+##
+## Ends in an error in state: 68.
+##
+## bound_term(SEMICOLON) -> IDENT . bound_term_ending(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+## type_or_term0(SEMICOLON) -> IDENT . [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> IDENT . type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL LPAREN SYMBOL SEMICOLON
+##
+## Ends in an error in state: 81.
+##
+## type_or_term0(SEMICOLON) -> LPAREN type_or_term(SEMICOLON) . RPAREN [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> LPAREN type_or_term(SEMICOLON) . RPAREN type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN type_or_term(SEMICOLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 61, spurious reduction of production type_or_term0(SEMICOLON) -> SYMBOL
+## In state 73, spurious reduction of production type_or_term(SEMICOLON) -> type_or_term0(SEMICOLON)
+##
+
+A term, an arrow ('->' or '=>'), a left parenthesis '(', or a semi-colon ';' are expected.
+
+lex_entry_eoi: SYMBOL COLON_EQUAL IDENT IDENT TYPE
+##
+## Ends in an error in state: 69.
+##
+## bound_term_ending(SEMICOLON) -> IDENT . DOT type_or_term(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+## bound_term_ending(SEMICOLON) -> IDENT . bound_term_ending(SEMICOLON) [ SEMICOLON RPAREN EOI END_OF_DEC ]
+## type_or_term0(SEMICOLON) -> IDENT . [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> IDENT . type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+lex_entry_eoi: SYMBOL COLON_EQUAL SYMBOL IDENT TYPE
+##
+## Ends in an error in state: 83.
+##
+## type_or_term0(SEMICOLON) -> IDENT . [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+## type_or_term0(SEMICOLON) -> IDENT . type_or_term0(SEMICOLON) [ SEMICOLON RPAREN LIN_ARROW EOI END_OF_DEC ARROW ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A term, a left parenthesis '(', or a semi-colon ';' are expected.
+
+sig_entry_eoi: PREFIX SYMBOL EQUAL SYMBOL RPAREN
+##
+## Ends in an error in state: 100.
+##
+## term_definition -> PREFIX SYMBOL EQUAL type_or_term(COLON) . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## PREFIX SYMBOL EQUAL type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+sig_entry_eoi: INFIX SYMBOL EQUAL SYMBOL RPAREN
+##
+## Ends in an error in state: 108.
+##
+## term_definition -> INFIX SYMBOL EQUAL type_or_term(COLON) . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX SYMBOL EQUAL type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+sig_entry_eoi: INFIX LSQBRACKET IDENT RSQBRACKET SYMBOL EQUAL SYMBOL RPAREN
+##
+## Ends in an error in state: 125.
+##
+## term_definition -> INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON) . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## INFIX LSQBRACKET separated_nonempty_list(COMMA,infix_option_value) RSQBRACKET SYMBOL EQUAL type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+
+A term, a left parenthesis '(', or a colon ':' are expected.
+
+sig_entry_eoi: IDENT EQUAL SYMBOL RPAREN
+##
+## Ends in an error in state: 132.
+##
+## term_definition -> IDENT EQUAL type_or_term(COLON) . COLON type_or_term(SEMICOLON) [ SEMICOLON EOI END_OF_DEC ]
+## type_definition -> IDENT EQUAL type_or_term(COLON) . COLON TYPE [ SEMICOLON EOI END_OF_DEC ]
+##
+## The known suffix of the stack is as follows:
+## IDENT EQUAL type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+term_alone: SYMBOL RPAREN
+##
+## Ends in an error in state: 205.
+##
+## term_alone -> type_or_term(COLON) . COLON type_or_term(EOI) EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production type_or_term0(COLON) -> SYMBOL
+## In state 13, spurious reduction of production type_or_term(COLON) -> type_or_term0(COLON)
+##
+term_alone: SYMBOL COLON SYMBOL RPAREN
+##
+## Ends in an error in state: 207.
+##
+## term_alone -> type_or_term(COLON) COLON type_or_term(EOI) . EOI [ # ]
+##
+## The known suffix of the stack is as follows:
+## type_or_term(COLON) COLON type_or_term(EOI)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 28, spurious reduction of production type_or_term0(EOI) -> SYMBOL
+## In state 40, spurious reduction of production type_or_term(EOI) -> type_or_term0(EOI)
+##
+
+A term, an arrow ('->' or '=>'), a left parenthesis '(', or a colon ':' are expected.
