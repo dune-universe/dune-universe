@@ -1,0 +1,14 @@
+(executable
+ (name amp)
+ (modules amp)
+ (libraries ladspa))
+
+(executable
+ (name inspect)
+ (modules inspect)
+ (libraries ladspa))
+
+(executable
+ (name sc4)
+ (modules sc4)
+ (libraries ladspa))

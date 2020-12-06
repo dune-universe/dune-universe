@@ -1,0 +1,17 @@
+(library
+ (name debug_protocol)
+ (public_name dap.types)
+ (preprocess (pps ppx_deriving_yojson ppx_here ppx_deriving.make))
+ (libraries yojson ppx_deriving_yojson.runtime))
+
+(rule
+  (target debug_protocol.ml)
+  (mode (promote (until-clean)))
+  (deps (:json ../../debugAdapterProtocol.json) ../../scripts/gen_protocol_ml.js)
+  (action (with-stdout-to %{target} (run node ../../scripts/gen_protocol_ml.js -- %{json}))))
+
+(rule
+  (target debug_protocol.mli)
+  (mode (promote (until-clean)))
+  (deps (:json ../../debugAdapterProtocol.json) ../../scripts/gen_protocol_mli.js)
+  (action (with-stdout-to %{target} (run node ../../scripts/gen_protocol_mli.js -- %{json}))))

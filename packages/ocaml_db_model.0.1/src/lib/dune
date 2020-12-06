@@ -1,0 +1,7 @@
+(library
+ (name ocaml_db_model)
+ (public_name ocaml_db_model)
+ (synopsis "Creation of modules with struct types based on db tables and fields, to save us lots of typing, entire class of run-time SQL errors when tables change.")
+ (libraries bignum core fieldslib mysql pcre ppx_deriving ppx_deriving.show ppx_deriving_yojson.runtime ppx_fields_conv uint yojson)
+ (preprocess (pps ppx_deriving.eq ppx_deriving.make ppx_deriving.ord ppx_deriving.show ppx_fields_conv ppx_sexp_conv))
+)

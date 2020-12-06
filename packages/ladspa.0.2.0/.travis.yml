@@ -1,0 +1,13 @@
+language: c
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - ladspa-sdk
+
+script:
+  - ./bootstrap
+  - ./configure
+  - make
+  - make -C examples

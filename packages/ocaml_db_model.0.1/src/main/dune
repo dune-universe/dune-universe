@@ -1,0 +1,6 @@
+(executable
+  (name ocaml_mysql_model)
+  (public_name ocaml_mysql_model)
+  (package ocaml_db_model)
+  (libraries core uint yojson mysql ppx_deriving ppx_deriving.show fieldslib ppx_fields_conv pcre bignum ocaml_db_model)
+)

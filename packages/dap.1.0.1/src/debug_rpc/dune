@@ -1,0 +1,7 @@
+(library
+ (name debug_rpc)
+ (public_name dap.rpc_lwt)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect ppx_deriving.make ppx_deriving_yojson lwt_ppx))
+ (libraries debug_protocol lwt lwt.unix angstrom angstrom.lwt-unix logs logs.lwt react))

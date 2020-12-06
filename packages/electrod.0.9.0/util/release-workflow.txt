@@ -1,0 +1,25 @@
+# semantic versioning (VVV herebelow), without 'v'
+
+git flow release start VVV
+
+# IMMEDIATELY prepare changelog
+echo "### VVV ($(date -Idate))" | cat - CHANGES.md > temp && mv temp CHANGES.md && $EDITOR CHANGES.md &
+
+# if needed, change, clean & update headers
+bash util/headache/headache.sh
+
+# regenerate opam with dune
+dune build electrod.opam && git add electrod.opam
+
+git commit -am "release VVV"
+
+git flow finish --showcommands --notag --push
+
+# NOW check https://github.com/grayswandyr/electrod/actions
+
+dune-release tag
+
+# (dune-release without argument means bistro)
+# (also: depends on DUNE_RELEASE_LOCAL_REPO)
+
+dune-release 
