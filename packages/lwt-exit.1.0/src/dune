@@ -1,0 +1,4 @@
+(library
+ (name lwt_exit)
+ (public_name lwt-exit)
+ (libraries lwt.unix ptime ptime.clock.os))

@@ -1,0 +1,5 @@
+(tests
+ (names after clean_up clean_up_failure clean_up_timeout exit exit_escape
+   raise raise_exit range_of_signals return signal unregister_clean_up
+   unregister_clean_up_with_after main_is_clean_up)
+ (libraries lwt.unix lwt-exit))

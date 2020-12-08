@@ -1,0 +1,29 @@
+build-and-test:
+  image: ocaml/opam2:4.09
+  script:
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam pin --no-action lwt-exit.dev .
+    - opam depext ocamlformat.0.11.0
+    - opam install ocamlformat.0.11.0
+    - dune build @fmt
+    - opam depext lwt-exit
+    - opam install --deps-only lwt-exit
+    - dune build
+    - opam install --deps-only --with-test .
+    - dune runtest
+
+pages:
+  image: ocaml/opam2:4.09
+  artifacts:
+    paths:
+    - public/
+  only:
+    - master
+  script:
+    - opam pin --no-action lwt-exit.dev .
+    - opam depext lwt-exit
+    - opam install --deps-only lwt-exit
+    - opam install odoc
+    - dune build @doc
+    - mv _build/default/_doc/_html public/

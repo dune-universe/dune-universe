@@ -1,0 +1,19 @@
+opam-version: "2.0"
+maintainer: "contact@tezos.com"
+authors: [ "Nomadic Labs" ]
+homepage: "https://gitlab.com/nomadic-labs/lwt-exit"
+bug-reports: "https://gitlab.com/nomadic-labs/lwt-exit/issues"
+dev-repo: "git+https://gitlab.com/nomadic-labs/lwt-exit.git"
+license: "MIT"
+depends: [
+  "ocaml" { >= "4.08" }
+  "dune" { >= "2.0" }
+  "base-unix"
+  "lwt"
+  "ptime"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+synopsis: "Lwt-exit: an oppinionated clean-exit and signal-handling library for Lwt programs"

@@ -1,0 +1,74 @@
+[project]
+drom-version = "0.1"
+
+[project]
+authors = ["Fabrice Le Fessant <fabrice.le_fessant@origin-labs.com>"]
+copyright = "OCamlPro SAS & Origin Labs SAS"
+edition = "4.10.0"
+github-organization = "ocamlpro"
+license = "LGPL2"
+min-edition = "4.07.0"
+name = "ez_opam_file"
+synopsis = "Package ez_opam_file is a simple compatibility layer on top of opam-file-format"
+version = "0.1.0"
+windows-ci = true
+
+# keys that you could also define:
+# odoc-target = "...odoc-target..."
+# sphinx-target = "...sphinx-target..."
+# archive = "...archive..."
+# dev-repo = "...dev-repo..."
+# bug-reports = "...bug-reports..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# homepage = "...homepage..."
+
+[project]
+description = """
+This package provides a minimal compatibility layer on top of opam-file-format
+to support both version 2.1.0 and version 2.1.1.
+"""
+
+[project]
+skip = "src/ez_opam_file/dune src/ez_opam_file/index.mld src/ez_opam_file/main.ml"
+
+# project-wide library dependencies (not for package-specific deps)
+[dependencies]
+
+# project-wide tools dependencies (not for package-specific deps)
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+
+# dirs to skip while scanning for dune files
+skip-dirs = []
+
+# dirs to scan for share/ folders (with package names)
+share-dirs = ["share"]
+
+# build profile to use by default
+# build-profile = ...
+
+# Profile options for this project
+#    [profile]
+#    dev = { ocaml-flags = "-w +a-4-40-41-42-44" }
+#    release = { ocaml-flags = "-w -a" }
+[profile]
+# ...
+
+# project-wide fields (depends on project skeleton)
+[fields]
+# ...
+
+
+[[package]]
+dir = "src/ez_opam_file"
+# edit 'src/ez_opam_file/package.toml' for package-specific options
+
