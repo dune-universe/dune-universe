@@ -1,0 +1,5 @@
+(library
+ (name logs_ppx)
+ (public_name logs-ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib))

@@ -1,0 +1,54 @@
+{
+  "name": "logs-ppx",
+  "version": "0.0.1",
+  "description": "This is an example of ppblix",
+  "author": "Ulrik Strid <ulrik.strid@outlook.com>",
+  "keywords": [
+    "reason",
+    "ocaml",
+    "ppx",
+    "logs"
+  ],
+  "esy": {
+    "build": "dune build -p logs-ppx",
+    "buildDev": [
+      [
+        "dune",
+        "build",
+        "--promote-install-files",
+        "--root",
+        "."
+      ]
+    ],
+    "buildEnv": {
+      "ODOC_SYNTAX": "re"
+    },
+    "release": {
+      "bin": [
+        "Bin"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@opam/logs": "*",
+    "@opam/merlin": "*",
+    "ocaml": "4.10.0",
+    "@opam/reason": ">= 3.6.0 < 4.0.0",
+    "@opam/dune": "2.7.1",
+    "@opam/ocaml-migrate-parsetree": "^1.7.3",
+    "@opam/ppxlib": "0.14.0",
+    "@opam/ocaml-lsp-server": "ocaml/ocaml-lsp:ocaml-lsp-server.opam#master",
+    "@opam/ocamlformat": "*",
+    "@opam/odoc": "*"
+  },
+  "scripts": {
+    "build": "esy dune build -p logs-ppx",
+    "watch": "esy dune build -p logs-ppx --watch",
+    "test": "esy b dune runtest",
+    "promote": "esy dune promote",
+    "doc": "esy dune build @doc",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "format": "esy dune build @fmt --auto-promote",
+    "utop": "esy dune utop lib -- -implicit-bindings"
+  }
+}

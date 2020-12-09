@@ -1,0 +1,18 @@
+opam-version: "2.0"
+name: "ff-bench"
+authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+synopsis: "Benchmark library for finite fields over the package ff-sig"
+description: "Benchmark library for finite fields over the package ff-sig"
+homepage: "https://gitlab.com/dannywillems/ocaml-ff"
+dev-repo: "git+https://gitlab.com/dannywillems/ocaml-ff.git"
+bug-reports: "https://gitlab.com/dannywillems/ocaml-ff/issues"
+license: "MIT"
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "2.7"}
+  "ff-sig" {= version}
+  "core" { = "v0.13.0" }
+  "core_bench" { = "v0.13.0" }
+]
+build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]

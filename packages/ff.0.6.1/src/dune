@@ -1,0 +1,29 @@
+(library
+ (public_name ff-sig)
+ (name ff_sig)
+ (modules ff_sig)
+ (libraries zarith)
+)
+
+(library
+ (public_name ff)
+ (name ff)
+ (modules ff)
+ (flags (-open Ff_sig))
+ (libraries zarith ff-sig)
+ (instrumentation (backend bisect_ppx))
+)
+
+(library
+ (public_name ff-pbt)
+ (name ff_pbt)
+ (modules ff_pbt)
+ (libraries ff-sig zarith alcotest)
+)
+
+(library
+ (public_name ff-bench)
+ (name ff_bench)
+ (modules ff_bench)
+ (libraries ff-sig core_bench core)
+)

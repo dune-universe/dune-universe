@@ -1,0 +1,18 @@
+language: c
+sudo: true
+addons:
+  apt:
+    packages:
+    - ocaml-nox
+    - ocaml-findlib
+    - dssi-dev
+
+before_install:
+  - git clone https://github.com/savonet/ocaml-ladspa
+  - cd ocaml-ladspa && git submodule init && git submodule update && ./bootstrap && ./configure && make && sudo make install
+
+script:
+  - ./bootstrap
+  - ./configure
+  - make
+  - make -C examples

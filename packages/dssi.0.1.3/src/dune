@@ -1,0 +1,18 @@
+(library
+ (name dssi)
+ (public_name dssi)
+ (synopsis "OCaml bindings for dssi")
+ (libraries ladspa)
+ (enabled_if
+  (or
+   (= %{system} "linux")
+   (= %{system} "macosx")))
+ (foreign_stubs
+  (language c)
+  (names dssi_stubs)
+  (extra_deps ocaml_dssi_config.h)))
+
+(rule
+ (targets ocaml_dssi_config.h)
+ (action
+  (run ./config/discover.exe)))

@@ -1,5 +1,0 @@
-(executable
- (name bench_ff)
- (modules bench_ff)
- (libraries core_bench ff core)
-)

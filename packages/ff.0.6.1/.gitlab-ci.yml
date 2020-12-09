@@ -1,0 +1,159 @@
+stages:
+  - lint
+  - build
+  - doc
+  - coverage
+  - deploy
+
+lint:
+  stage: lint
+  image: registry.gitlab.com/dannywillems/docker-ocamlformat:0.15.0
+  before_script:
+    - eval $(opam env)
+  script:
+    - ocamlformat --check js/*.ml*
+    - ocamlformat --check src/*.ml*
+    - ocamlformat --check test/*.ml*
+  rules:
+    - when: always
+
+dune-release-distrib:
+  image: ocaml/opam2:4.11
+  stage: lint
+  before_script:
+    - sudo chown -R opam. .
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam depext -i -y conf-m4
+    - opam install dune-release.1.4.0 -y
+    - opam depext -i -y zarith
+    - opam pin add ff-sig.dev ./ --no-action
+    - opam pin add ff.dev ./ --no-action
+    - opam pin add ff-pbt.dev ./ --no-action
+    - opam pin add ff-bench.dev ./ --no-action
+    - opam install . -y
+  script:
+    - dune-release distrib
+
+.build-test: &build_definition
+  stage: build
+  before_script:
+    # Always update system package manager + setup OPAM env
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - eval $(opam env)
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam depext -i -y zarith
+    # Install NVM for the JS test
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - . "$NVM_DIR/nvm.sh"
+    - nvm install 12.16.1
+    - nvm use 12.16.1
+  script:
+    - opam pin add ff-sig.dev ./ --no-action
+    - opam pin add ff.dev ./ --no-action
+    - opam pin add ff-pbt.dev ./ --no-action
+    - opam pin add ff-bench.dev ./ --no-action
+    - opam install --deps-only --with-test -y .
+    # Install the package
+    - opam install -y .
+    # Run tests
+    - dune build @runtest
+    # js_of_ocaml compatibility
+    - opam install js_of_ocaml js_of_ocaml-compiler js_of_ocaml-ppx zarith_stubs_js
+    - dune build js
+    - cp _build/default/js/FiniteField.js js/test
+    - node js/test/test_js.js
+  rules:
+    - when: always
+
+# OCaml 4.08
+build-ocaml-4.08:
+  <<: *build_definition
+  image: ocaml/opam2:4.08
+
+# OCaml 4.09
+build-ocaml-4.09:
+  <<: *build_definition
+  image: ocaml/opam2:4.09
+
+# OCaml 4.10
+build-ocaml-4.10:
+  <<: *build_definition
+  image: ocaml/opam2:4.10
+
+# OCaml 4.11
+build-ocaml-4.11:
+  <<: *build_definition
+  image: ocaml/opam2:4.11
+
+doc:
+  stage: doc
+  image: ocaml/opam2:4.09
+  before_script:
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - eval $(opam env)
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam depext -i -y zarith
+    - sudo apt-get install m4 -y
+    - opam install odoc -y
+    - opam install . -y
+  script:
+    - dune build @doc
+    - cp -r _build/default/_doc/_html _odoc/
+  artifacts:
+    paths:
+      - _odoc
+
+# Coverage
+coverage:
+  stage: coverage
+  image: ocaml/opam2:4.10
+  rules:
+    - when: always
+  before_script:
+    - sudo apt-get install m4 -y
+    - eval $(opam env)
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam depext -i -y zarith
+    - opam pin add ff-sig.dev ./ --no-action
+    - opam pin add ff.dev ./ --no-action
+    - opam pin add ff-pbt.dev ./ --no-action
+    - opam pin add ff-bench.dev ./ --no-action
+    - opam install -y --with-test .
+  script:
+    - dune runtest --instrument-with bisect_ppx --force
+    - bisect-ppx-report html
+
+# # FIXME: does not seem to work. Getting `Build processing error`.
+# coveralls:
+#   stage: deploy
+#   image: ocaml/opam2:4.10
+#   before_script:
+#     - sudo apt-get install m4 -y
+#     - eval $(opam env)
+#     - opam repository set-url default https://opam.ocaml.org
+#     - opam update
+#     - opam depext -i -y zarith
+#     - opam install -y --with-test .
+#   script:
+#     # Generate the coverage.json file. It is simply a JSON file used to post.
+#     - bisect-ppx-report coveralls coverage.json --service-name gitlab-ci --service-job-id $CI_JOB_ID --repo-token ${COVERALLS_REPO_TOKEN}
+#     - curl -L -F json_file=@./coverage.json https://coveralls.io/api/v1/jobs
+#   only:
+#     - merge_requests
+#     - master
+
+pages:
+  stage: deploy
+  image: ocaml/opam2:4.09
+  script:
+    - cp -r _odoc/ public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
