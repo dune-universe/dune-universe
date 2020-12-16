@@ -1,0 +1,46 @@
+SELECT table_schema, table_name, column_name, ordinal_position, column_default, is_nullable, data_type, character_maximum_length, numeric_precision,numeric_precision_radix, numeric_scale, datetime_precision, is_updateable 
+FROM vtvoters.information_schema.columns 
+LEFT JOIN 
+(select t.relname as table_name, i.relname as index_name, a.attname as column_name, d.adsrc as default_value from pg_class t join pg_attribute a on a.attrelid = t.oid join pg_index ix on t.oid = ix.indrelid AND a.attnum = ANY(ix.indkey) join pg_class i on i.oid = ix.indexrelid left join pg_attrdef d on d.adrelid = t.oid and d.adnum = a.attnum where t.relkind = 'r' and t.relname in ('vtvoters_july2020') order by t.relname, i.relname, a.attnum) AS T ON T.table_name=vtvoters.information_schema.columns.table_name AND T.column_name=vtvoters.information_schema.columns.column_name
+WHERE table_name='vtvoters_july2020'
+
+
+SELECT table_schema,vtvoters.information_schema.columns.table_name, vtvoters.information_schema.columns.column_name, T.index_name,default_value, ordinal_position, column_default, is_nullable, data_type, character_maximum_length, numeric_precision,numeric_precision_radix, numeric_scale, datetime_precision, is_updatable FROM vtvoters.information_schema.columns LEFT JOIN (select t.relname as table_name, i.relname as index_name, a.attname as column_name, d.adsrc as default_value from pg_class t join pg_attribute a on a.attrelid = t.oid join pg_index ix on t.oid = ix.indrelid AND a.attnum = ANY(ix.indkey) join pg_class i on i.oid = ix.indexrelid left join pg_attrdef d on d.adrelid = t.oid and d.adnum = a.attnum where t.relkind = 'r' and t.relname in ('vtvoters_july2020') order by t.relname, i.relname, a.attnum) AS T ON T.table_name=vtvoters.information_schema.columns.table_name AND T.column_name=vtvoters.information_schema.columns.column_name WHERE vtvoters.information_schema.columns.table_name='vtvoters_july2020';
+
+ABOVE LACKS PRIMARY KEY AND OTHER CONSTRAINTS!!!
+AND SOME SAY TO USE pg_* views instead of querying information_schema...
+
+TAKEN FROM : https://stackoverflow.com/questions/18516931/find-primary-key-of-table-in-postgresql-from-information-schema-with-only-select
+To get 
+select 
+    t.relname as table_name,
+    i.relname as index_name,
+    a.attname as column_name,
+    d.adsrc   as default_value
+from
+    pg_class t
+    join pg_attribute a on a.attrelid = t.oid
+    join pg_index ix    on t.oid = ix.indrelid AND a.attnum = ANY(ix.indkey)
+    join pg_class i     on i.oid = ix.indexrelid
+    left join pg_attrdef d on d.adrelid = t.oid and d.adnum = a.attnum  
+where
+    t.relkind = 'r'
+    and t.relname in ( 'aa', 'bb', 'cc' )
+order by
+    t.relname,
+    i.relname,
+    a.attnum;
+
+select t.relname as table_name, i.relname as index_name, a.attname as column_name, d.adsrc as default_value from pg_class t join pg_attribute a on a.attrelid = t.oid join pg_index ix on t.oid = ix.indrelid AND a.attnum = ANY(ix.indkey) join pg_class i on i.oid = ix.indexrelid left join pg_attrdef d on d.adrelid = t.oid and d.adnum = a.attnum where t.relkind = 'r' and t.relname in ('vtvoters_july2020') order by t.relname, i.relname, a.attnum;
+
+
+Taken from http://wiki.postgresql.org/wiki/Retrieve_primary_key_columns
+To get keys (only):
+SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type
+FROM   pg_index i
+JOIN   pg_attribute a ON a.attrelid = i.indrelid
+                     AND a.attnum = ANY(i.indkey)
+WHERE  i.indrelid = 'tablename'::regclass
+AND    i.indisprimary;
+
+SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = 'tablename'::regclass AND i.indisprimary;

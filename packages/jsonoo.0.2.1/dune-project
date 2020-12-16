@@ -1,0 +1,30 @@
+(lang dune 2.7)
+
+(name jsonoo)
+(version v0.2.1)
+
+(license MIT)
+
+(maintainers "Max Lantas <mnxndev@outlook.com>")
+
+(authors "Max Lantas <mnxndev@outlook.com>")
+
+(source
+ (github mnxn/jsonoo))
+
+(generate_opam_files true)
+
+(implicit_transitive_deps false)
+
+(package
+ (name jsonoo)
+ (synopsis "JSON library for Js_of_ocaml")
+ (depends
+  (ocaml
+   (>= 4.08))
+  js_of_ocaml
+  js_of_ocaml-ppx
+  gen_js_api
+  (webtest :with-test)
+  (webtest-js :with-test)
+  (conf-npm :with-test)))

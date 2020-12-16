@@ -1,0 +1,130 @@
+module Uint64_w_sexp = Uint64_w_sexp.Uint64_w_sexp
+module Uint32_w_sexp = Uint32_w_sexp.Uint32_w_sexp
+module Uint16_w_sexp = Uint16_w_sexp.Uint16_w_sexp
+module Uint8_w_sexp = Uint8_w_sexp.Uint8_w_sexp
+module Mysql = Mysql
+module Unix = Core.Unix
+module Utilities = struct
+
+  let getcon () =
+    Mysql.quick_connect ~host:HOST
+			~database:DATABASE
+			~password:PASSWORD
+			~user:USER ();;
+  let closecon c = Mysql.disconnect c;;
+    
+  let oc = Core.Out_channel.stdout;;    
+  let print_n_flush s =
+    Core.Out_channel.output_string oc s;
+    Core.Out_channel.flush oc;;
+       
+  let serialize_optional_field ~field ~conn =
+    match field with
+    | None -> "NULL"
+    | Some s -> "'" ^ (Mysql.real_escape conn s) ^ "'";;
+    
+  let serialize_optional_field_with_default ~field ~conn ~default =
+    match field with
+    | None -> default
+    | Some s -> "'" ^ (Mysql.real_escape conn s) ^ "'";;
+
+  let serialize_boolean_field ~field =
+    match field with
+    | true -> "TRUE"
+    | false -> "FALSE";;
+
+  let serialize_optional_bool_field ~field =
+    match field with
+    | None -> "NULL"
+    | Some b -> if b then "TRUE" else "FALSE";;
+
+  (*Int pennies*)
+  let serialize_optional_float_field_as_int ~field =
+    let open Core in 
+    match field with
+    | Some f -> Int.to_string (Float.to_int (f *. 100.0))
+    | None -> "NULL";;
+
+  let serialize_float_field_as_int ~field =
+    let open Core in 
+    Int.to_string (Float.to_int (field *. 100.0));;
+
+  let parse_optional_boolean_field ~field =
+    match field with
+    | None -> None
+    | Some s -> Some ((fun x ->
+		 match x with
+		   "1" -> true
+		 | "0" -> false
+		 | "true"
+		 | "TRUE" -> true
+		 | "false" 
+		 | "FALSE" -> false
+		 | _ -> raise (Failure "Utilities::parse_optional_boolean_field unrecognized value")
+		) s)
+
+  let parse_int_field_exn field =
+    match field with
+    | None -> raise (Failure "utilities::parse_optional_int_field optional string was NONE")
+    | Some s -> Int.of_string s
+
+  let parse_optional_int field =
+    match field with
+    | None -> None
+    | Some s -> Some (parse_int_field_exn field)
+
+  let parse_int_field field =
+    Int.of_string field
+
+  let parse_64bit_int_field field =
+    Core.Int64.of_string field
+
+  let parse_optional_uint8 field =
+    match field with
+    | Some s -> Some (Uint8_w_sexp.of_string s)
+    | None -> None
+
+  let parse_optional_uint16 field =
+    match field with
+    | Some s -> Some (Uint16_w_sexp.of_string s)
+    | None -> None
+
+  let parse_optional_uint32 field =
+    match field with
+    | Some s -> Some (Uint32_w_sexp.of_string s)
+    | None -> None
+
+  let parse_optional_uint64 field =
+    match field with
+    | Some s -> Some (Uint64_w_sexp.of_string s)
+    | None -> None
+
+  let parse_optional_float field =
+    let open Core in 
+    match field with
+    | Some s -> Some (Float.of_string s)
+    | None -> None
+
+  let parse_optional_date field =
+    let open Core in 
+    match field with
+    | Some s -> Some (Date.of_string s)
+    | None -> None
+
+  let parse_optional_time field =
+    let open Core in 
+    match field with
+    | Some s -> Some (Time.of_string s)
+    | None -> None
+
+  let parse_boolean_field field =
+    match field with
+      "1" -> true
+    | "0" -> false
+    | "true"
+    | "TRUE" -> true
+    | "false" 
+    | "FALSE" -> false
+    | _ -> raise (Failure "Utilities::parse_boolean_field unrecognized value")
+
+end

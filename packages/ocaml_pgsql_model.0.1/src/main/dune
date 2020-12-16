@@ -1,0 +1,6 @@
+(executable
+  (name ocaml_pgsql_model)
+  (public_name ocaml_pgsql_model)
+  (package ocaml_pgsql_model)
+  (libraries core uint yojson ppx_deriving ppx_deriving.show fieldslib ppx_fields_conv pcre bignum postgresql ocaml_pgsql_model)
+)

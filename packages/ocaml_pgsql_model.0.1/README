@@ -1,0 +1,237 @@
+The purpose of this project is to provide a convenient manner to
+"model" an existing POSTGRES database. This would be especially useful if a database
+has a large number of tables and fields. This project seeks to provide a
+fast way to generate modules and correct types that match the tables and fields,
+thus sparing us from having to manually create each and assign correct types.
+Other libraries exist in other languages to accomplish similar goals, such as
+JOOQ for java, and ODB for C++. Some call this endeavor "object mapping", and
+ODB for C++ even performs "migration" by which hand written code is used to create
+tables and fields in a database, which is not here supported (yet?). This library
+seeks only to create valid Ocaml modules to describe existing tables, not the
+other way around.
+
+Requires >= Ocaml 4.08.1 as of November 2020. Neither testing nor use has been attempted, nor reported, under any later versions of Ocaml to date.
+
+By way of example:
+Let us presume we have a table Foo with the following fields and types:
+ A integer (signed 32 bit)
+ B bigint unsigned (unsigned 64-bit)
+ C varchar(of any length)
+ D timestamp
+ E date
+ F nullable int
+This project would output a module described in foo.ml and foo.mli like so (most of
+the data types are from Jane Street Core, some are customized):
+module Foo = struct
+  type t = {
+    A : Int32.t;
+    B : UInt64_extended.t;
+    C : String.t;
+    D : Time.t;
+    E : Date.t;
+    F : Int64.t option
+  } [@@deriving fields,show,sexp,eq,ord,yojson]
+  ...
+end
+module Foo : sig
+  type t = {
+    A : Int32.t;
+    B : UInt64_extended.t;
+    C : String.t;
+    D : Time.t;
+    E : Date.t;
+    F : Int64.t option
+  } [@@deriving fields,show,sexp,eq,ord,yojson]
+  ...
+end
+
+Command line arguments also control which modules, or all or none, should have type t
+defined as part of a sub-module T for inclusion by way of an "include T" statement in the
+ml file, and furthermore running sub-module T through Core.Comprable.Make(T).
+
+Boiler plate functions are also provided to run queries and return Sets of type t, wrapped
+in Core.Result.t, as well as function for creating some of the SQL needed to insert or update
+records in a table.
+
+The modules created by this project as output should be correct and ready to serve
+as inputs to the Ocaml compiler. If used with many tables or tables with many
+fields, this project should hopefully save somebody a lot of time. At present
+almost all the types are take from Jane Street's Core libraries and this project
+supports Postgresql databases. Future support native Ocaml types are
+contemplated. Mysql support is found in another project named "Ocaml-db-model".
+Each module would also include some support functions for queries
+and creating instances of type t from results of those queries from the same tables.
+
+Note that by accident, ppx_deriving_yojson and not ppx_yojson_conv, is required to successfully
+compile the modules output by this project. Perhaps that will be changed in future to use
+Jane Street's ppx_yojson_conv.
+
+This project does its own string parsing, rejects
+some combinations of data types and Ocaml data types where clipping
+or overflow might be possible. Library support for signed and unsigned 8,16,32,
+and 64 bit data types is almost total. Needless to say varchar
+clipping is unavoidable given a sufficiently large input string unless we perhaps
+come up with our own length-aware data type as a drop-in replacement. (You may in
+general wish to set your schema to strict mode to reject all out-of-range
+values on insert instead of clipping values to the max or min permissible
+endpoint value of the column's data type.) While on the subject of clipping and
+data-types, perhaps in future we can also create overflow-aware data-types for
+additional safety when inter-operating with a db.
+
+At present this project will output modules with some ppx extensions by default:
+fields, show, sexp, eq, ord, and yojson.
+
+USAGE:
+Users can either manually invoke this project at the command line or incorporate invokation into your build system, such as Make files, dune, etc. This project first must be installed using opam. 
+
+USAGE WITH DUNE:
+The overall goal is to create a rule and an alias that invokes the a command line dependency that is this project after installation using opam.
+Within your source code directory, create a dune file, within which you use the "(include_subdirs unqualified)" directive.
+Use an alias to create the modules based on tables before compile-time.
+Include the following statement, or something similar, to direct dune to execute an alias:
+(preprocessor_deps (alias tables/tables_alias) (source_tree src/lib/tables))
+
+Within your source code subdirectory, create another subdirectory named "tables" and within that create another dune file in which to define the alias that creates the modules like so:
+(rule
+ (alias tables_alias)
+ (targets table_name_one.ml table_name_one.mli table_name_two.ml table_name_two.mli table_name_three.ml table_name_three.mli tables.ml)
+ (deps (:gen /home/<userhome>/.opam/<version>/bin/ocaml_mysql_model))
+ (action (run %{gen} -host <ip_of_db> -user <username> -password <password> -db <dbname> -table-list table_name_one,table_name_two,table_name_three -comparable-tables table_name_one,table_name_two,table_name_three -fields2ignore ts -ppx-decorators fields,eq,make,ord,sexp,show,yojson -destination <path_to_project>/_build/default/src/lib/tables/))
+ (mode fallback)
+)
+
+Create a second identical rule and alias within the same dune file that outputs to your "tables" subdirectory within your source code tree, such as <path_to_project>/src/lib/tables. Presently it appears dune copies source code over to the _build tree for compilation from the source code tree, and while our rule generates files within the source code tree, apparently that doesn't happen in time before dune copies source code from the source tree to the build tree. Use of dune locks doesn't seem to help. If anyone knows how to do this with just one rule instead of two with dune, please let me know.
+
+----TODO----Command line options------
+ -> Provide a version without Core?
+ -> Plain modules output - define modules each with a name matching that of
+ a table in the schema and with a type t that is a record (a product type).
+ Each component of each type t record bears the name of a field in the table
+ for which the module is named. The type of each component matches that of
+ it's corresponding field as closely as possible. Null-able fields must be
+ optional. An mli is also created. No functions are defined. Types that are
+ not supported are prohibited, such as 24-bit integer types for which
+ we have no matching type in Ocaml. Some unsigned types are supported. See below
+ for full details on which types are supported. 
+
+ -> with ppx decoration - modules are written with ppx extensions. Supported
+ ppx extensions presently include yojson, sexp, ord, eq, show, and fields.
+
+ -> with query functions - modules are written with (at least) the fields
+ ppx extension and a function of type:
+ conn: -> query:string -> (t list, string) Core.Std.Result.t
+ This function is named get_from_db and requires that any field not of type
+ string be parsed in an appropriate manner, such as for integers of several
+ supported types, dates, time-stamps, etc. Errors must be caught. No other
+ types are supported--yet--such as a field whose type is defined as another
+ module.
+
+-> include serial fields - if some tables contain a Serial data type field
+   we can choose to include it. By default we exclude it. If included. these
+   are always optional. Mysql permits null as a value on insert for fields of
+   type Serial and by default will use an auto-incremented next sequence value.
+   Instances of any type that includes a field that is of type Serial in the
+   db can enjoy a None value of this field if created at run-time and later
+   inserted into the db. Note that if the Serial field is NOT declared with
+   NOT NULL, then inserts that include a null will actually insert a null,
+   not an auto-incremented next in sequence value; so don't do that unless
+   you really mean it.
+
+
+-----------------Mapping of data types is described below: --------------------
+
+POSTGRES:
+
+We use the uint package in opam that provides Ocaml with unsigned integer types, specifically
+32, and 64 bit unsigned integers. We also extend these to play nicely with ppx
+when desired. NOTE: there are no unsigned integer types in Postgres, except for
+serial types which are almost unsigned but lack zero.
+--------------------------------------------------------------------------------
+BIGSERIAL is alias for  large autoincrementing integer (8 bytes)
+(aka BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE in MYSQL) ...  ->
+              no perfect data-type for this since range excludes zero and is 1 through 2^63 (aka 9223372036854775807)
+	      which is the upper half of 64-bit signed integer, the lower half being wasted, and illegal (perhaps we could create our own data type in Ocaml?)
+	      But for now use Core.Int64.t
+SERIAL is alias for autoincrementing integer (4 bytes) ->
+              no perfect data-type exists for this, since range excludes zero and is 1 through 2^31 - 1 (aka 2147483647)
+	      which is upper half of 32-bit signed integer, the lower half being wasted, and illegal (perhaps we could create our own data type in Ocaml?)
+	      But for now use Core.Int32.t
+SMALLSERIAL is alias for autoincrementing integer (2 bytes) ->
+              again, not perfect data-type exists for this, range exludes zero and is the upper half of signed 16-bit integer range
+	      (perhaps we could create our own data type in Ocaml?) - leave this one UNSUPPORTED
+
+SMALLINT (2 byte aka 16bit values) -> UNSUPPORTED
+INTEGER (4 byte aka 32 bit values) -> Core.Std.Int32 (range is -2147483648 to +2147483647) (rely on this)
+BIGINT (64 bit values) -> Core.Std.Int64 (range is -9223372036854775808 to +9223372036854775807) (rely on this heavily)
+
+  NUMERIC
+| DECIMAL -> arbitrary precision numbers, but very slow calculations according to postgres documentation.
+             Up to 131072 digits before the decimal point, up to 16383 digits after the decimal point. 
+	     Use zarith or bignum (done) support in the ppx_xml_conv or csvfields. 
+REAL (4 byte variable precision, inexact, 6 decimal digits precision) -> unsupported (use DOUBLE PRECISION instead)
+DOUBLE PRECISION (8 bytes variable precision, inexact, 15 decimal digits precision -> float
+
+MONEY (8 byte currency amount, 2 decimal digits precision by default set by lc_monetary, range of +/- 92233720368547758.08) -> unsupported at present
+
+|TEXT (variable unlimited length)
+|CHAR (fixed length)
+|CHARACTER (fixed length)
+|CHARACTER VARYING (variable limited length)
+|VARCHAR (variable limited length) -> string (the only thing that could go wrong is the length of your string exceeds field width,
+                                      until we come up with a type perhaps that checks for length overruns.)
+
+BYTEA (1 or 4 bytes plus actual binary variable length string, aka raw bytes) -> string
+
+| DATE (4 bytes) 
+| TIMESTAMP (8 bytes, 'with' or 'without timezone') -> Core.Std.Date
+
+| TIME (8 bytes 'with' or 'without timezone', but discouraged without) -> Core.Std.Time
+
+INTERVAL -> UNSUPPORTED at present
+
+BOOLEAN (1 byte) -> bool
+BIT (varying or not) -> UNSUPPORTED for now
+
+enum -> UNSUPPORTED
+
+TODO:
+geometric types:
+point
+line
+lseg
+box
+path
+polygon
+circle
+
+TODO:
+network address types:
+cidr (7 or 19 bytes, ipv4 or ipv6 networks)
+inet (7 or 19 bytes, ipv4 and ipv6 hosts and networks)
+macaddr (6 bytes, MAC addresses)
+
+TODO:
+Searchable and search optimized text and queries:
+tsvector
+tsquery
+
+TODO:
+uuid
+
+UNSUPORTED:
+xml
+
+USEFUL for storing objects but these types require no added support, just utilize them if we want to store instances (kinda like pickling in python):
+json
+jsonb
+
+todo:
+ARRAY type
+
+ENUM -> unsupported. We can get the permitted values and create a type that can be
+  serialized to appropriate values? But it is bad practice to use enums with
+  mysql, so I have heard anyway.
+
+
+NOTE:
+Take precautions with special chars in passwords or any other user supplied input, ie, single quote it or else the command line shell will screw you up. Double quotes still permit shell expansion.

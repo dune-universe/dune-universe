@@ -1,0 +1,14 @@
+(executable
+ (name noise)
+ (modules noise)
+ (libraries pulseaudio))
+
+(executable
+ (name rec)
+ (modules rec)
+ (libraries pulseaudio))
+
+(executable
+ (name sine)
+ (modules sine)
+ (libraries pulseaudio))

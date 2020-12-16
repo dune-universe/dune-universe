@@ -1,0 +1,20 @@
+USE ZARITH for DECIMAL type,
+OR Core.BIGNUM for the core branch and switch to use of dune for core branch
+
+DO NOT DO THIS:
+Actually copy the Utilities file.
+And copy all the required types only found in this project at preset, such as uint64_w_sexp.ml, etc, and perhaps others soon to join them.
+
+Look at no core branch and replicate:
+creating a toplevel ml file that contains all the generated modules in src/tables - DONE
+support complex types as field types...at some point in the future.
+
+Support dune: write dune file into src/tables - DONE
+
+Write ALL the extended module types into the generated modules -- think its DONE
+Use string not Core.String even in core branch for compatability with some ppx rewriters - DONE
+
+DO NOT DO THIS:
+Copy not just utilities2copy but also all the extended modules into src/tables/extendedtypes and create an extendedtypes.ml file to bundle them.
+
+Use the extended types ... still writing Core.Date.t instead of Date_extended.t - partly done

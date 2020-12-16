@@ -1,0 +1,13 @@
+(library
+ (public_name ezjs_min)
+ (modules js dom log promise table bigInt ezjs_min)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries js_of_ocaml stdlib-shims))
+
+(library
+ (name ezjs_min_lwt)
+ (public_name ezjs_min.lwt)
+ (optional)
+ (modules ezjs_min_lwt)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min lwt))
