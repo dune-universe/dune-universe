@@ -1,0 +1,8 @@
+(library
+ (name ppx_deriving_jsoo)
+ (public_name ppx_deriving_jsoo)
+ (kind ppx_deriver)
+ (modules common jsoo_type ppx_js jsoo_conv ppx_deriving_jsoo)
+ (preprocess (pps ppxlib.metaquot))
+ (libraries ppxlib)
+ (ppx_runtime_libraries ezjs_min))
