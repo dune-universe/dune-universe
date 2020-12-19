@@ -1,0 +1,6 @@
+(library
+ (name reddit_api_kernel)
+ (public_name reddit_api_kernel)
+ (libraries core_kernel cohttp ezjsonm core_kernel.uuid)
+ (preprocess
+  (pps ppx_jane)))

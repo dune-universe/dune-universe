@@ -1,0 +1,22 @@
+(executable
+ (name main)
+ (public_name repr-fuzz)
+ (package repr-fuzz)
+ (libraries crowbar repr)
+ (preprocess
+  (pps repr-fuzz.rewriter)))
+
+;; Start fuzzing when calling `dune build @fuzz`.
+
+(rule
+ (alias fuzz)
+ (deps
+  (source_tree ./input))
+ (action
+  (run afl-fuzz -i ./input -o output %{exe:fuzz_types.exe} @@)))
+
+(rule
+ (alias runtest)
+ (package repr-fuzz)
+ (deps main.exe)
+ (action progn))

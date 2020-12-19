@@ -1,0 +1,47 @@
+name: Main workflow
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.08.1
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin add reddit_api_kernel.dev . --no-action
+
+      - run: opam pin add reddit_api_async.dev . --no-action
+
+      - run: opam depext reddit_api_kernel --yes --with-doc
+
+      - run: opam depext reddit_api_async --yes --with-doc
+
+      - run: opam install . --deps-only --with-doc --with-test
+
+      - run: opam exec -- dune build
+
+      - run: opam exec -- dune runtest
+
+      - run: opam exec -- dune build @doc
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: _build/default/_doc/_html

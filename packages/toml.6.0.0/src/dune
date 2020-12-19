@@ -1,0 +1,10 @@
+(library
+ (public_name toml)
+ (modules compare lenses lexer menhir_parser min parser printer types unicode)
+ (private_modules menhir_parser)
+ (libraries str unix ISO8601))
+
+(menhir
+ (modules menhir_parser))
+
+(ocamllex lexer)
