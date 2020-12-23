@@ -1,0 +1,69 @@
+\documentclass[11pt, french, a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{minted}
+\usepackage{textcomp}
+\usepackage[hidelinks]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fullpage}
+\usepackage[many]{tcolorbox}
+
+\fvset{
+  commandchars=\\\{\},
+  numbers=left,
+  framesep=3mm,
+  frame=leftline,
+  firstnumber=last,
+  codes={\catcode`\$=3\catcode`\^=7}
+}
+
+\title{
+  Proposition d'un langage de formalisation\\
+  de textes législatifs :\\
+  Questionnaire à l'intention de juristes
+}
+\author{
+  Denis \bsc{Merigoux}\\Inria\and
+  Liane \bsc{Huttner}\\Université Panthéon-Sorbonne\and
+  Nicolas \bsc{Chataing}\\Inria -- École Normale Supérieure\and
+}
+
+\begin{document}
+\maketitle
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+
+\section{Introduction}
+
+Impôts, allocations et pensions de retraite partagent un point commun : les règles de calcul des montants de ces transferts sociaux sont définies dans des textes législatifs. Ce sont ces textes en langage naturel, votés par le parlement ou décrétés par le gouvernement, qui servent de référence aux administrations et entreprises qui ont besoin de calculer ces montants de transferts. Cependant, ces calculs sont largement effectués automatiquement : il existe donc des programmes informatiques qui suivent les règles définies par la loi pour calculer le montant des transferts sociaux. Dès lors se pose la question suivante : comment être sûr que ces programmes informatiques, écrits dans des langages de programmation, implémentent fidèlement les règles décrites en langage naturel dans les textes législatifs ? Après avoir résumé l'état de l'art en la matière, nous proposons et décrivons un processus nouveau permettant d'atteindre une garantie de conformité bien supérieure. Nous illustrons ensuite la manière dont ce processus fonctionne sur l'exemple des allocations familiales. En fin de document, un questionnaire vous permet de nous transmettre vos remarques sur notre démarche et sur le processus.
+
+\input{../../doc/motivation}
+
+\section{Implémentation des allocations familiales}
+
+Afin de mettre en pratique ces nouveaux concepts, nous vous proposons un exemple d'annotation de plusieurs article de loi  définissant les allocations familiales par des morceaux de programmes écrits dans notre nouveau langage de programmation \emph{ad hoc}. Le guide de lecture ci-dessous contient normalement toutes les informations nécessaires à la compréhension des annotations informatiques.
+
+\paragraph{Avertissement} L'étude de cas présentée ci-dessous n'a pas pour but d'être exhaustive. En effet, il manquerait beaucoup d'autres articles de loi pour définir complètement les allocations familiales. De même, certaines partie des articles présentées ne sont pas formalisés pour des raisons précisées dans le texte. La suite a donc une valeur essentiellement illustrative par rapport aux diverses fonctionnalités du langage de programmation et de la manière dont on pourrait vérifier localement la conformité du code par rapport au texte de loi.
+
+\subsection{Guide de lecture}
+
+\input{../../doc/reading_guide}
+
+\subsection{Corpus législatif annoté}
+
+Les numéros de ligne à gauche servent uniquement de référence, leur numérotation
+n'est pas consécutive ici car elle respecte celle du fichier source à partir
+duquel a été généré ce document.
+
+% \input{allocations_familiales}
+
+\clearpage
+
+\section{Questionnaire de satisfaction}
+
+\input{../../doc/questionnaire}
+
+\end{document}
