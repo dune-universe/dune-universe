@@ -1,0 +1,10 @@
+(executable
+  (name test)
+  (libraries netlink)
+)
+
+(alias
+  (name runtest)
+  (deps (:x test.exe))
+  (action (run %{x}))
+)

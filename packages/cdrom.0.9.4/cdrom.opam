@@ -1,0 +1,15 @@
+opam-version: "2.0"
+name: "cdrom"
+version: "0.9.4"
+maintainer: "xen-api@list.xen.org"
+homepage: "https://github.com/xapi-project/cdrom"
+dev-repo: "git+https://github.com/xapi-project/cdrom.git"
+bug-reports: "https://github.com/xapi-project/cdrom/issues"
+build: ["dune" "build" "-p" name "-j" jobs]
+depends: [
+  "ocaml"
+  "dune" {build}
+]
+tags: [ "org:xapi-project" ]
+synopsis: "Query the state and contents of CDROM devices under Linux"
+authors: "Dave Scott <dave@recoil.org>"

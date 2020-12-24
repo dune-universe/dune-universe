@@ -1,0 +1,5 @@
+(executable
+  (name query)
+  (public_name query-cdrom)
+  (libraries cdrom)
+)

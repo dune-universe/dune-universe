@@ -1,0 +1,32 @@
+(* -*- tuareg -*- *)
+
+let coverage_rewriter ~full =
+  let is_coverage =
+    try
+      Sys.getenv "BISECT_ENABLE" = "YES"
+    with Not_found -> false
+  in
+  match is_coverage, full with
+  | true, true -> "(preprocess (pps (bisect_ppx -conditional)))"
+  | true, _    -> "bisect_ppx -conditional"
+  | _ -> ""
+
+let () = Printf.ksprintf Jbuild_plugin.V1.send {|
+(library
+ (name nbd)
+ (public_name nbd)
+ (flags (:standard -w -34-32))
+ (libraries
+  cstruct
+  io-page
+  lwt
+  lwt_log
+  mirage-block
+  mirage-block-lwt
+  mirage-types-lwt
+  result
+  rresult
+  sexplib)
+ (preprocess (pps ppx_cstruct ppx_sexp_conv -no-check %s))
+)
+|} (coverage_rewriter ~full:false)

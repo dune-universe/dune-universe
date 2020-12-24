@@ -1,0 +1,15 @@
+language: c
+sudo: required
+service: docker
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-docker.sh
+script: bash -ex ./.travis-docker.sh
+env:
+  global:
+  - PACKAGE="fd-send-recv"
+  - PINS="fd-send-recv:. fd-send-recv-tuntap:."
+  matrix:
+  - DISTRO="debian-testing" OCAML_VERSION="4.07"
+  - DISTRO="ubuntu-14.04" OCAML_VERSION="4.07"
+  - DISTRO="ubuntu-16.04" OCAML_VERSION="4.07"
+  - DISTRO="centos-7" OCAML_VERSION="4.07"
+  - DISTRO="fedora-27" OCAML_VERSION="4.07"

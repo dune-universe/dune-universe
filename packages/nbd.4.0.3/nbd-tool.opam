@@ -1,0 +1,30 @@
+opam-version: "2.0"
+synopsis: "Network Block Device (NBD) protocol implementation"
+description: """
+This library allows applications to export and consume block
+devices using the NBD protocol (as used by Linux, qemu etc)"""
+maintainer: "jonathan.ludlam@citrix.com"
+authors: ["Jonathan Ludlam" "David Scott" "Thomas Sanders"]
+license: "LGPL-2 with OCaml linking exception"
+tags: ["org:mirage" "org:xapi-project"]
+homepage: "https://github.com/xapi-project/nbd"
+bug-reports: "https://github.com/xapi-project/nbd/issues"
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "dune" {>= "1.0"}
+  "alcotest" {with-test}
+  "alcotest-lwt" {with-test}
+  "cmdliner"
+  "lwt" {>= "2.7.0"}
+  "lwt_log"
+  "mirage-block-unix"
+  "nbd-lwt-unix"
+  "uri"
+]
+depexts: [
+  ["qemu-img" "nbd" "nmap-ncat"] {with-test & os-family = "rhel"}
+  ["qemu-utils" "nbd-client" "netcat-openbsd"] {with-test & os-family = "debian"}
+]
+build: ["dune" "build" "-p" name "-j" jobs]
+run-test: ["dune" "runtest" "-p" name "-j" jobs]
+dev-repo: "git+https://github.com/xapi-project/nbd.git"

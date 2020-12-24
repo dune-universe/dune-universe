@@ -1,0 +1,17 @@
+(library
+ (name nbd_lwt_unix)
+ (public_name nbd-lwt-unix)
+ (libraries
+  cstruct-lwt
+  io-page
+  io-page.unix
+  lwt
+  lwt.unix
+  mirage-block
+  mirage-block-lwt
+  mirage-block-unix
+  mirage-types-lwt
+  ssl
+  lwt_ssl
+  nbd)
+)

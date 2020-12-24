@@ -1,0 +1,22 @@
+(* -*- tuareg -*- *)
+
+let coverage_rewriter =
+  let bisect = Jbuild_plugin.V1.run_and_read_lines "echo ${BISECT_ENABLE}"
+    |> String.concat ""
+  in
+  if bisect = "YES" then "bisect_ppx -conditional" else ""
+
+let () = Printf.ksprintf Jbuild_plugin.V1.send {|
+(executable
+  (name crc_test)
+  (flags (:standard))
+  (libraries oUnit crc)
+  (preprocess (pps ppx_deriving_rpc ppx_sexp_conv %s))
+)
+
+(alias
+  (name runtest)
+  (deps (:x crc_test.exe))
+  (action (run %%{x} -runner sequential))
+)
+|} coverage_rewriter

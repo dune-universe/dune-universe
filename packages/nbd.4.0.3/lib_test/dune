@@ -1,0 +1,10 @@
+(test
+ (name suite)
+ (libraries
+  alcotest
+  alcotest-lwt
+  io-page-unix
+  lwt.unix
+  lwt_log
+  nbd)
+)

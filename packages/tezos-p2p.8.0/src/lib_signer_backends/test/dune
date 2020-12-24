@@ -1,0 +1,29 @@
+(executables
+ (names test_encrypted)
+ (libraries tezos-signer-backends
+            alcotest-lwt)
+ (flags (:standard -open Tezos_error_monad
+                   -open Tezos_stdlib
+                   -open Tezos_crypto
+                   -open Tezos_client_base
+                   -open Tezos_signer_backends)))
+
+(rule
+ (alias buildtest)
+ (deps test_encrypted.exe)
+ (action (progn)))
+
+(rule
+ (alias runtest_signer_encrypted)
+ (action (run %{exe:test_encrypted.exe})))
+
+(rule
+ (alias runtest)
+ (package tezos-signer-backends)
+ (deps (alias runtest_signer_encrypted))
+ (action (progn)))
+
+(rule
+ (alias runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))

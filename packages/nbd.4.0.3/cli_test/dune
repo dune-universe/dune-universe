@@ -1,0 +1,21 @@
+(executable
+ (name suite)
+ (libraries
+  alcotest
+  alcotest-lwt
+  cmdliner
+ )
+)
+
+(alias
+ (name runtest)
+ (package nbd-tool)
+ (deps
+  (:suite suite.exe)
+  (:cli ../cli/main.exe)
+  ./test-qemu.sh
+  ./test-nbd-client.sh
+  ./random_data.sh
+ )
+ (action (run %{suite} --cli %{cli}))
+)

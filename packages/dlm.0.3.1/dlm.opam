@@ -1,0 +1,35 @@
+opam-version: "2.0"
+version: "0.3.1"
+maintainer: "xen-api@list.xensource.com"
+authors: ["Edwin Török"]
+homepage: "https://github.com/xapi-project/ocaml-dlm/"
+bug-reports: "https://github.com/xapi-project/ocaml-dlm/issues"
+dev-repo: "git+https://github.com/xapi-project/ocaml-dlm.git"
+doc: "https://xapi-project.github.io/ocaml-dlm/doc"
+license: "LGPL-2.1 with OCaml linking exception"
+build: [
+  ["dune" "build" "--only" name "--root" "." "-j" jobs "@install"]
+]
+run-test: ["dune" "runtest" "-p" name "-j" jobs]
+depends: [
+  "ocaml"
+  "dune" {build & >= "1.4"}
+  "ctypes" {>= "0.11.1"}
+  "lwt"
+  "unix-errno"
+  "ounit"
+  "uuidm"
+]
+depexts: [
+  ["libdlm-dev"] {os-distribution = "debian"}
+  ["libdlm-dev"] {os-distribution = "ubuntu"}
+  ["dlm-devel"] {os-distribution = "rhel"}
+  ["dlm-devel"] {os-distribution = "centos"}
+  ["dlm-devel"] {os-distribution = "fedora"}
+  ["dlm-devel"] {os-distribution = "oraclelinux"}
+  ["dlm-git"] {os-distribution = "archlinux"}
+  ["libdlm-devel"] {os-distribution = "opensuse"}
+]
+available: [ os = "linux" ]
+synopsis: "Libdlm bindings"
+description: "Bindings to the Linux Distributed Lock Manager `libdlm(3)`."

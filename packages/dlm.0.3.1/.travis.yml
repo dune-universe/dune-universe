@@ -1,0 +1,16 @@
+language: c
+sudo: false
+services:
+  - docker
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-docker.sh
+script: bash ./$SCRIPT
+env:
+  global:
+  - PACKAGE=dlm
+  - PINS="dlm:."
+  - SCRIPT=.travis-docker.sh
+  matrix:
+  - DISTRO="debian-unstable" OCAML_VERSION=4.06.0
+  - DISTRO="centos-7" OCAML_VERSION=4.06.0
+branches:
+  only: master

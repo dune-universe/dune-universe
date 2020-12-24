@@ -1,0 +1,43 @@
+; pkg-config, can't use Configurator due to old OCaml version
+(rule (with-stdout-to "dlm_cflags" (run pkg-config libdlm --cflags)))
+(rule (with-stdout-to "dlm_libs" (run pkg-config libdlm --libs)))
+
+(rule (with-stdout-to "dlm_cflags.sexp" (echo "(%{read-strings:dlm_cflags})")))
+(rule (with-stdout-to "dlm_libs.sexp" (echo "(%{read-strings:dlm_libs})")))
+
+; bindings_structs -> stubgen
+(library
+  (name bindings_structs_lib)
+  (public_name dlm.bindings-structs)
+  (modules bindings_structs)
+  (libraries
+    ctypes
+    ctypes.stubs)
+)
+
+(executables
+  (names stubgen)
+  (modules stubgen)
+  (libraries
+    bindings_structs_lib
+    ctypes.stubs
+    ctypes)
+)
+
+; C file built by stubgen
+(rule (with-stdout-to "types_stubgen.c" (run "./stubgen.exe")))
+
+; C executable that checks struct offsets and outputs ML file
+(rule
+  (targets types_stubgen.exe)
+  (deps
+    (:x ./types_stubgen.c)
+    dlm_cflags
+    dlm_libs)
+  (action (bash "\
+  %{cc} %{x} \
+  %{read-strings:dlm_cflags} %{read-strings:dlm_libs} \
+  -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` \
+  -I %{ocaml_where} -o %{targets}"))
+)
+

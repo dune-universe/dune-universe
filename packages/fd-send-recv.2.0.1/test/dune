@@ -1,0 +1,25 @@
+(executable
+  (name test)
+  (modules test)
+  (libraries fd-send-recv threads)
+)
+
+(executable
+  (name test_fork)
+  (modules test_fork)
+  (libraries fd-send-recv)
+)
+
+(alias
+  (name runtest)
+  (package fd-send-recv)
+  (deps (:x test.exe))
+  (action (run %{x}))
+)
+
+(alias
+  (name runtest)
+  (package fd-send-recv)
+  (deps (:x test_fork.exe))
+  (action (run %{x}))
+)

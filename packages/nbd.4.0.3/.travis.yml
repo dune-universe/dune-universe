@@ -1,0 +1,18 @@
+language: c
+dist: xenial
+service: docker
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install qemu-utils nbd-client netcat-openbsd
+install:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+  - wget https://raw.githubusercontent.com/xapi-project/xs-opam/master/tools/xs-opam-ci.env
+  - source xs-opam-ci.env
+script: bash -ex .travis-docker.sh
+env:
+  global:
+    - PINS="nbd.master:. nbd-lwt-unix.master:. nbd-tool.master:."
+  jobs:
+    - PACKAGE="nbd"
+    - PACKAGE="nbd-lwt-unix"
+    - PACKAGE="nbd-tool"

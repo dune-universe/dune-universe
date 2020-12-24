@@ -1,0 +1,18 @@
+(executables
+  (names dlm_test nodlm_test)
+  (libraries
+    dlm
+    oUnit
+    uuidm)
+)
+
+(install
+  (section bin)
+  (files (dlm_test.exe as dlm-test))
+)
+
+(alias
+  (name runtest)
+  (deps (:x nodlm_test.exe))
+  (action (run %{x} -runner sequential))
+)
