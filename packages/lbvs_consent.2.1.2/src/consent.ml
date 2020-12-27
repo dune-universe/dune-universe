@@ -1,7 +1,7 @@
 open Printf
 
 module Logger = Dolog.Log
-module Log = Dolog.Log.Make(struct let section = "Main" end)
+module Log = Dolog.Log
 
 module Cons = Consensus
 module Fp = Fingerprint

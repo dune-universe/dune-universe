@@ -1,5 +1,5 @@
 
-module Log = Dolog.Log.Make(struct let section = "Scor" end)
+module Log = Dolog.Log
 
 module A = BatArray
 module Fp = Fingerprint

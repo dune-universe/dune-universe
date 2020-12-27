@@ -1,6 +1,6 @@
 open Printf
 
-module Log = Dolog.Log.Make(struct let section = "Mole" end)
+module Log = Dolog.Log
 
 module Fp = Fingerprint
 module Ht = BatHashtbl

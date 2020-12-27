@@ -19,7 +19,7 @@ let to_string s =
 let of_string s =
   assert(MyUtils.string_is_a_list_of_integers s);
   let chopped = BatString.chop ~l:1 ~r:1 s in
-  let int_strings = BatString.nsplit ~by:";" chopped in
+  let int_strings = BatString.split_on_string ~by:";" chopped in
   L.fold_left (fun acc int_str ->
       add (int_of_string int_str) acc
     ) empty int_strings

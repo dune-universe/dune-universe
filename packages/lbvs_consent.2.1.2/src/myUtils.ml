@@ -8,7 +8,7 @@
 (* #require "bitv";; *)
 
 module L = BatList
-module Log = Dolog.Log.Make(struct let section = "Utls" end)
+module Log = Dolog.Log
 
 type filename = string
 

@@ -5,7 +5,7 @@
  * License,  v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * http-cookie v2.0.0
+ * http-cookie v3.0.0
  *-------------------------------------------------------------------------*)
 
 (** A comprehensive and standards compliant HTTP cookies library for ocaml.
@@ -41,6 +41,16 @@ end
     attributes in [Set-Cookie] response header. *)
 type t
 
+type date_time =
+  { year : int (** Four digit year value, e.g. 2020, 2019, 1980 etc. *)
+  ; month : int (** Begins from 0, i.e. January = 0. *)
+  ; weekday : [ `Sun | `Mon | `Tue | `Wed | `Thu | `Fri | `Sat ]
+  ; day_of_month : int (** Day of the month value from 1 - 31. *)
+  ; hour : int (** 24 hour value from 0-23 *)
+  ; minutes : int (** Minutes value from 0 - 59*)
+  ; seconds : int (** Seconds value from 0 - 60 *)
+  }
+
 exception Cookie of string
 
 (** {1 Constructors} *)
@@ -53,7 +63,7 @@ exception Cookie of string
 val create
   :  ?path:string
   -> ?domain:string
-  -> ?expires:Unix.tm
+  -> ?expires:date_time
   -> ?max_age:int
   -> ?secure:bool
   -> ?http_only:bool
@@ -123,7 +133,7 @@ val domain : t -> string option
 (** [expires t] returns a coookie expires attribute.
 
     See {{:https://tools.ietf.org/html/rfc6265#section-4.1.2.1.} cookie-expires} *)
-val expires : t -> Unix.tm option
+val expires : t -> date_time option
 
 (** [max_age t] returns a cookie max_age attribute.
 

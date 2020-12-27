@@ -1,5 +1,5 @@
 
-module Log = Dolog.Log.Make(struct let section = "Fprt" end)
+module Log = Dolog.Log
 
 module S = BatString
 module IntSet = MyIntSet

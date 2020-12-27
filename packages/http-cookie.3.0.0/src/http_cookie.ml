@@ -5,7 +5,7 @@
  * License,  v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * http-cookie v2.0.0
+ * http-cookie v3.0.0
  *-------------------------------------------------------------------------*)
 module Same_site = struct
   type t =
@@ -27,22 +27,30 @@ end
 
 exception Cookie of string
 
+type date_time =
+  { year : int
+  ; month : int
+  ; weekday : [ `Sun | `Mon | `Tue | `Wed | `Thu | `Fri | `Sat ]
+  ; day_of_month : int
+  ; hour : int
+  ; minutes : int
+  ; seconds : int
+  }
+
 (** [to_rfc1123 t] converts [t] to a string in a format as defined by RFC 1123. *)
-let date_to_string (tm : Unix.tm) =
+let date_to_string (tm : date_time) =
   let weekday =
-    match tm.tm_wday with
-    | 0 -> "Sun"
-    | 1 -> "Mon"
-    | 2 -> "Tue"
-    | 3 -> "Wed"
-    | 4 -> "Thu"
-    | 5 -> "Fri"
-    | 6 -> "Sat"
-    | 7 -> "Sun"
-    | wd -> raise (Cookie (Format.sprintf "Invalid date time. weekday is %d" wd))
+    match tm.weekday with
+    | `Sun -> "Sun"
+    | `Mon -> "Mon"
+    | `Tue -> "Tue"
+    | `Wed -> "Wed"
+    | `Thu -> "Thu"
+    | `Fri -> "Fri"
+    | `Sat -> "Sat"
   in
   let month =
-    match tm.tm_mon with
+    match tm.month with
     | 0 -> "Jan"
     | 1 -> "Feb"
     | 2 -> "Mar"
@@ -60,12 +68,12 @@ let date_to_string (tm : Unix.tm) =
   Printf.sprintf
     "%s, %02d %s %04d %02d:%02d:%02d GMT"
     weekday
-    tm.tm_mday
+    tm.day_of_month
     month
-    (1900 + tm.tm_year)
-    tm.tm_hour
-    tm.tm_min
-    tm.tm_sec
+    tm.year
+    tm.hour
+    tm.minutes
+    tm.seconds
 ;;
 
 type t =
@@ -73,7 +81,7 @@ type t =
   ; value : string
   ; path : string option
   ; domain : string option
-  ; expires : Unix.tm option
+  ; expires : date_time option
   ; max_age : int option
   ; secure : bool option
   ; http_only : bool option

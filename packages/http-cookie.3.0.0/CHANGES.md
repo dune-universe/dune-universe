@@ -1,3 +1,7 @@
+## v3.0.0 2020-24-12 UK
+
+- Backwards incompatible change: remove `base-unix` dependency. Uses own `date_time` instead of `Unix.tm`.
+
 ## v2.0.0 2020-09-09 UK
 
 - Rewrite library by removing almost all ppx and external libraries

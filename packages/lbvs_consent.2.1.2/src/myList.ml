@@ -48,7 +48,7 @@ let singleton x =
 
 let medianf (l: float list): float =
   let xs = Array.of_list l in
-  Array.sort Pervasives.compare xs;
+  Array.sort BatFloat.compare xs;
   let n = Array.length xs in
   if n mod 2 = 1 then
     xs.(n/2)
@@ -61,7 +61,7 @@ let medianf (l: float list): float =
 
 let median (l: int list): float =
   let xs = Array.of_list l in
-  Array.sort Pervasives.compare xs;
+  Array.sort BatInt.compare xs;
   let n = Array.length xs in
   if n mod 2 = 1 then
     float xs.(n/2)
@@ -190,7 +190,7 @@ let to_string to_str l =
 
 let of_string of_str s =
   let s' = BatString.chop ~l:1 ~r:1 s in
-  map of_str (BatString.nsplit s' ~by:";")
+  map of_str (BatString.split_on_string s' ~by:";")
 
 (* shuffle list in non reproducible way (except luck) *)
 let real_shuffle l =

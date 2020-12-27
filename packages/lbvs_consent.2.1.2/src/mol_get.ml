@@ -74,7 +74,7 @@ let main () =
           DB.sync db
       );
   let names = match names_provider with
-    | On_cli names -> BatString.nsplit names ~by:","
+    | On_cli names -> BatString.split_on_string names ~by:","
     | From_file fn -> MyUtils.lines_of_file fn in
   List.iter (fun name ->
       try
