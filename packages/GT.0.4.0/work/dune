@@ -1,0 +1,23 @@
+(env
+ (_
+  (flags
+   (:standard -w -32))))
+
+(library
+ (name demo1)
+ (modules demo1)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect ppx_deriving.fold)))
+
+(library
+ (name demo2)
+ (modules demo2)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect ppx_deriving.fold)))
+
+(executable
+ (name demo_mutual)
+ (modules demo_mutual)
+)

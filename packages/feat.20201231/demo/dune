@@ -1,0 +1,5 @@
+(test
+  (name Test)
+  (libraries unix fix zarith feat)
+  (flags :standard "-w" "A-44")
+)

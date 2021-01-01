@@ -1,5 +1,0 @@
-(library
-  (name obuilder_spec)
-  (public_name obuilder-spec)
-  (preprocess (pps ppx_sexp_conv))
-  (libraries astring sexplib dockerfile))

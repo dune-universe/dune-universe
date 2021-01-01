@@ -1,0 +1,14 @@
+(test
+  (name test)
+  (package ocluster)
+  (libraries
+    alcotest-lwt
+    capnp-rpc-net
+    cluster_scheduler
+    cluster_worker
+    current_ocluster
+    db
+    fmt.tty
+    logs.fmt
+    lwt.unix
+    prometheus-app))
