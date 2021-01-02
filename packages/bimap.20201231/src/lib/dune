@@ -1,0 +1,6 @@
+(library
+  (name bimap)
+  (public_name bimap)
+  (synopsis "Bi-directional maps for keys and values or keys and lists of values (using a multi-map).")
+  (libraries core)
+)

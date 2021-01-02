@@ -1,0 +1,16 @@
+Bimaps allow clients to find not just a value given a key, but to find a
+key given a value. Inspired by com.google.guava.bimap. Implemented
+here using functors and two maps in two ways: as a class and as a module.
+Also supports multi-bi-map, in which a key is mapped to multiple values
+as in a multi-map and the inverse view is supported as well under which
+any one of the values will provide the key.
+
+Each method ensures us that both maps are updated properly, alleviating
+the user or client code from performing the correct operations on both
+maps when interacting with either one of them.
+
+See the unit test under src/test for examples of usage.
+
+                            Single values Map     v   Multi-map 
+Implemented as a module | Bimap_single_module.ml  | Bimap_multi_module.ml
+ Implemented as a class | Bimap_single_class.ml   | Bimap_multi_class.ml

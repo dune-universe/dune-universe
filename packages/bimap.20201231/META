@@ -1,0 +1,8 @@
+name="bimap"
+version="0.1"
+description="Bimap that maps keys to values and provides the inverse view of values to keys."
+requires="base core_kernel core ocamlbuild"
+archive(byte)="bimap.cma"
+archive(native)="bimap.cmxa"
+plugin(byte)="bimap.cma"
+plugin(archive)="bimap.cmxa"

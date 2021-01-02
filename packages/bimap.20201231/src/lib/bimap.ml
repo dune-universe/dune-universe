@@ -1,0 +1,4 @@
+module Bimap_single_class = Bimap_single_class.Bimap_single_class
+module Bimap_multi_class = Bimap_multi_class.Bimap_multi_class
+module Bimap_single_module = Bimap_single_module.Bimap_single
+module Bimap_multi_module = Bimap_multi_module.Bimap_multi_module
