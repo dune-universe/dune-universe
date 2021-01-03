@@ -1,0 +1,38 @@
+version: "0.1.0"
+opam-version: "2.0"
+name: "OCanren-ppx"
+synopsis: "Relational programming library in miniKanren manner. PPX extension"
+maintainer: "Dmitrii Kosarev Kakadu@pm.me"
+
+authors: [
+  "Dmitrii Boulytchev https://github.com/dboulytchev"
+  "Dmitrii Kosarev https://github.com/Kakadu"
+  "Evgenii Moiseenko https://github.com/eupp"
+  "Petr Lozov https://github.com/Lozov-Petr"
+  "JetBrains Research https://research.jetbrains.org"
+]
+
+homepage: "https://github.com/JetBrains-Research/OCanren"
+
+bug-reports: "https://github.com/JetBrains-Research/OCanren/issues"
+
+depends: [
+  "ocaml"
+  "dune"              { >= "2.5"  }
+  "dune-configurator"
+  "ppxlib"
+  "base"
+]
+
+build: [
+  ["dune" "subst"] { dev }
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+
+dev-repo: "git+https://github.com/JetBrains-Research/OCanren.git"
+
+url {
+  src: "git+https://github.com/JetBrains-Research/OCanren"
+}
+

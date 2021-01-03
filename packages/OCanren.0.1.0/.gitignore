@@ -1,0 +1,14 @@
+\ *undo-tree*
+*.native
+*.byte
+*.swp
+_build
+
+# ocamldoc related
+/style.css
+/MiniKanren.docdir
+/node_modules
+/.vscode
+.merlin
+/oc-qtc*
+

@@ -1,0 +1,11 @@
+(include_subdirs unqualified)
+
+(library
+ (name OCanren)
+ (public_name OCanren)
+ (libraries GT mtime.clock.os)
+ (flags
+  (:standard -short-paths))
+ (preprocess
+  (action
+   (run %{workspace_root}/camlp5/pp5+gt+plugins+dump.byte %{input-file}))))
