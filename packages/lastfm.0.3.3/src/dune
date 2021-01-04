@@ -1,0 +1,20 @@
+(library
+ (name lastfm)
+ (public_name lastfm)
+ (wrapped false)
+ (libraries
+  pcre
+  xmlplaylist
+  (select
+   lastfm.ml
+   from
+   (threads netclient netstring -> lastfm.ocamlnet.ml)
+   (-> lastfm.noop.ml)))
+ (modules lastfm_constants lastfm_generic lastfm)
+ (synopsis
+   "Implementation of the API used by the last.fm to keep count of played songs"))
+
+(rule
+ (target lastfm_constants.ml)
+ (action
+  (write-file %{target} "let version = \"%{version:lastfm}\"")))

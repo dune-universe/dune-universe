@@ -1,0 +1,61 @@
+0.3.3 (03-01-2021)
+=====
+* Switched to dune!
+
+0.3.2 (18-08-2018)
+=====
+* Fix compilation with OCaml >= 4.06
+
+0.3.1 (03-08-2015)
+=====
+* Switch to Bytes API.
+
+0.3.0 (13-05-2011)
+=====
+* Added timeout for http operations (#351)
+* Fixed bug when submitting to two different
+  hosts with the same user and password.
+* Functorized Audioscrobbler and Radio to 
+  allow to build a version without using
+  ocamlnet..
+
+0.2.0 (12-10-2009)
+=====
+* Added support for --enable-debugging configure option
+* Fixed Makefile for BSD: call $(MAKE) for generating documentation.
+* Now using xmlm instead of xml-light.
+* Removed anonymous radio connection: no longer available upstream... :-(
+* Made audioscrobbler host configurable, in order to allow libre.fm or other
+  implementations.
+
+0.1.3 (17-09-2008)
+====
+* Broadcast requests were submitted as User requests.. Fixed !
+* Bumped protocol version to latest (1.2.1)
+* Moved constants.ml to lastfm_constants.ml to avoid poluting the
+  namespace.
+
+0.1.2 (16-04-2008)
+=====
+* Install .cmx file
+
+0.1.1 (19-12-2007)
+=====
+* Changed API:
+ - Simply create a song record with get_song
+ - Test wether your song record is valid for each submission
+   type
+ - submit and do_submit now return a list of songs that
+   couldn't be submited, along with the explanation
+ - get, do_np and do_submit now give another try when failed
+   authentification can be due to caching inconsistency
+ - anonymous get requests are somehow better handled when caching.
+   However, you should not use get for multiple simultaneous anonymous
+   streaming.
+ + Better Radio protocol reversing, removed no longer available 
+   playlist url.
+ + Close http connection when error is raised by underlying modul
+
+0.1.0 (01-11-2007)
+=====
+* Initial release

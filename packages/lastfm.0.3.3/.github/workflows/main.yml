@@ -1,0 +1,13 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-20.04, macos-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - uses: avsm/setup-ocaml@master
+    - run: opam pin add -n .
+    - run: opam depext -yti lastfm

@@ -1,0 +1,16 @@
+(library
+ (name bjack)
+ (public_name bjack)
+ (synopsis "OCaml bindings for bjack")
+ (foreign_stubs
+  (language c)
+  (names jack_stubs jack_wrapper)
+  (flags
+   (:include c_flags.sexp)))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))

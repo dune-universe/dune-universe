@@ -1,0 +1,15 @@
+(executable
+ (name download)
+ (modules download)
+ (optional)
+ (libraries threads netclient lastfm))
+
+(executable
+ (name request)
+ (modules request)
+ (libraries lastfm))
+
+(executable
+ (name submit)
+ (modules submit)
+ (libraries lastfm))
