@@ -1,0 +1,28 @@
+(library
+  (name stubs)
+  (public_name portaudio_c_bindings.types.stubs)
+  (modules stubs)
+  (libraries ctypes.stubs ctypes.foreign))
+
+(executable
+ (name stubgen)
+ (modules stubgen)
+ (libraries stubs ctypes.stubs ctypes))
+
+(rule (with-stdout-to "stub_types_gen.c" (run "./stubgen.exe")))
+
+(rule
+ (targets stub_types_gen.exe)
+ (deps    (:stubs_ml_gen ./stub_types_gen.c))
+ (action (bash "%{cc} %{stubs_ml_gen} \
+  -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` \
+  -I %{ocaml_where} -o %{targets}")))
+
+(rule (with-stdout-to "stub_types.ml" (run "./stub_types_gen.exe")))
+
+(library
+ (name portaudio_types)
+ (public_name portaudio_c_bindings.types)
+ (modules portaudio_types stub_types)
+ (libraries ctypes.stubs ctypes stubs)
+ (flags (:standard -w -9-27)))

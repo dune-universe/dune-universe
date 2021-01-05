@@ -1,0 +1,29 @@
+(library
+ (name portaudio_ffi_stubs)
+ (public_name portaudio_c_bindings.ffi.stubs)
+ (modules portaudio_ffi_stubs)
+ (libraries portaudio_types))
+
+(executable
+ (name stubgen)
+ (modules stubgen)
+ (libraries portaudio_ffi_stubs portaudio_types ctypes.stubs ctypes))
+
+(rule
+ (targets ml_stubs.ml)
+ (deps (:stubgen stubgen.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -ml))))
+
+(rule
+ (targets c_stubs.c)
+ (deps (:stubgen stubgen.exe))
+ (action (with-stdout-to %{targets} (run %{stubgen} -c))))
+
+(library
+ (name portaudio_ffi)
+ (public_name portaudio_c_bindings.ffi)
+ (modules portaudio_ffi ml_stubs)
+ (foreign_stubs (language c) (names c_stubs))
+ (libraries portaudio_ffi_stubs ctypes.stubs ctypes)
+ (c_library_flags -lportaudio)
+ )

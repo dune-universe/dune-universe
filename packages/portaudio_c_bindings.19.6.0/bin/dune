@@ -1,0 +1,8 @@
+(env
+ (dev (flags (:standard -w -9))))
+
+(executable
+  (name main)
+  (modules main)
+  (libraries portaudio_c_bindings)
+)

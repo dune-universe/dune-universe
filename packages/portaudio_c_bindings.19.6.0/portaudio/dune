@@ -1,0 +1,5 @@
+(library
+    (name portaudio_c_bindings)
+    (public_name portaudio_c_bindings)
+    (libraries portaudio_c_bindings.ffi)
+    )
