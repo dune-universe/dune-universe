@@ -1,0 +1,6 @@
+(env
+ (release
+  (flags
+   (:standard -w -3))))
+
+(vendored_dirs stdune)

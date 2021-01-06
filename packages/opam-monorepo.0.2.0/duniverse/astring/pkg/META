@@ -1,0 +1,17 @@
+description = "Alternative String module for OCaml"
+version = "0.2.0"
+requires = ""
+archive(byte) = "astring.cma"
+archive(native) = "astring.cmxa"
+plugin(byte) = "astring.cma"
+plugin(native) = "astring.cmxs"
+
+package "top" (
+  description = "Astring toplevel support"
+  version = "0.2.0"
+  requires = "astring"
+  archive(byte) = "astring_top.cma"
+  archive(native) = "astring_top.cmxa"
+  plugin(byte) = "astring_top.cma"
+  plugin(native) = "astring_top.cmxs"
+)
