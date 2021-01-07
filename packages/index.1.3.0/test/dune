@@ -1,0 +1,4 @@
+(test
+ (name main)
+ (package index)
+ (libraries index alcotest))

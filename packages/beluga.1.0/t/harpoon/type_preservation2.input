@@ -1,0 +1,14 @@
+t/harpoon/type_preservation.bel
+tpr
+[|- oft M A] -> [|- eval M M'] -> [|- oft M' A]
+2
+
+toggle-automation auto-solve-trivial
+split x1
+invert x
+by (tpr [|- D] [|- E]) as ih0
+invert ih0
+solve tpr [|- D2 [_, D1]] [|- E1]
+solve x
+solve x
+:quit

@@ -1,0 +1,26 @@
+%%% Intuitionistic propositional calculus
+%%% Positive fragment with implies, and, true.
+%%% Author: Frank Pfenning
+
+% Type of atomic propositions.
+LF atm : type = ;
+
+% Type of propositions.
+LF o : type =
+  | imp : o -> o -> o
+  | conj : o -> o -> o
+  | true : o
+  | atom : atm -> o
+;
+
+% Atomic deductions (for faster search)
+LF up : o -> type =
+  | andI^ : up A -> up B -> up (conj A B)
+  | impI^ : (down A -> up B) -> up (imp A B)
+  | close : down (atom P) -> up (atom P)
+  | trueI^ : up true
+and down : o -> type =
+  | andEvL : down (conj A B) -> down A
+  | andEvR : down (conj A B) -> down B
+  | impEv : down (imp A B) -> up A -> down B
+;

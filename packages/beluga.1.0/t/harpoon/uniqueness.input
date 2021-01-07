@@ -1,0 +1,20 @@
+t/harpoon/uniqueness.bel
+unique
+(g : tctx) [g ⊢ hastype M T1[]] → [g ⊢ hastype M T2[]] → [⊢ eq T1 T2]
+1
+
+split x
+
+invert x1
+by (unique [_ |- X4] [_ |- X10]) as ih1
+invert ih1
+solve [|- refl]
+
+invert x1
+by (unique [_,b:block x:term, u:hastype x _ |- X3[..,b.1,b.2]] [_,b |- X7[..,b.1,b.2]]) as ih0
+invert ih0
+solve [|- refl]
+
+invert x1
+solve [|- refl]
+:quit

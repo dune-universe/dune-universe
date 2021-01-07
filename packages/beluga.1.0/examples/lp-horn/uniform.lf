@@ -1,0 +1,27 @@
+%%% Uniform Derivations
+%%% Author: Frank Pfenning
+%%% Temporarily removed parametric and hypothetical judgments
+
+solve  : o -> type.       % solve goal formulas
+assume : o -> type.       % assume program formulas
+focus  : o -> p -> type.  % immediate entailment
+
+%name solve S.
+%name assume H.
+%name focus I.
+
+s_and  : solve A2 -> solve A1 -> solve (conj A1 A2).
+
+s_true : solve (true).
+
+s_atom : focus A P -> assume A -> solve (atom P).
+
+i_andl : focus A1 P -> focus (conj A1 A2) P.
+
+i_andr : focus A2 P -> focus (conj A1  A2) P.
+
+i_imp  : solve A2 -> focus A1 P -> focus (imp A2 A1)  P.
+
+i_forall : {T:i} focus (A1 T) P -> focus (forall (\x. A1 x)) P.
+
+i_atom : focus (atom P) P.

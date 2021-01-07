@@ -1,0 +1,43 @@
+# OCaml files
+# see https://ocaml.org/learn/tutorials/filenames.html
+*.cm?*
+*.opt
+*.a
+*.o
+# Deprecated?
+*.annot
+
+# Ocamlbuild (used internally by Dune)
+_build/
+*.byte
+*.native
+
+# Merlin configuring files
+.merlin
+
+# Dune generated files
+*.install
+
+# Beluga debug output files
+/input.bel
+/last-output.bel
+debug.out
+
+# ELisp files
+*.elc
+
+# Mac (OS) specific files
+.DS_Store
+
+# Emacs editor setting files
+.dir-locals.el
+*~
+.projectile
+
+# S-expression dump for proof assistant comparison
+*.sexp
+
+# ???
+release
+
+/_opam/

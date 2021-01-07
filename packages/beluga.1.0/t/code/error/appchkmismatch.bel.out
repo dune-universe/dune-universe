@@ -1,0 +1,7 @@
+./t/code/error/appchkmismatch.bel, line 45, column 22:
+Type-checking error.
+Ill-typed expression.
+    Expected type:
+      [h |- target (cross T[] S[])]
+    Inferred type:
+      [h |- target S[]]

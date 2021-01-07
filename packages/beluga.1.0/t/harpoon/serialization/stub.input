@@ -1,0 +1,8 @@
+t/harpoon/serialization/stub.bel
+foo
+[|- tm] -> [|- tp]
+
+
+session serialize
+solve [|- base]
+:quit

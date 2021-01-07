@@ -1,0 +1,32 @@
+t/harpoon/logrel/weak-norm-total.bel
+lookup
+{gamma:ctx}{#p:[gamma |- tm A[]]}RedSub [gamma] [|- $S[^]] -> Reduce [|- A] [|- #p[$S]]
+1
+
+split [gamma]
+split [g, x:tm T[] |- #p]
+invert x
+invert x
+by lookup [g] [g |- #p1] x1 as ih
+impossible [|- #p]
+main
+{gamma:ctx}{M:[gamma |- tm A[]]} RedSub [gamma] [|- $S[^]] -> Reduce [|- A] [|- M[$S]]
+2
+
+rename comp x rs
+split [gamma |- M]
+suffices by I toshow _
+solve [|- halts/m refl val/c]
+
+suffices by Arr toshow _, _
+suffices by bwd_closed [|- beta] toshow _
+by Dot rs x as rs'
+solve main [gamma, x : tm _] [gamma, x |- M1] rs'
+solve [|- halts/m refl val/lam]
+
+by main [gamma] [gamma |- M1] rs as ih1
+invert ih1
+suffices by x1 toshow _
+solve main [gamma] [gamma |- M2] rs
+solve lookup [gamma] [gamma |- #p] rs
+:quit

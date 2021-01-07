@@ -1,0 +1,24 @@
+%%% The Mini-ML Language
+%%% Version distinguishing expressions and values
+%%% Author: Frank Pfenning
+
+LF exp  : type =
+  | z     : exp
+  | s     : exp -> exp
+  | match : exp -> exp -> (val -> exp) -> exp
+  | pair  : exp -> exp -> exp
+  | fst   : exp -> exp
+  | snd   : exp -> exp
+  | lam   : (val -> exp) -> exp
+  | app   : exp -> exp -> exp
+  | letv  : exp -> (val -> exp) -> exp
+  | letn  : exp -> (exp -> exp) -> exp
+  | fix   : (exp -> exp) -> exp
+  | vl    : val -> exp
+
+and val  : type =
+  | z*    : val
+  | s*    : val -> val
+  | pair* : val -> val -> val
+  | lam*  : (val -> exp) -> val
+;

@@ -1,0 +1,63 @@
+inductive Person :ctype   = P : Person ;
+
+% inductive Man : ctype  = M : Man;
+
+% inductive List :  ctype  =
+%   | Nil : List
+%   | Cons: Person -> List -> List
+% ;
+
+inductive Nat : ctype
+  =
+  | Z : Nat
+  | Succ : Nat   -> Nat
+;
+
+
+
+inductive Foo : ctype
+  =
+  | F1 : Person -> Foo
+  | F2 :  (Person -> Foo) -> Foo
+;
+
+inductive TestA : ctype
+  =
+  | Ta1 : TestA
+  | Ta2 : (Nat -> Nat)-> (Nat -> Nat) -> TestA
+;
+
+
+inductive TestB : ctype
+ =
+  | Tb1 : (Person -> Person -> TestB ) -> ( Person  -> TestB) -> TestB
+  | Tb2 : (Person -> Person -> TestB ) * (Person -> TestB) -> TestB
+  | Tb3 : ((TestA -> Person) -> TestB) -> TestB
+  % | Tb4 : ((((TestB -> Person) -> TestB) -> Person -> Person) -> TestB) -> TestB
+  % | Tb5 : ((((TestB -> Person) -> (TestB -> Person) -> TestB) -> Person -> Person) -> TestB) -> TestB
+  % | Tb6 : ((((TestB -> Person) -> (TestB -> Person) -> TestB) -> TestB -> Person) -> TestB) -> TestB
+
+;
+
+
+
+
+LF nat  : type =
+| z: nat
+| s: nat -> nat
+;
+
+LF plus: nat -> nat -> nat -> type =
+| pz: plus z Y Y
+| ps: plus X Y Z -> plus (s X) Y (s Z)
+;
+
+LF list: nat -> type =
+| nil: list z
+| cons: nat -> list I -> list (s I)
+;
+
+inductive IsList : [|- list N] -> ctype
+=
+IL: {L:[|- list N]} IsList [|- L]
+;

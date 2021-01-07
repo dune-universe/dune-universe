@@ -1,0 +1,11 @@
+t/harpoon/type_preservation.bel
+tpr
+[|- oft M A] -> [|- eval M M'] -> [|- oft M' A]
+2
+
+split x1
+invert x
+by (tpr [|- D] [|- E]) as ih0
+split ih0
+solve tpr [|- D2 [_, D1]] [|- E1]
+:quit

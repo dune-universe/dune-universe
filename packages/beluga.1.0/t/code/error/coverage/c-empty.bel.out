@@ -1,0 +1,8 @@
+./t/code/error/coverage/c-empty.bel, line 15, column 8:
+Type-checking error.
+The expression
+  c
+is not impossible.
+Its type
+  [g |- constructorless]
+is (possibly) inhabited.

@@ -1,0 +1,8 @@
+_bench/
+_build/
+_metrics/
+_opam/
+_tests/
+*.install
+*.merlin
+**/.DS_Store

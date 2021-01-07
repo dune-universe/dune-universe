@@ -1,0 +1,16 @@
+LF bool : type =
+| f : bool
+| t : bool;
+
+LF nat : type =
+| z : nat
+| s : nat -> nat;
+
+LF list : nat -> type =
+| nil : list z
+| ap : bool -> list N -> list (s N);
+
+% This would work if it was right associative
+--infix ap 1 left.
+
+let test = [ |- f ap f ap f ap nil];

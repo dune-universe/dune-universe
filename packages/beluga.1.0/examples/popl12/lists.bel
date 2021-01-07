@@ -1,0 +1,18 @@
+LF nat  : type =
+| z: nat
+| s: nat -> nat
+;
+
+LF plus: nat -> nat -> nat -> type =
+| pz: plus z Y Y
+| ps: plus X Y Z -> plus (s X) Y (s Z)
+;
+
+LF list: nat -> type =
+| nil: list z
+| cons: nat -> list I -> list (s I)
+;
+
+inductive IsList : [|- list N] -> ctype =
+IL: {L:[|- list N]} IsList [|- L]
+;

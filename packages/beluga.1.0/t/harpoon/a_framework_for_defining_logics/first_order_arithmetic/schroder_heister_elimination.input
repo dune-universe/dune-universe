@@ -1,0 +1,8 @@
+t/harpoon/a_framework_for_defining_logics/first_order_arithmetic.bel
+schroder_heister_elimination
+{ S : [t : term ⊢ formula] } { P : [⊢ formula] } [⊢ true (forall (\t. S[t]))] → (({ T : [⊢ term] } [⊢ true S[T]]) → [⊢ true P]) → [⊢ true P]
+
+
+unbox x as A
+solve x1 mlam T => [|- ALL-E (\t. S[t]) T A]
+:quit

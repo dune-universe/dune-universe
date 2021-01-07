@@ -1,0 +1,6 @@
+./t/code/error/typespine.bel, line 6, column 4:
+Ill-typed spine.
+    Expected number of arguments:
+      1
+    Actual number of arguments:
+      2

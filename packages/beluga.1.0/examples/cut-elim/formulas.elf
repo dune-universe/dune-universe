@@ -1,0 +1,16 @@
+%%% Language of formulas for intuitionistic and classical
+%%% predicate calculus.
+%%% Author: Frank Pfenning
+
+LF i : type = ;
+
+LF o : type = % formulas
+  | conj   : o -> o -> o
+  | imp    : o -> o -> o
+  | or     : o -> o -> o
+  | not    : o -> o
+  | true   : o
+  | false  : o
+  | forall : (i -> o) -> o
+  | exists : (i -> o) -> o
+;

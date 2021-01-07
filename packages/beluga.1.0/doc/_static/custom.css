@@ -1,0 +1,26 @@
+div.document {
+    width: 100%;
+    max-width: 10in;
+}
+
+div.document p {
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    text-align: justify;
+}
+
+li.toctree-l1 {
+    margin: 0.5em 0;
+}
+
+/* make admonitions less obtrusive */
+div.admonition p.admonition-title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* to make whitespace not have an ugly underline */
+div.highlight span.w {
+    text-decoration: none;
+}

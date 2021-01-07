@@ -1,0 +1,33 @@
+LF atomic_tp: type =
+;
+
+LF nat: type =
+| z: nat
+| s: nat -> nat
+;
+
+
+inductive Even: ctype =
+| Ze : Even
+| Ev : Odd -> Even
+and inductive Odd : ctype =
+| Od : Even -> Odd
+;
+
+
+inductive Nat: ctype =
+| No : Odd -> Nat
+| Ne : Even -> Nat
+;
+
+
+rec count: Nat -> [ |- nat] =
+fn n => case n of
+| No o => let Od e = o in
+         let [ |- N] =  count (Ne e) in
+            [ |- s N]
+| Ne e => case e of
+          | Ze => [ |- z]
+          | Ev o => let [ |- N] = count (No o) in
+                             [ |- s N]
+;

@@ -1,0 +1,20 @@
+--coverage
+
+term: type.
+lam:(term -> term) -> term.
+
+inductive Nat: ctype =
+| Z: Nat
+| S: Nat -> Nat;
+
+schema ctx = term;
+
+rec pos :{g:ctx}{#p:[g |- term]} Nat =
+/ total m (pos _ m) /
+mlam g,#p => case [g] of
+| [ ] => impossible [|- #p]
+| [g,y:term] =>
+  (case [g,y:term |- #p[..,y]] of
+  | [g, y:term |- y ] => (S Z)
+  | [g,y:term |- #p[..]] => S (pos [g] [g |- #p[..]]))
+;

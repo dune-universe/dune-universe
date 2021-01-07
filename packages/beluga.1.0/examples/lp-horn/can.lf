@@ -1,0 +1,81 @@
+%%% Canonical forms for natural deductions.
+%%% Author: Frank Pfenning
+
+can : {A:o} pf A -> type.  % Canonical deductions
+atm : pf A -> type.        % Atomic deductions
+%name can CN.
+%name atm AT.
+%% mode (can +A +P) (atm +P).
+
+can_andi : can B E -> can A D -> can (conj A B) (andi E D).
+
+
+% not necessary in horn fragment
+%{
+can_impi : {u:pf A} atm u -> can B (D u) -> can (imp A B) (impi (\u. D u)).
+
+}%
+can_truei : can (true) (truei).
+
+
+
+% not necessary in horn fragment
+%{
+can_foralli : {a:i} can (A a) (D a) -> can (forall (\x. A x)) (foralli (\x. D x)).
+
+}%
+can_atm : atm D -> can (atom P) D.
+
+atm_andel : atm D -> atm (andel D).
+
+atm_ander : atm D -> atm (ander D).
+
+atm_impe : can B E -> atm D -> atm (impe D E).
+
+atm_foralle : atm D -> atm (foralle D T).
+
+
+%%% Conversion to canonical form
+%%% Author: Frank Pfenning
+
+% Weak head reduction
+
+whr : pf A -> pf A -> type.  % Weak head reduction
+%name whr WHR.
+
+% Reductions
+whr_andl : whr (andel (andi E D)) D.
+whr_andr : whr (ander (andi E D)) E.
+whr_imp  : whr (impe (impi (\u. D u)) E) (D E).
+whr_forall : whr (foralle (foralli (\x. D x)) T) (D T).
+
+% Congruences on elimination rules
+whr_andel : whr D D' -> whr (andel D) (andel D').
+whr_ander : whr D D' -> whr (ander D) (ander D').
+whr_impe  : whr D D' -> whr (impe D E) (impe D' E).
+whr_foralle : whr D D' -> whr (foralle D T) (foralle D' T).
+
+% Conversion to canonical and atomic form.
+
+tocan : {A:o} pf A -> pf A -> type.  % Conversion to canonical form
+toatm : {A:o}pf A -> pf A -> type.        % Conversion to atomic form
+%name tocan TC.
+%name toatm TA.
+
+tc_and : tocan B (ander D) D2' -> tocan A (andel D) D1' -> tocan (conj A B) D (andi D2' D1').
+tc_true : tocan (true) D (truei).
+
+%{
+tc_forall : {a:i} tocan (A a) (foralle D a) (D' a) -> tocan (forall (\x. A x)) D (foralli (\x. D' x)).
+}%
+tc_whr : tocan (atom P) D'' D' -> whr D D'' -> tocan (atom P) D D'.
+
+tc_atm : toatm (atom P) D D' -> tocan (atom P) D D'.
+
+ta_impe : tocan A E E' -> toatm (imp A B) D D' -> toatm B (impe D E) (impe D' E').
+
+ta_andel : toatm (conj A B) D D' -> toatm A (andel D) (andel D').
+
+ta_ander : toatm (conj A B) D D' -> toatm B (ander D) (ander D').
+
+ta_foralle : toatm (forall A) D D' -> toatm (A T) (foralle D T) (foralle D' T).

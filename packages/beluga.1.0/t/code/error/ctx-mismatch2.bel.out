@@ -1,0 +1,7 @@
+./t/code/error/ctx-mismatch2.bel, line 7, column 15:
+Type reconstruction error.
+Context of meta-object does not match expected context.
+    Expected context:
+      g, x : tm
+    Encountered context:
+      h, x : _

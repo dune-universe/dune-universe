@@ -1,0 +1,21 @@
+LF nat : type =
+| z : nat
+| s : nat -> nat
+;
+
+coinductive Stream : ctype =
+| Hd : Stream :: [ |- nat]
+| Tl : Stream :: Stream
+;
+
+let a = [ |- s (s z)];
+
+rec cycleNats : [ |- nat] -> Stream =
+fun e .Hd => e
+  | [ |- z] .Tl => cycleNats a
+  | [ |- s N] .Tl => cycleNats [ |- N]
+;
+
+
+% let b = cycleNats [ |- s z];
+% let c = ((Hd b, Hd (Tl b)), Hd (Tl (Tl b)));

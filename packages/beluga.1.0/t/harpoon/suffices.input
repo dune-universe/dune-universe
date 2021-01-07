@@ -1,0 +1,26 @@
+t/harpoon/suffices.bel
+le-refl
+{N : [|- nat]} [|- le N N]
+1
+
+split [|- N]
+by le-refl [|- N1] as L unboxed
+solve [|- le_succ L]
+solve [|- le_zero]
+le-succ-1
+[|- le N K] -> [|- le N (succ K)]
+1
+
+split x
+by le-succ-1 [|- L] as L_succ unboxed
+solve [|- le_succ L_succ]
+solve [|- le_zero]
+le-add
+[|- add N M K] -> [|- le M K]
+1
+
+split x
+suffices by le-succ-1 toshow [|- le M N3]
+solve le-add [|- A]
+suffices by le-refl toshow
+:quit

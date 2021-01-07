@@ -1,0 +1,26 @@
+opam-version: "2.0"
+synopsis: "Implementation of contextual modal logic for reasoning with higher-order abstract syntax"
+maintainer: "jacob.errington@mail.mcgill.ca"
+authors: ["Brigitte Pientka" "Joshua Dunfield" "Andrew Cave" "Jacob Thomas Errington" "Junyoung Clare Jang"]
+homepage: "https://github.com/Beluga-lang/Beluga"
+bug-reports: "https://github.com/Beluga-lang/Beluga/issues"
+dev-repo: "git+https://github.com/Beluga-lang/Beluga.git"
+license: "GPLv3"
+
+run-test: [
+  [ "./TEST" ]
+  [ "./TEST" "--" "+htmltest" ]
+  [ "./TEST" "--harpoon" ]
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "dune" {>= "1.1"}
+  "dune-build-info"
+  "extlib"
+  "gen"
+  "linenoise"
+  "ocaml" {>= "4.08"}
+  "sedlex"
+]

@@ -1,0 +1,13 @@
+inductive Car : ctype =
+| Beatle : Car
+;
+
+inductive Colour : ctype =
+| Blue : Car
+;
+
+rec f : Car -> Car =
+    fn c => case c of
+     | Beatle => Beatle
+     | Blue => Blue
+;

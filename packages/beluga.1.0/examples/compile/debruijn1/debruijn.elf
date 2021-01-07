@@ -1,0 +1,22 @@
+%%% Expression representation using de Bruijn indices
+%%% Version restricted to pure lambda-calculus
+%%% Author: Frank Pfenning, based on [Hannan & Pfenning 92]
+
+% Expressions
+
+LF exp'   : type = %name exp' F.
+  | one      : exp'
+  | shift    : exp' -> exp'
+  | lam'     : exp' -> exp'
+  | app'     : exp' -> exp' -> exp'
+;
+
+% Environments and values
+
+LF env    : type = %name env K.
+  | empty  : env
+  | cons   : env -> val -> env
+
+and val    : type = %name val W.
+  | clo    : env -> exp' -> val
+;

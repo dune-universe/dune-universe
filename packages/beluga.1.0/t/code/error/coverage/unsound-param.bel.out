@@ -1,0 +1,7 @@
+./t/code/error/coverage/unsound-param.bel, line 8, column 21:
+
+######   COVERAGE FAILURE: Case expression doesn't cover: ######
+##       CASE(S) NOT COVERED:
+(1) g : ctx, #p : #(g, x : term |- term) ;  |- [g, x1 |- x1]
+
+##

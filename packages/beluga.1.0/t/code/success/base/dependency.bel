@@ -1,0 +1,31 @@
+o:type. --name o A p.
+i:type. --name i T x.
+
+z: i.
+
+all: (i -> o) -> o.
+neg: o -> o.
+
+nd: o -> type.
+
+nd_allI: ({a:i} nd (A a)) → nd (all (\x. A x)).
+
+nd_neg : nd A → nd (neg A).
+
+prf: nd A -> type.
+
+pr_all: ({a:i} prf (D a)) → prf (nd_allI (\a. D a)).
+
+pr_neg: prf D → prf (nd_neg D).
+
+%
+% pr_all : {A :  i -> o}
+%          {D: {a : i} nd (A a)}
+%           ({a : i} prf (A a) (D a)) ->
+%            prf (all (\ x . A x)) (nd_allI (\x . A x) (\a . D a)).
+%
+
+
+prove: prf D -> ({a:i}prf (E a)) -> type.
+
+prove_all: ({a:i} prove (D a)  (\b. (pr_neg (E a)))) → prove (pr_all (\a. D a))  (\a. E a).

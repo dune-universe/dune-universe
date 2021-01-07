@@ -1,0 +1,78 @@
+--nostrengthen
+% Variable counting (see Pientka [POPL'08])
+% Author:  Brigitte Pientka
+%
+% This example only uses weak higher-order abstract syntax.
+
+LF tp  : type =
+  | nat : tp
+  | bool: tp
+;
+--name tp T.
+
+LF exp : tp -> type =
+  | z   : exp nat
+  | s   : exp nat -> exp nat
+  | tt  : exp bool
+  | add : exp nat -> exp nat -> exp nat
+  | letv: {T1:tp}exp T1 -> (exp T1 -> exp T2) -> exp T2
+;
+--name exp E x.
+
+schema expCtx = some [t:tp] exp t;
+
+
+rec plus : [ |- exp nat] -> [ |- exp nat] -> [ |- exp nat] =
+% / total x (plus x) /
+fn x => fn y =>
+case x of
+| [ |- z]    => y
+
+| [ |- s U]  =>
+  let [ |- V] = plus [ |- U] y in [ |- s V]
+
+% [ |- U] => y
+;
+
+rec cntV : {g:expCtx} [g, x:exp T |-  exp S] -> [ |- exp nat] =
+% / total e (cntV _ _ _ e) /
+mlam g =>
+ fn e =>
+  case e of
+
+    [g,x : exp _  |-  tt]          => [ |- z]
+
+  | [g,x : exp _  |-  (#p )]    => [ |- z]
+
+  | [g,x : exp _  |-  x]           => [ |- s z]
+
+
+  | [g,x : exp _  |-  z]           => [ |- z]
+
+  | [g,x : exp _  |-  s W]  => cntV [g] [g,x |- W]
+%%
+%%
+%%  NOT WORKING IF WE OMIT T1  since from the pattern we simply infer
+%%  T1:tp[g, x:exp _]    and only later in the branch we learn that T1:tp[g].
+%%
+%%   | [g,x : exp _ ] letv  U1 (\y . (U2  x y)) =>
+%%             plus (cntV [g]  ([g,x] U1))
+%%                  (cntV [g, y:exp _ ]  ([g,y,x] (U2 y)))
+%%
+%% CURRENTLY, THIS PROBLEM ARISES IN THE FORM OF FAILURE TO INVERT THE
+%% RECONSTRUCTED BRANCH: MVAR 3[_  |-  ^0] occurs in the branch, but this is
+%% bad, since progress would be violated. The pattern may succeed in instantiating 3 to x
+%% in the context ., x:A . But then [_,  |- ](x)  does actually not exist.
+%% The solution is that the original meta-variable 3 needs to be in fact of a different type,
+%% namely exp [ |- ] and not exp[ |- , x:A].
+%%
+   | [g,x : exp _  |-  letv (T1[..]) U1 (\y . U2)] =>
+      plus  (cntV [g]          [g,x |- U1])
+            (cntV [g, y:exp _]  [g,y,x |-  (U2[..,x,y])])
+
+
+   | [g,x: exp _  |-  add U W]  =>
+     plus (cntV [g] [g,x |- U])
+          (cntV [g] [g,x |- W])
+
+;

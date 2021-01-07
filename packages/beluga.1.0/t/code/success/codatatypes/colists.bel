@@ -1,0 +1,31 @@
+LF nat : type =
+| z : nat
+| s : nat -> nat
+;
+
+inductive MuColist : ctype =
+| Nil : MuColist
+| Cons : [ |- nat] -> NuColist -> MuColist
+
+and coinductive NuColist : ctype =
+| Out : NuColist :: MuColist
+;
+
+inductive List : ctype =
+| Lnil : List
+| Lcons : [ |- nat] -> List -> List
+;
+
+rec append : List -> NuColist -> NuColist =
+fun (Lnil) f => f
+  | (Lcons g h) f .Out => Cons g (append h f)
+;
+
+rec zipWith : ([ |- nat] -> [ |- nat] -> [ |- nat]) -> NuColist -> NuColist -> NuColist =
+fun f xs ys .Out => (case Out xs of
+| Nil => Nil
+| Cons x xs' => (case Out ys of
+                | Nil => Nil
+                | Cons y ys' => Cons (f x y) (zipWith f xs' ys')
+               ))
+;

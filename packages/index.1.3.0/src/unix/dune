@@ -1,0 +1,8 @@
+(library
+ (foreign_stubs
+  (language c)
+  (names pread pwrite))
+ (public_name index.unix)
+ (name index_unix)
+ (libraries fmt index logs logs.threaded threads.posix unix semaphore-compat
+   mtime mtime.clock.os))
