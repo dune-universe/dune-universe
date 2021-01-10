@@ -524,34 +524,6 @@ let parmapfold
     (concat:'c->'c->'c) : 'c=
   parmapifold ~init ~finalize ?ncores ?chunksize (fun _ x -> f x) s op opid concat
 
-(* the parallel map function *)
-
-let parmapi
-    ?(init = fun _ -> ())
-    ?(finalize = fun () -> ())
-    ?(ncores= !default_ncores)
-    ?chunksize
-    (f:int ->'a -> 'b)
-    (s:'a sequence) : 'b list=
-  (* enforce array to speed up access to the list elements *)
-  let al = match s with A al -> al | L l  -> Array.of_list l in
-  let compute al lo hi previous exc_handler =
-    (* iterate in reverse order, to accumulate in the right order,
-       and add to acc *)
-    let f' j =
-      try let idx = lo+j in f idx (Array.unsafe_get al idx)
-      with e -> exc_handler e j in
-    let rec aux acc =
-      function
-	  0 ->  (f' 0)::acc
-	| n ->  aux ((f' n)::acc) (n-1)
-    in aux previous (hi-lo)
-  in
-  mapper init finalize ncores ~chunksize compute [] al  (fun r -> Utils.concat_tr r)
-
-let parmap ?init ?finalize ?ncores ?chunksize (f:'a -> 'b) (s:'a sequence) : 'b list=
-    parmapi ?init ?finalize ?ncores ?chunksize (fun _ x -> f x) s
-
 (* the parallel fold function *)
 
 let parfold
@@ -565,7 +537,7 @@ let parfold
     (concat:'b->'b->'b) : 'b=
     parmapfold ~init ~finalize ~ncores ?chunksize (fun x -> x) s op opid concat
 
-(* the parallel map function, on arrays *)
+(* the parallel map function *)
 
 let mapi_range lo hi (f:int -> 'a -> 'b) a =
   let l = hi-lo in
@@ -578,23 +550,95 @@ let mapi_range lo hi (f:int -> 'a -> 'b) a =
     r
   end
 
+
+(* the parallel map function, on arrays *)
+
 let array_parmapi
     ?(init = fun _ -> ())
     ?(finalize = fun () -> ())
     ?(ncores= !default_ncores)
     ?chunksize
+    ?(keeporder=false)
     (f:int -> 'a -> 'b)
     (al:'a array) : 'b array=
-  let compute a lo hi previous exc_handler =
+  (* compute, collect and opid definitions for reordering after load balancing *)
+  let compute_sorted a lo hi previous exc_handler =
+    try
+      (lo,mapi_range lo hi f a)::previous
+    with e -> exc_handler e lo
+  and collect_sorted (r:(int * 'b array) list list) =
+    let fragments = List.flatten r in
+    let ordered=List.map snd (List.stable_sort (fun (n,_) (m,_) -> n-m) fragments) in
+    Array.concat ordered
+  and opid_sorted = [(0,[||])]
+  (* compute, collect and opid definitions without reordering *)
+  and compute a lo hi previous exc_handler =
     try
       Array.concat [(mapi_range lo hi f a);previous]
     with e -> exc_handler e lo
-  in
-  mapper init finalize ncores ~chunksize compute [||] al  (fun r -> Array.concat r)
+  and collect r = Array.concat r
+  and opid = [||] in
+  let ln = Array.length al in
+  match keeporder, chunksize with
+  | _ , None ->
+      (* no need of load balancing *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | _ , Some v when ncores >= ln/v ->
+      (* no need of load balancing if more cores than tasks *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | false , Some _ ->
+      (* load balancing without reordering *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | true , Some _ ->
+      (* load balancing with reordering *)
+      mapper init finalize ncores ~chunksize compute_sorted opid_sorted al collect_sorted
 
-let array_parmap ?init ?finalize ?ncores ?chunksize (f:'a -> 'b) (al:'a array) : 'b array=
-  array_parmapi ?init ?finalize ?ncores ?chunksize (fun _ x -> f x) al
+let array_parmap ?init ?finalize ?ncores ?chunksize ?keeporder (f:'a -> 'b) (al:'a array) : 'b array=
+  array_parmapi ?init ?finalize ?ncores ?chunksize ?keeporder (fun _ x -> f x) al
 
+let parmapi
+    ?(init = fun _ -> ())
+    ?(finalize = fun () -> ())
+    ?(ncores= !default_ncores)
+    ?chunksize
+    ?(keeporder=false)
+    (f:int ->'a -> 'b)
+    (s:'a sequence) : 'b list=
+  (* enforce array to speed up access to the list elements *)
+  let al = match s with A al -> al | L l  -> Array.of_list l in
+  (* compute, collect and opid definitions without reordering *)
+  let compute al lo hi previous exc_handler =
+    (* iterate in reverse order, to accumulate in the right order,
+       and add to acc *)
+    let f' j =
+      try let idx = lo+j in f idx (Array.unsafe_get al idx)
+      with e -> exc_handler e j in
+    let rec aux acc =
+      function
+	  0 ->  (f' 0)::acc
+	| n ->  aux ((f' n)::acc) (n-1)
+    in aux previous (hi-lo)
+  and collect r = Utils.concat_tr r
+  and opid = [] in
+  let ln = Array.length al in
+  match keeporder, chunksize with
+    _ , None ->
+      (* no need of load balancing *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | _ , Some v when ncores >= ln/v ->
+      (* no need of load balancing if more cores than tasks *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | false , Some _ ->
+      (* load balancing without reordering *)
+      mapper init finalize ncores ~chunksize compute opid al collect
+  | true , Some _ ->
+      (* load balancing with reordering *)
+      Array.to_list (array_parmapi ~init ~finalize ~ncores ?chunksize ~keeporder f al)
+
+let parmap ?init ?finalize ?ncores ?chunksize ?keeporder (f:'a -> 'b) (s:'a sequence) : 'b list=
+    parmapi ?init ?finalize ?ncores ?chunksize ?keeporder (fun _ x -> f x) s
+
+    
 (* This code is highly optimised for operations on float arrays:
 
    - knowing in advance the size of the result allows to
