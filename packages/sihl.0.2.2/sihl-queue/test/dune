@@ -1,4 +1,0 @@
-(executables
- (names queue_memory queue_mariadb)
- (libraries sihl-persistence sihl-queue alcotest-lwt caqti-driver-mariadb
-   caqti-driver-postgresql))

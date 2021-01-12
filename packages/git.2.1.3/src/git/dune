@@ -1,6 +1,0 @@
-(library
- (name        git)
- (public_name git)
- (libraries   fpath cstruct fmt lwt uri logs astring hex lru rresult
-              ke angstrom encore duff ocamlgraph ocplib-endian
-              stdlib-shims ocplib-endian.bigstring decompress digestif))
