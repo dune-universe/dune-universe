@@ -1,0 +1,7 @@
+.vscode
+*~
+*.exe
+*.bc
+.merlin
+config.ml
+_build/

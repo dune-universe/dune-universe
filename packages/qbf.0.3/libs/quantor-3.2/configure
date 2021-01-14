@@ -1,0 +1,729 @@
+#!/bin/sh
+#*------------------------------------------------------------------------*#
+fmt="%s ..."
+maxloglevel=9
+defaultloglevel=2
+maxstatslevel=2
+cross=no
+#*------------------------------------------------------------------------*#
+check=undefined
+debug=no
+enabledpi=yes
+fastalloc=yes
+funcoverage=no
+log=yes
+loglevel=undefined
+sig=32
+sigref=no
+stats=yes
+statslevel=undefined
+stmtcoverage=no
+solver=undefined
+if true
+then
+  static=no
+  qbfeval=no
+else
+  static=yes
+  qbfeval=yes
+fi
+#*------------------------------------------------------------------------*#
+DEPHEADERS=""
+DEPLIB=""
+INC=""
+LIB=""
+funexdir=""
+limmatdir=""
+nanosatdir=""
+compsatdir=""
+booleforcedir=""
+picosatdir=""
+#*------------------------------------------------------------------------*#
+tmp=quantor-configure-$$
+mkdir $tmp || exit 1
+trap "rm -rf $tmp" 2
+#*------------------------------------------------------------------------*#
+die () {
+  echo "*** configure: $*" 2>&1
+  #rm -rf $tmp
+  exit 1
+}
+#*------------------------------------------------------------------------*#
+usage () {
+cat << EOF
+usage: [CC=<compiler>] [CFLAGS=<flags>] configure [ <option> ... ]
+
+  -h              print this command line option summary
+                 
+  -g              enable debugging, disable optimization (default)
+  -O              disable debugging, enable optimization
+  --check         include all checking code even when optimizing
+  --no-check      do not include checking code even when debugging
+  --static        force static linking (gcc only)
+  --no-static     force non-static linking (gcc only)
+  --no-dpi        disable double precision int
+
+  --sig<n>        use n-bit signatures (n =8,16,32,64, default 32)
+  --sigref        include signature references counting code
+                  (code will still be disabled by default)
+
+  --no-fast-alloc do not include fast allocation code
+
+  --no-log        do not include any logging code
+  --log=<level>   include logging code up to the given level
+                  (default depends on debugging/optimization options)
+
+  --no-stats      do not include any redundant statistics code
+  --stats=<level> include statistics code up to the given level
+                  (default is determined from logging level)
+
+  --qbfeval       assume SAT05 evaluation of QBF solvers command line API
+  --no-qbfeval    enforce standard command line API
+
+Specify the source directory of the backend SAT solver:
+
+  --funex=<dir>
+  --limmat=<dir>
+  --nanosat=<dir>
+  --compsat=<dir>
+  --booleforce=<dir>
+  --picosat=<dir>
+
+You can force the usage of just one backend solver by
+
+  --solver=(funex|limmat|nanosat|compsat|booleforce|picosat)
+
+If debugging is enabled the following two options modify 'CFLAGS' 
+if not specified to generate profiling data during run time.  This only
+works if the compiler type is 'gcc'.
+
+  -s              instrument code for statement profiling with 'gcov'
+  -f              instrument code for function profiling with 'gprof'
+
+For cross compilation use '--cross'.  You may need to hack the configure
+script in addition.
+EOF
+}
+#*------------------------------------------------------------------------*#
+while [ $# -gt 0 ]
+do
+  case $1 in
+    -h) usage; exit 0; ;;
+    -g) debug=yes;;
+    -O) debug=no;;
+    --no-log) log=no;loglevel=undefined;;
+    --log=*) log=yes;loglevel="`expr $1 : '--log=\(.*\)'`";;
+    --no-stats) stats=no;statslevel=undefined;;
+    --stats=*) stats=yes;statslevel="`expr $1 : '--stats=\(.*\)'`";;
+    --check) check=yes;;
+    --no-check) check=no;;
+    --no-static) static=no;;
+    --no-dpi) enabledpi=no;;
+    --no-fast-alloc) fastalloc=no;;
+    --static) static=yes;;
+    --qbfeval) qbfeval=yes;;
+    --no-qbfeval) qbfeval=no;;
+    --sigref) sigref=yes;;
+    -s) stmtcoverage=yes;;
+    -f) funcoverage=yes;;
+    --funex=*) funexdir="`expr $1 : '--funex=\(.*\)'`";;
+    --limmat=*) limmatdir="`expr $1 : '--limmat=\(.*\)'`";;
+    --nanosat=*) nanosatdir="`expr $1 : '--nanosat=\(.*\)'`";;
+    --compsat=*) compsatdir="`expr $1 : '--compsat=\(.*\)'`";;
+    --booleforce=*) booleforcedir="`expr $1 : '--booleforce=\(.*\)'`";;
+    --picosat=*) picosatdir="`expr $1 : '--picosat=\(.*\)'`";;
+    --solver=*)
+      solver="`expr $1 : '--solver=\(.*\)'`";
+      case X"$solver" in
+        Xfunex|Xlimmat|Xnanosat|Xcompsat|Xbooleforce|Xpicosat);;
+	*) die "invalid argument in '$1'";;
+      esac;
+      ;;
+    --cross) cross=yes;;
+    --sig*) 
+      sig="`expr $1 : '--sig\(.*\)'`"
+      case "$sig" in
+        64|32|16|8);;
+	*) die "invalid number of bits for signature";;
+      esac
+      ;;
+    *) die "invalid option '$1' (try '-h')";;
+  esac
+  shift
+done
+#*------------------------------------------------------------------------*#
+printf "$fmt" version
+version=`cat VERSION`
+echo " $version"
+#*------------------------------------------------------------------------*#
+printf "$fmt" debug
+echo " $debug"
+#*------------------------------------------------------------------------*#
+printf "$fmt" log
+if [ $log = yes ]
+then
+  if [ $loglevel = undefined ]
+  then
+    if [ $debug = yes ]
+    then
+      loglevel=$maxloglevel
+    else
+      loglevel=$defaultloglevel
+    fi
+  fi
+fi
+echo " $log (level $loglevel)"
+#*------------------------------------------------------------------------*#
+printf "$fmt" stats
+if [ $log = no ]
+then
+  stats=no
+  statslevel=undefined
+elif [ $stats = yes ]
+then
+  if [ $statslevel = undefined ]
+  then
+    if [ $debug = yes ]
+    then
+      statslevel=2
+    else
+      statslevel=1
+    fi
+  fi
+  [ $statslevel -gt $loglevel ] && statslevel=$loglevel
+  [ $statslevel -gt $maxstatslevel ] && statslevel=$maxstatslevel
+fi
+echo " $stats (level $statslevel)"
+#*------------------------------------------------------------------------*#
+printf "$fmt" check
+if [ $check = undefined ]
+then
+  if [ $debug = yes ]
+  then
+    check=yes
+  elif [ $check = undefined ]
+  then
+    check=no
+  fi
+fi
+echo " $check"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "fast allocation"
+echo " $fastalloc"
+#*------------------------------------------------------------------------*#
+printf "$fmt" CC
+if [ "$CC" = "" ]
+then
+  CC=gcc
+fi
+echo " $CC"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "CC type"
+RAWCC=unknown
+for cc in $CC 
+do
+  case $cc in
+    *gcc* | *cc*) RAWCC=$cc; break;;
+    *) ;;
+  esac
+done
+echo " $RAWCC"
+#*------------------------------------------------------------------------*#
+echo -n "ar ..."
+case $CC in
+  i[456]86-mingw*|x86_64-mingw*) AR="`echo $CC|sed -e 's,gcc,ar,'`";;
+  *) AR=ar;;
+esac
+echo " $AR"
+#*------------------------------------------------------------------------*#
+echo -n "ranlib ..."
+case $CC in
+  i[456]86-mingw*|x86_64-mingw*) RANLIB="`echo $CC|sed -e 's,gcc,ranlib,'`";;
+  *) RANLIB=ranlib;;
+esac
+echo " $RANLIB"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "CC version"
+case $RAWCC in
+  gcc) CCVERSION="`$RAWCC -dumpversion | head -1`";;
+  *) CCVERSION="unknown";;
+esac
+echo " $CCVERSION"
+#*------------------------------------------------------------------------*#
+printf "$fmt" static
+echo " $static"
+#*------------------------------------------------------------------------*#
+printf "$fmt" CFLAGS
+if [ "$CFLAGS" = "" ]
+then
+  case $RAWCC in
+    gcc)
+      CFLAGS="-Wall -W"
+      if [ $debug = yes ]
+      then
+        CFLAGS="$CFLAGS -g"
+	if [ $stmtcoverage = yes ]
+	then
+	  CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
+	fi
+      else
+        CFLAGS="$CFLAGS -O3 -DNDEBUG"
+      #
+      # again a new version of GCC (in this case gcc 4.1.2 requires this).
+      #
+      CFLAGS="$CFLAGS -fno-strict-aliasing"
+
+      fi
+      if [ $funcoverage = yes ]
+      then
+	CFLAGS="$CFLAGS -pg"
+      fi
+      if [ $static = yes ]
+      then
+        CFLAGS="$CFLAGS -static"
+      fi
+      ;;
+    *)
+      if [ $debug = yes ]
+      then
+        CFLAGS="-g"
+      else
+        CFLAGS="-O"
+      fi
+      ;;
+  esac
+fi
+echo " $CFLAGS"
+#*------------------------------------------------------------------------*#
+printf "$fmt" RAWCFLAGS
+RAWCFLAGS=""
+case $RAWCC in
+  gcc)
+    for flag in $CFLAGS
+    do
+      newflag=""
+      case $flag in
+        -m64)
+	   newflag="-m64"
+	   ;;
+      esac
+      if [ "$newflag" ]
+      then
+        [ "X$RAWCFLAGS" = X ] || RAWCFLAGS="$RAWCFLAGS "
+	RAWCFLAGS="$RAWCFLAGS$newflag"
+      fi
+    done
+    ;;
+esac
+echo " $RAWCFLAGS"
+#*------------------------------------------------------------------------*#
+if [ $solver = undefined ]
+then
+  solvers="funex limmat nanosat compsat booleforce picosat"
+else
+  solvers="$solver"
+fi
+funex=no
+limmat=no
+nanosat=no
+compsat=no
+booleforce=no
+picosat=no
+for solver in $solvers
+do
+  printf "$fmt" $solver
+  found=yes
+  solverdir=${solver}dir
+  eval "dir=\$$solverdir"
+  if [ "$dir" = "" ]
+  then
+    if [ -d ../$solver ]
+    then
+      dir=../$solver
+    else
+      echo " no (no $solver directory found)"
+      found=no
+    fi
+  fi
+  if [ ! -d $dir ]
+  then
+    echo " no ('$dir' is not a directory)"
+    found=no
+  fi
+  if [ $found = yes ]
+  then
+    if [ -f $dir/$solver.h ]
+    then
+      if [ -f $dir/lib$solver.a ]
+      then
+	found=yes
+	[ "$INC" = "" ] || INC="$INC "
+	INC="${INC}-I$dir"
+	[ "$LIB" = "" ] || LIB="$LIB "
+	LIB="${LIB}-L$dir -l$solver"
+	[ "$DEPHEADERS" = "" ] || DEPHEADERS="$DEPHEADERS "
+	DEPHEADERS="$DEPHEADERS$dir/$solver.h"
+	[ "$DEPLIB" = "" ] || DEPLIB="$DEPLIB "
+	DEPLIB="$DEPLIB$dir/lib$solver.a"
+      else
+	echo " no (could not find '$dir/lib$solver.a')"
+	found=no
+      fi
+    else
+      echo " no (could not find '$dir/$solver.h')"
+      found=no
+    fi
+  fi
+  if [ $found = yes ]
+  then
+    echo " yes (in '$dir')"
+  fi
+  eval "$solver=$found"
+  eval "${solver}dir=$dir"
+done
+#*------------------------------------------------------------------------*#
+printf "$fmt" INC
+echo " $INC"
+#*------------------------------------------------------------------------*#
+printf "$fmt" LIB
+echo " $LIB"
+#*------------------------------------------------------------------------*#
+printf "$fmt" Word
+if [ $cross = no ]
+then
+cat <<EOF >$tmp/getword.c
+#include <stdio.h>
+int main (void)
+{
+  if (sizeof(unsigned) == sizeof(void*))
+    printf ("unsigned");
+  else if (sizeof(unsigned long) == sizeof(void*))
+    printf ("unsigned long");
+  else if (sizeof(unsigned long long) == sizeof(void*))
+    printf ("unsigned long long");
+  else
+    printf ("invalid");
+  return 0;
+}
+EOF
+$RAWCC $RAWCFLAGS -o $tmp/getword $tmp/getword.c
+WORD="`$tmp/getword`"
+case "$WORD" in
+  *invalid*)
+    echo
+    die "could not get word size"
+    ;;
+esac
+else
+WORD=unsigned
+fi
+echo " $WORD"
+#*------------------------------------------------------------------------*#
+printf "$fmt" Signature
+if [ $cross = no ]
+then
+SIGNATURE=unsigned
+if [ "$sig" = 8 ]
+then
+  SIGNATURE="unsigned char"
+  echo " $SIGNATURE"
+elif [ "$sig" = 16 ]
+then
+  SIGNATURE="unsigned short"
+  echo " $SIGNATURE"
+elif [ "$sig" = 32 ]
+then
+  SIGNATURE="unsigned"
+  echo " $SIGNATURE"
+elif [ "$sig" = 64 ]
+then
+  cat <<EOF >$tmp/getsignature.c
+#include <stdio.h>
+int main (void)
+{
+  if (sizeof (unsigned long) == 8)
+    printf ("unsigned long");
+  else
+    printf ("invalid");
+  return 0;
+}
+EOF
+  $RAWCC $RAWCFLAGS -o $tmp/getsignature $tmp/getsignature.c
+  SIGNATURE="`$tmp/getsignature`"
+  if [ "X$SIGNATURE" = Xinvalid ]
+  then
+    cat <<EOF >$tmp/getsignature.c
+#include <stdio.h>
+int main (void)
+{
+  if (sizeof (unsigned long long) == 8)
+    printf ("unsigned long long");
+  else
+    printf ("invalid");
+}
+EOF
+    if $RAWCC $RAWCFLAGS -o $tmp/getsignature $tmp/getsignature.c \
+      1>/dev/null 2>/dev/null
+    then
+      SIGNATURE="`$tmp/getsignature`"
+      if [ "X$SIGNATURE" = Xinvalid ]
+      then
+	SIGNATURE=unsigned
+	sig=32;
+	echo " $SIGNATURE (sizeof (unsigned long long) != 8)"
+      else
+        echo " $SIGNATURE"
+      fi
+    else
+      SIGNATURE=unsigned
+      sig=32;
+      echo " $SIGNATURE (no support for 'long long')"
+    fi
+  fi
+else
+  die "unexpected number of bits for signatures"
+fi
+else
+sig=32
+SIGNATURE=unsigned
+fi
+#*------------------------------------------------------------------------*#
+printf "$fmt" "signature bits"
+echo " $sig"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "double precision int"
+if [ $cross = no ]
+then
+havedpi=no
+if [ $enabledpi = yes ]
+then
+  cat <<EOF >$tmp/longisdpi.c
+#include <stdio.h>
+int main (void)
+{
+  if (sizeof(long) == 2 * sizeof(int))
+    printf ("long");
+  return 0;
+}
+EOF
+  $RAWCC $RAWCFLAGS -o $tmp/longisdpi $tmp/longisdpi.c
+  if [ -f $tmp/longisdpi ]
+  then
+    DPI="`$tmp/longisdpi`"
+    if [ "X$DPI" = "X" ]
+    then
+      cat <<EOF >$tmp/longlongisdpi.c
+#include <stdio.h>
+int main (void)
+{
+  if (sizeof(long long) == 2 * sizeof(int))
+    printf ("long long");
+  return 0;
+}
+EOF
+      if $RAWCC $RAWCFLAGS -o $tmp/longlongisdpi $tmp/longlongisdpi.c \
+	1>/dev/null 2>/dev/null
+      then
+	if [ -f $tmp/longlongisdpi ]
+	then
+	  DPI="`$tmp/longlongisdpi`"
+	  if [ "X$DPI" = "X" ]
+	  then
+	    DPI=""		# just to be sure ...
+	  else
+	    havedpi=yes;
+	  fi
+	fi
+      fi
+    else
+      havedpi=yes
+    fi
+  fi
+
+  if [ $havedpi = no ]
+  then
+    echo " no (could not find proper type)"
+  else
+    echo " $DPI"
+  fi
+else
+  echo " no (disabled by command line option)"
+fi
+else
+havedpi=yes
+DPI="long long"
+echo " $DPI"
+fi
+#*------------------------------------------------------------------------*#
+printf "$fmt" "Lit alignment"
+if [ $cross = no ]
+then
+echo "typedef $WORD Word;" > $tmp/litalign.c
+echo "typedef $SIGNATURE Signature;" >> $tmp/litalign.c
+test $sigref = yes && echo "#define QUANTOR_SIGREF" >> $tmp/litalign.c
+sed \
+  -e '/QUANTOR_LIT_ALIGNMENT/,$d' \
+  -e '/#include "quantor.h"/d' \
+  -e '/#include "config.h"/d' \
+  quantor.c >> $tmp/litalign.c
+cat <<EOF >>$tmp/litalign.c
+};
+
+int 
+is_power_of_two (int n)
+{
+  int i;
+
+  for (i = 0; i <= 31; i++)
+    if ((1 << i) == n)
+      return 1;
+
+  return 0;
+}
+
+int 
+main (void)
+{
+  int base, alignment, i;
+
+  base = sizeof (Lit);
+  for (alignment = 0; alignment <= 64; alignment++)
+    if (is_power_of_two (base + alignment))
+      {
+	printf ("%d", alignment);
+	exit (0);
+      }
+
+  return 0;
+}
+EOF
+if [ $fastalloc = yes ] 
+then
+  ALIGNCCFLAGS="-DQUANTOR_FAST_ALLOC"
+else
+  ALIGNCCFLAGS=""
+fi
+$RAWCC $RAWCFLAGS $ALIGNCCFLAGS -o $tmp/litalign $tmp/litalign.c
+litalignment="`$tmp/litalign`"
+if [ "$litalignment" = "" ]
+then
+  echo
+  die "could not determine QUANTOR_LIT_ALIGNMENT"
+fi
+else
+ALIGNCCFLAGS=""
+litalignment=8
+fi
+echo " $litalignment"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "qbfeval usage"
+echo " $qbfeval"
+#*------------------------------------------------------------------------*#
+printf "$fmt" Makefile
+rm -f Makefile
+sed \
+  -e "s,@CC@,$CC," \
+  -e "s,@CFLAGS@,$CFLAGS," \
+  -e "s,@INC@,$INC," \
+  -e "s,@LIB@,$LIB," \
+  -e "s,@DEPLIB@,$DEPLIB," \
+  -e "s,@DEPHEADERS@,$DEPHEADERS," \
+  -e "s,@AR@,$AR,g" \
+  -e "s,@RANLIB@,$RANLIB,g" \
+  Makefile.in > Makefile
+echo " done"
+#*------------------------------------------------------------------------*#
+printf "$fmt" config.h
+rm -f config.h
+echo "#ifndef QUANTOR_config_h_INCLUDED" >> config.h
+echo "#define QUANTOR_VERSION \"$version\"" >> config.h
+test $debug = yes && echo "#define QUANTOR_DEBUG" >> config.h
+if [ $check = no ]
+then
+  echo "#ifndef NDEBUG" >> config.h
+  echo "#define NDEBUG" >> config.h
+  echo "#endif" >> config.h
+fi
+if [ $log = yes ]
+then
+  i=0
+  while [ $i -le $loglevel ]
+  do
+    echo "#define QUANTOR_LOG$i" >> config.h
+    i=`expr $i + 1`
+  done
+fi
+if [ $stats = yes ]
+then
+  i=0
+  while [ $i -le $statslevel ]
+  do
+    echo "#define QUANTOR_STATS$i" >> config.h
+    i=`expr $i + 1`
+  done
+fi
+test $check = yes && echo "#define QUANTOR_CHECK" >> config.h
+test $funex = yes && echo "#define QUANTOR_HAVE_FUNEX" >> config.h
+test $limmat = yes && echo "#define QUANTOR_HAVE_LIMMAT" >> config.h
+test $nanosat = yes && echo "#define QUANTOR_HAVE_NANOSAT" >> config.h
+test $compsat = yes && echo "#define QUANTOR_HAVE_COMPSAT" >> config.h
+test $booleforce = yes && echo "#define QUANTOR_HAVE_BOOLEFORCE" >> config.h
+test $picosat = yes && echo "#define QUANTOR_HAVE_PICOSAT" >> config.h
+test $fastalloc = yes && echo "#define QUANTOR_FAST_ALLOC" >> config.h
+test $qbfeval = yes && echo "#define QUANTOR_QBF_EVALUATION_FORMAT" >> config.h
+test $sig = 64 && echo "#define QUANTOR_SIG64" >> config.h
+test $sigref = yes && echo "#define QUANTOR_SIGREF" >> config.h
+if [ $havedpi = yes ]
+then
+  echo "#define QUANTOR_HAVE_DOUBLE_PRECISION_INT" >> config.h
+  echo "typedef $DPI DPI;" >> config.h
+fi
+echo "typedef $WORD Word;" >> config.h
+echo "typedef $SIGNATURE Signature;" >> config.h
+echo "#define QUANTOR_LIT_ALIGNMENT $litalignment" >> config.h
+[ "$litalignment" = 0 ] &&  \
+echo "#define QUANTOR_LIT_ALIGNMENT_IS_ZERO" >> config.h
+
+cto () {
+  printf '"%-20s' $1 >> config.h
+  echo "$2"'\\n" @SLASH@' >> config.h
+}
+
+echo "#define QUANTOR_COMPILE_TIME_OPTIONS \\" >> config.h
+cto "version" "$version"
+cto "debug" "$debug"
+cto "check" "$check"
+cto "log" "$log"
+[ $log = yes ] && \
+cto "loglevel" "$loglevel"
+cto "stats" "$stats"
+[ $stats = yes ] && \
+cto "statslevel" "$statslevel"
+cto "CC" "$CC"
+cto "CCVERSION" "$CCVERSION"
+cto "CFLAGS" "$CFLAGS"
+cto "funex" "$funex"
+cto "limmat" "$limmat"
+cto "nanosat" "$nanosat"
+cto "compsat" "$compsat"
+cto "booleforce" "$booleforce"
+cto "picosat" "$picosat"
+cto "qbfeval" "$qbfeval"
+cto "havedpi" "$havedpi"
+[ $havedpi = yes ] && \
+cto "DPI" "$DPI"
+cto "Word" "$WORD"
+cto "sig" "$sig"
+cto "sigref" "$sigref"
+cto "Signature" "$SIGNATURE"
+cto "litalign" "$litalignment"
+cto "fastalloc" "$fastalloc"
+echo '""' >> config.h
+
+echo "#endif" >> config.h
+sed -i -e 's,@SLASH@,\\,' config.h
+echo " done"
+#*------------------------------------------------------------------------*#
+printf "$fmt" "cleaning up"
+rm -rf $tmp
+echo " done"

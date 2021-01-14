@@ -1,0 +1,21 @@
+(rule
+ (targets picosat.h libpicosat.a quantor.h libquantor.a)
+ (deps
+  (source_tree libs))
+ (action
+  (progn
+   (chdir
+    libs
+    (run make picosat-960/libpicosat.a quantor-3.2/libquantor.a))
+   (run cp libs/picosat-960/libpicosat.a .)
+   (run cp libs/picosat-960/picosat.h .)
+   (run cp libs/quantor-3.2/libquantor.a .)
+   (run cp libs/quantor-3.2/quantor.h .))))
+
+(install
+ (section lib)
+ (files
+  (picosat.h as quantor/picosat.h)
+  (quantor.h as quantor/quantor.h)
+  (libpicosat.a as quantor/libpicosat.a)
+  (libquantor.a as quantor/libquantor.a)))

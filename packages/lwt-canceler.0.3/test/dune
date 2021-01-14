@@ -1,0 +1,3 @@
+(tests
+ (names basic fails linear_exception)
+ (libraries lwt.unix lwt lwt-canceler))

@@ -1,4 +1,0 @@
-(library
- (name irmin_mirage_git)
- (public_name irmin-mirage-git)
- (libraries irmin-mirage irmin-git git-mirage mirage-kv))

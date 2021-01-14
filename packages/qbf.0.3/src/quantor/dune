@@ -1,0 +1,24 @@
+(library
+ (foreign_stubs
+  (language c)
+  (names quantor_stubs))
+ (name qbf_quantor)
+ (public_name qbf.quantor)
+ (optional)
+ (wrapped false)
+ (libraries qbf)
+ (flags :standard -warn-error -a+8)
+ (c_library_flags :standard -lquantor -lpicosat -L.)
+ (library_flags
+  (-cclib -L.)
+  (-cclib -lquantor)
+  (-cclib -lpicosat)))
+
+(rule
+ (targets picosat.h libpicosat.a quantor.h libquantor.a)
+ (action
+  (progn
+   (copy %{workspace_root}/libpicosat.a libpicosat.a)
+   (copy %{workspace_root}/picosat.h picosat.h)
+   (copy %{workspace_root}/libquantor.a libquantor.a)
+   (copy %{workspace_root}/quantor.h quantor.h))))

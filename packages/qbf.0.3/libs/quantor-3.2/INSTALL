@@ -1,0 +1,21 @@
+In order to have a full QBF solver you need to compile Quantor with a SAT
+solver back end.  Preferably you should use PicoSAT, but FunEx, NanoSAT and
+Limmat, should work as well.  This new version of Quantor needs the
+workds only with a reentrant version of PicoSAT, so at least version 953.
+
+The 'configure' script will search in the parent directory in which you
+unpacked the Quantor sources for the directories 'picosat', 'compsat' etc.
+and whether they contain apropriate libraries.  If you have compiled PicoSAT
+some where else, say in '$HOME/picosat-560', then use can simply configure
+Quantor to use the libraries in that directory with 
+
+  ./configure --picosat=$HOME/picosat-560'
+
+Then 'make' should produce a 'quantor' binary.  The configure script
+generates 'config.h' and 'options.c', the latter by using the 'genopts'
+shell script.  This should work on a Unix system out of the box, and
+also for 'cygwin'.  For other operating systems you need to change the
+compilation process.  In the past we were successfully in producing a native
+Windows binary with the mingw32 cross compiler.
+
+Armin Biere, Linz, Son Okt 26 10:42:35 CET 2014

@@ -1,0 +1,4 @@
+(library
+ (name qbf)
+ (flags :standard -warn-error -a+8)
+ (public_name qbf))

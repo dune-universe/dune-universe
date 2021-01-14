@@ -1,0 +1,27 @@
+CC=@CC@
+AR=@AR@
+RANLIB=@RANLIB@
+INC=@INC@
+LIB=@LIB@
+DEPLIB=@DEPLIB@
+DEPHEADERS=@DEPHEADERS@
+CFLAGS=@CFLAGS@
+all: quantor
+quantor: main.o libquantor.a $(DEPLIB)
+	$(CC) $(CFLAGS) -o $@ main.o -L. -lquantor $(LIB)
+quantor.o: quantor.c options.c quantor.h config.h $(DEPHEADERS)
+	$(CC) $(CFLAGS) $(INC) -c quantor.c
+libquantor.a: quantor.o
+	$(AR) rc $@ quantor.o
+	$(RANLIB) $@
+options.c: genopts options.sh
+	rm -f $@; ./genopts < options.sh > $@
+main.o: main.c quantor.h config.h
+	$(CC) $(CFLAGS) -c $(INC) main.c
+clean:
+	rm -f *.o
+	rm -f quantor libquantor.a
+	rm -f *~ gmon.out cscope.out
+	rm -f *.bbg *.bb *.da *.c.gcov
+	rm -f config.h Makefile options.c
+	rm -f log/*.log

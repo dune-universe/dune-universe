@@ -1,0 +1,7 @@
+This is the source code of Quantor a QBF solver described in:
+
+A. Biere. Resolve and Expand. In Proc. 7th Intl. Conf. on Theory and
+Applications of Satisfiability Testing (SAT'04). Lecture Notes in Computer
+Science (LNCS), vol. 3542, Springer 2005.
+
+Armin Biere, Linz, Fri Jun 22 10:41:57 CEST 2007
