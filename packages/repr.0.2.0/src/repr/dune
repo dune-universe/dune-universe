@@ -1,4 +1,0 @@
-(library
- (name repr)
- (public_name repr)
- (libraries base64 fmt jsonm uutf))

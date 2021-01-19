@@ -1,3 +1,0 @@
-(lang dune 2.3)
-(name imagelib)
-(version ocaml-imagelib_20200929)
