@@ -1,0 +1,144 @@
+\documentclass[french,11pt]{article}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage[resetfonts]{cmap}
+\usepackage{fancyvrb}
+\begin{VerbatimOut}{ot1tt.cmap}
+%!PS-Adobe-3.0 Resource-CMap
+%%DocumentNeededResources: ProcSet (CIDInit)
+%%IncludeResource: ProcSet (CIDInit)
+%%BeginResource: CMap (TeX-OT1-0)
+%%Title: (TeX-OT1-0 TeX OT1 0)
+%%Version: 1.000
+%%EndComments
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo
+<< /Registry (TeX)
+/Ordering (OT1)
+/Supplement 0
+>> def
+/CMapName /TeX-OT1TT-0 def
+/CMapType 2 def
+1 begincodespacerange
+<00> <7F>
+endcodespacerange
+8 beginbfrange
+<00> <01> <0000>
+<09> <0A> <0000>
+<23> <26> <0000>
+<28> <3B> <0000>
+<3F> <5B> <0000>
+<5D> <5E> <0000>
+<61> <7A> <0000>
+<7B> <7C> <0000>
+endbfrange
+40 beginbfchar
+<02> <0000>
+<03> <0000>
+<04> <0000>
+<05> <0000>
+<06> <0000>
+<07> <0000>
+<08> <0000>
+<0B> <0000>
+<0C> <0000>
+<0D> <0000>
+<0E> <0000>
+<0F> <0000>
+<10> <0000>
+<11> <0000>
+<12> <0000>
+<13> <0000>
+<14> <0000>
+<15> <0000>
+<16> <0000>
+<17> <0000>
+<18> <0000>
+<19> <0000>
+<1A> <0000>
+<1B> <0000>
+<1C> <0000>
+<1D> <0000>
+<1E> <0000>
+<1F> <0000>
+<21> <0000>
+<22> <0000>
+<27> <0000>
+<3C> <0000>
+<3D> <0000>
+<3E> <0000>
+<5C> <0000>
+<5F> <0000>
+<60> <0000>
+<7D> <0000>
+<7E> <0000>
+<7F> <0000>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+%%EndResource
+%%EOF
+\end{VerbatimOut}
+\usepackage{fullpage,fancyhdr}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{xcolor}
+\newtheorem{question}{Question}
+\usepackage{color}
+\usepackage{pifont}
+\definecolor{sh_comment}{rgb}{0.12, 0.38, 0.18 }
+\definecolor{sh_keyword}{rgb}{0.37, 0.08, 0.25}
+\definecolor{sh_string}{rgb}{0.06, 0.10, 0.98}
+\lstset {
+ language=caml,
+ rulesepcolor=\color{white},
+ showspaces=false,showtabs=false,tabsize=2,
+ showstringspaces=false,d
+ numberstyle=\none,
+ basicstyle= \normalsize\ttfamily\color{olive},
+ stringstyle=\color{sh_string},
+ keywordstyle = \color{sh_keyword}\bfseries,
+ commentstyle=\color{sh_comment}\itshape,
+ captionpos=b,
+ inputencoding=utf8,
+ extendedchars=true,
+}
+\usepackage[left=1cm,right=1cm,top=1cm,bottom=3.5cm]{geometry}
+\newenvironment{qu}{\begin{question}\normalfont}{\end{question}
+\noindent\hfil\rule{0.5\textwidth}{.4pt}\hfil
+}
+\lstnewenvironment{caml}{\lstset{language=caml}}{}
+\newcommand{\co}[1]{\lstinline[language=caml]{#1}}
+
+\def\subjectheader{
+Vous devez rendre votre copie sous la forme d'un fichier OCaml sur la plateforme
+\url{http://syntaxerror.lacl.fr}. Attention elle ne fait que vérifier
+que le code compile et les signatures des fonctions.
+Si le fichier ne compile pas, il ne sera pas corrigé !
+
+Ce travail est individuel et doit être réalisé uniquement avec les
+documents du cours: vos notes, les slides et les TPs précédents. Si
+vos réponses sont trop similaires à celles d'un autre étudiant ou à du code
+trouvé sur internet, il ne sera pas corrigé.
+Les fonctions de la librairie standard OCaml (comme
+\lstinline|List.fold_left|) sont interdites sauf
+celles explicitement mentionnées par le sujet.
+
+Il y a trois genres de questions:
+\begin{itemize}
+\item Les questions à réponse unique A, B, C ou D le type attendu est le type\\ \co{type qcm = A | B | C | D} il y a toujours exactement une réponse valide ;
+\item Les questions à réponse multiple, le type attendu est le type \co{type qlist = int list}, vous devez renvoyer une liste contenant le numéro des réponses valides ;
+\item Les questions ouvertes, une expression OCaml est attendue sont type est précisé dans l'énoncé de la question.
+\end{itemize}
+
+Vous ne devez pas définir les types \co{qcm, qlist} dans votre rendu.
+}
+
+\pagestyle{fancy}
+\lhead{Programmation Fonctionnelle}

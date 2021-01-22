@@ -1,0 +1,9 @@
+# Changelog
+
+## [0.9.2] - 21/01/2021
+ - Add cram tests
+ - Fix typos
+
+## [0.9] --20/01/2021
+ - First release on opam 
+ - replace standalone type parser by ocaml-compiler-libs parser

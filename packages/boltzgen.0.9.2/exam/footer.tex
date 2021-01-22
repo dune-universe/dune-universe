@@ -1,0 +1,31 @@
+\begin{qu}
+On souhaite représenter des points dans le plan, un point dans le
+  plan se compose deux coordonnées dont le type est \co{float} et peut
+  avoir un nom dont le type est \co{string}.
+  \begin{itemize}
+  \item Créer le type \co{point_2d} qui correspond à la description
+    ci-dessus.
+   \item Créer la valeur \co{pt1 : point_2d} dont les coordonnées sont
+     $(3.1, 2)$ et n'a pas de nom.
+  \item Écrivez la fonction \co{string_of_point : point_2d -> string}
+    telle que l'application de la fonction\\ \co{string_of_point} sur le
+    point de la question précédente donne l'affichage suivant \co{"(3.1,2.) : -"}, et affiche \co{"(1.,0.) : toto"}
+    sur le point dont le nom est \co{"toto"} et les coordonnées sont
+    \co{(1,0)}.
+  \item Écrire les fonctions
+    \co{anonymous_point : float -> float -> point_2d} et\\
+    \co{named_point : float -> float -> string -> point_2d}
+    qui créent respectivement un point sans nom et un point nommé.
+  \item Écrire la fonction récursive
+    \co{find : float -> float -> point_2d list -> string option}
+    qui retourne le nom d'un point dans la liste dont les coordonnées
+    correspondent aux coordonnées passées en paramètre. Faites attention
+    aux points anonymes de même cordonnées qui eux sont ignorés.
+    \item Écrire la fonction \co{barycenter point_2d list -> point_2d}
+      qui retourne le point anonyme dont les coordonnées sont la somme de
+      toutes les coordonnées des points dans la liste (pour chaque abcisse et pour chaque ordonnée) divisée par le
+      nombre de points dans la liste. Pour cette question, vous aurez
+      besoin d'une fonction auxiliaire récursive.      
+  \end{itemize}
+\end{qu}
+\end{document}
