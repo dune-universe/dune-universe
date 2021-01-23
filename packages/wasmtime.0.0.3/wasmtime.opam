@@ -1,0 +1,35 @@
+opam-version: "2.0"
+name:         "wasmtime"
+bug-reports:  "https://github.com/LaurentMazare/ocaml-wasmtime/issues"
+homepage:     "https://github.com/LaurentMazare/ocaml-wasmtime"
+dev-repo:     "git+https://github.com/LaurentMazare/ocaml-wasmtime.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [["dune" "build" "-p" name "-j" jobs]]
+
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs] { os-distribution != "alpine" }
+]
+
+depends: [
+  "base" {>= "v0.13.0" & < "v0.15"}
+  "ctypes" {>= "0.5"}
+  "ctypes-foreign"
+  "dune" {>= "2.0.0" build}
+  "dune-configurator"
+  "libwasmtime" {>= "0.22.0" & < "0.23.0"}
+  "ocaml" {>= "4.10"}
+  "ppx_expect" {>= "v0.13.0" & < "v0.15" with-test}
+  "stdio"
+]
+
+available: arch = "x86_64" & (os = "linux" | os = "macos")
+
+synopsis: "Wasmtime bindings for OCaml"
+description: """
+Bindings for Wasmtime, a small and efficient
+runtime for WebAssembly.
+"""

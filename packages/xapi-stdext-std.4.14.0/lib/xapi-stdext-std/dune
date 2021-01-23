@@ -1,5 +1,0 @@
-(library
-  (public_name xapi-stdext-std)
-  (name  xapi_stdext_std)
-  (libraries uuidm)
-)
