@@ -1,7 +1,0 @@
-(library
- (public_name ppx_deriving_encoding)
- (name ppx_deriving_encoding)
- (kind ppx_deriver)
- (modules utils encoding ppx_deriving_encoding)
- (libraries ppxlib)
- (ppx_runtime_libraries ocplib-json-typed))
