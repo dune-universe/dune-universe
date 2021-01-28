@@ -1,0 +1,27 @@
+# TeX.
+main.pdf
+talk.pdf
+*.aux
+*.aux.bak
+*.bbl
+*.blg
+*.log
+*.out
+*.nav
+*.snm
+*.toc
+*.vrb
+
+# WhizzyTeX.
+._whizzy*
+_whizzy*
+*.raux
+*.wdvi
+*.dvi
+*.waux
+*.fmt
+
+# latexmk
+*.fdb_latexmk
+*.fls
+*.synctex.gz

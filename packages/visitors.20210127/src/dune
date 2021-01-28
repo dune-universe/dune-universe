@@ -1,0 +1,22 @@
+(library
+  (name ppx_deriving_visitors)
+  (public_name visitors.ppx)
+  (synopsis "Compile-time support for generating visitors")
+  (kind ppx_deriver)
+  (libraries result compiler-libs.common ppxlib ppx_deriving.api)
+  (ppx_runtime_libraries visitors.runtime)
+)
+
+(env
+  (dev (flags
+    :standard
+    -safe-string
+    -g
+    -w @A-4-44
+  ))
+  (release (flags
+    :standard
+    -safe-string
+    -g
+  ))
+)

@@ -1,0 +1,11 @@
+(library
+  (name snippets_that_need_ppx_import)
+  (preprocess (staged_pps ppx_import visitors.ppx))
+  (flags -w A-4-34-44)
+  (libraries ppx_import)
+  (modules
+    expr
+    expr_import
+    expr_import_opaque
+  )
+)

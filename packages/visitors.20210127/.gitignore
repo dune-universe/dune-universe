@@ -1,0 +1,6 @@
+*~
+_build
+.merlin
+*.processed.ml
+doc/manual.pdf
+dune-workspace.versions
