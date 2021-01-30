@@ -1,0 +1,39 @@
+version: "0.2"
+opam-version: "2.0"
+synopsis: "Globbing file paths"
+description: """
+An implementation of 'glob' patterns for file paths,
+extracted from ocamlbuild.
+"""
+
+homepage: "https://gitlab.com/gasche/path_glob"
+bug-reports: "https://gitlab.com/gasche/path_glob"
+doc: "https://gasche.gitlab.io/path_glob/doc/path_glob"
+
+maintainer: ["Gabriel Scherer <gabriel.scherer@gmail.com>"]
+authors: [
+  "Berke Durak"
+]
+
+license: "LGPL2 + linking exception"
+
+depends: [
+  "ocaml" {>= "4.03"}
+  "dune" {>= "2.7"}
+  "odoc" {with-doc}
+]
+
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]

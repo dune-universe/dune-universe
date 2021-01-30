@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name: "json-data-encoding"
+synopsis: "Type-safe encoding to and decoding from JSON"
+maintainer: "contact@nomadic-labs.com"
+authors: [ "Nomadic Labs" "Ocamlpro" ]
+homepage: "https://gitlab.com/nomadic-labs/json-data-encoding"
+bug-reports: "https://gitlab.com/nomadic-labs/json-data-encoding/issues"
+license: "MIT"
+dev-repo: "git+https://gitlab.com/nomadic-labs/json-data-encoding"
+
+build: [
+  ["dune" "build" "-j" jobs "-p" name]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "1.7"}
+  "uri" {>= "1.9.0" }
+  "crowbar" { with-test }
+  "alcotest" { with-test }
+]
