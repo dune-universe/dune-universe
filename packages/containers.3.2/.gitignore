@@ -1,0 +1,16 @@
+.*.swp
+.*.swo
+_build
+*.native
+*.byte
+.session
+*.docdir
+setup.*
+*.html
+.merlin
+*.install
+.ignore
+_opam
+*.exe
+fuzz-*-input
+fuzz-*-output
