@@ -1,0 +1,9 @@
+lilac-params:
+  source:
+    url: "https://ttaw.dev"
+    user: "lilac+source@ttaw.dev"
+    cred: ${LILAC_SOURCE_CRED}
+  dest:
+    url: "https://walkandtalk.dev"
+    user: "lilac+dest@walkandtalk.dev"
+    cred: ${LILAC_DEST_CRED}

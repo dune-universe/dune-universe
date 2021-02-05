@@ -1,0 +1,9 @@
+(env
+ (release
+  (flags "-noassert")))
+
+(library
+ (name data_encoding)
+ (public_name data-encoding)
+ (libraries json-data-encoding json-data-encoding-bson zarith ezjsonm)
+ (flags (:standard)))

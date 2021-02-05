@@ -1,0 +1,63 @@
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+# Need to learn more about ocaml and opam on windows, this fails with some cygwin and
+# pkg-config errors I haven't pinned down
+#         - windows-latest 
+        ocaml-version:
+          - 4.11.1
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v1
+
+      - name: get ocaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1.1.5
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+      - name: pin
+        run: opam pin add . --yes --no-action
+      - name: opam install
+        run: opam install . --deps-only --with-doc --with-test
+      - name: build
+        run: opam exec -- dune build
+      - name: test 
+        run: opam exec -- dune runtest
+
+  test-ubuntu-latest-with-coverage:
+    name: ubuntu-latest test with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: get ocaml
+        uses: avsm/setup-ocaml@v1.1.5
+        with:
+          ocaml-version: 4.11.1
+      - name: pin
+        run: opam pin add . --yes --no-action
+      - name: opam install
+        run: opam install . --deps-only --with-doc --with-test
+      - name: build
+        run: opam exec -- dune build
+      - name: test with coverage
+        run: opam exec -- dune runtest --instrument-with bisect_ppx --force
+      - name: generage coverage
+        run: opam exec -- bisect-ppx-report html
+      - name: report coverage
+        run: opam exec -- bisect-ppx-report summary
+      - name: send to codecov
+        run: opam exec -- bisect-ppx-report send-to Codecov

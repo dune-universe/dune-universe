@@ -1,0 +1,9 @@
+(executable
+ (public_name lilac)
+ (name lilacbin)
+ (libraries lilac cmdliner stdio))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))

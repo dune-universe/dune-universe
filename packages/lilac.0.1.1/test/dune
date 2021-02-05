@@ -1,0 +1,17 @@
+(test
+ (name lilac_tests)
+ (libraries lilac base oUnit)
+ (deps
+  (source_tree res)))
+
+(rule
+ (alias runtest)
+ (deps
+  (:x lilac_tests.exe))
+ (action
+  (run %{x})))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
