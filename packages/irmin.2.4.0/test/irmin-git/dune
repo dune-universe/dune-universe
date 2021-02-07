@@ -1,0 +1,18 @@
+(library
+ (name test_git)
+ (modules test_git)
+ (libraries alcotest fmt fpath irmin irmin-test irmin.mem irmin-git git
+   git-unix git-cohttp-unix lwt lwt.unix)
+ (preprocess
+  (pps ppx_irmin)))
+
+(executable
+ (name test)
+ (modules test)
+ (libraries alcotest irmin irmin-test test_git))
+
+(rule
+ (alias runtest)
+ (package irmin-git)
+ (action
+  (run ./test.exe -q --color=always)))

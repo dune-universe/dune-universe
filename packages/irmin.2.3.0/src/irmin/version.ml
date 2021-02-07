@@ -1,1 +1,0 @@
-let current = "2.3.0"

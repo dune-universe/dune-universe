@@ -1,0 +1,317 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                        %
+%                               Headache                                 %
+%                                                                        %
+%          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           %
+%                                                                        %
+%  Copyright 2002                                                        %
+%  Institut National de Recherche en Informatique et en Automatique.     %
+%  All rights reserved.  This file is distributed under the terms of     %
+%  the GNU Library General Public License.                               %
+%                                                                        %
+%  Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/  %
+%                                                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%BEGIN LATEX
+\documentclass{article}
+\setlength{\textheight}{240mm}
+\setlength{\textwidth}{160mm}
+\setlength{\topmargin}{-22mm}
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{12mm}
+\setlength{\footskip}{16mm}
+\setlength{\oddsidemargin}{2.2mm}
+\setlength{\evensidemargin}{2.2mm}
+%END LATEX
+%HEVEA \documentclass{article}
+
+\usepackage{alltt}
+\usepackage{moreverb}
+\usepackage{url}
+
+%BEGIN LATEX
+\newcommand{\mytt}[1]{\texttt{#1}}
+%END LATEX
+%HEVEA \newcommand{\mytt}[1]{`\texttt{#1}`}
+
+\newcommand{\headache}{\mytt{headache}}
+
+
+
+\title{\headache{}}
+\author{Vincent Simonet}
+\date{November, 2002}
+
+\begin{document}
+
+\maketitle
+
+%HEVEA This manual is also available in \ahref{manual.txt}{plain text},
+%HEVEA \ahref{manual.ps.gz}{PostScript} and \ahref{manual.pdf}{PDF}.
+
+% *************************************************************************
+\section{Overview}
+
+It is a common usage to put at the beginning of source code files a
+short header giving, for instance, some copyright informations.
+\headache{} is a simple and lightweight tool for managing easily these
+headers.  Among its functionalities, one may mention:
+\begin{itemize}
+\item Headers must generally be generated as \emph{comments} in source
+  code files.  \headache{} deals with different file types and generates
+  for each of them headers in an appropriate format.
+\item \headache{} automatically detects existing headers and removes them.
+  Thus, you can use it to update headers in a set of files.
+\end{itemize}
+
+\headache{} is distributed under the terms of the \emph{GNU Library General
+  Public License}.  See file \mytt{LICENSE} of the distribution for
+more information.
+
+
+% *************************************************************************
+\section{Compilation and installation}
+
+Building \headache{} requires \emph{Objective Caml} (version 3.06 or up,
+available at \url{http://caml.inria.fr/}) and \emph{GNU Make}.
+In addition, from version \texttt{1.03-utf8}, the build requires the Unicode library \emph{Camomile} and, from version \texttt{1.04}, \emph{Dune}.
+
+\paragraph{Instructions}
+
+\begin{alltt}
+  make && sudo make INSTALLDIR=/usr/local/bin install
+\end{alltt}
+Build the executable and install it into the specified directory.
+
+\headache{} is available through \emph{OPAM} (available at
+\url{http://opam.ocaml.org/}), the \emph{OCaml Package Manager}.
+This is the preferred installation method.
+Be sure to install opam v1.2 or higher.
+Then the following sequence of commands should install the package:
+\begin{alltt}
+  opam init
+  opam install depext
+  opam depext headache
+  opam install headache
+\end{alltt}
+
+% *************************************************************************
+\section{Usage}
+
+Let us illustrate the use of this tool with a small example.  Assume
+you have a small project mixing C and Caml code consisting in three
+files \mytt{foo.c}, \mytt{bar.ml} and \mytt{bar.mli}, and you want to
+equip them with some header.  First of all, write a \emph{header
+  file}, i.e.\ a plain text file including the information headers
+must mention.  An example of such a file is given in
+figure~\ref{figure:header}.  In the following, we assume this file is
+named \mytt{myheader} and is in the same directory as source files.
+
+Then, in order to generate headers, just run the command:
+\begin{alltt}
+  headache -h myheader foo.c bar.ml bar.mli
+\end{alltt}
+Each file is equipped with a header including the text given in the
+header file \mytt{myheader}, surrounded by some extra characters
+depending on its format making it a comment (e.g.\ \mytt{(*} and
+\mytt{*)} in \mytt{.ml} files).  If you update informations in the
+header file \mytt{myheader}, you simply need to re-run the above
+command to update headers in source code files: existing ones are
+automatically removed.
+
+Similarly, running:
+\begin{alltt}
+  headache -r foo.c bar.ml bar.mli
+\end{alltt}
+removes any existing in files \mytt{foo.c}, \mytt{bar.ml} and
+\mytt{bar.mli}.  Files which do not have a header are kept unchanged.
+
+The current headers of files can be extracted:
+\begin{alltt}
+  headache -e foo.c bar.ml bar.mli
+\end{alltt}
+prints on the standard output the current headers of the files \mytt{foo.c},
+\mytt{bar.ml} and \mytt{bar.mli}. All files are kept unchanged.
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+
+                             Headache
+               Automatic generation of files headers
+
+        Vincent Simonet, Projet Cristal, INRIA Rocquencourt
+
+Copyright 2002
+Institut National de Recherche en Informatique et en Automatique.
+All rights reserved.  This file is distributed under the terms of
+the GNU Library General Public License.
+
+Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+  \caption{An example of header file}
+  \label{figure:header}
+\end{figure}
+
+
+
+% *************************************************************************
+\section{Configuration file}
+
+File types and format of header may be specified by a
+\emph{configuration file}.  By default, the default builtin
+configuration file given in figure~\ref{figure:config} is used.  You
+can also use your own configuration file thanks to the \mytt{-c}
+option:
+\begin{alltt}
+  headache -c myconfig -h myheader foo.c bar.ml bar.mli
+\end{alltt}
+
+In order to write your own configuration, you can follow the example
+given in figure~\ref{figure:config}.  A configuration file consists in
+a list of \emph{entries} separated by the character \mytt{|}.  Each
+of them is made of two parts separated by an \mytt{->}:
+\begin{itemize}
+\item The first one is a \emph{regular expression}.  Regular
+  expression are enclosed within double quotes and have the same
+  syntax as in Gnu Emacs.  \headache{} determines file types according to
+  file basenames; thus, each file is dealt with using the first line
+  its name matches.
+\item The second one describes the format of headers for files of this
+  type.  It consists of the name of a \emph{model} (e.g.\ 
+  \mytt{frame}), possibly followed by a list of arguments.  Arguments
+  are named: \mytt{open:"(*"} means that the value of the argument
+  \mytt{open} is \mytt{(*}.
+\end{itemize}
+\headache{} currently supports three \emph{models}:
+\begin{itemize}
+\item \mytt{frame}.  With this model, headers are generated in a
+  frame.  This model requires three arguments: \mytt{open} and
+  \mytt{close} (the opening and closing sequences for comments) and
+  \mytt{line} (the character used to make the horizontal lines of the
+  frame).  Two optional arguments may be used: \mytt{margin} (a string
+  printed between the left and right side of the frame and the border,
+  by default two spaces) and \mytt{width} (the width of the inside of
+  the frame, default is 68).
+\item \mytt{lines}.  Headers are typeset between two lines.  Three
+  arguments must be provided: \mytt{open} and \mytt{close} (the
+  opening and closing sequences for comments), \mytt{line} (the
+  character used to make the horizontal lines).  Three optional
+  arguments are allowed: \mytt{begin} (a string typeset at the
+  beginning of each line, by default two spaces), \mytt{last} (a
+  string typeset at the beginning of the last line) and \mytt{width}
+  (the width of the lines, default is 70).
+\item \mytt{no}.  This model generates no header and has no argument.
+\end{itemize}
+
+
+It is possible to change the default builtin configuration file at
+compile time.  For this, just edit the file \mytt{config\_builtin.txt}
+present in the source distribution before building the software.
+
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+
+# Objective Caml source
+  ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.fml[i]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.mly"     -> frame open:"/*" line:"*" close:"*/"
+# C source
+| ".*\\.[chy]"    -> frame open:"/*" line:"*" close:"*/"
+# Latex
+| ".*\\.tex"     -> frame open:"%"  line:"%" close:"%"
+# Misc
+| ".*Makefile.*" -> frame open:"#"  line:"#" close:"#"
+| ".*README.*"   -> frame open:"*"  line:"*" close:"*"
+| ".*LICENSE.*"  -> frame open:"*"  line:"*" close:"*"
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+  \caption{The default builtin configuration file}
+  \label{figure:config}
+\end{figure}
+
+It is also possible to add entries into your own configuration file that
+specify when the initial lines of the processed file have to be skipped.
+As previously, these \emph{entries} are separated by the character \mytt{|}
+and each of them is made of two parts separated by an \mytt{->}:
+\begin{itemize}
+\item Again, the first part is a \emph{regular expression} used by \headache{}
+  to determine the file type. But here, it is according to
+  its full filename (including the pathname).
+\item The second part specifies when the initial lines must be skipped.
+  It consists of the keyword \mytt{skip} followed by one of the named
+  arguments \mytt{multiline\_match:} or \mytt{match:}, then a \emph{regular expression}.
+  As long as the lines match a \mytt{multiline\_match} parameter,
+  \headache{} skips them and checks the next line.
+  If the current line matches only a \mytt{match} parameter,
+  \headache{} skips the current line and breaks the iteration there (of course,
+  if nothing matches, \headache{} puts the header before the current line).
+
+\end{itemize}
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+# Script file
+ | ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
+ | ".*\\.sh" -> skip match:"#!.*"
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+  \caption{Example of a configuration file for skipping the shebang line of shell scripts}
+  \label{figure:example}
+\end{figure}
+
+Figure~\ref{figure:example} shows an example of configuration file
+that can used to skip the shebang line of shell scripts:
+when the first line of \mytt{.sh} files starts with \mytt{\#!},
+\headache{} does not modify that line and considers that the header must
+start at the second line.
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+# SWI Prolog file
+ | ".*\\.pl" -> frame open:"%"  line:"%" close:"%"
+ | ".*\\.pl" -> skip multiline_match:"#!.*" multiline_match:":-.*"
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+\caption{Example of a configuration file for skipping the shebang line,
+  as well as lines containing Prolog directives, such as Unicode usage.}
+  \label{figure:python-example}
+\end{figure}
+
+Figure~\ref{figure:python-example} shows an example of configuration file
+that can used for \mytt{SWI prolog} files:
+for a \mytt{.pl} file starting with the following three first lines,
+\headache{} considers that the header must start just after the first two lines:
+\begin{alltt}
+  #!/usr/bin/env swipl
+  :- encoding(utf8).
+  % remainder of the file, that can be after the header
+\end{alltt}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

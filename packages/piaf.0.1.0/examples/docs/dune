@@ -1,0 +1,3 @@
+(executable
+ (name readme)
+ (libraries piaf lwt))
