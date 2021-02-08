@@ -1,4 +1,0 @@
-(executable
- (modes byte exe)
- (name ppx)
- (libraries bisect_ppx ocaml-migrate-parsetree))

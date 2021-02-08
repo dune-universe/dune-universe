@@ -1,7 +1,0 @@
-(lang dune 2.7)
-(name ppxlib)
-(version 0.21.0)
-(using cinaps 1.0)
-(allow_approximate_merlin)
-(formatting disabled)
-(cram enable)
