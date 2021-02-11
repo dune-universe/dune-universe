@@ -1,9 +1,0 @@
-(executable
- (name main)
- (libraries bechamel bechamel.notty notty.unix bloomf))
-
-(alias
- (name bench)
- (deps main.exe)
- (action
-  (run %{exe:main.exe})))

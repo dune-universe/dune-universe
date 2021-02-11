@@ -1,0 +1,12 @@
+_build/
+*.install
+*.merlin
+
+# latex
+*.tex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.pdf
+auto

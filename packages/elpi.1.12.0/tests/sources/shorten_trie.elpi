@@ -1,7 +1,0 @@
-std.list.map _ _.
-std.string.concat _ _ _.
-std.string.escape _ _.
-
-shorten std.{list.map, string.{ concat, escape }}.
-
-main :- list.map F [], concat "a" "b" AB, escape "x y" E.
