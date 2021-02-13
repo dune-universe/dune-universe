@@ -1,0 +1,12 @@
+Install: 3
+Package: a2
+Version: 1
+Architecture: arch2
+
+Install: 2
+Package: a1
+Version: 1
+Architecture: arch2
+
+Summary: 2 to install  
+Installed: a2=1/arch2, a1=1/arch2

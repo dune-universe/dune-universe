@@ -1,0 +1,15 @@
+Package: main
+Version: 1
+Architecture: toaster
+Depends: a, b
+
+Package: a
+Version: 1
+Architecture: toaster
+Conflicts: v (=1)
+
+Package: b
+Version: 1
+Architecture: toaster
+Provides: v
+

@@ -1,0 +1,18 @@
+output-version: 1.2
+report:
+ -
+  package: incomplete-conjunctive-conflicts
+  version: 1
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: incomplete-conjunctive-conflicts
+      version: 1
+      unsat-dependency: d
+ 
+background-packages: 2
+foreground-packages: 1
+total-packages: 3
+broken-packages: 1

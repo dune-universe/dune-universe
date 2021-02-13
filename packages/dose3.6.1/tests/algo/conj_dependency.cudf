@@ -1,0 +1,20 @@
+package: bicycle
+depends: pedal, wheel, seat, bike-tire, user
+provides: transport
+version: 7
+
+package: pedal
+version: 1
+
+package: seat
+version: 1
+
+package: bike-tire
+version: 1
+depends: rim
+conflicts: tire
+
+package: user
+version: 1
+depends: transport
+

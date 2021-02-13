@@ -1,0 +1,22 @@
+Request: EDSP 0.5
+Architecture: arch1
+Install: a2:arch1
+
+Package: a1
+Version: 2
+Architecture: arch1
+Breaks: a2p (<< 1)
+Multi-Arch: same
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a2
+Version: 1
+Architecture: arch1
+Depends: a1 (>> 1), a1 (<< 3)
+Provides: a2p
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+Multi-Arch: none

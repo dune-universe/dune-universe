@@ -1,0 +1,15 @@
+package: incomplete-disjunctive-missing-conflict
+version: 1
+depends: c | a
+
+package: a
+version: 1
+depends: b
+
+package: b
+version: 1
+conflicts: incomplete-disjunctive-missing-conflict
+
+package: c
+version: 1
+depends: m

@@ -1,0 +1,16 @@
+Package: ab1
+Version: 3.4
+Source: as
+Architecture: arch1
+Depends: n1, n3 (=3465637848)
+
+Package: ab2
+Version: 3.4
+Source: as
+Architecture: arch1
+Depends: n2 (>56.78), n3 (<= 5.9)
+
+Package: cc
+Version: 17.42
+Depends: ab1 (< 76), ab2 (>76) ,n3 (> 8.9)
+Architecture: arch1

@@ -1,0 +1,32 @@
+digraph G {
+  "essential2:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)";
+  "essential:amd64 (= 1.0)";
+  "and-me:amd64 (= 1.0)";
+  "ess-dep-on-me:amd64 (= 1.0)";
+  "foo:amd64 (= 1.0)";
+  
+  
+  "essential2:amd64 (= 1.0)" -> "and-me:amd64 (= 1.0)";
+  "essential2:amd64 (= 1.0)" -> "ess-dep-on-me:amd64 (= 1.0)";
+  "essential2:amd64 (= 1.0)" -> "essential:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)" -> "and-me:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)" -> "ess-dep-on-me:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)" -> "essential:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)" -> "essential2:amd64 (= 1.0)";
+  "random:amd64 (= 1.0)" -> "foo:amd64 (= 1.0)";
+  "essential:amd64 (= 1.0)" -> "and-me:amd64 (= 1.0)";
+  "essential:amd64 (= 1.0)" -> "ess-dep-on-me:amd64 (= 1.0)";
+  "essential:amd64 (= 1.0)" -> "essential2:amd64 (= 1.0)";
+  "and-me:amd64 (= 1.0)" -> "ess-dep-on-me:amd64 (= 1.0)";
+  "and-me:amd64 (= 1.0)" -> "essential:amd64 (= 1.0)";
+  "and-me:amd64 (= 1.0)" -> "essential2:amd64 (= 1.0)";
+  "ess-dep-on-me:amd64 (= 1.0)" -> "and-me:amd64 (= 1.0)";
+  "ess-dep-on-me:amd64 (= 1.0)" -> "essential:amd64 (= 1.0)";
+  "ess-dep-on-me:amd64 (= 1.0)" -> "essential2:amd64 (= 1.0)";
+  "foo:amd64 (= 1.0)" -> "and-me:amd64 (= 1.0)";
+  "foo:amd64 (= 1.0)" -> "ess-dep-on-me:amd64 (= 1.0)";
+  "foo:amd64 (= 1.0)" -> "essential:amd64 (= 1.0)";
+  "foo:amd64 (= 1.0)" -> "essential2:amd64 (= 1.0)";
+  
+  }

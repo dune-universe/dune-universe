@@ -1,0 +1,156 @@
+output-version: 1.2
+report:
+ -
+  package: 2to3
+  version: 3.7.3-1
+  architecture: all
+  status: ok
+  installationset:
+   -
+    package: zlib1g
+    version: 1:1.2.11.dfsg-1
+    architecture: amd64
+   -
+    package: tar
+    version: 1.30+dfsg-6
+    architecture: amd64
+    essential: true
+   -
+    package: readline-common
+    version: 7.0-5
+    architecture: all
+   -
+    package: python3.7-minimal
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: python3.7
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: python3-minimal
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: python3-lib2to3
+    version: 3.7.3-1
+    architecture: all
+   -
+    package: python3
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: perl-base
+    version: 5.28.1-6+deb10u1
+    architecture: amd64
+    essential: true
+   -
+    package: mime-support
+    version: 3.62
+    architecture: all
+   -
+    package: libuuid1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: libtinfo6
+    version: 6.1+20181013-2+deb10u2
+    architecture: amd64
+   -
+    package: libssl1.1
+    version: 1.1.1d-0+deb10u3
+    architecture: amd64
+   -
+    package: libsqlite3-0
+    version: 3.27.2-3+deb10u1
+    architecture: amd64
+   -
+    package: libselinux1
+    version: 2.8-1+b1
+    architecture: amd64
+   -
+    package: libreadline7
+    version: 7.0-5
+    architecture: amd64
+   -
+    package: libpython3.7-stdlib
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: libpython3.7-minimal
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: libpython3-stdlib
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: libpcre3
+    version: 2:8.39-12
+    architecture: amd64
+   -
+    package: libncursesw6
+    version: 6.1+20181013-2+deb10u2
+    architecture: amd64
+   -
+    package: libmpdec2
+    version: 2.4.2-2
+    architecture: amd64
+   -
+    package: liblzma5
+    version: 5.2.4-1
+    architecture: amd64
+   -
+    package: libgcc1
+    version: 1:8.3.0-6
+    architecture: amd64
+   -
+    package: libffi6
+    version: 3.2.1-9
+    architecture: amd64
+   -
+    package: libexpat1
+    version: 2.2.6-2+deb10u1
+    architecture: amd64
+   -
+    package: libdb5.3
+    version: 5.3.28+dfsg1-0.5
+    architecture: amd64
+   -
+    package: libc6
+    version: 2.28-10
+    architecture: amd64
+   -
+    package: libbz2-1.0
+    version: 1.0.6-9.2~deb10u1
+    architecture: amd64
+   -
+    package: libattr1
+    version: 1:2.4.48-4
+    architecture: amd64
+   -
+    package: libacl1
+    version: 2.2.53-4
+    architecture: amd64
+   -
+    package: gcc-8-base
+    version: 8.3.0-6
+    architecture: amd64
+   -
+    package: dpkg
+    version: 1.19.7
+    architecture: amd64
+    essential: true
+   -
+    package: debconf
+    version: 1.5.71
+    architecture: all
+   -
+    package: 2to3
+    version: 3.7.3-1
+    architecture: all
+ 
+background-packages: 6391
+foreground-packages: 1
+total-packages: 6392
+broken-packages: 0

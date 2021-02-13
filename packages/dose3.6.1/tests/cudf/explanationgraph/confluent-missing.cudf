@@ -1,0 +1,31 @@
+package: confluent-missing 
+version: 1
+depends: p = 1 | q = 1
+
+package: p
+version: 1
+depends: p = 2
+
+package: q
+version: 1
+depends: q = 2
+
+package: p
+version: 2
+depends: p = 3
+
+package: q
+version: 2
+depends: q = 3
+
+package: p
+version: 3
+depends: c
+
+package: q
+version: 3
+depends: c
+
+package: c
+version: 1
+depends: d

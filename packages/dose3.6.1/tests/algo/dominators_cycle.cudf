@@ -1,0 +1,27 @@
+package: a3
+version: 1
+depends: a4 = 1
+
+package: a2
+version: 1
+depends: a7 = 1
+
+package: a1
+version: 1
+depends: a3 = 1 , a2 = 1
+
+package: a7
+version: 1
+
+package: a6
+version: 1
+depends: a4 = 1
+
+package: a5
+version: 1
+depends: a7 = 1
+
+package: a4
+version: 1
+depends: a6 = 1 , a5 = 1
+

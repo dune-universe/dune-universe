@@ -1,0 +1,10 @@
+Package: main
+Version: 1
+Architecture: toaster
+Depends: v (=1)
+
+Package: b
+Version: 2
+Architecture: toaster
+Provides: v
+

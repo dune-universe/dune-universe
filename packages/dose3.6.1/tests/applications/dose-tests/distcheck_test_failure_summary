@@ -1,0 +1,13 @@
+output-version: 1.2
+total-packages: 6392
+broken-packages: 2
+missing-packages: 2
+conflict-packages: 0
+unique-missing-packages: 0
+unique-conflict-packages: 0
+unique-self-conflicting-packages: 0
+conflict-missing-ratio:
+ 0-1: 2
+summary:
+ 
+

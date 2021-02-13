@@ -1,0 +1,520 @@
+Package: libudev1
+Version: 241-7~deb10u5
+Architecture: amd64
+Multi-Arch: same
+Source: systemd
+Depends: libc6 (>= 2.28)
+
+Package: fdisk
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: foreign
+Source: util-linux
+Depends: libc6 (>= 2.14), libfdisk1 (>= 2.33), libmount1 (>= 2.24.2), libncursesw6 (>= 6), libsmartcols1 (>= 2.28~rc1), libtinfo6 (>= 6)
+Breaks: util-linux (<< 2.29.2-3~)
+Replaces: util-linux (<< 2.29.2-3~)
+
+Package: libmount1
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: same
+Source: util-linux
+Depends: libblkid1 (>= 2.17.2), libc6 (>= 2.25), libselinux1 (>= 2.6-3~)
+
+Package: ncurses-bin
+Version: 6.1+20181013-2+deb10u2
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Source: ncurses
+Pre-Depends: libc6 (>= 2.14), libtinfo6 (>= 6.1)
+
+Package: liblz4-1
+Version: 1.8.3-1
+Architecture: amd64
+Multi-Arch: same
+Source: lz4
+Depends: libc6 (>= 2.14)
+Breaks: liblz4-1a
+Replaces: liblz4-1a
+
+Package: base-files
+Version: 10.3+deb10u7
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Provides: base
+Pre-Depends: awk
+Breaks: debian-security-support (<< 2019.04.25), initscripts (<< 2.88dsf-13.3), sendfile (<< 2.1b.20080616-5.2~)
+Replaces: base, dpkg (<= 1.15.0), miscutils
+
+Package: libgcrypt20
+Version: 1.8.4-5
+Architecture: amd64
+Multi-Arch: same
+Depends: libc6 (>= 2.15), libgpg-error0 (>= 1.25)
+
+Package: libpam-runtime
+Version: 1.3.1-5
+Architecture: all
+Multi-Arch: foreign
+Source: pam
+Depends: debconf (>= 0.5) | debconf-2.0, debconf (>= 1.5.19) | cdebconf, libpam-modules (>= 1.0.1-6)
+Conflicts: libpam0g-util
+Replaces: libpam0g-dev, libpam0g-util
+
+Package: ncurses-base
+Version: 6.1+20181013-2+deb10u2
+Architecture: all
+Multi-Arch: foreign
+Essential: yes
+Source: ncurses
+Provides: ncurses-runtime
+Breaks: bash-static (<< 4.4.18-1.1), libmono-corlib4.5-cil (<< 4.6.2.7+dfsg-2), libslang2 (<< 2.3.1a-3), libtinfo5 (<< 6.1), libunibilium0 (<< 2), libunibilium4 (<< 2.0.0-3), zsh-static (<< 5.4.2-4)
+
+Package: libaudit-common
+Version: 1:2.8.4-3
+Architecture: all
+Multi-Arch: foreign
+Source: audit
+Breaks: libaudit0, libaudit1 (<< 1:2.2.1-2)
+Replaces: libaudit0, libaudit1 (<< 1:2.2.1-2)
+
+Package: util-linux
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Depends: fdisk, login (>= 1:4.5-1.1~)
+Pre-Depends: libaudit1 (>= 1:2.2.1), libblkid1 (>= 2.31.1), libc6 (>= 2.25), libcap-ng0 (>= 0.7.9), libmount1 (>= 2.25), libpam0g (>= 0.99.7.1), libselinux1 (>= 2.6-3~), libsmartcols1 (>= 2.33), libsystemd0, libtinfo6 (>= 6), libudev1 (>= 183), libuuid1 (>= 2.16), zlib1g (>= 1:1.1.4)
+Breaks: bash-completion (<< 1:2.8), grml-debootstrap (<< 0.68), mount (<< 2.29.2-3~), s390-tools (<< 2.2.0-1~), setpriv (<< 2.32.1-0.2~), sysvinit-utils (<< 2.88dsf-59.4~)
+Replaces: bash-completion (<< 1:2.8), initscripts (<< 2.88dsf-59.2~), login (<< 1:4.5-1.1~), mount (<< 2.29.2-3~), s390-tools (<< 2.2.0-1~), setpriv (<< 2.32.1-0.2~), sysvinit-utils (<< 2.88dsf-59.1~)
+
+Package: libsigsegv2
+Version: 2.12-2
+Architecture: amd64
+Multi-Arch: same
+Source: libsigsegv
+Depends: libc6 (>= 2.4)
+
+Package: libcap-ng0
+Version: 0.7.9-2
+Architecture: amd64
+Multi-Arch: same
+Source: libcap-ng
+Depends: libc6 (>= 2.8)
+
+Package: sed
+Version: 4.7-1
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends: libacl1 (>= 2.2.51-8), libc6 (>= 2.14), libselinux1 (>= 1.32)
+
+Package: libdb5.3
+Version: 5.3.28+dfsg1-0.5
+Architecture: amd64
+Multi-Arch: same
+Source: db5.3
+Depends: libc6 (>= 2.17)
+
+Package: libtinfo6
+Version: 6.1+20181013-2+deb10u2
+Architecture: amd64
+Multi-Arch: same
+Source: ncurses
+Depends: libc6 (>= 2.16)
+
+Package: libncursesw6
+Version: 6.1+20181013-2+deb10u2
+Architecture: amd64
+Multi-Arch: same
+Source: ncurses
+Depends: libtinfo6 (= 6.1+20181013-2+deb10u2), libc6 (>= 2.14)
+
+Package: libdebconfclient0
+Version: 0.249
+Architecture: amd64
+Multi-Arch: same
+Source: cdebconf
+Depends: libc6 (>= 2.4)
+
+Package: libsmartcols1
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: same
+Source: util-linux
+Depends: libc6 (>= 2.25)
+
+Package: debianutils
+Version: 4.8.6.1
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends: libc6 (>= 2.15)
+
+Package: libc6-dev
+Version: 2.17-97
+Architecture: amd64
+Multi-Arch: no
+Breaks: binutils-gold (<< 2.20.1-11)
+
+Package: libbz2-1.0
+Version: 1.0.6-9.2~deb10u1
+Architecture: amd64
+Multi-Arch: same
+Source: bzip2
+Depends: libc6 (>= 2.4)
+
+Package: libblkid1
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: same
+Source: util-linux
+Depends: libc6 (>= 2.25), libuuid1 (>= 2.16)
+
+Package: bsdutils
+Version: 1:2.33.1-0.1
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Source: util-linux (2.33.1-0.1)
+Pre-Depends: libc6 (>= 2.14), libsystemd0
+Breaks: bash-completion (<< 1:2.1-4.1~)
+Replaces: bash-completion (<< 1:2.1-4.1~)
+
+Package: base-passwd
+Version: 3.5.46
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Depends: libc6 (>= 2.8), libdebconfclient0 (>= 0.145)
+Replaces: base
+
+Package: liblzma5
+Version: 5.2.4-1
+Architecture: amd64
+Multi-Arch: same
+Source: xz-utils
+Depends: libc6 (>= 2.17)
+Breaks: liblzma2 (<< 5.1.1alpha+20110809-3~)
+
+Package: libsystemd0
+Version: 241-7~deb10u5
+Architecture: amd64
+Multi-Arch: same
+Source: systemd
+Pre-Depends: libc6 (>= 2.28), libgcrypt20 (>= 1.8.0), liblz4-1 (>= 0.0~r122), liblzma5 (>= 5.1.1alpha+20120614)
+
+Package: libpam-modules
+Version: 1.3.1-5
+Architecture: amd64
+Multi-Arch: same
+Source: pam
+Provides: libpam-mkhomedir, libpam-motd, libpam-umask
+Pre-Depends: libaudit1 (>= 1:2.2.1), libc6 (>= 2.27), libdb5.3, libpam0g (>= 1.3.1), libselinux1 (>= 2.1.9), debconf (>= 0.5) | debconf-2.0, libpam-modules-bin (= 1.3.1-5)
+Conflicts: libpam-mkhomedir, libpam-motd, libpam-umask
+Replaces: libpam-umask, libpam0g-util
+
+Package: libacl1
+Version: 2.2.53-4
+Architecture: amd64
+Multi-Arch: same
+Source: acl
+Depends: libattr1 (>= 1:2.4.46-8), libc6 (>= 2.14)
+
+Package: readline-common
+Version: 7.0-5
+Architecture: all
+Multi-Arch: foreign
+Source: readline
+Depends: dpkg (>= 1.15.4) | install-info
+Conflicts: libreadline-common, libreadline5 (<< 5.0-11)
+Replaces: libreadline-common, libreadline4 (<< 4.3-16), libreadline5 (<< 5.0-11)
+
+Package: gcc-8-base
+Version: 8.3.0-6
+Architecture: amd64
+Multi-Arch: same
+Source: gcc-8
+Breaks: gnat (<< 7), gnat-6 (<< 6.4)
+
+Package: hostname
+Version: 3.21
+Architecture: amd64
+Multi-Arch: no
+Essential: yes
+Pre-Depends: libc6 (>= 2.4)
+Breaks: nis (<< 3.17-30)
+Replaces: nis (<< 3.17-30)
+
+Package: bash
+Version: 5.0-4
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Depends: base-files (>= 2.1.12), debianutils (>= 2.15)
+Pre-Depends: libc6 (>= 2.15), libtinfo6 (>= 6)
+Conflicts: bash-completion (<< 20060301-0)
+Replaces: bash-completion (<< 20060301-0), bash-doc (<= 2.05-1)
+
+Package: libgmp10
+Version: 2:6.1.2+dfsg-4
+Architecture: amd64
+Multi-Arch: same
+Source: gmp
+Depends: libc6 (>= 2.14)
+
+Package: sysvinit-utils
+Version: 2.93-8
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Source: sysvinit
+Depends: init-system-helpers (>= 1.25~), util-linux (>> 2.28-2~), libc6 (>= 2.14)
+Breaks: systemd (<< 215)
+Replaces: initscripts (<< 2.88dsf-59.5)
+
+Package: libselinux1
+Version: 2.8-1+b1
+Architecture: amd64
+Multi-Arch: same
+Source: libselinux (2.8-1)
+Depends: libc6 (>= 2.14), libpcre3
+
+Package: grep
+Version: 3.3-1
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Provides: rgrep
+Depends: dpkg (>= 1.15.4) | install-info
+Pre-Depends: libc6 (>= 2.14), libpcre3
+Conflicts: rgrep
+
+Package: libaudit1
+Version: 1:2.8.4-3
+Architecture: amd64
+Multi-Arch: same
+Source: audit
+Depends: libaudit-common (>= 1:2.8.4-3), libc6 (>= 2.14), libcap-ng0 (>= 0.7.9)
+
+Package: libreadline7
+Version: 7.0-5
+Architecture: amd64
+Multi-Arch: same
+Source: readline
+Depends: readline-common, libc6 (>= 2.15), libtinfo6 (>= 6)
+
+Package: tar
+Version: 1.30+dfsg-6
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends: libacl1 (>= 2.2.23), libc6 (>= 2.17), libselinux1 (>= 1.32)
+Conflicts: cpio (<= 2.4.2-38)
+Breaks: dpkg-dev (<< 1.14.26)
+Replaces: cpio (<< 2.4.2-39)
+
+Package: gawk
+Version: 1:4.2.1+dfsg-1
+Architecture: amd64
+Multi-Arch: foreign
+Provides: awk
+Pre-Depends: libc6 (>= 2.15), libgmp10, libmpfr6 (>= 3.1.3), libreadline7 (>= 6.0), libsigsegv2 (>= 2.9)
+
+Package: debconf
+Version: 1.5.71
+Architecture: all
+Multi-Arch: foreign
+Provides: debconf-2.0
+Pre-Depends: perl-base (>= 5.20.1-3~)
+Conflicts: apt (<< 0.3.12.1), cdebconf (<< 0.96), debconf-tiny, debconf-utils (<< 1.3.22), dialog (<< 0.9b-20020814-1), menu (<= 2.1.3-1), whiptail (<< 0.51.4-11), whiptail-utf8 (<= 0.50.17-13)
+Breaks: apt-listchanges (<< 3.14), ubiquity (<< 17.10.2), update-notifier-common (<< 3.187~)
+Replaces: debconf-tiny
+
+Package: zlib1g
+Version: 1:1.2.11.dfsg-1
+Architecture: amd64
+Multi-Arch: same
+Source: zlib
+Provides: libz1
+Depends: libc6 (>= 2.14)
+Conflicts: zlib1 (<= 1:1.0.4-7)
+Breaks: libxml2 (<< 2.7.6.dfsg-2), texlive-binaries (<< 2009-12)
+
+Package: findutils
+Version: 4.6.0+git+20190209-2
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends: libc6 (>= 2.17), libselinux1 (>= 1.32)
+Breaks: binstats (<< 1.08-8.1), guilt (<< 0.36-0.2), libpython3.4-minimal (<< 3.4.4-2), libpython3.5-minimal (<< 3.5.1-3), lsat (<< 0.9.7.1-2.1), mc (<< 3:4.8.11-1), switchconf (<< 0.0.9-2.1)
+
+Package: libpam0g
+Version: 1.3.1-5
+Architecture: amd64
+Multi-Arch: same
+Source: pam
+Depends: libaudit1 (>= 1:2.2.1), libc6 (>= 2.14), debconf (>= 0.5) | debconf-2.0
+Replaces: libpam0g-util
+
+Package: libfdisk1
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: same
+Source: util-linux
+Depends: libblkid1 (>= 2.24.2), libc6 (>= 2.25), libuuid1 (>= 2.16)
+
+Package: login
+Version: 1:4.5-1.1
+Architecture: amd64
+Multi-Arch: no
+Essential: yes
+Source: shadow
+Pre-Depends: libaudit1 (>= 1:2.2.1), libc6 (>= 2.14), libpam0g (>= 0.99.7.1), libpam-runtime, libpam-modules (>= 1.1.8-1)
+Conflicts: amavisd-new (<< 2.3.3-8), backupninja (<< 0.9.3-5), echolot (<< 2.1.8-4), gnunet (<< 0.7.0c-2), python-4suite (<< 0.99cvs20060405-1)
+Breaks: util-linux (<< 2.32-0.2~)
+Replaces: manpages-de (<< 0.5-3), manpages-tr (<< 1.0.5), manpages-zh (<< 1.5.1-1)
+
+Package: libpcre3
+Version: 2:8.39-12
+Architecture: amd64
+Multi-Arch: same
+Source: pcre3
+Depends: libc6 (>= 2.14)
+Conflicts: libpcre3-dev (<= 4.3-3)
+Breaks: approx (<< 4.4-1~), cduce (<< 0.5.3-2~), cmigrep (<< 1.5-7~), galax (<< 1.1-7~), libpcre-ocaml (<< 6.0.1~), liquidsoap (<< 0.9.2-3~), ocsigen (<< 1.3.3-1~)
+
+Package: libattr1
+Version: 1:2.4.48-4
+Architecture: amd64
+Multi-Arch: same
+Source: attr
+Depends: libc6 (>= 2.4)
+
+Package: dash
+Version: 0.5.10.2-5
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Depends: debianutils (>= 2.15), dpkg (>= 1.19.1), debconf (>= 0.5) | debconf-2.0
+Pre-Depends: libc6 (>= 2.14)
+
+Package: gzip
+Version: 1.9-3
+Architecture: amd64
+Multi-Arch: no
+Essential: yes
+Depends: dpkg (>= 1.15.4) | install-info
+Pre-Depends: libc6 (>= 2.17)
+
+Package: libmpfr6
+Version: 4.0.2-1
+Architecture: amd64
+Multi-Arch: same
+Source: mpfr4
+Depends: libc6 (>= 2.14), libgmp10
+Breaks: libcgal13 (<< 4.11-2+b1), libflint-2.5.2 (<< 2.5.2-17+b2), libgiac0 (<< 1.2.3.57+dfsg1-2+b4), libgmp3 (<< 4.1.4-3), libmpc3 (<< 1.1.0-1~), libnormaliz3 (<< 3.5.1+ds-4), sagemath (<< 8.1-2+b2)
+
+Package: coreutils
+Version: 8.30-3
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Pre-Depends: libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.44), libc6 (>= 2.28), libselinux1 (>= 2.1.13)
+
+Package: binutils
+Version: 2.24-3
+Architecture: amd64
+Multi-Arch: no
+Provides: binutils-gold
+
+Package: libuuid1
+Version: 2.33.1-0.1
+Architecture: amd64
+Multi-Arch: same
+Source: util-linux
+Depends: libc6 (>= 2.25)
+Replaces: e2fsprogs (<< 1.34-1)
+
+Package: libc-bin
+Version: 2.28-10
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Source: glibc
+Depends: libc6 (>> 2.28), libc6 (<< 2.29)
+
+Package: libgcc1
+Version: 1:8.3.0-6
+Architecture: amd64
+Multi-Arch: same
+Source: gcc-8 (8.3.0-6)
+Depends: gcc-8-base (= 8.3.0-6), libc6 (>= 2.14)
+Breaks: gcc-4.3 (<< 4.3.6-1), gcc-4.4 (<< 4.4.6-4), gcc-4.5 (<< 4.5.3-2)
+
+Package: perl-base
+Version: 5.28.1-6+deb10u1
+Architecture: amd64
+Multi-Arch: no
+Essential: yes
+Source: perl
+Provides: libfile-path-perl (= 2.15), libfile-temp-perl (= 0.2304), libio-socket-ip-perl (= 0.39), libscalar-list-utils-perl (= 1:1.50), libsocket-perl (= 2.027), libxsloader-perl (= 0.30), perlapi-5.28.0, perlapi-5.28.1
+Pre-Depends: libc6 (>= 2.28), dpkg (>= 1.17.17)
+Conflicts: defoma (<< 0.11.12), doc-base (<< 0.10.3), mono-gac (<< 2.10.8.1-3), safe-rm (<< 0.8), update-inetd (<< 4.41)
+Breaks: amanda-common (<< 1:3.3.9-2), backuppc (<< 3.3.1-2), debconf (<< 1.5.61), dh-haskell (<< 0.3), intltool (<< 0.51.0-4), libexception-class-perl (<< 1.42), libfile-path-perl (<< 2.15), libfile-spec-perl (<< 3.7400), libfile-temp-perl (<< 0.2304), libio-socket-ip-perl (<< 0.39), libsbuild-perl (<< 0.67.0-1), libscalar-list-utils-perl (<< 1:1.50), libsocket-perl (<< 2.027), libxsloader-perl (<< 0.30), mailagent (<< 1:3.1-81-2), perl (<< 5.28.1~), perl-modules (<< 5.28.1~), slic3r (<< 1.2.9+dfsg-6.1), slic3r-prusa (<< 1.37.0+dfsg-1.1), texinfo (<< 6.1.0.dfsg.1-8)
+Replaces: libfile-path-perl (<< 2.15), libfile-temp-perl (<< 0.2304), libio-socket-ip-perl (<< 0.39), libscalar-list-utils-perl (<< 1:1.50), libsocket-perl (<< 2.027), libxsloader-perl (<< 0.30), perl (<< 5.10.1-12), perl-modules (<< 5.20.1-3)
+
+Package: libpam-modules-bin
+Version: 1.3.1-5
+Architecture: amd64
+Multi-Arch: foreign
+Source: pam
+Depends: libaudit1 (>= 1:2.2.1), libc6 (>= 2.14), libpam0g (>= 0.99.7.1), libselinux1 (>= 1.32)
+Replaces: libpam-modules (<< 1.1.3-8)
+
+Package: libc6
+Version: 2.28-10
+Architecture: amd64
+Multi-Arch: same
+Source: glibc
+Depends: libgcc1
+Conflicts: openrc (<< 0.27-2~)
+Breaks: hurd (<< 1:0.5.git20140203-1), libtirpc1 (<< 0.2.3), locales (<< 2.28), locales-all (<< 2.28), nocache (<< 1.1-1~), nscd (<< 2.28), r-cran-later (<< 0.7.5+dfsg-2)
+Replaces: libc6-amd64
+
+Package: libgpg-error0
+Version: 1.35-1
+Architecture: amd64
+Multi-Arch: same
+Source: libgpg-error
+Depends: libc6 (>= 2.15)
+
+Package: diffutils
+Version: 1:3.7-3
+Architecture: amd64
+Multi-Arch: no
+Essential: yes
+Pre-Depends: libc6 (>= 2.17)
+Replaces: diff
+
+Package: init-system-helpers
+Version: 1.56+nmu1
+Architecture: all
+Multi-Arch: foreign
+Essential: yes
+Depends: perl-base (>= 5.20.1-3)
+Conflicts: file-rc (<< 0.8.17~), openrc (<= 0.18.3-1)
+Breaks: systemd (<< 228), sysvinit-utils (<< 2.88dsf-59.3~)
+Replaces: sysv-rc (<< 2.88dsf-59.3~), sysvinit-utils (<< 2.88dsf-59.3)
+
+Package: dpkg
+Version: 1.19.7
+Architecture: amd64
+Multi-Arch: foreign
+Essential: yes
+Depends: tar (>= 1.28-1)
+Pre-Depends: libbz2-1.0, libc6 (>= 2.15), liblzma5 (>= 5.2.2), libselinux1 (>= 2.3), zlib1g (>= 1:1.1.4)
+Breaks: acidbase (<= 1.4.5-4), amule (<< 2.3.1+git1a369e47-3), beep (<< 1.3-4), im (<< 1:151-4), libapt-pkg5.0 (<< 1.7~b), libdpkg-perl (<< 1.18.11), lsb-base (<< 10.2019031300), netselect (<< 0.3.ds1-27), pconsole (<< 1.0-12), phpgacl (<< 3.3.7-7.3), pure-ftpd (<< 1.0.43-1), systemtap (<< 2.8-1), terminatorx (<< 4.0.1-1), xvt (<= 2.1-20.1)
+

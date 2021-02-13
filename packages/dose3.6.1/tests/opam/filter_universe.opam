@@ -1,0 +1,32 @@
+switch: sw1
+switches: sw2
+
+package: a
+version: 1
+switches: sw1
+
+package: b
+version: 1
+switches: sw2
+installed: sw1
+pinned: sw1
+
+package: c
+version: 1
+switches: sw1,sw2
+installed: sw1,sw2
+
+package: d
+version: 1
+switches: all
+installed: sw1
+
+package: e
+version: 1
+switches:
+pinned: sw1
+base: sw2
+
+package: f
+version: 1
+pinned: sw2

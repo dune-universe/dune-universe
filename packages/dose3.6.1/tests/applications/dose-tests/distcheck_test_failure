@@ -1,0 +1,31 @@
+output-version: 1.2
+report:
+ -
+  package: aspell-en
+  version: 2018.04.16-0-1
+  architecture: all
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: aspell-en
+      version: 2018.04.16-0-1
+      architecture: all
+      unsat-dependency: aspell (>= 0.60.3-2)
+ -
+  package: aspell-he
+  version: 1.0-0-8
+  architecture: all
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: aspell-he
+      version: 1.0-0-8
+      architecture: all
+      unsat-dependency: aspell (>= 0.60.3-2)
+ 
+total-packages: 6392
+broken-packages: 2

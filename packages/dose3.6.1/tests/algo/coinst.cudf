@@ -1,0 +1,14 @@
+
+package: a
+version: 1
+
+package: a
+version: 2
+
+package: b
+version: 1
+conflicts: a = 1
+
+package: b
+version: 2
+conflicts: a = 2

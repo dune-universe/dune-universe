@@ -1,0 +1,45 @@
+output-version: 1.2
+report:
+ -
+  package: incomplete-disjunctive-missing-conflict
+  version: 1
+  status: broken
+  reasons:
+   -
+    conflict:
+     pkg1:
+      package: b
+      version: 1
+      unsat-conflict: incomplete-disjunctive-missing-conflict
+     pkg2:
+      package: incomplete-disjunctive-missing-conflict
+      version: 1
+     depchain1:
+      -
+       depchain:
+        -
+         package: incomplete-disjunctive-missing-conflict
+         version: 1
+         depends: c | a
+        -
+         package: a
+         version: 1
+         depends: b
+   -
+    missing:
+     pkg:
+      package: c
+      version: 1
+      unsat-dependency: m
+     depchains:
+      -
+       depchain:
+        -
+         package: incomplete-disjunctive-missing-conflict
+         version: 1
+         depends: c | a
+ 
+background-packages: 3
+foreground-packages: 1
+total-packages: 4
+broken-packages: 1

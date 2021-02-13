@@ -1,0 +1,950 @@
+Install: 55
+Package: binutils
+Version: 2.31.1-16
+Architecture: amd64
+
+Install: 60
+Package: binutils-common
+Version: 2.31.1-16
+Architecture: amd64
+
+Install: 81
+Package: binutils-x86-64-linux-gnu
+Version: 2.31.1-16
+Architecture: amd64
+
+Install: 110
+Package: cli-common
+Version: 0.10
+Architecture: all
+
+Install: 282
+Package: fontconfig-config
+Version: 2.13.1-2
+Architecture: all
+
+Install: 808
+Package: libbinutils
+Version: 2.31.1-16
+Architecture: amd64
+
+Install: 925
+Package: libbsd0
+Version: 0.9.1-2
+Architecture: amd64
+
+Install: 1026
+Package: libcairo2
+Version: 1.16.0-4
+Architecture: amd64
+
+Install: 1468
+Package: libexif12
+Version: 0.6.21-5.1+deb10u5
+Architecture: amd64
+
+Install: 1469
+Package: libexpat1
+Version: 2.2.6-2+deb10u1
+Architecture: amd64
+
+Install: 1558
+Package: libfontconfig1
+Version: 2.13.1-2
+Architecture: amd64
+
+Install: 1565
+Package: libfreetype6
+Version: 2.9.1-3+deb10u2
+Architecture: amd64
+
+Install: 1643
+Package: libgdbm-compat4
+Version: 1.18.1-4
+Architecture: amd64
+
+Install: 1645
+Package: libgdbm6
+Version: 1.18.1-4
+Architecture: amd64
+
+Install: 1648
+Package: libgdiplus
+Version: 4.2-2
+Architecture: amd64
+
+Install: 2001
+Package: libgif7
+Version: 5.1.4-3
+Architecture: amd64
+
+Install: 2026
+Package: libglib2.0-0
+Version: 2.58.3-2+deb10u2
+Architecture: amd64
+
+Install: 2328
+Package: libjbig0
+Version: 2.1-3.1+b2
+Architecture: amd64
+
+Install: 2372
+Package: libjpeg62-turbo
+Version: 1:1.5.2-2+deb10u1
+Architecture: amd64
+
+Install: 2728
+Package: libmono-accessibility4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2729
+Package: libmono-cairo4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2730
+Package: libmono-cecil-private-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2731
+Package: libmono-cil-dev
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2732
+Package: libmono-codecontracts4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2733
+Package: libmono-compilerservices-symbolwriter4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2734
+Package: libmono-corlib4.5-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2735
+Package: libmono-cscompmgd0.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2736
+Package: libmono-csharp4.0c-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2737
+Package: libmono-custommarshalers4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2738
+Package: libmono-data-tds4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2739
+Package: libmono-db2-1.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2740
+Package: libmono-debugger-soft4.0a-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2741
+Package: libmono-http4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2742
+Package: libmono-i18n-cjk4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2743
+Package: libmono-i18n-mideast4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2744
+Package: libmono-i18n-other4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2745
+Package: libmono-i18n-rare4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2746
+Package: libmono-i18n-west4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2747
+Package: libmono-i18n4.0-all
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2748
+Package: libmono-i18n4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2749
+Package: libmono-ldap4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2750
+Package: libmono-management4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2751
+Package: libmono-messaging-rabbitmq4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2752
+Package: libmono-messaging4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2753
+Package: libmono-microsoft-build-engine4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2754
+Package: libmono-microsoft-build-framework4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2755
+Package: libmono-microsoft-build-tasks-v4.0-4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2756
+Package: libmono-microsoft-build-utilities-v4.0-4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2757
+Package: libmono-microsoft-build4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2758
+Package: libmono-microsoft-csharp4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2759
+Package: libmono-microsoft-visualc10.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2760
+Package: libmono-microsoft-web-infrastructure1.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2761
+Package: libmono-oracle4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2762
+Package: libmono-parallel4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2763
+Package: libmono-peapi4.0a-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2764
+Package: libmono-posix4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2765
+Package: libmono-rabbitmq4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2766
+Package: libmono-relaxng4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2767
+Package: libmono-security4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2768
+Package: libmono-sharpzip4.84-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2769
+Package: libmono-simd4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2770
+Package: libmono-smdiagnostics0.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2771
+Package: libmono-sqlite4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2772
+Package: libmono-system-componentmodel-composition4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2773
+Package: libmono-system-componentmodel-dataannotations4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2774
+Package: libmono-system-configuration-install4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2775
+Package: libmono-system-configuration4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2776
+Package: libmono-system-core4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2777
+Package: libmono-system-data-datasetextensions4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2778
+Package: libmono-system-data-entity4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2779
+Package: libmono-system-data-linq4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2780
+Package: libmono-system-data-services-client4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2781
+Package: libmono-system-data-services4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2782
+Package: libmono-system-data4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2783
+Package: libmono-system-deployment4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2784
+Package: libmono-system-design4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2785
+Package: libmono-system-drawing-design4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2786
+Package: libmono-system-drawing4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2787
+Package: libmono-system-dynamic4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2788
+Package: libmono-system-enterpriseservices4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2789
+Package: libmono-system-identitymodel-selectors4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2790
+Package: libmono-system-identitymodel4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2791
+Package: libmono-system-io-compression-filesystem4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2792
+Package: libmono-system-io-compression4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2793
+Package: libmono-system-json-microsoft4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2794
+Package: libmono-system-json4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2795
+Package: libmono-system-ldap-protocols4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2796
+Package: libmono-system-ldap4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2797
+Package: libmono-system-management4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2798
+Package: libmono-system-messaging4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2799
+Package: libmono-system-net-http-formatting4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2800
+Package: libmono-system-net-http-webrequest4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2801
+Package: libmono-system-net-http4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2802
+Package: libmono-system-net4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2803
+Package: libmono-system-numerics-vectors4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2804
+Package: libmono-system-numerics4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2805
+Package: libmono-system-reactive-core2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2806
+Package: libmono-system-reactive-debugger2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2807
+Package: libmono-system-reactive-experimental2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2808
+Package: libmono-system-reactive-interfaces2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2809
+Package: libmono-system-reactive-linq2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2810
+Package: libmono-system-reactive-observable-aliases0.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2811
+Package: libmono-system-reactive-platformservices2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2812
+Package: libmono-system-reactive-providers2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2813
+Package: libmono-system-reactive-runtime-remoting2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2814
+Package: libmono-system-reactive-windows-forms2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2815
+Package: libmono-system-reactive-windows-threading2.2-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2816
+Package: libmono-system-reflection-context4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2817
+Package: libmono-system-runtime-caching4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2818
+Package: libmono-system-runtime-durableinstancing4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2819
+Package: libmono-system-runtime-serialization-formatters-soap4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2820
+Package: libmono-system-runtime-serialization4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2821
+Package: libmono-system-runtime4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2822
+Package: libmono-system-security4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2823
+Package: libmono-system-servicemodel-activation4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2824
+Package: libmono-system-servicemodel-discovery4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2825
+Package: libmono-system-servicemodel-internals0.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2826
+Package: libmono-system-servicemodel-routing4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2827
+Package: libmono-system-servicemodel-web4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2828
+Package: libmono-system-servicemodel4.0a-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2829
+Package: libmono-system-serviceprocess4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2830
+Package: libmono-system-threading-tasks-dataflow4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2831
+Package: libmono-system-transactions4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2832
+Package: libmono-system-web-abstractions4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2833
+Package: libmono-system-web-applicationservices4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2834
+Package: libmono-system-web-dynamicdata4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2835
+Package: libmono-system-web-extensions-design4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2836
+Package: libmono-system-web-extensions4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2837
+Package: libmono-system-web-http-selfhost4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2838
+Package: libmono-system-web-http-webhost4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2839
+Package: libmono-system-web-http4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2840
+Package: libmono-system-web-mobile4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2841
+Package: libmono-system-web-mvc3.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2842
+Package: libmono-system-web-razor2.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2843
+Package: libmono-system-web-regularexpressions4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2844
+Package: libmono-system-web-routing4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2845
+Package: libmono-system-web-services4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2846
+Package: libmono-system-web-webpages-deployment2.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2847
+Package: libmono-system-web-webpages-razor2.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2848
+Package: libmono-system-web-webpages2.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2849
+Package: libmono-system-web4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2850
+Package: libmono-system-windows-forms-datavisualization4.0a-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2851
+Package: libmono-system-windows-forms4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2852
+Package: libmono-system-windows4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2853
+Package: libmono-system-workflow-activities4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2854
+Package: libmono-system-workflow-componentmodel4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2855
+Package: libmono-system-workflow-runtime4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2856
+Package: libmono-system-xaml4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2857
+Package: libmono-system-xml-linq4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2858
+Package: libmono-system-xml-serialization4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2859
+Package: libmono-system-xml4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2860
+Package: libmono-system4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2861
+Package: libmono-tasklets4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2862
+Package: libmono-webbrowser4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2863
+Package: libmono-webmatrix-data4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2864
+Package: libmono-windowsbase4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2865
+Package: libmono-xbuild-tasks4.0-cil
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 2987
+Package: libnunit-cil-dev
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2988
+Package: libnunit-console-runner2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2989
+Package: libnunit-core-interfaces2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2990
+Package: libnunit-core2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2991
+Package: libnunit-framework2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2992
+Package: libnunit-mocks2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 2993
+Package: libnunit-util2.6.3-cil
+Version: 2.6.4+dfsg-1
+Architecture: all
+
+Install: 3168
+Package: libperl5.28
+Version: 5.28.1-6+deb10u1
+Architecture: amd64
+
+Install: 3184
+Package: libpixman-1-0
+Version: 0.36.0-1
+Architecture: amd64
+
+Install: 3220
+Package: libpng16-16
+Version: 1.6.36-6
+Architecture: amd64
+
+Install: 3612
+Package: libsqlite3-0
+Version: 3.27.2-3+deb10u1
+Architecture: amd64
+
+Install: 3795
+Package: libtiff5
+Version: 4.1.0+git191117-2~deb10u1
+Architecture: amd64
+
+Install: 3955
+Package: libwebp6
+Version: 0.6.1-2
+Architecture: amd64
+
+Install: 3991
+Package: libx11-6
+Version: 2:1.6.7-1+deb10u1
+Architecture: amd64
+
+Install: 3992
+Package: libx11-data
+Version: 2:1.6.7-1+deb10u1
+Architecture: all
+
+Install: 4014
+Package: libxau6
+Version: 1:1.0.8-1+b2
+Architecture: amd64
+
+Install: 4039
+Package: libxcb-render0
+Version: 1.13.1-2
+Architecture: amd64
+
+Install: 4043
+Package: libxcb-shm0
+Version: 1.13.1-2
+Architecture: amd64
+
+Install: 4059
+Package: libxcb1
+Version: 1.13.1-2
+Architecture: amd64
+
+Install: 4068
+Package: libxdmcp6
+Version: 1:1.1.2-3
+Architecture: amd64
+
+Install: 4074
+Package: libxext6
+Version: 2:1.3.3-1+b2
+Architecture: amd64
+
+Install: 4137
+Package: libxrender1
+Version: 1:0.9.10-1
+Architecture: amd64
+
+Install: 4293
+Package: mono-4.0-gac
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 4296
+Package: mono-gac
+Version: 5.18.0.240+dfsg-3
+Architecture: all
+
+Install: 4298
+Package: mono-runtime
+Version: 5.18.0.240+dfsg-3
+Architecture: amd64
+
+Install: 4299
+Package: mono-runtime-common
+Version: 5.18.0.240+dfsg-3
+Architecture: amd64
+
+Install: 4300
+Package: mono-runtime-sgen
+Version: 5.18.0.240+dfsg-3
+Architecture: amd64
+
+Install: 5191
+Package: perl
+Version: 5.28.1-6+deb10u1
+Architecture: amd64
+
+Install: 5194
+Package: perl-modules-5.28
+Version: 5.28.1-6+deb10u1
+Architecture: all
+
+Install: 6214
+Package: sensible-utils
+Version: 0.0.12
+Architecture: all
+
+Install: 6289
+Package: ttf-bitstream-vera
+Version: 1.10-8
+Architecture: all
+
+Install: 6291
+Package: tzdata
+Version: 2020d-0+deb10u1
+Architecture: all
+
+Install: 6292
+Package: ucf
+Version: 3.0038+nmu1
+Architecture: all
+

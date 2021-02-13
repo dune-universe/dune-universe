@@ -1,0 +1,16 @@
+Package: a
+Version: 1
+Depends: b:sw1 | c:any | d:sw1
+
+Package: b
+Version: 1
+Installed: sw1
+BuildDepends: b [sw1] <linux> , b1 <windows>
+
+Package: c
+Version: 1
+Conflicts: d:sw2, c
+
+Package: d
+Version: 1
+Conflicts: d:any

@@ -1,0 +1,43 @@
+output-version: 1.2
+report:
+ -
+  package: chain-back-cross-conflict
+  version: 1
+  status: broken
+  reasons:
+   -
+    conflict:
+     pkg1:
+      package: p
+      version: 3
+      unsat-conflict: q (= 1)
+     pkg2:
+      package: q
+      version: 1
+     depchain1:
+      -
+       depchain:
+        -
+         package: chain-back-cross-conflict
+         version: 1
+         depends: p (= 1)
+        -
+         package: p
+         version: 1
+         depends: p (= 2)
+        -
+         package: p
+         version: 2
+         depends: p (= 3)
+     depchain2:
+      -
+       depchain:
+        -
+         package: chain-back-cross-conflict
+         version: 1
+         depends: q (= 1)
+ 
+background-packages: 6
+foreground-packages: 1
+total-packages: 7
+broken-packages: 1

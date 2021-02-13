@@ -1,0 +1,16 @@
+package: f
+version: 1
+depends: b
+
+package: b
+version: 1
+depends: a | e
+
+package: c
+version: 1
+provides: e
+
+package: a
+version: 1
+depends: c
+

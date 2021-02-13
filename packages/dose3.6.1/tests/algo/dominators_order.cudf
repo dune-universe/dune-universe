@@ -1,0 +1,19 @@
+package: c
+version: 1
+depends: quebec = 1
+
+package: b
+version: 1
+depends: quebec = 1
+
+package: romeo
+version: 1
+
+package: a
+version: 1
+depends: quebec = 1
+
+package: quebec
+version: 1
+depends: romeo = 1
+

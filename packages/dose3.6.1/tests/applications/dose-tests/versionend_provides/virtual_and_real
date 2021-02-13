@@ -1,0 +1,14 @@
+Package: main
+Version: 1
+Architecture: amd64
+Depends: perl-base, libscalar-list-utils-perl (= 1:1.48-1)
+
+Package: perl-base
+Version: 5.24.1-5
+Architecture: amd64
+Provides: libscalar-list-utils-perl (= 1:1.42.02)
+
+Package: libscalar-list-utils-perl
+Version: 1:1.48-1
+Architecture: amd64
+

@@ -1,0 +1,11 @@
+package: incomplete-conjunctive-conflicts
+version: 1
+depends: b, c, d
+
+package: b
+version: 1
+conflicts: c
+
+package: c
+version: 1
+conflicts: b

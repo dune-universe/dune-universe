@@ -1,0 +1,104 @@
+{2:top Travesty}
+
+{i Travesty} is a library for defining containers with monadic and otherwise
+'exotic' traversals, inspired by Haskell's
+{i Traversable} and related typeclasses.  It sits on
+top of Jane Street's Core library ecosystem.
+
+As well as monadic traversals, Travesty includes various other
+extensions on top of Core.  These focus on making a more 'purely
+functional', Haskell-esque style of programming easier, though with
+a focus on pragmatism over mathematical purity.
+
+{3 Traversal interfaces}
+
+Travesty contains module signatures, functors,
+and extensions for dealing with various kinds of traversability:
+
+- {!Travesty.Mappable}: mapping (in Haskell,
+    {{:http://hackage.haskell.org/package/base/docs/Data-Functor.html}functors});
+- {!Travesty.Traversable}: monadic traversal (in Haskell,
+    {{:http://hackage.haskell.org/package/base/docs/Data-Traversable.html}traversable functors});
+- {!Travesty.Bi_mappable}: mapping on two types over the same
+  container (in Haskell,
+    {{:http://hackage.haskell.org/package/base/docs/Data-Bifunctor.html}bifunctors});
+- {!Travesty.Filter_mappable}: mapping that can discard
+  elements (similar to the
+    {{:https://hackage.haskell.org/package/filtrable-0.1.1.0}filtrable}
+    Haskell library).
+
+Haskell's {{:http://hackage.haskell.org/package/base/docs/Data-Foldable.html}foldable functors}
+already exist in Base as {{:https://ocaml.janestreet.com/ocaml-core/latest/doc/base/Base/Container/index.html}Container}.
+
+{3 State monads}
+
+[Travesty] also contains implementations of state monads
+({!Travesty.State}) and transformers
+({!Travesty.State_transform}).  We use these
+to implement fold-mapping and folding on top of
+{!Travesty.Traversable}, but expose them for general
+consumption.
+
+{3 Extensions}
+
+Travesty also contains extensions to various module signatures, as well as
+to Base container and monad modules.  We keep the latter in sub-libraries of
+[Travesty].
+
+{4 Signature expansions}
+
+These are in the [Travesty] library, and always have the suffix [exts].
+Some Travesty signatures pull them in automatically.
+
+- Containers ({!Travesty.Container_exts})
+- Monads ({!Travesty.Monad_exts})
+
+{4 Implementation expansions}
+
+These are in the {!Travesty_base_exts} library.
+Each usually has the same name as the
+module it extends (except `Alist`), but {i doesn't} re-export that module.
+The intended mode of use is:
+
+{[
+  open Base
+  module Tx = Travesty_base_exts
+
+  let example (foo : ('k, 'v) List.Assoc.t) =
+    Tx.Alist.bi_map ~left:foo ~right:bar foo
+]}
+
+- {!Travesty_base_exts.Tuple2}: pairs/2-tuples
+- {!Travesty_base_exts.Alist}: associative lists
+- {!Travesty_base_exts.Or_error}: error monad
+- {!Travesty_base_exts.Fn}: function combinators
+- {!Travesty_base_exts.List}: lists
+- {!Travesty_base_exts.Option}: options
+
+{3 Custom containers}
+
+As well as expanding various [Base] containers, [Travesty]
+features some of its own.  These have various traversal and mapping features
+built in, but aren't necessarily optimised for heavy-duty use.
+
+Each is in the {!Travesty_containers} subpackage
+(in Dune, use [travesty.containers].)
+
+- {!Travesty_containers.Singleton}: treating a single data item
+  like a mappable, traversable container
+- {!Travesty_containers.Zipper}: list zippers
+
+{3 Related projects}
+
+{4 Other similar libraries}
+
+- The {{: http://binaryanalysisplatform.github.io/bap/api/odoc/monads/Monads/Std/index.html} BAP monads library}
+  also contains implementations of monadic traversals, as well as several
+  of [Travesty]'s other extensions.
+- The {{: https://github.com/janestreet/accessor}accessor library} is an
+  implementation of the related Haskell notion of 'lenses', composable
+  accessors for nested functional data structures.
+
+{4 Projects depending on Travesty}
+
+- {{: https://github.com/MattWindsor91/act}act}, a toolbox for automatic compiler testing.

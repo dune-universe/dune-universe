@@ -1,0 +1,35 @@
+Package: aa
+Version: 1
+Depends: bb (= 1), dd (> 3)
+Architecture: all
+
+Package: bb
+Version: 1
+Depends: cc (< 3) | cc (= 4)
+Architecture: all
+
+Package: cc
+Version: 2
+Depends: hh
+Architecture: all
+Source: cc_source (1)
+
+Package: dd
+Version: 1
+Architecture: all
+Source: cc_source (1)
+
+Package: ee
+Version: 1
+Architecture: all
+Source: ee_source
+
+Package: ff
+Version: 2
+Architecture: all
+Source: ee_source
+
+Package: gg
+Version: 1
+Architecture: all
+Source: ee_source

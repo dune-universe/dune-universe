@@ -1,0 +1,4 @@
+package: foo
+version: 1
+depends: bar
+provides: bar

@@ -1,0 +1,75 @@
+output-version: 1.2
+report:
+ -
+  package: multi-version-confluent-disjunctive
+  version: 1
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: t
+      version: 2
+      unsat-dependency: z
+     depchains:
+      -
+       depchain:
+        -
+         package: multi-version-confluent-disjunctive
+         version: 1
+         depends: p
+        -
+         package: p
+         version: 3
+         depends: q
+        -
+         package: q
+         version: 3
+         depends: t
+   -
+    missing:
+     pkg:
+      package: t
+      version: 1
+      unsat-dependency: z
+     depchains:
+      -
+       depchain:
+        -
+         package: multi-version-confluent-disjunctive
+         version: 1
+         depends: p
+        -
+         package: p
+         version: 3
+         depends: q
+        -
+         package: q
+         version: 3
+         depends: t
+   -
+    missing:
+     pkg:
+      package: t
+      version: 3
+      unsat-dependency: z
+     depchains:
+      -
+       depchain:
+        -
+         package: multi-version-confluent-disjunctive
+         version: 1
+         depends: p
+        -
+         package: p
+         version: 3
+         depends: q
+        -
+         package: q
+         version: 3
+         depends: t
+ 
+background-packages: 9
+foreground-packages: 1
+total-packages: 10
+broken-packages: 1

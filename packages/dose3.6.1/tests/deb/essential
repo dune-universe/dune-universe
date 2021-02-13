@@ -1,0 +1,28 @@
+Package: aa
+Version: 1
+Depends: bb , cc
+Architecture: amd64
+Description: depends on an essential package and a 
+ not essential package
+
+Package: bb
+Version: 1
+Architecture: amd64
+
+Package: cc
+Version: 1
+Architecture: amd64
+Essential: true
+
+Package: dd
+Version: 1
+Architecture: amd64
+Depends: ee
+Essential: true
+Description: it is an essential package that depends
+ on a not essential package
+
+Package: ee
+Version: 1
+Architecture: amd64
+

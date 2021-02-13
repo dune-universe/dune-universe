@@ -1,0 +1,21 @@
+Package: main
+Version: 1
+Architecture: amd64
+Depends: d, b, c
+Description:
+ forces to install a real package a(=1), and two packages providing a(=1) 
+
+Package: a
+Version: 2
+Architecture: amd64
+Provides: d
+
+Package: b
+Version: 1
+Architecture: amd64
+Provides: a (=1)
+
+Package: c
+Version: 42
+Architecture: amd64
+Provides: a (=1)

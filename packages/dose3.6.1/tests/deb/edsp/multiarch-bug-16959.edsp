@@ -1,0 +1,37 @@
+Request: EDSP 0.5
+Architecture: amd64
+Architectures: i386
+Install: blub
+Strict-Pinning: no
+
+Package: blub
+Version: 1.0.1
+Architecture: all
+Depends: foo:i386, foo:amd64
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: foo
+Version: 1.0-1
+Architecture: amd64
+Multi-Arch: same
+Conflicts: bar
+Replaces: bar
+Provides: bar
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: foo
+Version: 1.0-1
+Architecture: i386
+Multi-Arch: same
+Conflicts: bar
+Replaces: bar
+Provides: bar
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+
+

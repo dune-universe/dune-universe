@@ -1,0 +1,17 @@
+Install: 1
+Package: foo
+Version: 1.0-1
+Architecture: amd64
+
+Install: 1
+Package: blub
+Version: 1.0.1
+Architecture: all
+
+Install: 1
+Package: foo
+Version: 1.0-1
+Architecture: i386
+
+Summary: 3 to install  
+Installed: foo=1.0-1/i386, foo=1.0-1/amd64, blub=1.0.1/all

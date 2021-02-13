@@ -1,0 +1,13 @@
+output-version: 1.2
+report:
+ -
+  package: main
+  version: 1
+  architecture: amd64
+  status: ok
+  
+ 
+background-packages: 3
+foreground-packages: 1
+total-packages: 4
+broken-packages: 0

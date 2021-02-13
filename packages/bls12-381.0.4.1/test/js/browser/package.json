@@ -1,0 +1,17 @@
+{
+    "browser": {
+        "child_process": false
+    },
+    "dependencies": {
+        "@dannywillems/rustc-bls12-381": "0.8.1"
+    },
+    "scripts": {
+        "serve": "webpack-dev-server"
+    },
+    "devDependencies": {
+        "html-webpack-plugin": "^3.2.0",
+        "webpack": "^4.29.4",
+        "webpack-cli": "^3.1.1",
+        "webpack-dev-server": "^3.1.0"
+    }
+}

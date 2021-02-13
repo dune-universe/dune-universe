@@ -1,0 +1,29 @@
+Package: essential
+Architecture: amd64
+Version: 1.0
+Depends: ess-dep-on-me
+Essential: yes
+
+Package: essential2
+Architecture: amd64
+Version: 1.0
+Essential: yes
+
+Package: ess-dep-on-me
+Version: 1.0
+Depends: and-me
+Architecture: amd64
+
+Package: and-me
+Version: 1.0
+Architecture: amd64
+
+Package: random
+Version: 1.0
+Depends: foo
+Architecture: amd64
+
+Package: foo
+Version: 1.0
+Architecture: amd64
+

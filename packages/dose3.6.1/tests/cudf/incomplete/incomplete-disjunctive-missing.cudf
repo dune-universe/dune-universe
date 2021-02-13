@@ -1,0 +1,15 @@
+package: incomplete-disjunctive-missing
+version: 1
+depends: a | b | c
+
+package: a
+version: 1
+depends: q
+
+package: b
+version: 1
+depends: z
+
+package: g 
+version: 1
+depends: z | r

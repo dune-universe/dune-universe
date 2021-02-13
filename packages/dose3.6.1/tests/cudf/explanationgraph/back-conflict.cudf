@@ -1,0 +1,15 @@
+package: back-conflict
+version: 1
+depends: c = 1
+
+package: c
+version: 1
+depends: c = 2
+
+package: c
+version: 2
+depends: c = 3
+
+package: c
+version: 3
+conflicts: c = 1

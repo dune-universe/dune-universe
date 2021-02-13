@@ -1,0 +1,344 @@
+output-version: 1.2
+report:
+ -
+  package: 2to3
+  version: 3.7.3-1
+  architecture: all
+  status: ok
+  installationset:
+   -
+    package: zlib1g
+    version: 1:1.2.11.dfsg-1
+    architecture: amd64
+   -
+    package: util-linux
+    version: 2.33.1-0.1
+    architecture: amd64
+    essential: true
+   -
+    package: tar
+    version: 1.30+dfsg-6
+    architecture: amd64
+    essential: true
+   -
+    package: sysvinit-utils
+    version: 2.93-8
+    architecture: amd64
+    essential: true
+   -
+    package: sed
+    version: 4.7-1
+    architecture: amd64
+    essential: true
+   -
+    package: readline-common
+    version: 7.0-5
+    architecture: all
+   -
+    package: python3.7-minimal
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: python3.7
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: python3-minimal
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: python3-lib2to3
+    version: 3.7.3-1
+    architecture: all
+   -
+    package: python3
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: perl-base
+    version: 5.28.1-6+deb10u1
+    architecture: amd64
+    essential: true
+   -
+    package: ncurses-bin
+    version: 6.1+20181013-2+deb10u2
+    architecture: amd64
+    essential: true
+   -
+    package: ncurses-base
+    version: 6.1+20181013-2+deb10u2
+    architecture: all
+    essential: true
+   -
+    package: mime-support
+    version: 3.62
+    architecture: all
+   -
+    package: login
+    version: 1:4.5-1.1
+    architecture: amd64
+    essential: true
+   -
+    package: libuuid1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: libudev1
+    version: 241-7~deb10u5
+    architecture: amd64
+   -
+    package: libtinfo6
+    version: 6.1+20181013-2+deb10u2
+    architecture: amd64
+   -
+    package: libsystemd0
+    version: 241-7~deb10u5
+    architecture: amd64
+   -
+    package: libssl1.1
+    version: 1.1.1d-0+deb10u3
+    architecture: amd64
+   -
+    package: libsqlite3-0
+    version: 3.27.2-3+deb10u1
+    architecture: amd64
+   -
+    package: libsmartcols1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: libsigsegv2
+    version: 2.12-2
+    architecture: amd64
+   -
+    package: libselinux1
+    version: 2.8-1+b1
+    architecture: amd64
+   -
+    package: libreadline7
+    version: 7.0-5
+    architecture: amd64
+   -
+    package: libpython3.7-stdlib
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: libpython3.7-minimal
+    version: 3.7.3-2+deb10u2
+    architecture: amd64
+   -
+    package: libpython3-stdlib
+    version: 3.7.3-1
+    architecture: amd64
+   -
+    package: libpcre3
+    version: 2:8.39-12
+    architecture: amd64
+   -
+    package: libpam0g
+    version: 1.3.1-5
+    architecture: amd64
+   -
+    package: libpam-runtime
+    version: 1.3.1-5
+    architecture: all
+   -
+    package: libpam-modules-bin
+    version: 1.3.1-5
+    architecture: amd64
+   -
+    package: libpam-modules
+    version: 1.3.1-5
+    architecture: amd64
+   -
+    package: libncursesw6
+    version: 6.1+20181013-2+deb10u2
+    architecture: amd64
+   -
+    package: libmpfr6
+    version: 4.0.2-1
+    architecture: amd64
+   -
+    package: libmpdec2
+    version: 2.4.2-2
+    architecture: amd64
+   -
+    package: libmount1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: liblzma5
+    version: 5.2.4-1
+    architecture: amd64
+   -
+    package: liblz4-1
+    version: 1.8.3-1
+    architecture: amd64
+   -
+    package: libgpg-error0
+    version: 1.35-1
+    architecture: amd64
+   -
+    package: libgmp10
+    version: 2:6.1.2+dfsg-4
+    architecture: amd64
+   -
+    package: libgcrypt20
+    version: 1.8.4-5
+    architecture: amd64
+   -
+    package: libgcc1
+    version: 1:8.3.0-6
+    architecture: amd64
+   -
+    package: libffi6
+    version: 3.2.1-9
+    architecture: amd64
+   -
+    package: libfdisk1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: libexpat1
+    version: 2.2.6-2+deb10u1
+    architecture: amd64
+   -
+    package: libdebconfclient0
+    version: 0.249
+    architecture: amd64
+   -
+    package: libdb5.3
+    version: 5.3.28+dfsg1-0.5
+    architecture: amd64
+   -
+    package: libcap-ng0
+    version: 0.7.9-2
+    architecture: amd64
+   -
+    package: libc6
+    version: 2.28-10
+    architecture: amd64
+   -
+    package: libc-bin
+    version: 2.28-10
+    architecture: amd64
+    essential: true
+   -
+    package: libbz2-1.0
+    version: 1.0.6-9.2~deb10u1
+    architecture: amd64
+   -
+    package: libblkid1
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: libaudit1
+    version: 1:2.8.4-3
+    architecture: amd64
+   -
+    package: libaudit-common
+    version: 1:2.8.4-3
+    architecture: all
+   -
+    package: libattr1
+    version: 1:2.4.48-4
+    architecture: amd64
+   -
+    package: libacl1
+    version: 2.2.53-4
+    architecture: amd64
+   -
+    package: init-system-helpers
+    version: 1.56+nmu1
+    architecture: all
+    essential: true
+   -
+    package: hostname
+    version: 3.21
+    architecture: amd64
+    essential: true
+   -
+    package: gzip
+    version: 1.9-3
+    architecture: amd64
+    essential: true
+   -
+    package: grep
+    version: 3.3-1
+    architecture: amd64
+    essential: true
+   -
+    package: gcc-8-base
+    version: 8.3.0-6
+    architecture: amd64
+   -
+    package: gawk
+    version: 1:4.2.1+dfsg-1
+    architecture: amd64
+   -
+    package: findutils
+    version: 4.6.0+git+20190209-2
+    architecture: amd64
+    essential: true
+   -
+    package: fdisk
+    version: 2.33.1-0.1
+    architecture: amd64
+   -
+    package: dpkg
+    version: 1.19.7
+    architecture: amd64
+    essential: true
+   -
+    package: diffutils
+    version: 1:3.7-3
+    architecture: amd64
+    essential: true
+   -
+    package: debianutils
+    version: 4.8.6.1
+    architecture: amd64
+    essential: true
+   -
+    package: debconf
+    version: 1.5.71
+    architecture: all
+   -
+    package: dash
+    version: 0.5.10.2-5
+    architecture: amd64
+    essential: true
+   -
+    package: coreutils
+    version: 8.30-3
+    architecture: amd64
+    essential: true
+   -
+    package: bsdutils
+    version: 1:2.33.1-0.1
+    architecture: amd64
+    essential: true
+   -
+    package: bash
+    version: 5.0-4
+    architecture: amd64
+    essential: true
+   -
+    package: base-passwd
+    version: 3.5.46
+    architecture: amd64
+    essential: true
+   -
+    package: base-files
+    version: 10.3+deb10u7
+    architecture: amd64
+    essential: true
+   -
+    package: 2to3
+    version: 3.7.3-1
+    architecture: all
+ 
+background-packages: 6392
+foreground-packages: 1
+total-packages: 6393
+broken-packages: 0

@@ -1,0 +1,4553 @@
+output-version: 1.2
+native-architecture: amd64
+host-architecture: amd64
+report:
+ -
+  package: haskell-hashable-time
+  version: 0.2.0.2-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hashable-time
+      version: 0.2.0.2-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-data-default-instances-containers
+  version: 0.0.1-10
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-data-default-instances-containers
+      version: 0.0.1-10
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: python-pecan
+  version: 1.3.2-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-pecan
+      version: 1.3.2-2
+      architecture: all
+      type: src
+      unsat-dependency: gunicorn:amd64
+ -
+  package: haskell-skylighting
+  version: 0.7.5-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-skylighting
+      version: 0.7.5-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-asn1-encoding
+  version: 0.9.5-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-asn1-encoding
+      version: 0.9.5-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-base-compat
+  version: 0.10.4-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-base-compat
+      version: 0.10.4-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtgraphicaleffects-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtgraphicaleffects-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtdeclarative5-doc-html:amd64 (>= 5.11.3~)
+ -
+  package: libtest-script-perl
+  version: 1.25-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtest-script-perl
+      version: 1.25-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest2-suite-perl:amd64
+ -
+  package: haskell-silently
+  version: 1.2.5-7
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-silently
+      version: 1.2.5-7
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: liblist-compare-perl
+  version: 0.53-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: liblist-compare-perl
+      version: 0.53-1
+      architecture: all
+      type: src
+      unsat-dependency: libio-captureoutput-perl:amd64
+ -
+  package: haskell-tasty-hunit
+  version: 0.10.0.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-hunit
+      version: 0.10.0.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-memory
+  version: 0.14.16-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-memory
+      version: 0.14.16-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtsensors-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtsensors-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-old-time
+  version: 1.1.0.3-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-old-time
+      version: 1.1.0.3-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-logging-facade
+  version: 0.3.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-logging-facade
+      version: 0.3.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: hscolour
+  version: 1.24.4-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: hscolour
+      version: 1.24.4-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-quickcheck
+  version: 2.11.3-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-quickcheck
+      version: 2.11.3-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-mime-types
+  version: 0.1.0.8-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-mime-types
+      version: 0.1.0.8-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-logict
+  version: 0.6.0.2-10
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-logict
+      version: 0.6.0.2-10
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tasty-kat
+  version: 0.0.3-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-kat
+      version: 0.0.3-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tagsoup
+  version: 0.14.6-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tagsoup
+      version: 0.14.6-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: velocity
+  version: 1.7-5
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: velocity
+      version: 1.7-5
+      architecture: all
+      type: src
+      unsat-dependency: libexcalibur-logger-java:amd64
+ -
+  package: vtk7
+  version: 7.1.1+dfsg1-12
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: vtk7
+      version: 7.1.1+dfsg1-12
+      architecture: any,all
+      type: src
+      unsat-dependency: gnuplot-nox:amd64
+ -
+  package: haskell-basement
+  version: 0.0.8-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-basement
+      version: 0.0.8-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hunit
+  version: 1.6.0.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hunit
+      version: 1.6.0.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libksba
+  version: 1.3.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libksba
+      version: 1.3.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: libgpg-error-mingw-w64-dev:amd64
+ -
+  package: libb-hooks-endofscope-perl
+  version: 0.24-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libb-hooks-endofscope-perl
+      version: 0.24-1
+      architecture: all
+      type: src
+      unsat-dependency: libdevel-hide-perl:amd64
+ -
+  package: haskell-ansi-terminal
+  version: 0.8.1-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-ansi-terminal
+      version: 0.8.1-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-primitive
+  version: 0.6.4.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-primitive
+      version: 0.6.4.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-sha
+  version: 1.6.4.4-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-sha
+      version: 1.6.4.4-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tls
+  version: 1.4.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tls
+      version: 1.4.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libparse-debianchangelog-perl
+  version: 1.2.0-13
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libparse-debianchangelog-perl
+      version: 1.2.0-13
+      architecture: all
+      type: src
+      unsat-dependency: libhtml-template-perl:amd64
+ -
+  package: haskell-hxt-charproperties
+  version: 9.2.0.1-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hxt-charproperties
+      version: 9.2.0.1-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libjson-perl
+  version: 4.02000-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libjson-perl
+      version: 4.02000-1
+      architecture: all
+      type: src
+      unsat-dependency: libjson-xs-perl:amd64 (>= 2.340)
+ -
+  package: haskell-temporary
+  version: 1.3-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-temporary
+      version: 1.3-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-yaml
+  version: 0.8.32-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-yaml
+      version: 0.8.32-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-mwc-random
+  version: 0.13.6.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-mwc-random
+      version: 0.13.6.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-juicypixels
+  version: 3.2.9.5-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-juicypixels
+      version: 3.2.9.5-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtspeech-opensource-src
+  version: 5.11.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtspeech-opensource-src
+      version: 5.11.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-cmark-gfm
+  version: 0.1.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cmark-gfm
+      version: 0.1.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-data-default
+  version: 0.7.1.1-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-data-default
+      version: 0.7.1.1-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-network
+  version: 2.6.3.6-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-network
+      version: 2.6.3.6-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-pandoc-types
+  version: 1.17.5.1-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-pandoc-types
+      version: 1.17.5.1-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libmime-charset-perl
+  version: 1.012.2-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libmime-charset-perl
+      version: 1.012.2-1
+      architecture: all
+      type: src
+      unsat-dependency: libencode-hanextra-perl:amd64
+ -
+  package: haskell-regex-posix
+  version: 0.95.2-11
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-regex-posix
+      version: 0.95.2-11
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-foldl
+  version: 1.4.4-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-foldl
+      version: 1.4.4-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-uuid-types
+  version: 1.0.3-11
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-uuid-types
+      version: 1.0.3-11
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hslua
+  version: 0.9.5.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hslua
+      version: 0.9.5.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-wcwidth
+  version: 0.0.2-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-wcwidth
+      version: 0.0.2-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-http
+  version: 1:4000.3.12-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-http
+      version: 1:4000.3.12-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libdebian-copyright-perl
+  version: 0.2-4
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libdebian-copyright-perl
+      version: 0.2-4
+      architecture: all
+      type: src
+      unsat-dependency: libtest-longstring-perl:amd64
+ -
+  package: haskell-blaze-html
+  version: 0.9.1.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-blaze-html
+      version: 0.9.1.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-doctemplates
+  version: 0.2.2.1-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-doctemplates
+      version: 0.2.2.1-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-haddock-library
+  version: 1.5.0.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-haddock-library
+      version: 1.5.0.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libfuture-perl
+  version: 0.39-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libfuture-perl
+      version: 0.39-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-identity-perl:amd64
+ -
+  package: gnupg2
+  version: 2.2.12-1+deb10u1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gnupg2
+      version: 2.2.12-1+deb10u1
+      architecture: any,all
+      type: src
+      unsat-dependency: libassuan-mingw-w64-dev:amd64 (>= 2.5.0)
+ -
+  package: haskell-semigroupoids
+  version: 5.2.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-semigroupoids
+      version: 5.2.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-x509-system
+  version: 1.6.6-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-x509-system
+      version: 1.6.6-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-cookie
+  version: 0.4.4-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cookie
+      version: 0.4.4-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: doxia-sitetools
+  version: 1.7.5-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: doxia-sitetools
+      version: 1.7.5-1
+      architecture: all
+      type: src
+      unsat-dependency: libxalan2-java-doc:amd64
+ -
+  package: nbsphinx
+  version: 0.4.2+ds-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: nbsphinx
+      version: 0.4.2+ds-1
+      architecture: all
+      type: src
+      unsat-dependency: python3-sphinxcontrib.bibtex:amd64
+ -
+  package: tcltk-defaults
+  version: 8.6.9+1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: tcltk-defaults
+      version: 8.6.9+1
+      architecture: any,all
+      type: src
+      unsat-dependency: debiandoc-sgml:amd64
+ -
+  package: haskell-texmath
+  version: 0.11.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-texmath
+      version: 0.11.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libmoox-types-mooselike-perl
+  version: 0.29-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libmoox-types-mooselike-perl
+      version: 0.29-1
+      architecture: all
+      type: src
+      unsat-dependency: libmoose-perl:amd64
+ -
+  package: haskell-x509-store
+  version: 1.6.6-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-x509-store
+      version: 1.6.6-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hspec-expectations
+  version: 0.8.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hspec-expectations
+      version: 0.8.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-data-default-instances-old-locale
+  version: 0.0.1-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-data-default-instances-old-locale
+      version: 0.0.1-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-setenv
+  version: 0.1.1.3-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-setenv
+      version: 0.1.1.3-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libgpg-error
+  version: 1.35-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libgpg-error
+      version: 1.35-1
+      architecture: any,all
+      type: src
+      unsat-dependency: mingw-w64:amd64
+ -
+  package: haskell-unbounded-delays
+  version: 0.1.1.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-unbounded-delays
+      version: 0.1.1.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: mono-tools
+  version: 4.2-3
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: mono-tools
+      version: 4.2-3
+      architecture: all
+      type: src
+      unsat-dependency: libmono-cecil-cil-dev:amd64
+ -
+  package: haskell-code-page
+  version: 0.1.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-code-page
+      version: 0.1.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-distributive
+  version: 0.5.3-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-distributive
+      version: 0.5.3-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-lexer
+  version: 1.0.1-7
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-lexer
+      version: 1.0.1-7
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libclass-method-modifiers-perl
+  version: 2.12-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libclass-method-modifiers-perl
+      version: 2.12-1
+      architecture: all
+      type: src
+      unsat-dependency: libmoose-perl:amd64
+ -
+  package: haskell-scientific
+  version: 0.3.6.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-scientific
+      version: 0.3.6.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-http-types
+  version: 0.12.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-http-types
+      version: 0.12.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-th-lift-instances
+  version: 0.1.11-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-th-lift-instances
+      version: 0.1.11-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-cereal
+  version: 0.5.7.0-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cereal
+      version: 0.5.7.0-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-utf8-string
+  version: 1.0.1.1-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-utf8-string
+      version: 1.0.1.1-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-connection
+  version: 0.2.8-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-connection
+      version: 0.2.8-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tasty
+  version: 1.1.0.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty
+      version: 1.1.0.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-aeson-qq
+  version: 0.8.2-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-aeson-qq
+      version: 0.8.2-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hxt-unicode
+  version: 9.0.2.4-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hxt-unicode
+      version: 9.0.2.4-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hspec-core
+  version: 2.5.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hspec-core
+      version: 2.5.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libassuan
+  version: 2.5.2-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libassuan
+      version: 2.5.2-1
+      architecture: any,all
+      type: src
+      unsat-dependency: libgpg-error-mingw-w64-dev:amd64
+ -
+  package: haskell-cmdargs
+  version: 0.10.20-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cmdargs
+      version: 0.10.20-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-clock
+  version: 0.7.2-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-clock
+      version: 0.7.2-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: maven-assembly-plugin
+  version: 3.1.0-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: maven-assembly-plugin
+      version: 3.1.0-1
+      architecture: all
+      type: src
+      unsat-dependency: libmaven-repository-builder-java:amd64
+ -
+  package: haskell-tasty-expected-failure
+  version: 0.11.1.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-expected-failure
+      version: 0.11.1.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: cpphs
+  version: 1.20.8-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: cpphs
+      version: 1.20.8-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: igerman98
+  version: 20161207-7
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: igerman98
+      version: 20161207-7
+      architecture: all
+      type: src
+      unsat-dependency: busybox:amd64
+ -
+  package: libio-socket-ssl-perl
+  version: 2.060-3
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libio-socket-ssl-perl
+      version: 2.060-3
+      architecture: all
+      type: src
+      unsat-dependency: libnet-idn-encode-perl:amd64
+ -
+  package: haskell-test-framework-quickcheck2
+  version: 0.3.0.5-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-test-framework-quickcheck2
+      version: 0.3.0.5-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: gzip
+  version: 1.9-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gzip
+      version: 1.9-3
+      architecture: any,all
+      type: src
+      unsat-dependency: mingw-w64:amd64
+ -
+  package: pandas
+  version: 0.23.3+dfsg-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: pandas
+      version: 0.23.3+dfsg-3
+      architecture: any,all
+      type: src
+      unsat-dependency: python3-sqlalchemy:amd64
+ -
+  package: haskell-tagged
+  version: 0.8.5-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tagged
+      version: 0.8.5-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-vector-builder
+  version: 0.3.6-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-vector-builder
+      version: 0.3.6-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: auctex
+  version: 11.91-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: auctex
+      version: 11.91-2
+      architecture: all
+      type: src
+      unsat-dependency: eperl:amd64
+ -
+  package: haskell-zlib
+  version: 0.6.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-zlib
+      version: 0.6.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-skylighting-core
+  version: 0.7.5-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-skylighting-core
+      version: 0.7.5-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: commons-vfs
+  version: 2.1-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: commons-vfs
+      version: 2.1-2
+      architecture: all
+      type: src
+      unsat-dependency: libcommons-collections4-java:amd64
+ -
+  package: gnome-icon-theme
+  version: 3.12.0-3
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gnome-icon-theme
+      version: 3.12.0-3
+      architecture: all
+      type: src
+      unsat-dependency: icon-naming-utils:amd64 (>= 0.8.7)
+ -
+  package: haskell-quickcheck-unicode
+  version: 1.0.1.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-quickcheck-unicode
+      version: 1.0.1.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tasty-smallcheck
+  version: 0.8.1-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-smallcheck
+      version: 0.8.1-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libmro-compat-perl
+  version: 0.13-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libmro-compat-perl
+      version: 0.13-1
+      architecture: all
+      type: src
+      unsat-dependency: libclass-c3-xs-perl:amd64
+ -
+  package: python-scipy
+  version: 1.1.0-7
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-scipy
+      version: 1.1.0-7
+      architecture: any,all
+      type: src
+      unsat-dependency: python-matplotlib-doc:amd64
+ -
+  package: haskell-regex-pcre
+  version: 0.94.4-11
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-regex-pcre
+      version: 0.94.4-11
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-transformers-base
+  version: 0.4.5.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-transformers-base
+      version: 0.4.5.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-xml
+  version: 1.3.14-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-xml
+      version: 1.3.14-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-comonad
+  version: 5.0.4-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-comonad
+      version: 5.0.4-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtmultimedia-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtmultimedia-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-asn1-parse
+  version: 0.9.4-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-asn1-parse
+      version: 0.9.4-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-vector
+  version: 0.12.0.1-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-vector
+      version: 0.12.0.1-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-cryptonite
+  version: 0.25-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cryptonite
+      version: 0.25-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-tasty-golden
+  version: 2.3.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-golden
+      version: 2.3.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: colord
+  version: 1.4.3-4
+  architecture: linux-any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: colord
+      version: 1.4.3-4
+      architecture: linux-any,all
+      type: src
+      unsat-dependency: argyll:amd64
+ -
+  package: fonts-dejavu
+  version: 2.37-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: fonts-dejavu
+      version: 2.37-1
+      architecture: all
+      type: src
+      unsat-dependency: fontforge-nox:amd64 | fontforge:amd64
+ -
+  package: haskell-optparse-applicative
+  version: 0.14.2.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-optparse-applicative
+      version: 0.14.2.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: liblog-log4perl-perl
+  version: 1.49-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: liblog-log4perl-perl
+      version: 1.49-1
+      architecture: all
+      type: src
+      unsat-dependency: libdbd-csv-perl:amd64
+ -
+  package: libtype-tiny-perl
+  version: 1.004004-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtype-tiny-perl
+      version: 1.004004-1
+      architecture: all
+      type: src
+      unsat-dependency: libclass-insideout-perl:amd64
+ -
+  package: haskell-byteable
+  version: 0.1.1-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-byteable
+      version: 0.1.1-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-vector-algorithms
+  version: 0.7.0.4-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-vector-algorithms
+      version: 0.7.0.4-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: ispell
+  version: 3.4.00-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: ispell
+      version: 3.4.00-6
+      architecture: any,all
+      type: src
+      unsat-dependency: wamerican:amd64 (>= 7.1)
+ -
+  package: haskell-exceptions
+  version: 0.10.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-exceptions
+      version: 0.10.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libwww-perl
+  version: 6.36-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libwww-perl
+      version: 6.36-2
+      architecture: all
+      type: src
+      unsat-dependency: libtest-needs-perl:amd64
+ -
+  package: qtserialport-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtserialport-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: libppi-perl
+  version: 1.236-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libppi-perl
+      version: 1.236-1
+      architecture: all
+      type: src
+      unsat-dependency: libfile-remove-perl:amd64
+ -
+  package: haskell-time-locale-compat
+  version: 0.1.1.5-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-time-locale-compat
+      version: 0.1.1.5-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: cli-common
+  version: 0.10
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: cli-common
+      version: 0.10
+      architecture: all
+      type: src
+      unsat-dependency: debiandoc-sgml:amd64
+ -
+  package: haskell-tf-random
+  version: 0.5-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tf-random
+      version: 0.5-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: python-virtualenv
+  version: 15.1.0+ds-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-virtualenv
+      version: 15.1.0+ds-2
+      architecture: all
+      type: src
+      unsat-dependency: python3-pip:amd64
+ -
+  package: libyaml-tiny-perl
+  version: 1.73-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libyaml-tiny-perl
+      version: 1.73-1
+      architecture: all
+      type: src
+      unsat-dependency: libjson-maybexs-perl:amd64
+ -
+  package: libpod-spell-perl
+  version: 1.20-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libpod-spell-perl
+      version: 1.20-1
+      architecture: all
+      type: src
+      unsat-dependency: libfile-sharedir-install-perl:amd64 (>= 0.06)
+ -
+  package: gtksourceview3
+  version: 3.24.9-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gtksourceview3
+      version: 3.24.9-2
+      architecture: any,all
+      type: src
+      unsat-dependency: libgdk-pixbuf2.0-doc:amd64
+ -
+  package: haskell-cabal-doctest
+  version: 1.0.6-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-cabal-doctest
+      version: 1.0.6-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-transformers-compat
+  version: 0.6.2-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-transformers-compat
+      version: 0.6.2-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: mako
+  version: 1.0.7+ds1-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: mako
+      version: 1.0.7+ds1-1
+      architecture: all
+      type: src
+      unsat-dependency: python-changelog:amd64
+ -
+  package: shunit2
+  version: 2.1.6-1.1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: shunit2
+      version: 2.1.6-1.1
+      architecture: all
+      type: src
+      unsat-dependency: mksh:amd64
+ -
+  package: haskell-integer-logarithms
+  version: 1.0.2.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-integer-logarithms
+      version: 1.0.2.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libspring-java
+  version: 4.3.22-4
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libspring-java
+      version: 4.3.22-4
+      architecture: all
+      type: src
+      unsat-dependency: gradle-plugin-protobuf:amd64
+ -
+  package: fonts-liberation2
+  version: 2.00.5-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: fonts-liberation2
+      version: 2.00.5-1
+      architecture: all
+      type: src
+      unsat-dependency: fontforge-nox:amd64 | fontforge:amd64
+ -
+  package: haskell-math-functions
+  version: 0.2.1.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-math-functions
+      version: 0.2.1.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-random
+  version: 1.1-7
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-random
+      version: 1.1-7
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-quickcheck-instances
+  version: 0.3.19-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-quickcheck-instances
+      version: 0.3.19-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libfile-sharedir-perl
+  version: 1.116-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libfile-sharedir-perl
+      version: 1.116-2
+      architecture: all
+      type: src
+      unsat-dependency: libfile-sharedir-install-perl:amd64 (>= 0.13)
+ -
+  package: python-traceback2
+  version: 1.4.0-5
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-traceback2
+      version: 1.4.0-5
+      architecture: all
+      type: src
+      unsat-dependency: python-contextlib2:amd64
+ -
+  package: haskell-hostname
+  version: 1.0-14
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hostname
+      version: 1.0-14
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtdeclarative-opensource-src
+  version: 5.11.3-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtdeclarative-opensource-src
+      version: 5.11.3-4
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-regex-tdfa
+  version: 1.2.3.1-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-regex-tdfa
+      version: 1.2.3.1-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hspec
+  version: 2.5.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hspec
+      version: 2.5.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libdevel-checklib-perl
+  version: 1.13-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libdevel-checklib-perl
+      version: 1.13-1
+      architecture: all
+      type: src
+      unsat-dependency: libio-captureoutput-perl:amd64
+ -
+  package: liburi-perl
+  version: 1.76-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: liburi-perl
+      version: 1.76-1
+      architecture: all
+      type: src
+      unsat-dependency: libbusiness-isbn-perl:amd64
+ -
+  package: haskell-aeson-pretty
+  version: 0.8.7-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-aeson-pretty
+      version: 0.8.7-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-test-framework
+  version: 0.8.2.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-test-framework
+      version: 0.8.2.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-data-default-class
+  version: 0.1.2.0-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-data-default-class
+      version: 0.1.2.0-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: yosys
+  version: 0.8-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: yosys
+      version: 0.8-1
+      architecture: any,all
+      type: src
+      unsat-dependency: texlive-publishers:amd64
+ -
+  package: libgcrypt20
+  version: 1.8.4-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libgcrypt20
+      version: 1.8.4-5
+      architecture: any,all
+      type: src
+      unsat-dependency: libgpg-error-mingw-w64-dev:amd64
+ -
+  package: libarchive-zip-perl
+  version: 1.64-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libarchive-zip-perl
+      version: 1.64-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-mockmodule-perl:amd64
+ -
+  package: haskell-dlist
+  version: 0.8.0.4-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-dlist
+      version: 0.8.0.4-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: pacemaker
+  version: 2.0.1-5+deb10u1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: pacemaker
+      version: 2.0.1-5+deb10u1
+      architecture: any,all
+      type: src
+      unsat-dependency: publican:amd64
+ -
+  package: pandoc
+  version: 2.2.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: pandoc
+      version: 2.2.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: liblwp-protocol-https-perl
+  version: 6.07-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: liblwp-protocol-https-perl
+      version: 6.07-2
+      architecture: all
+      type: src
+      unsat-dependency: libtest-requiresinternet-perl:amd64
+ -
+  package: haskell-src-meta
+  version: 0.8.0.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-src-meta
+      version: 0.8.0.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtlocation-opensource-src
+  version: 5.11.3+dfsg-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtlocation-opensource-src
+      version: 5.11.3+dfsg-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-blaze-markup
+  version: 0.8.2.1-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-blaze-markup
+      version: 0.8.2.1-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-safe
+  version: 0.3.17-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-safe
+      version: 0.3.17-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-x509-validation
+  version: 1.6.10-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-x509-validation
+      version: 1.6.10-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtquickcontrols2-opensource-src
+  version: 5.11.3+dfsg-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtquickcontrols2-opensource-src
+      version: 5.11.3+dfsg-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.2+dfsg~)
+ -
+  package: qttools-opensource-src
+  version: 5.11.3-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qttools-opensource-src
+      version: 5.11.3-4
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: python-bottle
+  version: 0.12.15-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-bottle
+      version: 0.12.15-2
+      architecture: all
+      type: src
+      unsat-dependency: python-cherrypy:amd64
+ -
+  package: haskell-polyparse
+  version: 1.12-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-polyparse
+      version: 1.12-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: gdcm
+  version: 2.8.8-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gdcm
+      version: 2.8.8-9
+      architecture: any,all
+      type: src
+      unsat-dependency: vtk7-doc:amd64
+ -
+  package: haskell-quickcheck-io
+  version: 0.2.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-quickcheck-io
+      version: 0.2.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-base64-bytestring
+  version: 1.0.0.1-10
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-base64-bytestring
+      version: 1.0.0.1-10
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: scowl
+  version: 2018.04.16-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: scowl
+      version: 2018.04.16-1
+      architecture: all
+      type: src
+      unsat-dependency: dos2unix:amd64
+ -
+  package: guava-libraries
+  version: 19.0-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: guava-libraries
+      version: 19.0-1
+      architecture: all
+      type: src
+      unsat-dependency: libanimal-sniffer-java:amd64
+ -
+  package: haskell-tasty-quickcheck
+  version: 0.10-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-tasty-quickcheck
+      version: 0.10-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libpoe-perl
+  version: 2:1.3670-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libpoe-perl
+      version: 2:1.3670-2
+      architecture: all
+      type: src
+      unsat-dependency: libpoe-test-loops-perl:amd64 (>= 1.360)
+ -
+  package: haskell-digest
+  version: 0.0.1.2-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-digest
+      version: 0.0.1.2-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: python-babel
+  version: 2.6.0+dfsg.1-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-babel
+      version: 2.6.0+dfsg.1-1
+      architecture: all
+      type: src
+      unsat-dependency: python-freezegun:amd64
+ -
+  package: libcapture-tiny-perl
+  version: 0.48-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libcapture-tiny-perl
+      version: 0.48-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-version-perl:amd64
+ -
+  package: vtk6
+  version: 6.3.0+dfsg2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: vtk6
+      version: 6.3.0+dfsg2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: gnuplot-nox:amd64
+ -
+  package: haskell-hslua-module-text
+  version: 0.1.2.1-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hslua-module-text
+      version: 0.1.2.1-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: gtk+3.0
+  version: 3.24.5-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gtk+3.0
+      version: 3.24.5-1
+      architecture: any,all
+      type: src
+      unsat-dependency: libatk1.0-doc:amd64
+ -
+  package: libgetopt-long-descriptive-perl
+  version: 0.103-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libgetopt-long-descriptive-perl
+      version: 0.103-2
+      architecture: all
+      type: src
+      unsat-dependency: libcpan-meta-check-perl:amd64 (>= 0.011)
+ -
+  package: felix-gogo-runtime
+  version: 0.16.2-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: felix-gogo-runtime
+      version: 0.16.2-1
+      architecture: all
+      type: src
+      unsat-dependency: libosgi-compendium-java-doc:amd64
+ -
+  package: haskell-hxt-regex-xmlschema
+  version: 9.2.0.3-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hxt-regex-xmlschema
+      version: 9.2.0.3-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: librole-tiny-perl
+  version: 2.000006-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: librole-tiny-perl
+      version: 2.000006-1
+      architecture: all
+      type: src
+      unsat-dependency: libnamespace-autoclean-perl:amd64
+ -
+  package: haskell-base-prelude
+  version: 1.3-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-base-prelude
+      version: 1.3-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: quilt
+  version: 0.65-3
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: quilt
+      version: 0.65-3
+      architecture: all
+      type: src
+      unsat-dependency: hevea:amd64
+ -
+  package: haskell-blaze-builder
+  version: 0.4.1.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-blaze-builder
+      version: 0.4.1.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-conduit
+  version: 1.3.0.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-conduit
+      version: 1.3.0.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: mrmpi
+  version: 1.0~20140404-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: mrmpi
+      version: 1.0~20140404-2
+      architecture: any,all
+      type: src
+      unsat-dependency: htmldoc:amd64
+ -
+  package: haskell-semigroups
+  version: 0.18.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-semigroups
+      version: 0.18.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtsvg-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtsvg-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: krb5
+  version: 1.17-3+deb10u1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: krb5
+      version: 1.17-3+deb10u1
+      architecture: any,all
+      type: src
+      unsat-dependency: python-cheetah:amd64
+ -
+  package: haskell-async
+  version: 2.2.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-async
+      version: 2.2.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-pretty-show
+  version: 1.7-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-pretty-show
+      version: 1.7-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-th-expand-syns
+  version: 0.4.4.0-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-th-expand-syns
+      version: 0.4.4.0-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: fop
+  version: 1:2.3-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: fop
+      version: 1:2.3-2
+      architecture: all
+      type: src
+      unsat-dependency: libfontbox-java:amd64
+ -
+  package: sphinx
+  version: 1.8.4-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: sphinx
+      version: 1.8.4-1
+      architecture: all
+      type: src
+      unsat-dependency: python-stemmer:amd64
+ -
+  package: haskell-unliftio
+  version: 0.2.8.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-unliftio
+      version: 0.2.8.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-base-orphans
+  version: 0.7-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-base-orphans
+      version: 0.7-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: cpio
+  version: 2.12+dfsg-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: cpio
+      version: 2.12+dfsg-9
+      architecture: any,all
+      type: src
+      unsat-dependency: mingw-w64:amd64
+ -
+  package: libfile-copy-recursive-perl
+  version: 0.44-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libfile-copy-recursive-perl
+      version: 0.44-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-file-perl:amd64
+ -
+  package: haskell-test-framework-hunit
+  version: 0.3.0.2-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-test-framework-hunit
+      version: 0.3.0.2-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-generic-deriving
+  version: 1.12.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-generic-deriving
+      version: 1.12.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-resourcet
+  version: 1.2.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-resourcet
+      version: 1.2.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: cdbs
+  version: 0.4.159
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: cdbs
+      version: 0.4.159
+      architecture: all
+      type: src
+      unsat-dependency: pypy-dev:amd64
+ -
+  package: po4a
+  version: 0.55-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: po4a
+      version: 0.55-1
+      architecture: all
+      type: src
+      unsat-dependency: libterm-readkey-perl:amd64
+ -
+  package: haskell-split
+  version: 0.2.3.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-split
+      version: 0.2.3.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-th-abstraction
+  version: 0.2.8.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-th-abstraction
+      version: 0.2.8.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-attoparsec
+  version: 0.13.2.2-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-attoparsec
+      version: 0.13.2.2-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-doctest
+  version: 0.16.0-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-doctest
+      version: 0.16.0-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libmodule-build-perl
+  version: 0.422400-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libmodule-build-perl
+      version: 0.422400-1
+      architecture: all
+      type: src
+      unsat-dependency: libpar-dist-perl:amd64
+ -
+  package: cm-super
+  version: 0.3.4-14
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: cm-super
+      version: 0.3.4-14
+      architecture: all
+      type: src
+      unsat-dependency: pfb2t1c2pfb:amd64
+ -
+  package: haskell-aeson
+  version: 1.3.1.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-aeson
+      version: 1.3.1.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libstrictures-perl
+  version: 2.000005-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libstrictures-perl
+      version: 2.000005-1
+      architecture: all
+      type: src
+      unsat-dependency: libbareword-filehandles-perl:amd64
+ -
+  package: haskell-monad-control
+  version: 1.0.2.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-monad-control
+      version: 1.0.2.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-x509
+  version: 1.7.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-x509
+      version: 1.7.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-socks
+  version: 0.5.6-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-socks
+      version: 0.5.6-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-http-client
+  version: 0.5.13.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-http-client
+      version: 0.5.13.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-streaming-commons
+  version: 0.2.1.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-streaming-commons
+      version: 0.2.1.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libtest-strict-perl
+  version: 0.47-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtest-strict-perl
+      version: 0.47-1
+      architecture: all
+      type: src
+      unsat-dependency: libmoose-autobox-perl:amd64
+ -
+  package: gedit
+  version: 3.30.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gedit
+      version: 3.30.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: libgtksourceview-3.0-doc:amd64
+ -
+  package: libgit-wrapper-perl
+  version: 0.048-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libgit-wrapper-perl
+      version: 0.048-1
+      architecture: all
+      type: src
+      unsat-dependency: libpath-class-perl:amd64
+ -
+  package: python-testtools
+  version: 2.3.0-5
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-testtools
+      version: 2.3.0-5
+      architecture: all
+      type: src
+      unsat-dependency: python-testresources:amd64
+ -
+  package: taglib
+  version: 1.11.1+dfsg.1-0.3+deb10u1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: taglib
+      version: 1.11.1+dfsg.1-0.3+deb10u1
+      architecture: any,all
+      type: src
+      unsat-dependency: gsfonts-x11:amd64
+ -
+  package: haskell-ansi-wl-pprint
+  version: 0.6.8.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-ansi-wl-pprint
+      version: 0.6.8.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libmoo-perl
+  version: 2.003004-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libmoo-perl
+      version: 2.003004-2
+      architecture: all
+      type: src
+      unsat-dependency: libclass-xsaccessor-perl:amd64 (>= 1.18)
+ -
+  package: libyaml-perl
+  version: 1.27-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libyaml-perl
+      version: 1.27-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-yaml-perl:amd64
+ -
+  package: haskell-bifunctors
+  version: 5.5.3-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-bifunctors
+      version: 5.5.3-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-http-client-tls
+  version: 0.3.5.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-http-client-tls
+      version: 0.3.5.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libpackage-stash-perl
+  version: 0.38-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libpackage-stash-perl
+      version: 0.38-1
+      architecture: all
+      type: src
+      unsat-dependency: libpackage-stash-xs-perl:amd64
+ -
+  package: haskell-case-insensitive
+  version: 1.2.0.11-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-case-insensitive
+      version: 1.2.0.11-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libwww-mechanize-perl
+  version: 1.91-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libwww-mechanize-perl
+      version: 1.91-2
+      architecture: all
+      type: src
+      unsat-dependency: libtest-memory-cycle-perl:amd64
+ -
+  package: strip-nondeterminism
+  version: 1.1.2-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: strip-nondeterminism
+      version: 1.1.2-1
+      architecture: all
+      type: src
+      unsat-dependency: libarchive-cpio-perl:amd64
+ -
+  package: gtk+2.0
+  version: 2.24.32-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: gtk+2.0
+      version: 2.24.32-3
+      architecture: any,all
+      type: src
+      unsat-dependency: libatk1.0-doc:amd64
+ -
+  package: npth
+  version: 1.6-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: npth
+      version: 1.6-1
+      architecture: any,all
+      type: src
+      unsat-dependency: mingw-w64:amd64
+ -
+  package: haskell-src-exts
+  version: 1.20.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-src-exts
+      version: 1.20.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-glob
+  version: 0.9.2-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-glob
+      version: 0.9.2-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-vector-th-unbox
+  version: 0.2.1.6-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-vector-th-unbox
+      version: 0.2.1.6-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtx11extras-opensource-src
+  version: 5.11.3-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtx11extras-opensource-src
+      version: 5.11.3-2
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-diff
+  version: 0.3.4-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-diff
+      version: 0.3.4-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libpod-pom-perl
+  version: 2.01-3
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libpod-pom-perl
+      version: 2.01-3
+      architecture: all
+      type: src
+      unsat-dependency: libfile-slurper-perl:amd64
+ -
+  package: haskell-chasingbottoms
+  version: 1.3.1.4-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-chasingbottoms
+      version: 1.3.1.4-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-executable-path
+  version: 0.0.3.1-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-executable-path
+      version: 0.0.3.1-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-contravariant
+  version: 1.4.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-contravariant
+      version: 1.4.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-profunctors
+  version: 5.2.2-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-profunctors
+      version: 5.2.2-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: webtest
+  version: 2.0.32-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: webtest
+      version: 2.0.32-1
+      architecture: all
+      type: src
+      unsat-dependency: python3-webob:amd64
+ -
+  package: fonts-cantarell
+  version: 0.111-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: fonts-cantarell
+      version: 0.111-2
+      architecture: all
+      type: src
+      unsat-dependency: appstream:amd64
+ -
+  package: libtest-spelling-perl
+  version: 0.20-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtest-spelling-perl
+      version: 0.20-1
+      architecture: all
+      type: src
+      unsat-dependency: iamerican:amd64
+ -
+  package: eigen3
+  version: 3.3.7-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: eigen3
+      version: 3.3.7-1
+      architecture: all
+      type: src
+      unsat-dependency: fonts-freefont-ttf:amd64
+ -
+  package: haskell-call-stack
+  version: 0.1.0-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-call-stack
+      version: 0.1.0-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-ghc-paths
+  version: 0.1.0.9-11
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-ghc-paths
+      version: 0.1.0.9-11
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-pem
+  version: 0.2.4-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-pem
+      version: 0.2.4-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-zip-archive
+  version: 0.3.3-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-zip-archive
+      version: 0.3.3-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: logilab-common
+  version: 1.4.2-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: logilab-common
+      version: 1.4.2-1
+      architecture: all
+      type: src
+      unsat-dependency: python-epydoc:amd64
+ -
+  package: haskell-statevar
+  version: 1.1.1.1-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-statevar
+      version: 1.1.1.1-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-mono-traversable
+  version: 1.0.9.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-mono-traversable
+      version: 1.0.9.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libtext-diff-perl
+  version: 1.45-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtext-diff-perl
+      version: 1.45-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-cpan-meta-perl:amd64
+ -
+  package: haskell-unliftio-core
+  version: 0.1.2.0-1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-unliftio-core
+      version: 0.1.2.0-1
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-asn1-types
+  version: 0.3.2-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-asn1-types
+      version: 0.3.2-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: opam
+  version: 2.0.3-1+deb10u1
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: opam
+      version: 2.0.3-1+deb10u1
+      architecture: any,all
+      type: src
+      unsat-dependency: texlive-lang-french:amd64
+ -
+  package: lucene4.10
+  version: 4.10.4+dfsg-5
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: lucene4.10
+      version: 4.10.4+dfsg-5
+      architecture: all
+      type: src
+      unsat-dependency: antlr3:amd64
+ -
+  package: haskell-smallcheck
+  version: 1.1.5-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-smallcheck
+      version: 1.1.5-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hxt
+  version: 9.3.1.16-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hxt
+      version: 9.3.1.16-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: webkit2gtk
+  version: 2.28.4-1~deb10u1
+  architecture: linux-any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: webkit2gtk
+      version: 2.28.4-1~deb10u1
+      architecture: linux-any,all
+      type: src
+      unsat-dependency: libsoup2.4-doc:amd64
+ -
+  package: pkg-components
+  version: 0.10
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: pkg-components
+      version: 0.10
+      architecture: all
+      type: src
+      unsat-dependency: libtest-longstring-perl:amd64
+ -
+  package: haskell-unordered-containers
+  version: 0.2.9.0-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-unordered-containers
+      version: 0.2.9.0-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-base16-bytestring
+  version: 0.1.1.6-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-base16-bytestring
+      version: 0.1.1.6-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-mockery
+  version: 0.3.5-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-mockery
+      version: 0.3.5-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: debconf
+  version: 1.5.71
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: debconf
+      version: 1.5.71
+      architecture: all
+      type: src
+      unsat-dependency: libintl-perl:amd64
+ -
+  package: libtext-template-perl
+  version: 1.55-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtext-template-perl
+      version: 1.55-1
+      architecture: all
+      type: src
+      unsat-dependency: libtest-more-utf8-perl:amd64
+ -
+  package: nunit
+  version: 2.6.4+dfsg-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: nunit
+      version: 2.6.4+dfsg-1
+      architecture: all
+      type: src
+      unsat-dependency: nuget:amd64
+ -
+  package: autoconf
+  version: 2.69-11
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: autoconf
+      version: 2.69-11
+      architecture: all
+      type: src
+      unsat-dependency: cm-super:amd64
+ -
+  package: pyparsing
+  version: 2.2.0+dfsg1-2
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: pyparsing
+      version: 2.2.0+dfsg1-2
+      architecture: all
+      type: src
+      unsat-dependency: tofrodos:amd64
+ -
+  package: adwaita-icon-theme
+  version: 3.30.1-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: adwaita-icon-theme
+      version: 3.30.1-1
+      architecture: all
+      type: src
+      unsat-dependency: gtk-3-examples:amd64
+ -
+  package: python-pbr
+  version: 4.2.0-5
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: python-pbr
+      version: 4.2.0-5
+      architecture: all
+      type: src
+      unsat-dependency: python-pip:amd64
+ -
+  package: dictionaries-common
+  version: 1.28.1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: dictionaries-common
+      version: 1.28.1
+      architecture: all
+      type: src
+      unsat-dependency: slice:amd64
+ -
+  package: haskell-network-uri
+  version: 2.6.1.0-6
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-network-uri
+      version: 2.6.1.0-6
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-foundation
+  version: 0.0.21-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-foundation
+      version: 0.0.21-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-hashable
+  version: 1.2.7.0-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hashable
+      version: 1.2.7.0-5
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libtest-warnings-perl
+  version: 0.026-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtest-warnings-perl
+      version: 0.026-1
+      architecture: all
+      type: src
+      unsat-dependency: libcpan-meta-check-perl:amd64 (>= 0.011)
+ -
+  package: dh-make-perl
+  version: 0.105
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: dh-make-perl
+      version: 0.105
+      architecture: all
+      type: src
+      unsat-dependency: libdpkg-parse-perl:amd64
+ -
+  package: qtwebsockets-opensource-src
+  version: 5.11.3-5
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtwebsockets-opensource-src
+      version: 5.11.3-5
+      architecture: any,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-extensible-exceptions
+  version: 0.1.1.4-10
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-extensible-exceptions
+      version: 0.1.1.4-10
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: qtwebengine-opensource-src
+  version: 5.11.3+dfsg-2+deb10u1
+  architecture: amd64,arm64,armhf,i386,mipsel,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: qtwebengine-opensource-src
+      version: 5.11.3+dfsg-2+deb10u1
+      architecture: amd64,arm64,armhf,i386,mipsel,all
+      type: src
+      unsat-dependency: qtbase5-doc-html:amd64 (>= 5.11.3+dfsg~)
+ -
+  package: haskell-data-default-instances-dlist
+  version: 0.0.1-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-data-default-instances-dlist
+      version: 0.0.1-9
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libio-async-perl
+  version: 0.72-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libio-async-perl
+      version: 0.72-1
+      architecture: all
+      type: src
+      unsat-dependency: libsereal-perl:amd64
+ -
+  package: audit
+  version: 1:2.8.4-3
+  architecture: linux-any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: audit
+      version: 1:2.8.4-3
+      architecture: linux-any,all
+      type: src
+      unsat-dependency: golang-go:amd64
+ -
+  package: libgitlab-api-v4-perl
+  version: 0.16-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libgitlab-api-v4-perl
+      version: 0.16-1
+      architecture: all
+      type: src
+      unsat-dependency: liblog-any-adapter-tap-perl:amd64
+ -
+  package: haskell-th-orphans
+  version: 0.13.6-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-th-orphans
+      version: 0.13.6-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: libtest-roo-perl
+  version: 1.004-1
+  architecture: all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: libtest-roo-perl
+      version: 1.004-1
+      architecture: all
+      type: src
+      unsat-dependency: libbareword-filehandles-perl:amd64
+ -
+  package: dose3
+  version: 5.0.1-12
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: dose3
+      version: 5.0.1-12
+      architecture: any,all
+      type: src
+      unsat-dependency: hevea:amd64
+ -
+  package: haskell-hourglass
+  version: 0.2.12-2
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-hourglass
+      version: 0.2.12-2
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-th-reify-many
+  version: 0.1.8-4
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-th-reify-many
+      version: 0.1.8-4
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: statsmodels
+  version: 0.8.0-9
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: statsmodels
+      version: 0.8.0-9
+      architecture: any,all
+      type: src
+      unsat-dependency: python-numpy-doc:amd64
+ -
+  package: haskell-old-locale
+  version: 1.0.0.7-8
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-old-locale
+      version: 1.0.0.7-8
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-syb
+  version: 0.7-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-syb
+      version: 0.7-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-regex-base
+  version: 0.93.2-13
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-regex-base
+      version: 0.93.2-13
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ -
+  package: haskell-colour
+  version: 2.3.4-3
+  architecture: any,all
+  type: src
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: haskell-colour
+      version: 2.3.4-3
+      architecture: any,all
+      type: src
+      unsat-dependency: ghc-doc:amd64
+ 
+binary-packages: 9618
+source-packages: 3225
+broken-packages: 303

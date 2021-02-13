@@ -1,0 +1,38 @@
+output-version: 1.2
+report:
+ -
+  package: incomplete-disjunctive-missing
+  version: 1
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: a
+      version: 1
+      unsat-dependency: q
+     depchains:
+      -
+       depchain:
+        -
+         package: incomplete-disjunctive-missing
+         version: 1
+         depends: a | b | c
+   -
+    missing:
+     pkg:
+      package: b
+      version: 1
+      unsat-dependency: z
+     depchains:
+      -
+       depchain:
+        -
+         package: incomplete-disjunctive-missing
+         version: 1
+         depends: a | b | c
+ 
+background-packages: 3
+foreground-packages: 1
+total-packages: 4
+broken-packages: 1

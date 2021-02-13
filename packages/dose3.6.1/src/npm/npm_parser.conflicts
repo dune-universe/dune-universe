@@ -1,0 +1,27 @@
+
+** Conflict (shift/reduce) in state 28.
+** Token involved: BLANK
+** This state is reached from depend_top after reading:
+
+name COLON QUOTE partial 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+depend_top 
+depend EOL 
+name COLON QUOTE rangelist QUOTE 
+                 (?)
+
+** In state 28, looking ahead at BLANK, reducing production
+** simplelist -> partial 
+** is permitted because of the following sub-derivation:
+
+simplelist BLANK OR BLANK rangelist // lookahead token appears
+partial . 
+
+** In state 28, looking ahead at BLANK, shifting is permitted
+** because of the following sub-derivation:
+
+simplelist 
+partial . BLANK simplelist 

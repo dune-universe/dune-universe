@@ -1,0 +1,21 @@
+
+package: alpha
+version: 1
+depends: papa
+
+package: bravo
+version: 1
+depends: papa
+
+package: papa
+version: 1
+depends: quebec | romeo
+
+package: quebec
+version: 1
+conflicts: romeo
+
+package: romeo
+version: 1
+
+request: 

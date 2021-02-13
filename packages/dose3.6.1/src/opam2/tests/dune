@@ -1,0 +1,6 @@
+(executable
+ (name tests)
+ (libraries extlib dose3.common dose3.algo dose3.versioning dose3.pef
+   dose3.opam2 oUnit)
+ (modules tests)
+ (flags (:standard)))

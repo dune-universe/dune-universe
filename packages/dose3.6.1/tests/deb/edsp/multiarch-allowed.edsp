@@ -1,0 +1,31 @@
+Request: EDSP 0.5
+Architecture: arch1
+Architectures: arch2
+Install: a2
+Strict-Pinning: no
+
+Package: a1
+Architecture: arch1
+Version: 1
+APT-ID: 1
+Multi-Arch: allowed
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a1
+Architecture: arch2
+Version: 1
+APT-ID: 2
+Multi-Arch: allowed
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a2
+Architecture: arch2
+Version: 1
+Depends: a1:any
+APT-ID: 3
+Multi-Arch: none
+APT-Pin: 500
+APT-Candidate: yes
+

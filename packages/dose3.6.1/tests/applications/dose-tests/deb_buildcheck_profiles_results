@@ -1,0 +1,22 @@
+output-version: 1.2
+native-architecture: amd64
+host-architecture: amd64
+report:
+ -
+  package: negative
+  version: 1.0
+  architecture: any
+  type: src
+  status: ok
+  
+ -
+  package: positive
+  version: 1.0
+  architecture: any
+  type: src
+  status: ok
+  
+ 
+binary-packages: 3
+source-packages: 2
+broken-packages: 0

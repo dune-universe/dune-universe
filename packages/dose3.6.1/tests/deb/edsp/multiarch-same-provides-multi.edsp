@@ -1,0 +1,45 @@
+Request: EDSP 0.5
+Architecture: arch1
+Architectures: arch2
+Install: a1:arch1 a1:arch2 a2:arch2
+Strict-Pinning: no
+
+Package: a1
+Architecture: arch1
+Version: 1
+Provides: a
+Conflicts: a
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a1
+Architecture: arch2
+Version: 1
+Provides: a
+Conflicts: a
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a2
+Architecture: arch2
+Version: 1
+Provides: a
+Conflicts: a
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a3
+Architecture: arch1
+Version: 1
+Provides: a
+Conflicts: a
+APT-ID: 1
+APT-Pin: 500
+APT-Candidate: yes
+

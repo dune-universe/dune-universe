@@ -1,0 +1,16 @@
+package: electric-engine
+version: 1
+depends: solar-collector | huge-battery
+conflicts: engine , electric-engine
+provides: engine
+
+package: gasoline-engine
+version: 2
+conflicts: engine , gasoline-engine
+
+package: gasoline-engine
+version: 1
+depends: turbo
+conflicts: engine , gasoline-engine
+provides: engine
+installed: true

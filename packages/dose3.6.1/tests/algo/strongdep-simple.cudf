@@ -1,0 +1,17 @@
+package: aa
+version: 1
+depends: bb | cc , dd
+
+package: bb
+version: 1
+depends: ee
+
+package: cc
+version: 1
+depends: ee
+
+package: dd
+version: 1
+
+package: ee
+version: 1

@@ -1,0 +1,16 @@
+output-version: 1.2
+report:
+ -
+  package: incomplete-conjunctive-missing
+  version: 1
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: incomplete-conjunctive-missing
+      version: 1
+      unsat-dependency: b
+ 
+total-packages: 1
+broken-packages: 1

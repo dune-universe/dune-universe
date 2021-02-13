@@ -1,0 +1,14 @@
+(library
+ (name dose_opam2)
+ (public_name dose3.opam2)
+ (libraries extlib cudf dose3.common dose3.versioning dose3.pef)
+ (flags (:standard)))
+
+(rule
+ (alias runtest)
+ (deps ../../tests/opam/version_lag.opam
+   ../../tests/opam/filter_universe.opam)
+ (action
+  (chdir
+   ../../
+   (run ./src/opam2/tests/tests.exe))))

@@ -1,0 +1,307 @@
+paranoid-upgrade.edsp
+
+abate@zed.fr:~/Videos$sudo apt-get --solver aspcud upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.OQyAUZdbgC/in-cudf /tmp/tmp.apt-cudf.OQyAUZdbgC/out-cudf -notuptodate,-removed,-changed
+Execute external solver... Done
+The following NEW packages will be installed:
+  ruby-locale
+The following packages will be upgraded:
+  fancontrol liblocale-ruby1.8 libmail-box-perl libsensors4 libxml2 libxml2-dev libxt6 lm-sensors python-libxml2 tex-common usbutils
+11 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 4,667 kB of archives.
+After this operation, 24.6 kB of additional disk space will be used.
+Do you want to continue [Y/n]? ^Cabate@zed.fr:~/Videos$sudo apt-get upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages have been kept back:
+  liblocale-ruby1.8
+The following packages will be upgraded:
+  fancontrol libmail-box-perl libsensors4 libxml2 libxml2-dev libxt6 lm-sensors python-libxml2 tex-common usbutils
+10 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Need to get 4,569 kB of archives.
+After this operation, 5,120 B of additional disk space will be used.
+Do you want to continue [Y/n]? n   
+Abort.
+abate@zed.fr:~/Videos$sudo apt-get dist-upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following NEW packages will be installed:
+  ruby-locale
+The following packages will be upgraded:
+  fancontrol liblocale-ruby1.8 libmail-box-perl libsensors4 libxml2 libxml2-dev libxt6 lm-sensors python-libxml2 tex-common usbutils
+11 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 4,667 kB of archives.
+After this operation, 24.6 kB of additional disk space will be used.
+
+--------------------
+
+dist-upgrade-multiarch.edsp
+
+apt-get dist-upgrade suggests to install a number of :i386 packages while 
+aspcud with does not ...
+
+-----------------------------
+
+paranoid-upgrade-2.edsp
+
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver aspcud upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.GzRUEkAkqh/in-cudf /tmp/tmp.apt-cudf.GzRUEkAkqh/out-cudf -notuptodate,-removed,-changed,-new
+Execute external solver... Done
+The following NEW packages will be installed:
+  libglew1.7 libpng15-15
+The following packages will be upgraded:
+  iceweasel libgzstreamtlp-3.6 libjack-jackd2-0 libmozjs10d libogdftlp-3.6 libpolkit-agent-1-0 libpolkit-backend-1-0 libpolkit-gobject-1-0 libslang2 libtulip-3.6
+  libtulip-ogdf-3.6 libtulip-ogl-3.6 libtulip-qt4-3.6 libxtst6 libxv1 libxvmc1 lsb-base lsb-release lsof policykit-1 printer-driver-splix texlive texlive-base
+  texlive-common texlive-doc-base texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-pstricks tulip
+  xulrunner-10.0
+32 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 93.6 MB of archives.
+After this operation, 2,486 kB disk space will be freed.
+Do you want to continue [Y/n]? ^CGit Branch:  
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver internal upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages have been kept back:
+  libtulip-ogl-3.6 libtulip-qt4-3.6 tulip
+The following packages will be upgraded:
+  iceweasel libgzstreamtlp-3.6 libjack-jackd2-0 libmozjs10d libogdftlp-3.6 libpolkit-agent-1-0 libpolkit-backend-1-0 libpolkit-gobject-1-0 libslang2 libtulip-3.6
+  libtulip-ogdf-3.6 libxtst6 libxv1 libxvmc1 lsb-base lsb-release lsof policykit-1 printer-driver-splix texlive texlive-base texlive-common texlive-doc-base
+  texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-pstricks xulrunner-10.0
+29 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+Need to get 84.6 MB of archives.
+After this operation, 2,508 kB disk space will be freed.
+Do you want to continue [Y/n]? ^CGit Branch:  
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver internal dist-upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following NEW packages will be installed:
+  libglew1.7 libpng15-15
+The following packages will be upgraded:
+  iceweasel libgzstreamtlp-3.6 libjack-jackd2-0 libmozjs10d libogdftlp-3.6 libpolkit-agent-1-0 libpolkit-backend-1-0 libpolkit-gobject-1-0 libslang2 libtulip-3.6
+  libtulip-ogdf-3.6 libtulip-ogl-3.6 libtulip-qt4-3.6 libxtst6 libxv1 libxvmc1 lsb-base lsb-release lsof policykit-1 printer-driver-splix texlive texlive-base
+  texlive-common texlive-doc-base texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-pstricks tulip
+  xulrunner-10.0
+32 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 93.6 MB of archives.
+After this operation, 2,486 kB disk space will be freed.
+Do you want to continue [Y/n]? ^CGit Branch:  
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver dump upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Execute external solver... Error!
+The solver encountered an error of type: ERR_JUST_DUMPING
+The following information might help you to understand what is wrong:
+I am too dumb, i can just dump!
+Please use one of my friends instead!
+
+The following packages have unmet dependencies:
+E: External solver failed with: I am too dumb, i can just dump!
+E: Internal error, AllUpgrade broke stuff
+Git Branch:  
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$
+
+----------------------
+
+paranoid-upgrade-3.edsp
+
+abate@zed.fr:/var/tmp$sudo apt-get --solver aspcud upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.wkNci3ixwU/in-cudf /tmp/tmp.apt-cudf.wkNci3ixwU/out-cudf -notuptodate,-new,-removed,-changed
+Execute external solver... Done
+The following NEW packages will be installed:
+  libjs-jquery libjs-sphinxdoc libjs-underscore
+The following packages have been kept back:
+  ffmpeg libav-tools libavcodec53 libavdevice53 libavfilter2 libavformat53 libavutil51 libpostproc52 libswscale2
+The following packages will be upgraded:
+  darcs diffutils dpkg dpkg-dev ethtool gcc-4.7-base gconf-service gconf2 gconf2-common gdb gdbserver ghostscript ghostscript-cups gitg gvfs gvfs-bin gvfs-common
+  gvfs-daemons gvfs-libs iptables isc-dhcp-client isc-dhcp-common kbd lib32gcc1 lib32stdc++6 libdpkg-perl libgcc1 libgconf-2-4 libgconf2-4 libgfortran3 libglib2.0-0
+  libglib2.0-data libgomp1 libgs9 libgs9-common libimlib2 libjavascriptcoregtk-1.0-0 libnewt0.52 libnss3-1d libquadmath0 libstdc++6 libtag1-vanilla libtag1c2a libtagc0
+  libwebkitgtk-1.0-0 libwebkitgtk-1.0-common offlineimap ristretto socat whiptail xfce4-mount-plugin xserver-xorg-input-synaptics
+52 upgraded, 3 newly installed, 0 to remove and 9 not upgraded.
+Need to get 43.7 MB of archives.
+After this operation, 3,815 kB of additional disk space will be used.
+Do you want to continue [Y/n]? ^C
+
+abate@zed.fr:/var/tmp$sudo apt-get --solver internal upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages have been kept back:
+  ffmpeg libav-tools libavcodec53 libavdevice53 libavfilter2 libavformat53 libavutil51 libpostproc52 libswscale2 offlineimap
+The following packages will be upgraded:
+  darcs diffutils dpkg dpkg-dev ethtool gcc-4.7-base gconf-service gconf2 gconf2-common gdb gdbserver ghostscript ghostscript-cups gitg gvfs gvfs-bin gvfs-common
+  gvfs-daemons gvfs-libs iptables isc-dhcp-client isc-dhcp-common kbd lib32gcc1 lib32stdc++6 libdpkg-perl libgcc1 libgconf-2-4 libgconf2-4 libgfortran3 libglib2.0-0
+  libglib2.0-data libgomp1 libgs9 libgs9-common libimlib2 libjavascriptcoregtk-1.0-0 libnewt0.52 libnss3-1d libquadmath0 libstdc++6 libtag1-vanilla libtag1c2a libtagc0
+  libwebkitgtk-1.0-0 libwebkitgtk-1.0-common ristretto socat whiptail xfce4-mount-plugin xserver-xorg-input-synaptics
+51 upgraded, 0 newly installed, 0 to remove and 10 not upgraded.
+Need to get 42.8 MB of archives.
+After this operation, 2,273 kB of additional disk space will be used.
+Do you want to continue [Y/n]? ^C
+
+abate@zed.fr:/var/tmp$sudo apt-get --solver internal dist-upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following packages will be REMOVED:
+  chromium ffmpeg gstreamer0.10-ffmpeg libav-tools libavcodec53 libavdevice53 libavfilter2 libavformat53 libpostproc52 libswscale2 mencoder mplayer vlc vlc-nox
+  vlc-plugin-notify vlc-plugin-pulse
+The following NEW packages will be installed:
+  javascript-common libjs-jquery libjs-sphinxdoc libjs-underscore wwwconfig-common
+The following packages will be upgraded:
+  darcs diffutils dpkg dpkg-dev ethtool gcc-4.7-base gconf-service gconf2 gconf2-common gdb gdbserver ghostscript ghostscript-cups gitg gvfs gvfs-bin gvfs-common
+  gvfs-daemons gvfs-libs iptables isc-dhcp-client isc-dhcp-common kbd lib32gcc1 lib32stdc++6 libavutil51 libdpkg-perl libgcc1 libgconf-2-4 libgconf2-4 libgfortran3
+  libglib2.0-0 libglib2.0-data libgomp1 libgs9 libgs9-common libimlib2 libjavascriptcoregtk-1.0-0 libnewt0.52 libnss3-1d libquadmath0 libstdc++6 libtag1-vanilla
+  libtag1c2a libtagc0 libwebkitgtk-1.0-0 libwebkitgtk-1.0-common offlineimap ristretto socat whiptail xfce4-mount-plugin xserver-xorg-input-synaptics
+53 upgraded, 5 newly installed, 16 to remove and 0 not upgraded.
+Need to get 43.9 MB of archives.
+After this operation, 113 MB disk space will be freed.
+Do you want to continue [Y/n]?
+
+-------------------------
+
+paranoid-upgrade-4.edsp
+
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver aspcud upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.Q0XSx0sDm7/in-cudf /tmp/tmp.apt-cudf.Q0XSx0sDm7/out-cudf -new,-removed,-notuptodate
+Execute external solver... Done
+The following packages have been kept back:
+  gettext gettext-base vlc vlc-nox vlc-plugin-notify vlc-plugin-pulse xserver-xorg-core xserver-xorg-input-evdev xserver-xorg-input-synaptics xserver-xorg-input-wacom
+  xserver-xorg-video-apm xserver-xorg-video-ark xserver-xorg-video-ati xserver-xorg-video-chips xserver-xorg-video-cirrus xserver-xorg-video-fbdev
+  xserver-xorg-video-i128 xserver-xorg-video-intel xserver-xorg-video-mach64 xserver-xorg-video-mga xserver-xorg-video-neomagic xserver-xorg-video-nouveau
+  xserver-xorg-video-radeon
+The following packages will be upgraded:
+  autoconf autopoint lib32ncurses5 lib32tinfo5 libaudiofile1 libncurses5 libncurses5-dev libncursesw5 libqt4-dbus libqt4-network libqt4-opengl libqt4-xml libqtcore4
+  libqtgui4 libsmbclient libtinfo-dev libtinfo5 libwbclient0 ncurses-base ncurses-bin ncurses-term qdbus samba-common samba-common-bin smbclient x11-xserver-utils xauth
+After this operation, 402 kB disk space will be freed.
+Do you want to continue [Y/n]? 
+
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver aspcud dist-upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.HtuT53FP6d/in-cudf /tmp/tmp.apt-cudf.HtuT53FP6d/out-cudf -notuptodate,-new,-removed
+Execute external solver... Done
+Done
+The following NEW packages will be installed:
+  libasprintf0c2 libgettextpo0
+The following packages have been kept back:
+  vlc vlc-nox vlc-plugin-notify vlc-plugin-pulse xserver-xorg-core xserver-xorg-input-evdev xserver-xorg-input-synaptics xserver-xorg-input-wacom xserver-xorg-video-apm
+  xserver-xorg-video-ark xserver-xorg-video-ati xserver-xorg-video-chips xserver-xorg-video-cirrus xserver-xorg-video-fbdev xserver-xorg-video-i128
+  xserver-xorg-video-intel xserver-xorg-video-mach64 xserver-xorg-video-mga xserver-xorg-video-neomagic xserver-xorg-video-nouveau xserver-xorg-video-radeon
+The following packages will be upgraded:
+  autoconf autopoint gettext gettext-base lib32ncurses5 lib32tinfo5 libaudiofile1 libncurses5 libncurses5-dev libncursesw5 libqt4-dbus libqt4-network libqt4-opengl
+  libqt4-xml libqtcore4 libqtgui4 libsmbclient libtinfo-dev libtinfo5 libwbclient0 ncurses-base ncurses-bin ncurses-term qdbus samba-common samba-common-bin smbclient
+  x11-xserver-utils xauth
+29 upgraded, 2 newly installed, 0 to remove and 21 not upgraded.
+Need to get 39.7 MB of archives.
+After this operation, 273 kB disk space will be freed.
+Do you want to continue [Y/n]? 
+
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver internal dist-upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following packages will be REMOVED:
+  libupnp3 xserver-xorg-video-all xserver-xorg-video-ati xserver-xorg-video-openchrome xserver-xorg-video-r128 xserver-xorg-video-rendition xserver-xorg-video-s3
+  xserver-xorg-video-s3virge xserver-xorg-video-savage xserver-xorg-video-siliconmotion xserver-xorg-video-sis xserver-xorg-video-sisusb xserver-xorg-video-tdfx
+  xserver-xorg-video-trident xserver-xorg-video-tseng xserver-xorg-video-vesa xserver-xorg-video-vmware xserver-xorg-video-voodoo
+The following NEW packages will be installed:
+  libasprintf0c2 libgettextpo0 libmtdev1 libupnp6
+The following packages will be upgraded:
+  autoconf autopoint gettext gettext-base lib32ncurses5 lib32tinfo5 libaudiofile1 libncurses5 libncurses5-dev libncursesw5 libqt4-dbus libqt4-network libqt4-opengl
+  libqt4-xml libqtcore4 libqtgui4 libsmbclient libtinfo-dev libtinfo5 libwbclient0 ncurses-base ncurses-bin ncurses-term qdbus samba-common samba-common-bin smbclient
+  vlc vlc-nox vlc-plugin-notify vlc-plugin-pulse x11-xserver-utils xauth xserver-xorg-core xserver-xorg-input-evdev xserver-xorg-input-synaptics
+  xserver-xorg-input-wacom xserver-xorg-video-apm xserver-xorg-video-ark xserver-xorg-video-chips xserver-xorg-video-cirrus xserver-xorg-video-fbdev
+  xserver-xorg-video-i128 xserver-xorg-video-intel xserver-xorg-video-mach64 xserver-xorg-video-mga xserver-xorg-video-neomagic xserver-xorg-video-nouveau
+  xserver-xorg-video-radeon
+49 upgraded, 4 newly installed, 18 to remove and 0 not upgraded.
+Need to get 49.3 MB of archives.
+After this operation, 3,737 kB disk space will be freed.
+Do you want to continue [Y/n]? 
+
+abate@zed.fr:~/Projects/repos/mancoosi-tools/dose$sudo apt-get --solver internal upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages have been kept back:
+  gettext gettext-base vlc vlc-nox vlc-plugin-notify vlc-plugin-pulse xserver-xorg-core xserver-xorg-input-evdev xserver-xorg-input-synaptics xserver-xorg-input-wacom
+  xserver-xorg-video-apm xserver-xorg-video-ark xserver-xorg-video-ati xserver-xorg-video-chips xserver-xorg-video-cirrus xserver-xorg-video-fbdev
+  xserver-xorg-video-i128 xserver-xorg-video-intel xserver-xorg-video-mach64 xserver-xorg-video-mga xserver-xorg-video-neomagic xserver-xorg-video-nouveau
+  xserver-xorg-video-radeon
+The following packages will be upgraded:
+  autoconf autopoint lib32ncurses5 lib32tinfo5 libaudiofile1 libncurses5 libncurses5-dev libncursesw5 libqt4-dbus libqt4-network libqt4-opengl libqt4-xml libqtcore4
+  libqtgui4 libsmbclient libtinfo-dev libtinfo5 libwbclient0 ncurses-base ncurses-bin ncurses-term qdbus samba-common samba-common-bin smbclient x11-xserver-utils xauth
+27 upgraded, 0 newly installed, 0 to remove and 23 not upgraded.
+Need to get 37.4 MB of archives.
+After this operation, 402 kB disk space will be freed.
+Do you want to continue [Y/n]
+
+--------------------
+
+paranoid-upgrade-5.edsp
+
+Cabate@zed.fr:~/Projects/repos/cbse-newexp/cbse2011/chroot$sudo apt-get --solver aspcud dist-upgrade 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+CMD /usr/bin/aspcud /tmp/tmp.apt-cudf.0Vyry57pz1/in-cudf /tmp/tmp.apt-cudf.0Vyry57pz1/out-cudf -notuptodate,-new
+Execute external solver... Done
+Done
+The following packages have been kept back:
+  libclutter-1.0-0 libclutter-gst-1.0-0 libclutter-gtk-1.0-0 libclutter-imcontext-0.1-0 libcluttergesture-0.0.2-0 libcogl-pango0 libmx-1.0-2 vlc vlc-nox
+  vlc-plugin-notify vlc-plugin-pulse
+0 upgraded, 0 newly installed, 0 to remove and 11 not upgraded.
+abate@zed.fr:~/Projects/repos/cbse-newexp/cbse2011/chroot$sudo apt-get dist-upgrade 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following packages will be REMOVED:
+  cheese libcheese-gtk21 libcogl5 libupnp3
+The following NEW packages will be installed:
+  libcogl-common libcogl9 libupnp6
+The following packages will be upgraded:
+  libclutter-1.0-0 libclutter-gst-1.0-0 libclutter-gtk-1.0-0 libclutter-imcontext-0.1-0 libcluttergesture-0.0.2-0 libcogl-pango0 libmx-1.0-2 vlc vlc-nox
+  vlc-plugin-notify vlc-plugin-pulse
+11 upgraded, 3 newly installed, 4 to remove and 0 not upgraded.
+Need to get 5,504 kB/6,890 kB of archives.
+After this operation, 492 kB of additional disk space will be used.
+Do you want to continue [Y/n]? ^Cabate@zed.fr:~/Projects/repos/cbse-newexp/cbse2011/chroot$sudo apt-get install vlc
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libupnp6 vlc-nox vlc-plugin-notify vlc-plugin-pulse
+Suggested packages:
+  videolan-doc
+The following packages will be REMOVED:
+  libupnp3
+The following NEW packages will be installed:
+  libupnp6
+The following packages will be upgraded:
+  vlc vlc-nox vlc-plugin-notify vlc-plugin-pulse
+4 upgraded, 1 newly installed, 1 to remove and 7 not upgraded.
+Need to get 3,545 kB/4,931 kB of archives.
+After this operation, 22.5 kB of additional disk space will be used.
+Do you want to continue [Y/n]? ^Cabate@zed.fr:~/Projects/repos/cbse-newexp/cbse2011/chroot$
+

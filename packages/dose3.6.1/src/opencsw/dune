@@ -1,0 +1,5 @@
+(library
+ (name dose_opencsw)
+ (public_name dose3.opencsw)
+ (libraries extlib cudf dose3.common dose3.versioning)
+ (flags (:standard)))

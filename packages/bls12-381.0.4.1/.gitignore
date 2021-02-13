@@ -1,0 +1,6 @@
+_build
+_opam
+*.install
+*.merlin
+_coverage
+node_modules

@@ -1,0 +1,9 @@
+Package: negative
+Version: 1.0
+Architecture: any
+Build-Depends: foo <!stage1>, bar <!nocheck>, baz <!stage1 !nocheck>, blub <!stage1> <dummy>, bla <dummy> <!nocheck>
+
+Package: positive
+Version: 1.0
+Architecture: any
+Build-Depends: build-essential <stage1>, build-essential <nocheck>, build-essential <stage1 nocheck>, build-essential <stage1> <dummy>, build-essential <dummy> <nocheck>

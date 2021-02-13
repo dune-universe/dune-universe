@@ -1,0 +1,37 @@
+output-version: 1.2
+report:
+ -
+  package: confluent-missing
+  version: 1
+  status: broken
+  reasons:
+   -
+    missing:
+     pkg:
+      package: c
+      version: 1
+      unsat-dependency: d
+     depchains:
+      -
+       depchain:
+        -
+         package: confluent-missing
+         version: 1
+         depends: p (= 1) | q (= 1)
+        -
+         package: q
+         version: 1
+         depends: q (= 2)
+        -
+         package: q
+         version: 2
+         depends: q (= 3)
+        -
+         package: q
+         version: 3
+         depends: c
+ 
+background-packages: 7
+foreground-packages: 1
+total-packages: 8
+broken-packages: 1

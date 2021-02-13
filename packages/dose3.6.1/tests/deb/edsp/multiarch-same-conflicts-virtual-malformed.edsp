@@ -1,0 +1,33 @@
+Request: EDSP 0.5
+Architecture: arch1
+Architectures: arch2
+Install: a1:arch1 a1:arch2
+Strict-Pinning: no
+
+Package: a1
+Architecture: arch1
+Version: 1
+Conflicts: virta, a1, a2
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a1
+Architecture: arch2
+Version: 1
+Provides: virta
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+
+Package: a2
+Architecture: arch2
+Version: 1
+Provides: virta
+APT-ID: 1
+Multi-Arch: same
+APT-Pin: 500
+APT-Candidate: yes
+

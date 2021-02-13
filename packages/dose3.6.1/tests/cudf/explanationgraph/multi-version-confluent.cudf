@@ -1,0 +1,39 @@
+package: multi-version-confluent
+version: 1
+depends: p  
+
+package: p
+version: 1
+depends: q = 1
+
+package: p
+version: 2
+depends: q = 2
+
+package: p
+version: 3
+depends: q = 3
+
+package: q
+version: 1
+depends: t = 1
+
+package: q
+version: 2
+depends: t = 2
+
+package: q
+version: 3
+depends: t = 3
+
+package: t
+version: 1
+depends: z 
+
+package: t
+version: 2
+depends: z
+
+package: t
+version: 3
+depends: z

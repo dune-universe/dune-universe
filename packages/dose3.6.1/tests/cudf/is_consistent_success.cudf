@@ -1,0 +1,8 @@
+package: a
+version: 1
+depends: b
+installed: true
+
+package: b
+version: 1
+installed: true

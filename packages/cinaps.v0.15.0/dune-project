@@ -1,4 +1,0 @@
-(lang dune 1.10)
-
-(name cinaps)
-(version v0.15.0)

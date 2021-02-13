@@ -1,0 +1,17 @@
+
+package: alpha
+version: 1
+depends: papa
+
+package: bravo
+version: 1
+depends: quebec
+
+package: papa
+version: 1
+conflicts: quebec
+
+package: quebec
+version: 1
+
+request: 

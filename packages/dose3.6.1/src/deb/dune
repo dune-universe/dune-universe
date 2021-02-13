@@ -1,0 +1,14 @@
+(library
+ (name dose_debian)
+ (public_name dose3.debian)
+ (libraries extlib cudf dose3.common dose3.versioning dose3.pef)
+ (flags (:standard)))
+
+(rule
+ (alias runtest)
+ (deps ../../tests/DebianPackages/Packages_20201226T144309Z_amd64.xz
+   ../../tests/deb/discriminants ../../tests/deb/essential)
+ (action
+  (chdir
+   ../../
+   (run ./src/deb/tests/tests.exe))))

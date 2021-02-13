@@ -1,0 +1,10 @@
+package: aa
+version: 1
+depends: bb | cc
+
+package: bb
+depends: aa
+version: 1
+
+package: cc
+version: 1

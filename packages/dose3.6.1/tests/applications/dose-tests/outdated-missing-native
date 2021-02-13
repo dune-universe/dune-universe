@@ -1,0 +1,73 @@
+output-version: 1.2
+report:
+ -
+  package: cc
+  version: 17.42
+  architecture: arch1
+  source: cc (= 17.42)
+  status: broken
+  reasons:
+   -
+    conflict:
+     pkg1:
+      package: ab1
+      version: 3.4
+      architecture: arch1
+      source: as (= 3.4)
+      unsat-conflict: Source conflict (src/as/3.4) (!= 1)
+     pkg2:
+      package: ab2
+      version: 76 < .
+      architecture: dummy
+      equivs: 
+      source: as (= 76 < .)
+     depchain1:
+      -
+       depchain:
+        -
+         package: cc
+         version: 17.42
+         architecture: arch1
+         depends: ab1:arch1 (< 76)
+     depchain2:
+      -
+       depchain:
+        -
+         package: cc
+         version: 17.42
+         architecture: arch1
+         depends: ab2:arch1 (> 76)
+   -
+    conflict:
+     pkg1:
+      package: ab1
+      version: 3.4 < . < 76
+      architecture: dummy
+      equivs: = 3.4
+      source: as (= 3.4 < . < 76)
+      unsat-conflict: Source conflict (src/as/3.4) (!= 4)
+     pkg2:
+      package: ab2
+      version: 76 < .
+      architecture: dummy
+      equivs: 
+      source: as (= 76 < .)
+     depchain1:
+      -
+       depchain:
+        -
+         package: cc
+         version: 17.42
+         architecture: arch1
+         depends: ab1:arch1 (< 76)
+     depchain2:
+      -
+       depchain:
+        -
+         package: cc
+         version: 17.42
+         architecture: arch1
+         depends: ab2:arch1 (> 76)
+ 
+total-packages: 19
+broken-packages: 1

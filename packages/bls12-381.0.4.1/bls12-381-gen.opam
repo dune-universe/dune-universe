@@ -1,0 +1,19 @@
+opam-version: "2.0"
+authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+synopsis: "Functors to generate BLS12-381 primitives based on stubs"
+description: "Functors to generate BLS12-381 primitives based on stubs"
+homepage: "https://gitlab.com/dannywillems/ocaml-bls12-381"
+dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
+bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
+license: "MIT"
+depends: [
+  "ocaml" {>= "4.08" & < "4.12"}
+  "dune" {>= "2.7"}
+  "ff-sig" {>= "0.6.1" & < "0.7.0"}
+  "zarith" {>= "1.10" & < "2.0"}
+  # The constraint < 2.6 is a temporary fix because there is a circular
+  # dependency between ocamlformat, odoc and bisect_ppx 2.6.0
+  "bisect_ppx" { with-test & >= "2.5" & < "2.6.0"}
+]
+build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]

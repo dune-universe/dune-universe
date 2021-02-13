@@ -1,0 +1,9 @@
+;; -*- mode: lisp; -*-
+
+(library
+ (name travesty_test)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane))
+ (libraries ppx_inline_test.config ppx_expect.config ppx_expect.config_types
+   ppx_expect.common sexplib0 stdio base travesty))

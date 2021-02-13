@@ -1,0 +1,14 @@
+(library
+ (name dose_npm)
+ (public_name dose3.npm)
+ (libraries extlib base64 cudf dose3.common dose3.versioning dose3.pef)
+ (flags (:standard)))
+
+(ocamllex npm_lexer)
+
+(ocamlyacc npm_parser)
+
+(rule
+ (alias runtest)
+ (action
+  (run ./tests/tests.exe)))

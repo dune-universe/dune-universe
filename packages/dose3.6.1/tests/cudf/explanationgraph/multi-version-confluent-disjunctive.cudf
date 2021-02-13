@@ -1,0 +1,39 @@
+package: multi-version-confluent-disjunctive
+version: 1
+depends: p  
+
+package: p
+version: 1
+depends: q
+
+package: p
+version: 2
+depends: q
+
+package: p
+version: 3
+depends: q
+
+package: q
+version: 1
+depends: t
+
+package: q
+version: 2
+depends: t
+
+package: q
+version: 3
+depends: t
+
+package: t
+version: 1
+depends: z 
+
+package: t
+version: 2
+depends: z
+
+package: t
+version: 3
+depends: z

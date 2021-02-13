@@ -1,0 +1,69 @@
+(executable
+ (name distcheck)
+ (public_name dose-distcheck)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse)
+ (modules distcheck))
+
+(executable
+ (name ceve)
+ (public_name dose-ceve)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse)
+ (modules ceve))
+
+(executable
+ (name challenged)
+ (public_name dose-challenged)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse parmap)
+ (modules challenged))
+
+(executable
+ (name outdated)
+ (public_name dose-outdated)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse)
+ (modules outdated))
+
+(executable
+ (name aptCudf)
+ (public_name apt-cudf)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse dose3.debian)
+ (modules aptCudf))
+
+(executable
+ (name debBuildcheck)
+ (public_name dose-builddebcheck)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse dose3.debian)
+ (modules debBuildcheck))
+
+(executable
+ (name debCoinstall)
+ (public_name dose-deb-coinstall)
+ (libraries extlib dose3.common dose3.algo dose3.doseparse dose3.debian)
+ (modules debCoinstall))
+
+(rule
+ (alias runtest)
+ (deps
+  distcheck.exe
+  ceve.exe
+  challenged.exe
+  outdated.exe
+  aptCudf.exe
+  debBuildcheck.exe
+  debCoinstall.exe
+  (:lst dose-tests.list)
+  (glob_files ../../tests/algo/*)
+  (glob_files ../../tests/applications/dose-tests/*)
+  (glob_files ../../tests/applications/dose-tests/versionend_provides/*)
+  (glob_files ../../tests/applications/outdated/*)
+  (glob_files ../../tests/cudf/*)
+  (glob_files ../../tests/cudf/explanationgraph/*)
+  (glob_files ../../tests/cudf/incomplete/*)
+  (glob_files ../../tests/deb/*)
+  (glob_files ../../tests/deb/edsp/*)
+  (glob_files ../../tests/DebianPackages/*)
+  (glob_files ../../tests/deb/misc/*)
+  (glob_files ../../tests/opam/*))
+ (action
+  (chdir
+   ../../
+   (run ./src/applications/dose-tests.py %{lst}))))

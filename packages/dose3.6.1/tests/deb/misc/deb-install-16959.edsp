@@ -1,0 +1,9 @@
+Package: libc6-dev
+Version: 2.17-97
+Architecture: amd64
+Breaks: binutils-gold (<< 2.20.1-11)
+
+Package: binutils
+Version: 2.24-3
+Architecture: amd64
+Provides: binutils-gold
