@@ -1,3 +1,21 @@
+1.8.0
+-----
+
+  * Upgrade the internal AST from 4.07 to 4.11
+    #52
+    (Gabriel Scherer, review by Emilio J. Gallego Arias)
+
+  * Update lower bound for `ppx_tools_versioned` and
+    `ocaml-migrate-parsetree` to 4.11 capable versions
+    (Emilio J. Gallego Arias)
+
+1.7.2
+-----
+
+  * Remove a warning in OCaml 4.11
+    #49
+    (Kate Deplaix)
+
 1.7.1
 -----
 
