@@ -1,0 +1,9 @@
+(library
+ (name mlpost_dot)
+ (public_name mlpost.dot)
+ (synopsis "Library for Mlpost which use dot to place Box, Picture, ...")
+ (libraries mlpost))
+
+(ocamllex xdot_lexer)
+
+(ocamlyacc xdot_parser)

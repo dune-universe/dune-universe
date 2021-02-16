@@ -1,0 +1,43 @@
+version: "0.9"
+opam-version: "2.0"
+maintainer: "filliatr@lri.fr"
+authors: [
+  "Romain Bardou"
+  "Francois Bobot"
+  "Jean-Christophe Filliâtre"
+  "Johannes Kanig"
+  "Stephane Lescuyer"
+]
+homepage: "https://github.com/backtracking/mlpost"
+dev-repo: "git+https://github.com/backtracking/mlpost.git"
+bug-reports: "https://github.com/backtracking/mlpost/issues"
+doc: "https://backtracking.github.io/mlpost"
+synopsis : "OCaml library on top of Metapost"
+description: "Library for building graphics and figures similarly to Metapost"
+license: "LGPL-2.1"
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
+depends: [
+  "ocaml" { >= "4.07.0" }
+  "ocamlfind" #during execution also
+  "bitstring" { >= "3.0.0" }
+  "ppx_bitstring"
+  "cairo2" { >= "0.6.2" }
+  "dune" { >= "2.7.0" }
+  "ocaml-migrate-parsetree" {< "2.0.0"}
+]
+depopts: [
+  "graphics"
+]

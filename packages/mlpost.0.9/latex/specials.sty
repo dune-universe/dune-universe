@@ -1,0 +1,46 @@
+% This file
+
+% Adds support for extended MetaPost features (transparency)
+\def\LoadMetaPostSpecialExtensions{%
+  \AtBeginDocument{%
+    \edef\@tempa{%
+      \catcode`\noexpand\=\the\catcode`\= %
+      \catcode`\noexpand\!\the\catcode`\! %
+      \catcode`\noexpand\@\the\catcode`\@ %
+      \catcode`\noexpand\?\the\catcode`\? %
+    }%
+    \@makeother\=%
+    \IfFileExists{supp-pdf}{%
+      \IfFileExists{supp-mis}{%
+        \IfFileExists{supp-mpe}{%
+          \input{supp-mis}%
+          \input{supp-mpe}%
+          \input{supp-mpe_mod}%
+          \MPcmykcolorstrue
+          \MPspotcolorstrue
+          \chardef\makeMPintoPDFobject=1 %
+        }{%
+          \GPT@warn{%
+            Cannot enable MetaPost Special Extensions,\MessageBreak
+            because supp-mpe.tex is missing%
+          }%
+        }%
+      }{%
+        \GPT@warn{%
+          Cannot enable MetaPost Special Extensions,\MessageBreak
+          because supp-mis.tex is missing%
+        }%
+      }%
+    }{%
+      \GPT@warn{%
+        Cannot enable support for MetaPost images,\MessageBreak
+        because supp-pdf.tex is missing%
+      }%
+    }%
+    \@tempa
+  }%
+}
+\ifx\@onlypreamble\@undefined
+\else
+  \@onlypreamble\LoadMetaPostSpecialExtensions
+\fi

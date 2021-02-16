@@ -1,0 +1,320 @@
+\documentclass[nodefaultblocks]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{beamerthemesplit}
+\usepackage{stmaryrd}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{pifont}
+\usepackage{shadow}   
+\usepackage{alltt}   
+\usepackage{tikz}
+\usepackage[dvips]{epsfig}
+
+\usetheme{Madrid}
+
+\beamertemplatenavigationsymbolsempty
+
+\definecolor{yel}{rgb}{.9,.8,.4}
+\definecolor{mygray}{rgb}{0.85,0.85,0.85}
+
+\def \ebox #1{\colorbox{yel}{\mbox {\strut #1}}}
+\def \gbox #1{\colorbox{mygray}{\mbox {\strut #1}}}
+
+\title{MlPost}
+\author{The MlPost team}
+\institute{Proval}
+\date{Réunion Proval}
+
+\begin{document}
+
+\begin{frame}
+  
+  \begin{center}
+    {\huge{MlPost - un outil de dessin scientifique}}\\[2em]
+    {\large \alert{Jean-Christophe Filli\^atre, Johannes Kanig, St\'ephane Lescuyer}}
+    \medskip
+    \hfill\includegraphics[height=5cm]{cfg.mps}
+  \end{center}
+  \hfill\includegraphics{proval.mps}
+%  \hfill\includegraphics[width=0.15\textwidth]{lrilogo.jpg}ρ
+\end{frame}
+
+\begin{frame}\frametitle{Motivation}
+
+  \begin{block}{Problème}
+    Un outil capable de combiner
+    \begin{itemize}
+      \item des éléments de dessin souvent simples
+      \item du Latex, et prise en compte de sa taille
+      \item Automatisation commode (dessin de grille, placement d'arbre)
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Solutions existantes}
+    \begin{itemize}
+      \item outils graphiques gratuits style {\tt dia} : Pas de support Latex,
+        pas d'automatisation
+      \item outils ``langages de programmation'': Metapost, Tikz
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Metapost}
+  \begin{minipage}{0.3\linewidth}
+  \includegraphics{mpex.mps}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.6\linewidth}
+    \small
+    \begin{alltt}
+beginfig(1);\\
+\hspace*{0pt}~ numeric u;\\
+\hspace*{0pt}~ u = 1cm;\\
+\hspace*{0pt}~ draw (0,2u)---(0,0)---(4u,0);\\
+\hspace*{0pt}~ pickup pencircle scaled 1pt;\\
+\hspace*{0pt}~ draw (0,0)\{up\}\\
+\hspace*{0pt}~ for i=1 upto 8: \\
+\hspace*{0pt}~~~  ..(i/2,sqrt(i/2))*u  \\
+\hspace*{0pt}~ endfor;\\
+\hspace*{0pt}~ label.lrt(btex $\sqrt x$ etex, 
+\hspace*{0pt}~ ~ ~ ~ ~ ~ (3,sqrt 3)*u);\\
+\hspace*{0pt}~ label.bot(btex $x$ etex, (2u,0));\\
+\hspace*{0pt}~ label.lft(btex $y$ etex, (0,u));\\
+endfig;\\
+    \end{alltt}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Tikz}
+  \begin{minipage}[]{0.45\textwidth}
+  \footnotesize
+  \begin{verbatim}
+  \shade[top color=blue,
+             bottom color=gray!50] 
+      (0,0) parabola 
+            (1.5,2.25) |- (0,0);
+  \draw[style=help lines] 
+         (0,0) grid (3.9,3.9)
+       [step=0.25cm]      
+         (1,2) grid +(1,1);
+
+  \draw[->] (-0.2,0) -- 
+      (4,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- 
+      (0,4) node[above] {$f(x)$};
+
+  \draw (-.5,.25) 
+        parabola bend (0,0) (2,4) 
+        node[below right] {$x^2$};
+  \end{verbatim}
+  \end{minipage}
+  \begin{minipage}[]{0.4\textwidth}
+    \begin{tikzpicture}[scale=1.4]
+    \shade[top color=blue,bottom color=gray!50] 
+        (0,0) parabola (1.5,2.25) |- (0,0);
+    \draw[style=help lines] (0,0) grid (3.9,3.9)
+         [step=0.25cm]      (1,2) grid +(1,1);
+
+    \draw[->] (-0.2,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-0.2) -- (0,4) node[above] {$f(x)$};
+
+    \draw (-.5,.25) parabola bend (0,0) (2,4) node[below right] {$x^2$};
+  \end{tikzpicture}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}\frametitle{Pourquoi pas MetaPost ou Tikz ?}
+  \begin{block}{MetaPost}
+    \begin{itemize}
+      \item Pas de structures de données
+      \item Pas de fonctions (seulement macros textuelles) 
+      \item précédences des opérateurs très bizarres
+    \end{itemize}
+  \end{block}
+  \begin{block}{Tikz}
+    \begin{itemize}
+      \item langage très complet, similaire dans l'esprit à MetaPost
+      \item les dessins se font directement en \LaTeX
+      \item compliqué à prendre en main 
+    \end{itemize}
+  \end{block}
+
+  \medskip
+
+  les deux : Encore un langage à apprendre, messages d'erreur
+  incompréhensibles, \dots
+\end{frame}
+
+\begin{frame}\frametitle{MlPost}
+  \begin{block}{A commencé comme un ``pretty-printeur'' de Metapost}
+    \begin{itemize}
+      \item pour profiter des capacités de Metapost 
+      \item typage et expressivité de Caml
+      \item developpement facilité d'extensions
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Aujourd'hui : bibliothèque OCaml}
+    \begin{itemize}
+      \item un ``cross-compiler'' vers Metapost
+      \item interface fonctionnelle
+      \item memoization des différents motifs d'un dessin
+      \item utiliser le côté impératif de MetaPost pour du partage
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Brique de base : les chemins}
+  \begin{block}{Les chemins}
+    \begin{itemize}
+      \item Une liste de points, connectés par des lignes droites, des courbes
+        de Bézier, \dots
+      \item on peut les fermer, les combiner, les intersecter, remplir la
+        surface délimitée, s'en servir pour faire du {\em clipping}, \dots
+    \end{itemize}
+  \end{block}
+  \begin{center}
+  \includegraphics{path.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Types de base}
+
+  \begin{block}{Types différents}
+    \begin{itemize}
+      \item longueurs : {\tt Num}
+      \item points : {\tt Point}
+      \item chemins : {\tt Path}
+      \item transformations affines : {\tt Transform}
+      \item plumes : {\tt Pen}
+      \item couleurs : {\tt Color}
+    \end{itemize}
+  \end{block}
+
+  \begin{center}
+    \includegraphics[width=0.3\textheight]{colortriangle.mps}
+  \end{center}
+  
+\end{frame}
+
+\begin{frame}\frametitle{Objets avancés}
+  \begin{block}{On peut se servir de \dots}
+    \begin{itemize}
+      \item Boîtes rondes ou rectangulaires qui contiennent du MlPost
+        arbitraire
+      \item des chemins avec des flèches
+      \item \LaTeX\ arbitraire 
+      \item \dots 
+    \end{itemize}
+  \end{block}
+  \bigskip
+  \begin{center}
+    \includegraphics[width=0.5\textheight]{cheno.mps}
+  \end{center}
+  
+\end{frame}
+
+\begin{frame}\frametitle{Pictures}
+
+  \begin{block}{Une figure est \dots}
+    \begin{itemize}
+      \item Un objet \LaTeX
+      \item Une liste de commandes
+      \item tout ce qui peut être dessiné avec MlPost ! 
+    \end{itemize}
+  \end{block}
+
+  \begin{minipage}[]{0.5\textwidth}
+    \begin{block}{Manipulation des figures}
+      \begin{itemize}
+        \item Rotation, Translation
+        \item Placement à côté, en dessous
+        \item Scaling 
+        \item \dots 
+      \end{itemize}
+    \end{block}
+  \end{minipage}
+  \begin{minipage}[]{0.4\textwidth}
+    \begin{center}
+      \includegraphics[height=0.5\textheight]{pictures.mps}
+    \end{center}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}\frametitle{Première Extension : les arbres}
+  \begin{block}{dessiner un arbre \dots}
+    \begin{itemize}
+      \item c'est facile !
+      \item il suffit de donner la structure de l'arbre et les options de
+        dessin 
+    \end{itemize}
+  \end{block}
+  \begin{minipage}[]{0.45\textwidth}
+    \begin{center}
+      \includegraphics[height=0.3\textheight]{tree2.mps}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}[]{0.45\textwidth}
+    \begin{center}
+      \includegraphics[height=0.3\textheight]{tree6.mps}
+    \end{center}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}\frametitle{Deuxième Extension : les diagrammes}
+  \begin{block}{Pour dessiner un graphe}
+    \begin{itemize}
+      \item Donner les noeuds avec le contenu
+      \item Donner les arrêtes avec les labels, la courbure, \ldots
+      \item Jouer ! 
+    \end{itemize}
+  \end{block}
+  \begin{center}
+    \includegraphics[height=5cm]{cfg.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Dernière Extension : Plot}
+  \begin{block}{Plotter une fonction}
+    \begin{itemize}
+      \item Dessiner des axes
+      \item Ajouter une grille
+      \item Plotter des fonctions
+    \end{itemize}
+  \end{block}
+  \begin{center}
+    \includegraphics[height=5cm]{florence.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Conclusion}
+
+  \begin{block}{Points forts de MlPost}
+    \begin{itemize}
+      \item les mêmes que MetaPost ! 
+      \item Bibliothèque Caml - dans votre langage de programmation favori
+      \item The sky is the limit : on attend vos extensions
+    \end{itemize}
+  \end{block}
+  
+  \begin{block}{Inconvénients}
+    \begin{itemize}
+      \item Syntaxe un peu lourde (inévitable, sans réinventer un langage),
+        camlp4~?
+      \item Toutes les erreurs ne peuvent pas être détectées par typage
+    \end{itemize}
+    Pour l'instant :
+    \begin{itemize}
+      \item Pas toutes les fonctionnalités de MetaPost, peu d'extensions
+        comparé à Tikz
+      \item ``lock-in'' de certaines extensions
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\end{document}

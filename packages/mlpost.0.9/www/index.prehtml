@@ -1,0 +1,131 @@
+<html>
+
+<head>
+<#iso>
+<title>
+Mlpost</title>
+<meta name="Keywords" content="metapost ocaml">
+</head>
+
+<body>
+
+<h1>Mlpost</h1>
+
+<#fr>
+Mlpost est une interface <#ocaml> pour <#metapost>.
+</#fr>
+<#en>
+Mlpost is an <#ocaml> interface to <#metapost>.
+</#en>
+<#de>
+Mlpost ist ein <#ocaml> Interface für <#metapost>.
+</#de>
+
+<p>
+
+<center>
+<a href="examples/tree.ml.html"><img src="examples/tree1.png" alt="no image"></a>
+</center>
+
+
+<h3><#fr>Exemples</#fr><#en>Examples</#en><#de>Beispiele</#de></h3>
+
+<#fr>Ne manquez pas notre <a href="examples/">galerie d'exemples</a>.</#fr>
+<#en>Have a look at our <a href="examples/">examples</a>.</#en>
+<#de><a href="examples/">Beispiele</a> von Mlpost-Programmen.</#de>
+
+<h3>Documentation</h3>
+
+<#fr>Il existe un <a href="manual.fr.html">petit manuel</a>.</#fr>
+<#en>There is a <a href="manual.en.html">small manual</a>.</#en>
+<#de>Es gibt ein <a href="manual.en.html">kleines Handbuch</a>.</#de>
+
+<#fr>Il y a également une <a href="download/FAQ">FAQ</a>.</#fr>
+<#en>There also is a <a href="download/FAQ">FAQ</a>.</#en>
+<#de>Es gibt ebenfalls eine <a href="download/FAQ">FAQ</a>.</#de>
+<p>
+
+<#fr>Parcourir l'<a href="doc/">API</a>. Note : Tous les modules sont
+regroupés à l'intérieur d'un unique module Mlpost.</#fr>
+<#en>Browse the <a href="doc/">API</a>. Note that all modules are
+packaged into a single module Mlpost.</#en>
+<#de>Werfen Sie einen Blick auf die <a href="doc/">API</a>. Alle Module
+befinden sich in einem Hauptmodul Mlpost.  </#de>
+
+<p>
+<#fr>Notre <a href="mlpost-jfla.pdf">article</a> et nos
+<a href="slides-jfla.pdf">slides</a> des
+<a href="http://jfla.inria.fr/2009/"> JFLA</a> sont disponibles.
+</#fr>
+</p>
+
+<h3>Download</h3>
+<p>
+<#fr>
+La version courante est <#version>.
+</#fr>
+<#en>
+Current version is <#version>.
+</#en>
+<#de>
+Die aktuelle Version ist <#version>.
+</#de>
+
+<ul>
+<li>
+  Sources: <a href="download/mlpost-<#version>.tar.gz">mlpost-<#version>.tar.gz</a>
+<li>
+  Opam
+  <a href="http://opam.ocaml.org/packages/mlpost/mlpost.<#version>/">package</a>
+<li>
+  Debian <a href="https://packages.debian.org/stable/tex/mlpost">package</a>
+</ul>
+<a href="download/CHANGES">CHANGES</a>
+</p>
+<p>
+
+<h3><#fr>Contributions</#fr><#en>Contributions</#en><#de>Änderungsvorschläge</#de></h3>
+
+  <#fr> Si vous voulez contribuer, le projet Mlpost utilise <a
+  href="https://github.com/backtracking/mlpost">github</a> pour son développement.
+  </#fr>
+  <#en> If you want to contribute, the Mlpost project uses <a
+  href="https://github.com/backtracking/mlpost">github</a> for its development.
+  </#en>
+  <#de> Falls Sie zum Mlpost-Projekt beitragen wollen, können Sie mit diesem
+  Befehl einen Anonymen Zugang zum <a href="https://github.com/backtracking/mlpost">github</a>-Repository bekommen:
+  </#de>
+<!--
+  <#fr>La branche principale de développement est <code>master</code>
+  (attention, elle peut contenir des erreurs ou des features inachévées), mais
+  il existent aussi des branches pour chaque version distribuée. Nous
+  apprécions chaque patch qui nous est envoyé.</#fr>
+  <#en> The main development branch is called <code>master</code> (Attention,
+  the code may contain errors or unfinished features), but there are also
+  branches for each released version. We are happy to receive patches.</#en>
+  <#de> Der Hauptentwicklungszweig heißt <code>master</code>, aber es gibt
+  Branchen für alle veröffentlichten Versionen. Wir freuen uns über jede
+  Patch-Zusendung.</#de>
+-->
+
+
+<h3><#fr>Auteurs</#fr><#en>Authors</#en><#de>Autoren</#de></h3>
+
+<#fr>Mlpost est développé par</#fr>
+<#en>Mlpost is developed by</#en>
+<#de>Mlpost wird entwickelt von</#de>
+<ul>
+<li><a href="http://romain.bardou.fr/">Romain Bardou</a>
+<li>François Bobot
+<li><a href="http://www.kanig.org/">Johannes Kanig</a>
+<li>Stéphane Lescuyer
+<li><a href="http://www.lri.fr/~filliatr/">Jean-Christophe Filliâtre</a>
+</ul>
+
+<hr>
+<a href="index.fr.html">Français</a> /
+<a href="index.en.html">English</a> /
+<a href="index.de.html">Deutsch</a>
+
+</body>
+</html>

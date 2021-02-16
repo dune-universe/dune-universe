@@ -1,0 +1,346 @@
+\documentclass[nodefaultblocks]{beamer}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{mflogo,beamerthemesplit,alltt} 
+\usepackage{tikz}
+
+\beamertemplatenavigationsymbolsempty
+%\usecolortheme{crane}
+\usetheme{Madrid}
+
+\newcommand{\ocaml}{OCaml}
+\newcommand{\camllight}{Caml Light}
+\newcommand{\fmpost}{\textit{functional} \metapost}
+\newcommand{\mlpost}{\textrm{\textsc{Mlpost}}}
+\newcommand{\metapost}{\MP}
+\newcommand{\nomdetikz}{\textsf{TikZ}}
+\newcommand{\pstricks}{\textsf{PSTricks}}
+\newcommand{\dia}{\textsf{Dia}}
+\newcommand{\xfig}{\textsf{Xfig}}
+\newcommand{\postscript}{PostScript}
+\newcommand{\mlpictex}{mlP\hspace{-0.2em}\raisebox{-0.2em}{i}\hspace{-0.1em}c\hspace{-0.1em}\TeX}
+\newcommand{\Item}{\bigskip\item}
+\newcommand{\bred}[1]{\alert{\textbf{#1}}}
+\let\emph\bred
+
+\title[Faire bonne figure avec \mlpost]{\LARGE Faire bonne figure avec \mlpost}
+\author[Bardou/Filliâtre/Kanig/Lescuyer]{R. Bardou
+        \& J.-C. Filliâtre
+        \& J. Kanig
+        \& S. Lescuyer \\[1em]
+      Équipe ProVal \\[0.5em]
+      INRIA Saclay -- Île-de-France \\
+      CNRS / LRI Université Paris-Sud }
+%\institute[proval]{ProVal}
+\date{JFLA  --- 3 février 2009}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+  \begin{center}
+    \includegraphics[width=0.3\textwidth]{ford.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Motivations 1/2}
+comment réaliser de belles figures contenant des éléments \LaTeX\ ?
+
+\vfill
+
+\begin{center}
+  \includegraphics[width=\textwidth]{yannick1.mps}
+\end{center}
+
+\vfill
+
+\begin{center}
+  \includegraphics{another_list.mps}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Motivations 2/2}
+comment réaliser des figures utilisant des calculs ?
+
+\vfill
+
+\begin{columns}
+\column{0.4\textwidth}  
+\begin{center}
+  \includegraphics{bresenham.mps}\\
+  \medskip
+  l'algorithme de Bresenham
+\end{center}
+\column{0.6\textwidth}  
+\begin{center}
+  \includegraphics[width=\textwidth]{figures_flo/chrono2_0_aplas.mps}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Solutions existantes}
+  \begin{itemize}
+  \item interfaces graphiques : \dia, \xfig
+    \begin{itemize}
+    \item[$+$] simple à utiliser (CQVVECQVO)
+    \item[$-$] intégration d'éléments \LaTeX\ difficile
+    \item[$-$] pas d'automatisation possible
+    \end{itemize}
+  \Item bibliothèques \LaTeX\ : \pstricks, \nomdetikz/PGF
+    \begin{itemize}
+    \item[$+$] intégration avec \LaTeX\
+      \begin{tikzpicture}[baseline=(a.base)]
+        \path[use as bounding box] 
+        (0,0) node[draw,style=dashed] (a) {optimale};
+        \draw[->] (a) .. controls +(+2cm,-1cm) and +(+2cm,0cm) .. (a);
+      \end{tikzpicture}
+    \item[$-$] programmation difficile
+    \end{itemize}
+  \Item outils externes : \metapost
+    \begin{itemize}
+    \item[$+$] très bonne intégration avec \LaTeX
+    \item[$+$] langage spécifique
+    \item[$-$] langage spécifique, avec de nombreux défauts
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Notre solution : \mlpost}
+  \begin{block}{}
+    Une bibliothèque \ocaml{} basée sur \MP
+  \end{block}
+  \begin{itemize}
+    \item programmer sa figure en \ocaml{}
+      \begin{itemize}
+        \smallskip
+    \item possibilité de développer des extensions de haut niveau
+
+        \smallskip
+    \item se prémunir contre un certain nombre d'erreurs grâce au typage
+      \end{itemize}
+
+      \medskip
+    \item bonne intégration avec \LaTeX{} grâce à \MP
+%    \item avoir l'occasion de venir aux JFLA !
+  \end{itemize}
+  \begin{center}
+    \includegraphics{mlposttree.mps}
+  \end{center}
+  un projet similaire utilisant Haskell : \fmpost
+\end{frame}
+
+\begin{frame}\frametitle{Fonctionnement de \mlpost}
+\begin{center}
+\includegraphics[width=\textwidth]{stages.mps}
+\bigskip
+
+\begin{minipage}{.35\textwidth}
+\begin{alltt}\small
+open Mlpost\\
+let figure = draw ...
+\end{alltt}
+\end{minipage}
+\begin{minipage}{.33\textwidth}
+\begin{alltt}\small
+beginfig(1)\\
+~~draw ...;\\
+~~...\\
+endfig;
+\end{alltt}
+\end{minipage}
+\begin{minipage}{.30\textwidth}
+\hfill\includegraphics[width=.9\textwidth]{rondscolores.mps}
+\end{minipage}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{}
+  \begin{center}
+    \Large\emph{démo !}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Choix de conception}
+
+  \begin{itemize}
+  \item \emph{persistance} \par
+    \quad permet de réutiliser les éléments d'une figure
+  \Item \emph{arguments optionnels} \par
+    \quad évite la pollution de l'espace de noms \par
+    \quad exemple : \texttt{Box.empty}
+  \Item une utilisation de \emph{variants polymorphes} \par
+    \begin{center}
+      \includegraphics{sous_typage.mps}
+    \end{center}
+  \Item \emph{minimalité de l'API} \par
+    \quad effort limité de notre part / API cependant complète
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Architecture}
+  \begin{center}
+    \includegraphics[width=.8\textwidth]{architecture.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Problèmes techniques}
+  idéalement, on souhaite interfacer les 7 types de \metapost\
+  dans 7 modules \ocaml\ différents 
+
+\bigskip
+problème : il y a \emph{circularité }
+
+\begin{alltt}
+~~Transform.shifted: Point.t -> Transform.t \\
+~~Point.transform: Transform.t -> Point.t -> Point.t \\
+~~... \\
+~~Picture.make : Command.t -> Picture.t \\
+~~Command.draw\_pic : Picture.t -> Command.t \\
+~~...
+\end{alltt}
+
+\begin{center}
+  \includegraphics{circularity.mps}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Solution}
+  \begin{itemize}
+  \item solution classique : tous les types dans un même module
+    (\texttt{types.mli})
+  \item tous les modules regroupés dans un module \texttt{Mlpost} avec
+    \texttt{-pack} 
+  \item une interface \texttt{mlpost.mli} réalisée avec \texttt{module
+    rec}
+  \end{itemize}
+
+  \vfill
+  \begin{center}
+    \includegraphics{circularity_solution.mps}
+  \end{center}
+
+\end{frame}
+
+\begin{frame}\frametitle{Traduction vers \metapost}
+  limitations de \metapost\ 
+  \begin{itemize}
+  \item profondeur de l'arbre de syntaxe
+  \item longueur des lignes
+  \item nombre d'éléments d'un même type
+  \end{itemize}
+
+  \bigskip
+  imposent une \emph{compilation} des expressions \metapost
+  \begin{itemize}
+  \item \textit{hash-consing} pour factoriser les sous-expressions communes
+  \item introduction de variables intermédiaires
+  \end{itemize}
+  \begin{center}
+    \includegraphics{tree_compile.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Applications d'\mlpost\ 1/5}
+\mlpost{} est déjà utilisé 
+\begin{itemize}
+\item pour des articles et des présentations (hier ici-même)
+\end{itemize}
+
+\vfill
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{figures_flo/chrono2_1.mps}
+  \includegraphics[width=0.4\textwidth]{figures_flo/automate_jfla.mps}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Applications d'\mlpost\ 2/5}
+  \begin{itemize}
+  \item pour deux thèses (une soutenue, une en cours)
+  \end{itemize}
+
+\vfill
+\begin{center}
+  \includegraphics[width=\textwidth]{yannick1.mps}
+\end{center}
+  
+\end{frame}
+
+\begin{frame}\frametitle{Applications d'\mlpost\ 3/5}
+  \begin{itemize}
+  \item pour plusieurs posters ProVal
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{why_platform.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Applications d'\mlpost\ 4/5}
+  \begin{itemize}
+  \item pour deux cours (U Paris Sud, ENS)
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{closure1.mps}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}\frametitle{Applications d'\mlpost\ 5/5}
+\begin{itemize}
+\item pour le site web \url{http://alt-ergo.lri.fr}
+\end{itemize}
+
+  \begin{center}
+    \includegraphics{alt_ergo.mps}
+  \end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Limitations de cette approche}
+
+  \begin{itemize}
+  \item limitations héritées de \metapost
+    \begin{itemize}
+    \item exemple : nombre de n\oe uds par chemin limité
+    \end{itemize}
+  \item limitations de l'interprétation par \texttt{latex}
+  \item calculs symboliques 
+    \begin{itemize}
+    \item difficulté pour écrire des branchements, des boucles, etc.
+    \end{itemize}
+  \item résolution d'équations linéaires de
+    \metapost\ non interfacée
+    \begin{itemize}
+    \item en partie remplacé par le placement relatif des boîtes
+    \end{itemize}
+  \end{itemize}
+
+\bigskip
+\emph{une solution} : reprogrammer l'équivalent de \metapost
+\begin{itemize}
+\item interface avec \LaTeX
+\item calcul des courbes de Bézier
+\end{itemize}
+\end{frame}
+
+% TODO figure
+\begin{frame}\frametitle{À votre tour de faire bonne figure}
+  \begin{center}
+    \Large \url{http://mlpost.lri.fr/}
+
+    \bigskip\bigskip
+    utilisez-le ! 
+
+    \bigskip
+    contribuez !
+
+  \end{center}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% ispell-local-dictionary: "francais"
+%%% TeX-master: t
+%%% End: 

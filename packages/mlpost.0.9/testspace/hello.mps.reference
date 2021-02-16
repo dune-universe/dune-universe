@@ -1,0 +1,15 @@
+%!PS
+%%BoundingBox: 0 0 21 7 
+%%HiResBoundingBox: 0 0 20.4738 6.8615 
+%%Creator: MetaPost 1.208
+%%CreationDate: 2010.07.30:1137
+%%Pages: 1
+%*Font: ecrm1000 9.96265 9.96265 65:912
+%%BeginProlog
+%%EndProlog
+%%Page: 1 1
+ 0 0 0 setrgbcolor
+0 0 moveto
+(hello) ecrm1000 9.96265 fshow
+showpage
+%%EOF

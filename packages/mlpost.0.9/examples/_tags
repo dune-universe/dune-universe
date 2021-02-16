@@ -1,0 +1,4 @@
+<animations*.*> : pkg_lablgtk2, pkg_cairo.lablgtk2
+<showlatex*.*> : pkg_lablgtk2, pkg_cairo.lablgtk2, pkg_mlpost
+<editor2*.*> : pkg_lablgtk2, pkg_cairo.lablgtk2, pkg_mlpost
+<lattice_lablgtk.*> : pkg_mlpost, pkg_mlpost_lablgtk

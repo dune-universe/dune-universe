@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{url}
+
+\newcommand{\mlpost}{Mlpost}
+\newcommand{\ocaml}{Ocaml}
+\newcommand{\metapost}{Metapost}
+\newcommand{\tikz}{TikZ}
+\title{Mlpost - A scientific drawing library}
+\date{}
+\author{Romain Bardou ~\hfill~ François Bobot \\ Jean-Christophe
+  Filliâtre ~\hfill~ Johannes Kanig \\ Stéphane Lescuyer}
+\begin{document}
+\maketitle
+
+We present \mlpost, an \ocaml\ library for drawing diagrams. Because
+of the possibility to include arbitrary \LaTeX\ text in figures
+and the resulting figure in \LaTeX\ documents, we believe
+it is particularly suited for the scientific community and ML
+programmers. Unlike other tools with similar features and scope,
+like \metapost\ or \tikz, \mlpost\ is {\em not} a stand-alone
+language, but a library for the modern \ocaml\ programming language.
+This greatly eases the construction of figures resulting from a
+computation or figures which are intended to illustrate the run of an
+algorithm.
+
+Initially based on the \metapost\ tool to do the actual
+computations, treatment of \LaTeX\ snippets and drawing, \mlpost\ has
+grown into a full-blown implementation of Bézier curves and interprets
+results of \LaTeX\ runs by itself, using the {\tt Cairo} library
+to draw objects. It supports output in PDF, Postscript, SVG,
+and even to X11 windows. Mlpost is freely distributed at \url{http://mlpost.lri.fr}.
+
+%TODO decide what we want to show
+The demo, if accepted, will show many examples from lectures, PhD
+theses, articles, talks, etc. In particular, it will focus on figures
+which illustrate the run of an algorithm. It will also show the basic
+principles of the \mlpost\ library.
+
+
+%TODO references
+\subsection*{Contact Information}
+%TODO more contact information? someone else?
+
+Johannes Kanig\\
+INRIA Saclay Île de France - ProVal\\
+Parc Club Orsay Université, bâtiment N\\
+4 rue Jacques Monod\\
+F-91893 Orsay cedex France\\
+Tel.: (+33) (0)1 72 92 59 79\\
+johannes.kanig@lri.fr
+
+
+
+\end{document}

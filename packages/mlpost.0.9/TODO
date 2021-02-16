@@ -1,0 +1,51 @@
+1) BUGS
+(des erreurs ou des TODOs très importantes)
+==========
+* installation des fichiers Latex pour inclusion d'images
+* images et sortie postscript ?
+* Probleme d'alignement avec slideshow + externalimage
+
+
+2) TODO
+(améliorer du comportement interne, doc, des bugs pas très importants)
+============
+
+* ranger le module Helpers
+* les fonctions de scale : pourquoi prennent-elles des Num.t, et non pas de
+  float ?
+* Box.group, align etc prennent des listes, Box.elts renvoie un tableau ?
+
+3) FEATURES
+(choses qui n'existent pas encore dans mlpost)
+===========================
+
+* refaire Diag : 
+    - pouvoir mettre n'importe quelle boîte
+    - pouvoir choisir les flêches
+    - interface fonctionelle
+    - le supprimer en fait ? indiquer "deprecated" au dessus ?
+
+* Box : 
+  - foncteur WithBox pour faciliter l'accès aux boîtes nommées
+  - clipping
+
+* Arrow :
+  - rajouter draw_box_box, draw_point_box, draw_box_point ou d'autres noms
+
+* fusionner Picture et Box ??
+
+* TODO BACKEND
+  - build-cycle
+  - Transformations sur les pens
+
+-------------------------------------------------------------------------------
+des liens avec des exemples :
+
+http://tex.loria.fr/prod-graph/zoonekynd/metapost/metapost.html
+http://melusine.eu.org/syracuse/metapost/cheno/illustrations/illustrations.html
+http://melusine.eu.org/syracuse/metapost/mpman/
+http://www.cs.ucc.ie/~dongen/mpost/mpost.html
+http://www.ursoswald.ch/metapost/tutorial.pdf
+http://remote.science.uva.nl/~heck/Courses/mptut.pdf
+(* ceci est metafun (metapost plus des macros) *)
+http://www.pragma-ade.com/general/manuals/metafun-p.pdf

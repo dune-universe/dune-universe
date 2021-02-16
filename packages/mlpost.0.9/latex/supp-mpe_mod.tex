@@ -1,0 +1,219 @@
+%Modification of supp-mpe.tex to allow the indirect transformation of
+% an image
+%This trick use a square which replace the image in the metapost computation.
+%mp-spec must be modified:
+%  addto p contour unitsquare scaled 0 ;
+% is replaced by :
+%  addto p contour unitsquare transformed t ;
+\unprotect
+%Accept more than one insertion of the same image
+\defineMPspecial{10}
+  {\setxvalue{mps:gr:\gMPs8}%
+     {\noexpand\handleMPfigurespecial
+        {\gMPs1}{\gMPs2}{\gMPs3}{\gMPs4}{\gMPs5}{\gMPs6}{\gMPs7}%
+%      \noexpand\setxvalue{mps:gr:\gMPs8}{}
+}}
+
+
+% \Specialstrigimage isn't 0 only if we parse the square which
+% replace an image.
+\newcount{\Specialstrigimage} \Specialstrigimage=0
+
+% The affine part of the matrix of transformation
+\def\Specialsmataa{}\def\Specialsmatab{}\def\Specialsmatac{}
+\def\Specialsmatba{}\def\Specialsmatbb{}\def\Specialsmatbc{}
+% The filename of the current image
+\def\Specialsfile{}
+
+% An usual trick from trig.sty which remove the unit of a dimen
+{\catcode`t=12\catcode`p=12\gdef\noPT#1pt{#1}}
+\def\Specialsrempt#1{\expandafter\noPT\the#1\space}
+
+
+
+% Extract from the path of the square the correct information, ie the
+% corner of the square
+% Twice the same function because I 'm not a good tex programmer.
+\newdimen{\specialstmp}
+\newdimen{\specialsdumb}
+\def\SpecialsgetnormalMPsegmenta
+ {
+   \ifcase\getMPkeyword\relax
+     %\PDFcode{\!MPgMPs1 \!MPgMPs2 l}%
+     \edef\myx{\!MPgMPs1}
+     \edef\myy{\!MPgMPs2}
+   \or
+     %\PDFcode{\!MPgMPs1 \!MPgMPs2 \!MPgMPs3 \!MPgMPs4 \!MPgMPs5 \!MPgMPs6 c}%
+     \edef\myx{\!MPgMPs5}
+     \edef\myy{\!MPgMPs6}
+   \or
+     %\PDFcode{\!MP\lastMPmoveX\space\!MP\lastMPmoveY\space l}%
+     \edef\myx{\!MPgMPs5}
+     \edef\myy{\!MPgMPs6}
+   \or
+     %\edef\lastMPmoveX{\gMPs1}% evt \!MP here
+     %\edef\lastMPmoveY{\gMPs2}%
+     %\PDFcode{\!MP\lastMPmoveX\space \!MP\lastMPmoveY\space m}%
+   \fi
+   \specialstmp=\Specialsmatac pt
+   \multiply\specialstmp by -1
+   \specialsdumb=\myx pt
+   \advance\specialstmp by \specialsdumb
+   \global\edef\Specialsmataa{\Specialsrempt\specialstmp}
+   \specialstmp=\Specialsmatbc pt
+   \multiply\specialstmp by -1
+   \specialsdumb=\myy pt
+   \advance\specialstmp by \specialsdumb
+   \global\edef\Specialsmatba{\Specialsrempt\specialstmp}
+}
+
+\def\SpecialsgetnormalMPsegmentb
+ {
+   \ifcase\getMPkeyword\relax
+     %\PDFcode{\!MPgMPs1 \!MPgMPs2 l}%
+     \edef\myx{\!MPgMPs1}
+     \edef\myy{\!MPgMPs2}
+   \or
+     %\PDFcode{\!MPgMPs1 \!MPgMPs2 \!MPgMPs3 \!MPgMPs4 \!MPgMPs5 \!MPgMPs6 c}%
+     \edef\myx{\!MPgMPs5}
+     \edef\myy{\!MPgMPs6}
+   \or
+     %\PDFcode{\!MP\lastMPmoveX\space\!MP\lastMPmoveY\space l}%
+     \edef\myx{\!MPgMPs5}
+     \edef\myy{\!MPgMPs6}
+   \or
+     %\edef\lastMPmoveX{\gMPs1}% evt \!MP here
+     %\edef\lastMPmoveY{\gMPs2}%
+     %\PDFcode{\!MP\lastMPmoveX\space \!MP\lastMPmoveY\space m}%
+   \fi
+   \specialstmp=\Specialsmatac pt
+   \multiply\specialstmp by -1
+   \specialsdumb=\myx pt
+   \advance\specialstmp by \specialsdumb
+   \global\edef\Specialsmatab{\Specialsrempt\specialstmp}
+   \specialstmp=\Specialsmatbc pt
+   \multiply\specialstmp by -1
+   \specialsdumb=\myy pt
+   \advance\specialstmp by \specialsdumb
+   \global\edef\Specialsmatbb{\Specialsrempt\specialstmp}
+}
+
+% Replace the true output function by a filter. It replace the square
+% by the corresponding image
+
+\let\normalPDFcode\PDFcode
+%%\def\normalPDFcode#1{\donormalPDFcode{#1}}
+%%\def\PDFcode#1{
+         % Extract the information from the path
+%%          \ifcase\Specialstrigimage
+%%          % Usually do nothing
+%%          \or %The first move is exactly the translation 
+%%              %part of the translation
+%%              \global\edef\Specialsmatac{\gMPs1}
+%%              \global\edef\Specialsmatbc{\gMPs2}
+%%          \or %The second point is the first column of the matrix minus
+%%              %the translation
+%%              \SpecialsgetnormalMPsegmenta
+%%          \or %The Third give only redondant informations
+%%          \or %The second point is the second column of the matrix minus
+%%              %the translation
+%%              \SpecialsgetnormalMPsegmentb
+%%          \else %Sometimes the first point
+%%          \fi
+
+         % Output the information
+%%        \ifnum\Specialstrigimage=0\relax
+        % Usually the function do nothing
+%%               \normalPDFcode{#1}%
+%%         \else
+%%          % During the parsing of the square :
+%%            \if f#1
+%%              % The fill instruction is the end of the path
+%%              \global\Specialstrigimage=0
+           
+%%              % We output the transformation
+%%              \normalPDFcode{q \Specialsmataa\space\Specialsmatba\space\Specialsmatab\space\Specialsmatbb\space\Specialsmatac\space\Specialsmatbc\space cm}%
+%%              % I don't know why this translation is now needed...
+%%              \normalPDFcode{q 1 0 0 1 0 1 cm}% 
+%%              \rlap{\getvalue\Specialsfile}%
+%%              \normalPDFcode{Q}%
+%%              \normalPDFcode{Q}%
+%%            \else
+%%              %Otherwise we look for the next point of the path
+%%              \global\advance\Specialstrigimage by \plusone
+%%            \fi
+%%         \fi
+%%}
+
+\let\normalfinishMPpath\finishMPpath
+\def\finishMPpath
+  {
+  
+  \ifnum\Specialstrigimage=0\relax
+        \normalfinishMPpath      
+  \else
+        \global\Specialstrigimage=0
+        %\global\let\PDFcode\normalPDFcode
+        % We output the transformation
+        \PDFcode{q \Specialsmataa\space\Specialsmatba\space\Specialsmatab\space\Specialsmatbb\space\Specialsmatac\space\Specialsmatbc\space cm}%
+        % I don't know why this translation is now needed...
+        \PDFcode{q 1 0 0 1 0 1 cm}% 
+        \rlap{\getvalue\Specialsfile}%
+        \PDFcode{Q}%
+        \PDFcode{Q}%
+
+  \fi
+}
+
+\let\normalflushnormalMPsegment\flushnormalMPsegment
+\def\flushnormalMPsegment
+{
+%Extract the information from the path
+         \ifcase\Specialstrigimage
+         \or %The first move is exactly the translation 
+             %part of the translation
+             \global\edef\Specialsmatac{\gMPs1}
+             \global\edef\Specialsmatbc{\gMPs2}
+         \or %The second point is the first column of the matrix minus
+             %the translation
+             \SpecialsgetnormalMPsegmenta
+         \or %The Third give only redondant informations
+         \or %The second point is the second column of the matrix minus
+             %the translation
+             \SpecialsgetnormalMPsegmentb
+         \else %Sometimes the first point
+         \fi
+
+         
+         \ifnum\Specialstrigimage=0\relax
+                \normalflushnormalMPsegment       
+         \else
+                \global\advance\Specialstrigimage by \plusone
+         \fi
+}
+\def\vide#1{}
+\def\handleMPfigurespecial#1#2#3#4#5#6#7% todo : combine with ext fig
+  {\vbox to \zeropoint
+     {\vss
+      \hbox to \zeropoint
+        {\ifcase\pdfoutput\or % will be hooked into the special driver
+           \doiffileelse{#7}
+             {\doifundefinedelse{mps:x:#7}
+                {\immediate\pdfximage\!!width\onebasepoint\!!height\onebasepoint{#7}%
+                 \setxvalue{mps:x:#7}{\pdfrefximage\the\pdflastximage}\message{[not
+     reusing]}}%
+                {\message{[reusing figure #7]}}%
+        %We save the filename of the current image
+        \global\edef\Specialsfile{mps:x:#7}%
+        %\PDFcode{q #1 #2 #3 #4 #5 #6 cm}%
+        %\rlap{\getvalue\Specialsfile}%
+        %\PDFcode{Q}%
+        %And we start the parsing of the square
+        \global\Specialstrigimage=1
+        \global\let\closeMPpath\relax
+        }
+         {\message{[unknown figure #7]}}%
+         \fi
+         \hss}}}
+
+\protect \endinput

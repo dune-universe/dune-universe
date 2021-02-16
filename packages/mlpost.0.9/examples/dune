@@ -1,0 +1,45 @@
+; In order to add a new example look at gen_dune.ml
+
+(rule
+ (with-stdout-to
+  dune.inc.gen
+  (run ./gen_dune.exe general)))
+
+(executable
+ (name lattice_lablgtk)
+ (modules lattice_lablgtk)
+ (libraries threads mlpost-lablgtk))
+
+(include dune.inc)
+
+(executable
+ (name gen_dune)
+ (modules gen_dune))
+
+(rule
+ (alias promote)
+ (action
+  (diff dune.inc dune.inc.gen)))
+
+(alias
+ (name runtest)
+ (deps
+  (alias promote)))
+
+; (ocamllex parse)
+
+; (executable
+;   (name parse)
+;   (modules parse)
+;   (libraries caml2html)
+; )
+
+; test of the executable
+
+(rule
+ (alias runtest)
+ (deps
+  (package mlpost))
+ (action
+  (ignore-stderr
+   (run %{bin:mlpost} -pgf %{dep:boxes.ml}))))

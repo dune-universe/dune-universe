@@ -1,0 +1,23 @@
+(library
+ (name mlpost)
+ (public_name mlpost)
+ (synopsis "OCaml interface to Mlpost, Cairo, Pgf")
+ (libraries unix bitstring cairo2 mlpost_version)
+ (preprocess
+  (pps ppx_bitstring img))
+ (foreign_stubs
+  (language c)
+  (names ml_mlpost_ft)
+  (flags
+   (:include c_flags.sexp)))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(ocamllex scan_prelude pfb_lexer map_lexer)
+
+(ocamlyacc pfb_parser map_parser)
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))

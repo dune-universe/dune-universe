@@ -1,0 +1,163 @@
+<html>
+
+<head>
+<#iso>
+<title>
+Mlpost manual</title>
+<meta name="Keywords" content="metapost ocaml">
+</head>
+
+<body>
+
+<h1>
+  <#en>Mlpost manual</#en>
+  <#fr>Manuel Mlpost</#fr>
+  <#de>Mlpost Handbuch</#de>
+</h1>
+
+<p>
+<#en>There are really two ways of using Mlpost. The first one uses the command
+line tool <tt>mlpost<tt> and is more convenient. The second one uses only the
+API of Mlpost and can be used in situations where the mlpost command does not
+apply.</#en>
+</p>
+
+
+<h2>
+  <#en>Using the Mlpost Tool</#en>
+  <#fr>Utilisation</#fr>
+  <#de>Mlpost Schnittstelle</#de>
+</h2>
+
+<!-- <#en>To make PostScript figures with Mlpost, follow these steps:</#en>
+<#fr>Pour construire des figures PostScript avec Mlpost, il faut
+procéder ainsi :</#fr>
+<#de>Um mit Mlpost Postcript-Abbildungen zu zeichnen, folgen Sie diese
+Schritten:</#de> -->
+
+<ol>
+<li>
+<#en>Define your figures in an Ocaml file <tt>fig.ml</tt>. The Mlpost modules are
+packed in the top module <tt> Mlpost</tt>, so you probably want to open it
+right away.</#en>
+<#fr>Définir ses figures dans un fichier Ocaml <tt>fig.ml</tt></#fr>
+<#de>Definieren Sie Ihre Zeichnungen in einem Ocaml Programm <tt>fig.ml</tt></#de>
+
+<pre>
+         open Mlpost
+         ...
+	 let fig_a = ...
+	 let fig_b = ...
+</pre>
+
+<#en>Each figure has type </#en>   
+<#fr>Chaque figure a le type</#fr>
+<#de>Jede Abbildung hat den Typ</#de>
+<a href="doc/Mlpost.Command.html#TYPEt"><tt>Command.t</tt></a>.
+
+<li> 
+<#en>Add some code to emit Metapost code, as follows</#en>
+<#fr>Ajouter du code pour la production du Metapost</#fr>
+<#de>Fügen Sie den folgenden Code hinzu, der das Metapost Programm erzeugt</#de>
+<pre>  
+	let () = Metapost.emit "file_a" fig_a
+	let () = Metapost.emit "file_b" fig_b
+</pre>
+
+<li> 
+<#en>Then run the <tt>mlpost</tt> program on this file</#en>
+<#fr>Lancer le programme <tt>mlpost</tt> sur ce fichier</#fr>
+<#de>Führen Sie das <tt>mlpost</tt> Programm auf dieser Datei aus, mit dem Kommando </#de>
+
+<pre>
+       mlpost fig.ml
+</pre>
+
+<#en>It will create PostScript figures in files file_a.1, file_b.1, etc.</#en>
+<#fr>Les figures PostScript sont alors créées dans les fichiers
+file_a.1, file_b.1, etc.</#fr>
+<#de>Die PostScript-Abbildungen werden in den Dateien file_a.1 file_b.1, usw abgespeichert.</#de>
+</ol>
+
+
+<h3>Options</h3>
+
+<#en><tt>mlpost</tt> supports the following options:</#en>
+<#fr><tt>mlpost</tt> accepte les options suivantes :</#fr>
+<#de><tt>mlpost</tt> akzeptiert die folgenden Optionen:</#de>
+
+<dl>
+<dt>
+-pdf
+<dd>
+	<#en>creates .mps files instead of .1, for inclusion in LaTeX files 
+	compiled with pdflatex (the PostScript file is actually the
+	same, but the suffix is used by <tt>pdflatex</tt> to identify
+	PostScript produced by Metapost)</#en>
+	<#fr>produit des fichiers .mps au lieu de .1, pour inclure
+	dans du LaTeX compilé avec <tt>pdflatex</tt></#fr>
+	<#de>produziert .mps Dateien anstatt .1, zum Einfügen in 
+	LaTeX Dateien, die mit pdflatex kompiliert werden.</#de>
+
+<p>
+
+<dt>
+-latex main.tex     
+<dd>
+        <#en>indicates the main LaTeX file, from which the prelude is
+        extracted to be passed to Metapost (this way you can use
+        macros, fonts and packages from your LaTeX document in your
+        figures). main.tex has to contain at least a <em>documentclass</em> and the
+        line "\begin{document}". The contents of this file are taken into
+        account up to the "\begin{document}" part. </#en>
+	<#fr>spécifie le fichier LaTeX principal, dont le prélude est
+	extrait et passé à Metapost (on peut ainsi utiliser les
+	macros, polices et paquets du document LaTeX en question). main.tex
+        doit contenir au moins une commande <em>documentclass</em> et la
+        commande "\begin{document}". </#fr>
+        <#de>spezifiziert die LaTeX-Hauptdatei, deren LaTeX-Präambel an Metapost
+        weitergegeben wird. Auf diese Weise können die gleichen Makros, Fonts
+        und LaTeX-Pakete wie im LaTeX-Dokument in den Abbildungen verwendet
+        werden. Die Datei main.tex muss mindestens den <em>documentclass</em>
+        Befehl und die Zeile "\begin{document}" enthalten.</#de>
+</dl>
+
+<h2>
+  <#en>Using only the API </#en>
+</h2>
+
+<#en> The <tt>mlpost</tt> tool works on a modified version of your file, and
+this can be a problem sometimes. The following method is a way out, but you
+need to do a bit more things by hand.
+</#en>
+
+<ol>
+<li>
+<#en> Follow steps 1 and 2 above. </#en>
+<li>
+<#en> Instead of running <tt>mlpost</tt> on your file, add the following
+additional lines to your program:
+</#en>
+<pre>
+let () = Metapost.dump 
+           ~prelude:(Metapost.read_prelude_from_tex_file "document.tex") "somefile"
+</pre>
+<#en> Now you can compile your program using the <tt>ocaml</tt> compiler. The
+obtained executable will compute your figure, dump the metapost code in
+<tt>somefile.mp</tt> and produce the postscript figures, using the specified
+file <tt>document.tex</tt> to extract a prelude. The <tt>Metapost.dump</tt>
+function has the additional optional arguments <tt>pdf</tt> and <tt>eps</tt>,
+with the same meaning as the options on the command line.
+</#en>
+</ol>
+
+
+
+
+<hr>
+<a href="manual.fr.html">Français</a> /
+<a href="manual.en.html">English</a> / 
+<a href="manual.de.html">Deutsch</a>
+	
+</body>
+</html>

@@ -1,0 +1,25 @@
+To compile the examples, issue
+
+  make
+
+Note that this only compiles the images. If you want to have the html files as
+well, do
+
+  make html
+
+
+======Developers notes=============
+
+* You need the latest version of caml2html:
+    svn checkout svn://svn.forge.ocamlcore.org/svnroot/caml2html
+  To compile that, you also need camlmix, either by godi, or
+    http://martin.jambon.free.fr/camlmix/
+
+* using (*html, you can put html into the target file
+
+* code hiding is done via (*parse. currently supported:
+   <<togglescript>> inserts the javascript code to toggle visibility of an element
+   <<name  - open a div with name "name" and show/hide link, defaults to hide
+   >> - close the last opened div
+
+* you can modify parse.mll if you need more than that

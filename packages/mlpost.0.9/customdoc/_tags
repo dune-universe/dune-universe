@@ -1,0 +1,2 @@
+<img.*> : use_ocamldoc
+<img_doc.*> : use_unix, pkg_cairo, pkg_bitstring, use_bigarray, use_libmlpost_ft

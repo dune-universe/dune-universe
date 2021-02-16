@@ -1,0 +1,8 @@
+*.mps
+*.log
+*.mpx
+*.[0-9]*
+*.aux
+*.tex
+*.mp
+*.ps

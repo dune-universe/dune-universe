@@ -1,0 +1,9 @@
+(library
+ (name mlpost_version)
+ (public_name mlpost.version))
+
+(rule
+ (targets conf.ml)
+ (action
+  (write-file conf.ml
+    "let ocamlfind_path = \"%{bin:ocamlfind}\"\nlet version = \"%{version:mlpost}\"")))

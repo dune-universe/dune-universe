@@ -1,0 +1,1 @@
+<gmlpost.*> : pkg_lablgtk2, use_unix, use_thread, pkg_lablgnomecanvas

@@ -1,0 +1,68 @@
+code,pre { color:black;background-color:white }a.Cannot { color:black;text-decoration:none }.Cannot:hover { background-color: #b4eeb4; }
+.Cbar,
+.Cdo,
+.Cdone,
+.Cdownto,
+.Celse,
+.Cfor,
+.Cif,
+.Clazy,
+.Cmatch,
+.Cnew,
+.Cor,
+.Cthen,
+.Cto,
+.Ctry,
+.Cwhen,
+.Cwhile,
+.Cwith { color: #77aaaa; }
+.Cassert,
+.Cinclude,
+.Copen { color: #cc9900; }
+.Cstring { color: #aa4444; }
+.Cand,
+.Cas,
+.Cclass,
+.Cconstraint,
+.Cexception,
+.Cexternal,
+.Cfun,
+.Cfunction,
+.Cfunctor,
+.Cin,
+.Cinherit,
+.Cinitializer,
+.Clet,
+.Cmethod,
+.Cmodule,
+.Cmutable,
+.Cof,
+.Cprivate,
+.Crec,
+.Ctype,
+.Cval,
+.Cvirtual { color: green; }
+.Cbackground { background-color: white; }
+.Craise { color: red; }
+.Cconstructor { color: #0033cc; }
+.Ccomment { color: #990000; }
+.Calphakeyword,
+.Casr,
+.Cland,
+.Clor,
+.Clsl,
+.Clsr,
+.Clxor,
+.Cmod { color: #808080; }
+.Clinenum { color: black; background-color: silver; }
+.Cbegin,
+.Cend,
+.Cobject,
+.Csig,
+.Cstruct { color: #990099; }
+.Cfalse,
+.Cnonalphakeyword,
+.Cquotation,
+.Ctrue { }
+
+.table { float:left; margin:5px;}

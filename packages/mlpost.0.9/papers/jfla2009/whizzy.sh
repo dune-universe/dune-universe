@@ -1,0 +1,2 @@
+MKSLICE=./whizzy-pp.sh
+

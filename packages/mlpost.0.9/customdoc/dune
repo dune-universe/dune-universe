@@ -1,0 +1,33 @@
+(library
+ (name img)
+ (modules img)
+ (kind ppx_rewriter)
+ (libraries ocaml-migrate-parsetree str))
+
+(executable
+ (name img_doc)
+ (modules img_doc)
+ (libraries mlpost.options mlpost))
+
+(rule
+ (targets circle.png rect.png round_rect.png ellipse.png patatoid.png tex.png
+   ctr.png north.png south.png west.png east.png north_west.png
+   south_west.png north_east.png south_east.png width.png height.png
+   shift.png center.png halign.png hplace.png hbox.png)
+ (action
+  (run %{dep:./img_doc.exe} -cairo -png)))
+
+(alias
+ (name doc)
+ (deps circle.png rect.png circle.png rect.png round_rect.png ellipse.png
+   patatoid.png tex.png ctr.png north.png south.png west.png east.png
+   north_west.png south_west.png north_east.png south_east.png width.png
+   height.png shift.png center.png halign.png hplace.png hbox.png))
+
+; (install
+;  (section doc)
+;  (package mlpost)
+;  (files circle.png rect.png round_rect.png ellipse.png patatoid.png tex.png
+;    ctr.png north.png south.png west.png east.png north_west.png
+;    south_west.png north_east.png south_east.png width.png height.png
+;    shift.png center.png halign.png hplace.png hbox.png))

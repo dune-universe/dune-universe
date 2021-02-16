@@ -1,0 +1,9 @@
+If you want to include external images in a figure, 
+you need to put the *.sty and *.tex files at a place that is visible 
+for latex/pdflatex, and
+you have to include the following lines in your LaTeX file:
+
+\usepackage{specials}
+\LoadMetaPostSpecialExtensions
+
+

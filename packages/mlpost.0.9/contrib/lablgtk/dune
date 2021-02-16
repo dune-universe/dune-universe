@@ -1,0 +1,4 @@
+(library
+ (name mlpost_lablgtk)
+ (public_name mlpost-lablgtk)
+ (libraries mlpost cairo2-gtk lablgtk2))

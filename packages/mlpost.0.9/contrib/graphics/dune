@@ -1,0 +1,7 @@
+(library
+ (name mlpost_graphics)
+ (public_name mlpost.graphics)
+ (synopsis
+   "Library for Mlpost which use the ocaml graphics library (experimental)")
+ (libraries mlpost graphics)
+ (optional))

@@ -1,0 +1,40 @@
+Frequently Asked Questions about Mlpost
+
+------------------------------------------------------------------------------
+
+1) When I run the mlpost tool on my figure, I get the error "! Unable to make
+mpx file.".
+
+Answer:
+
+This is a cryptical error message from metapost saying that there is some
+error in the Latex code that is part of your figure. However, it often points
+to some random Latex code, so you will have to figure out the problem by
+yourself, or by looking at the "mpxerr.tex" file that has been generated. You
+can also try to pass the "mpxerr.tex" file to latex to see which is the exact
+latex error message.
+
+------------------------------------------------------------------------------
+
+2) When I look at generated "foo.1" or "foo.mps" file, gv/evince does
+not display the figure correctly / gives some error.
+
+Answer:
+
+These generated files are not proper PostScript files. They need to be
+included in a Latex file using \includegraphics. If you pass the -eps option
+to mlpost, it generates encapsulated PostScript files that can be viewed with
+a PostScript viewer like gv. However, font rendering may be quite different.
+
+------------------------------------------------------------------------------
+
+3) In my Latex prelude I include other Latex files using "\input{foo.tex}".
+    When I compile my figure with mlpost, these files are not found.
+
+You are probably compiling your figure and your Latex file in different
+directories. You can make the file "foo.tex" visible to Latex changing the
+environment variable $TEXINPUTS to contain the directory where "foo.tex"
+lives.
+
+------------------------------------------------------------------------------
+

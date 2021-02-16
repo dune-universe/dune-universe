@@ -1,0 +1,70 @@
+Dependencies:
+* You need OCaml 4.0 or higher to compile Mlpost.
+* You need Ocamlfind
+* You need the libraries bitstring, lablgtk2 and cairo for cairo support.
+  Check the output of ./configure to see if cairo has been selected.
+* To use Mlpost, you need metapost and metafun (packages texlive-metapost and
+  context in debian) if you don't use the -mps option.
+* For the html version of the examples, you need caml2html, version 1.3.0 or
+  higher.
+* One example needs the tex chess fonts to work (package tex-chess in debian)
+* For external images, you need imagemagick
+* For the contrib package Mlpost_dot you need Objective Caml 3.10.2 or higher 
+  and dot (graphviz) at runtime
+
+1. Configure with 
+
+	./configure
+
+If you want to specify the directory where libraries (cmi, cma, ...) will be
+installed:
+
+        ./configure LIBDIR=/your/libdir
+
+If you want to specify the directory where the binary (mlpost) will be installed:
+
+        ./configure --bindir=/your/bindir
+
+2. Compile with 
+
+	make
+
+3. Install (as root) with
+
+	make install
+
+It installs the library in Ocaml's standard library and the tool "mlpost"
+in /usr/local/bin (or any other directory specified with ./configure --bindir).
+
+4 (optional)
+  Compile the contrib librairies
+          
+        make contrib
+
+5 (optional)
+  Install the contrib librairies
+          
+        make install-contrib
+
+6 (optional)
+  copy the files from the latex subdirectory at a place where latex can find
+  it (see the README in that directory)
+
+7 (optional). Create the documentation in doc/ with
+        
+        make doc
+
+  and the examples in examples/ with
+
+        make -C examples
+
+  and (optional) the contrib examples after installing the contrib librairies
+        
+        make -C examples contrib
+
+  To create html versions of the examples, you need caml2html version 1.3.0;
+  you can then issue
+
+        make -C examples html
+
+

@@ -1,0 +1,5 @@
+(lang dune 2.7)
+(name mlpost)
+(version 0.9)
+(formatting (enabled_for dune))
+

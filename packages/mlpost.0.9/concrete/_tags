@@ -1,0 +1,3 @@
+<ctypes.*> : pkg_cairo
+<ctypes.mli>: syntax_macro
+<*.cmx> : for-pack(Mlpost)
