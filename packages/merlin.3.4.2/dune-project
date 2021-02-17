@@ -1,6 +1,0 @@
-(lang dune 1.8)
-(name merlin)
-(version v3.4.2)
-(using menhir 2.0)
-
-(implicit_transitive_deps false)
