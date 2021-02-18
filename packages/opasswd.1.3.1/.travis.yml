@@ -1,0 +1,14 @@
+language: c
+sudo: required
+service: docker
+branches:
+  only: master
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+env:
+  global:
+    - PACKAGE=opasswd
+    - PINS="opasswd:."
+    - BASE_REMOTE="https://github.com/xapi-project/xs-opam.git"
+  matrix:
+    - DISTRO="debian-9-ocaml-4.07"
