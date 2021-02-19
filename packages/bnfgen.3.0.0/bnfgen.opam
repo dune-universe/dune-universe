@@ -1,0 +1,33 @@
+opam-version: "2.0"
+name: "bnfgen"
+version: "3.0.0"
+synopsis: "Random text generator that takes context-free grammars from BNF files"
+description: """
+BNFGen generates random texts based on user-defined context-free grammars
+specified in a BNF-like syntax. There are descriptive syntax error messages
+and tracing options.
+
+You can specify "weight" for rules with alternation to influence their probabilities.
+For example, in `<foo> ::= 10 <foo> "foo" | "foo";` the first (recursive) option will be
+taken ten times more often.
+
+You can also specify deterministic repetition ranges, like `<foo>{4}` (exactly four of `<foo>`)
+or `<foo>{1,5}` (from one to five of `<foo>`).
+
+This package includes both a library and a CLI tool based on it.
+"""
+maintainer: "Daniil Baturin <daniil@baturin.org>"
+authors: "Daniil Baturin <daniil@baturin.org>"
+license: "MIT"
+homepage: "https://baturin.org/tools/bnfgen"
+bug-reports: "https://github.com/dmbaturin/bnfgen/issues"
+dev-repo: "git+https://github.com/dmbaturin/bnfgen"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name]
+]
+depends: [
+  "ocaml" {>= "4.08"}
+  "menhir"
+  "dune" {>= "1.4.0"}
+]

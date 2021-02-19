@@ -1,0 +1,18 @@
+version: "0.0.1"
+opam-version: "2.0"
+name: "rungen"
+synopsis: "Generates dune files to run benchmarks from centralised config"
+maintainer: "Shakthi Kannan <author@shakthimaan.com>"
+authors: "Sadiq Jaffer <sadiq@toao.com>"
+license: "MIT"
+homepage: "https://github.com/shakthimaan/rungen"
+bug-reports: "https://github.com/shakthimaan/rungen/issues"
+dev-repo: "git+https://github.com/shakthimaan/rungen"
+depends: [ "ocaml" "yojson" "sexplib0" ]
+build: [
+  ["dune" "build" "-p" name]
+]
+description: """
+The rungen utility generates dune files to execute
+[Sandmark](https://github.com/ocaml-bench/sandmark) benchmarks.
+"""
