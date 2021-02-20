@@ -1,0 +1,19 @@
+(env
+ (_
+  (ocamlopt_flags -S)
+  (flags
+   (:standard -w -9-32-33))))
+
+(executable
+ (name bench1)
+ (modules bench1)
+ ; (preprocess
+ ; (pps ppx_sexp_conv))
+ (libraries base benchmark))
+
+(executable
+ (name bench2)
+ (modules bench2)
+ (preprocess
+  (pps ppx_sexp_conv))
+ (libraries base benchmark))

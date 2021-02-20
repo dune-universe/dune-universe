@@ -1,0 +1,46 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A -w -32))))
+
+(library
+ (name View)
+ (public_name GT.View)
+ (modules View)
+ (flags
+  (:standard -w -27-33 -warn-error -A)))
+
+(library
+ (name HTML)
+ (public_name GT.HTML)
+ (libraries View)
+ (modules HTML)
+ (flags
+  (:standard -w -27-33 -warn-error -A)))
+
+(library
+ (name GT)
+ (public_name GT)
+ (modules GT)
+ (libraries HTML)
+ (synopsis "Generic transformers for algebraic types")
+ (preprocessor_deps
+  (file %{project_root}/src/macro.m4)
+  (file %{project_root}/camlp5/pp5+gt+dump.exe))
+ (preprocess
+  (per_module
+   ((action
+     (run
+      sh
+      -c
+      "m4 %{project_root}/src/macro.m4 %{input-file} > GT.tmp && %{project_root}/camlp5/pp5+gt+dump.exe -impl GT.tmp && rm -f GT.tmp"))
+    GT)))
+ (flags
+  (:standard -w -27-33)))
+
+(library
+ (name syntax_p5)
+ (public_name GT.syntax)
+ (wrapped false)
+ (modules)
+ (libraries GT-p5))

@@ -1,0 +1,33 @@
+(rule
+ (targets toplevel.ml)
+ (deps (:f toplevel.cppo.ml))
+ (action
+  (chdir %{project_root}
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{f} -o %{targets}))))
+
+(rule
+ (targets ppx_cstubs_version.ml)
+ (action
+  (with-stdout-to
+    %{targets}
+   (echo "let version = \"%{version:ppx_cstubs}\""))))
+
+(rule
+ (targets ppxc__script.mli)
+ (deps ppxc__script_real.mli)
+ (action (copy %{deps} %{targets})))
+
+(ocamllex
+ (modules inline_lexer))
+
+(library
+ (name ppxc__script)
+ (synopsis "just ignore it")
+ (public_name ppx_cstubs.internal)
+ (private_modules attributes ctypes_type_printing_fake evil_hack extract_c extract_c_ml gen_c gen_ml inline_lexer keywords lconst main marshal_types mparsetree myconst ocaml_config options ppxc__script_real ppx_main ptree run script_result std toplevel uniq_ref ppx_cstubs_version)
+ (libraries bigarray-compat re.perl unix integers containers num findlib ctypes ppxlib ppx_cstubs)
+ (preprocess (pps ppxlib.metaquot))
+; broken .merlin generation ....
+; (preprocess (per_module
+;              ((pps ppxlib.metaquot) extract_c_ml ppxc__script_real ppx_cstubs gen_ml uniq_ref)))
+)

@@ -1,0 +1,64 @@
+(library
+ (name pkt_line)
+ (public_name git.nss.pkt-line)
+ (modules decoder encoder)
+ (libraries astring fmt))
+
+(library
+ (name smart)
+ (public_name git.nss.smart)
+ (modules smart filter capability state protocol)
+ (libraries git.nss.pkt-line result rresult ipaddr domain-name astring fmt))
+
+(library
+ (name sigs)
+ (public_name git.nss.sigs)
+ (modules sigs)
+ (libraries fmt cstruct))
+
+(library
+ (name smart_flow)
+ (public_name git.nss.smart-flow)
+ (modules smart_flow)
+ (libraries cstruct fmt git.nss.sigs git.nss.smart logs))
+
+(library
+ (name hkt)
+ (public_name git.nss.hkt)
+ (modules hkt)
+ (libraries git.nss.sigs))
+
+(library
+ (name neg)
+ (public_name git.nss.neg)
+ (modules neg find_common default)
+ (libraries fmt rresult cstruct sigs logs psq smart git.nss.smart-flow))
+
+(library
+ (name pck)
+ (public_name git.nss.pck)
+ (modules pck)
+ (libraries sigs psq logs smart))
+
+(library
+ (name nss)
+ (public_name git.nss)
+ (modules nss fetch push)
+ (libraries fmt result rresult logs ipaddr domain-name smart sigs neg pck
+   git.nss.smart-flow))
+
+(library
+ (name unixiz)
+ (public_name git.nss.unixiz)
+ (modules unixiz)
+ (libraries bigarray-compat git.nss.sigs lwt result rresult fmt mirage-flow
+   ke cstruct))
+
+(library
+ (name smart_git)
+ (public_name git.nss.git)
+ (modules smart_git smart_git_intf)
+ (libraries base64 bigarray-compat mimic mirage-flow unixiz ipaddr
+   decompress.de decompress.zl cstruct logs astring result rresult
+   bigstringaf fmt emile lwt domain-name uri sigs smart pck nss digestif
+   carton carton-lwt))

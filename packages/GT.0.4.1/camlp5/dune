@@ -1,0 +1,120 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A -w -27-9))))
+
+(library
+ (name pa_gt)
+ (public_name GT-p5)
+ (modules Camlp5Helpers extension core2)
+ (libraries camlp5 GT.common)
+ (preprocess
+  (action
+   (run %{project_root}/camlp5/pp5+dump.byte %{input-file})))
+ (flags
+  (:standard -warn-error -A -rectypes)))
+
+(rule
+ (targets pp5+gt+plugins+dump.exe)
+ (deps
+  ../common/GTCommon.cmxa
+  pa_gt.cmxa
+  ../plugins/show.cmxa
+  ../plugins/gmap.cmxa
+  ../plugins/gfmt.cmxa
+  ../plugins/compare.cmxa
+  ../plugins/eq.cmxa
+  ../plugins/foldl.cmxa
+  ../plugins/foldr.cmxa
+  ../plugins/stateful.cmxa
+  ../plugins/eval.cmxa
+  ../plugins/html.cmxa)
+ (action
+  (run
+   mkcamlp5.opt
+   -package
+   camlp5,camlp5.pa_o,camlp5.pr_dump,camlp5.extend,camlp5.quotations,base,logger,ppxlib,ocamlgraph
+   %{deps}
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+gt+plugins+o.exe)
+ (deps
+  ../common/GTCommon.cmxa
+  pa_gt.cmxa
+  ../plugins/show.cmxa
+  ../plugins/gmap.cmxa
+  ../plugins/gfmt.cmxa
+  ../plugins/compare.cmxa
+  ../plugins/eq.cmxa
+  ../plugins/foldl.cmxa
+  ../plugins/foldr.cmxa
+  ../plugins/stateful.cmxa
+  ../plugins/eval.cmxa
+  ../plugins/html.cmxa)
+ (action
+  (run
+   mkcamlp5.opt
+   -package
+   camlp5,camlp5.pa_o,camlp5.pr_o,camlp5.extend,camlp5.quotations,base,logger,ppxlib,ocamlgraph
+   %{deps}
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+gt+dump.exe)
+ (deps %{project_root}/common/GTCommon.cmxa pa_gt.cmxa)
+ (action
+  (run
+   mkcamlp5.opt
+   -package
+   camlp5,camlp5.pa_o,camlp5.pr_dump,camlp5.extend,camlp5.quotations,base,logger,ppxlib,ocamlgraph
+   %{deps}
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+gt+o.exe)
+ (deps pa_gt.cmxa)
+ (action
+  (run
+   mkcamlp5.opt
+   -package
+   camlp5,camlp5.pa_o,camlp5.pr_o,camlp5.extend,camlp5.quotations,base,logger,GT.common,ocamlgraph
+   %{deps}
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+gt+o.byte)
+ (deps pa_gt.cma)
+ (action
+  (run
+   mkcamlp5
+   -package
+   camlp5,camlp5.pa_o,camlp5.pr_o,camlp5.extend,camlp5.quotations,base,logger,GT.common,ocamlgraph
+   %{deps}
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+dump.exe)
+ (action
+  (run
+   mkcamlp5.opt
+   -package
+   camlp5,camlp5.pa_o,camlp5.extend,camlp5.quotations
+   pr_dump.cmx
+   -o
+   %{targets})))
+
+(rule
+ (targets pp5+dump.byte)
+ (action
+  (run
+   mkcamlp5
+   -package
+   camlp5,camlp5.quotations,camlp5.pr_dump,camlp5.pa_o,camlp5.extend,ocamlgraph
+   -o
+   %{targets})))

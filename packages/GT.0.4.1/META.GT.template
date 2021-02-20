@@ -1,0 +1,214 @@
+# DISABLED DUNE_GEN
+version = "0.4.1"
+requires = "GT.HTML base"
+archive(byte) = "GT.cma"
+archive(native) = "GT.cmxa"
+plugin(byte) = "GT.cma"
+plugin(native) = "GT.cmxs"
+
+package "HTML" (
+  directory = "HTML"
+  description = ""
+  requires = "GT.View"
+  archive(byte) = "HTML.cma"
+  archive(native) = "HTML.cmxa"
+  plugin(byte) = "HTML.cma"
+  plugin(native) = "HTML.cmxs"
+)
+package "View" (
+  directory = "View"
+  description = ""
+  requires = ""
+  archive(byte) = "View.cma"
+  archive(native) = "View.cmxa"
+  plugin(byte) = "View.cma"
+  plugin(native) = "View.cmxs"
+)
+package "common" (
+  directory = "common"
+  description = "Actual code that perform codegeneration. Will used for creating new plugins"
+  requires = "ocamlgraph ppxlib base"
+  archive(byte) = "GTCommon.cma"
+  archive(native) = "GTCommon.cmxa"
+  plugin(byte) = "GTCommon.cma"
+  plugin(native) = "GTCommon.cmxs"
+)
+package "ppx" (
+  directory = "ppx"
+  description = "PPX syntax extensionon top of ppx_core"
+  requires(ppx_driver) = "GT.common base ppxlib"
+  archive(ppx_driver,byte) = "ppx.cma"
+  archive(ppx_driver,native) = "ppx.cmxa"
+  plugin(ppx_driver,byte) = "ppx.cma"
+  plugin(ppx_driver,native) = "ppx.cmxs"
+  # This line makes things transparent for people mixing preprocessors
+  # and normal dependencies
+  requires(-ppx_driver) = ""
+  ppx(-ppx_driver,-custom_ppx) = "./ppx.exe --as-ppx"
+  library_kind = "ppx_rewriter"
+)
+package "syntax" (
+  directory = "syntax"
+  description = "Various GT.syntax.* all together"
+  requires = "GT-p5"
+  archive(byte) = "syntax_p5.cma"
+  archive(native) = "syntax_p5.cmxa"
+  plugin(byte) = "syntax_p5.cma"
+  plugin(native) = "syntax_p5.cmxs"
+  package "all" (
+    directory = "all"
+    description = ""
+    requires =
+    "GT.syntax.compare
+     GT.syntax.eq
+     GT.syntax.eval
+     GT.syntax.fmt
+     GT.syntax.foldl
+     GT.syntax.foldr
+     GT.syntax.hash
+     GT.syntax.html
+     GT.syntax.map
+     GT.syntax.show
+     GT.syntax.stateful"
+
+    # By some reason bunch of require directives doesn't include preprocessor directives.
+    archive(syntax,preprocessor) = "syntax_all.cma"
+    archive(syntax,preprocessor,native) = "syntax_all.cmxa"
+    archive(byte) = "syntax_all.cma"
+    archive(native) = "syntax_all.cmxa"
+    plugin(byte) = "syntax_all.cma"
+    plugin(native) = "syntax_all.cmxs"
+  )
+  package "compare" (
+    directory = "compare"
+    description = "Plugin 'compare'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "compare.cma"
+    archive(syntax,preprocessor,native) = "compare.cmxa"
+    archive(byte) = "compare.cma"
+    archive(native) = "compare.cmxa"
+    plugin(byte) = "compare.cma"
+    plugin(native) = "compare.cmxs"
+  )
+  package "eq" (
+    directory = "eq"
+    description = "Plugin 'eq'"
+    requires = "GT.common GT.syntax.compare"
+
+    archive(syntax,preprocessor) = "eq.cma"
+    archive(syntax,preprocessor,native) = "eq.cmxa"
+    archive(byte) = "eq.cma"
+    archive(native) = "eq.cmxa"
+    plugin(byte) = "eq.cma"
+    plugin(native) = "eq.cmxs"
+  )
+  package "eval" (
+    directory = "eval"
+    description = "Plugin 'eval'"
+    requires = "GT.common GT.syntax.map"
+
+    archive(syntax,preprocessor) = "eval.cma"
+    archive(syntax,preprocessor,native) = "eval.cmxa"
+    archive(byte) = "eval.cma"
+    archive(native) = "eval.cmxa"
+    plugin(byte) = "eval.cma"
+    plugin(native) = "eval.cmxs"
+  )
+  package "fmt" (
+    directory = "gfmt"
+    description = "Plugin 'fmt'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "gfmt.cma"
+    archive(syntax,preprocessor,native) = "gfmt.cmxa"
+    archive(byte) = "gfmt.cma"
+    archive(native) = "gfmt.cmxa"
+    plugin(byte) = "gfmt.cma"
+    plugin(native) = "gfmt.cmxs"
+  )
+  package "foldl" (
+    directory = "foldl"
+    description = "Plugin 'foldl'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "foldl.cma"
+    archive(syntax,preprocessor,native) = "foldl.cmxa"
+    archive(byte) = "foldl.cma"
+    archive(native) = "foldl.cmxa"
+    plugin(byte) = "foldl.cma"
+    plugin(native) = "foldl.cmxs"
+  )
+  package "foldr" (
+    directory = "foldr"
+    description = "Plugin 'foldr'"
+    requires = "GT.common GT.syntax.foldl"
+
+    archive(syntax,preprocessor) = "foldr.cma"
+    archive(syntax,preprocessor,native) = "foldr.cmxa"
+    archive(byte) = "foldr.cma"
+    archive(native) = "foldr.cmxa"
+    plugin(byte) = "foldr.cma"
+    plugin(native) = "foldr.cmxs"
+  )
+  package "hash" (
+    directory = "hash"
+    description = "Plugin 'hash'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "ghash.cma"
+    archive(syntax,preprocessor,native) = "ghash.cmxa"
+    archive(byte) = "ghash.cma"
+    archive(native) = "ghash.cmxa"
+    plugin(byte) = "ghash.cma"
+    plugin(native) = "ghash.cmxs"
+  )
+  package "html" (
+    directory = "html"
+    description = "Plugin 'html'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "html.cma"
+    archive(syntax,preprocessor,native) = "html.cmxa"
+    archive(byte) = "html.cma"
+    archive(native) = "html.cmxa"
+    plugin(byte) = "html.cma"
+    plugin(native) = "html.cmxs"
+  )
+  package "map" (
+    directory = "map"
+    description = "Plugin 'map' a.k.a. functor's fmap"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor) = "gmap.cma"
+    archive(syntax,preprocessor,native) = "gmap.cmxa"
+    archive(byte) = "gmap.cma"
+    archive(native) = "gmap.cmxa"
+    plugin(byte) = "gmap.cma"
+    plugin(native) = "gmap.cmxs"
+  )
+  package "show" (
+    directory = "show"
+    description = "Plugin 'show'"
+    requires = "GT.common"
+
+    archive(syntax,preprocessor,byte) = "show.cma"
+    archive(syntax,preprocessor,native) = "show.cmxa"
+    archive(byte) = "show.cma"
+    archive(native) = "show.cmxa"
+    plugin(byte) = "show.cma"
+    plugin(native) = "show.cmxs"
+  )
+  package "stateful" (
+    directory = "stateful"
+    description = "Plugin 'stateful'"
+    requires = "GT.common GT.syntax.map"
+
+    archive(syntax,preprocessor) = "stateful.cma"
+    archive(syntax,preprocessor,native) = "stateful.cmxa"
+    archive(byte) = "stateful.cma"
+    archive(native) = "stateful.cmxa"
+    plugin(byte) = "stateful.cma"
+    plugin(native) = "stateful.cmxs"
+  )
+)

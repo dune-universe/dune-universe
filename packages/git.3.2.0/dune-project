@@ -1,4 +1,0 @@
-(lang dune 2.0)
-(name git)
-(version 3.1.0-63-g606fb98c6)
-(implicit_transitive_deps false)
