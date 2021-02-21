@@ -1,0 +1,3 @@
+(lang dune 2.0)
+(name color-brewery)
+(version 0.2)

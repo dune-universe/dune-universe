@@ -1,0 +1,4 @@
+(executable
+ (name        make_palettes)
+ (optional)
+ (libraries   yojson gg))

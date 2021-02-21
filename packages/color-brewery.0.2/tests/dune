@@ -1,0 +1,13 @@
+(executables
+ (names     gradient conversions)
+ (libraries color-brewery))
+
+(alias
+ (name exe)
+ (deps gradient.exe conversions.exe))
+
+(rule
+ (alias runtest)
+ (action (progn
+          (run %{exe:gradient.exe})
+          (run %{exe:conversions.exe}))))
