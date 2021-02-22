@@ -1,0 +1,23 @@
+type version = {
+    major : int;
+    minor : int;
+    subminor : int;
+  }
+
+let llvm_config = "@LLVM_CONFIG@"
+
+let version_string = "@LLVM_VERSION@"
+
+let version = {
+  major = @LLVM_VERSION_MAJOR@;
+  minor = @LLVM_VERSION_MINOR@;
+  subminor = @LLVM_VERSION_SUBMINOR@;
+}
+
+let equivalent_version = {
+  major = @EQUIVALENT_LLVM_VERSION_MAJOR@;
+  minor = @EQUIVALENT_LLVM_VERSION_MINOR@;
+  subminor = @EQUIVALENT_LLVM_VERSION_SUBMINOR@;
+}
+
+let includedir = "@LLVM_INCLUDEDIR@"
