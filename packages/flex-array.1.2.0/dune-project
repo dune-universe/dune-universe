@@ -1,0 +1,4 @@
+(lang dune 2.0)
+(name flex-array)
+(version 1.2.0)
+(formatting (enabled_for dune))
