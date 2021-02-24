@@ -1,8 +1,0 @@
-(executable
- (name fuzz)
- (libraries fmt crowbar optint))
-
-(alias
- (name runtest)
- (deps (:fuzz fuzz.exe))
- (action (run %{fuzz})))

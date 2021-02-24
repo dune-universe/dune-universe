@@ -1,0 +1,3 @@
+#define SUPPORTS_VALE 1
+#define SUPPORTS_128 1
+#define SUPPORTS_256 1
