@@ -94,12 +94,11 @@ let feed_them_all csize ncores demux queue =
     end
 
 (* worker process loop *)
-let go_to_work jobs_queue work results_queue =
+let go_to_work prfx jobs_queue work results_queue =
   (* let pid = Unix.getpid () in
    * eprintf "worker(%d) started\n%!" pid; *)
-  let out_count = ref 0 in
-  let prfx = Filename.temp_file "oparany_" "" in
   try
+    let out_count = ref 0 in
     let buff = Bytes.create 80 in
     while true do
       let xs = Shm.receive jobs_queue buff in
@@ -110,13 +109,10 @@ let go_to_work jobs_queue work results_queue =
       incr out_count
     done
   with End_of_input ->
-    begin
-      (* tell collector to stop *)
-      (* eprintf "worker(%d) finished\n%!" pid; *)
-      Sys.remove prfx;
-      Shm.raw_send results_queue "EOF";
-      Unix.close results_queue
-    end
+    (* resource cleanup was moved to an at_exit-registered function,
+       so that cleanup is done even in the case of an uncaught exception
+       and the muxer doesn't enter an infinite loop *)
+    ()
 
 let fork_out f =
   match Unix.fork () with
@@ -161,40 +157,54 @@ let imux (mux: 'b -> unit) =
       (* put somewhere into the pile *)
       Ht.add wait_list i res
 
-let demux_work_mux ~(core_pin: bool) ~(csize: int) (nprocs: int)
-    ~(demux: unit -> 'a) ~(work: 'a -> 'b) ~(mux: 'b -> unit): unit =
-  (* create queues *)
-  let jobs_in, jobs_out = Shm.init () in
-  let res_in, res_out = Shm.init () in
-  (* start feeder *)
-  (* eprintf "father(%d) starting feeder\n%!" pid; *)
-  Gc.compact (); (* like parmap: reclaim memory prior to forking *)
-  fork_out (fun () -> feed_them_all csize nprocs demux jobs_in);
-  (* start workers *)
-  for worker_rank = 0 to nprocs - 1 do
-    (* eprintf "father(%d) starting a worker\n%!" pid; *)
-    fork_out (fun () ->
-        if core_pin then Cpu.setcore worker_rank;
-        go_to_work jobs_out work res_in
-      )
-  done;
-  (* collect results *)
-  let finished = ref 0 in
-  let buff = Bytes.create 80 in
-  while !finished < nprocs do
-    try
-      while true do
-        let xs = Shm.receive res_out buff in
-        (* eprintf "father(%d) collecting one\n%!" pid; *)
-        List.iter mux xs
-      done
-    with End_of_input -> incr finished
-  done;
-  (* free resources *)
-  List.iter Unix.close [jobs_in; jobs_out; res_in; res_out]
-
-let run ?(preserve = false) ?(core_pin = false) ?(csize = 1) nprocs
+let run ?(init = fun (_rank: int) -> ()) ?(finalize = fun () -> ())
+    ?(preserve = false) ?(core_pin = false) ?(csize = 1) nprocs
     ~demux ~work ~mux =
+  (* the (type a b) annotation unfortunately implies OCaml >= 4.03.0 *)
+  let demux_work_mux (type a b)
+      ~(demux: unit -> a) ~(work: a -> b) ~(mux: b -> unit): unit =
+    (* create queues *)
+    let jobs_in, jobs_out = Shm.init () in
+    let res_in, res_out = Shm.init () in
+    (* start feeder *)
+    (* eprintf "father(%d) starting feeder\n%!" pid; *)
+    Gc.compact (); (* like parmap: reclaim memory prior to forking *)
+    fork_out (fun () -> feed_them_all csize nprocs demux jobs_in);
+    (* start workers *)
+    for worker_rank = 0 to nprocs - 1 do
+      (* eprintf "father(%d) starting a worker\n%!" pid; *)
+      fork_out (fun () ->
+          init worker_rank; (* per-process optional setup *)
+          at_exit finalize; (* register optional finalize fun *)
+          (* parmap also does core pinning _after_ having called
+             the per-process init function *)
+          if core_pin then Cpu.setcore worker_rank;
+          let prfx = Filename.temp_file "oparany_" "" in
+          at_exit (fun () ->
+              (* tell collector to stop *)
+              (* eprintf "worker(%d) finished\n%!" pid; *)
+              Shm.raw_send res_in "EOF";
+              Unix.close res_in;
+              Sys.remove prfx
+            );
+          go_to_work prfx jobs_out work res_in
+        )
+    done;
+    (* collect results *)
+    let finished = ref 0 in
+    let buff = Bytes.create 80 in
+    while !finished < nprocs do
+      try
+        while true do
+          let xs = Shm.receive res_out buff in
+          (* eprintf "father(%d) collecting one\n%!" pid; *)
+          List.iter mux xs
+        done
+      with End_of_input -> incr finished
+    done;
+    (* free resources *)
+    List.iter Unix.close [jobs_in; jobs_out; res_in; res_out]
+  in
   if nprocs <= 1 then
     (* sequential version *)
     try
@@ -216,13 +226,12 @@ let run ?(preserve = false) ?(core_pin = false) ?(csize = 1) nprocs
             potentially out of order (for parallelization efficiency);
             but we will order back the results in input order
             (for user's convenience) *)
-         demux_work_mux ~core_pin ~csize nprocs
+         demux_work_mux
            ~demux:(idemux demux) ~work:(iwork work) ~mux:(imux mux)
        else
          (* by default, to maximize parallel efficiency we don't care about the
             order in which jobs are computed. *)
-         demux_work_mux ~core_pin ~csize nprocs
-           ~demux ~work ~mux
+         demux_work_mux ~demux ~work ~mux
       );
       (* eprintf "father(%d) finished\n%!" pid; *)
     end
@@ -233,7 +242,8 @@ module Parmap = struct
   let tail_rec_map f l =
     List.rev (List.rev_map f l)
 
-  let parmap ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores f l =
+  let parmap ?(init = fun (_rank: int) -> ()) ?(finalize = fun () -> ())
+      ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores f l =
     if ncores <= 1 then tail_rec_map f l
     else
       let input = ref l in
@@ -244,10 +254,11 @@ module Parmap = struct
       let mux x =
         output := x :: !output in
       (* parallel work *)
-      run ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux;
+      run ~init ~finalize ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux;
       !output
 
-  let pariter ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores f l =
+  let pariter ?(init = fun (_rank: int) -> ()) ?(finalize = fun () -> ())
+      ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores f l =
     if ncores <= 1 then List.iter f l
     else
       let input = ref l in
@@ -255,20 +266,37 @@ module Parmap = struct
         | [] -> raise End_of_input
         | x :: xs -> (input := xs; x) in
       (* parallel work *)
-      run ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux:ignore
+      run ~init ~finalize ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux:ignore
 
-  let parfold ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores
-      f g init l =
-    if ncores <= 1 then List.fold_left g init (tail_rec_map f l)
+  let parfold ?(init = fun (_rank: int) -> ()) ?(finalize = fun () -> ())
+      ?(preserve = false) ?(core_pin = false) ?(csize = 1) ncores
+      f g init_acc l =
+    if ncores <= 1 then
+      List.fold_left (fun acc x -> g acc (f x)) init_acc l
     else
       let input = ref l in
       let demux () = match !input with
         | [] -> raise End_of_input
         | x :: xs -> (input := xs; x) in
-      let output = ref init in
+      let output = ref init_acc in
       let mux x =
         output := g !output x in
       (* parallel work *)
-      run ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux;
+      run ~init ~finalize ~preserve ~core_pin ~csize ncores ~demux ~work:f ~mux;
       !output
+
+  (* let parfold_compat
+   *     ?(init = fun (_rank: int) -> ()) ?(finalize = fun () -> ())
+   *     ?(ncores: int option) ?(chunksize: int option) (f: 'a -> 'b -> 'b)
+   *     (l: 'a list) (init_acc: 'b) (acc_fun: 'b -> 'b -> 'b): 'b =
+   *   let nprocs = match ncores with
+   *     | None -> 1 (\* if the user doesn't know the number of cores to use,
+   *                    we don't know better *\)
+   *     | Some x -> x in
+   *   let csize = match chunksize with
+   *     | None -> 1
+   *     | Some x -> x in
+   *   parfold ~init ~finalize ~preserve:false ~core_pin:false ~csize nprocs
+   *     (fun x -> f x init_acc) acc_fun init_acc l *)
+
 end
