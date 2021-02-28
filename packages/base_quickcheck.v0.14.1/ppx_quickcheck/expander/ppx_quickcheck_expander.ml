@@ -347,11 +347,12 @@ let intf type_decl ~f ~covar ~contravar =
     List.fold_right
       type_decl.ptype_params
       ~init:result
-      ~f:(fun (core_type, variance) result ->
+      ~f:(fun (core_type, (variance, injectivity)) result ->
         let id =
-          match variance with
-          | Invariant | Covariant -> covar
-          | Contravariant -> contravar
+          match (variance, injectivity) with
+          | ((NoVariance | Covariant), NoInjectivity) -> covar
+          | (Contravariant, NoInjectivity) -> contravar
+          | (_, Injective) -> Location.raise_errorf ~loc "Injective type parameters aren't supported."
         in
         let arg = ptyp_constr ~loc { loc; txt = id } [ core_type ] in
         [%type: [%t arg] -> [%t result]])
