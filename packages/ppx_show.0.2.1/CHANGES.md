@@ -1,3 +1,8 @@
+# 2021-02-28, version 0.2.1
+
+- Fix #1: incompatibility with toplevel
+  (Reported by Daian Yue).
+
 # 2020-05-21, version 0.2.0
 
 - Reverse the parenthesis and the constructor name for single argument,

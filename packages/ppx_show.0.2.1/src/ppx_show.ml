@@ -375,23 +375,23 @@ let show_type_of_type_decl (td : type_declaration) : value_description =
     Ast_helper.Val.mk name ty
   end
 
-let make_str ~loc ~path (rec_flag, tds) (with_path : expression option)
+let make_str ~ctxt (rec_flag, tds) (with_path : expression option)
     : structure =
   let with_path =
     match with_path with
     | Some [%expr false] -> None
     | _ ->
-        match String.split_on_char '.' (Filename.basename path) with
-        | filename :: "ml" :: path
-        | filename :: _ :: "ml" :: path ->
-            Some (String.capitalize_ascii filename :: path)
-        | _ -> prerr_endline path; assert false in
+        let code_path = Ppxlib.Expansion_context.Deriver.code_path ctxt in
+        let main_module_name = Ppxlib.Code_path.main_module_name code_path in
+        let submodule_path = Ppxlib.Code_path.submodule_path code_path in
+        Some (main_module_name :: submodule_path) in
   let vbs = tds |> List.map (pp_of_type_decl ~with_path) in
+  let loc = Ppxlib.Expansion_context.Deriver.derived_item_loc ctxt in
   [Ast_helper.Str.value ~loc rec_flag vbs;
    Ast_helper.Str.value ~loc Nonrecursive (tds |> List.map show_of_type_decl)]
 
 let str_type_decl =
-  Ppxlib.Deriving.Generator.make
+  Ppxlib.Deriving.Generator.V2.make
     Ppxlib.Deriving.Args.(empty +>
       arg "with_path" __)
     make_str
