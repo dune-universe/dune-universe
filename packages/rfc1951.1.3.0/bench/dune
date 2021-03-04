@@ -1,0 +1,59 @@
+(executable
+ (name bench)
+ (modules bench)
+ (foreign_stubs
+  (language c)
+  (names mclock bs))
+ (preprocess
+  (pps ppx_deriving_yojson))
+ (libraries
+  bigarray-compat
+  unix
+  fmt
+  decompress.de
+  decompress.zl
+  cmdliner
+  yojson
+  ppx_deriving_yojson))
+
+(executable
+ (name run)
+ (modules run)
+ (libraries cmdliner fpath rresult bos))
+
+(rule
+ (targets zpipe)
+ (deps
+  (:zpipe zpipe.c))
+ (action
+  (run %{cc} %{zpipe} -lz -o %{targets})))
+
+(rule
+ (targets output.csv)
+ (deps
+  (:run run.exe)
+  (:zpipe zpipe)
+  (:bench bench.exe))
+ (action
+  (chdir
+   %{workspace_root}
+   (run %{run} -o %{targets}))))
+
+(library
+ (name lz_landmarks)
+ (optional)
+ (modules lz_landmarks)
+ (libraries bigarray-compat checkseum optint landmarks de)
+ (preprocess
+  (pps landmarks.ppx --auto)))
+
+(rule
+ (copy ../lib/lz.ml lz_landmarks.ml))
+
+(rule
+ (copy ../lib/lz.mli lz_landmarks.mli))
+
+(executable
+ (name lzld)
+ (modules lzld)
+ (libraries decompress.de lz_landmarks))

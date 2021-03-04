@@ -1,0 +1,11 @@
+(executable
+ (name xxd)
+ (public_name hxd.xxd)
+ (modules xxd)
+ (libraries hxd cmdliner hxd_unix))
+
+(executable
+ (name caml)
+ (public_name hxd.caml)
+ (modules caml)
+ (libraries hxd cmdliner hxd_unix))

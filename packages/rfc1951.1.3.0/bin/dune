@@ -1,0 +1,12 @@
+(executable
+ (name pipe)
+ (modules pipe)
+ (package decompress)
+ (public_name decompress.pipe)
+ (libraries
+  checkseum.c
+  unix
+  decompress.de
+  decompress.zl
+  decompress.gz
+  cmdliner))
