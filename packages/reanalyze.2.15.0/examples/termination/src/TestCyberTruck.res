@@ -247,7 +247,7 @@ module UITermination = {
   let nothing: onClick = () => ()
 
   type div = (~text: string, ~onClick: onClick) => dom
-  let div: div = assert false
+  let div: div = (~text, ~onClick) => assert false
 
   let initState = n => n == 0 ? Some(42) : None
   let increment = n => Some(n + 1)
@@ -434,4 +434,16 @@ module TerminationTypes = {
 
   @progress(Parser.next)
   and oneTwoStar /* _=>N */ = p => kleene(~f=oneTwo, p)
+}
+
+@progress(progress)
+let rec testTry = () => {
+  try raise(Not_found) catch {
+  | Not_found =>
+    let _ = #abc(progress())
+    testTry()
+  | _ =>
+    let _ = [(), progress(), ()]
+    testTry()
+  }
 }
