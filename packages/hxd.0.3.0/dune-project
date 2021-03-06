@@ -1,4 +1,0 @@
-(lang dune 2.7)
-(name hxd)
-(version v0.3.0)
-(cram enable)

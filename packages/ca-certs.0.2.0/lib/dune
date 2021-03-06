@@ -1,0 +1,27 @@
+(library
+ (name ca_certs)
+ (public_name ca-certs)
+ (libraries mirage-crypto x509 astring bos rresult fpath logs ptime.clock.os)
+ (foreign_stubs
+  (language c)
+  (names ca_certs_stubs))
+ (c_library_flags
+  (:include flags.sexp)))
+
+(rule
+ (target flags.sexp)
+ (enabled_if
+  (= %{os_type} Win32))
+ (action
+  (with-stdout-to
+   %{target}
+   (echo "(:standard -lcrypt32)"))))
+
+(rule
+ (target flags.sexp)
+ (enabled_if
+  (<> %{os_type} Win32))
+ (action
+  (with-stdout-to
+   %{target}
+   (echo :standard))))
