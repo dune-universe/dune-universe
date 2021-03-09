@@ -1,0 +1,26 @@
+(library
+ (name ogg)
+ (public_name ogg)
+ (synopsis "OCaml bindings for libogg")
+ (libraries threads)
+ (modules ogg)
+ (install_c_headers ocaml-ogg)
+ (foreign_stubs
+  (language c)
+  (names ogg_stubs)
+  (flags
+   (:include c_flags.sexp)))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(library
+ (name ogg_decoder)
+ (public_name ogg.decoder)
+ (synopsis "Ogg decoding library with pluggable decoders")
+ (libraries ogg)
+ (modules ogg_decoder))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))
