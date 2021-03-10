@@ -1,0 +1,6 @@
+(library
+ (public_name agrid)
+ (modules agrid)
+ (libraries flex-array)
+ (instrumentation
+  (backend bisect_ppx)))

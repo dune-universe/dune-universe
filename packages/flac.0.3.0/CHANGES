@@ -1,0 +1,53 @@
+0.3.0 (08-03-2021)
+======
+* Switch to dune
+
+0.2.0 (08-10-2020)
+======
+* Switch to bytes read callback.
+
+0.1.7 (02-05-2020)
+======
+* Fix exception raised on end of track when
+  decoding ogg streams.
+* Fix memory leak when calling OCaml code from
+  unregistered C threads (#9).
+
+0.1.6 (12-04-2020)
+======
+* Fix return status for native and ogg read callbacks (savonet/liquidosoap#1146)
+
+0.1.5 (27-06-2019)
+=====
+* More cleanup.
+* Make sure input samples always fall withing the [-1;1] range. (#6)
+* Remove StringCompat, bump OCaml version to >= 4.03
+
+0.1.4 (23-01-2019)
+=====
+* Use caml_acquire_runtime_system/caml_release_runtime_system for clarity
+* Register global roots using caml_register_generational_global_root
+* Remove tmp field from encoder and decoder and use proper variable
+  registration when appropriate.
+* Be specific about each callback registered as global root.
+
+0.1.3 (07-10-2017)
+=====
+* Fixed segfault in encoder.
+* Fixed compilation with OCaml 4.06
+
+0.1.2 (03-08-2015)
+=====
+* Changed types to match new ocaml-ogg's API.
+  Should be fully backward compatible.
+* Fix segfault when vendor string is empty.
+* Swich to Bytes API and String.uppercase_ascii
+
+0.1.1 (25-06-2012)
+=====
+* Fixed incorrect decoding of 24bit flac streams.
+  Thanks to Wittawas Nakkasem for reporting and patching!
+
+0.1.0 (04-07-2011)
+======
+* Initial release

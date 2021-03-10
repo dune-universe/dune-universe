@@ -1,0 +1,11 @@
+(executable
+ (name decode)
+ (modules decode)
+ (optional)
+ (libraries flac.ogg))
+
+(executable
+ (name encode)
+ (modules encode)
+ (optional)
+ (libraries flac.ogg))

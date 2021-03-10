@@ -1,0 +1,32 @@
+archetype contract_transition
+
+states =
+| First
+| Second
+| Third
+
+
+transition mytr () {
+  from First
+  to Second
+  when { true }
+  with effect {
+    ()
+  }
+}
+
+transition mytr_a () {
+  from any
+  to Third
+  with effect {
+    ()
+  }
+}
+
+transition mytr_b () {
+  from (First or Second)
+  to Third
+  with effect {
+    ()
+  }
+}

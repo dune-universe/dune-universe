@@ -1,0 +1,14 @@
+(executable
+ (name ogg2wav)
+ (modules ogg2wav)
+ (libraries vorbis))
+
+(executable
+ (name stream2wav)
+ (modules stream2wav)
+ (libraries vorbis))
+
+(executable
+ (name wav2ogg)
+ (modules wav2ogg)
+ (libraries vorbis))

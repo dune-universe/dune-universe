@@ -1,0 +1,25 @@
+(library
+ (name speex)
+ (public_name speex)
+ (synopsis "OCaml bindings for libspeex")
+ (libraries ogg)
+ (modules speex)
+ (foreign_stubs
+  (language c)
+  (names speex_stubs)
+  (flags
+   (:include c_flags.sexp)))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(library
+ (name speex_decoder)
+ (public_name speex.decoder)
+ (synopsis "Speex decoder for the ogg-decoder library")
+ (libraries ogg.decoder speex)
+ (modules speex_decoder))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))

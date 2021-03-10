@@ -1,0 +1,40 @@
+name: Deploy binary
+on:
+  create:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.10.1+musl+static+flambda
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - name: Build
+        run: |
+          sudo apt-get install musl-tools
+          opam install dune containers fmt fileutils cmdliner timere toml dune-build-info
+          opam pin add timere-parse https://github.com/daypack-dev/timere.git
+          eval $(opam env); make release-static
+          cp _build/default/src/dirsift.exe dirsift
+      - name: Upload to GitHub release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dirsift
+          tag: ${{ github.ref }}

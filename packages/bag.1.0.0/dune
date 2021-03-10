@@ -1,0 +1,8 @@
+(library
+ (public_name bag)
+ (modules bag))
+
+(test
+ (name test)
+ (modules test)
+ (libraries bag))

@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+my $comment = 0;
+my @results;
+my @names;
+
+while (<STDIN>) {
+
+my $new_comment = $comment;
+
+s/^\s+//;
+s/\/\*.*\*\///;
+s/\/\/.*//;
+if (m/\/\*/) { $new_comment++; }
+if (m/\*\//)  { $new_comment--; }
+s/SPEEX_(GET|SET)_PF//;
+
+if (!$comment && !$new_comment)
+ {  
+   if (/^#define\s+(SPEEX_(?:GET|SET).+)\s+(.+)/)
+
+     {  my $pair = "$1:$2";
+        push(@results,$pair); 
+        push(@names,$1); }
+
+ }
+
+$comment = $new_comment;
+
+}
+
+my $types = join(" |\n  ", @names);
+print "type control = \n  $types\n";
+
+
+print <<BLA;
+
+let int_of_control x =
+    match x with
+BLA
+foreach (@results) {
+  my ($name,$value) = split (":");
+  print "      | $name -> $value\n";
+}

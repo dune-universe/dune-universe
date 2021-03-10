@@ -1,0 +1,13 @@
+(executable
+ (flags     (-w "+a-4-9-29-37-40-42-44-48-50-32-30@8"))
+ (name dirsift)
+ (public_name dirsift)
+ (libraries containers
+            fileutils
+            cmdliner
+            timere
+            timere-parse
+            toml
+            dune-build-info
+ )
+)

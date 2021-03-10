@@ -1,0 +1,45 @@
+0.4.0 (08-03-2021)
+=====
+* Switch to dune
+
+0.3.0 (16-10-2020)
+=====
+* Switch to Unix.read style API.
+
+0.2.2 (16-10-2020)
+=====
+* Fix Speex header notification spam.
+
+0.2.1 (03-08-2015)
+=====
+* Changed types to match new ocaml-ogg's API.
+  Should be fully backward compatible.
+* Wrapped more speex functions around enter/leave
+  blocking sections to avoid deadlock when speex
+  writes to stderr
+
+0.2.0 (04-07-2011)
+=====
+* Added decoding module for the new Ogg_demuxer module
+* Implement new Out_of_sync exception
+* Efficient seeking support
+
+0.1.2 (14-10-2009)
+=====
+* Added support for --enable-debugging configure option
+* Makefile now honnors LIBDIRS
+  variable for linking against libraries
+  located in other places than then standard
+  ones.
+* Added prefix to main compilation variables
+  if passed to configure.
+* Added NO_CUSTOM to build
+  in standard mode.
+
+0.1.1 (30-03-2009)
+=====
+* Fixed Makefile for BSD: call $(MAKE) for generating documentation.
+
+0.1.0 (17-02-2009)
+=====
+* Initial release

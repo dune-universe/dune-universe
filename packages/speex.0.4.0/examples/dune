@@ -1,0 +1,9 @@
+(executable
+ (name speex2wav)
+ (modules speex2wav)
+ (libraries speex))
+
+(executable
+ (name wav2speex)
+ (modules wav2speex)
+ (libraries speex))
