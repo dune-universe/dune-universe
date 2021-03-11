@@ -1,0 +1,9 @@
+(library
+ (name sihl_token)
+ (public_name sihl-token)
+ (libraries sihl)
+ (preprocess
+  (pps ppx_deriving_yojson)))
+
+(documentation
+ (package sihl-token))

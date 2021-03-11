@@ -1,6 +1,0 @@
-(library
- (name sihl_user)
- (public_name sihl-user)
- (libraries sihl-facade sihl-persistence)
- (preprocess
-  (pps ppx_deriving_yojson)))
