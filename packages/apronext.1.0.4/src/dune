@@ -1,0 +1,6 @@
+(include_subdirs unqualified)
+
+(library
+ (name apronext)
+ (public_name apronext)
+ (libraries apron apron.boxD apron.octD apron.polkaMPQ))

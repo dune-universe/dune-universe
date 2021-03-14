@@ -1,5 +1,0 @@
-(lang dune 2.0)
-(formatting (enabled_for ocaml))
-(name coq-serapi)
-(version 8.12.0+0.12.0)
-
