@@ -1,0 +1,5 @@
+(library
+ (public_name atable)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (libraries agrid flex-array))

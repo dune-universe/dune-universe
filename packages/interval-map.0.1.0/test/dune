@@ -1,0 +1,17 @@
+(library
+ (name interval_map_test)
+ (libraries alcotest interval-map)
+ (modules
+  (:standard \ test_runner)))
+
+(executable
+ (name test_runner)
+ (libraries alcotest interval_map_test)
+ (modules test_runner))
+
+(rule
+ (alias runtest)
+ (action
+  (run ./test_runner.exe -q --color=always)))
+
+(include_subdirs unqualified)

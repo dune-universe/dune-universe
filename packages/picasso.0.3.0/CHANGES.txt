@@ -1,0 +1,15 @@
+- fix font and visual improvement when changing variables
+- add variable selection for axes with gtk
+- add color for obj generation
+- show now generate a svg file when none of graphics and lablgtk are installed
+
+on 29 Jan release of v0.2 
+- add '~dashed' arg for line drawing functions in backends
+- add 'show' function
+- make graphics and gtk optional dependencies
+- graphics backend
+- add SVG backend
+- add 'add_l' functions into rendering modules
+- minor fixes
+
+on 17 Sep 2020 v0.1 first release

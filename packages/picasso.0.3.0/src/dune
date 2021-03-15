@@ -1,0 +1,14 @@
+(include_subdirs unqualified)
+
+(library
+  (public_name picasso)
+  (name picasso)
+  (libraries apron apronext
+      (select canvas.ml from
+          (lablgtk2  -> backends/gtk/canvas.ok.ml)
+          (!lablgtk2 -> backends/gtk/canvas.ko.ml))
+      (select graphX.ml from
+          (graphics  -> backends/graphics/graphX.ok.ml)
+          (!graphics -> backends/graphics/graphX.ko.ml))
+  )
+)
