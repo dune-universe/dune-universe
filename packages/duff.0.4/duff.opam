@@ -1,0 +1,37 @@
+version: "0.4"
+opam-version: "2.0"
+name:         "duff"
+maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
+authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
+homepage:     "https://github.com/mirage/duff"
+bug-reports:  "https://github.com/mirage/duff/issues"
+dev-repo:     "git+https://github.com/mirage/duff.git"
+doc:          "https://mirage.github.io/duff/"
+license:      "MIT"
+synopsis:     "Rabin's fingerprint and diff algorithm in OCaml"
+description: """
+This library provides a pure implementation of Rabin's fingerprint and diff algorithm in OCaml.
+
+It follows libXdiff C library. It is used by ocaml-git project.
+"""
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+
+depends: [
+  "ocaml"    {>= "4.03.0"}
+  "dune"     {>= "2.0.0"}
+  "fmt"
+  "bigarray-compat"
+  "stdlib-shims"
+  "alcotest"    {with-test}
+  "bigstringaf" {with-test}
+  "hxd"         {with-test & >= "0.3.1"}
+  "crowbar"     {with-test}
+]
+
+conflicts: [
+  "git" {<= "2.1.3"}
+]

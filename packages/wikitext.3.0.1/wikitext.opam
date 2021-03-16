@@ -1,0 +1,19 @@
+opam-version: "2.0"
+maintainer: "Julien SAGOT <julien.sagot@geneanet.org>"
+authors: "Maxence ABELA <maxence.abela+wikitext@gmail.com>"
+homepage: "https://github.com/geneanet/ocaml-wikitext"
+bug-reports: "https://github.com/geneanet/ocaml-wikitext/issues"
+dev-repo: "git+https://github.com/geneanet/ocaml-wikitext.git"
+synopsis: "Wikitext parser"
+build: [
+  [ "dune" "build" "-p" name "-j" jobs ]
+]
+depends: [
+  "dune" { >= "1.5.1" }
+  "menhir"
+  "ocaml" { >= "4.05.0" }
+  "js_of_ocaml" {with-test}
+  "ounit" {with-test & >= "2.0.0"}
+  "ppx_deriving" {with-test}
+  "ppx_import" {with-test}
+]
