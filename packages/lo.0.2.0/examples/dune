@@ -1,0 +1,9 @@
+(executable
+ (name osclisten)
+ (modules osclisten)
+ (libraries lo))
+
+(executable
+ (name send)
+ (modules send)
+ (libraries lo))

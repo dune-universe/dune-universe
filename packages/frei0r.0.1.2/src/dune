@@ -1,0 +1,18 @@
+(library
+ (name frei0r)
+ (public_name frei0r)
+ (synopsis "OCaml bindings for libfrei0r")
+ (libraries threads)
+ (modules frei0r)
+ (foreign_stubs
+  (language c)
+  (names frei0r_stubs)
+  (flags
+   (:include c_flags.sexp)))
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))

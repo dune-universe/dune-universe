@@ -1,0 +1,4 @@
+(executable
+ (name frei0r_test)
+ (modules frei0r_test)
+ (libraries frei0r))
