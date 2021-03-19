@@ -1,0 +1,4 @@
+(library
+ (public_name merlin.os_ipc)
+ (name os_ipc)
+ (c_names os_ipc_stub))

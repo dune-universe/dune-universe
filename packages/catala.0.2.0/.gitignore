@@ -1,5 +1,0 @@
-_build/
-*.install
-src/**/.merlin
-legifrance_oauth*
-*.html

@@ -1,6 +1,0 @@
-[ERROR] This constructor is not part of the E enumeration
-[ERROR] 
-[ERROR]   --> test_enum/too_many_cases.catala
-[ERROR]    | 
-[ERROR] 21 |     -- Case4 : true
-[ERROR]    |        ^^^^^

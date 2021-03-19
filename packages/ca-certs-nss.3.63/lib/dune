@@ -1,0 +1,22 @@
+; to update, browse to https://hg.mozilla.org/projects/nss/tags
+; find the last release (click on the tag, find the "changeset .. ID" line)
+; rm lib/certdata.txt
+; dune build lib/certdata.txt
+; mv _build/default/lib/certdata.txt lib
+;(rule
+; (targets certdata.txt)
+; (action
+;  (bash
+;    "wget https://hg.mozilla.org/projects/nss/raw-file/2c75831cea425ad082ab74f9993c857cdc6b4bdc/lib/ckfw/builtins/certdata.txt -O %{targets}")))
+
+(rule
+ (targets trust_anchor.ml)
+ (deps certdata.txt)
+ (action
+  (run %{bin:extract-from-certdata} certdata.txt --output trust_anchor.ml)))
+
+(library
+ (name ca_certs_nss)
+ (public_name ca-certs-nss)
+ (modules ca_certs_nss trust_anchor)
+ (libraries x509 rresult mirage-clock mirage-crypto))
