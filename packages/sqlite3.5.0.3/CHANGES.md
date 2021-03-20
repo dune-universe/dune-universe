@@ -1,3 +1,12 @@
+### 5.0.3 (2021-03-18)
+
+  * Fixed missing GC registration of init values in aggregate functions.
+
+  * Fixed call to final aggregate function when no step function was called.
+
+  * Fixed incorrect required minimum OCaml version (now 4.12).
+
+
 ### 5.0.2 (2020-07-30)
 
   * Added missing `dune-configurator` dependency.

@@ -109,18 +109,8 @@ static int pthread_setspecific(pthread_key_t key, void *value)
 
 /* Utility definitions */
 
-static const value Val_None = Val_int(0);
-
-static inline value Val_Some(value v_arg)
-{
-  CAMLparam1(v_arg);
-  value v_res = caml_alloc_small(1, 0);
-  Field(v_res, 0) = v_arg;
-  CAMLreturn(v_res);
-}
-
 static inline value Val_string_option(const char *str)
-{ return (str == NULL) ? Val_None : Val_Some(caml_copy_string(str)); }
+{ return (str == NULL) ? Val_none : caml_alloc_some(caml_copy_string(str)); }
 
 
 /* Type definitions */
@@ -340,14 +330,8 @@ static inline value copy_string_option_array(const char** strs, int len)
 
     for (i = 0; i < len; ++i) {
       const char *str = strs[i];
-      if (str == NULL) Field(v_res, i) = Val_None;
-      else {
-        value v_opt;
-        v_str = caml_copy_string(str);
-        v_opt = caml_alloc_small(1, 0);
-        Field(v_opt, 0) = v_str;
-        Store_field(v_res, i, v_opt);
-      }
+      if (str == NULL) Field(v_res, i) = Val_none;
+      else Store_field(v_res, i, caml_alloc_some(caml_copy_string(str)));
     }
 
     CAMLreturn(v_res);
@@ -483,7 +467,7 @@ CAMLprim value caml_sqlite3_open(
   char *file;
 
 #ifdef SQLITE_HAS_OPEN_V2
-  if (v_vfs_opt == Val_None) vfs = NULL;
+  if (Is_none(v_vfs_opt)) vfs = NULL;
   else {
     value v_vfs = Field(v_vfs_opt, 0);
     int vfs_len = caml_string_length(v_vfs) + 1;
@@ -499,7 +483,7 @@ CAMLprim value caml_sqlite3_open(
       Int_val(v_cache)
      )
     caml_failwith("SQLite3 version < 3.5 does not support open flags");
-  if (v_vfs_opt != Val_None)
+  if (Is_some(v_vfs_opt))
     caml_failwith("SQLite3 version < 3.5 does not support VFS modules");
 #endif
 
@@ -665,7 +649,7 @@ CAMLprim value caml_sqlite3_exec(value v_db, value v_maybe_cb, value v_sql)
   cbx.cbp = &v_cb;
   cbx.exn = &v_exn;
 
-  if (v_maybe_cb != Val_None) {
+  if (Is_some(v_maybe_cb)) {
     v_cb = Field(v_maybe_cb, 0);
     cb = exec_callback;
   }
@@ -947,9 +931,9 @@ CAMLprim value caml_sqlite3_prepare_tail(value v_stmt)
   if (stmtw->sql && stmtw->tail && *(stmtw->tail)) {
     db_wrap *dbw = stmtw->db_wrap;
     int tail_len = stmtw->sql_len - (stmtw->tail - stmtw->sql);
-    CAMLreturn(Val_Some(prepare_it(dbw, stmtw->tail, tail_len, loc)));
+    CAMLreturn(caml_alloc_some(prepare_it(dbw, stmtw->tail, tail_len, loc)));
   }
-  else CAMLreturn(Val_None);
+  else CAMLreturn(Val_none);
 }
 
 CAMLprim value caml_sqlite3_recompile(value v_stmt)
@@ -1391,7 +1375,7 @@ static inline value caml_sqlite3_wrap_values(int argc, sqlite3_value **args)
           v_res = Val_int(1);
           break;
         default:
-          v_res = Val_None;
+          v_res = Val_none;
       }
       Store_field(v_arr, i, v_res);
     }
@@ -1473,9 +1457,14 @@ static void caml_sqlite3_user_function_##NAME(sqlite3_context *ctx) \
   agg_ctx *agg_ctx = sqlite3_aggregate_context(ctx, sizeof(agg_ctx)); \
   value v_res; \
   caml_leave_blocking_section(); \
-    v_res = caml_callback_exn(GET_FUN, agg_ctx->v_acc); \
-    set_sqlite3_result(ctx, v_res); \
-    REMOVE_ROOT; \
+    if (!agg_ctx->initialized) { \
+      v_res = caml_callback_exn(GET_FUN, Field(data->v_fun, 1)); \
+      set_sqlite3_result(ctx, v_res); \
+    } else { \
+      v_res = caml_callback_exn(GET_FUN, agg_ctx->v_acc); \
+      set_sqlite3_result(ctx, v_res); \
+      REMOVE_ROOT; \
+    } \
   caml_enter_blocking_section(); \
 }
 
@@ -1574,8 +1563,8 @@ CAMLprim value caml_sqlite3_create_aggregate_function(
   value v_init, value v_stepfn, value v_inversefn, value v_valuefn,
   value v_finalfn)
 {
-  CAMLparam5(v_db, v_name, v_stepfn, v_inversefn, v_valuefn);
-  CAMLxparam1(v_finalfn);
+  CAMLparam5(v_db, v_name, v_init, v_stepfn, v_inversefn);
+  CAMLxparam2(v_valuefn, v_finalfn);
   user_function *param;
   int rc;
   db_wrap *dbw = Sqlite3_val(v_db);
@@ -1588,8 +1577,8 @@ CAMLprim value caml_sqlite3_create_aggregate_function(
     sqlite3_create_window_function(
       dbw->db, String_val(v_name), n_args, SQLITE_UTF8, param,
       caml_sqlite3_user_function_step, caml_sqlite3_user_function_final,
-      v_valuefn == Val_None ? NULL : caml_sqlite3_user_function_value,
-      v_inversefn == Val_None ? NULL : caml_sqlite3_user_function_inverse,
+      Is_none(v_valuefn) ? NULL : caml_sqlite3_user_function_value,
+      Is_none(v_inversefn) ? NULL : caml_sqlite3_user_function_inverse,
       NULL);
 #else
   rc = sqlite3_create_function(dbw->db, String_val(v_name),
