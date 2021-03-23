@@ -1,0 +1,14 @@
+(copy_files# ../lib/*.c)
+
+(rule
+ (deps Makefile stub_alloc_pages.c stub_get_addr.c)
+ (targets libiopage_freestanding_stubs.a)
+ (action
+  (no-infer
+   (progn
+    (run %{make})))))
+
+(install
+ (package io-page)
+ (section lib)
+ (files libiopage_freestanding_stubs.a))

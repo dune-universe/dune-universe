@@ -1,0 +1,4 @@
+(test
+ (name portable)
+ (package io-page)
+ (libraries io-page oUnit))

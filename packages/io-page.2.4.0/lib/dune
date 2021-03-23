@@ -1,0 +1,17 @@
+(library
+ (name io_page)
+ (modules io_page)
+ (public_name io-page)
+ (libraries cstruct bigarray-compat)
+ (foreign_stubs
+  (language c)
+  (names stub_alloc_pages stub_get_addr)
+  (flags :standard))
+ (js_of_ocaml
+  (javascript_files io-page.js)))
+
+(library
+ (name io_page_unix)
+ (public_name io-page.unix)
+ (modules io_page_unix)
+ (libraries io_page))

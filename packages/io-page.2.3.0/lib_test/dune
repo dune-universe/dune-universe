@@ -1,9 +1,0 @@
-(executables
- (names portable)
- (libraries io-page-unix io-page oUnit))
-
-(alias
- (name runtest)
- (package io-page-unix)
- (deps (:< portable.exe))
- (action (run %{<})))

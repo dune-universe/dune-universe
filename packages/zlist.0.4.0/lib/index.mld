@@ -1,0 +1,70 @@
+{0 [zlist] - Lazily-realized lists for OCaml}
+
+This is version 0.4.0, which is released under the terms of the Apache-2.0 license.
+
+[zlist] is copyright 2016 by Jesse Haber-Kucharsky.
+
+{1 Overview}
+
+A lazy list is like an OCaml [list], except that next element is lazily computed. These lists behave like the [List] type in Haskell.
+
+This structure allows allows arbitrary transformations to be executed without forcing each intermediate representation in memory.
+
+Another interesting property of lazy lists is that infinite structures can be constructed without being evaluated.
+
+For example, this is an infinite list of the value [0]:
+
+{[ let zeros = Zlist.continually 0 ]}
+
+A similar structure to a lazy list is the (now) standard [Seq.t] type, which differs from lazy lists in that it is defined via a function [unit -> 'a] (a "thunk") instead of as a lazy value.
+
+For applications in which [zlist] would be useful, it's likely that [Seq.t] is a better option due to interoperability with the wider OCaml ecosystem. Thus, the value in this package is mostly educational.
+
+{1 Examples}
+
+Each of these examples assumes that
+
+{[ open Zlist ]}
+
+has been executed.
+
+- Generate an infinite sequence of even numbers and sample some of them:
+
+{[
+  let evens = enum_from 0 |> map (fun x -> 2 * x) in
+  evens |> take 4 |> strict
+]}
+{[ - : int list = [0; 2; 4; 6] ]}
+
+- Compute an infinite list of Fibonacci numbers and sample 8 of them:
+
+{[
+  let fibs = iterate (0, 1) (fun (a, b) -> (b, a + b)) |> map snd in
+  fibs |> take 8 |> strict
+]}
+{[ - : int list = [1; 1; 2; 3; 5; 8; 13; 21] ]}
+
+- A Quicksort-like algorithm:
+
+{[
+  let ( ++ ) = concat in
+  
+  let rec sort = function
+    | lazy Nil -> lazy Nil
+    | lazy (Cons (x, t)) ->
+        let smaller = filter (fun y -> y < x) t in
+        let greater = filter (fun y -> y >= x) t in
+        sort smaller ++ unit x ++ sort greater
+  in
+  
+  sort (items [10; 2; 8; 5; 1; 0; 20; 3]) |> strict
+]}
+{[ - : int list = [0; 1; 2; 3; 5; 8; 10; 20] ]}
+
+{1 Entry point }
+
+The entry point for the [zlist] package is the {!Zlist} module, which defines the type of a lazy list, {!Zlist.t}.
+
+{1 Acknowledgements}
+
+This implementation is heavily inspired by "Functional Programming in Scala", by Chiusano and Bjarnason (2014).

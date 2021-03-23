@@ -1,0 +1,5 @@
+(lang dune 2.8)
+(name git)
+(version 3.3.1-21-g219cd19a1)
+(implicit_transitive_deps false)
+(cram enable)

@@ -1,0 +1,30 @@
+name: build
+on: [push]
+jobs:
+  run:
+    name: Build
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        # operating-system: [macos-latest, ubuntu-latest, windows-latest]
+        operating-system:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.08.1
+    steps:
+    - uses: actions/checkout@master
+    - name: cache opam
+      id: cache-opam
+      uses: actions/cache@v2
+      with:
+        path: _opam
+        key: opam-${{matrix.operating-system}}-${{matrix.ocaml-version}}
+    - uses: avsm/setup-ocaml@v1
+      if: steps.cache-opam.outputs.cache-hit != 'true'
+      with:
+        ocaml-version: ${{ matrix.ocaml-version }}
+    - run: opam pin -n .
+    - run: opam depext -yt batsat
+    - run: opam install -t . --deps-only
+    - run: opam exec -- dune build
+    - run: opam exec -- dune runtest
