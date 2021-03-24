@@ -1,0 +1,7 @@
+(library
+ (name aws_rds)
+ (public_name aws-rds)
+ (synopsis "aws-Amazon Relational Database Service")
+ (flags
+  (:standard -w -27))
+ (libraries aws))

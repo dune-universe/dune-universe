@@ -1,0 +1,4 @@
+(library
+ (name aws_lwt)
+ (public_name aws-lwt)
+ (libraries lwt aws cohttp cohttp-lwt cohttp-lwt-unix))

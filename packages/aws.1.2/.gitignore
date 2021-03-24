@@ -1,0 +1,16 @@
+.*.sw[po]
+_build/
+_opam/
+*#*
+*.core
+output/
+aws.docdir
+libraries/**/_build
+*.tar.gz
+*.install
+libraries/**/.merlin
+libraries/**/*.install
+lib/**/.merlin
+.envrc
+**/.merlin
+.idea
