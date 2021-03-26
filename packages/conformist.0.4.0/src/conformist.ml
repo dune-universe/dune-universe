@@ -176,7 +176,7 @@ let rec fold_left'
 
 let fold_left ~f ~init schema = fold_left' ~f ~init schema.fields
 
-type validation_error = (string * string) list
+type error = string * string option * string
 type input = (string * string list) list
 
 let validate schema input =
@@ -185,24 +185,28 @@ let validate schema input =
     match List.assoc name input with
     | [ value_string ] ->
       (match Field.validate field value_string with
-      | Some msg -> List.cons (name, msg) errors
+      | Some msg -> List.cons (name, Some value_string, msg) errors
       | None -> errors)
-    | _ -> List.cons (name, "Multiple values provided") errors
+    | values ->
+      let value = Format.sprintf "[%s]" (String.concat ", " values) in
+      List.cons (name, Some value, "Multiple values provided") errors
     | exception Not_found ->
       (match Field.optional field, Field.encode_default field with
       | _, Some default ->
         (match Field.validate field default with
-        | Some msg -> List.cons (name, msg) errors
+        | Some msg -> List.cons (name, None, msg) errors
         | None -> errors)
       | true, None -> errors
-      | false, None -> List.cons (name, "No value provided") errors)
+      | false, None -> List.cons (name, None, "No value provided") errors)
   in
   fold_left ~f ~init:[] schema |> List.rev
 ;;
 
 let rec decode
     : type meta ctor ty.
-      (meta, ctor, ty) t -> (string * string list) list -> (ty, string) Result.t
+      (meta, ctor, ty) t
+      -> (string * string list) list
+      -> (ty, string * string option * string) Result.t
   =
  fun { fields; ctor } fields_assoc ->
   let open! Field in
@@ -215,59 +219,50 @@ let rec decode
       | Ok value ->
         (match ctor value with
         | ctor -> decode { fields; ctor } fields_assoc
-        | exception _ ->
-          Error
-            (Printf.sprintf
-               "Failed to decode value '%s' of field '%s'"
-               value_string
-               field.name))
-      | Error msg ->
-        Error
-          (Printf.sprintf
-             "Failed to decode value '%s' of field '%s': %s"
-             field.name
-             value_string
-             msg))
+        | exception exn ->
+          let msg = Printexc.to_string exn in
+          Error (field.name, Some value_string, msg))
+      | Error msg -> Error (field.name, Some value_string, msg))
     | [] ->
       (match field.default with
       | Some value ->
         (match ctor value with
         | ctor -> decode { fields; ctor } fields_assoc
-        | exception _ ->
-          Error (Printf.sprintf "Failed to construct field '%s'" field.name))
+        | exception exn ->
+          let msg = Printexc.to_string exn in
+          Error (field.name, None, msg))
       | None ->
         (match field.decoder "" with
         | Ok value ->
           (match ctor value with
           | ctor -> decode { fields; ctor } fields_assoc
-          | exception _ ->
-            Error
-              (Printf.sprintf
-                 "Failed to decode value '%s' of field '%s'"
-                 ""
-                 field.name))
-        | Error msg ->
-          Error
-            (Printf.sprintf
-               "Failed to decode value '%s' of field '%s': %s"
-               field.name
-               ""
-               msg)))
-    | _ ->
-      Error
-        (Printf.sprintf
-           "Failed to decode field '%s': Multiple values provided"
-           field.name)
+          | exception exn ->
+            let msg = Printexc.to_string exn in
+            Error (field.name, None, msg))
+        | Error msg -> Error (field.name, Some "", msg)))
+    | values ->
+      let value = Format.sprintf "[%s]" (String.concat ", " values) in
+      Error (field.name, Some value, "Multiple values provided")
     | exception Not_found ->
       (match field.default with
       | Some value ->
         (match ctor value with
         | ctor -> decode { fields; ctor } fields_assoc
-        | exception _ ->
-          Error (Printf.sprintf "Failed to construct field '%s'" field.name))
-      | None ->
-        Error
-          (Printf.sprintf
-             "Failed to decode field '%s': No value provided"
-             field.name)))
+        | exception exn ->
+          let msg = Printexc.to_string exn in
+          let value_string = Option.map field.encoder field.default in
+          Error (field.name, value_string, msg))
+      | None -> Error (field.name, None, "No value provided")))
+;;
+
+let decode_and_validate schema input =
+  let validation_errors = validate schema input in
+  match decode schema input, validation_errors with
+  | Ok value, [] -> Ok value
+  | Ok _, validation_errors -> Error validation_errors
+  | Error (field_name, value, msg), validation_errors ->
+    validation_errors
+    |> List.filter (fun (name, _, _) -> not (String.equal name field_name))
+    |> List.cons (field_name, value, msg)
+    |> Result.error
 ;;

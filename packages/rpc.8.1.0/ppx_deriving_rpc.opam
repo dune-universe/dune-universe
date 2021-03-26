@@ -1,23 +1,24 @@
-version: "8.0.0"
+version: "8.1.0"
 opam-version: "2.0"
-synopsis: "A library to deal with RPCs in OCaml - Async interface"
+synopsis: "Ppx deriver for ocaml-rpc, a library to deal with RPCs in OCaml"
 maintainer: "thomas@gazagnaire.org"
 authors: "Thomas Gazagnaire, Jon Ludlam"
 tags: ["org:mirage" "org:xapi-project"]
 homepage: "https://github.com/mirage/ocaml-rpc"
-doc: "https://mirage.github.io/ocaml-rpc/rpclib-async"
+doc: "https://mirage.github.io/ocaml-rpc/ppx_deriving_rpc"
 bug-reports: "https://github.com/mirage/ocaml-rpc/issues"
 depends: [
-  "ocaml"
+  "ocaml" {>= "4.04.1"}
+  "dune" {>= "2.0.0"}
+  "rpclib" {= version}
+  "rresult"
+  "ppxlib" {>= "0.18.0"}
+  "lwt" {with-test & >= "3.0.0"}
   "alcotest" {with-test}
-  "dune"
-  "rpclib" {=version}
-  "async" {>= "v0.9.0"}
-  "ppx_deriving_rpc" {with-test & =version}
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
-  ["dune" "runtest" "-p" name] {with-test}
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
 dev-repo: "git://github.com/mirage/ocaml-rpc"
 description: """

@@ -1,20 +1,21 @@
-version: "8.0.0"
+version: "8.1.0"
 opam-version: "2.0"
-synopsis: "A library to deal with RPCs in OCaml - Lwt interface"
+synopsis: "A library to deal with RPCs in OCaml"
 maintainer: "thomas@gazagnaire.org"
 authors: "Thomas Gazagnaire, Jon Ludlam"
 tags: ["org:mirage" "org:xapi-project"]
 homepage: "https://github.com/mirage/ocaml-rpc"
-doc: "https://mirage.github.io/ocaml-rpc/rpclib-lwt"
+doc: "https://mirage.github.io/ocaml-rpc/rpclib"
 bug-reports: "https://github.com/mirage/ocaml-rpc/issues"
 depends: [
-  "ocaml"
+  "ocaml" {>= "4.04.0"}
   "alcotest" {with-test}
-  "dune"
-  "rpclib" {=version}
-  "lwt" {>= "3.0.0"}
-  "alcotest-lwt" {with-test}
-  "ppx_deriving_rpc" {with-test & =version}
+  "dune" {>= "2.0.0"}
+  "base64" {>= "3.4.0"}
+  "cmdliner"
+  "rresult"
+  "xmlm"
+  "yojson" {>= "1.7.0"}
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
