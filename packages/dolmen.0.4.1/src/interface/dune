@@ -1,7 +1,0 @@
-(library
-  (name           dolmen_intf)
-  (public_name    dolmen.intf)
-  (libraries      menhirLib)
-  (modules        Lex Parse Location
-                  Id Term Stmt Language)
-)

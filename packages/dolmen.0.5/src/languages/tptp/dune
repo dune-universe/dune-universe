@@ -1,0 +1,7 @@
+
+(library
+  (name         dolmen_tptp)
+  (public_name  dolmen.tptp)
+  (libraries    dolmen_tptp_v6_3_0)
+  (modules      Dolmen_tptp)
+)

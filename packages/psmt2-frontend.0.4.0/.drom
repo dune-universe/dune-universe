@@ -1,0 +1,27 @@
+# Keep this file in your GIT repo to help drom track generated files
+
+# hash of toml configuration files
+# used for generation of all files
+
+e78e3df6990ea287e1d3860125a9824f:.
+# end context for .
+
+# begin context for drom.toml
+# file drom.toml
+ebed3a9019eec353445cdf96689b6b23:drom.toml
+# end context for drom.toml
+
+# begin context for dune-project
+# file dune-project
+74ac144e5bce61e5d2dda30ccef9e046:dune-project
+# end context for dune-project
+
+# begin context for src/bin/package.toml
+# file src/bin/package.toml
+dea23aaee88271953b1dd68f9b719637:src/bin/package.toml
+# end context for src/bin/package.toml
+
+# begin context for src/lib/package.toml
+# file src/lib/package.toml
+d6254e79340933b17bf8900214091eb5:src/lib/package.toml
+# end context for src/lib/package.toml

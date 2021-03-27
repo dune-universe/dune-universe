@@ -1,0 +1,5 @@
+(lang dune 2.7)
+(name dolmen)
+(version v0.5)
+(using menhir 2.0)
+(implicit_transitive_deps false)

@@ -1,0 +1,61 @@
+[project]
+drom-version = "0.1.0"
+
+[project]
+archive = "https://github.com/OCamlPro-Coquera/psmt2-frontend/archive/0.4.0.tar.gz"
+authors = ["Albin Coquereau"]
+bug-reports = "https://github.com/OCamlPro-Coquera/psmt2-frontend/issues"
+copyright = "Albin Coquereau"
+dev-repo = "https://github.com/OCamlPro-Coquera/psmt2-frontend/tree/next"
+edition = "4.10.0"
+homepage = "https://github.com/OCamlPro-Coquera/psmt2-frontend/"
+license = "Apache-2.0"
+min-edition = "4.04.2"
+mode = "binary"
+name = "psmt2-frontend"
+synopsis = "The psmt2-frontend project"
+version = "0.4.0"
+windows-ci = true
+
+# keys that you could also define:
+# build-profile = "...build-profile..."
+# odoc-target = "...odoc-target..."
+# sphinx-target = "...sphinx-target..."
+# doc-api = "...doc-api..."
+# doc-gen = "...doc-gen..."
+# github-organization = "...github-organization..."
+
+[project]
+description = """
+An OCaml library to parse and type-check a conservative extension of the SMT-LIB 2
+standard with prenex polymorphism.
+"""
+
+[drom]
+skip = "license"
+
+[dependencies]
+
+[tools]
+menhir = ""
+[tools.ocamlformat]
+for-test = true
+[tools.odoc]
+for-doc = true
+[tools.ppx_expect]
+for-test = true
+[tools.ppx_inline_test]
+for-test = true
+
+[project]
+generators = ["ocamllex", "menhir"]
+pack = "Psmt2Frontend"
+pack-modules = true
+skip-dirs = []
+
+
+[[package]]
+dir = "src/bin"
+
+[[package]]
+dir = "src/lib"

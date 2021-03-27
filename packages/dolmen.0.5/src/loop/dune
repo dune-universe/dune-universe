@@ -1,0 +1,20 @@
+(library
+  (name           dolmen_loop)
+  (public_name    dolmen_loop)
+  (instrumentation (backend bisect_ppx))
+  (libraries
+    ; External deps
+    gen unix fmt
+    ; main dolmen deps , with versioned languages deps
+    dolmen
+    dolmen.intf dolmen.std dolmen.class
+    dolmen.smtlib2 dolmen.tptp
+    ; typechecker
+    dolmen_type
+    )
+  (modules
+    ; Interfaces
+    Expr_intf Typer_intf Headers_intf State_intf
+    ; Implementations
+    Logic Code State Parser Typer Headers Pipeline)
+)

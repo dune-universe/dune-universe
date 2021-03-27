@@ -1,0 +1,295 @@
+#
+# Syntax Error Messages for dimacs
+#
+# Each error message *must* follow the following format:
+#
+# """
+# XXX
+# production parsed (on a single line)
+# what is expected at that point,
+# possibly on multiple lines
+# """
+#
+# The error numbers can be pretty much arbitrary, but for each
+# error number XXX, a corresponding test case file must exists as
+# tests/parsing/dimacs/errors/XXX_some_descr_of_the_error_Y.smt2
+# (Y is there to allow multiple example of the error test case to exist,
+# for instance with various different error tokens)
+#
+# Notes:
+# - some error messages are shared among more than one error case,
+#   in such cases, the error number is the same, so when modifying
+#   an error message, be sure to modify all occurrences of the same
+#   error number
+
+
+input: ZERO
+##
+## Ends in an error in state: 23.
+##
+## input' -> . input [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: NEWLINE INT
+##
+## Ends in an error in state: 3.
+##
+## file -> list(NEWLINE) . start cnf [ # ]
+##
+## The known suffix of the stack is as follows:
+## list(NEWLINE)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 1, spurious reduction of production list(NEWLINE) ->
+## In state 2, spurious reduction of production list(NEWLINE) -> NEWLINE list(NEWLINE)
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: NEWLINE ZERO
+##
+## Ends in an error in state: 1.
+##
+## list(NEWLINE) -> NEWLINE . list(NEWLINE) [ P INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## NEWLINE
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: P CNF INT INT NEWLINE INT ZERO NEWLINE ZERO
+##
+## Ends in an error in state: 17.
+##
+## cnf -> clause . cnf [ # ]
+##
+## The known suffix of the stack is as follows:
+## clause
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: P CNF INT INT NEWLINE NEWLINE ZERO
+##
+## Ends in an error in state: 10.
+##
+## cnf -> NEWLINE . cnf [ # ]
+##
+## The known suffix of the stack is as follows:
+## NEWLINE
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: P CNF INT INT NEWLINE ZERO
+##
+## Ends in an error in state: 9.
+##
+## file -> list(NEWLINE) start . cnf [ # ]
+##
+## The known suffix of the stack is as follows:
+## list(NEWLINE) start
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+file: ZERO
+##
+## Ends in an error in state: 0.
+##
+## file' -> . file [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+001
+an input sentence
+a p-cnf header if there hasn't been one yet,
+or a clause starting with a non-zero integer
+
+input: P ZERO
+##
+## Ends in an error in state: 25.
+##
+## start -> P . CNF INT INT NEWLINE [ # ]
+##
+## The known suffix of the stack is as follows:
+## P
+##
+
+002
+a p-cnf header
+the keyword "cnf"
+
+file: P ZERO
+##
+## Ends in an error in state: 4.
+##
+## start -> P . CNF INT INT NEWLINE [ NEWLINE INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## P
+##
+
+002
+a p-cnf header
+the keyword "cnf"
+
+input: P CNF ZERO
+##
+## Ends in an error in state: 26.
+##
+## start -> P CNF . INT INT NEWLINE [ # ]
+##
+## The known suffix of the stack is as follows:
+## P CNF
+##
+
+003
+a p-cnf header
+a non-zero integer for the number of variables
+
+file: P CNF ZERO
+##
+## Ends in an error in state: 5.
+##
+## start -> P CNF . INT INT NEWLINE [ NEWLINE INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## P CNF
+##
+
+003
+a p-cnf header
+a non-zero integer for the number of variables
+
+input: P CNF INT ZERO
+##
+## Ends in an error in state: 27.
+##
+## start -> P CNF INT . INT NEWLINE [ # ]
+##
+## The known suffix of the stack is as follows:
+## P CNF INT
+##
+
+004
+a p-cnf header
+a non-zero integer for the number of clauses
+
+file: P CNF INT ZERO
+##
+## Ends in an error in state: 6.
+##
+## start -> P CNF INT . INT NEWLINE [ NEWLINE INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## P CNF INT
+##
+
+004
+a p-cnf header
+a non-zero integer for the number of clauses
+
+input: P CNF INT INT ZERO
+##
+## Ends in an error in state: 28.
+##
+## start -> P CNF INT INT . NEWLINE [ # ]
+##
+## The known suffix of the stack is as follows:
+## P CNF INT INT
+##
+
+005
+a p-cnf header
+a newline character to end the header
+
+file: P CNF INT INT ZERO
+##
+## Ends in an error in state: 7.
+##
+## start -> P CNF INT INT . NEWLINE [ NEWLINE INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## P CNF INT INT
+##
+
+005
+a p-cnf header
+a newline character to end the header
+
+input: INT P
+##
+## Ends in an error in state: 19.
+##
+## nonempty_list(atom) -> atom . [ ZERO ]
+## nonempty_list(atom) -> atom . nonempty_list(atom) [ ZERO ]
+##
+## The known suffix of the stack is as follows:
+## atom
+##
+
+006
+a clause
+an integer, either zero to mark the end of the clause, or
+a non-zero integer to add to the clause
+
+input: INT ZERO ZERO
+##
+## Ends in an error in state: 33.
+##
+## clause -> nonempty_list(atom) ZERO . NEWLINE [ # ]
+##
+## The known suffix of the stack is as follows:
+## nonempty_list(atom) ZERO
+##
+
+008
+a clause
+a newline to properly finish the clause after the zero
+
+file: P CNF INT INT NEWLINE INT ZERO ZERO
+##
+## Ends in an error in state: 14.
+##
+## clause -> nonempty_list(atom) ZERO . NEWLINE [ NEWLINE INT EOF ]
+##
+## The known suffix of the stack is as follows:
+## nonempty_list(atom) ZERO
+##
+
+008
+a clause
+a newline to properly finish the clause after the zero
+
+
+

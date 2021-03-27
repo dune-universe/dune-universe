@@ -1,0 +1,16 @@
+(executable
+  (name         main)
+  (public_name  dolmenls)
+  (package      dolmen_lsp)
+  (libraries
+    ; ocaml deps
+    threads.posix
+    ; lwp deps
+    lsp linol linol-lwt
+    ; other external deps
+    gen logs
+    ; dolmen deps
+    dolmen dolmen.intf dolmen.std
+    dolmen_type dolmen_loop
+    )
+ )

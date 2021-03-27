@@ -1,0 +1,14 @@
+(library
+  (name           dolmen_std)
+  (public_name    dolmen.std)
+  (libraries      dolmen_intf dolmen_line fmt)
+  (instrumentation (backend bisect_ppx))
+  (flags :standard -warn-error -3)
+  (modules
+    ; Parsing structures
+    Loc Id Term Statement Normalize
+    ; Typing & Loop stuff
+    Tag Pretty Expr
+    ; Helpers
+    Msg Tok Vec Misc Escape Transformer)
+)

@@ -1,0 +1,12 @@
+
+; Language library definition
+(library
+  (name           dolmen_dimacs)
+  (public_name    dolmen.dimacs)
+  (instrumentation (backend bisect_ppx))
+  (libraries      dolmen_std dolmen_intf menhirLib)
+  (modules        Dolmen_dimacs Tokens Lexer Parser Ast Syntax_messages)
+)
+
+; Common include
+(include ../dune.common)

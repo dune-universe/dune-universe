@@ -1,0 +1,6 @@
+(set-logic UFLIA)
+(declare-sort foo 0)
+(declare-fun a () foo)
+(declare-fun p (Int) Bool)
+(assert (p a))
+(check-sat)

@@ -1,0 +1,101 @@
+
+name: Main Workflow
+
+env:
+  OPAMYES: true
+  OPAMSOLVERTIMEOUT: 300
+
+on:
+  pull_request:
+    branches:
+      - main
+      - next
+  push:
+    branches:
+      - main
+      - next
+
+jobs:
+  build_dune_ocaml_versions:
+    name: Build with dune on different ocaml versions
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.04.2
+          - 4.05.0
+          - 4.10.0
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Retrieve opam cache
+        uses: actions/cache@v2
+        id: cache-opam
+        with:
+          path: ~/.opam
+          key: v1-${{ runner.os }}-psmt2-frontend-dune-${{ matrix.ocaml-version }}-${{ hashFiles('*.opam') }}
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin add . --no-action
+
+      - run: opam depext psmt2-frontend_bin psmt2-frontend
+
+      - run: opam install ./*.opam --deps-only --with-test
+
+      - run: opam exec -- dune build @install
+
+      - name: run test suite
+        run: opam exec -- dune build @runtest
+
+      - name: test source is well formatted
+        run: opam exec -- dune build @fmt
+        continue-on-error: true
+        if: matrix.ocaml-version == '4.10.0'
+
+
+  build_opam_os:
+    name: Build with opam on different OS
+
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-version:
+          - 4.10.0
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Retrieve opam cache
+        uses: actions/cache@v2
+        id: cache-opam
+        with:
+          path: ~/.opam
+          key: v1-${{ runner.os }}-psmt2-frontend-opam-${{ matrix.ocaml-version }}-${{ hashFiles('*.opam') }}
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin add . --no-action
+
+      - run: opam depext psmt2-frontend_bin psmt2-frontend
+
+      - run: opam install ./*.opam --deps-only --with-test
+
+      - run: opam install .
