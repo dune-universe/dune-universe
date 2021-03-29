@@ -20,6 +20,6 @@
    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
    SOFTWARE. *)
 
-let version = "2.7.3"
+let version = "2.7.4"
 
 let protocol_version = "5.2"
