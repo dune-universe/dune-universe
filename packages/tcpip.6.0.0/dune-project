@@ -1,3 +1,0 @@
-(lang dune 2.7)
-(name tcpip)
-(version v6.0.0)
