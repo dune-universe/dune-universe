@@ -1,0 +1,6 @@
+(library
+ (name ez_pgocaml)
+ (public_name ez_pgocaml)
+ (wrapped false)
+ (modules EzPG EzPGUpdater)
+ (libraries pgocaml))

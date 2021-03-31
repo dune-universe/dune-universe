@@ -1,0 +1,4 @@
+(library
+ (name biarray)
+ (wrapped false)
+ (libraries strong))

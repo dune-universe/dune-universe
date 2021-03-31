@@ -1,0 +1,10 @@
+(executables
+ (names ask_integrator_mariadb)
+ (libraries
+  ask
+  ask-integrator
+  sihl
+  sihl-storage
+  alcotest
+  alcotest-lwt
+  caqti-driver-mariadb))

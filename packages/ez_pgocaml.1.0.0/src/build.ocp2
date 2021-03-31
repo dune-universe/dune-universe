@@ -1,0 +1,11 @@
+
+OCaml.library("ez-pgocaml", ocaml+
+  {
+    files = [
+      "ezPG.ml";
+      "ezPGUpdater.ml";
+    ];
+    requires = [
+          "pgocaml";
+    ];
+  });

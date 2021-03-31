@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # default user is "opam"
+      - ..:/workspace:cached
+      - opam:/home/opam/.opam:cached
+      - build:/workspace/_build:cached
+      - ${HOME}${USERPROFILE}/.ssh:/home/opam/.ssh
+      - ${HOME}${USERPROFILE}/.gitconfig:/home/opam/.gitconfig
+      - ${HOME}${USERPROFILE}/.gitignore_global:/home/opam/.gitignore_global
+    depends_on: [database]
+    ports: [3000:3000]
+    command: /workspace/.devcontainer/wait-for-database.sh test sleep infinity
+
+  database:
+    image: mariadb:10.3
+    command: --max_allowed_packet=629145600
+    ports: [3310:3306]
+    environment:
+      - TZ=Europe/Zurich
+      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=development
+      - MYSQL_USER=root
+    volumes:
+      - ./data/db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d/:ro
+
+  adminer:
+    image: adminer:4.7.6-standalone
+    restart: always
+    ports: [8080:8080]
+    depends_on: [database]
+
+volumes:
+  opam:
+  build:

@@ -1,0 +1,14 @@
+(library
+ (name ask)
+ (public_name ask)
+ (libraries sihl sihl-storage)
+ (preprocess
+  (pps
+   ppx_fields_conv
+   ppx_deriving_yojson
+   ppx_deriving.eq
+   ppx_deriving.show
+   ppx_deriving.make
+   ppx_sexp_conv)))
+
+(include_subdirs unqualified)

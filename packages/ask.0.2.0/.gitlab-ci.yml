@@ -1,0 +1,42 @@
+---
+variables:
+  MYSQL_ROOT_PASSWORD: password
+  MYSQL_DATABASE: dev
+
+services:
+  - mariadb:10.3
+
+stages:
+  - test
+
+test:
+  stage: test
+  tags: [docker]
+  image: ocaml/opam2:4.11
+  environment:
+    name: production
+  variables:
+    DATABASE_URL_TEST_MARIADB: mariadb://root:${MYSQL_ROOT_PASSWORD}@mariadb:3306/${MYSQL_DATABASE}
+  artifacts:
+    paths:
+      - _build/default/test/
+  script:
+    - echo "Updating OPAM"
+    - sudo apt-get update -y
+    - sudo apt-get install -y libmariadb-dev
+    - opam remote remove --all default
+    - opam remote add default https://opam.ocaml.org
+    - echo "Pin package"
+    - opam pin add . --yes --no-action
+    - echo "Query and install external depencencies"
+    - opam depext ask ask-integrator --yes --with-doc --with-test
+    - echo "Install dependencies"
+    - OPAMSOLVERTIMEOUT=180 opam install . --deps-only --with-doc --with-test --locked --unlock-base
+    - opam install ocamlformat --skip-updates
+    - echo "Install test dependencies"
+    - opam install -y alcotest-lwt
+    - sudo chown -R opam:nogroup .
+    - echo "compile project"
+    - opam config exec -- make
+    - echo "Running tests including migrations"
+    - opam config exec -- make test

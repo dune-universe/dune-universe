@@ -1,0 +1,16 @@
+
+db-update: db-version.txt
+	$(MAKE) db-update-check
+
+db-update-check:
+	if $(DBUPDATER) ; then \
+        	$(DBUPDATER) $(DBOLDINFO) $(DBWITNESS) $(DBNAME) $(DBHOST) $(DBPORT) $(DBSOCKETDIR) $(DBUSER) $(DBPASSWORD); \
+	else \
+	exit 0; \
+	fi
+
+db-version.txt:
+	echo 0 > db-version.txt
+
+dropdb:
+	$(DBUPDATER) $(DBNAME) $(DBHOST) $(DBPORT) $(DBSOCKETDIR) $(DBUSER) $(DBPASSWORD) --dropdb
