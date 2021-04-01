@@ -1,0 +1,6 @@
+[submodule "benchmarks/VOQC-benchmarks"]
+	path = benchmarks/VOQC-benchmarks
+	url = https://github.com/inQWIRE/VOQC-benchmarks
+[submodule "extraction/SQIR"]
+	path = extraction/SQIR
+	url = https://github.com/inQWIRE/SQIR

@@ -1,0 +1,14 @@
+(library
+ (name ezDebug)
+ (public_name ez_api.debug)
+ (virtual_modules ezDebug)
+ (modules ezDebug)
+ (default_implementation ezDebug_unix))
+
+(library
+ (name ezLwtSys)
+ (public_name ez_api.lwt_sys)
+ (virtual_modules ezLwtSys)
+ (modules ezLwtSys)
+ (default_implementation ezLwtSys_unix)
+ (libraries lwt))

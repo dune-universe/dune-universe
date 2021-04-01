@@ -1,0 +1,13 @@
+(library
+ (name ezDebug_unix)
+ (public_name ez_api.debug_unix)
+ (modules ezDebug)
+ (implements ezDebug))
+
+(library
+ (name ezLwtSys_unix)
+ (public_name ez_api.lwt_unix)
+ (optional)
+ (modules ezLwtSys)
+ (implements ezLwtSys)
+ (libraries lwt.unix))

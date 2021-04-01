@@ -1,0 +1,3 @@
+(executable
+  (name voqc_cli)
+  (libraries voqc))

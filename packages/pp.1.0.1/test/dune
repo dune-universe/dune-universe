@@ -1,5 +1,0 @@
-(library
- (name pp_tests)
- (libraries pp)
- (inline_tests)
- (preprocess (pps ppx_expect)))

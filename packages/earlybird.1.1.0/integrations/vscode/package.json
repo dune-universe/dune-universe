@@ -1,0 +1,170 @@
+{
+  "private": true,
+  "name": "ocamlearlybird",
+  "displayName": "Ocamlearlybird",
+  "description": "OCaml debugger. Powered by ocamlearlybird.",
+  "version": "1.2.0",
+  "publisher": "hackwaly",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hackwaly/ocamlearlybird.git"
+  },
+  "categories": [
+    "Debuggers"
+  ],
+  "main": "extension.js",
+  "activationEvents": [
+    "onDebugResolve:ocamlearlybird",
+    "onDebugResolve:ocamlearlybird.dune",
+    "onDebugInitialConfigurations",
+    "onDebugDynamicConfigurations",
+    "onCommand:ocamlearlybird.startDebug",
+    "onCommand:ocamlearlybird.variableGotoClosureCodeLocation"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "ocamlearlybird.startDebug",
+        "title": "Start an OCaml Debug Session"
+      },
+      {
+        "command": "ocamlearlybird.variableGotoClosureCodeLocation",
+        "title": "Goto Closure Code Location"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceFilename =~ /\\.bc$/ || resourceFilename =~ /^a\\.out$/ || resourceFilename =~ /\\.d\\.byte$/",
+          "command": "ocamlearlybird.startDebug"
+        }
+      ],
+      "debug/variables/context": [
+        {
+          "when": "debugProtocolVariableMenuContext == 'ocamlearlybird.function'",
+          "command": "ocamlearlybird.variableGotoClosureCodeLocation",
+          "group": "navigation"
+        }
+      ]
+    },
+    "breakpoints": [
+      {
+        "language": "ocaml"
+      },
+      {
+        "language": "reason"
+      },
+      {
+        "language": "ocamllex"
+      },
+      {
+        "language": "menhir"
+      }
+    ],
+    "configuration": [
+      {
+        "properties": {
+          "ocamlearlybird.path": {
+            "type": "string",
+            "description": "Path to ocamlearlybird executable.",
+            "default": "ocamlearlybird"
+          }
+        }
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "ocamlearlybird",
+        "label": "Ocamlearlybird",
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "noDebug": {
+                "type": "boolean",
+                "default": false
+              },
+              "cwd": {
+                "type": "string",
+                "description": "The working directory for debuggee program."
+              },
+              "env": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Environment variables passed to the debuggee program.",
+                "default": {}
+              },
+              "program": {
+                "type": "string",
+                "description": "The path of debuggee program."
+              },
+              "source_dirs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The path to search sources.",
+                "default": []
+              },
+              "onlyDebugGlob": {
+                "type": "string",
+                "description": "Only debug sources which match `onlyDebugGlob`.",
+                "default": "true"
+              },
+              "followForkMode": {
+                "enum": [
+                  "forkChild",
+                  "forkParent"
+                ],
+                "description": "Set which process the debugger follows on fork.",
+                "default": "forkParent"
+              },
+              "yieldSteps": {
+                "type": "number",
+                "description": "Max steps to execute in batch. Debugger can not response other requests when executing steps in batch.",
+                "default": 4096
+              },
+              "arguments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The command-line arguments for the debuggee program.",
+                "default": []
+              },
+              "console": {
+                "enum": [
+                  "internalConsole",
+                  "integratedTerminal",
+                  "externalTerminal"
+                ],
+                "description": "Where to launch the debug target: internal console, integrated terminal, or external terminal.",
+                "default": "internalConsole"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after launch.",
+                "default": false
+              },
+              "_debugLog": {
+                "type": "string",
+                "description": "File to Log debug messages."
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.22",
+    "@types/vscode": "^1.54.0"
+  }
+}
