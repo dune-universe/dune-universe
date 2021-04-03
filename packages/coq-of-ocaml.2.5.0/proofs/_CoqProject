@@ -1,0 +1,9 @@
+-R . CoqOfOCaml
+-arg -impredicative-set
+
+Basics.v
+CoqOfOCaml.v
+Libraries.v
+List.v
+Settings.v
+Tags.v
