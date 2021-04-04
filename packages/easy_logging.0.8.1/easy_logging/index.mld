@@ -1,0 +1,185 @@
+{0:top easy_logging}
+
+{1 Easy logging %%VERSION%%}
+
+   Logging library inspired by the Python logging module.
+
+  Easy_logging allows fine-grained tuning of of when and where and how log messages are printed,
+  with relatively low configuration, and simple logger configuration and usage.
+
+It has the following features :
+   - one line logger creation
+   - log messages printf style, or provide [string] or [string lazy_t] message
+   - loggers for tree architecture for easy level and handlers configuration
+   - handlers associated to each logger will filter, format and treat the message independantly
+   - use tags and tag generators to add contextual information to log messages
+   - use default handlers for outputing log messages to stdout, stderr or to a file
+   - declare your own handler for anything else
+
+{4     Basic example } 
+{[   
+open Easy_logging
+logger = Logging.make_logger "my_logger" (Some Debug) [Cli Debug]
+logger#info "log_message" ]}   
+will output to the stdout a message of the form
+{v 1.306  my_logger    Info    log_message v}
+
+{2 Table of contents }
+
+{ol
+{- {!section:description} (see also {! Easy_logging})}
+{- {!section:defaults}
+   + {!section:handlers} (see also {! Easy_logging__Handlers})
+   + {!section:logger} (see also {! Easy_logging.Logging.logger} )
+   + {!section:logging}  (see also {! Easy_logging.Logging}) }
+{- {!section:makelogging} (see also {! Easy_logging__Make_logging.MakeLogging} )} 
+{- {{:examples.html} More examples}}
+{- {{!section:index} Index of modules}}
+}
+{2:description Overall description }
+
+The logging infrastructure is based on four concepts:
+ 
+{e loggers,  handlers, log items } and {e logging tree}.
+
+A call to {e logger} will create a {e log item}, which it will pass to its {e handlers}. Each {e handler} will treats the {e item} (e.g. transform it to a string, and then outputs to stdout or to a file).
+{v
+                                     ___________
+                                    | handler 1 |
+               _______________      |-----------|
+              |     logger    | ==> |   ( * )   |
+              |---------------|     |___________|
+(message) ==> | -> log item   |      ___________
+              [_______________| ==> | handler 2 |
+                                    |   ...     |
+v}
+
+{3 Logging tree}
+
+Loggers are stored in a tree structure, with the following properties :
+
+ - messages handled by a logger (after level filtering) are passed to its ancestor's handlers (this can be overriden with the [set_propagate] method).
+ - if not set, the level of a logger is that of its closest ancestor whose level is set (or NoLevel if there is no such ancestor)
+
+{4 Example}
+{v
+                       A (Info, Cli Debug)
+                     /    \
+                  A.B      A.C
+                 /            \
+            A.B.D (Warning)    A.C.E (Debug, (File "f", Debug),
+                                                propagate=false)
+v}
+For example, with the above logging tree
+ - logs made to [A], [A.B] or [A.C] of level [Info] or more are written to the stdout.
+ - logs made to [A.B.D] of level [Warning] or above are written the stdout.
+ - logs made to [A.C.E] are only written to the file ["f"]
+
+{3 Levels}
+
+To each logger and log message are associated a level, which will
+be used to filter the messages going through the logging infrastructure.
+
+The predefined levels are, in increasing order of precedence :
+ + Debug   : used for debugging.
+ + Trace   : used between info and debug
+ + Info    : used to trace program execution.
+ + Warning : used for warnings.
+ + Error   : used for errors.
+ + Flash   : used for one-shot debugging: displays an easy to spot message.
+ + NoLevel : used to filter out all messages.
+
+{3 Log items }
+
+A log item has type
+{[
+    type log_item = {
+        level : level;          (* the level of the log item *)
+        logger_name : string;   (* the name of the logger to which the log call was passed *)
+        msg : string;           (* the actual log message *)
+        tags : string list      (* a list of tags *)
+      } ]}
+
+
+{2:handlers Handlers}
+Four handler creation helper function are provided. They  instantiate handlers with a level of their own to filter messages :
+ - Cli handler: outputs colored messages to stdout.
+   {[ let h = Handlers.make (Cli Debug) ]}
+ - CliErr handler: outputs colored messages to stderr.
+   {[ let h = Handlers.make (CliErr Debug) ]}
+ - File handler : outputs messages to a given file.
+   {[ let h = Handlers.make (File ("filename", Debug)) ]}
+ - RotatingFile handler : outputs messages to a given file. Takes as argument the max number of kb per log file, and the number of backup log files.
+   {[ let h = Handlers.make (RotatingFile ("filename", Debug, 65536, 3)) ]}
+
+Log file creation is governed by configuration values (setting up file name prefix/suffix, folder, file creation mode, etc...). The configuration can be specified when creating the handlers explicitely (like above), and a default configuration can be set in the Logging module.
+
+See more at {! Easy_logging.Handlers}
+
+{2:logger Loggers}
+
+See complete class documentation at {! Easy_logging.Logging.logger}
+
+{3 Creation}
+
+A logger object can be created directly (in which case it will not be part of the logging tree)
+{[ let logger1 = new Logging.logger "my_logger1" ]}
+or through helper functions of the {!logging} module.
+
+{3 Usage}
+
+A logger object has three methods for each of the log levels:
+
+ - one that takes a formatting string and parameters (printf like)
+  {[logger1#debug "Myvar : %s" (to_string myvar); ]}
+ - one that takes a [string lazy_t]
+  {[logger1#ldebug (lazy (heavy_calculation ())); ]}
+ - one that takes a [string]
+  {[ logger1#sdebug (to_string myvar);]}
+
+{2:logging The Logging module}
+
+The {! Easy_logging.Logging} module is the application of [MakeLogging] over [Handlers].
+It provides two functions :
+
+ - {[ val make_logger :
+    ?propagate:bool -> string -> log_level -> Handlers.desc list ]}
+    Instantiates a logger with some paramters, and adds it to the logging tree.
+
+ - {[ val get_logger : string -> logger ]}
+ Returns a registered logger, or creates a new one if it doesn't exist.
+
+ - {[val set_handlers_config : Handlers.config -> unit]}
+  Sets the default handlers configuration, used when creating new handlers via [make_logger].
+
+{2:makelogging The MakeLogging functor }
+
+The MakeLogging functor takes a {!Easy_logging__.Easy_logging_types.HandlersT} typed module, and creates a Logging module.
+
+{3 WARNING}
+When declaring your Handlers module, do not coerce it the type [HandlersT], because then  its internal types [t] and [desc] won't be accessible.
+
+{2 Examples}
+
+See {{:examples.html} the examples page} for more examples.
+
+{2:index Index of modules}
+
+{ol
+
+{- {! Easy_logging__Colorize}}
+{- {! Easy_logging}}
+{- {! Easy_logging__Formatters}}
+{- {! Easy_logging__Handlers}}
+{- {! Easy_logging__Logging_infra}}
+{- {! Easy_logging__Logging_types}}
+{- {! Easy_logging__Make_logging}}
+}
+
+{1 Reference }
+
+{ul
+  {- Author: %%PKG_AUTHORS%%}
+  {- Homepage:  %%PKG_HOMEPAGE%%}
+  {- Repo: %%PKG_REPO%%}
+}
