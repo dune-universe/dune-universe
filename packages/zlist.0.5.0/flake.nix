@@ -29,7 +29,7 @@
           useDune2 = true;
           pname = "zlist";
           src = self;
-          version = "0.4.0";
+          version = "0.5.0";
           buildInputs = [ ];
         };
       };

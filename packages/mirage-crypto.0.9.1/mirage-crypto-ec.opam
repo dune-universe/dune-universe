@@ -1,4 +1,4 @@
-version: "0.9.0"
+version: "0.9.1"
 opam-version: "2.0"
 synopsis: "Elliptic Curve Cryptography with primitives taken from Fiat"
 description: """
@@ -34,6 +34,7 @@ depends: [
   "eqaf" {>= "0.7"}
   "mirage-crypto" {=version}
   "mirage-crypto-rng" {=version}
+  "mirage-crypto-pk" {with-test & =version}
   "hex" {with-test}
   "alcotest" {with-test}
   "asn1-combinators" {with-test & >= "0.2.5"}
