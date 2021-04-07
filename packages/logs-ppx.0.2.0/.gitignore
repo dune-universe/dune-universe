@@ -1,0 +1,63 @@
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+
+# ocamlbuild working directory
+_build/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# oasis generated files
+setup.data
+setup.log
+
+# Merlin configuring file for Vim and Emacs
+.merlin
+
+# Dune generated files
+*.install
+
+# Local OPAM switch
+_opam/
+
+# Esy generated files
+_esy/
+_release/
+_export/
+npm-debug.log
+yarn-error.log
+node_modules/
+
+/lib/*
+!/lib/js/*
+/bundledOutputs/
+npm-debug.log
+.DS_Store
+.bsb.lock
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+
+# Vim
+.*.swp
+
+*.bs.js
+**.xre
+
+.vscode
+esy.lock

@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-esy:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install esy
+        run: npm install -g esy@0.6.7
+
+      - name: Try to restore install cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.esy/source
+          key: source-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+
+      - name: Install dependencies
+        run: esy install
+
+      - name: Print esy cache
+        id: print_esy_cache
+        run: node .github/workflows/print-esy-cache.js
+
+      - name: Try to restore dependencies cache
+        id: deps-cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.print_esy_cache.outputs.esy_cache }}
+          key: build-${{ matrix.os }}-${{ hashFiles('**/index.json') }}
+          restore-keys: build-${{ matrix.os }}-
+
+      - name: Build dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy build-dependencies
+
+      - name: Build project
+        run: esy build
+
+      - name: Run tests
+        run: |
+          esy test
+        env:
+          OCAML_ERROR_STYLE: "short"
+          OCAML_COLOR: "never"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}
+          path: _build/default/bin/Bin.exe
+
+      # Cleanup build cache if dependencies have changed
+      - name: Clean build cache
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: esy cleanup .
+  build-opam:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-version:
+          - 4.13.0
+          - 4.11.2
+          - 4.8.1
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+      - run: opam install . --deps-only --with-doc --with-test
+      - run: opam exec -- dune build
+      - run: opam exec -- dune runtest
