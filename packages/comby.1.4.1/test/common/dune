@@ -1,0 +1,75 @@
+(library
+ (name common_test_integration)
+ (package comby)
+ (modules
+  test_helpers
+  test_extract_regex
+  test_alpha
+  test_omega
+  test_cli
+  ; test_server
+  test_statistics
+  test_offset_conversion
+
+  test_rewrite_rule_alpha
+  test_rewrite_rule_omega
+
+  test_integration_alpha
+  test_integration_omega
+
+  test_match_rule_alpha
+  test_match_rule_omega
+
+  test_python_string_literals_alpha
+  test_python_string_literals_omega
+
+  test_hole_extensions_alpha
+  test_hole_extensions_omega
+
+  test_generic_alpha
+  test_generic_omega
+
+  test_string_literals_alpha
+  test_string_literals_omega
+
+  test_c_style_comments_alpha
+  test_c_style_comments_omega
+
+  test_nested_comments_alpha
+  test_nested_comments_omega
+
+  test_c_alpha
+  test_c_omega
+
+  test_bash_alpha
+  test_bash_omega
+
+  test_go_alpha
+  test_go_omega
+
+  test_c_separators_alpha
+  test_c_separators_omega
+
+  test_pipeline_alpha
+  test_pipeline_omega
+
+  test_rewrite_parts_alpha
+  test_rewrite_parts_omega
+
+  test_user_defined_language_alpha
+  test_user_defined_language_omega
+
+  test_nested_matches_alpha
+  test_nested_matches_omega
+  )
+ (inline_tests)
+ (preprocess (pps ppx_expect ppx_sexp_message ppx_deriving_yojson))
+ (libraries
+  comby
+  cohttp-lwt-unix
+  core
+  camlzip))
+
+(alias
+(name runtest)
+(deps (source_tree example) (source_tree example/src/.ignore-me)))
