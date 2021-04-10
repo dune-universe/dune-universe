@@ -1,3 +1,0 @@
-(executable
- (name main)
- (libraries ocaml-migrate-parsetree gen_js_api_ppx_driver))
