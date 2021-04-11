@@ -1,8 +1,8 @@
 opam-version: "2.0"
-version: "0.4.1"
-synopsis: "User service implementations for Sihl"
+version: "0.5.0"
+synopsis: "Storage service implementations for Sihl"
 description:
-  "Modules for user management and password reset workflows with support for PostgreSQL and MariaDB."
+  "Modules for storing large binary blobs using either PostgreSQL or MariaDB."
 maintainer: ["josef@oxidizing.io"]
 authors: ["Josef Erben" "Aron Erben" "Miko Nieminen"]
 license: "MIT"
@@ -12,8 +12,8 @@ bug-reports: "https://github.com/oxidizing/sihl/issues"
 depends: [
   "base-threads" {= "base"}
   "base-unix" {= "base"}
-  "dune" {= "2.8.4"}
-  "ocaml" {= "4.08.1"}
+  "dune" {= "2.8.5"}
+  "ocaml" {= "4.11.2"}
 ]
 build: [
   ["dune" "subst"] {dev}
@@ -30,4 +30,4 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/oxidizing/sihl.git"
-name: "sihl-user"
+name: "sihl-storage"

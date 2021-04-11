@@ -25,7 +25,7 @@ module Web = struct
   end
 
   module Response = Opium.Response
-  module Cooke = Opium.Cookie
+  module Cookie = Opium.Cookie
   module Body = Opium.Body
   module Router = Opium.Router
   module Route = Opium.Route
@@ -41,6 +41,36 @@ module Web = struct
     let set_notice = Web_flash.set_notice
     let find = Web_flash.find
     let set = Web_flash.set
+  end
+
+  module Rest = struct
+    type action =
+      [ `Index
+      | `Create
+      | `New
+      | `Edit
+      | `Show
+      | `Update
+      | `Destroy
+      ]
+
+    type form = (string * string option * string option) list
+
+    let resource_of_service = Web_rest.resource_of_service
+    let resource_of_controller = Web_rest.resource_of_controller
+    let find_form = Web_rest.Form.find
+
+    module type SERVICE = sig
+      include Web_rest.SERVICE
+    end
+
+    module type VIEW = sig
+      include Web_rest.VIEW
+    end
+
+    module type CONTROLLER = sig
+      include Web_rest.CONTROLLER
+    end
   end
 
   module Htmx = struct
