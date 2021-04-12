@@ -1,5 +1,0 @@
-(library
-    (name resp_unix)
-    (public_name resp-unix)
-    (libraries resp resp-server resp-client lwt conduit-lwt-unix)
-)

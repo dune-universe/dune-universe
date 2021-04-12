@@ -1,5 +1,0 @@
-(library
-    (name resp_mirage)
-    (public_name resp-mirage)
-    (libraries resp resp-server resp-client lwt mirage-conduit mirage-stack-lwt)
-)
