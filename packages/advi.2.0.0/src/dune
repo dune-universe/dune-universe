@@ -1,0 +1,48 @@
+(executable
+ (name main)
+ (public_name advi)
+ (package advi)
+ (flags (:standard -w +YXD -warn-error +S -w -KZ -w -50 -w -9 -w -6 -w -27)
+ ;; (-cclib  -lXinerama)
+ )
+ (libraries str unix graphics camlimages.core camlimages.graphics
+            camlimages.freetype)
+ (foreign_stubs (language c)
+                (names grY11 events grwm)
+                ;; Does not compile on Mac osx, even when Xinerama is present
+                ;; (flags :standard -D HAVE_XINERAMA)
+                )
+ (modules_without_implementation
+  dvicommands
+  transitions
+  )
+ )
+
+(rule
+ (target configure.sh)
+ (deps discover.sh)
+ (action (run bash discover.sh %{target}))
+)
+
+(rule
+  (target config.ml)
+  (deps configure.sh (:src config.in.ml))
+  (action (run bash configure.sh %{src} %{target}))
+)
+
+(rule
+  (target Makefile.config)
+  (deps configure.sh (:src Makefile.in.config))
+  (action (run bash configure.sh %{src} %{target}))
+)
+
+(rule
+  (target advi-latex-files)
+  (deps configure.sh (:src advi-latex-files.in))
+  (action (run bash configure.sh %{src} %{target}))
+)
+
+(install
+ (section bin)
+ (files advi-latex-files))
+ 

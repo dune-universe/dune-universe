@@ -1,0 +1,11 @@
+\renewcommand{\@bodyargs}{TEXT=black BGCOLOR=white}
+\let\RequirePackage\usepackage
+\def\space{~}
+\def\vfill{}
+\def\vfil{}
+\def\hfill{\hspace*{4ex}}
+\def\goodbreak{}
+\renewcommand{\sqrt}[2][2]{(#2)^{1/#1}}
+
+\providecommand {\setblend}[1]{}
+\providecommand {\setalpha}[1]{}

@@ -1,0 +1,11 @@
+#! /usr/bin/perl
+
+while (<>) {
+  if (/^.PS/) {
+    print "%%BEGIN IMAGE\n" ;
+  } 
+  print "$_";
+  if (/^.PE/) {
+    print "%%END IMAGE\n" ;    
+  }
+}

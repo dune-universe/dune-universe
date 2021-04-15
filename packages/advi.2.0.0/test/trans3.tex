@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+
+\usepackage{advi}
+
+\usepackage{color}
+\usepackage{graphicx}
+
+\pagestyle{empty}
+
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{green}{rgb}{0.0,1.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+\definecolor{c1}{rgb}{1.0,0.0,0.0}
+\definecolor{c2}{rgb}{0.5,0.4,0.0}
+\definecolor{c3}{rgb}{0.0,0.8,0.0}
+\definecolor{c4}{rgb}{0.0,0.4,0.5}
+\definecolor{c5}{rgb}{0.0,0.0,1.0}
+\definecolor{c6}{rgb}{0.5,0.0,0.5}
+
+\def\keymenu#1{\textcolor{red}{\underline{#1}}}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+Press: \keymenu{n}ext page \keymenu{p}revious page
+\keymenu{\textvisiblespace} next pause%
+\hfill{\adviembed[sticky=advianim,width=1.56cm,height=1.824cm]{animate -geometry @g! -window @p advilogo.anim.gif}}
+} \vss}}
+
+\def\adviheader{\noindent
+{\bf\Large {\ActiveDVI}  --- moving text}\\
+\includegraphics[width=\textwidth]{bar.eps}}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\def\adviquitfooter{\vbox to 0em{\vbox to \vsize {\vfill
+{\centerline{\Large {Press: \keymenu{q} to quit}}}%
+} \vss}}
+
+\def\lastpage{\Newpage\adviquitfooter\adviheader}
+
+\begin{document}
+
+\newpage
+
+\section*{Text movements}
+
+\noindent
+You can move texts around with the \verb"\advitransbox" \TeX~macro.
+
+\noindent For instance,
+
+\verb"\advitransbox{slide,from=right}{coming from the right}}"
+
+\noindent moves the text {\em coming from the right} from the
+right edge of the slide to its correct position into the
+page. Variants \verb"right", \verb"left", \verb"top", and
+\verb"bottom" of this macro are available.
+\\
+This is now being generalised to an open framework to describe
+arbitrary paths for the box to follow in the animation.
+
+\newpage
+
+For example, the first effect is obtained via:\\
+%
+\verb"\advitransbox{path,steps=100,startx=500,starty=1000,stopx=10,stopy=10,genpath=line}"
+
+Notice that, if start or stop is omitted, it is replaced by the actual
+coordinates of the box in the dvi screen, so that the effect for the
+\textcolor{yellow}{yellow} line below is obtained by writing:\\
+\verb"\advitransbox{path,steps=100,startx=500,starty=1000,genpath=line}{path}"
+{\Huge
+\begin{itemize}
+\item \textcolor{red}{From \advitransbox{path,steps=100,startx=500,starty=1000,stopx=10,stopy=10,genpath=line}{path}}
+\item \textcolor{yellow}{From \advitransbox{path,steps=100,startx=500,starty=1000,genpath=line}{path}}
+\item \textcolor{green}{From \advitransbox{slide,from=left}{left}}
+\item \textcolor{blue}{From \advitransbox{slide,from=top}{top}}
+\item \textcolor{cyan}{From \advitransbox{slide,from=bottom}{bottom}}
+\end{itemize}
+}
+
+\lastpage
+
+\paragraph {Note}
+The command is robust:
+\[
+\advitransbox{slide,from=down}
+   {it may include \verb"verbatim" material}
+\]
+
+\end{document}

@@ -1,0 +1,15 @@
+taquin
+but
+adviclock
+test_cursors
+*.log
+*.dvi
+*.aux
+*.toc
+demo*.ps
+bar.eps
+gpic.ps
+test_gpic.tex
+test_gpic.ps
+.advi
+*.out

@@ -1,0 +1,195 @@
+\documentclass[12pt]{article}
+
+\usepackage {manual}
+\usepackage {fullpage}
+\usepackage {makeidx}
+
+\usepackage {graphicx}
+\usepackage {advi}
+\usepackage {advi-annot}
+\usepackage {bubble}
+
+% For splash inclusion
+\usepackage {color}
+\usepackage {graphicx}
+\usepackage {tabularx}
+%\usepackage {pst-all}
+\usepackage {xwindows-colors}
+\usepackage{hyperref}
+
+% End of splash specific stuf
+\usepackage[latin1]{inputenc}
+\usepackage [francais]{babel}
+%\usepackage [cyr]{aeguill}
+
+\begin{document}
+
+\section{Comment contrôler {\ActiveDVI} avec une télécommande}
+
+Sous Linux, le projet {\furl{www.lirc.org/} {\tt lirc}}
+
+\href{www.lirc.org}{{\tt lirc}} procure différents types d'interaction
+entre une télécommande et votre machine Linux. Vous en découvrirez
+toutes les fonctionnalités sur le site de
+\softtarget{http://www.lirc.org/}{{\tt lirc}} \ldots
+\href{www.lirc.org/}{{\tt lirc}} \ldots
+
+La distribution actuelle (4/9/2003) de {\tt lirc} se télécharge 
+\href{http://prdownloads.sourceforge.net/lirc/lirc-0.6.6.tar.bz2}{ici}.
+Pour faire marcher le système, il faut bien sûr disposer d'un
+récepteur IR (Infra-Rouge) sur l'ordinateur.
+Encore une fois, le site de \href{www.lirc.org}{{\tt lirc}} donne des pistes.
+J'ai personnellement acheté le récepteur IR (Home-Brew) \ldots
+
+Attention, j'ai réussi à faire ce qui suit avec les bureaux gnome,
+blackbox, icewm mais pas KDE (c'est {\tt lirc} qui ne marche pas avec
+KDE pour moi).
+
+\subsection{Installation rapide de {\tt lirc}}
+
+\begin{verbatim}
+tar xvjf lirc-0.6.6.tar.bz2
+cd lirc-0.6.6
+./configure
+\end{verbatim}
+
+Choisir son capteur IR (pour moi, c'était le choix par défaut).
+
+Ensuite {\tt save conf} \& {\tt run configure}.
+
+\begin{verbatim}
+make (en root)
+make install
+chmod 666 /dev/li*
+\end{verbatim}
+
+Si vous avez le capteur Home-Brew sur port série, il faut ajouter les
+2 lignes suivantes dans {\tt /etc/modules.conf}:
+
+\begin{verbatim}
+alias char-major-61  lirc_serial
+options lirc_serial irq=4 io=0x3e8
+\end{verbatim}
+
+Si vous n'avez pas ce capteur, je ne sais pas!
+
+\subsection{Configuration de la télécommande}
+
+Maintenant que {\tt lircd} est installé, il faut configurer la télécommande.
+
+Les fichiers de configuration des télécommandes sont disponibles
+\href{http://prdownloads.sourceforge.net/lirc/lircrc_config-0.1.1.tar.gz}{ici}.
+
+Si votre télécommande est dans la liste des télécommandes préconfigurées,
+il vous suffit de copier le fichier correspondant dans {\tt /etc/lircd.conf}.
+
+Sinon, il faut configurer les touches de votre télécommande une à une.
+
+Cette configuration se fait à l'aide du programme \emph{irrecord}.
+{\tt irrecord} créé un fichier de configuration pour la télécommande qu'il
+faudra ensuite renommer en {\tt /etc/lircd.conf}.
+
+Le fichier de configuration associe le signal d'un bouton de votre
+télécommande avec une chaîne de caractère (le nom du bouton par
+exemple). J'ai défini les boutons suivants sur ma télécommande :
+
+\begin{verbatim}
+          a1
+          2
+          3
+          afp
+          4
+          5
+          6
+          B
+          7
+          8
+          9
+          mode
+          0
+          memo
+          scroll
+          cancel
+          time
+          fast\_back
+          play
+          fast\_forward
+          mute
+          back
+          stop
+          forward
+          pause
+          volume\_up
+          volume\_down
+\end{verbatim}
+
+\subsection{Configuration de {\tt lirc} pour {\ActiveDVI}}
+
+Il ne reste plus qu'à configurer le fichier {\tt ~/.lircrc} qui
+spécifie ce que {\tt irxevent} doit exécuter lorsqu'un signal IR est
+reçu. À titre d'exemple, voilà mon fichier {\tt ~/.lircrc}:
+
+\begin{verbatim}
+begin
+        prog = irxevent
+        button = stop
+        config = Key q CurrentWindow
+end
+
+begin
+        prog = irxevent
+        button = fast_forward
+        config = Key n CurrentWindow
+end
+
+begin
+        prog = irxevent
+        button = fast_back
+        config = Key p CurrentWindow
+end
+
+begin
+        prog = irxevent
+        button = memo
+        config = Key shift-T CurrentWindow
+end
+
+begin
+        prog = irxevent
+        button = mute
+        config = Key t CurrentWindow
+end
+\end{verbatim}
+
+En gros, lorsque {\tt irxevent} est lancé,
+
+\begin{itemize}
+ \item si l'on clique sur le bouton ``stop'', {tt irxevent} envoie le
+caractère ``q'' à la fenêtre active.
+ \item si l'on appuie sur le bouton ``memo'', c'est ``T'' qui est
+envoyé.
+\end{itemize}
+
+Lors d'une présentation, la fenêtre de {\ActiveDVI} est toujours
+active et ce mécanime doit marcher! (Je n'ai pas testé avec des films
+ou d'autres programmes embarqués qui pourraient ouvrir des fenêtre
+par-dessus {\ActiveDVI}.)
+
+\subsection*{Mise en {\oe}uvre}
+
+Pour essayer le contrôle à distance, lancez
+\begin{verbatim}
+irxevent &
+\end{verbatim}
+et
+\begin{verbatim}
+advi mon_talk.dvi
+\end{verbatim}
+
+On navigue alors avec les boutons {\tt fast\_forward} et {\tt
+fast\_back} et l'on fait apparaître la table des matières/thumbnails
+avec les boutons {\tt memo} et {\tt mute}.
+
+Joyeuses présentations télécommandées!
+
+\end{document}

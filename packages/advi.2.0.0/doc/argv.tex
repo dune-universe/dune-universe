@@ -1,0 +1,141 @@
+\documentclass [12pt]{article}
+
+\usepackage {manual}
+\usepackage {fullpage}
+\usepackage {makeidx}
+
+\usepackage{argv}
+\defargv {ps2pdf}[]{
+  \rundriver{ps2pdf}
+  \usepackage {times}
+  \PassOptionsToPackage {ignore}{advi}
+  \PassOptionsToPackage {psbubble}{xprosper}
+}
+\runargv
+
+\title {{\ActiveDVI} manual}
+\author {Didier R{\'{e}}my and ???}
+\def \ActiveDVI {\textbf {Active-DVI}}
+
+
+\begin{document}
+
+\begin{abstract}
+This package provides help for parameterizing the processing of latex source
+file by comannd-line options.
+\end{abstract}
+
+
+\section {Calling latex}
+
+The goal is to be able to call latex with different options, such as:
+\begin{quote}
+\verb+latex '\def\argv{dvips}\input' foo.tex+
+\end{quote}
+or
+\begin{quote}
+\verb+latex '\def\argv{ps2pdf}\input' foo.tex+
+\end{quote}
+and having different latex producing different outputs, so that they 
+can be processed with {\tt dvips} or {\tt dvipdfm} shell commands.
+
+Then, the file {\tt foo.tex} should look like:
+\begin{quote}
+\begin{verbatim}
+\documentclass{article}
+
+\usepackage{argv}
+\def \driver {}
+\defargv{dvips}[]{\def \driver{dvips}}
+\defargv{dvips}[]{\def \driver{ps2pdf}}
+\runargv
+
+\usepackage [\driver]{hyperref}
+
+\begin{document}
+foo
+\end{document}
+\end{verbatim}
+\end{quote}
+Of course, in this simple example, some alternative, maybe shorter way could
+have been found. However, one can do much more. Moreover, some options 
+are actually predifined, and in this case, it would suffice to write:
+\begin{quote}
+\begin{verbatim}
+\documentclass{article}
+\usepackage[run]{argv}
+\usepackage{hyperref}
+\begin{document}
+foo
+\end{document}
+\end{verbatim}
+\end{quote}
+and latex the file with either
+\begin{quote}
+\verb+latex '\def\argv{driver=dvips}\input' foo.tex+
+\end{quote}
+or
+\begin{quote}
+\verb+latex '\def\argv{driver=ps2pdf}\input' foo.tex+
+\end{quote}
+
+\section {Requirements}
+
+The package uses the \doctt {keyval} package.
+
+\section {New Commands}
+
+\medskip\noindent
+\docdef \defargv\docarg{name}\docopt{default}\docarg{value}
+\begin{quote}
+Define the option \docid{name} to execute \docid{value}, where value is the
+body of a command with one argument (it may contain \verb"#1"). 
+If \docid{default} is present, then the field \docid{name} can be called
+without a value, and \docid{default} is used as the default value. 
+
+In fact, the following names are predefined:
+
+\medskip\noindent
+\dockey {use}{package}
+\begin{quote}
+This will load the package \docid{package}
+\end{quote}
+
+\medskip\noindent
+\dockey {driver}{driver}
+\begin{quote}
+This will execute \docdef\usrdriver\docarg{driver} as described below.
+\end{quote}
+\end{quote}
+
+\medskip\noindent
+\docdef \rundriver\docarg{driver}
+\begin{quote}
+If the \docid{driver} is recognized as a valid driver, it passed the
+corresponding option to the two packages \doctt{hyperref} and
+\doctt{graphicx}. The current drivers are:
+\doctt{dvips}, \doctt{dvipdfm}, \doctt{ps2pdf}, and \doctt{pdflatex}.
+
+(But it does not load the corresponding package).
+\end{quote}
+
+
+\medskip\noindent
+\docdef \runargv
+\begin{quote}
+If \docdef \argv{} is defined (typically, on the command line), 
+its contents is processed.
+\end{quote}
+
+Moreover, the package recognizes the option \doctt{run} which tells
+the package to process arguments immediately. Hence,
+\begin{quote}
+\verb"\usepackage[run]{argv}"
+\end{quote}
+is equivalent to:
+\begin{quote}
+\verb"\usepackage{argv}\runargv"
+\end{quote}
+
+
+\end{document}

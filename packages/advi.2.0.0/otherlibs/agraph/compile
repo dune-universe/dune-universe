@@ -1,0 +1,12 @@
+ocamlc -c apg_types.mli
+ocamlc -c apg.mli 
+ocamlc -c apg.ml
+ocamlc -c apg_run.ml
+ocamlc -c agraphics.mli
+ocamlc -c agraphics.ml
+ocamlc -c config.ml
+ocamlc -c options.mli
+ocamlc -c options.ml
+ocamlc -c apgv.ml
+
+

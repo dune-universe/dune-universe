@@ -1,0 +1,310 @@
+%; tx     TEXINPUTS=.:../../tex:../lib: tx join.tex
+%; dview  dview -mlslides $*.dvi &
+%; whizzy  slide -dvi "dview -mlslides."
+%
+% Didier Rémy.
+
+\documentclass [landscape,semlayer,semcolor,semlcmss,a4]{seminar}
+
+\usepackage{argv}
+\defargv {ps2pdf}[]{
+  \rundriver{ps2pdf}
+  \usepackage {times}
+  \PassOptionsToPackage {psbubble}{xprosper}
+}
+\runargv
+
+\slidewidth 235mm
+\slideheight 174mm
+\centerslidesfalse
+\slideframe {none}
+\renewcommand{\slidetopmargin}{20pt}
+\renewcommand{\slidebottommargin}{1cm}
+
+\usepackage{advi} 
+\usepackage{xprosper}
+
+\AtEndLastOverlay{\advithumbnail}
+
+%%% colors
+\usepackage {color}
+
+\definecolor{lightblue}{rgb}{0.7,0.7,1}
+\definecolor{lightred}{rgb}{1,0.8,0.8}
+\definecolor{lightgreen}{rgb}{0.6,1,0.6}
+
+\usepackage{pst-node}
+
+%%% hyperref must come last
+
+
+%%% both prosper and advi define the same macro pause, to be fixed
+
+\def \jc {\;\triangleright\;}
+\def \jcand {\;\&\;}
+
+\newpagestyle {mystyle}{}{}%{\hfil {\tiny \thepage}}
+\pagestyle {mystyle}
+
+\def \titlestyle {\color{blue}}
+\newcommand{\slidetitle}[1]
+   {\vskip 2ex \subsection* {\centerline {\titlestyle \Large #1}}}
+
+\def \ebox #1{\colorbox{yellow}{\mbox {\large \strut #1}}}
+\def \mathprefix #1{\mathopen{}\mathrel{\tt {#1}}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\overlays*{\begin{slide}
+\slidetitle{Effects with advi}
+
+\large
+
+A concurrent, object-oriented calculus with:
+\vspace {0.5em}
+\begin {itemize}
+\item 
+\ebox {\bf \red object internal concurrency}
+
+\begin{advirecording}{1}
+--- not just sequential objects running concurrently!
+\end{advirecording}
+\item
+\ebox {\bf \red incremental assembling of object definitions}
+
+\adviwait\adviplay{1}
+
+\begin{advirecording}{2}
+--- including the refinement of both
+\begin {itemize}
+\item behavior ~{\sl traditional in object-orientation}
+\item synchronization ~{\sl expected in a concurrent setting}
+\end {itemize}
+\end{advirecording}\adviwait\adviplay{2}
+\end {itemize}
+
+\end{slide}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\overlays*{\begin{slide}
+\slidetitle{Same effects with prosper}
+
+\large
+
+A concurrent, object-oriented calculus with:
+\vspace {0.5em}
+\begin {itemize}
+\item 
+\ebox {\bf \red object internal concurrency}
+
+\fromPause[1]{
+--- not just sequential objects running concurrently!
+}{}
+
+\item
+\ebox {\bf \red incremental assembling of object definitions}
+
+\pause[2]
+ --- including the refinement of both
+\begin {itemize}
+\item behavior ~{\sl traditional in object-orientation}
+\item synchronization ~{\sl expected in a concurrent setting}
+\end {itemize}
+\end {itemize}
+
+\end{slide}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\overlays*{\begin{slide}
+\slidetitle {Definition of behaviors in the $\pi$-calculus}
+
+\large
+$$
+\def \u{\mbox {\large \bf u\hskip 0.3ex}}
+\def \z{\mbox {\large \bf z\hskip 0.3ex}}
+\begin{array}{@{}c@{}ccc@{}c@{}}
+&& 
+\bulle %[=1]
+    {\ovalnode* [fillstyle=solid,fillcolor=lightred]{u1}
+        {\u?(x)\,P}}(1.5,-1.5){\mbox{Reception on $u$}} & 
+\\
+\hfil
+\bulle %[=1]
+  {\ovalnode* [fillstyle=solid,fillcolor=lightred]{u2}
+        {rec\; \u?(x) \, Q}}
+  (0.2,-2)
+  {\begin{minipage}{7em}Replicated \\reception on $u$\end{minipage}}&  
+\\
+& 
+\bulle %[=1]
+  {\ovalnode* [fillstyle=solid,fillcolor=lightgreen]{u3}
+        {\hbox{$\u!(v)$}}}
+   (3,-2)
+   {\mbox{Emission on $u$}}
+%\pause
+& 
+&& 
+\fromPause[1]{\ovalnode* [fillstyle=solid,fillcolor=lightgreen]{u3b}
+        {\hbox{$\u!(w)$}}}
+\\[2ex]
+\ifpause[=3]{\CancelColorsGray}{}
+\betweenPauses23
+  {\ovalnode* [fillstyle=solid,fillcolor=lightblue]{u5}
+        {\hbox{$dyn!(\psframebox*[fillstyle=solid,fillcolor=lightred]{\u})$}}
+}
+\RestoreColorsBlack
+\hfill
+\\
+&
+\betweenPauses23{\rnode{u45}{\color{blue}\star}}& 
+\fromPause[3]{\ovalnode* [fillstyle=solid,fillcolor=lightred]{u6}{\u?(x) \, S}}
+\\
+\ifpause[=3]{\CancelColorsGray}{}
+\betweenPauses23{\ovalnode* [fillstyle=solid,fillcolor=lightblue]{u4}
+  {dyn?(\psframebox*[fillstyle=solid,fillcolor=yellow]{\z}) 
+        \psovalbox*[fillstyle=solid,fillcolor=lightred]
+          {{\psframebox*[fillcolor=yellow]{\z}}{?(x) \,S}}}}
+\hskip -3em
+\RestoreColorsBlack
+\\
+\end{array}
+\ncarc[linestyle=dashed,linecolor=red]{-}{u2}{u1}
+\ncarc[linecolor=green]{-}{u3}{u1}
+\ncarc[linecolor=green]{-}{u2}{u3}
+\fromPause*[1]{
+\ncarc[linecolor=green]{-}{u3b}{u1}
+\ncarc[linecolor=green]{-}{u2}{u3b}
+}
+\betweenPauses*23{
+\ncarc[linecolor=green]{-}{u45}{u4}
+\ncarc[linecolor=green]{-}{u5}{u45}
+}
+\fromPause*[4]{
+\ncarc[linecolor=green]{-}{u3}{u6}
+\ncarc[linecolor=green]{-}{u3b}{u6}
+\ncarc[linestyle=dashed,linecolor=red]{-}{u6}{u2}
+\ncarc[linestyle=dashed,linecolor=red]{-}{u1}{u6}
+}
+\onlyPause*[3]{
+\ncarc[linecolor=lightblue,doubleline=true]{<-}{u6}{u45}
+}
+$$
+\vskip -6em
+\null
+\pause[4]
+
+\large
+\slidetitle{\leftline {\fromPause[2]{\ebox{Too loose!}}}}
+\begin {itemize}
+\pause
+\item
+{\ifpause[>0]{\color{gray}}{}
+Behaviors attached to a name are not syntactically
+known; they are reconfigurable, dynamically.}
+
+\item
+{\ifpause[>0]{\color{gray}}{}
+This makes reasoning {\em and} distributed computing difficult.}
+\pause
+\end {itemize}
+
+\end{slide}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\overlays*{\begin{slide}
+\slidetitle {Definitions of behavior in the join-calculus}
+
+\large
+$$
+\def \u{{\mbox {\large \bf u\hskip 0.3ex}}}
+\def \w{{\mbox {\large \bf w\hskip 0.3ex}}}
+\hfill
+\begin{array}{ccccc}
+\bulle%[=1]
+{\rnode {u0}{\psframebox* [fillstyle=solid,fillcolor=lightred]
+{\begin{array}{r@{}l} \u(x) \jc& P\\ \u(x) \jcand \w(y) \jc &Q\\
+\end{array}}}}
+(1.5,-3)
+{\mbox{\begin{minipage}{9em}
+ Defines synchronizing names $\u$ and $\w$ 
+ and their behaviors \\ altogether
+\end{minipage}}}
+&
+\hspace {4em}
+\begin{array}{cc}
+\bulle%[=1]
+{\ovalnode* [fillstyle=solid,fillcolor=lightgreen]{u1}{\u!(v)}}
+(1.5,-2)
+{\mbox{\begin{minipage}{6em}Asynchronous \\ emission on $\u$\end{minipage}}}
+\pause
+\\
+& 
+\fromPause[1]{\ovalnode* [fillstyle=solid,fillcolor=lightgreen]{u2}
+{\w!(v)}}
+\\
+\end{array}
+\\
+\betweenPauses23{\circlenode*{?}{\ldots}} \hfil
+&\fromPause[3]
+{\ovalnode* [fillstyle=solid,fillcolor=lightgreen]{u3}{\u!(k)}}\hfil
+\\
+\betweenPauses23{
+\hfill \circlenode* {s}{\color{blue}\star}
+}
+\\[1em]
+\ifpause[=3]{\CancelColorsGray}{}
+\betweenPauses23{
+\rnode {xy}{\psframebox* [fillstyle=solid,fillcolor=lightblue]
+      {dyn(\psframebox* [fillcolor=yellow]{z}) \jc
+      {\psovalbox* [fillstyle=solid,fillcolor=lightgreen]
+      {\psframebox* [fillcolor=yellow]{z}!(k)}}
+}}
+}
+\RestoreColorsBlack
+\hfill 
+&
+\\
+\end{array}
+\ncarc[linecolor=green]{u0}{u1}
+\fromPause*[1]{\ncarc[linecolor=green]{u2}{u0}}
+\betweenPauses*23{
+\ncarc[linecolor=lightblue]{s}{xy}
+\ncarc[linecolor=lightblue]{?}{s}
+}
+\onlyPause*[3]{
+\ncarc[linecolor=lightblue,doubleline=true]{<-}{u3}{s}
+}
+\fromPause*[4]{
+\ncarc[linecolor=green]{u3}{u0}
+}
+$$
+\vskip -3em
+\pause[4]
+\null
+\begin {itemize}
+\pause \item
+{\ifpause[>0]{\color{gray}}{}
+Name scoping is more constrained than in $\pi$-calculus}
+
+\onlyPause*{\em
+\begin {itemize}
+\item
+Behavior of a name is statically defined and lexically scoped. 
+
+\item
+Synchronizing names are jointly defined.
+\end {itemize}}
+
+\pause \item
+{\ifpause[>0]{\color{gray}}{}
+Easier for reasoning and  distributed computation}
+\end {itemize}
+
+\pause
+\vspace {1em}
+\centerline {\ebox {\LARGE {Want's more?}}}
+
+\end{slide}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

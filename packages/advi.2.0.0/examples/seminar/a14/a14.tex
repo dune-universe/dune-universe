@@ -1,0 +1,765 @@
+\newif\ifslides\slidestrue
+% \newif\ifslides\slidesfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{mon-seminar}
+\input{mon-color}
+\input{mon-dvipdf}
+
+%\usepackage{eurosym}
+\usepackage{amssymb}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+% \usepackage {pstcol,color,pst-node}
+\usepackage{advi}
+\usepackage{advi-annot}
+\usepackage{advi-graphicx}
+\usepackage{superpose}
+
+\newcommand{\urlter}[3]{\advirecord{#1}{%
+\adviembed[name=netscape; height=0mm]{%
+netscape -remote openFile(#2)}}%
+\advianchor[click]{#1}{#3}%
+}
+\newcommand{\urlbis}[2]{\advirecord{#1}{%
+\adviembed[name=netscape; height=0mm]{%
+netscape -remote openURL(#2)}}%
+\advianchor[click]{#1}{\url{#2}}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\bfseries
+\blueSky
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\begin{center}
+{\blueBis \huge \bf Inf 431 -- Cours 14\\[1ex]
+\colorbox{monyellow}{Algorithmes géométriques}}
+\\ \bigskip
+{\red \ahref{http://jeanjacqueslevy.net}{\tt jeanjacqueslevy.net}}\\[2ex]
+
+{\tiny secrétariat de l'enseignement:\\
+Catherine Bensoussan\\
+{\red\tt \mailto{cb@lix.polytechnique.fr}} \\
+Aile 00, LIX\\
+01 69 33 34 67
+\\[2ex]
+}
+
+{\small\ahrefurl{http://www.enseignement.polytechnique.fr/informatique/}}
+\end{center}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\centerslidesfalse
+\begin{slide}\blueSky
+\heading{Plan}
+
+\begin{enumerate}
+\item Graphique {\it bitmap}
+\item Enveloppe convexe
+\item Recherche de points dans des intervalles
+\item Intersection de segments orthogonaux
+\item Intersection de segments
+\end{enumerate}
+
+\bigskip
+{\tiny{\blue Bibliographie}
+
+J.D.~Foley, A.~van Dam, S.K.~Feiner, J.F.~Hugues, {\it Computer Graphics,
+Principle and Practice}, Addison Wesley, 1990.
+
+D.E.~Knuth, {\it The Metafont book}, Addison Wesley, 1986.
+
+D.E.~Knuth, {\it Metafont: The Program}, Addison Wesley, 1986.
+
+}
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Graphique {\it bitmap}}
+
+\begin{itemize}
+\item
+Ecran $=$ matrice de {\it\orchidBis pixels\/} ($1152 \times 768 \times
+32$).
+
+\adviwait
+\item
+Ecran $=$  zone mémoire ({\it\red mémoire vidéo\/}),
+directement accessible par le processeur, et/ou par son {\DarkOrange
+co-processeur graphique}.
+
+\adviwait
+\item
+Tous les tracés sont digitalisés.
+
+\adviwait
+Par exemple pour un vecteur ou le dessin de la lettre "a"
+
+\bigskip
+\begin{center}
+\epsfig{file=fig/vecteur.eps,scale=.4}
+\hspace*{5em}
+\epsfig{file=fig/a.eps,scale=.4}
+\end{center}
+\end{itemize}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Tracé de vecteurs}
+
+\newcommand{\nat}{\mathbb{N}}
+
+{\orchidBis But}: tracer le vecteur \overrightarrow{P_0P_1} entre
+les points $P_0$ et $P_1$ de coordonnées $(x_0, y_0)$ et 
+$(x_1, y_1)$ ($x_0\in\nat$, $y_0\in\nat$, $x_1\in\nat$, $y_1\in\nat$)
+
+La méthode la plus simple consiste à calculer la pente $m=dy/dx$ où
+$dy = y_1 - y_0$ et $dx = x_1 - x_0$, et en supposant $0 \leq m \leq
+1$ et $0 < dx$.
+
+\bigskip
+\begin{lstlisting}{}
+static void vecteur (int x0, int y0, int x1, int y1) {
+  int dx = x1 - x0, dy = y1 - y0;
+  float m = ((float)dy) /dx;
+  for (int x = x0, float y = y0; x <= x1; ++x) {
+    setPixel(x, Math.round(y));
+    y = y + m;
+  }
+}
+\end{lstlisting}
+
+Opérations flottantes. Calcul de l'arrondi. C'est un peu long.
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Tracé de vecteurs (1)}
+
+L'équation de la droite passant par $(x_0, y_0)$ et $(x_1, y_1)$
+est 
+%
+$$x dy - y dx - x_0 dy + y_0 dx = 0$$
+%
+où $dy = y_1 - y_0$ et $dx = x_1 - x_0$.
+%
+\adviwait
+On maintient une erreur $e$ entre le point $(x, y)$ et la droite. 
+%
+$$e = x dy - y dx - x_0 dy + y_0 dx$$
+%
+\adviwait {\DarkOrange On suppose} la pente $0 \leq dy/dx \leq
+1$. Pour savoir si le pixel suivant sur la droite $y = x+1$ est à
+l'{\red est} ou au {\orchidBis nord-est} du point $(x,y)$, on regarde
+le signe de l'erreur pour le point $(x+1, y+0.5)$
+%
+$$e_m = (x+1) dy - (y+0.5) dx - x_0 dy + y_0 dx$$
+%
+Soit
+$$e_m = e + dy - dx/2$$
+En multipliant par 2, on obtient
+$$2 e_m = 2 e + 2 dy - dx$$
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}[21.5cm,17.3cm]\blueSky
+\heading{Tracé de vecteurs (3)}
+
+Si $2 e_m \geq 0$, on positionne le pixel au nord-est et l'erreur
+devient $2 e' = 2e_m - dx$.
+Sinon on positionne le pixel à l'est et l'erreur devient $2 e'' = 2e_m
++ dx$.
+
+D'où le programme pour tracer un vecteur de pente positive inférieure
+à 1.
+
+\bigskip
+\begin{lstlisting}{}
+static void vecteur (int x0, int y0, int x1, int y1) {
+  int dx = x1 - x0, dy = y1 - y0;
+  int e = 0;
+  for (int x = x0, y = y0; x <= x1; ++x) {
+    setPixel(x,y);
+    int em = e + 2*dy - dx;
+    if (em >= 0) {
+      ++y;
+      e = em - dx;
+    } else 
+      e = em + dx;
+  }
+}
+\end{lstlisting}
+
+Si $x_0$, $y_0$, $x_1$, $y_1$ sont entiers, toutes les opérations sont
+des additions {\orchidBis entières} de constantes.  {\red\tt [Bresenham]}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Tracé de vecteurs (4)}
+
+\exercice Compléter le programme pour qu'il trace un vecteur
+de {\DarkOrange pente arbitraire}.
+
+\exercice Trouver un algorithme genre Bresenham pour les tracés de
+{\red cercles}, ou d'ellipses.
+
+\bigskip
+
+Si on dessine le vecteur dans une fenêtre, on peut avoir à
+l'{\orchidBis intersecter} avec un rectangle ({\red\it
+clipping\/}). Par exemple avec le bord gauche $x = x_{\mathit{min}}$
+d'un rectangle. On calcule
+%
+$$y = y_0 + \lfloor (x_{\mathit{min}}-x_0) {dy \over dx} + 0.5 \rfloor$$
+%
+et on démarre le tracé avec une erreur non nulle
+%
+$$2e = 2x_{\mathit{min}} dy - 2y dx - 2x_0 dy + 2y_0 dx$$
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Remplissage de polygones}
+
+\begin{itemize}
+\item Deux manières pour définir l'{\red intérieur d'un polygone}.
+
+\begin{itemize}
+\item {\orchidBis pair-impair}:
+on compte la parité des intersections d'une droite intersectant le
+polygone.
+
+\item la {\DarkOrange règle de l'enroulement}:
+les bords sont des vecteurs orientés. L'intérieur est toujours à gauche
+du vecteur bord.
+
+\end{itemize}
+
+
+\begin{center}
+\epsfig{file=fig/fill2.eps,scale=.3}
+\hspace*{1em}
+\epsfig{file=fig/fill1.eps,scale=.3}
+\end{center}
+
+\item on {\red balaie par une ligne horizontale}, et on adapte le
+  Bresenham de vecteurs en gérant une file de priorité pour l'arrivée
+  de nouveaux segments.
+\end{itemize}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Bitblt}
+
+\begin{itemize}
+\item Pour afficher du texte, chaque {\orchidBis lettre} est un petit
+  {\orchidBis rectangle} de pixels qu'on doit recopier à l'endroit
+  voulu sur l'écran.
+
+\adviwait
+\item Il faut disposer d'opérations rapides pour recopier des
+  rectangles de pixels. {\it Bit Block Transfer} ({\red\it bitblt\/})
+  ou encore paquetage {\it Raster-op}, réalisées par des {\greenBis
+    processeurs vidéo} spécialisés (avec beaucoup de mémoire pour
+    stocker les polices de caractères).
+
+\adviwait
+\item Autrefois, ces opérations étaient réalisées par des processeurs
+  normaux, avec plein d'optimisations (cf.~l'article de 
+  {\tt\red[Pike, Locanthi et Reiser, 84]}). 
+
+\adviwait
+\item Les opérations biblt viennent du premier écran bitmap:
+  l'{\greenBis Alto} de Xerox PARC, {\tt\red[Lampson, McCreight,
+      Thacker, 74]}
+
+\adviwait
+\item Pour générer les rectangles de pixels pour chaque lettre, on 
+part d'une description de chaque caractère dans une police par des
+{\DarkOrange cubiques}. Polices de {\it Postscript} {\red\tt[Warnock]}
+ ou de {\it Metafont} {\red\tt[Knuth]}.
+
+\end{itemize}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Dessin des lettres}
+
+\begin{center}
+\epsfig{file=fig/cmr8-a.eps,scale=.6}
+\end{center}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Tracé d'une cubique de Bézier}
+
+Par Bresenham ou par dichotomie:
+
+\begin{center}
+\epsfig{file=fig/bezier.eps,scale=.5}
+\end{center}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Ordre trigonométrique}
+\small\medskip
+
+On cherche à savoir si l'angle \(0 \leq \widehat{P_1P_0P_2} < \pi \) ?\\
+Dans le cas où $\widehat{P_1P_0P_2} = 0$, on exige alors $P_0P_1 < P_0P_2$.
+
+En calculant le produit vectoriel \(\overrightarrow{P_0 P_1} \wedge
+\overrightarrow{P_0 P_2}\).  Si l'angle est nul, par convention on
+compare les normes.
+\bigskip
+
+\begin{lstlisting}{}
+static int ordreTrigo (Point p0, Point p1, Point p2) {
+  int dx1 = p1.x - p0.x; int dy1 = p1.y - p0.y;
+  int dx2 = p2.x - p0.x; int dy2 = p2.y - p0.y;
+  if (dx1 * dy2 > dy1 * dx2) return 1;
+  else if (dx1 * dy2 < dy1 * dx2) return -1;
+  else { 
+    if (dx1 * dx2 < 0 || dy1 * dy2 < 0) return -1;
+    else if (dx1*dx1 + dy1*dy1 < dx2*dx2 + dy2*dy2) return 1;
+    else if (dx1*dx1 + dy1*dy1 == dx2*dx2 + dy2*dy2) return 0;
+    else return -1;
+  }
+}
+\end{lstlisting}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Intersection de segments}
+\small\medskip
+
+\begin{lstlisting}{}
+static boolean intersection (Line l1, Line l2) {
+  return  ordreTrigo (l1.p1, l1.p2, l2.p1) 
+        * ordreTrigo (l1.p1, l1.p2, l2.p2) <= 0
+       && ordreTrigo (l2.p1, l2.p2, l1.p1) 
+        * ordreTrigo (l2.p1, l2.p2, l1.p2) <= 0;
+}
+\end{lstlisting}
+
+\bigskip
+
+\begin{center}
+\epsfig{file=fig/intersect.eps,scale=.5}
+\end{center}
+
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Pente d'un vecteur}
+\small\medskip
+
+\begin{lstlisting}{}
+static float theta (Point p1, Point p2) {
+  float t; int dx = p2.x - p1.x; int dy = p2.y - p1.y; 
+  if (dx == 0 && dy == 0) t = 0;
+  else t = (float) dy / (Math.abs(dx) + Math.abs(dy));
+  if (dx < 0) t = 2 - t;
+  else if (dy < 0) t = 4 + t;
+  return t * 90.f;
+}
+\end{lstlisting}
+
+Cette fonction évite le long calcul de {\sf Math.atan(dy/dx)}.
+
+\medskip
+
+\begin{center}
+\epsfig{file=fig/theta.eps,scale=.5}
+\end{center}
+
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Enveloppe convexe (marche de Jarvis) (1/4)}
+\small
+
+\begin{itemize}
+\item Chercher un point avec \(y\) minimum.
+
+\item Chercher les points successifs de l'enveloppe dans l'ordre
+trigonométrique.
+
+\item Un point \(P_{m+1}\) sur l'enveloppe est le \(P_i\) tel que
+  \(\overrightarrow{P_m P_i}\) fait un angle $\theta$ minimal et
+  positif avec l'axe $\overrightarrow{0x}$.
+
+\end{itemize}
+
+\begin{center}
+\epsfig{file=fig/enveloppe.eps,scale=.5}
+\end{center}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Enveloppe convexe (marche de Jarvis) (2/4)}
+\small
+
+\begin{lstlisting}{}
+static int enveloppe (Point[ ] p) {
+  int m = 0, n = p.length;
+  if (n > 0) {
+    int min = 0; 
+    for (int i = 1; i < n; ++i) if (p[i].y < p[min].y) min =  i;
+    float angleMin = 400; 
+    do {
+      Point t = p[m]; p[m] = p[min]; p[min] = t;
+      ++m; min = 0;
+      for (int i = m; i < n; ++i) {
+        float alpha = theta(p[m-1], p[i]);
+        if (alpha < angleMin) { min = i; angleMin = alpha; }
+      }
+      angleMin = theta(p[min], p[0]);
+    } while (min != 0);
+  }
+  return m;
+}
+\end{lstlisting}
+
+\epsfig{file=fig/hull-res.eps,scale=.3}
+%
+\adviwait 
+\hspace{5em}Complexité $=$ \adviwait \( O(n^2) \)
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Enveloppe convexe (marche de Graham) (3/4)}
+\small\medskip
+
+\begin{itemize}
+
+\item Chercher un point \(P_0\) avec \(y\) minimum.
+
+\item Trier les points \(P_i\) sur l'angle formé avec \(P_0\). 
+
+\item Partir de ce point en tournant toujours à gauche.
+
+\end{itemize}
+
+\medskip
+
+\begin{center}
+\epsfig{file=fig/graham.eps,scale=.5}
+\end{center}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Enveloppe convexe (marche de Graham) (4/4)}
+\small\medskip
+
+\begin{lstlisting}{}
+static int enveloppe (Point[ ] p) {
+  int m = 0; int n = p.length;
+  if (n <= 2) return n;
+  else {
+    int min = 0; 
+    for (int i = 1; i < n; ++i) if (p[i].y < p[min].y) min = i;
+    for (int i = 0; i < n; ++i)
+      if (p[i].y == p[min].y && p[i].x > p[min].x) min =  i;
+    Point t = p[0]; p[0] = p[min]; p[min] = t;
+    tri(p); m = 2;
+    for (int i = 3; i < n; ++i) {
+      while (ordreTrigo(p[m], p[m-1], p[i]) >= 0)
+        --m;
+      ++m;
+      t = p[m]; p[m] = p[i]; p[i] = t;
+    }
+    return m+1;
+  }
+}
+\end{lstlisting}
+
+\medskip
+\exercice Complexité $=$ \adviwait \( O(n \log n) \)
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Recherche de points dans des intervalles}
+\small
+
+En dimension 1, représenter les points avec un arbre de recherche.
+
+\bigskip
+
+\begin{lstlisting}{}
+static void rechercher (Arbre a, intervalle i) {
+  if (a != null) {
+    boolean bg = i.x1 <= a.x, bd = a.x <= i.x2;
+    if (bg) rechercher (a.gauche, i);
+    if (bg && bd) System.out.print (a.x + " ");
+    if (bd) rechercher (a.droite, i);
+   }
+}
+\end{lstlisting}
+
+\medskip
+\exercice Complexité?
+
+% \item \(O(n \log n)\) pour construire la structure, et \(O (k + \log n)\)
+% pour chercher \(k\) points dans un intervalle.
+
+\medskip
+
+\begin{center}
+\epsfig{file=fig/intervalle.eps,scale=.5}
+\end{center}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Recherche de points dans des intervalles}
+
+En dimension 2, arbre de recherche en alternant le rangement sur
+\(x\) et \(y\).
+
+\bigskip
+
+\begin{lstlisting}{}
+static void rechercher (Arbre a, Rect r, Boolean d) {
+  boolean t1, t2;
+  if (a != null) {
+    boolean bx1 = r.x1 <= a.p.x, bx2 = a.p.x <= r.x2;
+    boolean by1 = r.y1 <= a.p.y, by2 = a.p.y <= r.y2;
+    if (d) { b1 = bx1; b2 = bx2; } 
+    else { b1 = by1; b2 = by2; }
+    if (b1) 
+       rechercher (a.gauche, r, !d);
+    if (dansRect (a.p, r))
+       System.out.print (a.p + " ");
+    if (b2) 
+       rechercher (a.droite, r, !d);
+   }
+}
+\end{lstlisting}
+
+\medskip
+\exercice Complexité?
+
+% \item \(O(k + \log n)\) ou` \(k\) est le nombre de points dans le rectangle
+% parmi \(n\) points.
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Graphiquement}
+\bigskip
+
+\begin{tabular}{ll}
+\epsfig{file=fig/rectangle.eps,scale=.30}&
+\epsfig{file=fig/arbreXY.eps,scale=.38}
+%\epsfig{file=rectangle-arbreXY.eps,scale=.35}
+\end{tabular}
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}[21.5cm,17.3cm]\blueSky
+\heading{Intersection de segments orthogonaux}
+\small
+
+\begin{itemize}
+
+\item On {\red balaie} le plan avec une {\red ligne horizontale} de
+  bas en haut ({\sl scanline\/}). Il faut trier les extrémités des
+  segments sur \(y\).
+
+\item A chaque point {\greenBis début} de {\orchidBis segment
+  vertical}, on rajoute dans l'arbre de recherche sa coordonnée \(x\).
+
+\item A chaque {\DarkOrange segment horizontal}, on fait une recherche
+  des points dans l'intervalle correspondant au segment.
+
+\item A chaque {\greenBis fin} de {\orchidBis segment vertical}, on
+  retire de l'arbre de recherche la coordonnée \(x\).
+
+\item \(O(k + n \log n)\).
+
+\end{itemize}
+%
+\begin{center}
+\epsfig{file=fig/manhattan.eps,scale=.23}
+\end{center}
+
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}\blueSky
+\heading{Intersection de segments quelconques}
+
+{\red\tt [Shamos-Hoey]}
+
+Recherche d'au moins 1 intersection:
+
+\begin{itemize}
+
+\item On balaie le plan avec une ligne horizontale de bas en haut
+({\it scanline}). Il faut donc trier les extrémités des segments.
+Soit \(Q\) cet ensemble. Au début, \(R = \emptyset\).
+
+\item A chaque point \(p\) dans \(Q\) dans l'ordre des \(y\) croissants,
+
+\begin{enumerate}
+
+\item si \(p\) est le début du segment \(s\). On insère \(s\) dans
+\(R\). On teste si \(s\) intersecte le segment de gauche ou de droite
+dans \(R\), et on retourne cette intersection.
+
+\item si \(p\) est la fin du segment \(s\).  On teste si les segments à
+gauche de \(s\) et à droite de \(s\) dans \(R\) s'intersectent, et on
+retourne cette intersection. On enlève \(s\) de \(R\).
+
+\end{enumerate}
+
+\item \(O(n \log n)\).
+
+\end{itemize}
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}[21.5cm,17.3cm]\blueSky
+\heading{Intersections de segments quelconques}
+
+{\red\tt[Bentley-Ottmann, 79]} (cf.~%
+\ahref{ya/index.html}{l'appliquette})
+
+\begin{itemize}
+
+\item On balaie le plan avec une ligne horizontale de bas en haut
+({\it scanline\/}). Il faut donc trier les extrémités des segments.
+Soit \(Q\) cet ensemble. Au début, \(R = \emptyset\).
+
+\item A chaque point $p$ dans \(Q\) dans l'ordre des $y$ croissants,
+
+\begin{enumerate}
+
+\item si $p$ est le début du segment $s$. On insère $s$ dans
+\(R\). Si $s$ intersecte le segment de gauche ou de droite $t$
+dans \(R\), on rajoute le point d'intersection de $s$ et $t$
+dans \(Q\) (en respectant l'ordre des $y$ croissants).
+
+\item si $p$ est la fin du segment $s$.  Si l'intersection des
+segments à gauche de $s$ et à droite de $s$ dans \(R\) n'est pas dans
+\(Q\), on teste l'intersection et on l'ajoute à \(Q\).  On enlève $s$ de
+\(R\).
+
+\item si $p$ est l'intersection de $s$ et $t$, on écrit $p$ et on
+échange $s$ et $t$ dans \(R\). (Remarque: ils sont alors adjacents). On
+teste si le segment de gauche $s$ s'intersecte avec le segment à
+gauche de lui dans \(R\), et le segment à droite de $t$, et on rajoute
+cette intersection à \(Q\).
+
+\end{enumerate}
+\end{itemize}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}[21.5cm,17.3cm]\blueSky
+\heading{Intersections de segments quelconques}
+
+{\tt\red[Bentley-Ottmann, 79]} (cf.~%
+\ahref{ya/index.html}{l'appliquette})
+
+\begin{itemize}
+\item \(O(n \log n + k \log n)\), en utilisant des arbres équilibrés
+pour \(R\) et \(Q\) comme une file de priorité.
+\end{itemize}
+
+\begin{center}
+\epsfig{file=fig/obliq.eps,scale=.4}
+\end{center}
+
+\bigskip
+{\tiny La vision et la synthèse d'images sont enseignées en Majeure 1 et 2.}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}[21.5cm,17.3cm]\blueSky
+\heading{Problèmes auxquels on a échappé}
+\small
+
+\begin{itemize}
+
+\item compression
+\item {\orchidBis flots} dans les graphes
+\item algorithmes {\DarkOrange randomisés}  \adviwait
+\item problèmes {\red NP} complets
+\item complexité {\greenBis abstraite} (P-SPACE, NC) \adviwait
+\item analyse d'algorithmes \adviwait
+\item {\red correction} des programmes
+\item {\red logique}, méthodes formelles \adviwait
+\item concurrence et synchronisation par {\greenBis messages} \adviwait
+\item algorithmique {\DarkOrange distribuée}
+\item programmation système \adviwait
+\item relations et {\orchidBis bases de données} \adviwait
+\item langages de programmation, {\brownBis compilation} \adviwait
+\item {\DarkOrange circuits} et architecture matérielle, $\ldots$
+
+\end{itemize}
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+\begin{slide}\blueSky
+\heading{Enveloppe convexe (marche de Jarvis)}
+\small\medskip
+
+\begin{lstlisting}{}
+static int enveloppe (Point[ ] p) {
+  int m = 0, n = p.length;
+  if (n > 0) {
+    int min = 0; 
+    for (int i = 1; i < n; ++i) if (p[i].y < p[min].y) min =  i;
+    float angle1 = 0, angle2 = 400; do {
+      Point t = p[m]; p[m] = p[min]; p[min] = t;
+      ++m; min = 0;
+      for (int i = m; i < n; ++i) {
+        float alpha = theta(p[m-1], p[i]);
+        if (angle1 < alpha && alpha < angle2) {
+            min = i; angle2 = alpha;
+        }
+      }
+      angle1 = angle2; angle2 = theta(p[min], p[0]);
+     } while (min != 0);
+  }
+  return m;
+}
+\end{lstlisting}
+
+\medskip
+\exercice Complexité?
+
+
+\end{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

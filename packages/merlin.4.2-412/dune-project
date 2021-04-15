@@ -1,0 +1,8 @@
+(lang dune 2.7)
+(name merlin)
+(version v4.2-412)
+(using menhir 2.0)
+
+(cram enable)
+(formatting disabled)
+(implicit_transitive_deps false)

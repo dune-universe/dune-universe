@@ -1,0 +1,9 @@
+# Apg
+
+#!/bin/sh
+
+../apgv.byt essai1.apg
+../apgv.byt essai2.apg
+../apgv.byt graphps_logo.apg
+../apgv.byt euro.apg
+../apgv.byt titi5.apg

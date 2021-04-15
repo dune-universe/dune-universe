@@ -1,0 +1,104 @@
+%% Copyright Roberto Di Cosmo, Jun Furuse, Didier Remy, and Pierre Weis
+%% All rights reserved.
+
+%% $Id$
+
+% You need graphics package
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{advi-graphicx}
+
+\usepackage {advi}
+
+\usepackage{hyperref}
+
+%% must occur after packages using PStricks macros 
+%% (it redefines some of them) 
+
+
+\pagestyle{empty}
+
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{green}{rgb}{0.0,1.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+\definecolor{yellow}{rgb}{1.0,1.0,0.0}
+\definecolor{cyan}{rgb}{0.0,1.0,1.0}
+\definecolor{magenta}{rgb}{1.0,0.0,1.0}
+\definecolor{lightred}{rgb}{1.0,0.5,0.5}
+\definecolor{lightgreen}{rgb}{0.5,1.0,0.5}
+\definecolor{lightblue}{rgb}{0.6784,0.8471,0.9020}
+\definecolor{lightlightblue}{rgb}{0.51,0.52,0.931}
+\definecolor{c1}{rgb}{1.0,0.0,0.0}
+\definecolor{c2}{rgb}{0.5,0.4,0.0}
+\definecolor{c3}{rgb}{0.0,0.8,0.0}
+\definecolor{c4}{rgb}{0.0,0.4,0.5}
+\definecolor{c5}{rgb}{0.0,0.0,1.0}
+\definecolor{c6}{rgb}{0.5,0.0,0.5}
+
+\def\smallpause{0.3}
+
+\edef \theSharp {\string#}
+\AtEndDocument {\immediate\write \@auxout
+{\string \gdef \string \LastPage{\thepage}}} 
+\newcommand \theTarget[3][\thepage]%
+  {\@tempcnta #1\advance \@tempcnta by #3
+   \advi@special@ {html:<a href="\theSharp /page.\the\@tempcnta">}#2%
+   \advi@special@ {html:</a>}}
+
+\def\keymenu#1{\textcolor{red}{\underline{#1}}}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+Press: %
+\keymenu{n}ext page %
+\keymenu{p}revious page %
+\keymenu{\textvisiblespace} next pause%
+% Was \hfill{\adviembed[sticky=advianim,width=1.56cm,height=1.824cm]%
+% The size of the logo is 69x79 (in pixels)
+% this ratio is respected by fixing width,
+% then calculating height = 79. /. 69. *. twidth
+% xanim +Sx@x +Sy@y +W @p advilogo.anim.gif
+%
+\hfill{\adviembed[sticky=advianim,width=1.56cm,height=1.824cm]%
+{xanim -Zr +q +Sx@w +Sy@h +W@p +Wx@x +Wy@y advilogo.anim.gif}}
+}\medskip \leftline
+ {\hbox to 3em {\ifnum \thepage >1\theTarget [0]{First}{1}\fi\hfil}
+  \hbox to 3em {\ifnum \thepage >1\theTarget {Prev}{-1}\fi\hfil}
+  \@ifundefined {LastPage}{}
+   {\ifnum \thepage <\LastPage \hbox to 3em {\theTarget {Next}{1}\hfil}
+   \theTarget[0]{Last}{\LastPage}\fi}}
+\vss}}
+
+\def\adviheader{\noindent
+{\bf\Large {\ActiveDVI}}\\
+\includegraphics[width=\textwidth]{bar.eps}\par}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader\advithumbnail[\thepage]}
+
+\def\adviemptyfooter{\vbox to 0em{\vbox to \vsize {\vfill
+~~\vss\advikillembed{advianim}}}}
+
+\def\lastpage{\Newpage\adviemptyfooter\adviheader}
+
+%  \setlength\textwidth{660\p@}
+%  \setlength\textheight{460\p@}
+
+\def \docdef #1{{\tt \string #1}}
+\def \docid #1{$\langle \hbox {\rm\em #1}\rangle$}
+\def \doctt #1{{\tt #1}}
+\def \docarg #1{{\tt \{\docid {#1}\}}}
+\def \docopt #1{{\tt [\docid {#1}]}}
+\def \docpar #1{{\tt (\docid {#1})}}
+\def \doc@empty {}
+\newcommand \dockey[3][]{{\tt #2\def \@test {#3}\ifx \@test \doc@empty \else
+  =\docid{#3}\fi} \def \@test {#1}\ifx \@test \doc@empty \else
+  \quad (default value is {\tt #1})\fi}
+
+\newenvironment{citemize}{\begin{list}{$\bullet$}%
+{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+\newenvironment{cenumerate}%
+{\begin{list}{-}{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+\def\advitalktitle#1{\centerline{{\Huge{\bf #1}}}}
+

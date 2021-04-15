@@ -1,0 +1,9 @@
+The Active-DVI, DVI presenter
+
+README                    Requirements, overview of the distribution
+LGPL			  License for advi-1.4.0
+adk-1.4.0.tar.gz
+  advi development kit source code (comprises all the source code to
+  build a full fledged presenter, including companion Caml libraries
+  camlimages consistent with the current advi version)
+advi-1.4.0.tar.gz	  The source code for advi presenter only

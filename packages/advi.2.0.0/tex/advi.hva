@@ -1,0 +1,59 @@
+%%% Active-DVI
+%%
+%% This is the original source file advi.hva
+%%
+%% Package `advi' to use with LaTeX 2e
+%% Copyright Roberto Di Cosmo, Jun Furuse, Didier Remy, and Pierre Weis
+%% All rights reserved.
+
+%% $Id$
+
+%% Administrative definitions for Active-DVI, that need updating.
+
+% Which name is ours
+\def \advi@name {Active-DVI}
+% Which year of development are we (used for various copyrights message) ?
+\def \advi@year {2021}
+% Which version is it ?
+\def \advi@version {2.0.0}
+
+%% End of administrative definitions that need updating.
+
+%% Preliminary declarations
+
+\usepackage {keyval}
+\usepackage {color}
+
+%% Options
+
+\def \advi@export #1#2{\let #1#2}
+\advi@export \adviversion \advi@version
+\advi@export \adviyear \advi@year
+\advi@export \adviname \advi@name
+\advi@export \ActiveDVI \advi@name
+
+%%
+\def \@ignore{}
+\def \@ignore@ #1{}
+\def \@ignore@@ #1#2{}
+\def \@ignore@@@ #1#2#3{}
+\newcommand {\@Ignore}[1][]{}
+\newcommand {\@Ignore@}[2][]{}
+\newcommand {\@Ignore@@}[3][]{}
+
+\newcommand {\adviannot}[3][]{#2\footnote{\let\\\relax#3}}
+\let \advipause \@Ignore
+\let \adviwait \@Ignore
+
+\let \itemsep \@Ignore
+\let \topsep \@Ignore
+\newenvironment{citemize}{\begin{list}{$\bullet$}%
+{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+\newenvironment{cenumerate}%
+{\begin{list}{-}{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+\let \setblend \@Ignore@
+\let \setalpha \@Ignore@
+
+\def \driver {hypertex}

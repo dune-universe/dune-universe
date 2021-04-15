@@ -1,0 +1,1212 @@
+\documentclass[12pt]{article}
+
+%% Loading necessary LaTeX packages
+
+  % You need the color.sty package to get color names
+  \usepackage{color}
+  % You need the graphicx.sty package to include images and graphics
+  \usepackage{graphicx}
+  % You need the advi.sty package to view any DVI file :)
+  \usepackage{advi}
+
+  % You need the package xwindows-colors.sty to get X colors names
+  \usepackage{xwindows-colors}
+
+%% Defining our own slide layout to get a coherent presentation
+%%
+%% We redefine the \newpage macro to first draw a header and a footer
+%% for the new page (the new slide)
+%%
+%% So we first define a \advifooter macro to get a slide footer
+%% then we define a \adviheader macro to get a slide header
+%% Finally the new \newpage macro uses the \adviheader and \advifooter macros.
+
+  % Defining our own header and footer macros
+
+  % Helper to write underline read characters
+  \def\keymenu#1{\textcolor{red}{\underline{#1}}}
+
+  % Footer: recall the commands to drive advi, and add animayted logo
+  \def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+  Press: %
+  \keymenu{n}ext page %
+  \keymenu{p}revious page %
+  \keymenu{\textvisiblespace} next pause%
+  \hfill{\adviembed[sticky=advianim,width=1.56cm,height=1.824cm]%
+  {animate -geometry @g! -window @p advilogo.anim.gif}}
+  }
+  \vss}}
+
+  % Header: Just advi name with a brush line
+  \def\adviheader{\noindent
+  {\bf\Large {\ActiveDVI}}\\
+  \includegraphics[width=\textwidth]{bar.eps}\par}
+
+  % (Re)-defining the \newpage macro to set up our page
+  \let \Newpage \newpage
+  \def \newpage {\Newpage \advifooter\adviheader}
+
+  % Defining the \last page macro to end the presentation
+  \def\adviemptyfooter{\vbox to 0em{\vbox to \vsize {\vfill
+  ~~\vss\advikillembed{advianim}}}}
+
+  \def\lastpage{\Newpage\adviemptyfooter\adviheader}
+
+\begin{document}
+
+\newpage
+
+\bigskip
+
+In {\ActiveDVI}, colors can be specified either
+
+\begin{itemize}
+\item with names (taken from the {\LaTeX} package \verb"color.sty")
+\item with RGB specifications (red, green, or blue color values, specified
+as floating point numbers in the range 0.0 .. 1.0)
+\item with CMYK specifications (cyan, magenta, yellow, or black color
+values, specified as integers in the range 0 .. 255)
+\end{itemize}
+
+For instance, the background color of this page has been specified using the
+\verb"yellow" predefined color of the \verb"color.sty" package, using:
+
+\verb"\advibg{color=yellow}"
+\advibg{color=yellow}
+
+\bigskip
+
+Note that using this kind of color specifications supposes that you
+have load the \verb"color.sty" {\LaTeX} package (include the line
+
+\verb"\usepackage{color}"
+
+in the header of your document).
+
+\newpage
+
+\section*{Named colors}
+
+Colors can also be named using the keyword {\tt named}.
+If you use named colors, the color names should be capitalized; for
+instance:\\
+\verb"\advibg{color=[named]White}"\\
+or equivalently\\
+\verb"\advibg{color=[named]{White}}"
+
+\advibg{color=[named]{White}}
+
+The names of available colors can be found in the {\tt dvipsnam.def}
+file, generally at location\\
+{\tt /usr/share/texmf/tex/latex/graphics/dvipsnam.def}
+
+To give an idea, the names and colors available on my installation of
+{\LaTeX} are:
+
+{\color[named]{GreenYellow}{GreenYellow}} $\quad$
+{\color[named]{Yellow}{Yellow}} $\quad$
+{\color[named]{Goldenrod}{Goldenrod}} $\quad$
+{\color[named]{Dandelion}{Dandelion}} $\quad$
+{\color[named]{Apricot}{Apricot}} $\quad$
+
+{\color[named]{Peach}{Peach}} $\quad$
+{\color[named]{Melon}{Melon}} $\quad$
+{\color[named]{YellowOrange}{YellowOrange}} $\quad$
+{\color[named]{Orange}{Orange}} $\quad$
+{\color[named]{BurntOrange}{BurntOrange}} $\quad$
+
+{\color[named]{Bittersweet}{Bittersweet}} $\quad$
+{\color[named]{RedOrange}{RedOrange}} $\quad$
+{\color[named]{Mahogany}{Mahogany}} $\quad$
+{\color[named]{Maroon}{Maroon}} $\quad$
+{\color[named]{BrickRed}{BrickRed}} $\quad$
+
+{\color[named]{Red}{Red}} $\quad$
+{\color[named]{OrangeRed}{OrangeRed}} $\quad$
+{\color[named]{RubineRed}{RubineRed}} $\quad$
+{\color[named]{WildStrawberry}{WildStrawberry}} $\quad$
+{\color[named]{Salmon}{Salmon}} $\quad$
+
+{\color[named]{CarnationPink}{CarnationPink}} $\quad$
+{\color[named]{Magenta}{Magenta}} $\quad$
+{\color[named]{VioletRed}{VioletRed}} $\quad$
+{\color[named]{Rhodamine}{Rhodamine}} $\quad$
+{\color[named]{Mulberry}{Mulberry}} $\quad$
+
+{\color[named]{RedViolet}{RedViolet}} $\quad$
+{\color[named]{Fuchsia}{Fuchsia}} $\quad$
+{\color[named]{Lavender}{Lavender}} $\quad$
+{\color[named]{Thistle}{Thistle}} $\quad$
+{\color[named]{Orchid}{Orchid}} $\quad$
+{\color[named]{DarkOrchid}{DarkOrchid}} $\quad$
+
+{\color[named]{Purple}{Purple}} $\quad$
+{\color[named]{Plum}{Plum}} $\quad$
+{\color[named]{Violet}{Violet}} $\quad$
+{\color[named]{RoyalPurple}{RoyalPurple}} $\quad$
+{\color[named]{BlueViolet}{BlueViolet}} $\quad$
+
+{\color[named]{Periwinkle}{Periwinkle}} $\quad$
+{\color[named]{CadetBlue}{CadetBlue}} $\quad$
+{\color[named]{CornflowerBlue}{CornflowerBlue}} $\quad$
+{\color[named]{MidnightBlue}{MidnightBlue}} $\quad$
+
+{\color[named]{NavyBlue}{NavyBlue}} $\quad$
+{\color[named]{RoyalBlue}{RoyalBlue}} $\quad$
+{\color[named]{Blue}{Blue}} $\quad$
+{\color[named]{Cerulean}{Cerulean}} $\quad$
+{\color[named]{Cyan}{Cyan}} $\quad$
+{\color[named]{ProcessBlue}{ProcessBlue}} $\quad$
+
+{\color[named]{SkyBlue}{SkyBlue}} $\quad$
+{\color[named]{Turquoise}{Turquoise}} $\quad$
+{\color[named]{TealBlue}{TealBlue}} $\quad$
+{\color[named]{Aquamarine}{Aquamarine}} $\quad$
+{\color[named]{BlueGreen}{BlueGreen}} $\quad$
+
+{\color[named]{Emerald}{Emerald}} $\quad$
+{\color[named]{JungleGreen}{JungleGreen}} $\quad$
+{\color[named]{SeaGreen}{SeaGreen}} $\quad$
+{\color[named]{Green}{Green}} $\quad$
+{\color[named]{ForestGreen}{ForestGreen}} $\quad$
+
+{\color[named]{PineGreen}{PineGreen}} $\quad$
+{\color[named]{LimeGreen}{LimeGreen}} $\quad$
+{\color[named]{YellowGreen}{YellowGreen}} $\quad$
+{\color[named]{SpringGreen}{SpringGreen}} $\quad$
+
+{\color[named]{OliveGreen}{OliveGreen}} $\quad$
+{\color[named]{RawSienna}{RawSienna}} $\quad$
+{\color[named]{Sepia}{Sepia}} $\quad$
+{\color[named]{Brown}{Brown}} $\quad$
+{\color[named]{Tan}{Tan}} $\quad$
+
+{\color[named]{Gray}{Gray}} $\quad$
+{\color[named]{Black}{Black}} $\quad$
+\advirecord{thewhite}{\
+{\color[named]{Red}{White}}}
+
+\bigskip
+
+\noindent
+I know, you don't see the {\tt White} color: look more carefully, it
+is the last color, just after {\tt Black}; yes, the {\tt White}
+word written in {\tt White} over the background!
+
+\adviwait
+
+\adviplay[red]{thewhite}
+
+\newpage
+
+Any of the preceding colors can be used for the background. For instance:
+
+\advibg{color=[named]BlueViolet}
+\verb"\advibg{color=[named]BlueViolet}"
+
+\newpage
+
+\subsection*{The CMYK specifications}
+
+You may also explicitely use a CMYK specification:
+
+\verb"\advibg{color=[cmyk]{1,0,1,0}}"
+
+\bigskip
+
+In this case, \verb"\advibg{color=[cmyk]1,0,1,0}" is not recognized,
+since the comma is a field separator.
+
+\advibg{color=[cmyk]{1,0,1,0}}
+
+\newpage
+
+\subsection*{The RGB specifications}
+
+RGB specifications are similar to CMYK:
+
+\verb"\advibg{color=[rgb]{1,0,1}}"
+
+\advibg{color=[rgb]{1,0,1}}
+
+\newpage
+
+\subsection*{X colors}
+
+If you also load the {\tt xwindows-colors.sty} package (from the {\ActiveDVI}
+{\tt tex} directory), then you get a whole new set of colors from the
+usual X installations. The following pages list those that are defined
+by {\ActiveDVI}'s {\tt xwindows-colors.sty} package.)
+
+\newpage
+
+\subsection*{X color names: The simple whites and greys}
+
+{\color[named]{snow}{snow}}
+%{\color[named]{ghost white}{ghost white}}
+{\color[named]{GhostWhite}{GhostWhite}}
+%{\color[named]{white smoke}{white smoke}}
+{\color[named]{WhiteSmoke}{WhiteSmoke}}
+
+{\color[named]{gainsboro}{gainsboro}}
+%{\color[named]{floral white}{floral white}}
+{\color[named]{FloralWhite}{FloralWhite}}
+%{\color[named]{old lace}{old lace}}
+{\color[named]{OldLace}{OldLace}}
+
+{\color[named]{linen}{linen}}
+%{\color[named]{antique white}{antique white}}
+{\color[named]{AntiqueWhite}{AntiqueWhite}}
+%{\color[named]{papaya whip}{papaya whip}}
+{\color[named]{PapayaWhip}{PapayaWhip}}
+
+%{\color[named]{blanched almond}{blanched almond}}
+{\color[named]{BlanchedAlmond}{BlanchedAlmond}}
+{\color[named]{bisque}{bisque}}
+%{\color[named]{peach puff}{peach puff}}
+{\color[named]{PeachPuff}{PeachPuff}}
+
+%{\color[named]{navajo white}{navajo white}}
+{\color[named]{NavajoWhite}{NavajoWhite}}
+{\color[named]{moccasin}{moccasin}}
+{\color[named]{cornsilk}{cornsilk}}
+{\color[named]{ivory}{ivory}}
+
+%{\color[named]{lemon chiffon}{lemon chiffon}}
+{\color[named]{LemonChiffon}{LemonChiffon}}
+{\color[named]{seashell}{seashell}}
+{\color[named]{honeydew}{honeydew}}
+%{\color[named]{mint cream}{mint cream}}
+
+{\color[named]{MintCream}{MintCream}}
+{\color[named]{azure}{azure}}
+%{\color[named]{alice blue}{alice blue}}
+{\color[named]{AliceBlue}{AliceBlue}}
+{\color[named]{lavender}{lavender}}
+
+%{\color[named]{lavender blush}{lavender blush}}
+{\color[named]{LavenderBlush}{LavenderBlush}}
+%{\color[named]{misty rose}{misty rose}}
+{\color[named]{MistyRose}{MistyRose}}
+{\color[named]{white}{white}}
+
+{\color[named]{black}{black}}
+%{\color[named]{dark slate gray}{dark slate gray}}
+{\color[named]{DarkSlateGray}{DarkSlateGray}}
+%{\color[named]{dark slate grey}{dark slate grey}}
+{\color[named]{DarkSlateGrey}{DarkSlateGrey}}
+%{\color[named]{dim gray}{dim gray}}
+{\color[named]{DimGray}{DimGray}}
+%{\color[named]{dim grey}{dim grey}}
+{\color[named]{DimGrey}{DimGrey}}
+
+%{\color[named]{slate gray}{slate gray}}
+{\color[named]{SlateGray}{SlateGray}}
+%{\color[named]{slate grey}{slate grey}}
+{\color[named]{SlateGrey}{SlateGrey}}
+%{\color[named]{light slate gray}{light slate gray}}
+{\color[named]{LightSlateGray}{LightSlateGray}}
+%{\color[named]{light slate grey}{light slate grey}}
+{\color[named]{LightSlateGrey}{LightSlateGrey}}
+
+{\color[named]{DarkGray}{DarkGray}}
+%{\color[named]{dark gray}{dark gray}}
+{\color[named]{DarkGrey}{DarkGrey}}
+%{\color[named]{dark grey}{dark grey}}
+{\color[named]{gray}{gray}}
+{\color[named]{grey}{grey}}
+%{\color[named]{light grey}{light grey}}
+
+{\color[named]{LightGrey}{LightGrey}}
+%{\color[named]{light gray}{light gray}}
+{\color[named]{LightGray}{LightGray}}
+
+\newpage
+
+\subsection*{X color names: The simple blues}
+
+%{\color[named]{midnight blue}{midnight blue}}
+{\color[named]{MidnightBlue}{MidnightBlue}}
+{\color[named]{navy}{navy}}
+
+%{\color[named]{navy blue}{navy blue}}
+{\color[named]{NavyBlue}{NavyBlue}}
+%{\color[named]{cornflower blue}{cornflower blue}}
+{\color[named]{CornflowerBlue}{CornflowerBlue}}
+%{\color[named]{dark slate blue}{dark slate blue}}
+
+{\color[named]{DarkSlateBlue}{DarkSlateBlue}}
+%{\color[named]{slate blue}{slate blue}}
+{\color[named]{SlateBlue}{SlateBlue}}
+%{\color[named]{medium slate blue}{medium slate blue}}
+{\color[named]{MediumSlateBlue}{MediumSlateBlue}}
+
+%{\color[named]{light slate blue}{light slate blue}}
+{\color[named]{LightSlateBlue}{LightSlateBlue}}
+%{\color[named]{medium blue}{medium blue}}
+{\color[named]{MediumBlue}{MediumBlue}}
+%{\color[named]{royal blue}{royal blue}}
+
+{\color[named]{RoyalBlue}{RoyalBlue}}
+{\color[named]{blue}{blue}}
+%{\color[named]{dark blue}{dark blue}}
+{\color[named]{DarkBlue}{DarkBlue}}
+%{\color[named]{dodger blue}{dodger blue}}
+
+{\color[named]{DodgerBlue}{DodgerBlue}}
+%{\color[named]{deep sky blue}{deep sky blue}}
+{\color[named]{DeepSkyBlue}{DeepSkyBlue}}
+%{\color[named]{sky blue}{sky blue}}
+{\color[named]{SkyBlue}{SkyBlue}}
+
+%{\color[named]{light sky blue}{light sky blue}}
+{\color[named]{LightSkyBlue}{LightSkyBlue}}
+%{\color[named]{steel blue}{steel blue}}
+{\color[named]{SteelBlue}{SteelBlue}}
+%{\color[named]{light steel blue}{light steel blue}}
+
+{\color[named]{LightSteelBlue}{LightSteelBlue}}
+%{\color[named]{light blue}{light blue}}
+{\color[named]{LightBlue}{LightBlue}}
+%{\color[named]{powder blue}{powder blue}}
+{\color[named]{PowderBlue}{PowderBlue}}
+
+%{\color[named]{pale turquoise}{pale turquoise}}
+{\color[named]{PaleTurquoise}{PaleTurquoise}}
+%{\color[named]{dark turquoise}{dark turquoise}}
+{\color[named]{DarkTurquoise}{DarkTurquoise}}
+%{\color[named]{medium turquoise}{medium turquoise}}
+
+{\color[named]{MediumTurquoise}{MediumTurquoise}}
+{\color[named]{turquoise}{turquoise}}
+{\color[named]{cyan}{cyan}}
+%{\color[named]{dark cyan}{dark cyan}}
+{\color[named]{DarkCyan}{DarkCyan}}
+
+%{\color[named]{light cyan}{light cyan}}
+{\color[named]{LightCyan}{LightCyan}}
+%{\color[named]{cadet blue}{cadet blue}}
+{\color[named]{CadetBlue}{CadetBlue}}
+%{\color[named]{medium aquamarine}{medium aquamarine}}
+
+\newpage
+
+\subsection*{X color names: The greens yellows and oranges}
+
+{\color[named]{MediumAquamarine}{MediumAquamarine}}
+{\color[named]{aquamarine}{aquamarine}}
+%{\color[named]{dark green}{dark green}}
+{\color[named]{DarkGreen}{DarkGreen}}
+%{\color[named]{light green}{light green}}
+
+{\color[named]{LightGreen}{LightGreen}}
+%{\color[named]{dark olive green}{dark olive green}}
+{\color[named]{DarkOliveGreen}{DarkOliveGreen}}
+%{\color[named]{dark sea green}{dark sea green}}
+{\color[named]{DarkSeaGreen}{DarkSeaGreen}}
+
+%{\color[named]{sea green}{sea green}}
+{\color[named]{SeaGreen}{SeaGreen}}
+%{\color[named]{medium sea green}{medium sea green}}
+{\color[named]{MediumSeaGreen}{MediumSeaGreen}}
+%{\color[named]{light sea green}{light sea green}}
+
+{\color[named]{LightSeaGreen}{LightSeaGreen}}
+%{\color[named]{pale green}{pale green}}
+{\color[named]{PaleGreen}{PaleGreen}}
+%{\color[named]{spring green}{spring green}}
+{\color[named]{SpringGreen}{SpringGreen}}
+
+%{\color[named]{lawn green}{lawn green}}
+{\color[named]{LawnGreen}{LawnGreen}}
+{\color[named]{green}{green}}
+{\color[named]{chartreuse}{chartreuse}}
+%{\color[named]{medium spring green}{medium spring green}}
+
+{\color[named]{MediumSpringGreen}{MediumSpringGreen}}
+%{\color[named]{green yellow}{green yellow}}
+{\color[named]{GreenYellow}{GreenYellow}}
+%{\color[named]{lime green}{lime green}}
+{\color[named]{LimeGreen}{LimeGreen}}
+
+%{\color[named]{yellow green}{yellow green}}
+{\color[named]{YellowGreen}{YellowGreen}}
+%{\color[named]{forest green}{forest green}}
+{\color[named]{ForestGreen}{ForestGreen}}
+%{\color[named]{olive drab}{olive drab}}
+
+{\color[named]{OliveDrab}{OliveDrab}}
+%{\color[named]{dark khaki}{dark khaki}}
+{\color[named]{DarkKhaki}{DarkKhaki}}
+{\color[named]{khaki}{khaki}}
+%{\color[named]{pale goldenrod}{pale goldenrod}}
+
+{\color[named]{PaleGoldenrod}{PaleGoldenrod}}
+%{\color[named]{light goldenrod yellow}{light goldenrod yellow}}
+{\color[named]{LightGoldenrodYellow}{LightGoldenrodYellow}}
+%{\color[named]{light yellow}{light yellow}}
+{\color[named]{LightYellow}{LightYellow}}
+
+{\color[named]{yellow}{yellow}}
+{\color[named]{gold}{gold}}
+%{\color[named]{light goldenrod}{light goldenrod}}
+{\color[named]{LightGoldenrod}{LightGoldenrod}}
+{\color[named]{goldenrod}{goldenrod}}
+%{\color[named]{dark goldenrod}{dark goldenrod}}
+{\color[named]{DarkGoldenrod}{DarkGoldenrod}}
+
+%{\color[named]{rosy brown}{rosy brown}}
+{\color[named]{RosyBrown}{RosyBrown}}
+%{\color[named]{indian red}{indian red}}
+{\color[named]{IndianRed}{IndianRed}}
+%{\color[named]{saddle brown}{saddle brown}}
+{\color[named]{SaddleBrown}{SaddleBrown}}
+{\color[named]{sienna}{sienna}}
+{\color[named]{peru}{peru}}
+
+{\color[named]{burlywood}{burlywood}}
+{\color[named]{beige}{beige}}
+{\color[named]{wheat}{wheat}}
+%{\color[named]{sandy brown}{sandy brown}}
+{\color[named]{SandyBrown}{SandyBrown}}
+
+{\color[named]{tan}{tan}}
+{\color[named]{chocolate}{chocolate}}
+{\color[named]{firebrick}{firebrick}}
+{\color[named]{brown}{brown}}
+
+%{\color[named]{dark salmon}{dark salmon}}
+{\color[named]{DarkSalmon}{DarkSalmon}}
+{\color[named]{salmon}{salmon}}
+%{\color[named]{light salmon}{light salmon}}
+{\color[named]{LightSalmon}{LightSalmon}}
+
+{\color[named]{orange}{orange}}
+%{\color[named]{dark orange}{dark orange}}
+{\color[named]{DarkOrange}{DarkOrange}}
+{\color[named]{coral}{coral}}
+%{\color[named]{light coral}{light coral}}
+{\color[named]{LightCoral}{LightCoral}}
+
+\newpage
+
+\subsection*{X color names: The reds and roses}
+
+{\color[named]{tomato}{tomato}}
+%{\color[named]{orange red}{orange red}}
+{\color[named]{OrangeRed}{OrangeRed}}
+{\color[named]{red}{red}}
+%{\color[named]{dark red}{dark red}}
+{\color[named]{DarkRed}{DarkRed}}
+
+%{\color[named]{hot pink}{hot pink}}
+{\color[named]{HotPink}{HotPink}}
+%{\color[named]{deep pink}{deep pink}}
+{\color[named]{DeepPink}{DeepPink}}
+{\color[named]{pink}{pink}}
+%{\color[named]{light pink}{light pink}}
+{\color[named]{LightPink}{LightPink}}
+
+%{\color[named]{pale violet red}{pale violet red}}
+{\color[named]{PaleVioletRed}{PaleVioletRed}}
+{\color[named]{maroon}{maroon}}
+%{\color[named]{medium violet red}{medium violet red}}
+{\color[named]{MediumVioletRed}{MediumVioletRed}}
+%{\color[named]{violet red}{violet red}}
+{\color[named]{VioletRed}{VioletRed}}
+
+{\color[named]{magenta}{magenta}}
+%{\color[named]{dark magenta}{dark magenta}}
+{\color[named]{DarkMagenta}{DarkMagenta}}
+{\color[named]{violet}{violet}}
+{\color[named]{plum}{plum}}
+
+{\color[named]{orchid}{orchid}}
+%{\color[named]{medium orchid}{medium orchid}}
+{\color[named]{MediumOrchid}{MediumOrchid}}
+%{\color[named]{dark orchid}{dark orchid}}
+{\color[named]{DarkOrchid}{DarkOrchid}}
+
+%{\color[named]{dark violet}{dark violet}}
+{\color[named]{DarkViolet}{DarkViolet}}
+%{\color[named]{blue violet}{blue violet}}
+{\color[named]{BlueViolet}{BlueViolet}}
+
+{\color[named]{purple}{purple}}
+%{\color[named]{medium purple}{medium purple}}
+{\color[named]{MediumPurple}{MediumPurple}}
+{\color[named]{thistle}{thistle}}
+
+{\color[named]{snow1}{snow1}}
+{\color[named]{snow2}{snow2}}
+{\color[named]{snow3}{snow3}}
+{\color[named]{snow4}{snow4}}
+
+{\color[named]{seashell1}{seashell1}}
+{\color[named]{seashell2}{seashell2}}
+{\color[named]{seashell3}{seashell3}}
+{\color[named]{seashell4}{seashell4}}
+
+{\color[named]{AntiqueWhite1}{AntiqueWhite1}}
+{\color[named]{AntiqueWhite2}{AntiqueWhite2}}
+{\color[named]{AntiqueWhite3}{AntiqueWhite3}}
+{\color[named]{AntiqueWhite4}{AntiqueWhite4}}
+
+{\color[named]{bisque1}{bisque1}}
+{\color[named]{bisque2}{bisque2}}
+{\color[named]{bisque3}{bisque3}}
+{\color[named]{bisque4}{bisque4}}
+
+{\color[named]{PeachPuff1}{PeachPuff1}}
+{\color[named]{PeachPuff2}{PeachPuff2}}
+{\color[named]{PeachPuff3}{PeachPuff3}}
+{\color[named]{PeachPuff4}{PeachPuff4}}
+
+{\color[named]{NavajoWhite1}{NavajoWhite1}}
+{\color[named]{NavajoWhite2}{NavajoWhite2}}
+{\color[named]{NavajoWhite3}{NavajoWhite3}}
+{\color[named]{NavajoWhite4}{NavajoWhite4}}
+
+{\color[named]{LemonChiffon1}{LemonChiffon1}}
+{\color[named]{LemonChiffon2}{LemonChiffon2}}
+{\color[named]{LemonChiffon3}{LemonChiffon3}}
+{\color[named]{LemonChiffon4}{LemonChiffon4}}
+
+{\color[named]{cornsilk1}{cornsilk1}}
+{\color[named]{cornsilk2}{cornsilk2}}
+{\color[named]{cornsilk3}{cornsilk3}}
+{\color[named]{cornsilk4}{cornsilk4}}
+
+{\color[named]{ivory1}{ivory1}}
+{\color[named]{ivory2}{ivory2}}
+{\color[named]{ivory3}{ivory3}}
+{\color[named]{ivory4}{ivory4}}
+
+{\color[named]{honeydew1}{honeydew1}}
+{\color[named]{honeydew2}{honeydew2}}
+{\color[named]{honeydew3}{honeydew3}}
+{\color[named]{honeydew4}{honeydew4}}
+
+{\color[named]{LavenderBlush1}{LavenderBlush1}}
+{\color[named]{LavenderBlush2}{LavenderBlush2}}
+{\color[named]{LavenderBlush3}{LavenderBlush3}}
+{\color[named]{LavenderBlush4}{LavenderBlush4}}
+
+{\color[named]{MistyRose1}{MistyRose1}}
+{\color[named]{MistyRose2}{MistyRose2}}
+{\color[named]{MistyRose3}{MistyRose3}}
+{\color[named]{MistyRose4}{MistyRose4}}
+
+\newpage
+
+\subsection*{X color names: The blues}
+
+{\color[named]{azure1}{azure1}}
+{\color[named]{azure2}{azure2}}
+{\color[named]{azure3}{azure3}}
+{\color[named]{azure4}{azure4}}
+
+{\color[named]{SlateBlue1}{SlateBlue1}}
+{\color[named]{SlateBlue2}{SlateBlue2}}
+{\color[named]{SlateBlue3}{SlateBlue3}}
+{\color[named]{SlateBlue4}{SlateBlue4}}
+
+{\color[named]{RoyalBlue1}{RoyalBlue1}}
+{\color[named]{RoyalBlue2}{RoyalBlue2}}
+{\color[named]{RoyalBlue3}{RoyalBlue3}}
+{\color[named]{RoyalBlue4}{RoyalBlue4}}
+
+{\color[named]{blue1}{blue1}}
+{\color[named]{blue2}{blue2}}
+{\color[named]{blue3}{blue3}}
+{\color[named]{blue4}{blue4}}
+
+{\color[named]{DodgerBlue1}{DodgerBlue1}}
+{\color[named]{DodgerBlue2}{DodgerBlue2}}
+{\color[named]{DodgerBlue3}{DodgerBlue3}}
+{\color[named]{DodgerBlue4}{DodgerBlue4}}
+
+{\color[named]{SteelBlue1}{SteelBlue1}}
+{\color[named]{SteelBlue2}{SteelBlue2}}
+{\color[named]{SteelBlue3}{SteelBlue3}}
+{\color[named]{SteelBlue4}{SteelBlue4}}
+
+{\color[named]{DeepSkyBlue1}{DeepSkyBlue1}}
+{\color[named]{DeepSkyBlue2}{DeepSkyBlue2}}
+{\color[named]{DeepSkyBlue3}{DeepSkyBlue3}}
+{\color[named]{DeepSkyBlue4}{DeepSkyBlue4}}
+
+{\color[named]{SkyBlue1}{SkyBlue1}}
+{\color[named]{SkyBlue2}{SkyBlue2}}
+{\color[named]{SkyBlue3}{SkyBlue3}}
+{\color[named]{SkyBlue4}{SkyBlue4}}
+
+{\color[named]{LightSkyBlue1}{LightSkyBlue1}}
+{\color[named]{LightSkyBlue2}{LightSkyBlue2}}
+{\color[named]{LightSkyBlue3}{LightSkyBlue3}}
+{\color[named]{LightSkyBlue4}{LightSkyBlue4}}
+
+{\color[named]{SlateGray1}{SlateGray1}}
+{\color[named]{SlateGray2}{SlateGray2}}
+{\color[named]{SlateGray3}{SlateGray3}}
+{\color[named]{SlateGray4}{SlateGray4}}
+
+{\color[named]{LightSteelBlue1}{LightSteelBlue1}}
+{\color[named]{LightSteelBlue2}{LightSteelBlue2}}
+{\color[named]{LightSteelBlue3}{LightSteelBlue3}}
+{\color[named]{LightSteelBlue4}{LightSteelBlue4}}
+
+{\color[named]{LightBlue1}{LightBlue1}}
+{\color[named]{LightBlue2}{LightBlue2}}
+{\color[named]{LightBlue3}{LightBlue3}}
+{\color[named]{LightBlue4}{LightBlue4}}
+
+{\color[named]{LightCyan1}{LightCyan1}}
+{\color[named]{LightCyan2}{LightCyan2}}
+{\color[named]{LightCyan3}{LightCyan3}}
+{\color[named]{LightCyan4}{LightCyan4}}
+
+{\color[named]{PaleTurquoise1}{PaleTurquoise1}}
+{\color[named]{PaleTurquoise2}{PaleTurquoise2}}
+{\color[named]{PaleTurquoise3}{PaleTurquoise3}}
+{\color[named]{PaleTurquoise4}{PaleTurquoise4}}
+
+{\color[named]{CadetBlue1}{CadetBlue1}}
+{\color[named]{CadetBlue2}{CadetBlue2}}
+{\color[named]{CadetBlue3}{CadetBlue3}}
+{\color[named]{CadetBlue4}{CadetBlue4}}
+
+{\color[named]{turquoise1}{turquoise1}}
+{\color[named]{turquoise2}{turquoise2}}
+{\color[named]{turquoise3}{turquoise3}}
+{\color[named]{turquoise4}{turquoise4}}
+
+{\color[named]{cyan1}{cyan1}}
+{\color[named]{cyan2}{cyan2}}
+{\color[named]{cyan3}{cyan3}}
+{\color[named]{cyan4}{cyan4}}
+
+{\color[named]{DarkSlateGray1}{DarkSlateGray1}}
+{\color[named]{DarkSlateGray2}{DarkSlateGray2}}
+{\color[named]{DarkSlateGray3}{DarkSlateGray3}}
+{\color[named]{DarkSlateGray4}{DarkSlateGray4}}
+
+\newpage
+
+\subsection*{X color names: The greens}
+
+{\color[named]{aquamarine1}{aquamarine1}}
+{\color[named]{aquamarine2}{aquamarine2}}
+{\color[named]{aquamarine3}{aquamarine3}}
+{\color[named]{aquamarine4}{aquamarine4}}
+
+{\color[named]{DarkSeaGreen1}{DarkSeaGreen1}}
+{\color[named]{DarkSeaGreen2}{DarkSeaGreen2}}
+{\color[named]{DarkSeaGreen3}{DarkSeaGreen3}}
+{\color[named]{DarkSeaGreen4}{DarkSeaGreen4}}
+
+{\color[named]{SeaGreen1}{SeaGreen1}}
+{\color[named]{SeaGreen2}{SeaGreen2}}
+{\color[named]{SeaGreen3}{SeaGreen3}}
+{\color[named]{SeaGreen4}{SeaGreen4}}
+
+{\color[named]{PaleGreen1}{PaleGreen1}}
+{\color[named]{PaleGreen2}{PaleGreen2}}
+{\color[named]{PaleGreen3}{PaleGreen3}}
+{\color[named]{PaleGreen4}{PaleGreen4}}
+
+{\color[named]{SpringGreen1}{SpringGreen1}}
+{\color[named]{SpringGreen2}{SpringGreen2}}
+{\color[named]{SpringGreen3}{SpringGreen3}}
+{\color[named]{SpringGreen4}{SpringGreen4}}
+
+{\color[named]{green1}{green1}}
+{\color[named]{green2}{green2}}
+{\color[named]{green3}{green3}}
+{\color[named]{green4}{green4}}
+
+{\color[named]{chartreuse1}{chartreuse1}}
+{\color[named]{chartreuse2}{chartreuse2}}
+{\color[named]{chartreuse3}{chartreuse3}}
+{\color[named]{chartreuse4}{chartreuse4}}
+
+{\color[named]{OliveDrab1}{OliveDrab1}}
+{\color[named]{OliveDrab2}{OliveDrab2}}
+{\color[named]{OliveDrab3}{OliveDrab3}}
+{\color[named]{OliveDrab4}{OliveDrab4}}
+
+{\color[named]{DarkOliveGreen1}{DarkOliveGreen1}}
+{\color[named]{DarkOliveGreen2}{DarkOliveGreen2}}
+{\color[named]{DarkOliveGreen3}{DarkOliveGreen3}}
+{\color[named]{DarkOliveGreen4}{DarkOliveGreen4}}
+
+{\color[named]{khaki1}{khaki1}}
+{\color[named]{khaki2}{khaki2}}
+{\color[named]{khaki3}{khaki3}}
+{\color[named]{khaki4}{khaki4}}
+
+\newpage
+
+\subsection*{X color names: The yellows}
+
+{\color[named]{LightGoldenrod1}{LightGoldenrod1}}
+{\color[named]{LightGoldenrod2}{LightGoldenrod2}}
+{\color[named]{LightGoldenrod3}{LightGoldenrod3}}
+{\color[named]{LightGoldenrod4}{LightGoldenrod4}}
+
+{\color[named]{LightYellow1}{LightYellow1}}
+{\color[named]{LightYellow2}{LightYellow2}}
+{\color[named]{LightYellow3}{LightYellow3}}
+{\color[named]{LightYellow4}{LightYellow4}}
+
+{\color[named]{yellow1}{yellow1}}
+{\color[named]{yellow2}{yellow2}}
+{\color[named]{yellow3}{yellow3}}
+{\color[named]{yellow4}{yellow4}}
+
+{\color[named]{gold1}{gold1}}
+{\color[named]{gold2}{gold2}}
+{\color[named]{gold3}{gold3}}
+{\color[named]{gold4}{gold4}}
+
+{\color[named]{goldenrod1}{goldenrod1}}
+{\color[named]{goldenrod2}{goldenrod2}}
+{\color[named]{goldenrod3}{goldenrod3}}
+{\color[named]{goldenrod4}{goldenrod4}}
+
+{\color[named]{DarkGoldenrod1}{DarkGoldenrod1}}
+{\color[named]{DarkGoldenrod2}{DarkGoldenrod2}}
+{\color[named]{DarkGoldenrod3}{DarkGoldenrod3}}
+{\color[named]{DarkGoldenrod4}{DarkGoldenrod4}}
+
+\newpage
+
+\subsection*{X color names: The roses and oranges}
+
+{\color[named]{RosyBrown1}{RosyBrown1}}
+{\color[named]{RosyBrown2}{RosyBrown2}}
+{\color[named]{RosyBrown3}{RosyBrown3}}
+{\color[named]{RosyBrown4}{RosyBrown4}}
+
+{\color[named]{IndianRed1}{IndianRed1}}
+{\color[named]{IndianRed2}{IndianRed2}}
+{\color[named]{IndianRed3}{IndianRed3}}
+{\color[named]{IndianRed4}{IndianRed4}}
+
+{\color[named]{sienna1}{sienna1}}
+{\color[named]{sienna2}{sienna2}}
+{\color[named]{sienna3}{sienna3}}
+{\color[named]{sienna4}{sienna4}}
+
+{\color[named]{burlywood1}{burlywood1}}
+{\color[named]{burlywood2}{burlywood2}}
+{\color[named]{burlywood3}{burlywood3}}
+{\color[named]{burlywood4}{burlywood4}}
+
+{\color[named]{wheat1}{wheat1}}
+{\color[named]{wheat2}{wheat2}}
+{\color[named]{wheat3}{wheat3}}
+{\color[named]{wheat4}{wheat4}}
+
+{\color[named]{tan1}{tan1}}
+{\color[named]{tan2}{tan2}}
+{\color[named]{tan3}{tan3}}
+{\color[named]{tan4}{tan4}}
+
+{\color[named]{chocolate1}{chocolate1}}
+{\color[named]{chocolate2}{chocolate2}}
+{\color[named]{chocolate3}{chocolate3}}
+{\color[named]{chocolate4}{chocolate4}}
+
+{\color[named]{firebrick1}{firebrick1}}
+{\color[named]{firebrick2}{firebrick2}}
+{\color[named]{firebrick3}{firebrick3}}
+{\color[named]{firebrick4}{firebrick4}}
+
+{\color[named]{brown1}{brown1}}
+{\color[named]{brown2}{brown2}}
+{\color[named]{brown3}{brown3}}
+{\color[named]{brown4}{brown4}}
+
+{\color[named]{salmon1}{salmon1}}
+{\color[named]{salmon2}{salmon2}}
+{\color[named]{salmon3}{salmon3}}
+{\color[named]{salmon4}{salmon4}}
+
+{\color[named]{LightSalmon1}{LightSalmon1}}
+{\color[named]{LightSalmon2}{LightSalmon2}}
+{\color[named]{LightSalmon3}{LightSalmon3}}
+{\color[named]{LightSalmon4}{LightSalmon4}}
+
+{\color[named]{orange1}{orange1}}
+{\color[named]{orange2}{orange2}}
+{\color[named]{orange3}{orange3}}
+{\color[named]{orange4}{orange4}}
+
+{\color[named]{DarkOrange1}{DarkOrange1}}
+{\color[named]{DarkOrange2}{DarkOrange2}}
+{\color[named]{DarkOrange3}{DarkOrange3}}
+{\color[named]{DarkOrange4}{DarkOrange4}}
+
+{\color[named]{coral1}{coral1}}
+{\color[named]{coral2}{coral2}}
+{\color[named]{coral3}{coral3}}
+{\color[named]{coral4}{coral4}}
+
+{\color[named]{tomato1}{tomato1}}
+{\color[named]{tomato2}{tomato2}}
+{\color[named]{tomato3}{tomato3}}
+{\color[named]{tomato4}{tomato4}}
+
+{\color[named]{OrangeRed1}{OrangeRed1}}
+{\color[named]{OrangeRed2}{OrangeRed2}}
+{\color[named]{OrangeRed3}{OrangeRed3}}
+{\color[named]{OrangeRed4}{OrangeRed4}}
+
+\newpage
+
+\subsection*{X color names: The reds and violets}
+
+{\color[named]{red1}{red1}}
+{\color[named]{red2}{red2}}
+{\color[named]{red3}{red3}}
+{\color[named]{red4}{red4}}
+
+{\color[named]{DeepPink1}{DeepPink1}}
+{\color[named]{DeepPink2}{DeepPink2}}
+{\color[named]{DeepPink3}{DeepPink3}}
+{\color[named]{DeepPink4}{DeepPink4}}
+
+{\color[named]{HotPink1}{HotPink1}}
+{\color[named]{HotPink2}{HotPink2}}
+{\color[named]{HotPink3}{HotPink3}}
+{\color[named]{HotPink4}{HotPink4}}
+
+{\color[named]{pink1}{pink1}}
+{\color[named]{pink2}{pink2}}
+{\color[named]{pink3}{pink3}}
+{\color[named]{pink4}{pink4}}
+
+{\color[named]{LightPink1}{LightPink1}}
+{\color[named]{LightPink2}{LightPink2}}
+{\color[named]{LightPink3}{LightPink3}}
+{\color[named]{LightPink4}{LightPink4}}
+
+{\color[named]{PaleVioletRed1}{PaleVioletRed1}}
+{\color[named]{PaleVioletRed2}{PaleVioletRed2}}
+{\color[named]{PaleVioletRed3}{PaleVioletRed3}}
+{\color[named]{PaleVioletRed4}{PaleVioletRed4}}
+
+{\color[named]{maroon1}{maroon1}}
+{\color[named]{maroon2}{maroon2}}
+{\color[named]{maroon3}{maroon3}}
+{\color[named]{maroon4}{maroon4}}
+
+{\color[named]{VioletRed1}{VioletRed1}}
+{\color[named]{VioletRed2}{VioletRed2}}
+{\color[named]{VioletRed3}{VioletRed3}}
+{\color[named]{VioletRed4}{VioletRed4}}
+
+{\color[named]{magenta1}{magenta1}}
+{\color[named]{magenta2}{magenta2}}
+{\color[named]{magenta3}{magenta3}}
+{\color[named]{magenta4}{magenta4}}
+
+{\color[named]{orchid1}{orchid1}}
+{\color[named]{orchid2}{orchid2}}
+{\color[named]{orchid3}{orchid3}}
+{\color[named]{orchid4}{orchid4}}
+
+{\color[named]{plum1}{plum1}}
+{\color[named]{plum2}{plum2}}
+{\color[named]{plum3}{plum3}}
+{\color[named]{plum4}{plum4}}
+
+{\color[named]{MediumOrchid1}{MediumOrchid1}}
+{\color[named]{MediumOrchid2}{MediumOrchid2}}
+{\color[named]{MediumOrchid3}{MediumOrchid3}}
+{\color[named]{MediumOrchid4}{MediumOrchid4}}
+
+{\color[named]{DarkOrchid1}{DarkOrchid1}}
+{\color[named]{DarkOrchid2}{DarkOrchid2}}
+{\color[named]{DarkOrchid3}{DarkOrchid3}}
+{\color[named]{DarkOrchid4}{DarkOrchid4}}
+
+{\color[named]{purple1}{purple1}}
+{\color[named]{purple2}{purple2}}
+{\color[named]{purple3}{purple3}}
+{\color[named]{purple4}{purple4}}
+
+{\color[named]{MediumPurple1}{MediumPurple1}}
+{\color[named]{MediumPurple2}{MediumPurple2}}
+{\color[named]{MediumPurple3}{MediumPurple3}}
+{\color[named]{MediumPurple4}{MediumPurple4}}
+
+{\color[named]{thistle1}{thistle1}}
+{\color[named]{thistle2}{thistle2}}
+{\color[named]{thistle3}{thistle3}}
+{\color[named]{thistle4}{thistle4}}
+
+
+\newpage
+
+\subsection*{X color names: The greys}
+
+{\color[named]{gray0}{gray0}}
+{\color[named]{grey0}{grey0}}
+{\color[named]{gray1}{gray1}}
+{\color[named]{grey1}{grey1}}
+{\color[named]{gray2}{gray2}}
+
+{\color[named]{grey2}{grey2}}
+{\color[named]{gray3}{gray3}}
+{\color[named]{grey3}{grey3}}
+{\color[named]{gray4}{gray4}}
+{\color[named]{grey4}{grey4}}
+
+{\color[named]{gray5}{gray5}}
+{\color[named]{grey5}{grey5}}
+{\color[named]{gray6}{gray6}}
+{\color[named]{grey6}{grey6}}
+{\color[named]{gray7}{gray7}}
+
+{\color[named]{grey7}{grey7}}
+{\color[named]{gray8}{gray8}}
+{\color[named]{grey8}{grey8}}
+{\color[named]{gray9}{gray9}}
+{\color[named]{grey9}{grey9}}
+
+{\color[named]{gray10}{gray10}}
+{\color[named]{grey10}{grey10}}
+{\color[named]{gray11}{gray11}}
+{\color[named]{grey11}{grey11}}
+{\color[named]{gray12}{gray12}}
+
+{\color[named]{grey12}{grey12}}
+{\color[named]{gray13}{gray13}}
+{\color[named]{grey13}{grey13}}
+{\color[named]{gray14}{gray14}}
+{\color[named]{grey14}{grey14}}
+
+{\color[named]{gray15}{gray15}}
+{\color[named]{grey15}{grey15}}
+{\color[named]{gray16}{gray16}}
+{\color[named]{grey16}{grey16}}
+{\color[named]{gray17}{gray17}}
+
+{\color[named]{grey17}{grey17}}
+{\color[named]{gray18}{gray18}}
+{\color[named]{grey18}{grey18}}
+{\color[named]{gray19}{gray19}}
+{\color[named]{grey19}{grey19}}
+
+{\color[named]{gray20}{gray20}}
+{\color[named]{grey20}{grey20}}
+{\color[named]{gray21}{gray21}}
+{\color[named]{grey21}{grey21}}
+{\color[named]{gray22}{gray22}}
+
+{\color[named]{grey22}{grey22}}
+{\color[named]{gray23}{gray23}}
+{\color[named]{grey23}{grey23}}
+{\color[named]{gray24}{gray24}}
+{\color[named]{grey24}{grey24}}
+
+{\color[named]{gray25}{gray25}}
+{\color[named]{grey25}{grey25}}
+{\color[named]{gray26}{gray26}}
+{\color[named]{grey26}{grey26}}
+{\color[named]{gray27}{gray27}}
+
+{\color[named]{grey27}{grey27}}
+{\color[named]{gray28}{gray28}}
+{\color[named]{grey28}{grey28}}
+{\color[named]{gray29}{gray29}}
+{\color[named]{grey29}{grey29}}
+
+{\color[named]{gray30}{gray30}}
+{\color[named]{grey30}{grey30}}
+{\color[named]{gray31}{gray31}}
+{\color[named]{grey31}{grey31}}
+{\color[named]{gray32}{gray32}}
+
+{\color[named]{grey32}{grey32}}
+{\color[named]{gray33}{gray33}}
+{\color[named]{grey33}{grey33}}
+{\color[named]{gray34}{gray34}}
+{\color[named]{grey34}{grey34}}
+
+{\color[named]{gray35}{gray35}}
+{\color[named]{grey35}{grey35}}
+{\color[named]{gray36}{gray36}}
+{\color[named]{grey36}{grey36}}
+{\color[named]{gray37}{gray37}}
+
+{\color[named]{grey37}{grey37}}
+{\color[named]{gray38}{gray38}}
+{\color[named]{grey38}{grey38}}
+{\color[named]{gray39}{gray39}}
+{\color[named]{grey39}{grey39}}
+
+{\color[named]{gray40}{gray40}}
+{\color[named]{grey40}{grey40}}
+{\color[named]{gray41}{gray41}}
+{\color[named]{grey41}{grey41}}
+{\color[named]{gray42}{gray42}}
+
+{\color[named]{grey42}{grey42}}
+{\color[named]{gray43}{gray43}}
+{\color[named]{grey43}{grey43}}
+{\color[named]{gray44}{gray44}}
+{\color[named]{grey44}{grey44}}
+
+{\color[named]{gray45}{gray45}}
+{\color[named]{grey45}{grey45}}
+{\color[named]{gray46}{gray46}}
+{\color[named]{grey46}{grey46}}
+{\color[named]{gray47}{gray47}}
+
+{\color[named]{grey47}{grey47}}
+{\color[named]{gray48}{gray48}}
+{\color[named]{grey48}{grey48}}
+{\color[named]{gray49}{gray49}}
+{\color[named]{grey49}{grey49}}
+
+{\color[named]{gray50}{gray50}}
+{\color[named]{grey50}{grey50}}
+{\color[named]{gray51}{gray51}}
+{\color[named]{grey51}{grey51}}
+{\color[named]{gray52}{gray52}}
+
+\newpage
+
+\subsection*{X color names: The greys (continued)}
+
+{\color[named]{grey52}{grey52}}
+{\color[named]{gray53}{gray53}}
+{\color[named]{grey53}{grey53}}
+{\color[named]{gray54}{gray54}}
+{\color[named]{grey54}{grey54}}
+
+{\color[named]{gray55}{gray55}}
+{\color[named]{grey55}{grey55}}
+{\color[named]{gray56}{gray56}}
+{\color[named]{grey56}{grey56}}
+{\color[named]{gray57}{gray57}}
+
+{\color[named]{grey57}{grey57}}
+{\color[named]{gray58}{gray58}}
+{\color[named]{grey58}{grey58}}
+{\color[named]{gray59}{gray59}}
+{\color[named]{grey59}{grey59}}
+
+{\color[named]{gray60}{gray60}}
+{\color[named]{grey60}{grey60}}
+{\color[named]{gray61}{gray61}}
+{\color[named]{grey61}{grey61}}
+{\color[named]{gray62}{gray62}}
+
+{\color[named]{grey62}{grey62}}
+{\color[named]{gray63}{gray63}}
+{\color[named]{grey63}{grey63}}
+{\color[named]{gray64}{gray64}}
+{\color[named]{grey64}{grey64}}
+
+{\color[named]{gray65}{gray65}}
+{\color[named]{grey65}{grey65}}
+{\color[named]{gray66}{gray66}}
+{\color[named]{grey66}{grey66}}
+{\color[named]{gray67}{gray67}}
+
+{\color[named]{grey67}{grey67}}
+{\color[named]{gray68}{gray68}}
+{\color[named]{grey68}{grey68}}
+{\color[named]{gray69}{gray69}}
+{\color[named]{grey69}{grey69}}
+
+{\color[named]{gray70}{gray70}}
+{\color[named]{grey70}{grey70}}
+{\color[named]{gray71}{gray71}}
+{\color[named]{grey71}{grey71}}
+{\color[named]{gray72}{gray72}}
+
+{\color[named]{grey72}{grey72}}
+{\color[named]{gray73}{gray73}}
+{\color[named]{grey73}{grey73}}
+{\color[named]{gray74}{gray74}}
+{\color[named]{grey74}{grey74}}
+
+{\color[named]{gray75}{gray75}}
+{\color[named]{grey75}{grey75}}
+{\color[named]{gray76}{gray76}}
+{\color[named]{grey76}{grey76}}
+{\color[named]{gray77}{gray77}}
+
+{\color[named]{grey77}{grey77}}
+{\color[named]{gray78}{gray78}}
+{\color[named]{grey78}{grey78}}
+{\color[named]{gray79}{gray79}}
+{\color[named]{grey79}{grey79}}
+
+{\color[named]{gray80}{gray80}}
+{\color[named]{grey80}{grey80}}
+{\color[named]{gray81}{gray81}}
+{\color[named]{grey81}{grey81}}
+{\color[named]{gray82}{gray82}}
+
+{\color[named]{grey82}{grey82}}
+{\color[named]{gray83}{gray83}}
+{\color[named]{grey83}{grey83}}
+{\color[named]{gray84}{gray84}}
+{\color[named]{grey84}{grey84}}
+
+{\color[named]{gray85}{gray85}}
+{\color[named]{grey85}{grey85}}
+{\color[named]{gray86}{gray86}}
+{\color[named]{grey86}{grey86}}
+{\color[named]{gray87}{gray87}}
+
+{\color[named]{grey87}{grey87}}
+{\color[named]{gray88}{gray88}}
+{\color[named]{grey88}{grey88}}
+{\color[named]{gray89}{gray89}}
+{\color[named]{grey89}{grey89}}
+
+{\color[named]{gray90}{gray90}}
+{\color[named]{grey90}{grey90}}
+{\color[named]{gray91}{gray91}}
+{\color[named]{grey91}{grey91}}
+{\color[named]{gray92}{gray92}}
+
+{\color[named]{grey92}{grey92}}
+{\color[named]{gray93}{gray93}}
+{\color[named]{grey93}{grey93}}
+{\color[named]{gray94}{gray94}}
+{\color[named]{grey94}{grey94}}
+
+{\color[named]{gray95}{gray95}}
+{\color[named]{grey95}{grey95}}
+{\color[named]{gray96}{gray96}}
+{\color[named]{grey96}{grey96}}
+{\color[named]{gray97}{gray97}}
+
+{\color[named]{grey97}{grey97}}
+{\color[named]{gray98}{gray98}}
+{\color[named]{grey98}{grey98}}
+{\color[named]{gray99}{gray99}}
+{\color[named]{grey99}{grey99}}
+
+{\color[named]{gray100}{gray100}}
+{\color[named]{grey100}{grey100}}
+Warning: last grey is grey100 (white).
+
+\lastpage
+
+~\vfill
+\begin{center}
+\includegraphics[width=0.5\textwidth]{../tex/advilogo.eps}\\
+{\Large \bf That's all, folks!!}
+\end{center}
+\vfill
+
+\end{document}

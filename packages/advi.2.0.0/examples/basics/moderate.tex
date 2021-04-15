@@ -1,0 +1,133 @@
+\documentclass[12pt]{article}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{advi}
+\usepackage{alltt}
+
+% To get page numbers
+\pagestyle{plain}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+\tiny{My organisation %
+\hfill \today
+\hfill My.Name@organisation.org}}
+\vss}}
+
+% Just at the beginning of page, not too large
+\def\adviheader{\vspace*{-0.1\textheight}\noindent{\tiny{%
+My talk title is written on each page}\\
+\includegraphics[width=\textwidth,height=0.8EM]{bar.eps}}}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\begin{document}
+
+\newpage
+
+\subsection* {{\ActiveDVI} is really cool}
+
+\begin{itemize}
+
+\item {\bf a DVI} previewer for hackers written in Caml
+
+\item You may hack your {\LaTeX} source file, your favorite style
+file or the Caml code of the presenter.
+
+\item You can launch arbitrary commands to animate your presentation!
+
+\end{itemize}
+
+\newpage
+
+\bigskip
+
+\subsection* {Slide strip-tease}
+
+You can program pauses in your talk writing:
+
+\verb"\adviwait"
+
+\noindent
+The mouse pointer is modified, and {\ActiveDVI} waits for you to press
+the space bar to go on!
+\adviwait
+
+\subsection* {Color writing}
+
+Using the macro \verb"textcolor" you can write text in the color you
+want. For instance, \verb"\textcolor{red}{important}" is rendered as
+\textcolor{red}{important}!
+
+\adviwait
+
+\subsection* {Color specification}
+
+Following the conventions of the \verb"color.sty" {\LaTeX} package,
+you can use predefined (or \verb"named") colors. Syntax is
+\verb"\textcolor[named]{Color}{text}", as in
+
+\def\bs{\char92}
+
+{\tt{\bs textcolor[named]\{Green\}\{}%
+\textcolor[named]{Green}{\tt{this example}}%
+}{\tt{\}}}%
+
+\subsection* {Writing program code}
+
+The environment \verb"allt" is nice to write type-writer text
+(presumably program samples). In environment \verb"allt" you can still
+use your favorite {\LaTeX} macros, hence coloring text and changing
+styles.
+
+\begin{alltt}
+{\it(* Colors with rgb specification are still available. *)}
+\end{alltt}
+
+\begin{alltt}
+{\it{(* Remark that double semi-colon is mandatory *)}}
+let x = 1\textcolor{red}{;;}
+let r = \{foo = 1; bar = "toto"\};;
+\textcolor[named]{Red}{let} z = r.foo;;
+\end{alltt}
+
+\newpage
+
+\subsection* {Writing math in program code}
+
+If you need math formulas into the environment \verb"alltt" insert
+them into fancy parens \verb"\(" and \verb"\)".
+\adviwait
+
+\noindent
+Write for instance \verb"\(\alpha \rightarrow \beta\)" to produce
+$\alpha \rightarrow \beta$.
+\adviwait
+
+\bigskip
+Note for mathmode inside \verb"alltt":\\
+since characters \verb"^" and \verb"_" are written as
+is in the \verb"alltt" environment, you need special macro
+calls to simulate them in math mode. Use \verb"\sp"
+(superscript) for \verb"^" and \verb"\sb" (subscript) for
+\verb"_"; hence, you would write \verb"\(x\sp{2} + t\sb{0}\)"
+to produce $x^2 + t_0$ in the program text. For instance:
+
+\adviwait
+\begin{alltt}
+for i = 0 to Array.lenght v - 1 do
+ {\it{(* Remark the mandatory loop invariant:}} \(i\sp{2}>=0\) {\it{*)}}
+ v.(i) <- 2
+done;;
+\end{alltt}
+
+\adviwait
+
+\vfill
+\begin{center}\begin{Large}
+{\bf That's all folks}
+\end{Large}\end{center}
+\vfill
+
+\end{document}

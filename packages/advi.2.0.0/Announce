@@ -1,0 +1,42 @@
+
+                       Active-DVI
+
+Version 2.0.0 is now available.
+
+It builds under version 4.12 of OCaml and is available as an opam package.
+See 
+
+Active-DVI is a programmable presenter and previewer for texts or slides
+written in LaTeX. 
+
+It can display files in DVI format and is thus a possible replacement for
+other DVI previewers. 
+
+It also commes with a package advi.sty that provided new macros and generate
+new DVI-specials understood by Active-DVI that enables:
+
+   * Image file inclusions in a variety of different formats 
+
+   * Some effects for presentation: pause, delay,  background images,
+     transitions, etc.
+
+   * Embedded applications.
+
+   * Special Support for WhizzyTeX including
+
+      - Backpointing to the source file. 
+      - (Rudimentary) support for moving or resizing objects with the mouse.
+
+The source code and more information are available at
+
+        https://github.com/diremy/advi
+
+Documentation is available at
+
+        http://advi.inria.fr/
+
+Mailing list and bug reports at advi@inria.fr
+
+--April 2021
+
+Didier Remy 

@@ -1,0 +1,201 @@
+\subsection*{Survival command kit}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{?}{info}{This quick info and key bindings help.}
+\ikey{q}{quit}{End of show.}
+\ikey{space}{continue}
+{Move forward (\arg pauses forward if any, or do as \key{return} otherwise).}
+\ikey{\char94 X-\char94 C}{quit}{End of show.}
+\end{tabularx}
+
+\Stretch
+\subsection*{Moving between pages}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{n}{next}{Move \arg physical pages forward, leaving the history unchanged.}
+\ikey{p}{previous}{Move \arg physical pages backward, leaving the history unchanged.}
+\ikey{,}{begin}{Move to the first page.}
+\ikey{.}{end}{Move to the last page.}
+\ikey{g}{go}{If \arg is unset move to the last page.
+ If \arg is the current page do nothing.
+ Otherwise, push the current page on the history as marked, and move
+ to physical page \arg.}
+\end{tabularx}
+
+\Stretch
+\newpage
+\Stretch
+
+\subsection*{Moving between pauses}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{N}{next pause}{Move \arg pauses forward (equivalent to continue).}
+\ikey{P}{previous pause}{Move \arg pauses backward.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Adjusting the page size}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{\char94 X-\char94 F}{set fullscreen}%
+{Adjust the size of the page to fit the
+entire screen.}
+\ikey{\char94 F}{toggle fullscreen}{Adjust the size of the page to fit the
+entire screen or reset the page to the default size (this is a toggle).}
+\ikey{$<$}{smaller}{Scale down the resolution by scalestep (default
+\tiny{$\sqrt{\sqrt{\sqrt 2}}$}).}
+\ikey{$>$}{bigger}{Scale up the resolution by scalestep (default
+\tiny{$\sqrt{\sqrt{\sqrt 2}}$}).}
+\ikey{\char35}{fullpage}{Remove margins around the page and change
+the resolution accordingly.}
+\ikey{c}{center}{Center the page in the window, and resets the default
+resolution.}
+\end{tabularx}
+
+\Stretch
+
+\newpage
+
+\Stretch
+
+\subsection*{Moving the page in the window}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{h}{page left}
+{Moves one screen width toward the left of the page. Does nothing if the
+  left part of the page is already displayed}
+\ikey{l}{page right}
+{Moves one screen width toward the right of the page. Does nothing if the
+  right part of the page is already displayed}
+\ikey{j}{page down}
+{Moves one screen height toward the bottom of the page. Jumps to the top of
+  next page, if there is one, and if the bottom of the page is already
+  displayed.}
+\ikey{k}{page up}
+{Moves one screen height toward the top of the page. Jumps to the bottom
+ previous page, if there is one, and if the top of the page is already
+ displayed.}
+\end{tabularx}
+
+\medskip
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{\begin{tabular}[t]{@{}l@{}}\char94 left\\button\end{tabular}}{move page}
+{A black line draws the page borders; moving the mouse then moves the
+page in the window.}
+\ikey{\char94 C}{\begin{tabular}[t]{@{}l@{}}toggle\\center on\\cursor\end{tabular}}
+{Toggles \texttt{center-on-cursor} flag, which when sets moves the screen 
+automatically so that the cursor appears on the screen.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Switching views}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{w}{switch}{Switch view between master and client (if any).}
+\ikey{W}{sync}{Goto page of client view corresponding to page of master view.}
+\ikey{\char94 W}{autoswitch}{Toggle autoswitch flag.}
+\end{tabularx}
+
+\Stretch
+
+\newpage
+
+\Stretch
+
+\subsection*{Redisplay commands}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{r}{redraw}{Redraw the current page to the current pause.}
+\ikey{R}{reload}{Reload the file and redraw the current page.}
+\ikey{\char94 L}{redisplay}{Redisplay the current page to the first
+pause of the page.}
+\ikey{a}{active/passive}{toggle advi effects (so that reloading is silent).}
+\ikey{\char`\/}{sync}{Sync Postscript.}
+\ikey{\char`\|}{autosync}{toggle postsyncing of Postscript.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Using the navigation history stack}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{return}{forward}{Push the current page on the history stack, and move forward n physical pages.}
+\ikey{tab}{mark and next}{Push the current page on the history as marked,
+and move forward n physical pages.}
+\ikey{backspace}{back}{Move \arg pages backward according to the
+history. The history stack is poped, accordingly.}
+\ikey{escape}{find mark} {Move \arg marked pages backward according to the
+history.  Do nothing if the history does no contain any marked page.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Table of contents}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{T}{Thumbnails}{Process thumbnails.}
+\ikey{t}{toc}{Display thumbnails if processed, or floating table of contents
+if available, or else do nothing.}
+\end{tabularx}
+
+\Stretch
+
+\newpage
+
+\Stretch
+
+\subsection*{Writing and drawing on the page}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{s}{write}{Give a pencil to scratch, typing characters on the page.}
+\ikey{S}{draw}{Give a spray can to scratch, drawing on the page.}
+\ikey{?}{info}{While in scratch mode, press \key{?} for more info.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Using the laser pointer}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{\char94 X-l}{toggle laser}{Toggle the laser beam to point on the page.}
+\ikey{\char94 G}{laser off}{When laser is on turn it off.}
+\end{tabularx}
+
+\Stretch
+
+\subsection*{Saving the current page}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{\char94 X-\char94 S}{save page}{Save the current page as an image file.}
+\end{tabularx}
+
+\subsection*{Dealing with caches}
+
+\noindent
+\begin{tabularx}{\linewidth}{clcX}
+\ikey{f}{load fonts}{Load all the fonts used in the document. By
+default, fonts are loaded only when needed.}
+\ikey{F}{make fonts}
+{Does the same as \key{f}, and precomputes the glyphs of all the
+characters used in the document.
+This takes more time than loading the fonts, but the pages are drawn faster.}
+\ikey{C}{clear}{Erase the image cache.}
+\end{tabularx}
+
+\Stretch

@@ -1,0 +1,57 @@
+#*********************************************************************#
+#                                                                     #
+#                   Projet Cristal, INRIA Rocquencourt                #
+#                                                                     #
+#  Copyright 2002 Institut National de Recherche en Informatique et   #
+#  en Automatique.  All rights reserved.  This file is distributed    #
+#  under the terms of the GNU Lesser General Public License.          #
+#                                                                     #
+#  Jun Furuse, Didier Rémy and Pierre Weis.                           #
+#  Contributions by Roberto Di Cosmo, Didier Le Botlan,               #
+#  Xavier Leroy, and Alan Schmitt.                                    #
+#                                                                     #
+#  Based on Mldvi by Alexandre Miquel.                                #
+#*********************************************************************#
+
+MORETEXFILES = demo.tex demo2.tex trigo_source.tex \
+	  trans.tex trans2.tex trans3.tex background.tex \
+	  color.tex demo_raw.tex macros.tex test_events.tex
+MOREDVIFILES =  $(TEXFILES:%.tex=%.dvi)
+
+all :: (DVIFILES) $(MLPROG)
+
+ifeq ($(HAVE_LABLTK),true)
+MLPROG=taquin adviclock
+else
+MLPROG=
+endif
+
+
+taquin: taquin_embed.ml
+	ocamlc -o taquin -I $(LABLTKDIR) $(LABLTKLIB) taquin_embed.ml
+
+adviclock: adviclock.ml
+	ocamlc -o adviclock unix.cma -I $(LABLTKDIR) $(LABLTKLIB) adviclock.ml
+
+test_subwindow: test_subwindow.ml
+	ocamlc -custom -I .. unix.cma graphics.cma -ccopt -L.. ../grY11.o ../events.o ../grap
+hicsY11.cmo test_subwindow.ml 
+
+
+test_cursors: test_cursors.ml
+	ocamlc -custom -I .. unix.cma graphics.cma -ccopt \
+	-L.. ../grY11.o ../events.o ../misc.cmo ../grwm.o \
+	../graphicsY11.cmo test_cursors.ml -cclib "$(WITH_X)" \
+	-o test_cursors 
+
+trigo.tex: trigo.pic
+	gpic -t trigo.pic > trigo.tex
+
+test_gpic.tex: test_gpic.pic
+	gpic -t test_gpic.pic > test_gpic.tex
+
+
+clean::
+	$(RM) test_cursors
+	$(RM) $(MLPROG) *.cmi *.cmo
+	$(RM) test_gpic.tex trigo.tex

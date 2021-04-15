@@ -1,0 +1,498 @@
+\firstslide{Caml}
+
+\vspace*{2cm}
+
+\begin{center}
+
+{\large \bf \em Pierre Weis}
+
+\vspace*{3cm}
+
+Lyon -- May $22$ 2002 
+
+\end{center}
+
+\newslide{Plan}
+
+\begin{itemize}
+\item Past
+\item Present
+\item Future
+\end{itemize}
+
+
+\newslide{History}
+
+1978: design of ML, first interpretor (Robin Milner)\\
+1981: first ML compiler at INRIA (Guy Cousineau, Gérard Huet)\\
+1984: pattern matching (Guy Cousineau)\\
+1984: first class references (Pierre Weis).\\
+1985: first V1.17 Caml compiler (Ascander Suarez)\\
+1990: Caml V3.1, ultimate version based on JIT (Pierre Weis)\\
+
+
+\newslide{Caml V3.1}
+
+- general ``or'' patterns (binding variables), \\
+- general ``alias'' patterns (pat as pat),  \\
+- guarded patterns (when construct), \\
+- lazy values (for sum and product types) with
+automatic forcing at access time during pattern matching, \\
+- declared mutable constructors and labels, with proper contents
+binding during pattern matching, \\
+- dynamic values with coercion via pattern matching, \\
+- parsing facilities included in the language (grammars), \\
+- pretty-printing facilities (printf and format).
+
+
+\newslide{Caml V3.1 extensions}
+
+- extensible sum types (new constructors can be added after
+the initial definition of the type), \\
+- polymorphic overloading with static resolution
+(overloading accepted iff there is only one acceptable solution in the
+context), \\
+- fully typechecked forward declarations for inter-modules
+recursion (polymorphic forwards used type scheme unification), \\
+- introspection facilities (lexical and syntactic macro generation), \\
+- generalized looping construct, \\
+- a polymorphic ``print'' primitive.
+
+\newslide{Past of Objective Caml}
+
+1991: Caml Light compiler on PC (Xavier Leroy, Damien Doligez)\\
+1996: modules, functors, native code compiler (Xavier Leroy)\\
+1998: objects $\rightarrow$ Objective Caml (Jérôme Vouillon)\\
+2000: labels, optional arguments, polymorphic variants (Jacques Garrigue)\\
+2002: dynamically linked libraries, libraries encapsulation (Xavier Leroy)
+
+
+\newslide{Present}
+
+{\bf Compiler}: Objective Caml has a fast byte-code {\em and} native
+compilers (both Caml Light and Caml inheritance). Compiles quickly
+programs that go fast!
+
+{\bf Runtime}: Objective Caml has a state of the art GC
+(generational, compacting, ``malloc'' compatible, static allocation,
+finalized objects, and weak pointers).
+
+{\bf Library}: Objective Caml has a mature user's library polished by
+20 years of research. 
+
+
+\newslide{Programming in the small}
+
+{\bf Printf}: statically typed printing facility with compact formats.
+
+{\bf Toplevel}: interactive system that allows the programmer to
+load and execute pieces of code.
+
+{\bf Test}: the toplevel allows testing and simple debugging (trace).
+
+Also convenient for teaching \ldots
+
+
+\newslide{Programming in the large}
+
+Objective Caml has a powerful module system that statically verifies
+modules compatibility.
+
+Other features for programming in the large:
+\begin{citemize}
+\item Value I/Os: any value can be written to a file that can be read
+back (architecture aware input/output)
+\item Camllex Camlyacc
+\item Architecture independant graphics library
+\item GUIs
+\end{citemize}
+
+\newslide{Other features}
+
+{\bf Debugging}: Objective Caml has a {\em replay} debugger.
+
+{\bf FI}: Objective Caml has a foreign interface with C and Fortran.
+
+{\bf Portability}: extremely high (compilers are ported and easy
+to port, users' programs are assumed to be portable at no cost)
+
+{\bf Users' communauty}: Objective Caml has a reactive and
+active users' communauty all over the world. (Not millions, but
+sophisticated programmers.)
+
+\newslide{Strength of Objective Caml}
+
+{\bf State of the art in language design}: ``The language of choice for the
+discriminating hackers!''
+
+{\bf ICFP programming contest}:\\
+1999: 2nd (after a specialized C program)\\
+2000: 1st and 2nd\\
+2001: 2nd (after a Haskell program) \\
+2002: 1st
+
+{\bf Benchmarks}: consistantly faster than any other functional programming
+languages, between C++ and C-O2
+
+\newslide{Strength of Objective Caml}
+
+{\bf Static checkings}.
+
+\begin{citemize}
+\item {\bf Type reconstruction} (no annotations in programs)
+\item {\bf Genericity} (structural polymorphism)
+\item {\bf Easy} value definition and manipulation
+\item {\bf Theorems} due to clean semantics
+\end{citemize}
+
+\newslide{Type reconstruction}
+
+No type annotation in programs,\\
+Type modifications are automatically propagated.
+
+{\bf Theorem}: no type error can occur at runtime.
+
+\begin{small}\begin{alltt}
+# let succ x = x + 1;;
+val succ : int -> int = <fun>
+# let apply1 x = x 1;;
+val apply1 : (int -> 'a) -> 'a = <fun>
+\end{alltt}\end{small}
+
+{\bf Theorem}: the type (scheme) found by the compiler is the most general.\\
+
+\newslide{Type reconstruction}
+
+Simplifying the definition.
+
+\begin{small}\begin{alltt}
+# let const x = 1;; \pause
+val const : 'a -> int = <fun> \pause
+# let id x = x;; \pause
+val id : 'a -> 'a = <fun> \pause
+# let f x = x ( + );; \pause
+val f : ((int -> int -> int) -> 'a) -> 'a = <fun> \pause
+# let g x = ( + ) 1;; \pause
+val g : 'a -> int -> int = <fun> \pause
+# let h = ( + ) 1;; \pause
+val h : int -> int = <fun> \pause
+# let i = ( + );; \pause
+val i : int -> int -> int = <fun>
+\end{alltt}\end{small}
+
+\newslide{Type reconstruction}
+
+Working with functions
+
+\begin{small}\begin{alltt}
+# let compose f g = function x -> f (g (x));; \pause
+val compose : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b = <fun> \pause
+# compose succ (function s -> String.length (s ^ s));; \pause
+- : string -> int = <fun> \pause
+# compose (function s -> String.length (s ^ s)) succ;; \pause
+                                                ^^^^
+This expression has type int -> int but is here used with type int -> string \pause
+# let z x = (compose compose compose) x;; \pause
+val z : ('a -> 'b) -> ('c -> 'd -> 'a) -> 'c -> 'd -> 'b = <fun> \pause
+\end{alltt}\end{small}
+
+No problemo: it works!
+
+\newslide{Easy value definition}
+
+{\bf Powerful} data type definitions.
+
+{\bf Implicit} allocation and deallocation.
+
+{\bf Compact} syntax for creation.
+
+{\bf Theorem}: no value can be left uninitialized.
+
+\newslide{Type definitions}
+
+{\bf Product} types: cartesian products (\verb"t1 * t2") or {\bf records}
+\begin{alltt}
+type monom = \{coefficient : float; degree : int\}
+\end{alltt}
+
+{\bf Sum} types:
+\begin{alltt}
+type expression =
+   | Const of float
+   | Sum of expression * expression
+\end{alltt}
+
+\newslide{Type definitions}
+
+Type {\bf abbreviations}: {\tt type polynom = monom list}
+
+{\bf ADT}: defined in the implemention of the module, but
+definition is not exported in the interface
+
+Any kind of type can be polymorphic and/or recursive
+\begin{alltt}
+type 'a polylist = Nil | Cons of 'a * 'a polylist
+\end{alltt}
+
+\newslide{Value creation}
+
+\begin{small}\begin{alltt}
+# let m1 = \{coefficient = 3.14; degree = 2\};;
+val m1 : monom = \{coefficient = 3.14; degree = 2\}
+\end{alltt}
+
+\begin{alltt}
+# let e1 = Sum (Const 1.0, Const 2.0);;
+val e1 : expr = Sum (Const 1., Const 2.)
+\end{alltt}
+
+\begin{alltt}
+# let l1 = 1 :: 2 :: [];;
+val l1 : int list = [1; 2]
+# let rec linfty = 1 :: linfty;;
+val linfty : int list =
+  [1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1; 1;
+   ...]
+\end{alltt}
+\end{small}
+{\bf Theorem}: once created, no value can be unadvertedly modified.
+
+\newslide{Easy value manipulation}
+
+Pattern matching
+\begin{small}\begin{alltt}
+let rec add_pol (p1, p2) =\pause
+  match p1, p2 with\pause
+  | [], p2 ->\pause p2\pause
+  | p1, [] -> p1\pause
+  | (m1 :: r1), (m2 :: r2)\pause when m1.degree < m2.degree ->\pause
+      m1 :: add_pol (r1, p2)\pause
+  | (m1 :: r1), (m2 :: r2) when m1.degree = m2.degree ->\pause
+      \{coefficient = m1.coefficient +. m2.coefficient;\pause
+       degree = m1.degree\} :: add_pol (r1, r2)\pause
+  | _, _ ->\pause add_pol (p2, p1);;\pause
+\end{alltt}\end{small}
+
+\newslide{Structural polymorphism}
+
+Follows values structure
+\begin{small}\begin{alltt}
+# [];;\pause
+- : 'a list = []\pause
+# [] :: [];;\pause
+- : 'a list list = [[]]\pause
+\end{alltt}\end{small}
+
+\begin{small}\begin{alltt}
+let rec sort l = \pause
+  match l with\pause
+  | [] -> []\pause
+  | e :: l -> insert e (sort l)\pause
+and insert e l =\pause
+  match l with\pause
+  | [] -> [e]\pause
+  | x :: l -> if e <= x then e :: l else x :: insert e l;;\pause
+val sort : 'a list -> 'a list = <fun>
+val insert : 'a -> 'a list -> 'a list = <fun>
+\end{alltt}\end{small}
+
+\newslide{Exceptions}
+
+Exists in Caml from the very beginning.
+
+-- Fully type-checked.\\
+-- No counterparts in function types.\\
+-- Raised using {\tt raise}, caught with {\tt try}.\\
+-- Selection via pattern matching.
+\begin{small}\begin{alltt}
+try
+  let oc = open_out "/tmp/foo" in
+  ...
+with
+| System_error s -> eprintf ("System error " ^ s)
+| x -> eprintf "Spurious exception"; raise x
+\end{alltt}\end{small}
+In addition, exceptions are first class citizens!
+
+\newslide{Code safety}
+
+{\bf Static verifications}.
+
+{\bf Strong typing} is all over the place (inside modules, between modules).
+
+{\bf Code structuration}: data type definitions are mandatory.
+
+{\bf Static binding} (even {\em hyper-static} binding).
+
+
+\newslide{Code safety}
+
+{\bf Theorem}: once defined, no binding can be modified.
+
+{\bf Corollary}: hypotheses that hold when writing a function, still
+hold when executing it.
+
+Enables {\em true} functions (so-called closures) as first class citizens.
+
+\newslide{Code evolutivity}
+
+{\bf Pattern matching} is a concise ``test and bind'' facility.
+
+Its clean and precise semantics leads to extra static sanity checks:\\
+- {\bf exhaustivity checking}\\
+- {\bf unused match case detection}
+
+Efficient way to consistantly propagate modifications into the code:
+modify and compile!
+
+\newslide{Code evolutivity}
+
+Multiparadigmatic language: you're not stuck to a given style.
+
+\pause Smooth integration of
+\begin{center}
+\pause\textcolor{blue}{\advitransbox{slide,from=right}{imperative,}}
+\pause\textcolor{green}{\advitransbox{slide,from=left}{functional, and}}
+\pause\textcolor{red}{\advitransbox{slide,from=top}{object}}
+\pause\textcolor{black}{\advitransbox{slide,from=bottom}{paradigms.}}
+%imperative, functional, and objects paradigms.
+\end{center}
+
+\pause
+On top: {\advitransbox{block,steps=50}{a first order functional language}}\\
+\pause{\advitransbox{wipe,steps=150,from=left}{for powerful module programming}}
+
+\pause(\textcolor{red}{%
+\advitransbox{wipe,steps=100,from=right}{\em templates on steroids}} ?).
+
+\newslide{Strength of Objective Caml}
+
+The compiler is good at {\bf verifying program coherence}.
+
+Usual programmers' experience with Caml:
+
+\begin{center}
+{\em Once the compiler ``accepts'' to compile the program,\\
+ the program works!}
+\end{center}
+
+\pause Unfortunately wrong, but \ldots almost true!
+
+\newslide{Weaknesses}
+
+{\bf Technically}:~\pause None that I know of :)\pause\\
+{\bf Socially}:\pause
+\begin{citemize}
+\item Not like SML (standard ?)\pause
+\item Not like C++ (large and uneasy to understand ?)\pause
+\item Not enough advertized (lacks the Java ``evangelists'' ?)\pause
+\item Not expansive enough (as Maple and Mathlab ?)\pause
+\end{citemize}
+Not American enough ? %To be french ?\pause
+
+\newslide{Strength of Objective Caml}
+
+\textcolor{red}{\bf Clean semantics} (both static and dynamic).
+
+\textcolor{red}{\bf Clean implementation} (both compilers, additional tools, and libraries).
+
+\textcolor{red}{\bf Encourage} well structured and well written code.
+
+\textcolor{red}{\bf Allows} easy prototyping (type reconstruction).
+
+\textcolor{red}{\bf Helps} for programming in the large (modules).
+
+\newpage\advibg{image=fumicamltrans.ppm}
+
+\pause\stitle{Future}
+
+%\let\orgheader\adviheader
+%\def\adviheader{\orgheader\advibg{image=fumicamltrans.ppm}}
+
+\pause Overloading and programming with types ?
+
+\vfill
+
+\pause {\Huge{On ne voit rien !}}
+
+\newpage\advibg{alpha=0.3,image=fumicamltrans.ppm}
+
+\pause\stitle{Future}
+
+\pause Overloading and programming with types (dynamic values) ?
+
+\pause Automatic test generation ?
+
+\pause More static analyses in the code ?
+
+\pause Mixins ?
+
+\pause Long term: programming with proofs ?
+
+\newslide{Bibliography}
+
+``Le langage Caml'',\\
+Pierre Weis et Xavier Leroy, InterEditions 1999.
+
+``Développement d'applications avec Objective Caml'',\\
+Chailloux, Manoury, Pagano, O'Reilly 2000.
+
+Web:
+
+\verb"http://pauillac.inria.fr/caml/index-fra.html"\\
+\verb"http://pauillac.inria.fr/caml/FAQ/index-fra.html"\\
+
+
+\newslide{What's that ?}
+
+\advitransition{slide}
+
+\def\tpause{\advitransition{none}\pause}
+\pause Xdvi ?%
+\tpause{\advitransbox{slide,from=right}{\textcolor{red}{No}}}%
+\tpause~Ghostview ?%
+\tpause{\advitransbox{slide,from=right}{\textcolor{red}{No}}}%
+\tpause~Acroread ?%
+\tpause{\advitransbox{slide,from=right}{\textcolor{red}{No}}}%
+\tpause~Powerpoint ?%
+\tpause{\advitransbox{slide,from=right}{\textcolor{red}{No}}}
+
+\tpause Its \textcolor{blue}{\bf Active-DVI !}
+\tpause Entirely written in Caml, \textcolor{red}{\bf hence~}\tpause reliable and easy to extend.
+\tpause Entirely programmable, this is:\tpause
+
+\bigskip
+\begin{center}
+\textcolor{blue}{\Large{\bf The presenter of choice}}
+
+\textcolor{blue}{\Large{\bf for the discriminative hacker!}}
+\end{center}
+
+\newslide{That's all, folks!!!}
+\advitransition{wipe}
+
+\begin{center}
+\includegraphics[width=0.25\textwidth]{advilogo.eps}
+\end{center}
+
+\def\advimasquotte{\adviembed[width=1.56cm,height=1.824cm]%
+{animate -geometry !g! -window !p advilogo.anim.gif}}
+
+\hbox to \hsize{\pause\hfill\advimasquotte\pause\hfill\advimasquotte\pause\hfill\advimasquotte\pause\hfill\advimasquotte\pause\hfill\advimasquotte\hfill}
+
+\vfill
+
+\pause
+
+\newslide{Interaction}
+
+\adviembed[width=0.15\textwidth,height=0.04\textheight]{xterm -geometry !g -e ocaml}
+
+\newslide{The code of this slide}
+
+\begin{verbatim}
+\newslide{Interaction}
+
+\adviembed[width=0.15\textwidth,height=0.04\textheight]%
+  {xterm -geometry !g -e ocaml}
+\end{verbatim}

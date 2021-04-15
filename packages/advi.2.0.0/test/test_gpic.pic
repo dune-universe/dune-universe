@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+
+\def\showgraph{%
+  \par\medskip\centerline{\raise 1em\box\graph}\bigskip\noindent\ignorespaces}
+
+\begin{document}
+
+\verb"gpic -t test_gpic.pic > test_gpic.tex"
+
+Here is the picture:
+
+.PS
+Z: box invis ht 4.2 wid 1.2 fill 0.05
+A: box ht 4 wid 1 fill 0.1 at Z
+B: box ht 1 wid 0.5 fill 0.2 at A + (0, -1)
+C: box ht 1 wid 0.5 fill 0.4 at A + (0, 1)
+D: box invis ht 0.25 wid 0.5 fill 0.0 at A + (0, 0)
+.PE
+
+\centerline{\raise 1em\box\graph}
+
+\end{document}

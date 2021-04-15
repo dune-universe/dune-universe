@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+
+% You need graphics package
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{tabularx}
+
+\usepackage{pst-all}
+
+\usepackage{hyperref}
+
+%% must occur after packages using PStricks macros 
+%% (it redefines some of them) 
+\usepackage{advi-annot} 
+
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+
+\def\email#1{\textcolor{gray}{$<${#1}$>$ }}
+
+\def\key#1{\textcolor{red}{#1}}
+\def\ikey#1#2#3{\key{#1} & #2 & -- & #3\\}
+\def\arg{\textcolor{blue}{arg }}
+
+\usepackage{manual}
+
+\pagestyle{empty}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+\center{Press: \key{n}ext page \key{p}revious page \key{q}uit \vss}}}}
+
+\def\adviheader{\noindent
+{\bf{\Large {\adviname}} (version \adviversion)}\\
+\includegraphics[width=\textwidth]{bar.eps}}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\def\adviemptyfooter{\vbox to 0em{\vbox to \vsize {\vfill
+\hfill Press \key{q} to quit \hfill~} \vss}}
+
+\def\lastpage{\Newpage\adviemptyfooter\adviheader}
+
+\begin{document}
+ 
+\newpage
+
+\medskip
+
+\begin{tabularx}{\linewidth}{Xl}
+The presentation tool of choice for discriminating hackers.
+See \texttt{http://pauillac.inria.fr/advi/}
+&
+\raisebox{-30pt}{\includegraphics[width=2cm]{advilogo.eps}}
+\end{tabularx}
+
+\subsection*{Key bindings when drawing on slides (scratching)}
+
+\input{scratch_draw_splash_contents.tex}
+
+\vspace{\stretch{1}}
+
+\lastpage
+
+\subsection*{Acknowledgments}
+
+Authors and contributors are :
+
+\begin{itemize}
+\item Jun Furuse \email{Jun.Furuse@inria.fr}
+\item Pierre Weis \email{Pierre.Weis@inria.fr}
+\item Didier R\'emy \email{Didier.Remy@inria.fr}
+\item Roberto Di Cosmo \email{Roberto.DiCosmo@inria.fr}
+\item Xavier Leroy \email{Xavier.Leroy@inria.fr}
+\item Didier Le Botlan \email{Didier.Le\_Botlan@inria.fr}
+\item Alan Schmitt \email{Alan.Schmitt@inria.fr}
+\item Alexandre Miquel \email{Alexandre.Miquel@inria.fr}
+\end{itemize}
+
+\vspace{\stretch{1}}
+
+\begin{center}
+This program is distributed under the GNU LGPL. \\
+See the enclosed file COPYING.
+\end{center}
+
+\vspace{\stretch{3}}
+
+\end{document}

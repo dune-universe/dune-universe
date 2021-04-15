@@ -1,0 +1,259 @@
+<HTML><BODY><TITLE>
+Active-DVI FAQ
+</TITLE>
+  <LINK REL="stylesheet" HREF="style.css" TYPE="text/css">
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+</HEAD>
+
+
+<H1 ALIGN=CENTER><A name="FAQ">Active-DVI: Frequently asked questions</A></H1>
+
+<H2 ALIGN=CENTER>Version @@VERSION@@</H2>
+
+<P ALIGN=RIGHT><IMG SRC="advilogo.anim.gif"></P>
+
+<DL>
+
+<DT><STRONG>Is there a Win 32 version ?</STRONG>
+ <DD>Answer: <I>Unfortunately, there is no native Win 32 version.
+However, you can also use Cygwin and build advi from sources after
+proper configuration with the special configuration command
+<CODE>configure_Cygwin</CODE>.</I>
+
+ <DD>Additional answer: <I>you can also use the
+<STRONG>DemoLinux</STRONG> CD-ROM that includes a version of
+Active-DVI: if you can reboot the Windows machine, boot it from the
+CD-ROM and launch advi. After the presentation, just reboot the
+machine: DemoLinux does not write files on the hard disk, hence the
+machine is left unmodified.</I>
+
+<DT><STRONG>How to get a full-screen presentation ?</STRONG>
+ <DD>Answer: <I>Just launch Active-DVI and type <CODE>^F</CODE>
+(control-F) in the Active-DVI window.</I>
+
+<DT><STRONG>How to revert from full-screen to normal size ?</STRONG>
+ <DD>Answer: <I>Just type <CODE>^F</CODE> (control-F) again in the
+Active-DVI window!</I>
+
+<DT><STRONG>How to center the slide when full-screen mode is active ?</STRONG>
+ <DD>Answer: <I>Just use the mouse to move the bounding box of the
+slide: pressing control key and the left button draws the bounding box, then
+if you continue pressing the key and button you can drag the bounding
+box where you want to.</I>
+
+<DT><STRONG>How to get online help for Active-DVI keys ?</STRONG>
+ <DD>Answer: <I>Just press <CODE>?</CODE> in the Active-DVI window.</I>
+
+<DT><STRONG>How to get examples of talks ?</STRONG>
+ <DD>Answer: <I>Look in the distribution, sub-directory
+<CODE>examples</CODE>. The sub-directories are <CODE>basics</CODE>
+(from simple to moderately advanced style effects), <CODE>slitex</CODE>
+with simple and easy to use templates (four presentations),
+<CODE>prosper</CODE> (two presentations in directories
+<CODE>LL</CODE>, and <CODE>Join</CODE>), <CODE>seminar</CODE> (two
+examples). You may also
+consider the sub-directory <CODE>test</CODE> of the source main
+directory and look at the various <CODE>*.tex</CODE> files. Just
+type<CODE>make</CODE> in any of those sub-directories to build the
+corresponding DVI presentations.</I>
+
+<DT><STRONG>How to ensure safety, since unknown applications can be launched
+from the DVI file that I am previewing ?</STRONG>
+ <DD>Answer: <I>Active-DVI's default behavior is not to automatically
+launch embedded applications: when a presentation attempts to launch an
+application, the presentation is stopped and a dialog box appears to
+tell you the name of the application and ask you for confirmation
+before launching.</I>
+
+<DT><STRONG>How do I know in advance the set of applications that a
+DVI file can launch ?</STRONG>
+ <DD>Answer: <I>Just launch Active-DVI with the <CODE>-n</CODE> option.
+<CODE>advi -n file.dvi</CODE> will analyze the file <CODE>file.dvi</CODE>
+and print out the list of embedded commands it contains.</I>
+
+<DT><STRONG>How to print my slides for real on paper or slides for
+a retro-projector ?</STRONG>
+ <DD>Answer: <I>Easy. Just use the <CODE>ignore</CODE> option of the
+<CODE>advi.sty</CODE> package, it is especially devoted to that task!
+Write <CODE>usepackage[ignore]{advi}</CODE> in the header of the document,
+then use LaTeX to recompile your source file: the Active-DVI package
+will suppress the effects that cannot be rendered and render the effects that
+it knows how to emulate via postscript.</I>
+ <DD>Additional answer: <I>Impossible. How could you ever believe that
+somebody or something could render on a mere sheet of paper all those
+text dancing movements and those fancy, fascinating, and creative
+effects that your presentation features ? No hope: you really need
+Active-DVI to play your talk!</I>
+ <DD>Additional<SUP>2</SUP> (preventive) answer: <I>The additional
+answer which immediately precedes this one is a joke; in fact, the
+truth is: we worked hard such that the <CODE>ignore</CODE> option of
+<CODE>advi.sty</CODE> does a good job; however, it is clear that the
+Active-DVI style can just do its best to perform a task that
+cannot be done perfectly.</I>
+
+<DT><STRONG>How do I write on my slide during the presentation ?</STRONG>
+ <DD>Answer: <I>Just type <CODE>s</CODE> to write text and
+<CODE>S</CODE> to draw lines.</I>
+
+<DT><STRONG>How to write on my slides some programs that have colored
+parts ?</STRONG>
+ <DD>Answer: <I>Just use the environment <CODE>alltt</CODE>; then colors
+(and other text annotations and typographic indications) are available
+within a type-writer font setting. For instance:</I>
+<PRE>
+\begin{alltt}
+{\it{(* Remark that double semi-colon is mandatory here. *)}}
+let x = 1\textcolor{red}{;;}
+let r = \{foo = 1; bar = "toto"\};;
+\textcolor[named]{Red}{let} z = r.foo;;
+\end{alltt}
+</PRE>
+
+Renders (much better than the following :)
+<PRE>
+<I>(* Remark that double semi-colon is mandatory here. *)</I>
+let x = 1<FONT COLOR=red>;;</FONT>
+let r = {foo = 1; bar = "toto"};;
+<FONT COLOR=red>let</FONT> z = r.foo;;
+</PRE>
+
+<DT><STRONG>How to write on my slides programs which have mathematical
+formulas in them ?</STRONG>
+ <DD>Answer: <I>If you need mathematical formulas into your programs,
+use the environment <CODE>alltt</CODE> and insert the formulas into fancy
+parens <CODE>\(</CODE> and <CODE>\)</CODE>.</I>
+
+<DT><STRONG>Some part (or every) material on my slides is invisible
+when using <CODE>advi</CODE> (whereas everything goes well with
+<CODE>xdvi</CODE>). What happens ?</STRONG>
+ <DD>Answer: <I>You should be using some virtual fonts and Active-DVI does not
+natively handle those; you must preprocess the DVI file to expand
+virtual fonts using the command
+<A
+HREF="http://www.ctan.org/tex-archive/dviware/dvicopy/">dvicopy</A>.
+For instance:
+<PRE>
+        dvicopy foo.dvi foo.advi &amp;&amp; advi foo.advi
+</PRE>
+usually works fine.
+</I>
+
+<DT><STRONG>How to visualize Adobe PostScript fonts like
+<CODE>ptmr8t</CODE> using Active-DVI ?</STRONG>
+
+ <DD>Answer: <I>You have to preprocess the file with the command
+<A HREF="http://www.ctan.org/tex-archive/dviware/dvicopy/">dvicopy</A>
+which expands virtual fonts. For instance:
+<PRE>
+        dvicopy foo.dvi foo.advi &amp;&amp; advi foo.advi
+</PRE>
+usually works fine.
+</I>
+
+ <DD>Additional answer: <I>Active-DVI can display only PK based fonts
+whose sources are provided in <CODE>.mf</CODE> files. Adobe fonts
+having no <CODE>.mf</CODE> source files, hence METAFONT cannot create
+the corresponding <CODE>.pk</CODE> files for Active-DVI.</I>
+ <DD><I>The workaround is to use an equivalent of the problematic font
+in the Computer-Modern font set, that has been designed by Donald Knuth
+to be the default fonts for TeX.</I>
+
+<DT><STRONG>How to solve the margin problems of Active-DVI (margins
+are wrong with <CODE>advi</CODE> while <CODE>xdvi</CODE> works
+perfect) ?</STRONG>
+ <DD>Answer: <I><CODE>xdvi</CODE> and <CODE>advi</CODE> do not use the
+same margins. <CODE>Advi</CODE> uses the specification that TeX emits
+into the DVI file (bounding box) and does not add extra space for
+margins. Unfortunately, many LaTeX styles and packages do not give a
+relevant value to the bounding box. 
+ <DD>The workaround is to modify margins, either by moving the
+bounding-box around with the mouse (Control+button), or to use the
+relevant option on the command line when launching <CODE>advi</CODE>
+(the <CODE>-vmargin</CODE> and <CODE>-hmargin</CODE> options).</I>
+
+<DT><STRONG>How to display the target of an HTML anchor in an already
+running browser ?</STRONG>
+ <DD>Answer: <I>to render hyper links that are HTML pages, you must
+properly set up the <CODE>-browser</CODE> option of <CODE>advi</CODE>,
+or explicitly call the browser you want with the proper option in an
+<CODE>adviembed</CODE> command. You could use for instance:</I>
+<PRE>
+netscape -remote 'openURL(http://www.acm.org)'
+</PRE>
+
+<I>To insert such a command into an <CODE>adviembed</CODE> command, a
+little trickery is necessary, since <CODE>'</CODE> characters are
+interpreted by LaTeX. To prevent this behavior, you can write for
+instance:</I>
+<PRE>
+{\catcode `\' 12 \catcode `\: 12, \catcode `\' 12
+  \adviembed {netscape -remote 'openURL(http://www.acm.org)'}
+}
+</PRE>
+</DD>
+
+<DD><I>For <CODE>mozilla</CODE>, you must also use the option
+<CODE>mozilla -remote</CODE>. Similarly to the previous question, this
+option supposes that a mozilla browser is already up and running. If
+you want to have a command that works in any case, even if no mozilla
+is launched, you could use a shell script like:</I>
+<PRE>
+#!/bin/bash
+
+# Here you write the path corresponding to your mozilla binary command,
+# for instance
+#MOZILLA=/usr/local/mozilla/mozilla
+MOZILLA=`which mozilla`
+
+case $# in
+ 1) 
+   if \$MOZILLA -remote "ping()" 2>/dev/null
+   then 
+     \$MOZILLA -remote "openURL($1,new-window)" || \
+     \$MOZILLA "$@" 
+   else
+     \$MOZILLA "$@" 
+   fi;;
+ *)
+   \$MOZILLA "$@";;
+esac
+</PRE>
+<I>(Instead of the <CODE>new-window</CODE> behavior specification, you
+can use <CODE>new-tab</CODE> or nothing, as you wish.)</I>
+
+<DT><STRONG>How to avoid spurious messages from <CODE>advi</CODE>
+related to <CODE>dvips</CODE> ?</STRONG>
+
+<DD>I got for instance
+<PRE>
+dvips: Unknown keyword (proc) in \special will be ignored
+dvips: Unknown keyword (koyaa) in \special will be ignored
+dvips: Unknown keyword (record) in \special will be ignored
+dvips: Unknown keyword (start) in \special will be ignored
+dvips: Couldn't find figure file advi:; continuing
+dvips: Unknown keyword (embed) in \special will be ignored
+dvips: Unknown keyword (name) in \special will be ignored
+dvips: Unknown keyword ("xmms") in \special will be ignored
+</PRE>
+ </DD>
+ <DD>Answer: <I>As written in the messages, those errors are not
+reported by <CODE>advi</CODE> by issued by <CODE>dvips</CODE> that
+cannot understand the <CODE>\special</CODE> instructions that
+the <CODE>advi.sty</CODE> LaTeX style inserts into the DVI file.
+This behavior is normal and properly specified by the DVI format:
+interpreters of DVI files are required to ignore the
+<CODE>\special</CODE> instructions they do not understand. However,
+nothing prevents interpreters from emitting a warning when facing an
+unknown instruction.
+</I>
+
+</DL>
+
+<P ALIGN=LEFT><IMG SRC="bar.gif"></P>
+<ADDRESS>Contact <A
+ HREF="mailto:Pierre.Weis@inria.fr">Pierre.Weis@inria.fr</A></ADDRESS>
+
+<P ALIGN=CENTER><IMG SRC="inria.gif"></P>
+
+</BODY>
+</HTML>

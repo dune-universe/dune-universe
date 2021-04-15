@@ -1,0 +1,136 @@
+% This style is  a verbatim mode with escapes
+% \begin {program}
+% bla in verbatim
+% anywhere \esc {blabla escapes from the verbatim: It is parsed and typeset
+% in the environment before entering the program environment, but as an 
+% argument of \esc, thus it cannot contain outer commands}
+% or anywhere \escape blabla in the outer mode.  This blabla is parsed at
+% toplevel, thus may contain anything even a \verb command
+% more blabla
+% The use of \end inside this blabla but not followed by {program} may be
+% printed badly, (the next token after \end is not parsed in verbatim mode 
+% the use of \escaXY will signal an error if "XY" is not "pe" but will
+% continue ignoring the "\escaXY
+% \end {program} 
+
+% The only porblem is the use of \end inside the 
+
+% Tu peux re'gler l'indentation par 
+%
+%       \programindent <dimension>
+%
+% par example la valeur conseille'e est
+%
+%       \programindent 4em
+
+% L'espace entre deux lignes blanches est de moitie' de l'espace normal
+% by setting \halfblanklinestrue or \halfblanklinesfalse which is originally
+% set to false
+
+%%%% N E W 
+
+% Tu peux regler l'espace au dessus et en dessous par
+%
+% \programaroundskip <skip>
+%
+% Par defaut, la valeur est de 
+%
+% \programaroundskip \medskipamount
+
+
+
+
+\begingroup 
+\catcode `|=0 \catcode`\\=12 
+|gdef|@xprogram#1\e{#1|x@e}
+|endgroup
+
+\let \x@do \relax
+\def \x@e#1#2{\ifx #1n\ifx #2d\let \x@do \x@end \else #1#2\fi\else
+              \ifx #1s\ifx #2c\let \x@do \x@esc \else #1#2\fi\else
+              \char "5Ce\def \x@do {\@xprogram#1#2}\fi \fi \x@do}
+
+\def \x@end {\endgroup \end@program}
+\def \x@esc {\endgroup \x@@esc}
+\def \x@@esc #1{\ifx #1a\let \x@do \x@esca
+                  \else \def \x@do {{#1}\init@program}\fi
+                \x@do}
+
+\def \x@esca #1#2{\ifx #1p\ifx #2e\let \x@do \escape@program
+                          \else \def \x@do {\esc@error {escap#2}}\fi
+                  \else \def \x@do {\esc@error {esca#1}}\fi
+                  \x@do}
+
+\def \end@escape {\egroup \init@program}
+\def \escape@program {\bgroup \let \endescape \end@escape
+    \ignorespaces}
+
+\def \esc@error #1{\immediate \write0
+    {*** error: wrong escape sequence #1 in a 
+     program environment}\init@program}
+
+\def \esc@program #1{\hbox {#1}\init@program}
+\def \end@program #1{\expandafter
+    \ifx \csname end#1\endcsname \endprogram \end {#1}\else
+      \immediate \write0
+       {*** warning: you have used end inside program mode
+        which may have not produced what you expected}\hbox
+      {\tt \char"5Cend\{#1\}}\init@program
+    \fi}
+
+\newskip \programindent \programindent \z@
+\newskip \programaroundskip \programaroundskip \medskipamount
+
+\def \@program 
+   {\trivlist \item []\if@minipage \else \vskip \parskip \fi
+    \leftskip \@totalleftmargin \rightskip \z@
+    \parindent \programindent \parfillskip \@flushglue \parskip \z@
+    \@tempswafalse}
+
+\def \@program 
+   {\begingroup \vskip \programaroundskip
+    \parindent \programindent \@tempswafalse}
+
+
+
+\let \obey@spaces \obeyspaces
+\newskip \vlineskip 
+\def \storevlineskip {\vlineskip \baselineskip 
+       \divide \vlineskip by 2}
+\def \halflineskip {\baselineskip \vlineskip}
+\def \fulllineskip {\baselineskip 2\vlineskip}
+\newif \ifhalfblanklines \halfblanklinesfalse
+
+\def \init@program {\begingroup
+    \frenchspacing \@vobeyspaces
+%   \def\par{\if@tempswa\hbox{}\fi\@tempswatrue\@@par}
+% patch JJL - GG
+    \multiply \baselineskip by 100
+    \divide \baselineskip by 150
+    \ifhalfblanklines
+      \storevlineskip
+      \def \par {\if@tempswa\hbox{}\fi\@tempswatrue\@@par \vspace{-2pt}
+                 \halflineskip \everypar={\fulllineskip}}\else
+      \def \par {\if@tempswa\hbox{}\fi\@tempswatrue\@@par \vspace{-2pt}}\fi
+    \obeylines \tt 
+    \catcode``=13 \@noligs \let \do \@makeother \dospecials
+    \obey@spaces  \@xprogram}
+
+
+\def \program {\@program \init@program}
+\let \endprogram \endtrivlist
+\def \endprogram {\ifdim\lastskip >\z@ \@tempskipa\lastskip 
+       \vskip -\lastskip\fi\vskip \programaroundskip \endgroup
+     \@endpetrue
+     \def\par{\@restorepar\everypar{}\par\@endpefalse}\everypar
+               {\setbox0=\lastbox\everypar{}\@endpefalse}}
+
+
+
+\@namedef{program*}{\let \obey@spaces \relax\program}
+\expandafter\let\csname endprogram*\endcsname =\endtrivlist
+
+
+\let \prog \verb
+
+

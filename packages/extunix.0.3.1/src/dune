@@ -1,0 +1,69 @@
+(rule
+ (targets config.h extUnixConfig.ml ldlibs.sexp)
+ (deps
+  (:gen ../discover/discover.exe))
+ (action
+  (run %{gen})))
+
+(rule
+ (action
+  (progn
+   (copy extUnix.pp.ml extUnixAll.ml)
+   (copy extUnix.pp.ml extUnixSpecific.ml))))
+
+(library
+ (name ExtUnix)
+ (public_name extunix)
+ (modules_without_implementation ExtUnix)
+ (wrapped (transition "use ExtUnix.All or ExtUnix.Specific instead, top-level modules ExtUnixAll and ExtUnixSpecific will be gone soon."))
+ (libraries unix bigarray bytes)
+ (preprocess
+  (per_module
+   ((pps ppx_have --gen-all)
+    ExtUnixAll)
+   ((pps ppx_have)
+    ExtUnixSpecific)))
+ (c_library_flags
+  (:include ldlibs.sexp))
+ (foreign_stubs
+  (language c)
+  (flags :standard)
+  (names
+   atfile
+   bigarray
+   common
+   dirfd
+   endian
+   endianba
+   execinfo
+   fadvise
+   fallocate
+   fexecve
+   fsync
+   ioctl_siocgifconf
+   malloc
+   memalign
+   mktemp
+   mman
+   mount
+   poll
+   pread_pwrite_ba
+   ptrace
+   pts
+   read_cred
+   resource
+   sendmsg
+   signalfd
+   sockopt
+   splice
+   statvfs
+   stdlib
+   sysconf
+   sysinfo
+   syslog
+   time
+   tty_ioctl
+   uname
+   unistd
+   unshare
+   eventfd)))

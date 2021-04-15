@@ -1,0 +1,100 @@
+devfont.cmi: glyph.cmi table.cmi 
+driver.cmi: dvi.cmi transitions.cmi 
+dvi.cmi: grdev.cmi 
+dviview.cmi: dimension.cmi 
+glyph.cmi: font.cmi 
+grdev.cmi: drawimage.cmi embed.cmi glyph.cmi misc.cmi transitions.cmi 
+rc.cmi: misc.cmi 
+userfile.cmi: misc.cmi 
+timeout.cmo: timeout.cmi 
+timeout.cmx: timeout.cmi 
+misc.cmo: misc.cmi 
+misc.cmx: misc.cmi 
+graphicsY11.cmo: misc.cmi graphicsY11.cmi 
+graphicsY11.cmx: misc.cmx graphicsY11.cmi 
+options.cmo: config.cmo graphicsY11.cmi misc.cmi options.cmi 
+options.cmx: config.cmx graphicsY11.cmx misc.cmx options.cmi 
+busy.cmo: graphicsY11.cmi options.cmi timeout.cmi busy.cmi 
+busy.cmx: graphicsY11.cmx options.cmx timeout.cmx busy.cmi 
+rc.cmo: misc.cmi rc.cmi 
+rc.cmx: misc.cmx rc.cmi 
+gterm.cmo: graphicsY11.cmi gterm.cmi 
+gterm.cmx: graphicsY11.cmx gterm.cmi 
+scratch.cmo: graphicsY11.cmi misc.cmi options.cmi scratch.cmi 
+scratch.cmx: graphicsY11.cmx misc.cmx options.cmx scratch.cmi 
+launch.cmo: graphicsY11.cmi gterm.cmi misc.cmi options.cmi rc.cmi launch.cmi 
+launch.cmx: graphicsY11.cmx gterm.cmx misc.cmx options.cmx rc.cmx launch.cmi 
+userfile.cmo: misc.cmi options.cmi rc.cmi userfile.cmi 
+userfile.cmx: misc.cmx options.cmx rc.cmx userfile.cmi 
+input.cmo: input.cmi 
+input.cmx: input.cmi 
+symbol.cmo: misc.cmi symbol.cmi 
+symbol.cmx: misc.cmx symbol.cmi 
+search.cmo: config.cmo misc.cmi search.cmi 
+search.cmx: config.cmx misc.cmx search.cmi 
+shot.cmo: shot.cmi 
+shot.cmx: shot.cmi 
+drawimage.cmo: config.cmo graphicsY11.cmi misc.cmi options.cmi search.cmi \
+    userfile.cmi drawimage.cmi 
+drawimage.cmx: config.cmx graphicsY11.cmx misc.cmx options.cmx search.cmx \
+    userfile.cmx drawimage.cmi 
+dvicolor.cmo: misc.cmi dvicolor.cmi 
+dvicolor.cmx: misc.cmx dvicolor.cmi 
+table.cmo: table.cmi 
+table.cmx: table.cmi 
+pkfont.cmo: input.cmi pkfont.cmi 
+pkfont.cmx: input.cmx pkfont.cmi 
+ttfont.cmo: ttfont.cmi 
+ttfont.cmx: ttfont.cmi 
+jfm.cmo: input.cmi jfm.cmi 
+jfm.cmx: input.cmx jfm.cmi 
+font.cmo: config.cmo jfm.cmi misc.cmi pkfont.cmi search.cmi table.cmi \
+    ttfont.cmi userfile.cmi font.cmi 
+font.cmx: config.cmx jfm.cmx misc.cmx pkfont.cmx search.cmx table.cmx \
+    ttfont.cmx userfile.cmx font.cmi 
+glyph.cmo: font.cmi glyph.cmi 
+glyph.cmx: font.cmx glyph.cmi 
+devfont.cmo: font.cmi glyph.cmi table.cmi devfont.cmi 
+devfont.cmx: font.cmx glyph.cmx table.cmx devfont.cmi 
+units.cmo: units.cmi 
+units.cmx: units.cmi 
+dimension.cmo: units.cmi dimension.cmi 
+dimension.cmx: units.cmx dimension.cmi 
+gs.cmo: config.cmo graphicsY11.cmi misc.cmi options.cmi search.cmi gs.cmi 
+gs.cmx: config.cmx graphicsY11.cmx misc.cmx options.cmx search.cmx gs.cmi 
+transimpl.cmo: graphicsY11.cmi transitions.cmi 
+transimpl.cmx: graphicsY11.cmx transitions.cmi 
+embed.cmo: graphicsY11.cmi launch.cmi misc.cmi embed.cmi 
+embed.cmx: graphicsY11.cmx launch.cmx misc.cmx embed.cmi 
+grdev.cmo: busy.cmi drawimage.cmi embed.cmi glyph.cmi graphicsY11.cmi gs.cmi \
+    launch.cmi misc.cmi options.cmi symbol.cmi timeout.cmi transimpl.cmo \
+    grdev.cmi 
+grdev.cmx: busy.cmx drawimage.cmx embed.cmx glyph.cmx graphicsY11.cmx gs.cmx \
+    launch.cmx misc.cmx options.cmx symbol.cmx timeout.cmx transimpl.cmx \
+    grdev.cmi 
+dvi.cmo: grdev.cmi dvi.cmi 
+dvi.cmx: grdev.cmx dvi.cmi 
+driver.cmo: devfont.cmi dimension.cmi drawimage.cmi dvi.cmi dvicolor.cmi \
+    embed.cmi glyph.cmi grdev.cmi launch.cmi misc.cmi options.cmi search.cmi \
+    table.cmi transitions.cmi units.cmi driver.cmi 
+driver.cmx: devfont.cmx dimension.cmx drawimage.cmx dvi.cmx dvicolor.cmx \
+    embed.cmx glyph.cmx grdev.cmx launch.cmx misc.cmx options.cmx search.cmx \
+    table.cmx transitions.cmi units.cmx driver.cmi 
+ageometry.cmo: misc.cmi ageometry.cmi 
+ageometry.cmx: misc.cmx ageometry.cmi 
+thumbnails.cmo: ageometry.cmi options.cmi userfile.cmi thumbnails.cmi 
+thumbnails.cmx: ageometry.cmx options.cmx userfile.cmx thumbnails.cmi 
+dviview.cmo: ageometry.cmi busy.cmi config.cmo dimension.cmi driver.cmi \
+    dvi.cmi graphicsY11.cmi grdev.cmi launch.cmi misc.cmi options.cmi \
+    scratch.cmi thumbnails.cmi transimpl.cmo transitions.cmi userfile.cmi \
+    dviview.cmi 
+dviview.cmx: ageometry.cmx busy.cmx config.cmx dimension.cmx driver.cmx \
+    dvi.cmx graphicsY11.cmx grdev.cmx launch.cmx misc.cmx options.cmx \
+    scratch.cmx thumbnails.cmx transimpl.cmx transitions.cmi userfile.cmx \
+    dviview.cmi 
+main.cmo: config.cmo dimension.cmi dviview.cmi embed.cmi gs.cmi launch.cmi \
+    misc.cmi options.cmi rc.cmi userfile.cmi 
+main.cmx: config.cmx dimension.cmx dviview.cmx embed.cmx gs.cmx launch.cmx \
+    misc.cmx options.cmx rc.cmx userfile.cmx 
+events.o: events.c libgraph.h
+grY11.o: grY11.c libgraph.h image.h

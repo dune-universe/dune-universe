@@ -1,0 +1,22 @@
+must generate the hevea version of the manual (for the WEB site).
+
+grdev and the if bg_color <> white should be reintroduced for
+optimisation ?
+
+window_id should always return an int32 value.
+must review completely the get set remember_mode and display_mode
+machinery to provide with_screen_only
+
+
+Grdev.draw_ps -> Grdev.draw_ps_file
+See why clean_ps_cahe is a synonyme of Drawimage.clean_cache
+
+Revoir aussi le reference events qui devrait être locale aux fonctions
+qui l'utilisent.
+
+See also save_rectangle, restore_rectangle.
+
+Misc.get_suffix useless ???
+
+-- ": ..." for options should be "  ..."
+DONE -- (* int_of_float *) should be empty

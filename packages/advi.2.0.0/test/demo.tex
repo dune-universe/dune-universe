@@ -1,0 +1,832 @@
+%% Copyright Roberto Di Cosmo, Jun Furuse, Didier Remy, and Pierre Weis
+%% All rights reserved.
+
+%% $Id$
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage {pstcol,color,pst-node}
+\usepackage{advi}
+\usepackage[ps]{advi-annot}
+\usepackage{advi-graphicx}
+\usepackage{demo}
+\usepackage{superpose}
+
+\begin{document}
+
+\newpage
+
+{\bf {\ActiveDVI}} is a DVI {\bf {previewer}} and a graphic {\bf
+{presenter}} for talks written in {\LaTeX}. The package contains:
+
+\begin{citemize}
+\item {\bf A DVI} previewer based on \verb"mldvi" (by Alexandre Miquel)
+  \begin {citemize}
+  \item[+] dvips
+    \textcolor{c1}{c}%
+    \textcolor{c2}{o}%
+    \textcolor{c3}{l}%
+    \textcolor{c4}{o}%
+    \textcolor{c5}{u}%
+    \textcolor{c6}{r}
+    extension (by Alexandre Miquel)
+  \item[+] psfile specials with cache (by Jun Furuse)
+  \item[+] GPIC specials (by Xavier Leroy)
+  \item[+] Postscript specials (by Didier R{\'{e}}my)
+  \item[+] hyperrefs (by Didier R{\'{e}}my)
+  \item[+] active anchors (by Didier R{\'{e}}my)
+  \item[+] background images (by Roberto Di Cosmo and Pierre Weis)
+  \item[+] and a few other gadgets...
+  \end {citemize}
+
+\item Two sets of macros to animate your presentation (by
+Jun~Furuse, Didier~R{\'{e}}my, Pierre~Weis, and Roberto Di~Cosmo): the
+{\LaTeX} package styles \verb"advi.sty" and \verb"advi-slides.sty".
+
+\item An easy way to launch arbitrary demonstration and/or animation
+programs from inside your slides \hbox {(by Jun~Furuse and
+Pierre~Weis)}.
+
+\item A set of built-in functions to animate transitions from slides
+to slides \hbox {(by Jun~Furuse, Didier R{\'{e}}my, and Pierre Weis)}.
+
+\item Some facilities to resize and move texts within the slides
+(by Jun~Furuse, Roberto Di~Cosmo, and Pierre~Weis).
+
+\item Hyperref anchors in the presentation to switch by clicking to
+another slide of the show, or even to view other files (either DVI,
+text or HTML files).
+
+\item A package to annotate texts (using active anchors).
+
+\item A built in laser pointer facility (by Pierre~Weis).
+
+\item Full-fledged background images and background gradients (by
+Pierre~Weis and Roberto~Di~Cosmo).
+
+\item A scratching facility to interactively annotate slides.
+\end{citemize}
+
+\newpage
+
+%Didier's flashy macro
+\def \flash #1{\let \do\leflash \do #1\relax}
+\def \leflash #1{\ifx #1\relax \def \do{}\else \def \do {#1\adviwait[0.05]\leflash}\fi \do}
+
+\def\goon{\hbox{{\Large $\Rightarrow$}~Type~space~to~go~on}}
+
+\subsection* {Images in presentations}
+
+{\ActiveDVI} supports \verb+\includegraphics+ with native image formats.
+
+\subsection* {EPS (and other!) graphics inclusion using Camlimages}
+\begin{quote}
+\verb+\includegraphics[width=0.1\textwidth]{caml.eps}+\\
+\verb+\includegraphics[width=0.2\textwidth]{caml.eps}+\\
+\verb+\includegraphics[width=0.1\textwidth]{world}+\\
+
+This last command looks for a file named {\tt world} with extensions
+out of the ones provided by the directive
+\verb+\DeclareGraphicsExtensions+ in the \verb|advi-graphicx| package.
+In the present case, it finds \verb+world.jpg+, for which a
+bounding box specification must be available in the file
+\verb+world.bb+. For this image \verb+world.bb+ is:
+\begin{verbatim}
+%%BoundingBox: 15 208 580 633
+\end{verbatim}
+
+\medskip
+
+\includegraphics[width=0.1\textwidth]{../tex/caml.eps}
+\includegraphics[width=0.2\textwidth,height=0.09\textwidth]{../tex/caml.eps}
+\framebox{\includegraphics[width=0.1\textwidth]{world}}
+\end{quote}
+
+\newpage
+
+\subsection* {Other eye candies for presentation}
+
+\medskip\noindent
+\docdef \adviwait\docopt{seconds}
+\begin{quote}
+Wait for \docid{seconds} or wait for ever if no argument is
+provided. Wait means do nothing until the user requests to
+continue (or to move to another page).
+\end{quote}
+
+\medskip\noindent
+\docdef \advirecord \doctt{[play]}\docarg{tag}\docarg{latex code}
+\begin{quote}
+Computes \docid{latex code} and records its DVI output bound to the tag
+\docid{tag}. The DVI output is not displayed during recording, unless the
+option \doctt{play} is set.
+
+Embedded recordings are prohibited. 
+\end{quote}
+
+\medskip\noindent
+\docdef \adviplay\docopt{color}\docarg{tag}
+\begin{quote}
+Replay the DVI previously recorded as \docid{tag}.
+The optional argument changes the color to \docid{color} during replay. 
+\end{quote}
+
+\newpage
+
+\subsection* {Eye candies (examples)}
+
+\begin{itemize}
+   \item mark the text with a tag name:\\
+     $\tt \backslash advirecord\{this\}
+      \{\advirecord[play]{this}{Warning~to~the~casual~user}\}$
+
+   \item then change the current text color and replay the tagged text:\\
+  $\tt{\backslash}adviplay\{this\}$.
+\end{itemize}
+
+
+\noindent
+For instance, to display in red the text associated to the tag
+{\tt this} above, you can either pass a color option to the play command:
+\verb+\adviplay[red]{this}}+\\
+\advirecord[play]{that}{\goon}\adviwait%
+\textcolor {c1}{\adviplay {this}\adviplay {that}}\adviwait
+{\adviplay{this}\adviplay {that}}\adviwait
+
+\noindent
+or place the command in the appropriate color environment:
+to display the same text in green, type\\
+\verb+\textcolor{green}{\adviplay{this}}+\\
+\advirecord[play]{goon}{\goon}\adviwait
+\textcolor{green}{\adviplay{this}\adviplay{goon}\adviwait}
+
+\noindent
+Using pauses and color settings, you can get
+\advirecord[play]{this}{various}
+\textcolor{red}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{color (and fonts)}
+\textcolor{c2}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{effects}
+\textcolor{c3}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{in}
+\textcolor{c4}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{your}
+\textcolor{c5}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{texts}
+\textcolor{c6}{\adviplay{this}\adviplay{goon}}\adviwait
+\advirecord[play]{this}{!}\\
+\textcolor{red}{\adviplay{this}\adviplay{goon}}\adviwait
+Including some strange flashing effect!
+\adviplay{goon}
+\textcolor{c6}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c1}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c2}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c3}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c4}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c5}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c6}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c1}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c2}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c3}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c4}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c5}{\adviplay{this}}\adviwait[\smallpause]%
+\textcolor{c6}{\adviplay{this}}\adviwait[\smallpause]%
+
+\newpage
+
+\subsection* {Launching applications}
+
+Any Unix command can be launch during the presentation.
+This is convenient to call an external program to draw material in the
+{\ActiveDVI} window, or to start a demo from within the presentation.
+
+\bigskip
+
+\noindent
+To launch the program {\verb"command"} use in your {\LaTeX} source file\\
+
+\verb+\adviembed{command}+\\
+
+\noindent Additionnally, you may precise the size of the rectangular
+window where the application will draw its material. {\ActiveDVI} will
+reserve that area for your application.\\
+
+\verb+\adviembed[width=w,height=h]{command}+\\
+
+\noindent
+Moreover, {\ActiveDVI} provides two special \TeX macros \verb"@g" and
+\verb"@p" that specify the geometry and the (X) window identifier that
+the application should use. Hence, if {\verb"command"} has option
+{\tt -geometry} to specify its X geometry specification, and option
+{\verb"-use"} to specify the X window it should use, then\\
+
+\verb+\adviembed[width=w,height=h]{command -geometry @g -use @p}+\\
+
+\noindent will launch \verb"command" with a geometry computed from the
+width and height specifications of the \verb|adviembed| call (the
+specified \verb"w" and \verb"h" parameters); hence the system command
+\verb"command" will run in the (X) window \verb"@p" (normally a
+sub-window of {\ActiveDVI}'s window) with the proper geometry.
+
+\newpage
+
+\subsection* {Embedding applications}
+
+There are two kinds of applications you can launch during the
+presentation:
+\begin{itemize}
+
+\item {\em embeddable applications} that run inside a subwindow of the
+main {\ActiveDVI}'s window (hence their window is stuck to the precise
+place computed for you by {\ActiveDVI}),
+
+\item {\em non-embeddable applications} that run in a window of their
+own (hence their window is unrelated to the {\ActiveDVI}'s window and
+may be moved independantly).
+
+\end{itemize}
+
+\subsubsection*{Embeddable applications}
+
+For each application to launch, {\ActiveDVI} allocates a new sub
+window of the specified size.  If provided, the identifier \verb"@p"
+is replaced by the (X) identifier of that sub window, in order for the
+application to use that sub window as its root window. Options to
+specify the root window may vary according to the application at hand
+(however, \verb"-use" or \verb"-window" are common to specify this
+option). Unfortunately, not every X-application is capable of using a
+specified window as its (root) window.  If an application can be
+rerooted, it is truely embeddable into {\ActiveDVI} (meaning it is
+really a part of the {\ActiveDVI} window). Otherwise the application
+is not embeddable.
+
+\subsubsection*{Non embeddable applications}
+
+If the application cannot be rerooted (or if the \verb"@p" parameter
+is not specified), {\ActiveDVI} cannot control the placement of the
+application: the window manager will handle it. However, {\ActiveDVI}
+helps by providing a complete X geometry specification: with width and
+height, an extra \verb"+x+y" shift is indicated to precisely access
+the place where the embedding should occur in the {\ActiveDVI}
+window. Hence, the application appears at the right place even if it
+cannot be rerooted and is indeed impossible to embed.
+
+\newpage
+
+\subsubsection*{Launching embeddable applications}
+
+Rerootable applications obey to the X geometry specifications and thus
+can be properly displayed within the {\ActiveDVI} window (embedding).
+
+Examples:
+
+\begin{itemize}
+\item The \verb"display" command (from ImageMagick) can show any image into your
+presentation using:\\
+\verb|\adviembed[width=3cm,height=3.3cm]|\\
+\verb|          {display -geometry @g! -window @p logo.gif}|\\
+\adviembed[ephemeral=advilogo,width=3cm, height=3.3260869cm]{display -geometry @g! -window @p advilogo.gif}
+
+\item Similarly, \verb|animate| can display animations with:\\
+        \verb|\adviembed[width=2cm,height=2cm]|\\
+        \verb|          {animate -geometry @g! -window @p anim.gif}|\\
+        \adviembed[ephemeral=animate,width=2cm,height=2cm]{animate -geometry @g! -window @p mmm.anim.gif}
+\end{itemize}
+
+\newpage
+
+\subsection*{Launching embeddable applications (cont.)}
+
+\begin{itemize}
+  \item Any application which supports embedding options can be launched, as\\
+   \verb+\adviembed[width=w,height=h]{prog -geometry @g -use @p}+\\
+   For instance, using wish:\\
+   \verb|\adviembed[persistent,width=5cm,height=1cm]|\\
+   \verb|          {wish ./watch -geometry @g -use @p}|\\
+   \adviembed[persistent=wish,width=5cm,height=0.71cm]{wish ./watch -geometry @g -use @p}
+\adviwait
+  \item Possibly interactive ! (We use CamlTk here)\\
+   \verb|\adviembed[persistent=taquin,width=6.5cm,height=9.5cm]|\\
+   \verb|          {./taquin -geometry @g -use @p dojoji.gif}|\\
+  \adviembed[persistent=taquin,width=8.5cm,height=10cm]{./taquin.sh -geometry @g -use @p dojoji.gif}
+
+\end{itemize}
+
+\newpage
+
+\subsection*{Launching non-embeddable applications}
+
+If an X application does not support the specification of its parent
+window, it will be automatically handled by the window manager. Then,
+depending on the WM at hand, the placements may or may not obey your
+geometry specifications. (In some cases, disabling the ``remember window
+positions'' option of your WM may help.)
+
+Applications launched that way will not be properly embedded: they
+will appear {\em above} not {\em inside} the {\ActiveDVI}
+window. (Hence if you move the {\ActiveDVI} window the applications
+will not follow (they may even desappear {\em below} the
+{\ActiveDVI}'s window)).
+
+\begin{itemize}
+ \item Xeyes using the macro command \verb|embed|:\\
+   \verb|\adviembed[width=2cm,height=2cm]|\\
+   \verb|    {xeyes -bw 0 -shape -geometry @g}|\\
+   \adviembed[width=2cm,height=2cm]{xeyes -bw 0 -shape -geometry @g}
+
+ \item An Xterm running an interesting application:\\
+   \verb|\adviembed[width=10cm,height=4cm]|\\
+   \verb|    {xterm -geometry 50x7+@x+@y -e ocaml}|\\
+% Ne marche pas car la géometrie de xterm est en caractères non en points
+%   \adviembed[width=10cm,height=4cm]{xterm -geometry @g -e ocaml}
+   \adviembed[width=0.1\textwidth,height=0.02\textheight]{xterm -geometry @g -e ocaml}
+\end{itemize}
+
+\newpage
+
+\subsection* {Launching non-embeddable applications (cont.)}
+
+You can add music to your presentation, if you have a music
+player available: just embed the music player at the precise place
+where you want it to play your sounds.
+
+  \verb|\adviembed[width=1mm,height=1mm]|\\
+  \verb|    {mpg123 -q music.mp3}|
+
+\advirecord{play}
+ {\adviembed[name=mpg123,width=1mm,height=1mm]{mpg123 -q music.mp3}}
+\advirecord{stop}
+ {\advikillembed{mpg123}}
+
+\advianchor[click]{play}{Play}
+\advianchor[click]{stop}{Stop}
+
+\medskip
+\noindent
+Here, we added active buttons to start and stop the music (don't forget
+to add that kind of gadgets in your shows: it can be very frustrating to have
+music automatically launched when you are still speaking! :)
+
+\bigskip
+
+\noindent
+In conclusion, the \verb|embed| macro can launch any executable
+command during your presentations.
+
+\newpage
+ 
+\begin{center}
+{\large\bf I have four words for you!}\\[3mm]
+
+%\adviembed[width=10.62cm,height=7.92cm]{xanim +W@p +Sx@w +Sy@h +Zpe -Zr dancemonkeyboy.avi}
+%\adviembed[width=10.62cm,height=7.92cm]{plaympeg -s x@wx@h dancemonkeyboy.mpg}
+%\adviembed[width=15.93cm,height=12.88cm]{mtvp -z -G=@wx@h -W@p dancemonkeyboy.mpg}
+\adviembed[width=15.93cm,height=12.88cm]{mplayer -x @w -y @h -wid @p dancemonkeyboy.mpg}
+\end{center}
+
+\newpage
+
+\section* {Postscript specials}
+
+{\ActiveDVI} recognizes and renders Postscript Specials by calling and telling
+\verb"ghostview" to display Postscript on the \verb"advi" window. 
+Hence, images drawn using PS tricks will be displayed by \verb"advi". 
+However, PS tricks make the assumptions that everything is displayed
+by Postscript, which is wrong since \verb"advi" displays most of the
+material itself.
+
+\subsubsection* {Most PS-tricks do work}
+\begin {itemize}
+
+\item[+]
+Simple drawings, such as \verb"\psframe", \verb"\ovalnode", \ldots.
+\begin{quote}
+\ovalnode{A}{oval} \hspace {4em}
+\Rnode{R}{\psframebox{rectangle}}\pnode{right}
+\end{quote}
+
+\item[+]
+Connections between nodes {\tt \string \ncarc}, {\tt \string \ncarc},
+also works.
+\ncarc{->}{A}{R}
+
+\item[+]
+Labels over arrows \verb"\Aput", \verb"\Bput", etc.
+\Bput{\rnode{L}{label}}
+
+\item[+] 
+{\tt\string\SpecialCoor}, {\em i.e.} commands of the form
+{\tt \string \rput (A)\{bla bla\}} works where {\tt A} is a node name. 
+\SpecialCoor
+\rput[b](right){\rlap{\em right of rectangle}}
+(Of course rotations of text do not work.)
+\end {itemize}
+
+\subsubsection*{Limitations of Postscript specials}
+
+Unfortunately, some PS-tricks may not work. 
+Known limitations are: 
+\begin{itemize}
+\item[-] {\ActiveDVI} only recognizes binary overlays (display if 0,
+hide otherwise). This is sufficient for the prosper documentclass (see
+\hyperlink {overlays}{below}).
+
+\end {itemize}
+
+\subsubsection*{Known bug with PS tricks}
+
+With some old versions of \verb"gs" and/or \verb"X11", the PS tricks are not
+correctly synchronized. Some drawings may hide text, or conversely.
+
+% Examples: 
+% \Rnode {A}{A} \qquad \Rnode {B}{B}
+% \ncline{->}{A}{B} \Aput{L}
+
+\newpage
+
+\section* {Overlays}
+\hypertarget {overlays}{}
+
+Overlays of the \verb"seminar" mode uses PS tricks, but in a manner that
+requires characters to be also printed as Postscript. The \verb"advi" package 
+redefines \verb"\overlay" so that it draws only the first overlay (and
+ignore others).
+Hence, \verb"advi" cannot be used to preview slides using \verb"seminar"
+overlays. However, a better package for overlays (build on top of seminar)
+is \verb"prosper", which only uses the ability to show or hide some
+material, which works well with \verb"advi".
+
+Some reimplementation of \verb"\overlay" for \verb"advi" to work with 
+seminar overlays might still be possible...  
+
+\newpage
+
+\section* {Printing your slides: the ignore mode}
+
+The package \verb"advi" can be loaded with the \verb"ignore" option:
+
+\smallskip
+{\verb"\usepackage[ignore]{advi}"}
+\smallskip
+
+\noindent
+The effect is to switch off some \verb"advi" gadgets and to render some others 
+in Postscript, if possible. This is useful to generate a DVI file that
+can be easily turned into Postscript to print a set of slides as an
+approximation of the show that {\ActiveDVI} plays.
+
+\newpage
+
+\section* {Hyper links to other files}
+
+\begin {itemize}
+
+\item (Recursive) link to \hyperref{demo.dvi}{}{overlays}{\tt demo.dvi}
+is produced by
+
+\qquad\verb"\hyperref{demo.dvi}{}{overlays}{\tt demo.dvi}"
+
+A click opens file \verb"demo.dvi" with a new \verb"advi" process and
+jumps to the link \verb"overlays" in that file, as if the command
+
+\qquad\verb"advi -html overlays demo.dvi"
+
+had been typed in a shell.
+
+\item The source file of this demo is \hyperref{demo.tex}{}{}{\tt
+demo.tex}. A link to the source file is produced by
+
+\qquad\verb"\hyperref{demo.tex}{}{}{\tt more demo.tex}"
+
+A click on the link opens the file in a new window, as if 
+
+\qquad\verb"more demo.tex"
+
+had been typed in a shell.
+
+\item Currently, the file is recognized from its file name extension
+that must be one of \verb".dvi", \verb".pdf", \verb".ps", \verb".eps",
+\verb".htm", or \verb".html". In addition various well-known text file
+extensions are recognized, namely \verb".txt", \verb".tex",
+\verb".ftex", \verb".sty", \verb".pic", and famous programming
+languages source file extensions such as \verb".scm", \verb".c",
+\verb".el", or \verb".ml". In the future, this feature should use Mine
+man Mailcap to find the type of the file and the proper previewer for
+that file.
+
+For the time being, the viewer commands can be set using an
+option on the command line (or including this option in the
+\verb".advirc" file). Options are \verb"-browser", \verb"-pager",
+\verb"-pdf-viewer", \verb"-ps-viewer".
+
+\end{itemize}
+
+\newpage
+
+\section* {Hyper links to other files (cont)}
+
+For instance, you can compare the rendering of \ActiveDVI's manual
+
+\begin{itemize}
+
+\item in PDF, viewing {\tt ../doc/manual.pdf} with the
+\hyperref{../doc/manual.pdf}{}{}{viewer for PDF} files (by default
+{\tt xpdf}),
+\item in PostScript, viewing {\tt ../doc/manual.ps} with the
+\hyperref{../doc/manual.ps}{}{}{viewer for PostScript} files (by
+default {\tt gv}),
+\item in DVI, \hyperref{../doc/manual.dvi}{}{}{as rendered by
+\ActiveDVI}.
+
+\end{itemize}
+
+\subsection *{Wrong links}
+
+In case of bad link, {\ActiveDVI} just ignores the link and emits an
+error a warning is emitted on standard error (Unix {\tt stderr}). For
+instance
+
+\begin{itemize}
+
+\item when the file extension is not recognized:
+
+\hyperref{bad-talk.ppt}{}{}{\tt bad-talk.ptt}
+
+\item or the file is non-existent:
+
+\hyperref{nonexistent.dvi}{}{}{\tt nonexistent.dvi}
+
+\end {itemize}
+
+\newpage
+
+\subsection* {Combination of replays and PS tricks}
+
+Replay command can hide or show text or change the color of text. 
+However, Postscript colors are hard-wired by {\TeX}, {\em i.e.} they are not
+interpreted in the current color context as font colors are.
+\noindent
+Replay can still be used to simulate the replay of Postscript colors:
+it suffices to superpose two identical figures. For instance, 
+$$
+\psset {linestyle=none,fillstyle=solid}
+\rlap
+{\advirecord{tagb}{\ovalnode [fillcolor=green]{A}{\textbf {Postscript}}}}%
+\advirecord[play]{taga}{\ovalnode [fillcolor=yellow]{B}{\textbf {Postscript}}}
+$$
+will  be rendered by
+\begin{verbatim}
+  \psset {linestyle=none,fillstyle=solid}
+  \def \PS {\textbf {Postscript}}
+  \rlap {\advirecord{tagb}{\ovalnode [fillcolor=green]{A}{\PS}}}%
+  \advirecord[play]{taga}{\ovalnode [fillcolor=yellow]{B}{\PS}}}
+\end{verbatim}
+\begin {enumerate}
+
+\item Type space to change the text color. 
+\adviwait\textcolor{red}{\adviplay{taga}}
+\begin{verbatim}
+    \textcolor{red}{\adviplay{taga}}
+\end{verbatim}
+
+\item Type space to change the background.
+\adviwait\textcolor{red}{\adviplay{tagb}}
+\begin{verbatim}
+    \textcolor{red}{\adviplay{tagb}}
+\end{verbatim}
+
+\end {enumerate}
+
+\newpage
+
+\subsection*{Active anchors}
+
+Active anchors are much alike HTML anchors, except that instead of
+jumping to a reference anchors (usually another page), they 
+replay a recorded piece of DVI when the mouse is over the
+anchor area. The page is saved and reset to its normal shape when the mouse
+leaves the anchor region.
+
+\noindent
+Scratch those stamps with the mouse to see how much you win \verb":)"
+
+$$
+\ovalnode [linestyle=none,fillstyle=solid,fillcolor=yellow]{A}
+  {\advirecord {A}{\textbf {10000}}}
+\advianchor{A}{\adviplay[yellow]{A}}
+\hspace {4em}
+\def \i{\textcolor{green}{.}}
+\ovalnode [linestyle=none,fillstyle=solid,fillcolor=green]{B}
+  {\advirecord {B}{\i\textbf{Lost}!\i}}
+\advianchor{B}{\adviplay[green]{B}}
+$$
+The left game was typeset as
+{\small
+\begin{verbatim}
+\ovalnode [linestyle=none,fillstyle=solid,fillcolor=yellow]{A}
+  {\advirecord {A}{\textbf {10000}}}
+\advianchor{A}{\adviplay[yellow]{A}}
+\end{verbatim}}%
+
+\medskip
+\noindent
+The effect of active anchors can also be 
+\advianchor{C}{delocalized}.
+\SpecialCoor
+\advirecord {C}
+  {\ncarc[linecolor=red,arcangleA=50,arcangleB=50,linewidth=3pt]
+         {<->}{A}{B}\Aput{\color{blue}{\huge{\bf Fire!}}}
+}
+\begin{verbatim}
+\SpecialCoor
+\advirecord {C}
+  {\ncarc[linecolor=red,
+          arcangleA=50,arcangleB=50,linewidth=3pt]
+         {<->}{A}{B}\Aput{\color{blue}{\huge{\bf Fire!}}}
+}
+\end{verbatim}
+
+\noindent
+Another form of%
+\begin{superpose}
+\advirecord[play]{a1}{\advianchor{a2}{ simple }}\\
+\advirecord{a2}{\adviplay[white]{a1}\colorbox{yellow}{ cool }}
+\end{superpose}%
+annotations is the overriding of%
+\begin{superpose}
+\advianchor{7}{ words. }\\
+\advirecord{7}{\adviplay[white]{6}\colorbox{white}{{ text. }}}\\
+\end{superpose}
+
+\noindent
+You can also replace larger pieces of text by other%
+\begin{superpose}
+\advirecord[play]{1}{\advianchor{2}{pieces} of \advianchor{3}{text}}\\
+\advirecord{2}{\colorbox{white}{\begin{tabular}{@{}l@{}}
+inner tabulars\\ should be enclosed\\ by parentheses\end{tabular}}}\\
+\advirecord{3}{\colorbox{white}{The \qquad End.}}\\
+\end{superpose}
+
+\newpage
+
+\subsection*{\adviannot{Active Annotations}(2,1.5){Annotations \\are great!}}
+
+\noindent
+\adviannot[p=9em]{Active anchors}(1,1.5)
+{\centering Active anchors are even greater!}
+can also annotate text as \adviannot[C,bg=green]{here}{here=h+e+r+e},
+{\adviannot[c]{for instance}(-1.5,1){\textcolor{red}{for example ?}}}.
+
+\medskip
+
+\noindent
+{\let \do\adviemphasize
+\do{These} \do{annotations} \do{have} \do{been} \do{typeset} 
+\do{respectively} \do{as}\let\do\relax:}
+
+\begin{small}
+\begin{verbatim}
+\adviannot{Active Annotations}(2,1.5){Annotations \\are great!}
+
+\adviannot[p=9em]{Active anchors}(1,1.5)
+   {\centering Active anchors are even greater!}
+
+\adviannot[C,bg=green]{here}{here=h+e+r+e}
+
+\adviannot[c]{for instance}(-1.5,1){\textcolor{red}{for example ?}}
+\end{verbatim}
+\end{small}
+
+Background of annotations defaults to yellow, centering annotation is
+reminiscent to the {\tt array} command: {\tt c} means centered,
+{\tt r} right ajusted, and {\tt l} left adjusted. Uppercase variants
+{\tt C}, {\tt L}, {\tt R}, have the same meaning, plus implicit math
+mode environment.
+
+\subsection*{Note}
+
+The {\setanchor{invisible}\adviannot[bg=red]{commands}(-1.5,1){you found it!}}
+\begin{quote}
+\hsize \linewidth\setbox0\vbox\bgroup
+
+\verb"\usepackage{advi}"
+
+\verb"\usepackage{advi-annot}"
+
+\egroup
+\adviemphasize[lightgreen]{\box0}
+\end{quote}
+must appear after other packages that uses PS tricks, since it redefines
+some macros. The package \verb"advi-annot" is necessary to get
+the annotation macros.
+
+\vfil\noindent
+\adviemphasize[lightblue]
+{\em
+Some invisible anchors have been hidden in this page, could you find them?}
+
+\newpage
+
+\subsection*{Superpose Package}
+
+This very small package provides superimposition of boxes, making the
+surrounding box large enough to fit all the included boxes. This is convenient
+when displaying each included box at different pauses.
+
+\noindent
+A kind of {\ActiveDVI} movie
+\advirecord{0}{\colorbox{white}
+{\begin{superpose}
+\advirecord{1}{\textcolor{c2}{can be played}}\\
+\advirecord{15}{\textcolor{c1}{changing text at each space}}\\
+\advirecord{2}{\textcolor{c3}{you can also use pictures}}\\
+\advirecord{31}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}}\\
+\advirecord{32}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.03\textwidth]{../tex/caml.eps}}}\\
+\advirecord{33}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.03\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.04\textwidth]{../tex/caml.eps}}}\\
+\advirecord{34}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.03\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.04\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.06\textwidth]{../tex/caml.eps}}}\\
+\advirecord{35}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.03\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.04\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.06\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.08\textwidth]{../tex/caml.eps}}}\\
+\advirecord{36}{\
+{\includegraphics[width=0.02\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.03\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.04\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.06\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.08\textwidth]{../tex/caml.eps}}\
+{\includegraphics[width=0.1\textwidth]{../tex/caml.eps}}}\\
+\advirecord{37}{{\includegraphics[width=0.1\textwidth]{world}}}\\
+\advirecord{4}{{\begin{tabular}{@{}l@{}}
+Note that inner tabulars\\ should still be enclosed\\
+by parentheses\end{tabular}}}\\
+\advirecord{5}{\textcolor{c4}{The End}}
+\end{superpose}}}
+here.
+\adviplay{1}
+\adviwait\adviplay{0}\adviplay{15}
+\adviwait\adviplay{0}\adviplay{2}
+\adviwait\adviplay{0}\adviplay{31}
+\adviwait\adviplay{0}\adviplay{32}
+\adviwait\adviplay{0}\adviplay{33}
+\adviwait\adviplay{0}\adviplay{34}
+\adviwait\adviplay{0}\adviplay{35}
+\adviwait\adviplay{0}\adviplay{36}
+\adviwait\adviplay{0}\adviplay{37}
+\adviwait\adviplay{0}\adviplay{4}
+\adviwait\adviplay{0}\adviplay{5}
+
+\newpage
+
+\subsection*{Pictures for \TeX}
+
+{\ActiveDVI} can display pictures for \TeX, as generated by
+the \verb"gpic" command into a list of \TeX~ \verb"\special" commands.
+
+\bigskip
+
+To obtain a figure, you first write commands for the language
+{\em pic} into a file; from this pic file, you can generate a \TeX
+file using a {\em pic compiler}, e.g. \verb"gpic"; then include this
+compiled file into your presentation, and {\ActiveDVI} will nicely display it.
+
+Let's consider the \verb"pic" source file \verb"trigo.pic" given
+\hyperref{trigo_source.dvi}{}{}{here}; we obtain
+\verb"trigo.tex" using the command 
+\begin{verbatim}
+gpic -t trigo.pic > trigo.tex
+\end{verbatim}
+
+Then we include \verb"trigo.tex" with the \TeX command
+\verb|\input{trigo}| and get:
+
+\def\showgraph{%
+  \par\medskip\centerline{\raise 1em\box\graph}\bigskip\noindent\ignorespaces}
+
+\input{trigo}
+
+See the \verb"gpic" command manual for more information about
+\verb"gpic" and the programming language \verb"pic".
+
+\lastpage
+
+~\vfill
+\begin{center}
+\includegraphics[width=0.5\textwidth]{../tex/advilogo.eps}\\
+{\Large \bf That's all, folks!!}
+\end{center}
+\vfill
+
+\end{document}

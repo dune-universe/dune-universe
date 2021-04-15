@@ -1,0 +1,246 @@
+\ifslides
+\documentclass[semlcmss,sem-a4]{seminar}
+\else
+\documentclass[semlcmss,sem-a4,article]{seminar}
+\fi
+
+\newcommand{\thepicture}{{\center\mbox{}{\box\graph}\mbox{}\endcenter}}
+\newcommand{\apicture}{{\mbox{}{\box\graph}\mbox{}}}
+
+\usepackage{hevea}
+\usepackage[latin1jk]{inputenc}
+\usepackage[french]{babel}
+%------------------------------------ hack bug babel
+\makeatletter
+\begin{toimage}                      % hack ->hevea
+\makeatletter
+\end{toimage}
+\let\accent@spacefactor\relax
+\begin{toimage}                      % hack ->hevea
+\makeatother
+\end{toimage}
+%------------------------------------ fin du hack 
+\usepackage{epsf}
+\usepackage{epsfig}
+% \usepackage{semrot,semcolor}
+\usepackage{graphics,color}
+\usepackage{program-1c}
+
+\newcommand{\mypdfimage}[1]{\mbox{
+\pdfimage #1
+\vspace*{-3ex}
+}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% macros
+\newcommand{\patch}{\global\parskip= 0.2ex}
+\newcommand{\arr}{\rightarrow}
+\newcommand{\ans}[1]{\orchidBis{#1}}
+\renewcommand{\comment}[1]{{\bf\green{#1}}}
+\newcommand{\commentb}[1]{{\bf\orchidBis{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% macros
+\newcommand{\gifimage}[1]{}
+
+\def\printlandscape{\special{landscape}}    % Works with dvips.
+% \articlemag{2}
+% \slidesmag{5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{exoNum}
+\setcounter{exoNum}{1}
+\newcommand{\exoplus}{\arabic{exoNum}{\addtocounter{exoNum}{1}}}
+\newcommand{\exercice}{{\normalsize\colorExercice Exercice \exoplus\hspace{1ex}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lac}{$\lambda$-calcul}
+\newcommand{\es}{explicit substitutions}
+\renewcommand{\l}{\lambda}
+\newcommand{\x}{\lambda x}
+\newcommand{\y}{\lambda y}
+\newcommand{\z}{\lambda z}
+\newcommand{\type}{{\,:\,}}
+\newcommand{\goes}{\rightarrow}
+\newcommand{\subst}[1]{[\hspace{-.24ex}[ #1 ]\hspace{-.27ex}]}
+\newcommand{\rby}{\backslash}
+\newcommand{\becomes}{:=}
+\newcommand{\tolambda}[1]{\{#1\}}
+
+\newcommand{\nexthyp}{\quad}
+\newcommand{\infrule}[2]{{{\mbox{\small$ #1$}} \over {\mbox{\small$ #2$}}}}
+\newcommand{\axiom}[1]{#1}
+\newcommand{\notfreein}{\mathrel{\mbox{\tiny not free in}}}
+\newcommand{\linearin}{\mathrel{\mbox{\tiny linear in}}}
+\newcommand{\doesnotbind}{\mathrel{\mbox{\tiny does not bind}}}
+\newcommand{\If}{\mathrel{\hbox{if}}}
+\newcommand{\Implies}{\mathrel{\hbox{implies}}}
+\newcommand{\Domain}{\mathop{\hbox{\it domain}}}
+\newcommand{\Otherwise}{\mathrel{\;\hbox{otherwise}}}
+\newcounter{thmcounter}
+\newenvironment{thm}{{\blue Theorem 
+               \addtocounter{thmcounter}{1}\thethmcounter\hspace{1ex}}}{}
+\newenvironment{fact}{{\blue Fact
+               \addtocounter{thmcounter}{1}\thethmcounter\hspace{1ex}}}{}
+\newenvironment{prop}{{\blue Proposition
+               \addtocounter{thmcounter}{1}\thethmcounter\hspace{1ex}}}{}
+\newenvironment{cor}{{\blue Corollary\hspace{1ex}}}{}
+
+\newcommand{\entails}{\mathrel{\raisebox{-.25ex}{$\vdash$}}}
+
+\newcommand{\mylet}{\mathop{\mathtt{let}\,}}
+\newcommand{\myletrec}{\mathop{\mathtt{letrec}\,}}
+\newcommand{\myin}{\mathrel{\mathtt{in}}}
+\newcommand{\myint}{\mathop{\mathtt{int}}}
+\newcommand{\myif}{\mathop{\mathtt{ifz}}}
+\newcommand{\mythen}{\mathrel{\mathtt{then}}}
+\newcommand{\myelse}{\mathrel{\mathtt{else}}}
+\newcommand{\myfun}{\mathop{\mathtt{fun}}}
+\newcommand{\mylist}{\mathop{\mathtt{list}}}
+\newcommand{\mynil}{\mathop{\mathtt{nil}}}
+\newcommand{\mycons}{\mathrel{\mathtt{::}}}
+\newcommand{\myhd}{\mathop{\mathtt{hd}}}
+\newcommand{\mytl}{\mathop{\mathtt{tl}}}
+\newcommand{\myifn}{\mathop{\mathtt{ifnil}}}
+\newcommand{\mytrue}{\mathop{\mathtt{vrai}}}
+\newcommand{\myfalse}{\mathop{\mathtt{faux}}}
+\newcommand{\myiszero}{\mathop{\mathtt{zero}}}
+\newcommand{\id}{\mathop{\mathit{id}}}
+\newcommand{\myfact}{\mathop{\mathtt{fact}}}
+\newcommand{\const}[1]{\underline{#1}}
+\newcommand{\myone}{\const{1}}
+\newcommand{\mytwo}{\const{2}}
+\newcommand{\mythree}{\const{3}}
+\newcommand{\myfour}{\const{4}}
+\newcommand{\myerr}{\mathop{\mathtt{err}}}
+
+\newcommand{\shift}{\makebox[1ex]{{\small $\uparrow$}}}
+\newcommand{\comp}{\circ}
+\newcommand{\var}[1]{\underline{#1}}
+\newcommand{\Int}{\mathop{\mathtt{integrale}}}
+
+
+\newcommand{\myeval}{\mathit{eval}}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\ifslides
+\slideframewidth=.00pt
+\else
+\slideframewidth=.5pt
+\slideframe{plain}
+\fi
+
+\def\slidelabel{\footnotesize\bf Planche \theslide}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\paperwidth 215mm
+ \newpagestyle{xxx}{%
+\hspace*{1.5em}\raisebox{-2.5em}{{\tiny .}}
+             \hfill
+}{
+   \tiny 
+   \hfill\thepage\hspace*{3em}}
+ \pagestyle{xxx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bigline}{\noindent\rule{\textwidth}{.25mm}}
+\newcommand{\heading}[1]{%
+    \makebox[\textwidth]{\large\sf\colorHeading #1}\\[-1.5ex]{\colorYellow\bigline}
+\small
+%  \vspace{3ex}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% couleurs
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{cyan}{rgb}{0,1,1}
+\definecolor{cyanBis}{rgb}{0.03,0.56,.68}
+\definecolor{cyanTer}{rgb}{0.13,0.43,0.52}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{greenBis}{rgb}{0.0,0.55,0.0}
+\definecolor{orchid}{rgb}{0.855,0.439,0.839}
+\definecolor{orchidBis}{rgb}{0.76,0,0.67}
+\definecolor{blueBis}{rgb}{0,0.05,1}
+\definecolor{orange}{rgb}{1.000,0.647,0.000}
+\definecolor{darkorange}{rgb}{1.000,0.549,0.000}
+\definecolor{DarkOrange}{rgb}{1.000,0.549,0.000}
+\definecolor{DarkOrangeBis}{rgb}{.249,.129,.006}
+\definecolor{brownBis}{rgb}{.73,.46,.17}
+\definecolor{yellow}{rgb}{.90,.90,0}
+\definecolor{blueSky}{rgb}{.10,.25,.28}
+\definecolor{black}{rgb}{.0,.0,.0}
+
+\newcommand{\red}{\color{red}}
+\newcommand{\black}{\color{black}}
+\newcommand{\cyan}{\color{cyan}}
+\newcommand{\cyanBis}{\color{cyanBis}}
+\newcommand{\cyanTer}{\color{cyanTer}}
+\newcommand{\blue}{\color{blue}}        % pour sortie transparents
+\newcommand{\blueBis}{\color{blueBis}}
+\newcommand{\green}{\color{green}}
+\newcommand{\greenBis}{\color{greenBis}}
+\newcommand{\DarkOrange}{\color{DarkOrange}}
+\newcommand{\DarkOrangeBis}{\color{DarkOrangeBis}}
+\newcommand{\orchid}{\color{orchid}}
+\newcommand{\orchidBis}{\color{orchidBis}}
+\newcommand{\orange}{\color{orange}}
+\newcommand{\darkorange}{\color{darkorange}}
+\newcommand{\brownBis}{\color{brownBis}}
+\newcommand{\blueSky}{\color{blueSky}}
+\newcommand{\yellow}{\color{yellow}}
+
+\newcommand{\redOne}{\black}
+\newcommand{\m}[1]{{\red $#1$}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\labelitemi}{{\colorItem $\bullet$}}
+\renewcommand\labelenumi{{\colorItem \theenumi.}}
+\renewcommand\labelitemii{{\greenBis \normalfont\bfseries \textendash}}
+\def \({\bgroup\red $}
+\def \){$\egroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\setlength{\medskipamount}{0ex}
+\lstset{
+  language=Java,
+  basicstyle=\ttfamily,
+  keywordstyle=\sf\colorKeyword,
+  identifierstyle=,
+  commentstyle=\rmfamily,
+  stringstyle=\ttfamily\color{orchidBis},
+  lineskip=-.4ex,
+  extendedchars=true,
+  escapechar=`}
+%  aboveskip=-1ex,
+%  belowskip=0ex,
+
+%------------------------------------------------------------
+%% %begin latex
+%%  \makeatletter
+%%  \def\bbl@frenchitemize{%
+%%     \ifFrenchItemizeSpacing
+%%       \renewenvironment{itemize}%
+%% %        {\begin{list}{{\blue $\blacktriangleright$}}%
+%%         {\begin{list}{{\colorItem $\bullet$}}%
+%%           {\let\@trivlist\@trivlistORI
+%%              \settowidth{\labelwidth}{$\bullet$}%
+%% %             \setlength{\leftmargin}{\labelwidth}%
+%%              \setlength{\leftmargin}{1.5em}%
+%%              \addtolength{\leftmargin}{\labelsep}%
+%%              \ifnum\@listdepth=0
+%%                \setlength{\itemindent}{\parindent}%
+%%              \else
+%%                \addtolength{\leftmargin}{\parindent}%
+%%              \fi
+%%              \setlength{\itemsep}{1ex}% JJL
+%%              \setlength{\parsep}{\z@}%
+%%              \setlength{\topsep}{\z@}%
+%%              \setlength{\partopsep}{\z@}%
+%%              \addtolength{\topsep}{-\parskip}%
+%%              \addtolength{\partopsep}{\parskip}%
+%%           }%
+%%         }%
+%%         {\end{list}}%
+%%     \else
+%%       \def\labelitemi{{\colorItem \blacktriangleright}}%
+%%       \def\labelitemii{\textendash}%
+%%       \def\labelitemiii{\textendash}%
+%%       \def\labelitemiv{\textendash}%
+%%     \fi}
+%% \makeatother
+%% %end latex
+%------------------------------------------------------------

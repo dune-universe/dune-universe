@@ -1,0 +1,6 @@
+(library
+ (public_name ezjs_idb)
+ (modules ezjs_idb_types ezjs_idb)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries ezjs_min)
+ (modes byte))

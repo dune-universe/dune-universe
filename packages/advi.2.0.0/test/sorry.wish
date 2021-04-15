@@ -1,0 +1,4 @@
+#!/usr/bin/wish
+
+label .l -text "sorry, the program is not compiled"
+pack .l

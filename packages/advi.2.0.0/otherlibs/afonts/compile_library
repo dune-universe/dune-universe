@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ocamlc -c xfonts.mli
+ocamlc -c get_xfonts.mli
+ocamlc -c get_xfonts.ml
+ocamlc -c xfonts_table.mli
+ocamlc -c xfonts_table.ml
+ocamlc -c fonts_table.mli
+ocamlc -c fonts_table.ml
+
+ocamlc -a -o fonts_table.cma unix.cma get_xfonts.cmo xfonts_table.cmo fonts_table.cmo
+

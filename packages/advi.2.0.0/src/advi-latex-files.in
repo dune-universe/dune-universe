@@ -1,0 +1,172 @@
+#!/bin/bash
+
+advi_texdir='@ADVI_TEXDIR@'
+texdir='@TEXDIR@'
+latexdir='@LATEXDIR@'
+advi_latexdir=${advi_texdir}/tex/latex
+dest=${latexdir}/advi
+
+cmd=advi-latex-files
+
+
+warn () {
+    echo "$@" 1>&2; 
+}
+
+error () {
+    case $# in 0) ;; *) warn "$@";; esac
+    exit 1
+}
+
+usage () {
+    warn Usage:
+    warn '    ' ${cmd} --install 
+    warn '    ' ${cmd} --install default
+    warn '    ' ${cmd} --install '<PATH>'
+    warn '    ' ${cmd} --uninstall
+    warn '    ' ${cmd} --list
+    warn '    ' ${cmd} --path
+    error
+}
+
+help () {
+    warn Usage:
+    warn 
+    warn '        ' ${cmd} --install '<DEST>'
+    cat <<EOF
+
+ - If <DEST> may be equal to 'default', this will attempt to find the
+   default path for latex style files in your latex distributoin hierarchy
+   and install the files there.
+
+   This command must then probably be run as root.
+   You may actually need to provide the full path:
+
+EOF
+    warn '        sudo' $(which advi-latex-files) --install default
+    cat <<EOF
+   or 
+        sudo' $(which advi-latex-files) --install default
+
+ - Otherwise, <DEST> must be a valid directory. This will attempt to install
+   the files in this directory, which should exist and be writable.
+
+   You will them must ensure that <DEST> is included in your latex source 
+   path environment variable "TEXINPUTS". You may then have to run 
+
+        mktexlsr
+
+EOF
+    exit 0
+    }
+
+case $# in 1) ;; 2) ;; *) usage; esac
+command="$1"
+path="$2"
+
+case "${command}" in
+    --install)
+        case "${path}" in
+            "") help ;;
+            default) ;;
+            /*) dest="${path}";;
+            *) error 'You give a full path' ;;
+        esac
+        ;;
+    --uninstall)
+        case $# in 2) usage;; esac
+        if test "${latexdir}" = undefined
+        then
+            error 'Unknown installation directory: cannot uninstall.'
+        fi
+        ;;
+    --list)
+        ls "${advi_latexdir}"
+        exit 0
+        ;;
+    --path)
+        echo "${advi_latexdir}"
+        exit 0
+        ;;
+    *) usage
+       ;;
+esac
+
+
+install-message () {
+    echo 'Latex files, which are currently in:'
+    echo
+    echo '    ' "${advi_latexdir}/"
+    echo
+    echo 'will be installed in the repository'
+    echo
+    echo '    ' "${dest}/"
+    echo
+    echo "See ${cmd} -help to see how to choose another path"
+    echo 'You may also manually copy the files in some other location'
+    echo 'in your TEXINPUTS path.'
+    echo
+}
+
+installed () {
+    if test ! -r ${dest}
+    then
+        echo "No files installed in ${dest}"
+        exit 1;
+    fi
+}
+
+check () {
+    if test ! -x ${latexdir}
+    then
+        warn "Destination ${latexdir} does not exits."
+        error "Tou must create it first."
+    fi
+
+    if test ! -w ${latexdir}
+    then
+        warn "Destination ${latexdir} is not writable"
+        error 'This script must be run as root.'
+    fi
+
+    read -p 'Continue [yes/no] ' answer
+
+    case ${answer} in
+        yes) echo 'Proceeding...' ;;
+        *) echo Aborted; exit 1 ;;
+    esac
+}
+
+doinstall () {    
+    echo "install ${advi_latexdir}/* ${dest}" && \
+        install -d ${dest}/ && \
+        install ${advi_latexdir}/* ${dest}/ && \
+        echo mktexlsr && \
+        mktexlsr && \
+        echo Done || error 'An error occured'
+}
+
+uninstall-message () {
+    echo 'This is going to uninstall latex files ecurrently in the distribution repository'
+    echo
+    echo '    ' "${dest}/"
+    echo
+    echo 'You may also do this manually.'
+    echo
+}
+
+douninstall () {
+    for i in $(cd ${dest} && ls)
+    do
+        rm -v ${dest}/$i
+    done && 
+    rmdir ${dest} &&
+    mktexlsr
+}
+
+case ${command} in
+     --install)
+          install-message && check && doinstall ;;
+     --uninstall) 
+          installed && uninstall-message && check && douninstall ;;
+esac

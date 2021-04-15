@@ -1,0 +1,61 @@
+ \documentclass[12pt]{article}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{advi}
+
+\pagestyle{empty}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+My organisation \hfill \today \hfill My.Name@organisation.org}
+\vss}}
+
+\def\adviheader{\noindent
+{\bf\Large My talk title is written on each page}\\
+\includegraphics[width=\textwidth]{bar.eps}\par}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\begin{document}
+
+\newpage
+
+\subsection*{{\ActiveDVI} is really cool}
+
+\begin{itemize}
+\item {\bf a DVI} previewer for hackers written in Caml
+\item You may hack your {\LaTeX} source file, your favorite style
+file or the Caml code of the presenter.
+\item You can launch arbitrary commands to animate your presentation!
+\end{itemize}
+
+\newpage
+
+\bigskip
+
+\subsection* {Slide strip-tease}
+
+You can program pauses in your talk writing:
+
+\verb"\adviwait"
+
+\noindent
+The mouse pointer is modified, and {\ActiveDVI} waits for you to press
+the space bar to go on!
+\adviwait
+
+\subsection* {Color writing}
+
+Using the macro \verb"textcolor" you can write text in the color you
+want. For instance, \verb"\textcolor{red}{important}" is rendered as
+\textcolor{red}{important}!
+
+\adviwait
+
+\vfill
+\begin{center}\begin{Large}{\bf That's all folks}\end{Large}\end{center}
+\vfill
+
+\end{document}
+

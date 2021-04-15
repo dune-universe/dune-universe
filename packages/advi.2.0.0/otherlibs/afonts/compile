@@ -1,0 +1,7 @@
+#!/bin/sh
+
+./compile_library
+ocamlc -c main.ml
+
+ocamlc unix.cma fonts_table.cma main.cmo
+

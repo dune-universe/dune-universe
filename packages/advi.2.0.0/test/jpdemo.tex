@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+
+% You need graphics package
+\usepackage{color}
+\usepackage{graphicx}
+
+\usepackage{pst-all}
+
+\usepackage{advi}
+\usepackage{advi-annot}
+
+\usepackage{hyperref}
+
+%% \usepackage[annot]{advi} 
+%% must occur after packages using PStricks macros 
+%% (it redefines some of them) 
+
+\def\mathsym#1{\ifmmode{#1}\else$#1$\fi}
+
+\pagestyle{empty}
+
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{green}{rgb}{0.0,1.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+\definecolor{c1}{rgb}{1.0,0.0,0.0}
+\definecolor{c2}{rgb}{0.5,0.4,0.0}
+\definecolor{c3}{rgb}{0.0,0.8,0.0}
+\definecolor{c4}{rgb}{0.0,0.4,0.5}
+\definecolor{c5}{rgb}{0.0,0.0,1.0}
+\definecolor{c6}{rgb}{0.5,0.0,0.5}
+
+\def\smallpause{0.3}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+押せ: \underline{n}:次頁 \underline{p}:前頁
+\underline{\textvisiblespace} 次停止%
+\hfill{\adviembed[sticky,name=advianim,width=1.56cm,height=1.824cm]{animate -geometry @g! -window @p advilogo.anim.gif}}
+} \vss}}
+
+\def\adviheader{\noindent
+{\bf\Large 悪恥部 泥部位愛(\ActiveDVI)}\\
+\includegraphics[width=\textwidth]{bar.eps}}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\def\adviemptyfooter{\vbox to 0em{\vbox to \vsize {\vfill
+~~} \vss}}
+
+\def\lastpage{\Newpage\adviemptyfooter\adviheader}
+
+%  \setlength\textwidth{660\p@}
+%  \setlength\textheight{460\p@}
+
+\epswhite
+
+\begin{document}
+ 
+\newpage
+
+\subsection* {悪恥部 泥部位愛 の日本語表示について}
+悪恥部 泥部位愛(以下『悪泥』)ではあなたが今御覧になっている通り、
+p\TeX の日本語 DVI ファイルの表示が可能です。
+日本語を表示するために以下の事を行っています。
+
+\begin{itemize}
+\item Camlimages の Freetype インターフェースを通した
+  日本語 true type フォントを使ったレンダリング
+  (ですから Freetype が使えるようにコンパイルされた Camlimages 
+  と一緒にリンクされていない場合は日本語表示できません。)
+\item {\tt vftools} のソースから頂いたデータ
+  を元にした括弧（「、」）や句読点などの位置補正
+\end {itemize}
+
+\subsection*{フォント設定}
+いまさらVFlib のインターフェースなんか書きたくないので、
+\begin{itemize}
+\item \verb+$(ADVILIB)/jpfonts.conf+
+\item もしくは \verb+~/.advi/jpfonts.conf+
+\end{itemize}
+ファイルに自前の\TeX{}フォント $\rightarrow$ TrueTypeフォントの
+マップ情報を持っています。
+
+\subsection* {バグ}
+\begin{itemize}
+\item Truetype フォントは kpsewhich で見えるようにしておく事 
+\end {itemize}
+
+\lastpage
+
+~\vfill
+\begin{center}
+\includegraphics[width=0.5\textwidth]{../tex/advilogo.eps}\\
+{\Large \bf 仏血義理! 夜露死苦!!}
+\end{center}
+\vfill
+
+
+\end{document}

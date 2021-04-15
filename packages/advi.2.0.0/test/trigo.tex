@@ -1,0 +1,80 @@
+\expandafter\ifx\csname graph\endcsname\relax \csname newbox\endcsname\graph\fi
+\expandafter\ifx\csname graphtemp\endcsname\relax \csname newdimen\endcsname\graphtemp\fi
+\setbox\graph=\vtop{\vskip 0pt\hbox{%
+    \special{pn 8}%
+    \special{ar 1050 1350 900 900 0 6.28319}%
+    \graphtemp=.5ex\advance\graphtemp by 1.440in
+    \rlap{\kern 0.960in\lower\graphtemp\hbox to 0pt{\hss O\hss}}%
+    \graphtemp=.5ex\advance\graphtemp by 2.550in
+    \rlap{\kern 1.050in\lower\graphtemp\hbox to 0pt{\hss The trigonometric circle\hss}}%
+    \graphtemp=\baselineskip\multiply\graphtemp by 1\divide\graphtemp by 2
+    \advance\graphtemp by .5ex\advance\graphtemp by 1.350in
+    \rlap{\kern 1.950in\lower\graphtemp\hbox to 0pt{~1\hss}}%
+    \graphtemp=\baselineskip\multiply\graphtemp by -1\divide\graphtemp by 2
+    \advance\graphtemp by .5ex\advance\graphtemp by 0.450in
+    \rlap{\kern 1.050in\lower\graphtemp\hbox to 0pt{\hss 1~}}%
+    \special{pa 0 1350}%
+    \special{pa 2400 1350}%
+    \special{fp}%
+    \special{sh 1.000}%
+    \special{pa 2300 1325}%
+    \special{pa 2400 1350}%
+    \special{pa 2300 1375}%
+    \special{pa 2300 1325}%
+    \special{fp}%
+    \graphtemp=\baselineskip\multiply\graphtemp by 1\divide\graphtemp by 2
+    \advance\graphtemp by .5ex\advance\graphtemp by 1.350in
+    \rlap{\kern 2.400in\lower\graphtemp\hbox to 0pt{\hss $x$}}%
+    \special{pa 1050 2400}%
+    \special{pa 1050 0}%
+    \special{fp}%
+    \special{sh 1.000}%
+    \special{pa 1025 100}%
+    \special{pa 1050 0}%
+    \special{pa 1075 100}%
+    \special{pa 1025 100}%
+    \special{fp}%
+    \graphtemp=.5ex\advance\graphtemp by 0.000in
+    \rlap{\kern 1.050in\lower\graphtemp\hbox to 0pt{\hss $y$~}}%
+    \special{ar 1282 1319 250 250 -0.886486 0.125474}%
+    \special{sh 1.000}%
+    \special{pa 1502 1208}%
+    \special{pa 1440 1125}%
+    \special{pa 1533 1169}%
+    \special{pa 1502 1208}%
+    \special{fp}%
+    \graphtemp=\baselineskip\multiply\graphtemp by -1\divide\graphtemp by 2
+    \advance\graphtemp by .5ex\advance\graphtemp by 1.319in
+    \rlap{\kern 1.532in\lower\graphtemp\hbox to 0pt{~$\theta$\hss}}%
+    \special{pa 1050 1350}%
+    \special{pa 1829 900}%
+    \special{fp}%
+    \graphtemp=.5ex\advance\graphtemp by 0.800in
+    \rlap{\kern 1.929in\lower\graphtemp\hbox to 0pt{\hss $M$\hss}}%
+    \special{pa 1829 900}%
+    \special{pa 1050 900}%
+    \special{fp}%
+    \special{sh 1.000}%
+    \special{pa 1150 925}%
+    \special{pa 1050 900}%
+    \special{pa 1150 875}%
+    \special{pa 1150 925}%
+    \special{fp}%
+    \graphtemp=.5ex\advance\graphtemp by 1.125in
+    \rlap{\kern 0.810in\lower\graphtemp\hbox to 0pt{\hss $\sin\left(\theta\right)\left\{\begin{array}{c} \\ \\ \end{array}\right.$\hss}}%
+    \special{pa 1829 900}%
+    \special{pa 1829 1350}%
+    \special{fp}%
+    \special{sh 1.000}%
+    \special{pa 1854 1250}%
+    \special{pa 1829 1350}%
+    \special{pa 1804 1250}%
+    \special{pa 1854 1250}%
+    \special{fp}%
+    \graphtemp=.5ex\advance\graphtemp by 1.350in
+    \rlap{\kern 1.829in\lower\graphtemp\hbox to 0pt{\hss $\underbrace{\hspace*{1.95cm}}_{\displaystyle\cos~\left(\theta\right)~}$}}%
+    \hbox{\vrule depth2.550in width0pt height 0pt}%
+    \kern 2.400in
+  }%
+}%
+\showgraph

@@ -1,0 +1,102 @@
+
+# These files depend on the interfaces in ../lib
+# OCAMLINCLUDES += ../graph +site-lib/camlimages
+OCAMLINCLUDES += +site-lib/camlimages
+CFLAGS += -I /opt/local/lib/ocaml
+
+
+############################################################################
+
+CFILES[] = 
+  events
+  grwm
+  grY11
+
+StaticCLibrary(clibgr, $(CFILES))
+
+# OCAMLC_FLAGS += $(addsuffix .o, $(CFILES))
+
+
+############################################################################
+
+OCAML_OTHER_LIBS[] +=
+  unix
+  str
+  graphics
+  camlimages_core
+  camlimages_all
+  camlimages_graphics
+  camlimages_freetype
+
+
+############################################################################
+
+
+FILES[] = 
+  config
+  misc
+  timeout
+  ageometry
+  options
+  rc
+  userfile
+  graphicsY11
+  global_options
+  busy
+  gradient
+  gterm
+  launch
+  dvicolor
+  shot
+  laser_pointer
+  symbol
+  input
+  table
+  pkfont
+  ttfont
+  jfm
+  search
+  font
+  glyph
+  devfont
+  adviUnits
+  dimension
+  dvi
+  drawimage
+  gs
+  transimpl
+  embed
+  grdev
+  addons
+  scratch
+  cdvi
+  driver
+  thumbnails
+  dviview
+  main
+
+# Build the program.
+# Builds horsefly.exe on Win32, and horsefly on Unix.
+# The first argument is the name of the executable.
+# The second argument is an array of object files (without suffix)
+# that are part of the program.
+
+ALLFILES = \
+		$(addsuffix .o, $(CFILES)) \
+		$(addsuffix .cmx, $(FILES))
+
+advi: $(ALLFILES)
+	$(OCAMLFIND) $(OCAMLOPT) \
+	        $(mapprefix -I, $(OCAMLINCLUDES)) \
+		-cclib -lXinerama \
+		-o $@ \
+	        $(addsuffix .cmxa, $(OCAML_OTHER_LIBS)) \
+		$(ALLFILES)
+
+# OCamlProgram(advi, $(FILES))
+
+# Build the program by default (in case omake is called
+# without any arguments).  EXE is defined as .exe on Win32,
+# otherwise it is empty.
+
+.DEFAULT: advi$(EXE)

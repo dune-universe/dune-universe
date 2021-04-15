@@ -1,0 +1,254 @@
+18/03/2010
+============
+
+ - add support for gz and bz2
+ - clean up the list below
+
+
+============================================================================
+
+2005-01-17
+
+- Add a word about epsbygs in the FAQ.
+- verify -fg toto error message.
+- implement cmyk color parsing on the command line.
+- add compression (or decompression) to images and ps files.
+- add a lib to implement a vector graphic language.
+
+ - new engine
+ - input foo.ps in gs
+ - draw gpic in gs
+
+BEFORE RELEASE:
+===============
+Of course, I know it.
+But string a la 
+-scratch-font -*-*-*-*-*-*-*-*-*-*-*-*-koi8-r
+is change font really, but advi not take any key-code with eighth bit (ie
++symbols with code >127)
+
+Else one bug or feature ;)
+advi from mandrake-rpm use gzip and gs and try find it in hard places
++/usr/local/bin/gs and /usr/bin/gzip.
+But in my mandrake-like system they palces at /usr/bin/gs and /usr/gzip.
+Of course, it is not difficult make symlinks ;) howether, I think it will be
++better if calling of programs not use full paths. I think these program places 
++in directories which is inscribed in $PATH variable.
+
+ * Vérifier que adviwait[sec] marche.
+
+ * Vérifier que toutes les formes de spécification de couleurs marchent
+
+ * Vérifier le resizing et le grossissement.
+
+ * Vérifier les bugs de Damien.
+
+ * Distribuer pour MacOs X
+
+KNOWN BUGS:
+===========
+ *PW security problem: should read .advirc in the directory where the
+   DVI file resides, NOT where advi is launched.
+ *PW Spurious fatal error: (the psfile had a bounding box, but the dvi
+   file contained vscale=100.0 hoffset=-228.0 voffset=-368.0
+   hscale=100.0, instead of llx, lly, urx, ury).
+ Fatal error: exception Failure("psfile: no bbox")
+ ???
+ * going to full screen and back changes slightly the size and position 
+   of the window
+   This seems to be entirely due to improper saving of the X window state
+   in the fullscreen code in deviview.ml: one is not getting the same
+   width/height/x/y position as X
+
+DELAYED AFTER RELEASE:
+======================
+
+LIMITATIONS:
+
+* Grdev.cut does not work ?
+==>PW could you elaborate a bit ???
+
+* PStricks ne marche pas correctement avec \ncarc etc. (annotation sur les
+  flèches). 
+
+* font searches uses the hard-wired directory "/usr/share/texmf/ls-R" (in 
+config.ml.in instead of dynamically finding the search path for fonts). 
+This will not work if the user install news fonts and sets some environment
+variable accordingly. 
+==>PW has to be revisited
+
+CLEANING: 
+
+* Parsing of specials should probably be shared (it is duplicated). 
+  The abstract syntax tree should provided a data-type for specials
+
+* The hyperref links (green boxes) are a little to close to the text (take a
+  link that ends with a '2' for instance) 
+  ==>PW added some extra blank space, but this needs to be rewritten
+  using the parameters of the font of the glyphs at hand.
+
+WISH LIST: 
+
+ - Some option to stop effects would also be nice
+
+    . wait are ignored
+
+    . embeded applets are not launched
+      (then, they could be launch by a key stroke, this is actually an
+       interesting mode for applets)
+    ==>PW implemented -safer option.
+        need to add launching by keystrokes as suggested here and below
+
+    . reload would not kill/restart applets that are the same string command
+      after reloading (this is also an interesting feature)
+    ==>PW could you explain ? May be you can try ^L (redisplay) and r
+    (redraw), as opposed to R (reload) ? In addition, I guess your
+    wish also has some relationship with the semantics of advi's persistent
+    and sticky embedded applications ? Is there still something to
+    implement for that wish ?
+
+ - Adapter la résolution aux vrai dpy de l'écran
+   ==>PW code is prepared to do so. Still need to get characteristics
+   of the screen into X ressources.
+
+ - transbox: replace steps by a timer
+   ==>PW to wish list
+   ==>PW simplify implementation ??
+      (transbox_save should not
+       be called from within tex but as the first action of trans_go ???)
+ - transbox: add general path specification
+   ==> PW started implementation with RDC
+   ==> PW still todo: * allow loading of .cmo files to generate paths
+                      * documentation
+                      * revise advi.sty implementation
+
+ - alpha, blend, etc. for images: keep track within text and emit the info
+   at every image?
+   ==>PW could you explain (alpha and blending preferences already are
+   image specific, so what more ?)
+
+ - tester fullscreen mode
+ ==>PW I don't think it works properly.
+
+ - fork? (i.e. lancer un dvi identique à celui qui tourne)
+
+ - améliorer advi.sty
+ 
+  * pour les bulles-actives 
+      -> générer un slide supplémentaire
+      -> générer des footnotes (avec un cadre ou dans une mini-bulle)
+
+  * exporter \ifadvi et \Ifadvi
+  ==>PW done ?
+
+ -PW ajouter m et i comme j et k mais une ligne à la fois (scrolling).
+
+ -PW We need a .advirc file to setup options at launch time, and store
+user's preferences for key bindings.
+
+ -PW Traiter les fichiers postscript sans llx lly urx ury mais avec
+vscale=100.0 hoffset=-228.0 voffset=-368.0 hscale=100.0
+
+ - while 'g' jumps to aboslute (dvi) <page number>, 
+  Make 'G' jumps to the page.<page number> url, i.e. latex page number, 
+  whenever possible, and if not jump to <page number> as 'g'. 
+  (Do not make 'G' the default, since it is fragiles ---depends on how latex
+  has generated page numbers. Experiment with book files slides, etc.)
+
+ -PW Need to control advi from within tex
+   \advikey{key} would generate a call to key as if key has been pressed
+   \advicom{f arg} would generate a call to internal function f with
+   argument arg.
+
+ -PW Need to be able to generate graphics from the Graphics module, that
+   are displayed directly inside the advi screen.
+
+ -PW Need also to be able to pop a small window to request something to
+ the user (for instance to launch applications on a on demand basis).
+
+ -PW Should incorporate the clock into the core advi in order to be able
+ to interact smoothly with it (for instance to have a key to hide it)...
+
+ DR: Not necessarily: the key bindings could be programmed from tex (neeed
+ to be added). Then the user could also launch an application by hitting a
+ key of his choice [ add an action on-key similar to on-clikc or on-mouse
+ for active parts ]
+ PW: I already listed above:
+   ``\advikey{key} would generate a call to key as if key has been pressed
+     \advicom{f arg} would generate a call to internal function f with
+     argument arg.''
+   So we should add also the combinaison of both
+   \advikeybinding{key}{f arg}
+   that bind keystroke key to internal function call f (arg)
+
+ -PW Need a key to hide and show windows
+
+==> Which ones?
+ ==> PW: the windows that advi launches, what else ?
+
+ - Need a key binding similar to 'g' such that it goes to the page and pushes
+   on the stack all the pages from here to the target page
+
+ -PW Need a ``compiling'' version of advi (name it advic) that creates
+   and caches all the images of a presentation to speed up the
+   presentation afterwards. (Otherwise one is obliged to play the
+   presentation in advance by viewing every slides!)
+
+ DR: I don't think so, since there is already several unfreeze flags to do
+ that.  You should just use them, maybe add -unfreeze on the command line,
+ that would do as if you press the unfree keep.
+ PW: Good news! You're right, I want to use those flags not to
+ reimplement them! So, please tell me what are the names of the
+ ``several unfreeze flags to do that'' ?
+
+ -PW Add a new macro !current-page! for insertion in arguments of command
+   calls.
+
+ -PW Animated backgrounds ?
+
+General multimedia support
+--------------------------
+ -PW Engine for animated stuff from the W3C (SVG standard) ?
+ -PW Engine for PDF rendering ?
+ -PW Engine for SMIL rendering ??
+
+ -PW add a new -n flag to advi, that would list the commands that could
+possibly be launched from a dvi file.
+ ==> Done with RDC
+     -PW should document it!
+     ==> PW Done
+
+Bindings
+--------
+
+ - bind focus in to + and = and focus out to - and _
+ PW Why all those doublons (triplons, say!)?
+ (There already exist > and < to do that)
+
+ PW We should choose one default key for each functionality and let the
+ user redefine those bindings as soon as we have an .advirc
+ implementation ?
+
+Scratching
+----------
+ -PW Fonction stabilo
+ -PW Fonction tracé supplémentaire: tracé soutenu par la machine
+ (horizontal, vertical et à 45 o) par analyse du déplacement de la
+ souris (mode par défaut ou mode obtenu par shift).
+ -PW Need to save the stabilo drawings and replay them on
+  demand. (This would allow arbitrary add-ons (prepared in advance) to
+  be drawn on the slide.)
+
+Interaction with the WM
+-----------------------
+
+(1) Name of icons
+
+ -PW Should be able to set up the name of advi's icon.
+  (Should also provide an icon for advi.)
+
+(2) Window class
+
+ -PW Must set up the WM_CLASS X property to "advi": this way we would
+  automatically benefit from the WM automatic handling of ``onglets''
+  (window grouping).

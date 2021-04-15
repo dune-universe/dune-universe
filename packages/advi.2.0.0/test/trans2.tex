@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+
+\usepackage{advi}
+
+\usepackage{color}
+\usepackage{graphicx}
+
+\pagestyle{empty}
+
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{green}{rgb}{0.0,1.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+\definecolor{c1}{rgb}{1.0,0.0,0.0}
+\definecolor{c2}{rgb}{0.5,0.4,0.0}
+\definecolor{c3}{rgb}{0.0,0.8,0.0}
+\definecolor{c4}{rgb}{0.0,0.4,0.5}
+\definecolor{c5}{rgb}{0.0,0.0,1.0}
+\definecolor{c6}{rgb}{0.5,0.0,0.5}
+
+\def\keymenu#1{\textcolor{red}{\underline{#1}}}
+
+\def\advifooter{\vbox to 0em{\vbox to \vsize {\vfill
+Press: \keymenu{n}ext page \keymenu{p}revious page
+\keymenu{\textvisiblespace} next pause%
+\hfill{\adviembed[sticky=advianim,width=1.56cm,height=1.824cm]{animate -geometry @g! -window @p advilogo.anim.gif}}
+} \vss}}
+
+\def\adviheader{\noindent
+{\bf\Large {\ActiveDVI}  --- moving text}\\
+\includegraphics[width=\textwidth]{bar.eps}}
+
+\let \Newpage \newpage
+\def \newpage {\Newpage \advifooter\adviheader}
+
+\def\adviquitfooter{\adviwait\noindent
+\centerline{\Large{Press: \keymenu{q} to quit}}
+}
+
+\def\lastpage{\Newpage\adviheader}
+
+\begin{document}
+
+\newpage
+
+\section*{Text movements}
+
+\noindent
+You can move texts around with the \verb"\advitransbox" \TeX~macro.
+
+\noindent For instance,
+
+\verb"\advitransbox{slide,from=right}{coming from the right}}"
+
+\noindent moves the text {\em coming from the right} from the
+right edge of the slide to its correct position into the
+page. Variants \verb"right", \verb"left", \verb"top", and
+\verb"bottom" of this macro are available.
+
+{
+\Huge
+\begin{itemize}
+\item \textcolor{red}{From \advitransbox{slide,from=right}{right}}
+\item \textcolor{green}{From \advitransbox{slide,from=left}{left}}
+\item \textcolor{blue}{From \advitransbox{slide,from=top}{top}}
+\item \textcolor{cyan}{From \advitransbox{slide,from=bottom}{bottom}}
+\end{itemize}
+}
+
+\adviwait
+\paragraph {Note}
+The command is robust:
+
+$$
+\advitransbox{slide,from=down}
+   {it may include \verb"verbatim" material}
+$$
+
+\newpage
+\section*{Setting speed of text movements}
+
+\noindent
+You can specify the number of,steps of the animation with the
+extra optional \verb"steps=int" argument.
+
+\noindent For instance,
+
+\verb"\advitransbox{slide,from=right,steps=70}{coming from the right}"
+
+\noindent moves the text {\em coming from the right} at a peaceful
+pace.
+
+\adviwait
+
+{
+\Huge
+\begin{itemize}
+\item From \advitransbox{slide,from=right,steps=70}{right}
+\item From \advitransbox{slide,from=left,steps=60}{left}
+\item From \advitransbox{slide,from=top,steps=70}{top}
+\item From \advitransbox{slide,from=bottom,steps=100}{bottom}
+\end{itemize}
+}
+
+\bigskip
+\noindent\advitransbox{slide,from=top,steps=150}{%
+{\begin{minipage}{\textwidth}
+\adviheader\\
+\end{minipage}}
+}
+
+\vfill
+
+\lastpage
+\section*{Other effects}
+
+\verb"\advitransbox" can also animate the apparition of non moving texts:
+
+{\Large
+\begin{itemize}
+\item Wipe \adviwait : \advitransbox{wipe,steps=50,from=left}{\verb"\advitransbox{wipe}{text}"}
+\item Block\adviwait : \advitransbox{block,steps=50}{\verb"\advitransbox{block}{text}"}
+\end{itemize}
+}
+~\vfill~
+\advitransbox{slide,from=top,steps=20}{\adviquitfooter}
+
+\end{document}

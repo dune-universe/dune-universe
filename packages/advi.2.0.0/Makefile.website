@@ -1,0 +1,56 @@
+include Makefile
+
+VERSION = 2.0.0
+RELEASETAG = advi-$(VERSION)
+
+EXTRA_DIST = LGPL
+
+.PHONY: gittag gituntag gitretag
+gittag:
+	git tag -a $(VERSION)
+
+gituntag:
+	cvs tag -d $(VERSION)
+
+gitretag:
+	git tag -c $(VERSION)
+
+opampublish:
+	opam publish
+
+check: check.tmp
+	rm -rf check.tmp
+
+check.tmp: $(DIST)
+	rm -rf check.tmp
+	mkdir check.tmp
+	cd check.tmp && tar -xf ../$(DIST) && cd advi && make 
+
+FILEPERMS = -g cristal -m 644
+DIRERMS = -g cristal -m 755
+
+ROOTFILES = README.md INSTALL.md LICENSE.md CHANGES.md
+
+DIST = advi-$(VERSION).tar.gz
+
+# $(DIST): check
+$(DIST): 
+	git archive --prefix=advi/ -o $(DIST) $(VERSION)
+
+RSYNC = rsync --chmod=u+w,o-w,o+rX 
+
+.PHONY: web website webdist webonly 
+
+include web/Makefile.website
+
+website: webdist webonly
+
+web: $(CONFIG)
+	make -C web
+
+webdist: $(DIST)
+	$(RSYNC) $(DIST) $(WEBSITEDIR)
+
+webonly: web
+	make -C doc website
+	make -C web website

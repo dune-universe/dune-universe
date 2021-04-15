@@ -1,0 +1,258 @@
+<!--#include virtual="avanttitre-fra.htm"-->
+Active-DVI FAQ
+<!--#include virtual="aprestitre-fra.htm"-->
+
+<!-- \$Id$ -->
+
+<H1 ALIGN=CENTER><A name="FAQ">Active-DVI: Foire aux questions</A></H1>
+
+<!--#include virtual="advi-version.htm"-->
+
+<P ALIGN=RIGHT><IMG SRC="advilogo.anim.gif"></P>
+
+<DL>
+
+<DT><STRONG>Existe-t-il une version Win32 ?</STRONG>
+ <DD>Réponse: <I>Malheureusement, il n'y a pas de version Windows native.
+ Toutefois, vous pouvez utiliser l'émulateur Cygwin and construire
+Active-DVI à partir des fichiers source, après avoir configurer le
+programme à l'aide de la commande spéciale
+<CODE>configure_Cygwin</CODE>.</I>
+ <DD>Réponse additionnelle: <I>vous pouvez aussi utiliser le CD-ROM
+<STRONG>DemoLinux</STRONG> qui contient une version d'Active-DVI: si
+vous pouvez rebooter la machine Windows, redémarrez-la depuis le
+CD-ROM et lancez advi. Après la présentation redémarrez simplement la
+machine: DemoLinux n'écrit rien sur le disque dur si bien que la
+machine repart sans aucune modification.
+
+<DT><STRONG>Comment obtenir une présentation plein écran ?</STRONG>
+ <DD>Réponse: <I>Lancez Active-DVI et tapez <CODE>^F</CODE>
+(control-F) dans la fenêtre d'Active-DVI.</I>
+
+<DT><STRONG>Comment revenir du plein écran à une taille normale ?</STRONG>
+ <DD>Réponse: <I>Tapez <CODE>^F</CODE> (control-F) à nouveau dans la
+fenêtre d'Active-DVI!</I>
+
+<DT><STRONG>Comment centrer le transparent en mode plein écran ?</STRONG>
+ <DD>Réponse: <I>Utilisez la souris pour déplacer la boîte (bounding
+box) qui contient le transparent: en appuyant sur la touche contrôle
+et le bouton gauche de la souris le contour de la boîte apparaît; il
+vous suffit de maintenir touche et souris pour déplacer la boîte où
+vous le voulez.</I>
+
+<DT><STRONG>Comment savoir quelles sont les clefs Active-DVI
+disponibles pendant la présentation ?</STRONG>
+ <DD>Réponse: <I>Tapez <CODE>?</CODE> dans la fenêtre Active-DVI.</I>
+
+<DT><STRONG>Comment avoir des exemples de présentations ?</STRONG>
+ <DD>Réponse: <I>Regardez dans la distribution le sous-répertoire
+<CODE>examples</CODE>. Les sous-répertoires sont <CODE>basics</CODE>
+(de simple à modérément avancé), <CODE>slitex</CODE> avec 4
+présentations simples à mettre en oeuvre dont on peut aisément
+s'inspirer, <CODE>prosper</CODE> (deux présentations dans les
+répertoires <CODE>LL</CODE> et <CODE>Join</CODE>) <CODE>seminar</CODE>
+(deux présentations dans les sous-répertoires <CODe>a14</CODE> et
+<CODE>clock</CODE>). Vous pouvez aussi explorer le sous-répertoire
+<CODE>test</CODE> du répertoire principal de la distribution et jeter
+un coup d'oeil aux divers fichiers <CODE>*.tex</CODE> qui y sont.
+Dans chacun de ces sous-répertoires lancez la commande
+<CODE>make</CODE> pour construire les différentes présentations.
+Lancer <CODE>make</CODE> au niveau du répertoire <CODE>examples</CODE>
+construit et visualise tour-à-tour tous les exemples de
+présentations.</I>
+
+<DT><STRONG>Comment assurer la sécurité des présentations si l'on peut
+lancer n'importe quel programme depuis un fichier DVI ?</STRONG>
+ <DD>Réponse: <I>Par défaut Active-DVI ne lance pas automatiquement
+les applications embarquées dans les fichiers DVI. Au moment du
+lancement d'une application embarquée, la présentation s'arrête et une
+boîte de dialogue vous indique quelle application va être lancée puis
+vous demande confirmation avant d'effectivement exécuter le code.</I>
+
+<DT><STRONG>Comment savoir à l'avance quelles applications sont
+lancées par un fichier DVI ?</STRONG>
+ <DD>Réponse: <I>Tapez <CODE>advi -n fichier.dvi</CODE>. Active-DVI ne
+se lance pas mais analyse le fichier pour trouver toutes les
+applications susceptibles d'être appelées durant la présentation.</I>
+
+<DT><STRONG>Comment imprimer mes transparents «en vrai», sur du
+papier ou des transparents pour rétro-projecteur ?</STRONG>
+ <DD>Réponse: <I>Facile. Utilisez l'option <CODE>ignore</CODE> du style
+<CODE>advi.sty</CODE> (écrivez
+<CODE>usepackage[ignore]{advi}</CODE>). Puis recompilez votre fichier
+source avec LaTeX: le style d'Active-DVI supprimera certains effets et
+en simulera d'autres à l'aide de postscript.</I>
+ <DD>Réponse supplémentaire: <I>Impossible. Comment pouvez-vous croire
+que quelque chose ou quelqu'un puisse être capable de rendre sur une
+simple feuille de papier tous ces mouvements de danse de vos textes et
+ces multiples effets, créatifs, fascinants, et pour tout dire si
+amusants, qui sont présents tout au long de votre présentation ? Il n'y
+a décidément aucun espoir que vous puissiez utiliser des transparents
+pour votre colloque: vous avez réellement besoin d'Active-DVI pour
+jouer votre présentation!</I>
+ <DD>Réponse préventive supplémentaire<SUP>2</SUP>: <I>La réponse
+supplémentaire précédant immédiatement celle-ci est une blague; en
+fait, nous avons travaillé de notre mieux pour que l'option
+<CODE>ignore</CODE> de <CODE>advi.sty</CODE> fasse un bon travail;
+il n'en demeure pas moins, que le style fait de son mieux pour remplir
+un contrat impossible.</I> 
+
+<DT><STRONG>Comment écrire sur un transparent au cours de la
+présentation ?</STRONG>
+ <DD>Réponse: <I>Tapez <CODE>s</CODE> pour écrire du texte et
+<CODE>S</CODE> pour dessiner.</I>
+
+<DT><STRONG>Comment écrire des programmes avec des couleurs dans mes
+présentations ?</STRONG>
+ <DD>Réponse: <I>Utilisez l'environnement <CODE>alltt</CODE>; les
+couleurs (et autres indications typographiques) sont alors disponibles avec
+une fonte machine à écrire. Par exemple:</I>
+<PRE>
+\begin{alltt}
+{\it{(* Remark that double semi-colon is mandatory here. *)}}
+let x = 1\textcolor{red}{;;}
+let r = \{foo = 1; bar = "toto"\};;
+\textcolor[named]{Red}{let} z = r.foo;;
+\end{alltt}
+</PRE>
+
+<DT><STRONG>Comment écrire des programmes avec des formules
+mathématiques dans ma présentation ?</STRONG>
+ <DD>Réponse: <I>Utilisez l'environnement <CODE>alltt</CODE>; les
+formules de mathématiques dans cet environnement ne posent pas de
+problèmes pourvu que vous les entouriez des parenthèses spéciales
+<CODE>\(</CODE> et <CODE>\)</CODE>.</I>
+
+<DT><STRONG>Certaines parties de mes transparents n'apparaissent pas
+avec advi (alors qu'elles sont imprimées par <CODE>xdvi</CODE>). Quer
+se passe-t-il?</STRONG>
+ <DD>Réponse: <I>Vous devez utiliser des fontes virtuelles et
+Active-DVI ne sait pas les traiter lui-même. Il faut donc préprocesser
+votre fichier DVI pour expanser les fontes virtuelles avec la commande
+<A HREF="http://www.ctan.org/tex-archive/dviware/dvicopy/">dvicopy</A>.
+Par exemple, la commande:</I>
+<PRE>
+        dvicopy foo.dvi foo.advi && advi foo.advi
+</PRE>
+<I>règle normalement ce problème.</I>
+
+<DT><STRONG>Comment visualiser les fontes PostScript Adobe
+(comme <CODE>ptmr8t</CODE>) avec Active-DVI ?</STRONG>
+
+ <DD>Réponse: <I>Vous devez préprocesser votre fichier DVI avec la commande
+<A HREF="http://www.ctan.org/tex-archive/dviware/dvicopy/">dvicopy</A>
+qui expanse les fontes virtuelles:</I>
+<PRE>
+        dvicopy foo.dvi foo.advi && advi foo.advi
+</PRE>
+<I>règle normalement le problème.</I>
+
+ <DD>Réponse additionnelle: <I> Active-DVI ne peut utiliser que
+les fontes basées sur des fichiers PK, dont les sources sont des
+fichiers <CODE>.mf</CODE>. Les fontes Adobe n'ont pas de fichiers
+source <CODE>.mf</CODE> associés; c'est pourquoi METAFONT ne peut
+créer de fichiers <CODE>.pk</CODE> correspondants pour Active-DVI.</I>
+
+ <DD><I>Pour s'en tirer, il suffit d'utiliser un équivalent de la fonte
+qui pose problème, parmi l'ensemble des fontes Computer-Modern qui a
+été créé par Donald Knuth pour servir de fontes par défaut à TeX.</I>
+
+<DT><STRONG>Comment se fait-il qu'Active-DVI ait des problèmes de
+marges (alors que <CODE>xdvi</CODE> n'en a pas) ?</STRONG>
+ <DD>Réponse: <I><CODE>xdvi</CODE> et <CODE>advi</CODE> n'utilisent pas
+les mêmes marges. <CODE>Advi</CODE> utilise la spécification
+d'encombrement (bounding box) émise par TeX dans le fichier DVI et
+n'ajoute aucune marge supplémentaire. Malheureusement, beaucoup de
+styles et de librairies LaTeX ne donnent pas une valeur correcte à la
+bounding box.</I>
+ <DD><I>Le remède consiste donc à modifier les marges en déplaçant la boîte
+englobante (bounding box) à la souris (Contrôle-Bouton Gauche), ou sur la
+ligne de commande au lancement de <CODE>advi</CODE> 
+(options <CODE>-vmargin</CODE> et <CODE>-hmargin</CODE>).</I>
+
+<DT><STRONG>Comment visualiser la page pointée par une ancre HTML dans
+un brouteur déjà lancé ?</STRONG>
+ <DD>Réponse: <I>pour afficher les liens hyper texte qui pointent vers
+des pages HTML, vous devez fixer correctement l'option
+<CODE>-browser</CODE> d'<CODE>advi</CODE>,
+ou alors appeler explicitement le brouteur de votre choix dans une commande
+<CODE>adviembed</CODE>. Vous pouvez par exemple utiliser:</I>
+<PRE>
+netscape -remote 'openURL(http://www.acm.org)'
+</PRE>
+
+<I>Pour insérer une telle commande dans une macro <CODE>adviembed</CODE>,
+un peu de magie est nécessaire parce que le caractère <CODE>'</CODE>
+est interprété par LaTeX. Pour l'en empêcher, écrivez par exemple:</I>
+<PRE>
+{\catcode `\' 12 \catcode `\: 12, \catcode `\' 12
+  \adviembed {netscape -remote 'openURL(http://www.acm.org)'}
+}
+</PRE>
+</DD>
+
+<DD><I>Pour <CODE>mozilla</CODE>, utilisez l'option
+<CODE>mozilla -remote</CODE>. Comme pour la question précédente, cette
+option suppose que mozilla est déjà lancé. Si vous voulez une commande
+qui marche dans tous les cas, même si aucun programme mozilla ne
+tourne, utilisez une commande shell; par exemple:</I>
+<PRE>
+#!/bin/bash
+
+# Écrivez ici l'adresse du binaire de mozilla, par exemple
+#MOZILLA=/usr/local/mozilla/mozilla
+MOZILLA=`which mozilla`
+
+case $# in
+ 1) 
+   if \$MOZILLA -remote "ping()" 2>/dev/null
+   then 
+     \$MOZILLA -remote "openURL($1,new-window)" || \
+     \$MOZILLA "$@" 
+   else
+     \$MOZILLA "$@" 
+   fi;;
+ *)
+   \$MOZILLA "$@";;
+esac
+</PRE>
+<I>(À la place de la spécification de comportement
+<CODE>new-window</CODE>, vous pouvez choisir <CODE>new-tab</CODE> ou
+rien, comme vous le préférez.)</I>
+
+<DT><STRONG>Comment éviter ces messages superfétatoires d'<CODE>advi</CODE>
+au sujet de <CODE>dvips</CODE> ?</STRONG>
+
+<DD>J'obtiens par exemple
+<PRE>
+dvips: Unknown keyword (proc) in \special will be ignored
+dvips: Unknown keyword (koyaa) in \special will be ignored
+dvips: Unknown keyword (record) in \special will be ignored
+dvips: Unknown keyword (start) in \special will be ignored
+dvips: Couldn't find figure file advi:; continuing
+dvips: Unknown keyword (embed) in \special will be ignored
+dvips: Unknown keyword (name) in \special will be ignored
+dvips: Unknown keyword ("xmms") in \special will be ignored
+</PRE>
+ </DD>
+ <DD>Réponse: <I>Comme le disent les messages, ces erreurs ne
+proviennent pas d'<CODE>advi</CODE> mais de la commande
+<CODE>dvips</CODE> qui ne comprend pas les instructions
+<CODE>\special</CODE> que le style LaTeX <CODE>advi.sty</CODE> insère
+and le fichier DVI.
+Ce comportement est normal et explicitement spécifié par le format DVI:
+les interprètes de fichiers DVI doivent ignorer les instructions
+<CODE>\special</CODE> qu'ils ne comprennent pas. Toutefois,
+rien n'empêche les interprètes d'émettre une alerte quand ils
+rencontrent une instruction qu'ils ne connaissent pas.
+</I>
+
+</DL>
+
+<P ALIGN=LEFT><IMG SRC="bar.gif"></P>
+<ADDRESS>Contact <A
+ HREF="mailto:Pierre.Weis@inria.fr">Pierre.Weis@inria.fr</A></ADDRESS>
+
+<P ALIGN=CENTER><IMG SRC="inria.gif"></P>
+
+<!--#include virtual="basdepage-fra.htm"-->

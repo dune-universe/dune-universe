@@ -1,0 +1,62 @@
+\providecommand{\driver}{}
+\def \advidriver {ignore}
+\def \dvipsdriver{dvips}
+\def \dvipdfmdriver{dvipdfm}
+\ifx \driver \dvipsdriver 
+\else \ifx \driver \dvipdfmdriver 
+\else \let \advidriver \empty \fi \fi
+
+\def \cmdindex #1{\index{\string\cmdtt \string #1}}
+\def \cmdtt #1{\texttt{\string #1}}
+\def \docdef #1{\cmdindex{#1}{\tt \string #1}}
+\def \docenv #1#2{\index{#1}{\cmdtt{\begin}\{\doctt{#1}\}#2%
+                             \cmdtt{\end}\{\doctt{#1}\}}}
+\def \docid #1{$\langle\hbox{\rm\em#1}\rangle$}
+\def \doctt #1{\texttt{#1}}
+\def \docarg #1{{\texttt {\{\docid{#1}\}}}}
+\def \docopt #1{{\texttt {[\docid{#1}]}}}
+\def \docpar #1{{\texttt {(\docid{#1})}}}
+\def \doc@empty {}
+\newcommand \dockey[3][]{{\tt#2\def\@test {#3}\ifx \@test \doc@empty \else
+  =\docid{#3}\fi}\def \@test {#1}\ifx \@test \doc@empty \else
+  \quad (default value is {\tt #1})\fi}
+
+\edef\hyper@quote{\string"}
+\edef\hyper@sharp{\string#}
+\edef\hyper@colon{\string:}
+
+\newcommand{\softtarget}[2]%
+  {\special{html:<a name=\hyper@quote#1\hyper@quote>}#2%
+   \special{html:</a>}}
+\newcommand{\softlink}[2]%
+  {\special{html:<a href=\hyper@quote\hyper@sharp#1\hyper@quote>}#2%
+   \special{html:</a>}}
+\newcommand{\furl}[2]%
+  {\special{html:<a href=\hyper@quote http\hyper@colon//#1\hyper@quote>}#2%
+   \special{html:</a>}}
+
+\newenvironment{citemize}%
+{\begin{list}{$\bullet$}{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+\newenvironment{cenumerate}%
+{\begin{list}{-}{\itemsep 0pt \topsep 5pt}}{\end{list}}
+
+
+% to be added in xxx.sty
+\makeatletter
+\begingroup
+\catcode `\| 0
+\catcode `|\ 11%
+|xdef|special@backslash{\}%
+|endgroup%
+\def\back{\special@backslash}
+%\makeatother
+% pour tester
+%\special{foo:\special@backslash t}
+
+% Macros specific to splash.tex
+\def\key#1{\textcolor{red}{#1}}
+\def\ikey#1#2#3{\key{#1} & #2 & -- & #3\\}
+\def\arg{\textcolor{blue}{arg }}
+\def \Stretch {\vspace{\stretch{1}}}
+\def \Medskip {\par\medskip}

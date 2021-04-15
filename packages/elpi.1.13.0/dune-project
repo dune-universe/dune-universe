@@ -1,4 +1,0 @@
-(lang dune 2.0)
-(name elpi)
-(version v1.13.0)
-(allow_approximate_merlin)

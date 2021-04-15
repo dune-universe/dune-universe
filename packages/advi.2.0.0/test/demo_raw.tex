@@ -1,0 +1,108 @@
+%% Copyright Roberto Di Cosmo, Jun Furuse, Didier Remy, and Pierre Weis
+%% All rights reserved.
+
+%% $Id$
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage {pstcol,color,pst-node}
+\usepackage{advi}
+\usepackage{advi-annot}
+\usepackage{advi-graphicx}
+\usepackage{demo}
+\usepackage{superpose}
+
+\begin{document}
+
+\newpage
+
+\subsection* {Raw embedded applications in {\ActiveDVI}}
+
+\advirecord{embedlogo} 
+ {\centerline{\adviembed[raw=advilogo,width=3cm, height=3.3260869cm]%
+  {animate -geometry @g! -window @p advilogo.anim.gif}}}
+ 
+\advirecord{unmap}
+ {\adviunmapembed[advilogo]}
+
+\advirecord{map}
+ {\advimapembed[advilogo]}
+
+\advirecord{kill}
+ {\advikillembed{advilogo}}
+
+\begin{itemize}
+\item \advianchor[click]{embedlogo}%
+  {Launch the animation of the {\ActiveDVI} logo}
+\item \advianchor[click]{map}
+  {Map the {\ActiveDVI} logo window}
+\item \advianchor[click]{unmap}
+  {Unmap the {\ActiveDVI} logo window}
+\item \advianchor[click]{kill}%
+  {Kill the {\ActiveDVI} logo and suppress its window}
+\end{itemize}
+
+\adviwait \advikillallembed{advianim}
+
+\newpage
+
+\subsection* {Raw embedded applications are sticky}
+
+The raw embedded application is not automatically killed or unmap by
+{\ActiveDVI}. Hence you have to do it yourself!
+
+\advirecord{unmap}
+ {\adviunmapembed[advilogo]}
+
+\advirecord{map}
+ {\advimapembed[advilogo]}
+
+\begin{itemize}
+\item \advianchor[click]{map}
+  {Map the {\ActiveDVI} logo window}
+\item \advianchor[click]{unmap}
+  {Unmap the {\ActiveDVI} logo window}
+\end{itemize}
+
+\adviwait \advikillallembed{advianim}
+
+\newpage
+
+\subsection* {Fake embedded applications are sticky}
+
+\advirecord{createfake}{\centerline{Here is $\quad\quad${\adviembed[fake=fakelogo,width=3cm, height=3.3260869cm]{ls}}} the fake window}
+
+Thanks to the {\tt fake} embedded application, space is allocated for
+the raw application.
+
+\advirecord{unmap}{\adviunmapembed[advilogo]}
+
+\advirecord{map}{\advimapembed[advilogo]}
+
+\advirecord{unmapfake}{\adviunmapembed[fakelogo]}
+
+\advirecord{mapfake}{\advimapembed[fakelogo]}
+
+\advirecord{closefake}{\advikillembed{fakelogo}}
+
+Now choose one of the following:
+
+\begin{itemize}
+\item \advianchor[click]{createfake}
+  {Create the {\ActiveDVI} logo fake window}
+\item \advianchor[click]{mapfake}
+  {Map the {\ActiveDVI} logo fake window}
+\item \advianchor[click]{unmapfake}
+  {Unmap the {\ActiveDVI} logo fake window}
+\item \advianchor[click]{closefake}
+  {Close the {\ActiveDVI} logo fake window}
+\item \advianchor[click]{map}
+  {Map the {\ActiveDVI} logo window}
+\item \advianchor[click]{unmap}
+  {Unmap the {\ActiveDVI} logo window}
+\end{itemize}
+
+C'est fini!
+
+\end{document}

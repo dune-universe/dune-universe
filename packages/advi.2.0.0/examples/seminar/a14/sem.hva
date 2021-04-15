@@ -1,0 +1,30 @@
+\input{seminar.hva}
+\usepackage{color}
+
+\renewcommand{\@bodyargs}{TEXT=black BGCOLOR=white}
+\renewenvironment{slide*}{\stepcounter{slide}%
+\begin{bgcolor}[width="100\%"]{yellow}\begin{center}\textbf{Planche \theslide}\end{center}\end{bgcolor}}{\bigskip}
+\renewenvironment{slide}[1][]{\begin{slide*}}{\end{slide*}}
+\newcommand{\vbox}[1]{\mbox{#1}}
+\newcommand{\raisebox}[2]{\mbox{#2}}
+\renewcommand{\hspace*}[1]{}
+\renewcommand{\vspace*}[1]{}
+\renewcommand{\title}[1]{\@open{H1}{ALIGN=center}#1\@close{H1}}
+\def\thepicture{%
+%BEGIN IMAGE
+\box\graph
+%END IMAGE
+\begin{center}
+\imageflush
+\end{center}}
+\newcommand{\epsfig}[1]{\begin{toimage}\epsfig{#1}\end{toimage}\imageflush}
+\renewcommand{\simeq}{\approx}
+\renewcommand{\bigskip}{}
+% \newcommand{\Longrightarrow}{\Rightarrow}
+\newcommand{\uplus}{{\red\cup}}
+\renewcommand{\hspace}[1]{}
+\renewcommand{\tiny}{\footnotesize}
+\renewcommand{\heading}[1]{\@open{H2}{ALIGN=center}\@print{<font color=blue>}#1\@print{</font>}\@close{H2}}
+
+\renewcommand{\exercice}{{\large\blue Exercice \exoplus\mbox{\ }}}
+\renewcommand{\colorbox}[2]{#2}

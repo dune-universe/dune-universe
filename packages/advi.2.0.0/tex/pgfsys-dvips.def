@@ -1,0 +1,102 @@
+\ProvidesFileRCS $Header$
+
+% Copyright 2005 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+
+% Driver commands for dvips
+
+\def\pgfsys@invoke#1{\special{ps:: #1}}
+\def\pgfsys@outerinvoke#1{\special{ps: #1}}
+\def\pgf@sys@postscript@header#1{\special{! #1}}
+\def\pgf@sys@postscript@object#1{\special{! #1}}
+
+%%% BUG FIX
+%% generation of \specials should be delayed...
+ 
+\let \pgf@sys@postscript@object@immediate \pgf@sys@postscript@object
+ 
+\def\pgf@sys@postscript@object #1{%
+  \AtBeginDvi{\pgf@sys@postscript@object@immediate {#1}}%
+}
+\AtBeginDocument {%
+  \let \pgf@sys@postscript@objects \pgf@sys@postscript@objects@immediate
+}
+
+%%% END OF BUG FIX
+
+
+%
+% Load common postscript commands:
+%
+\input pgfsys-common-postscript.def
+
+
+%
+% dvips-specific stuff:
+%
+
+\def\pgfsys@beginpicture{\special{ps: }\special{ps::[begin]}\pgfsys@invoke{pgfo}}
+\def\pgfsys@endpicture{\pgfsys@invoke{pgfc}\special{ps::[end]}}
+\def\pgfsys@hbox#1{%
+  \pgfsys@invoke{pgfs}%
+    \special{ps::[end]}%
+      \wd#1=0pt%
+      \ht#1=0pt%
+      \dp#1=0pt%
+      \box#1
+    \special{ps::[begin]}%
+  \pgfsys@invoke{pgfr}%
+}
+\def\pgfsys@begininvisible{%
+  \special{ps::[begin]}%
+  \pgfsys@invoke{gsave nulldevice}%
+  \special{ps::[end]}}
+\def\pgfsys@endinvisible{%
+  \special{ps::[begin]}%
+  \pgfsys@invoke{grestore}%
+  \special{ps::[end]}%
+}
+\def\pgfsys@color@unstacked#1{\special{ps: \XC@usecolor{#1}}}
+\def\pgfsys@imagesuffixlist{epsi:eps:ps}
+
+\AtBeginDocument{
+  % Always present specials.
+  \special{!
+    /pgfsc{}B% stroke color is empty by default
+    /pgffc{}B% fill color is empty by default
+    /pgfstr{stroke}B%
+    /pgffill{fill}B%
+    /pgfeofill{eofill}B%
+    /pgfe{a dup 0 rlineto exch 0 exch rlineto neg 0 rlineto closepath}B% rectangle
+    /pgfw{setlinewidth}B% setlinewidth
+    /pgfs{save pgfpd 72 Resolution div 72 VResolution div neg scale 
+      magscale{1 DVImag div dup scale}if 
+      pgfx neg pgfy neg translate pgffoa .setopacityalpha}B% save
+    /pgfr{pgfsd restore}B %restore
+    userdict begin%
+    /pgfo{pgfsd /pgfx currentpoint /pgfy exch def def @beginspecial}B %open
+    /pgfc{newpath @endspecial pgfpd}B %close
+    /pgfsd{globaldict /pgfdelta /delta where {pop delta} {0} ifelse put}B% save delta
+    /pgfpd{/delta globaldict /pgfdelta get def}B % put delta
+    /.setopacityalpha where {pop} {/.setopacityalpha{pop}def} ifelse % install .setopacityalpha 
+    /.pgfsetfillopacityalpha{/pgffoa exch def
+      /pgffill{gsave pgffoa .setopacityalpha fill 1 .setopacityalpha newpath fill grestore}B
+      /pgfeofill{gsave pgffoa .setopacityalpha eofill1 .setopacityalpha newpath eofill grestore}B}B
+    /.pgfsetstrokeopacityalpha{/pgfsoa exch def
+      /pgfstr{gsave pgfsoa .setopacityalpha stroke grestore}B}B
+    /pgffoa 1 def
+    /pgfsoa 1 def
+    end
+    }
+}
+
+\endinput
+
+%%% Local Variables: 
+%%% mode: latex
+%%% End: 

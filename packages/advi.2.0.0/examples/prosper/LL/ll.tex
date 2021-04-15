@@ -1,0 +1,380 @@
+%; Roberto Di Cosmo.
+%;
+%; with some help from Pierre Weis for french spelling and rewriting.
+
+\documentclass [landscape,semlayer,semcolor,semlcmss,a4]{seminar}
+
+\slidewidth 235mm
+\slideheight 174mm
+\centerslidesfalse
+
+\usepackage[USenglish,francais]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{argv}
+\defargv {ignore}[]{
+  \PassOptionsToPackage {ignore}{advi}
+}
+\defargv {ps2pdf}[]{
+%  \rundriver{ps2pdf}
+  \usepackage {times}
+  \PassOptionsToPackage {psbubble}{xprosper}
+  \PassOptionsToPackage {ignore}{advi}
+}
+\runargv
+
+\usepackage {xprosper}
+\AtEndLastOverlay{\advithumbnail}
+
+\usepackage {amssymb}
+\usepackage {color}
+\definecolor{lightred}{rgb}{1,0.8,0.8}
+\definecolor{lightblue}{rgb}{0.7,0.7,1}
+\definecolor{lightgreen}{rgb}{0.8,1,0.8}
+\definecolor{purple}{rgb}{1,0,1}
+\def\purple{\color{purple}}
+\usepackage {pst-node}
+\usepackage {hyperref}
+\usepackage{shadow}
+
+\newcommand{\centershabox}[1]{\begin{center}\shabox{#1}\end{center}}
+\newcommand{\vcentershabox}[1]{\vfill\centershabox{#1}\vfill}
+
+\def\advifooter{\vbox to 0em{\vbox to 8em {\vfill
+\hfill{\adviembed[sticky=advianim,width=0.8cm,height=0.9cm]{animate -geometry !g! -window !p advilogo.anim.gif}}
+} \vss}}
+
+\let \Pause \pause
+\let \pause \relax
+\usepackage{advi}
+\usepackage{advi-annot}
+\let \pause \Pause
+
+\slideframe {none}
+\renewcommand{\slidetopmargin}{20pt}
+\renewcommand{\slidebottommargin}{1cm}
+
+\def\titlestyle{\color{lightblue}}
+\newcommand{\slidetitle}[1]{\begingroup 
+   \sl \bf \titlestyle {#1}
+   \par
+   \smallskip\hrule\medskip \endgroup} 
+
+\newcommand{\redcol}[1]{\textcolor{red}{#1}}
+\newcommand{\greencol}[1]{\textcolor{green}{#1}}
+\newcommand{\bluecol}[1]{\textcolor{blue}{#1}}
+
+\def \ebox #1{\colorbox{yellow}
+   {\mbox {\large \strut #1}}}
+
+\begin{document}
+
+\pagestyle {empty}
+
+\overlays*{\begin{slide}
+\advibg[global]{image=world.jpg,fit=top}
+\slidetitle{\Huge Logiciel Libre, \par Logiciel Propriétaire}
+\vskip 2cm
+\begin{center}
+Roberto Di Cosmo\\
+Université de Paris VII \& INRIA Roquencourt\\
+\mbox{}\\
+28 Novembre 2001
+\end{center}
+\advifooter
+\end{slide}}
+
+\advitransition{wipe}
+\overlays*{\begin{slide}
+\slidetitle{Quelques définitions}
+\begin{description}
+  \item[\bluecol{Freeware}]\mbox{}\\ logiciel gratuit\\\pause
+  \item[\bluecol{Shareware}]\mbox{}\\ logiciel payant,
+   mais avec une période d'essai gratuite\\\pause
+  \item[\bluecol{Free Software}]\mbox{}\\ (Open Source, Logiciel Libre)\\
+   Quelque chose  de radicalement différent, à l'origine du succés du
+   Web et de l'Internet.
+\end{description}
+\end{slide}}
+
+\advitransition{block}
+\overlays*{\begin{slide}
+\slidetitle{Free, Open Source Software: Logiciel libre }
+ \begin{description}
+   \item[\greencol{Gratuit}] (anglais: free): \\\pause
+        logiciel non payant (aujourd'hui)\pause
+   \item[\bluecol{Libre}] (anglais: free): \\\pause
+        logiciel avec 4 droits\pause
+   \begin{itemize}
+     \item Liberté d'\bluecol{utiliser} le logiciel\pause
+     \item Liberté d'\bluecol{étudier} les sources du logiciel et
+      de l'\bluecol{adapter} à ses besoins\pause
+     \item Liberté de \bluecol{distribuer} des copies\pause
+     \item Liberté de \bluecol{distribuer} les sources
+      (éventuellement \bluecol{modifiées})\\\pause
+           \mbox{}\\
+      Il y a des \redcol{obligations} aussi, qui  varient selon la licence:
+      GPL/BSD/Mozilla/X, etc.
+   \end{itemize}
+ \end{description}
+\end{slide}}
+
+\advitransition{wipe}
+\overlays*{\begin{slide}
+\slidetitle{\bluecol{Libre} \emph{n'est pas} \greencol{gratuit} }
+\vfill
+  \begin{description}
+    \item[\greencol{non libre} mais \bluecol{gratuit}]:\mbox{}\\
+      Internet Explorer, MacTCP, Acrobat Reader, freeware, etc.\pause
+    \item[\greencol{non libre} et \bluecol{non gratuit}]:\mbox{}\\
+      \pause le plus connu \ldots{}\pause\\
+    \item[\greencol{libre} et \bluecol{gratuit}]:\mbox{}\\
+      Mozilla, Linux, FreeBSD, OpenBSD, sendmail, perl, etc.\pause\\
+    \item[\greencol{libre} mais \bluecol{non gratuit}]:\mbox{}\\
+      distributions commerciales de Linux, etc.
+  \end{description}
+\end{slide}}
+
+\advitransition{block}
+\overlays*{\begin{slide}
+\slidetitle{Le logiciel libre \bluecol{respecte} le droit des auteurs}
+  \begin{description}
+    \item[n'est pas Napster]\mbox{}\\
+         \pause
+         L'auteur choisit \emph{librement} d'écrire du logiciel libre\pause
+    \item[n'est pas du «domaine public»]
+    \item[n'est pas «libre de droits»]\mbox{}\\
+         \pause
+         L'auteur \emph{protège} la \emph{liberté} de son logiciel par
+         une licence
+    \item[ne relève pas d'une «logique d'abandon»]\mbox{}\\
+         \pause
+         L'auteur choisit une logique de valorisation innovante pour
+         son logiciel
+  \end{description}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Le logiciel libre vs. le logiciel propriétaire}
+  \begin{description}
+    \item[Logiciel libre]:
+    \begin{itemize}
+      \item\bluecol{avantages pédagogiques indéniables: accès à une
+        meilleure formation (à l'informatique)}\pause
+      \item\bluecol{multiplie le nombre des programmeurs qui,
+        vérificateurs, divisent les pirates}\pause:\\
+        l'accès au code source attire les programmeurs compétents 
+      \item\bluecol{redonne le contrôle aux utilisateurs}\pause
+      \item\bluecol{permet d'échapper à la fuite en avant technologique}\pause
+    \end{itemize}
+    \item[Logiciel propriétaire]:\pause
+    \begin{itemize}
+      \item \redcol{ne permet pas d'adapter le logiciel, ni de le comprendre}\pause
+      \item \redcol{aucun contrôle de l'évolution technologique}\pause
+      \item \redcol{multiplie les pirates, divise les vérificateurs}\pause
+      \item \redcol{forte tendance à la création de monopoles qui
+        lèvent une taxe sur l'information et rendent captifs les utilisateurs}
+    \end{itemize}
+  \end{description}
+\end{slide}}
+
+\advitransition{slide}
+\overlays*{\begin{slide}
+\slidetitle{\greencol{Le logiciel libre vs. le logiciel propriétaire}}
+  \begin{description}
+    \item[modèle centré sur les licences]: profit non proportionnel au
+     travail, peu ou pas d'emplois\\
+     \pause
+     à la limite (ex: Microsoft) taxe monopoliste et mauvaise qualité,
+     \pause accumulation de richesse sans création de richesse.
+    \item[modèle centré sur les services]: tendance naturelle des
+      grandes sociétés (IBM, Oracle etc.),
+     \pause
+     profit proportionnel au travail, beaucoup d'emplois qualifiés de
+     proximité.\\
+     \pause
+     à la limite, le Logiciel Libre
+  \end{description}
+  \pause
+  \begin{center}
+    \begin{tabular}{|c|r|r|r|r|c|c|}
+      \hline & Income & \greencol{P}rofit & \% & \bluecol{E}mployees & \fromPause[0]{\adviannot{$\greencol{P}/\bluecol{E}$}(-2,1){«taxe» collectée par employé}}& \fromPause[4]{\adviannot{$\bluecol{E}/\greencol{P}$}(-3,1){employés à \emph{votre} service}}\\\hline
+         IBM & 81,667 M\$ & 6,328 M\$       & 7  & 290.000 &  \fromPause[1]{ 21820 \$} & \fromPause[4]{45}\\\hline
+         Oracle & 7,143 M\$ & 955 M\$       & 13 &  40.000 &  \fromPause[2]{ 23875 \$} & \fromPause[5]{41}\\\hline
+         Microsoft & 20,000 M\$ & 8,000 M\$ & 40 &  29.000 &  \fromPause[3]{275000 \$} & \fromPause[6]{ 3}\\\hline
+    \end{tabular}
+  \end{center}
+\pause
+\pause
+\pause
+\pause
+\pause
+\pause
+\end{slide}}
+
+\advitransition{wipe}
+\overlays*{\begin{slide}
+\slidetitle{Les dérives du logiciel propriétaire}
+  \begin{description}
+    \item[la sécurité impossible]:\mbox{}\\
+     \pause Sans code source, vous ne pouvez pas modifier un logiciel.\\
+     \pause Mais l'utilisateur \emph{veut} personnaliser les logiciels!\\
+     \pause
+     Voilà donc apparaître \adviannot{VisualBasic}(1,2){Melissa, ILoveYou etc.},
+     \adviannot{ActiveX}(1,2){CCC: vol sur les comptes en ligne}, etc.
+     qui ouvrent des \adviannot{trous béants de sécurité}(1,1){RSA!}.\\
+     \pause
+     Combien coûtent ces virus à l'État chaque année? \pause
+    \item[les formats opaques]:\mbox{}\\
+     \pause Le workflow vaseux \ldots{}
+    \item[le modèle de licences variable]:\mbox{}\\
+     \pause Windows et Office
+     \redcol{\adviannot{X}(-1,1){eXPerience?}\adviannot{P}(1,1){eXPires!}}  
+     sont arrivés!\pause
+    \item[\ldots{}]: \ldots{}
+  \end{description}
+\end{slide}}
+
+\advitransition{none}
+\overlays*{\begin{slide}
+\slidetitle{Le logiciel propriétaire dans le contexte académique: I}
+L'Université en tant qu'\greencol{utilisatrice} de logiciel.\\
+
+  \begin{description}
+    \item[Coût élévé]:\mbox{}\\
+      \pause
+      les logiciels propriétaires sont vendus à prix exorbitant aux
+      Universités (ex: les Windows/Office pré-installés)\pause
+    \item[Mauvaise pédagogie]:\mbox{}\\
+      \pause
+      pas d'exercice d'esprit critique, limites arbitraires des
+      \adviannot{connaissances}(2,1){«connaître c'est savoir faire»,
+      selon Vico (\emph{circa} 1700)} qu'un étudiant peut obtenir\pause
+    \item[Violation du devoir d'impartialité]:\mbox{}\\
+      \pause
+      on doit utiliser \bluecol{des} logiciels pour former,
+      et non pas former à utiliser \redcol{un} logiciel\pause
+    \item[Philosophie radicalement contraire à l'esprit académique]:\mbox{}\\
+      \pause
+      Programme \emph{Compétence 2000}, notes de cours, polycopiés etc.
+  \end{description}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Le logiciel propriétaire dans le contexte académique: II}
+L'Université en tant que \bluecol{créatrice} de logiciel.
+
+  \begin{description}
+    \item[Entrave à la recherce]:\mbox{}\\
+      des \adviannot{licences restrictives}(2,-1.5){\begin{minipage}{10em}
+             On peut dire de même du copyright sur les articles
+             imposé par la plupart des revues!\end{minipage}}
+      sont incompatibles avec l'activité de recherche et de coopération
+      scientifique.
+    \item[Nature des logiciels]:\mbox{}\\
+      une très grande quantité de logiciel dévéloppé dans le cadre
+      académique n'est pas industrialisable
+      \adviannot{facilement}(-2,2){\begin{minipage}{20em}
+         Pour ceux qui le sont, une licence restrictive
+         les priverait des contributions précieuses\\
+         de la communauté
+                                   \end{minipage}}
+    \item[Entrave à la participation des chercheurs aux projets libres]:\mbox{}\\
+       un enseignant, chercheur ou technicien est naturellement porté à coopérer
+       à des projets libres, dont l'Institution bénéficie en tant
+       qu'utilisatrice.
+       Des licences restrictives seraient contre-productives et
+       priveraient l'Institution de retours sur investissement
+       \adviannot{importants}(1,2){\begin{minipage}{15em}
+          Remy Card, Xavier Leroy, Jerôme Vouillon, Yves
+          Legrandgérard, Juliusz Chroboczeck \ldots{}\end{minipage}}.
+  \end{description}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Le logiciel libre dans le contexte académique}
+L'Université en tant qu'\bluecol{utilisatrice} de logiciel.
+  \begin{description}
+    \item[\adviannot{égalité des chances}(1,1)
+      {protection de la propriété intellectuelle}]:\mbox{}\\
+      \pause des projets comme Artouste ou DemoLinux permettent à
+      \emph{tous} les étudiants d'accéder aux outils informatiques 
+      enseignés à l'Université \pause sans
+      \adviannot{passer dans l'illégalité}(-2,-1.5){\begin{minipage}{15em}
+                  Combien de copies pirates de Mathematica, Maple,
+                  Word, Excel, Visual C++ \ldots ?
+                                                      \end{minipage}} 
+    \item[adaptation aux exigences pédagogiques]:\mbox{}\\
+      \pause on peut choisir et adapter à ses besoins
+      pédagogiques les logiciels libres
+      \adviannot{à ses besoins}(1,1){\begin{minipage}{10em}
+                                       minilangage g--\\
+                                       projets de compilation\\
+                                       \ldots{}
+                                       \end{minipage}}
+    \item[maîtrise du parc logiciel et matériel]:\mbox{}\\
+      \pause
+         pérennité des choix logiciels,\pause\mbox{}
+         plus longue durée du matériel,\pause\mbox{}
+         meilleure image vis à vis des étudiants, à parité de budget
+    \item[meilleure sécurité]:\mbox{}\\
+\pause
+         réduction de l'impact des macro-virus
+  \end{description}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Une solution adaptée, à l'étude à Paris VII}
+  \begin{description}
+    \item[connaître] les logiciels libres\\
+      \pause cette journée\pause
+    \item[reconnaître] les logiciels libres\\
+      \pause s'initier à la charte de la propriété intellectuelle\pause
+    \item[recenser] les logiciels libres\\
+      \pause un projet à long terme, qui nécessite des moyens\pause
+    \item[valoriser] les logiciels libres\\
+      \pause sensibilisation des instances compétentes\pause
+    \item[aider] les logiciels libres\\
+      \pause infrastructure et support soutenus officiellement
+  \end{description}
+  \pause
+  \adviannot{Un remerciement particulier au BVRI}(1,1){pour sa clairvoyance}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Il reste du chemin à faire: quelques pistes}
+  \begin{description}
+    \item[financement des logiciels libres]\mbox{}\\
+      Le logiciel libre n'est pas gratuit!\\
+      \pause Est-il avisé de gaspiller des millions de francs en
+      \adviannot{licences}(-1,1){bien des fois inutiles!} et en
+      personnel \adviannot{prêté}(1,1){Conventions Select \ldots{}} aux
+      fournisseurs propriétaires d'un côté,\pause\mbox{}
+      et de refuser tout investissement dans l'équivalent libre?\pause
+    \item[recyclage du matériel]\mbox{}\\
+      Les logiciels libres permettent d'utiliser le matériel plus longtemps\\
+      \pause
+      Ne doit-on pas \adviannot{faire un effort de
+      recyclage}(-1,1){les entreprises sont en avance}, notamment envers
+      les écoles et associations?\pause
+    \item[\ldots{}] \ldots{}
+  \end{description}
+\end{slide}}
+
+\overlays*{\begin{slide}
+\slidetitle{Des questions?}
+  \begin{description}
+  \pause
+    \item[Est-ce du PowerPoint] ? \\
+      \pause \adviannot{Non}(1,1){c'est {\ActiveDVI}!}\pause
+    \item[Qu'est-ce qu'{\ActiveDVI}] ? \\
+      \pause un visualiseur DVI programmable et entièrement écrit en
+      Ocaml à l'INRIA\ldots{}
+    \item[Où trouver {\ActiveDVI}] ? \\
+      \pause \hyperref{http://pauillac.inria.fr/advi/}{}{}{Sur son
+site WEB {\tt http://pauillac.inria.fr/advi/}}!
+    \item[\ldots{}] \ldots{}
+  \end{description}
+\end{slide}}
+\end{document}

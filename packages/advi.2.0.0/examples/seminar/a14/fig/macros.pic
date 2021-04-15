@@ -1,0 +1,84 @@
+.PS
+
+vs = 11/72                      # 11/72 = 11p; used for vertical distances
+hu = .5; vu = 2*vs; chopln = .065
+cm =  0.3937; mm = 0.03937      # stop aux pouces
+pt = 1/72                       # points de TeX
+pagewid = 3.5                  # for centering on a page
+
+################### Pour faire les arbres de Sethi
+define ln1 {
+{ [
+        x = $1*hu; y = $2*vu; th = atan2(y,x); s = sin(th)
+        ch = chopln/max(s,-s)
+        O : ""
+        line $3 to O + x,y chop ch
+] with .O at Here
+}
+move to Here + $1*hu,$2*vu
+}
+
+################### Pour faire des arbres
+
+
+define chopCblabLn {
+    x = $1; y = $2
+    x = max (x, -x); y = max (y, -y)
+    r = rblabht / 2; w = rblabwid - 2*circlerad
+    if x == 0 then {
+        ch = r                        #intersects box
+    } else {
+        tn = y/x
+	if tn > (r / (w/2)) then {        #intersects box
+	    ch = (r/y) * sqrt(x*x + y*y)
+	} else {                        #intersects circles
+            delta = w*w - 4*(1+tn*tn)*(w*w/4 - r*r)
+	    xx = (w + sqrt(delta))/(2*(1 + tn*tn)); yy = tn * xx
+	    ch = sqrt(xx*xx + yy*yy)
+	}
+    }
+}
+
+define clab {
+      {circle at Here $1 $2 $3}
+}
+
+define rblab {
+   {[
+    A: box invis at Here wid rblabwid-2*circlerad ht rblabht $2 $4
+       move to A.nw; left; arc; arc $1 $4
+       move to A.se; right; arc; arc $3 $4
+       line from A.nw to A.ne
+       line from A.sw to A.se
+   ] with .A at Here
+   }
+}
+
+define rbln {
+   {   chopCblabLn($1*hu, $2*vu)
+       line $3 right $1*hu up $2*vu chop ch chop circlerad
+   }
+   move right $1*hu up $2*vu
+}
+
+define lnrb {
+   {   chopCblabLn($1*hu, $2*vu)
+       line $3 right $1*hu up $2*vu chop circlerad chop ch
+   }
+   move right $1*hu up $2*vu
+}
+
+
+define rblnrb {
+   {   chopCblabLn($1*hu, $2*vu)
+       line $3 right $1*hu up $2*vu chop ch 
+   }
+   move right $1*hu up $2*vu
+}
+
+define ln {
+   {   line $3 right $1*hu up $2*vu chop
+   }
+   move right $1*hu up $2*vu
+}
+.PE

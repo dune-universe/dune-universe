@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage{advi}
+\usepackage{pst-node}
+\title{Test sticky anchors}
+\begin{document}
+\maketitle
+A sticky anchor is like an anchor with a persistant action: the drawing is
+not undone when leaving the anchor area.
+
+\medskip
+
+\advianchor[stick]{1}{Click}
+\advirecord{1}{\advianchor[stick]{2}{these}}
+\advirecord{2}{\advianchor[stick]{3}{words}}
+\advirecord{3}{\advianchor[stick]{4}{as}}
+\advirecord{4}{\advianchor[stick]{5}{they}}
+\advirecord{5}{appear}
+to see the effect.
+
+\medskip
+
+\noindent The same again, but with invisible anchors
+
+\medskip
+
+\advianchor[stick,invisible]{1b}{Click}
+\advirecord{1b}{\advianchor[stick,invisible]{2b}{these}}
+\advirecord{2b}{\advianchor[stick,invisible]{3b}{words}}
+\advirecord{3b}{\advianchor[stick,invisible]{4b}{as}}
+\advirecord{4b}{\advianchor[stick,invisible]{5b}{they}}
+\advirecord{5b}{appear}
+to see the effect.
+
+\bigskip
+\ovalnode{o1}{\advianchor[invisible,stick]{a1}{1}}\qquad\qquad
+\ovalnode{o2}{\advianchor[invisible,stick]{a2}{2}}\qquad\qquad
+
+\bigskip
+\bigskip
+
+\def \eraseanchor#1{\mput{\advianchor[stick,invisible]{#1}{\color{white}{X}}}}
+
+\ovalnode{o3}{\advianchor[invisible,stick]{a3}{3}}\qquad\qquad
+\ovalnode{o4}{\advianchor[invisible,stick]{a4}{4}}
+
+
+\advirecord{a1}{\ncarc{->}{o1}{o2}%
+\eraseanchor{d12}\ncarc{->}{o1}{o3}\eraseanchor{d13}} 
+\advirecord{d12}{\ncarc[linecolor=white]{->}{o1}{o2}}
+\advirecord{d13}{\ncarc[linecolor=white]{->}{o1}{o3}}
+\advirecord{a2}{\ncarc{->}{o2}{o4}\ncarc{->}{o2}{o1}}
+\advirecord{a3}{\ncarc{->}{o3}{o4}\eraseanchor{d3}}
+\advirecord{d3}{\ncarc[linecolor=white]{->}{o3}{o4}}
+\advirecord{a4}{\ncarc{->}{o4}{o1}\eraseanchor{d4}}
+\advirecord{d4}{\ncarc[linecolor=white]{->}{o4}{o1}}
+
+
+\advirecord{erase}{\color{blue}\psset{linecolor=white}%
+\adviplay{a1}\adviplay{a2}\adviplay{a3}\adviplay{a4}%
+\ncarc{->}{o1}{o2}\ncarc{->}{o1}{o3}%
+\ncarc{->}{o2}{o4}\ncarc{->}{o2}{o1}%
+\ncarc{->}{o3}{o4}%
+\ncarc{->}{o4}{o1}%
+}
+
+\advianchor[stick]{erase}{Erase all arrows}
+
+
+
+\end{document}

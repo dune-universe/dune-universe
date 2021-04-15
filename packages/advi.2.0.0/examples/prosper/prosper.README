@@ -1,0 +1,24 @@
+I wrote the xprosper.sty package from the documentclass prosper.cls
+belonging to the prosper distribution:
+
+        http://prosper.sourceforge.net/
+
+(A copy has been inserted here for comparison). 
+
+The prosper package should be used with the seminar documentclass:
+
+ * Unlike the prosper class, it does not redefine the background, 
+   or the page setting.
+
+ * As the prosper class, it enables a special form of overlays.
+
+ * It fixes a few problems, mostly blank characters, from the original
+  package.
+
+ * Overlays can be refered to by relative positions (in addition to absolute
+   positions), such that moving blocks of text in a slide does not break the
+   overlays.
+
+ * No need to count the number of overlays yourself, it does it for you.
+
+Didier Remy

@@ -1,0 +1,6 @@
+Turn Active-DVI portable graphics into scalable graphics:
+- all the moveto, rmoveto, lineto, rlineto, curveto, etc, and font_size
+commands are proportional to the graphics size (that is x and y are
+respectively intyrenally stored as a percentage of size_x, size_y).
+- a proportional/absolute flag should also be given that defaults to
+proportional (call it scalable as in set_scalable true/false ?).

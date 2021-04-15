@@ -1,0 +1,181 @@
+<HTML>
+<HEAD>
+<TITLE>
+Active-DVI
+</TITLE>
+  <LINK REL="stylesheet" HREF="style.css" TYPE="text/css">
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+<TABLE WIDTH="100%">
+<TR>
+ <TD ALIGN=CENTER><IMG SRC="advilogo.gif"></TD>
+ <TD ALIGN=RIGHT>
+ <TABLE>
+   <TR><TD><A HREF="#features">Description</A></TD></TR>
+   <TR><TD><A HREF="screen-shots.html">Screen shots</A></TD></TR>
+   <TR><TD><A HREF="#requirements">Requirements</A></TD></TR>
+   <TR><TD><A HREF="#download">Download</A></TD></TR>
+   <TR><TD><A HREF="faq.html">Frequently asked questions</A></TD></TR>
+   <TR><TD><A HREF="manualxxx.html">Manual</A></TD></TR>
+   <TR><TD><A HREF="#lists">Mailing list</A></TD></TR>
+   <TR><TD><A HREF="#lists">Bug reports</A></TD></TR>
+   <TR><TD><A HREF="#authors">Authors and Copyright</A></TD></TR>
+   <TR>
+     <TD><H1 ALIGN=CENTER><IMG SRC="advilogo.anim.gif">ctive-DVI</H1></TD></TR>
+   <TR>
+     <TD>
+<H2 ALIGN=CENTER>Version @@VERSION@@</H2>
+
+    </TD></TR>
+ </TABLE>
+ </TD>
+</TR>
+</TABLE>
+
+<P ALIGN=LEFT><IMG SRC="bar.gif"></P>
+
+<H2 ALIGN=LEFT><A name="features">Description of Active-DVI</A></H2>
+
+<P>Active-DVI is a Unix-platform <STRONG>DVI previewer</STRONG> and a
+<STRONG>programmable presenter for slides</STRONG> written in LaTeX.</P>
+
+<P>To preview DVI files, Active-DVI features:
+
+<UL>
+ <LI>Color anti-aliasing.
+ <LI>Inclusion of images (via the Camlimages package) with alpha
+     channel and blending.
+ <LI>Encapsulated Postscript File inclusion (using graphics macros package).
+ <LI>Gpic specials to display pictures.
+ <LI>Correct treatment of many (but not all) in-lined-Postscript specials.
+ <LI>Page background settings.
+ <LI>Japanese pTeX DVI extension support (<A HREF="pngs/japanese/advi-j.png">screen shot</A>).
+</UL>
+
+<P>To present your DVI files, Active-DVI features:
+
+<UL>
+ <LI>Basic effects for presentation (pause, delay, dynamic text color change).
+ <LI>Annotations displayed on demand (similar to pop-up balloons).
+ <LI>Hyper links from slide to slide or to other files (including DVI files).
+ <LI>Replay of previously recorded parts of the display.
+ <LI>Text movements.
+ <LI>Page transitions.
+ <LI>Embedded applications (launched and killed on demand from within.
+     the presentation text source), with precise security policy.
+ <LI>Scratching on slide to interactively modify the text on screen.
+ <LI>Synchronization indications of each slide timing during the
+     presentation, to connect the talk with a recording/playing facility
+     and/or to automate the show.
+</UL>
+
+<P>Active-DVI special effects are set and launched from within your
+LaTeX source file via the macros of the <CODE>advi.sty</CODE>
+LaTeX package provided by the distribution.
+
+<P>In addition, Caml hackers can program new and fancy Active-DVI effects in the
+source code of the presenter.
+
+<P><font size=+1>
+<strong>Warning!</strong>
+See the security warning in the enclosed file <A href="README">README</a>.
+</font>
+
+<H2 ALIGN=LEFT><A name="screenshots">Screen shots</A></H2>
+
+<P>Click on the image to have a look on the screen shots of Active-DVI
+presentations.
+
+<P ALIGN=CENTER><A HREF="screen-shots.html"><IMG SRC="pngs/f.png"></A>
+
+
+<H2 ALIGN=LEFT>Requirements</H2>
+
+To install Active-DVI, you need
+<ul>
+<li>a Unix platform running the X11 window system.
+
+<li>an OCaml compile, version 3.11 or later with  the latest version (4.0) of
+  the <A   HREF="http://gallium.inria.fr/camlimages/">Camlimages</A>
+  library. 
+
+<li>the `kpsewhich' utility of the `kpathsea' library
+provided by the TeX distributions.
+</ul>
+For more details see the enclosed file <A href="INSTALL">INSTALL</a>.
+
+
+<H2 ALIGN=LEFT><A name="download">Download</A></H2>
+
+
+The latest version <STRONG>(@@VERSION@@)</STRONG>
+of Active-DVI is only available as a 
+<A HREF="advi-@@VERSION@@.tar.gz">source tar ball</a>. 
+
+See changes in <A HREF="ChangeLog">ChangeLog</a>.
+Some older versions are still avaliable in the 
+<A HREF="http://advi.inria.fr/archive">archive</a>.
+
+
+<H2 ALIGN=LEFT><A name="manual">User's manual</A></H2>
+
+<P> The Active-DVI user's manual is available online
+as <A HREF="manual.html">multiple HTML files</A>, 
+as <A HREF="manual.html">one single HTML file</A> or 
+in <A HREF="manual.pdf">PDF</A>. (It is also available in
+<A HREF="manual.dvi">DVI</A> or <A HREF="manual.ps">PS</A> formats.)
+
+</A> is also available, but with a few typesetting glitches.
+<p> See also the <A HREF="faq.html">Frequently asked questions
+(FAQ)</A></H2>
+
+
+<H2 ALIGN=LEFT><A NAME="lists">Bug reports and mailing list</A></H2>
+
+<P>Write to <a href="mailto:advi@inria.fr"><CODE>advi@inria.fr</CODE></a>.
+for bug reports, or to get in touch with the implementors.  The is the
+Active-DVI mailing list, which is also the forum to discuss about Active
+DVI. To write to the list, you should first
+<a href="https://sympa.inria.fr/sympa/info/advi">subscribe</a>.  
+(We are sorry for the annoyance, but given the low traffic, we prefer this
+solution, even for bug reports, so as to avoid spam).
+
+
+<H2 ALIGN=LEFT><A NAME="authors">Authors</A></H2>
+
+<A HREF="http://jun.furuse.info/">Jun Furuse</A>,
+<A HREF="http://gallium.inria.fr/~weis/">Pierre Weis</A>,
+<A HREF="http://gallium.inria.fr/~remy/">Didier Rémy</A>,
+<A HREF="http://gallium.inria.fr/~xleroy/">Xavier Leroy</A>,
+<A HREF="http://wwwdgeinew.insa-toulouse.fr/~lebotlan/">Didier Le Botlan</A>,
+<A HREF="http://sardes.inrialpes.fr/~aschmitt/">Alan Schmitt</A>,
+<A HREF="http://www.dicosmo.org/">Roberto Di Cosmo</A>,
+<A HREF="http://www.pps.jussieu.fr/~miquel/">Alexandre Miquel</A>.
+
+
+<H2 ALIGN=LEFT>Acknowledgments</H2>
+
+<P>Active-DVI's graphical engine to display DVI files is based on
+Mldvi version 1.0, written by <A
+HREF="http://www.pps.jussieu.fr/~miquel/">Alexandre Miquel</A>.
+
+<P>Active-DVI is written in <A HREF="http://caml.inria.fr/ocaml/">OCaml</A>.
+
+<H2 ALIGN=LEFT><A NAME="copyright">COPYRIGHT</A></H2>
+
+This program is distributed under the GNU LGPL.  See the enclosed file
+<A href="LICENSE">LICENSE</a>.
+<TABLE WIDTH="100%"><TR> 
+  <TD>Copyright &#169; 2001 - @COPYRIGHT@ INRIA all rights reserved.</TD>
+  <TD><IMG SRC="inr_logo_rouge.svg"></TD>
+</TR></TABLE>
+
+<P ALIGN=LEFT><IMG SRC="bar.gif"></P>
+<ADDRESS>Contact <A
+ HREF="mailto:advi@inria.fr">advi@inria.fr</A></ADDRESS>
+
+</BODY>
+</HTML>

@@ -1,0 +1,13 @@
+#!/usr/bin/wish
+
+proc show_time {} {
+    global time
+    set time [exec date +%r]
+    after 1000 show_time
+}
+
+
+label .l -textvariable time
+pack .l
+
+show_time

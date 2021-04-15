@@ -1,0 +1,1698 @@
+%*********************************************************************%
+%                                                                     %
+%                             Active-DVI                              %
+%                                                                     %
+%                   Projet Cristal, INRIA Rocquencourt                %
+%                                                                     %
+%  Copyright 2002,2021 Institut National de Recherche en Informatique %
+%  et en Automatique.  All rights reserved. This file is distributed  %
+%  under the terms of the GNU Lesser General Public License.          %
+%                                                                     %
+%  Jun Furuse, Didier Rémy and Pierre Weis.                           %
+%  Contributions by Roberto Di Cosmo, Didier Le Botlan,               %
+%  Xavier Leroy, and Alan Schmitt.                                    %
+%                                                                     %
+%  Based on Mldvi by Alexandre Miquel.                                %
+%*********************************************************************%
+
+\documentclass[12pt]{article}
+
+\usepackage {manual}
+\usepackage {fullpage}
+
+\providecommand{\advidriver}{ignore}
+\usepackage {graphicx}
+\usepackage [\advidriver]{advi}
+\usepackage {advi-annot}
+\usepackage {bubble}
+
+\usepackage {xspace}
+\def \ActiveDVI {Active-DVI\xspace}
+\def \advi {\texttt{advi}\xspace}
+\def \latex {\LaTeX\xspace}
+
+% For splash inclusion
+\usepackage{color}
+\definecolor{red}{rgb}{1.0,0.0,0.0}
+\definecolor{blue}{rgb}{0.0,0.0,1.0}
+\usepackage{graphicx}
+\usepackage{tabularx}
+%\usepackage{pst-all}
+\usepackage{xwindows-colors}
+\usepackage[\driver]{hyperref}
+
+\newcommand{\githuburl}{\url{https://github.com/diremy/advi}\xspace}
+\newcommand{\homeurl}{\url{http://advi.inria.fr/}\xspace}
+
+
+
+% End of splash specific stuff
+
+% We use Hevea to create the HTML version
+\usepackage{hevea}
+
+\ifhevea
+\title{
+{\bf\ActiveDVI}\\
+\includegraphics{bar.eps}\\
+%% \imgsrc{advi\theimage.png}\\
+Reference manual\\
+{\small Version {\adviversion}}
+}
+\else
+\newdimen \tmpdim
+\title {\setbox0 \hbox {\bf\ActiveDVI}\global \tmpdim \wd0
+\advance \tmpdim by 4em
+\begin{tabular}{c}
+\box0 \\
+\includegraphics[width=\the\tmpdim]{bar.eps}\\
+Reference manual\\
+{\small Version {\adviversion}}
+\end{tabular}
+}
+\fi
+\author {Didier R{\'{e}}my and Pierre Weis}
+
+\thispagestyle{empty}
+
+\usepackage{makeidx}
+\makeindex
+
+\begin{document}
+
+\maketitle
+
+\ifhevea
+\renewenvironment{abstract}{\begin{quote}}{\end{quote}}
+\else
+\def \abstractname {}
+\fi
+
+\begin{abstract}
+{\bf\ActiveDVI} is a viewer for DVI files that also recognizes a new class of 
+\docdef\special's targeted to presentations via laptop computers:
+various visual effects can easily be incorporated to the presentation,
+via a companion \doctt{advi.sty} {\latex} package. 
+
+\ifhevea\else\bigskip\fi
+{\ActiveDVI} is copyright \copyright 2001--{\adviyear},2021 INRIA
+and distributed under the Gnu Library General Public License ---see the LGPL
+file included in the distribution.
+
+\ifhevea\else\bigskip\fi
+\ActiveDVI is available at \githuburl.
+This documentation and additional information are available at \homeurl.
+
+\ifhevea
+This manual is  available as a
+a \ahref {advi.html}{single} or 
+\ahref {advixxx.html}{several} HTML files, 
+or in \ahref {advi.pdf}{PDF format}.
+
+\bigskip
+\fi
+\end{abstract}
+
+\vfill
+
+\section*{Acknowledgments and contributors}
+
+{\ActiveDVI} is based on Mldvi, written by
+\ahref{https://www.fing.edu.uy/\home{amiquel}/}{Alexandre~Miquel},
+which constituted the core rendering engine.  {\ActiveDVI} has then
+been developed by 
+%
+\ahref{https://camlspotter.gitlab.io/page/about/}{Jun Furuse},
+\ahref{http://gallium.inria.fr/\home{remy}/}{Didier R{\'e}my}, and
+\ahref{http://gallium.inria.fr/\home{weis}/}{Pierre Weis},
+with contributions by 
+\ahref{http://wwwperso.insa-toulouse.fr/\home{lebotlan}/}{Didier Le Botlan},
+\ahref{http://www.dicosmo.org/}{Roberto Di Cosmo},
+\ahref{http://gallium.inria.fr/\home{xleroy}/}{Xavier Leroy},
+\ahref{https://www.fing.edu.uy/\home{amiquel}/}{Alexandre~Miquel}, and
+\ahref{http://people.rennes.inria.fr/Alan.Schmitt/}{Alan Schmitt}.
+
+\clearpage
+%\advitoc
+\hypertarget{advitoc.first}{}
+\tableofcontents
+\hypertarget{advitoc.last}{}
+%\endadvitoc
+\clearpage
+
+\section{Installation}
+
+\ActiveDVI may be available as a package of your linux or macOS distribution.
+
+Otherwise, starting with version 2.0.0 you need an \verb"opam"-based
+installation of \verb"ocaml" (see \url {https://opam.ocaml.org/} and \url
+{https://ocaml.org/index.fr.html}).
+
+\subsection{Installation of the \advi executable}
+
+The simpliest is to run:
+\begin{verbatim}
+        opam install advi
+\end{verbatim}
+this should tell you and install the missing dependencies. 
+
+You may also retreive the github sources from \githuburl either by cloning
+sources or by retreiving a tar ball.  In both cases, you must ensure that
+the following \verb"opam" packages
+\begin{verbatim}
+        "dune" {>= "2.5"}
+        "graphics" {>= "5.1.1"}
+        "camlimages" {>= "5.0.4"}
+\end{verbatim}
+are installed.  Then just run in the root distribution directory:
+\begin{verbatim}
+        make
+        make install
+\end{verbatim}
+This will only install the \verb"advi" executable in the opam hierarchy as
+well as a command \verb"advi-latex-files" which you must run as described
+below. 
+
+\subsection{Installation of the \advi \latex source files}
+
+As explained above, you also need to install additional \latex sources
+to  benefit from advanced features of \advi.
+The command:
+\begin{verbatim}
+        advi-latex-files --install
+\end{verbatim}
+will tell you what to do. In particular, you may install \latex source files
+at the default path in your \latex installation hierarchy:
+\begin{verbatim}
+        advi-latex-files --install default
+\end{verbatim}
+Alternatively, you may specify explicitly where to install those files:
+\begin{verbatim}
+        advi-latex-files --install <DESTINATION>
+\end{verbatim}
+The \verb"<DESTINATION>" path should then be included in to your \verb"TEXINPUTS" 
+environment variable.
+
+You may also install these additional \latex source files manually.
+Then, the command
+\begin{verbatim}
+        advi-latex-files --path
+\end{verbatim}
+tells you where to find those files 
+(and you may actually add this path  in your \verb"TEXINPUTS" environment
+variable), while the the command: 
+\begin{verbatim}
+        advi-latex-files --list
+\end{verbatim}
+will list the files that should be installed.
+
+Finally, you may run
+\begin{verbatim}
+        advi-latex-files --uninstall
+\end{verbatim}
+to deinstall the \latex source files, but only if you installed them at the
+default location.
+
+\subsection {Rebuilding the documentation}
+
+The documentation, available at \url {http://advi.inria.fr/advi.html}, is
+not installed by default.
+
+You may rebuild the document from the sources:
+\begin{verbatim}
+        make doc.manual
+\end{verbatim}
+and install it in you \verb"opam" hierarchy:
+\begin{verbatim}
+        make install.manual
+\end{verbatim}
+
+Building the documnentation requires several \latex packages to be installed
+\begin{verbatim}
+        eepic
+        pstricks
+        graphics
+        babel
+        graphicx
+        hyperref
+        makeidx
+        manual
+        tabularx
+\end{verbatim}
+as well as some extra tools: \verb"latexmk", \verb"pandoc", and \verb"hevea"
+(see \url {http://hevea.inria.fr/}, also available under opam).
+
+\subsection {Tests and examples}
+
+After successful installation of {\ActiveDVI}, you may have a
+look at example presentations provided with the distribution, in the
+directories:
+
+\begin{itemize}
+%
+ \item {\tt test}: a lot of demonstration presentations. From the main
+{\ActiveDVI} directory, just type {\tt {cd test; make all}}, and
+launch {\tt advi} on files {\tt *.dvi}.
+%
+ \item {\tt examples}: examples to get inspiration from to easily
+write your own talks. A full range of examples, from the simplest one
+to the most involved.
+%
+  \begin{itemize}
+%
+    \item {\tt basics}: very simple presentations (slightly longer
+presentation in sub-directory {\tt cash}).
+%
+    \item {\tt slitex}: presentations using the {\tt advi-slides}
+package. Each presentation has its own directory with a {\tt Makefile}
+to automate the process of keeping the presentation up-to-date with
+the sources. Nothing difficult here.
+%
+    \item {\tt seminar}: one presentation using the popular {\tt
+seminar} {\latex} package in the {\tt clock} sub-directory.
+%
+    \item {\tt prosper}: two example presentations using the {\tt
+prosper} {\latex} package in sub-directories {\tt LL} and {\tt
+Join}. Quite impressive and involved.
+%
+  \end{itemize}
+\end{itemize}
+
+
+\section{{\ActiveDVI} for the impatient}
+
+\begin{itemize}
+%
+\item As a previewer, {\ActiveDVI} can preview any correct DVI file.
+%
+\item As a presenter, {\ActiveDVI} provides some {\latex} packages to
+facilitate animations and interaction with the presenter from within
+your {\latex} source text. The {\tt advi-slides.sty} package is
+designed to be a simple way to build a presentation for {\ActiveDVI}.
+%
+\end{itemize}
+
+See {\tt examples/slitex/simplistic/} for a simplistic talk example.  There,
+the command {\tt \char92pause} is used to make the presenter to stop while
+displaying the document. More involved examples can be found in the
+directory {\tt examples} of the distribution.
+
+\section{Safety concerns when using the {\ActiveDVI} previewer}
+
+\paragraph{\bf Warning!}
+
+{\ActiveDVI} may execute programs and commands embedded into the DVI
+file.  Hence, when playing a DVI file from an untrusted source, you
+should run \doctt{advi} with the \doctt{-safer} option that inhibits
+the execution of embedded applications. This warning applies in
+particular if you choose {\ActiveDVI} as your default {\tt meta-mail}
+previewer for the {\tt application/x-dvi} mime-type.
+
+\bigskip
+
+The default safety option is the \doctt{-ask} option: it
+tells {\ActiveDVI} to ask the user each time it must launch an
+application. (Note that in such a case {\ActiveDVI} asks only once to
+launch a given application: it remembers your previous decisions
+concerning the command and acts accordingly for the rest of the
+presentation.)
+
+The second safety option is the above mentioned \doctt{-safer} option:
+it completely inhibits the execution of embedded applications.
+
+The last safety option is \doctt{-exec}: if you call \doctt{advi}
+\doctt{-exec}, \doctt{advi} automatically and silently launches all
+embedded applications (this is useful to play your own presentations without
+the burden of answering yes to {\ActiveDVI}'s questions).
+
+As mentioned, the safe \doctt{-ask} option is the default,
+automatically set when nothing has been explicitly specified by the
+user. If desired, the default safety option can be set via {\em
+initialization files}, either on a system large scale by the machine
+administrator (in the file \doctt{/etc/advirc}), on a local scale by
+individual users (setting the default policy for that user), or even
+on a per directory basis (setting the default policy to show DVI files
+in this directory)! (This last option is convenient to gracefully run
+your own talks, while still being cautious when running talks from
+others.)
+
+\section{Initialization files for {\ActiveDVI}}
+
+\subsection{Syntax of initialization files}
+
+An initialization file for {\ActiveDVI} is simply a text file that
+contains options exactly similar to those you can give on the command
+line (with the exception of comments, made of a sharp sign
+(\doctt{\char35}) followed by some text that is ignored until the end
+of line). For instance:
+%
+\begin{verbatim}
+-exec # I know what I mean!
+-bgcolor grey16
+-fgcolor grey95
+\end{verbatim}
+is a valid initialization file that sets the safety policy to
+\doctt{-exec}, then sets the background and foreground colors to
+obtain a nice reverse video effect.
+
+\subsection{Loading initialization files}
+
+Before parsing options on the command line, {\ActiveDVI} loads, in the
+order listed below, the following initialization files (nothing
+happens if any of them does not exist):
+
+\begin{itemize}
+\item system wide initialization file: \doctt{/etc/advirc},
+\item user specific initialization files: \doctt{\char126/.advirc} then
+\doctt{\char126/.advi/advirc},
+\item directory specific initialization file: \doctt{./.advirc}.
+\end{itemize}
+
+\subsection{Automatic setting of options}
+
+In addition, the user may load an arbitrary file containing options by
+specifying the file path via the command line argument
+\doctt{-options-file}.  Hence, \doctt{-options-file} {\tt filename}
+loads {\tt filename} when parsing this option to set up the options
+contained in {\tt filename} (thus overriding the options set before by
+the default \doctt{\char126/.advirc}, \doctt{\char126/.advi/advirc}, or
+\doctt{./.advirc}, initialization files).
+
+{\softtarget{otherpage}{%
+ \section{Using the {\ActiveDVI} presenter}}}
+
+\subsection{Launching {\ActiveDVI}}
+
+{\ActiveDVI} is invoked with the following command syntax
+\begin{verbatim}
+advi [options] dvifile [dvifile]
+\end{verbatim}
+
+Once {\ActiveDVI} is launched, just press {\bf \verb"?"} to get help
+on the keys you can use to control the presenter (type \verb"^f"
+(Control-F) to get full screen, \verb"<" or \verb">" to change
+the magnification of the text).
+
+When two file names are provided {\ActiveDVI} displays them both: see
+section~\ref{multiplex} for details on the use of a secondary DVI file.
+
+\subsection{Command line options}
+%
+\noindent 
+The \doctt{advi} commands recognized the following options:
+%
+\subsubsection*{Help and info options}
+%
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-v"         & Prints the \doctt{advi} current version and exits \\
+\verb"--version"  & Prints the full \doctt{advi} current version and
+exits \\
+\verb"-help"      & Short command line options help
+\end{tabular}
+\subsubsection*{Window and display specifications}
+%
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-geometry geom"      & Geometry of \ActiveDVI's window specification
+\end{tabular}
+%
+Geometry \verb"geom" is specified in pixels, using the standard format
+for X-Window geometry specifications (i.e:
+\verb"WIDTHxHEIGHT[+XOFFSET+YOFFSET]").
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-fullwidth"          & Adjust the size of the window to the width of the screen
+\end{tabular}
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-nomargins"          & Cancel horizontal and vertical margins \\
+\verb"-hmargin dimen"      & Horizontal margin specification (default: 1cm) \\
+\verb"-vmargin dimen"      & Vertical margin specification   (default: 1cm) \\
+\end{tabular}
+Dimensions are specified as numbers optionally followed by two letters
+representing units. When no units are given, dimensions are treated
+as numbers of pixels. Currently supported units are the standard TeX
+units as specified in the TeX book (D. Knuth, Addison-Wesley, (C)
+1986):
+ `pt' (point), `pc' (pica), `in' (inch), `bp' (big point),
+ `cm' (centimeter), `mm' (millimeter), `dd' (didot point),
+ `cc' (cicero) and `sp' (scaled point).
+Note that dimensions are specified w.r.t the original TeX document,
+and do not correspond to what is actually shown on the screen, which
+can be displayed at a different resolution than specified in the
+original TeX source.
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-crop"               & Crop the window to the best size (default) \\
+\verb"-nocrop"             & Disable cropping
+\end{tabular}
+%
+\subsubsection*{Color specifications}
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-fgcolor <color>" & Specify the color of the foreground color \\
+\verb"-bgcolor <color>" & Specify the color of the background color \\
+\verb"-rv" & Specify that reverse video should be simulated by exchanging \\
+& the background and foreground colors \\
+\verb"-gamma <float>" & Specify gamma correction ($>0.0$) of glyphs\\
+\end{tabular}
+%
+\subsubsection*{Helpers specification}
+%
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-pager" & Specify the name of the pager to launch on a \verb"txt" link\\
+\verb"-browser" & Specify the name of the browser to a \verb"html" link\\
+\end{tabular}
+
+\subsubsection*{Debugging options}
+%
+\Medskip\noindent\begin{tabular}{ll}
+\verb"--debug" & General debug option \\
+\verb"--debug_pages" & Debug page motion \\
+\verb"--show_ps" & Print a copy of Postscript sent to gs to stdout \\
+\verb"--verbose_image_access" & Change the cursor while loading images\\
+\end{tabular}
+%
+\subsubsection*{Rendering options}
+%
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-A" & Toggle Postscript anti-aliasing \\
+\verb"-passive" & Inhibit effects that are visible when redrawing the page
+\\ & (Transitions, delays, embedded applications) \\
+\end{tabular}
+%
+\subsubsection*{Safety options}
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-exec" & Set safety policy to ``always execute embedded applications'' \\
+\verb"-ask" & Set safety policy to ``ask user before execution of embedded applications'' \\
+\verb"-safer" & Set safety policy to ``never execute embedded applications''
+\end{tabular}
+%
+\subsubsection*{Option files option}
+\Medskip\noindent\begin{tabular}{ll}
+\verb"-option-file <filename>" & Load {\tt filename} as a file containing a list of options \\
+& as given on the command line to \doctt{advi}. \\
+\end{tabular}
+%
+\subsubsection*{Miscelleanous options}
+\Medskip\noindent\begin{tabular}{ll}
+\doctt{-autoswitch} & Set the {\tt autoswitch} flag, which allows
+implicit switch to master \\& on \texttt{usr1} signal (default is off).\\
+\end{tabular}
+
+\subsection{Cut and paste}
+
+Text can be copied from the {\ActiveDVI} previewer to another application.
+However, this uses the \doctt{XBuffer} and not the \doctt{XSelection}
+mechanism.
+\begin {itemize}
+\item
+Shift middle-click copies the current word.
+\item
+Shift right-click and drag copies the specified region. 
+\end {itemize}
+Moreover, Shift left-click dump an ASCII representation of the region
+under the mouse pointer in the source file. This expects the DVI to
+have been instrumented with line numbers of the form
+\begin{quote}
+\doctt {line:} \docid {line} \docid {file}
+\end{quote}
+where \docid {line} and \docid {file} are the current source line and
+current source file.
+
+The position is exported in ASCII, in the form
+\begin{quote}
+\verb"#line "\docid{before}, \docid{after} 
+\doctt {<<}\docid{prefix}\doctt{>><<}\docid{suffix}\doctt{>>}
+\docid{file} 
+\end{quote}
+where \docid{before} and \docid{after} are the enclosing line numbers, 
+\docid{prefix}\docid{suffix} the word constituent surrounding the
+mouse position, and file is the name of the current file. 
+
+Line numbers default to $0$ when not found. Note that line numbers may be
+inconsistent if there \docdef\special-line commands have not been inserted
+close enough to the position.
+
+\subsection{Hyper-text references}
+
+{\ActiveDVI} supports the {\latex} {\tt hyperref} package with both
+internal and cross-file references. For cross-file references, it
+launches a new \doctt{advi} process to view the target.
+
+{\ActiveDVI} improves the treatment of hyper-refs over conventional previewers,
+by emphasizing the hyper-target text of an hyper-link. Thus, an hyper-target
+definition:
+
+\docdef\hypertarget \docarg{tag}\docarg{text}
+
+\noindent
+should make the activation of the link \docid{text} not only move to
+the page where \docid{tag} occurs, but also emphasize the destination
+target \docid{tag}.
+%
+However, since {\docdef\hypertarget} does include its second argument
+within the target, we use the following command instead:
+\begin{verbatim}
+\edef\hyper@quote{\string"}
+\edef\hyper@sharp{\string#}
+
+\newcommand{\softtarget}[2]%
+  {\special{html:<a name=\hyper@quote#1\hyper@quote>}#2%
+   \special{html:</a>}}
+\end{verbatim}
+
+(If you are viewing this document with {\softtarget{targethere}{\ActiveDVI}},
+you may move over \softlink{targethere}{this area} 
+or click on \softlink{otherpage}{this one} to see the effect.)
+
+Similarly, to define a link target we use:
+\begin{verbatim}
+\newcommand{\softlink}[2]%
+  {\special{html:<a href=\hyper@quote\hyper@sharp#1\hyper@quote>}#2%
+   \special{html:</a>}}
+\end{verbatim}
+
+\subsection{Floating table of contents and thumbnails}
+
+There are two ways to include a floating table of contents while previewing. 
+
+\begin {itemize}
+
+\item {\ActiveDVI} recognizes the reserved hyper-targets
+\doctt{advitoc.first} and \doctt{advitoc.last} as markers for the first and
+last pages of the table of contents. These pages then become floating,
+{\em i.e.} accessible from anywhere in the document with the default
+key binding \verb't'. The first stroke on \verb't' shows the first page
+of the table of contents. Successive stokes will show the following
+pages. (As usual, prefix integer argument may be used to directly
+access a specific page of the table of contents.)
+
+The package \softlink{advistyle}{\doctt{advi}} described below
+redefines the macro {\docdef\tableofcontents} so that it automatically
+inserts the reserved hyper-targets markers around the table of
+contents. It also provides two new macros, {\docdef\advitoc} and
+{\docdef\endadvitoc}, that serve to insert these markers when the table
+of contents is hand-made.
+
+\item If no table of contents markers are found, then {\ActiveDVI}
+will compute thumbnails, {\em i.e.} will show the whole set of pages
+of the presentation, each page drawn at a smaller scale and packed
+with the others on a single page. {\ActiveDVI} computes the scale so
+that all the thumbnails fit on one page only, provided that the scale
+is less or equal to a maximal value; otherwise, the maximal value
+scale is selected and the thumbnail pages spread on several pages. The
+default maximal scale value is 5, so that 25 thumbnails can fit on the
+same page. This value can be changed using the option
+\doctt{-thumbnail\_scale}.
+
+Normally, thumbnails are drawn for all the pages. However, thumbnail
+pages can also be defined manually, with an hyper-target whose anchor
+is of the form \doctt{/page.\docid{suffix}}. In this case, all the
+desired thumbnails must be explicitly marked.
+
+\end{itemize}
+
+By default, the binding \doctt{T} processes thumbnails and the binding
+\doctt{t} displays thumbnails if already processed, or shows the table
+of contents if available. Otherwise pressing \doctt{t} has no
+action. Thumbnails computation is explicit, so that incidentally
+hitting the \doctt{t} key does not lead to an unexpected computation,
+hence an unexpected delay.
+
+\subsection{Moving around}
+
+See the \softlink{activedvikeys}{key bindings} in the appendix.
+
+\subsection{Scratching on slides}
+
+During the show you can annotate your slides, entering the {\em
+scratching} mode. There are two modes, one for writing characters
+(the {\em writing mode}, entered by pressing {\tt s} during the show)
+and the other to draw lines or figures on the slides (the {\em drawing
+mode}, entered by pressing {\tt S}). In each of this modes, you can
+enter the {\em scratch setting mode} to set various properties of the
+scratching process. See the relevant key bindings for
+\softlink{writingkeys}{writing mode} and \softlink{drawingkeys}{drawing
+mode} 
+in the appendix.
+
+\subsection{Using the laser pointer}
+
+If you press \verb"^X-l" (Control-X then l) the laser pointer appears
+on the slide; the pointer sticks to the mouse pointer and allows easy
+pointing to parts of the presentation. The laser pointer size and
+color can be set on the command line (options {\tt
+-laser-pointer-color} and {\tt laser-pointer-size}).
+
+\subsection{Saving slides}
+
+You can save a snapshot of the current slide at any time by pressing
+\verb"^X-^S" (Control-X then Control-S). An image file is written
+(by default a {\tt png} file). The name of the file produced can be
+set via the command line (see {\tt advi -help} for details) or
+directly from within the {\latex} source file with commands
+\verb"\advisavepageimage" and \verb"\advisavepageimagefile{filename}").
+
+\subsection{Creating events from the {\latex} source file}
+
+{\ActiveDVI} provides the command \verb"\advipushkeys" that provides
+key presses to the presenter as if you had pressed it when viewing the
+presentation. For instance:
+\begin{verbatim}
+\advipushkeys{"q"}
+\end{verbatim}
+ends the talk immediately.
+
+Note that control keys must be encoded inside key strings passed to
+{\ActiveDVI}: we use the Emacs textual convention. For instance, the
+character ``Control-A'' (ASCII 1) is denoted by the two charcters
+\verb"^X" (i.e. a carret character immediately followed by an X).
+Hence, the command
+\begin{verbatim}
+\advipushkeys{"^X^F"}
+\end{verbatim}
+switches to full screen mode.
+
+\subsection{Using and making special effects}
+
+Presentation examples can be found in the \verb"examples"
+directory. Don't miss to play them! Then, feel free to read their
+source code and copy the effects they provide.
+
+{\ActiveDVI} can be used as is, but will shine when driven by a user
+with a bias towards programming: special effects can easily be realized
+by using the {\latex} packages provided with the distribution.
+
+Creative advanced users may program the presenter at various levels, either
+using or defining simple {\latex} macros, writing new {\latex} package
+files, or by implementing extensions to the previewer itself.
+
+% If you ever succeed at adding a nice special effect that could be of
+% a general interest, or if you can provide a nice and fancy presentation
+% of your own that can serve as an example to the \ActiveDVI's users
+% community, please don't hesitate to drop a mail to the implementors
+% at \verb"advi@inria.fr".
+
+\subsection{Viewing multiple files simultaneously}
+
+\label{multiplex}
+{\ActiveDVI} can be invoked with several DVI files (currently only two).
+The first file is always used as the master file and others are client
+files. The user can switch between files explicitly (see 
+\softlink{activedvikeys}{key bindings}) or implicitly.
+There is an implicit switch from the master to the client file $c$ when an
+hyperlink that is not found in the master file can be found in the client file
+$c$; there is also a switch from the client $c$ to the master when using the
+history stack and the previous event on the stack was an implicit switch
+from the master to the client $c$. 
+
+If \doctt{autoswitch} flag is set, there is also an implicit switch to
+the master, whenever {\ActiveDVI} receives signal \doctt{usr1} (to mean 
+immediate refresh). 
+
+\softtarget{advistyle}{%
+ \section{The {\doctt{advi.sty}} {\latex} package}}
+
+{\ActiveDVI} provides some {\latex} packages to facilitate animations and
+interaction with the presenter from within your {\latex} source text.
+
+The \doctt{advi.sty} package is the main package to include when writing
+a presentation for {\ActiveDVI}. It defines the main set of interactive
+commands for {\ActiveDVI} to animate the show. However, there is no
+need to load the package if no {\ActiveDVI} special effects are
+required for the presentation.
+
+\paragraph{Warning!} Most commands of \doctt{advi.sty} use the {\TeX}
+\verb$\special$ command to insert into the DVI output file the
+{\ActiveDVI} specific commands that implement their
+semantics. Those commands are interpreted by {\ActiveDVI} afterwhile during
+the DVI file previewing. Note that a \verb$\special{bla bla}$ command
+is equivalent to a \verb$\hbox{}$ for {\TeX}'s mouth, hence it may alter
+the document layout accordingly. Thus, be aware that most commands of
+the \doctt{advi.sty} package are equivalent to a \verb$\hbox{}$
+command as far as the document layout is concerned.
+
+\subsection{Printing the presentation}
+
+The \doctt{advi.sty} package recognizes the special option \doctt{ignore},
+which helps the production of a printable version of the
+presentation: the \doctt{ignore} option makes the package not to
+produce {\ActiveDVI} specials, so that the show can be previewed by
+other DVI previewers or turned into Postscript using {\tt dvips}. Of
+course, this option disables most effects that cannot be printed,
+although some of them are still approximated.
+
+If the \doctt{ignore} option is not set globally, it can be set
+locally with the commands {\docdef \adviignore}. However, this will not
+prevent all effects, since some decisions are taken when the package is
+loaded.
+
+The package also defines the conditional {\docdef \ifadvi} which
+evaluates its first argument if {\doctt advi} is not in ignore mode and its
+second argument otherwise.
+
+\subsection{Pauses}
+
+{\ActiveDVI} provides partial display of pages (slide
+``strip-tease''): the {\ActiveDVI}'s rendering engine stops before the
+display of the current page is complete. The corresponding state is
+named a {\em pause}. Upon reaching a pause, {\ActiveDVI} may wait for
+a specified delay, or for user input.
+%
+\Medskip\noindent
+\docdef \adviwait\docopt{seconds}
+\begin{quote}
+Wait for \docid{seconds}. If no argument is provided, waits until the
+user requests to continue (hitting a key to move to next pause or to
+change page).
+\end{quote}
+
+\subsection{{\ActiveDVI} records}
+
+{\ActiveDVI} allows (almost) any piece of {\latex} code to be
+recorded, and the corresponding DVI code to be rendered later upon
+request. To be able to render the code in any order we choose, we must
+bind the recorded {\latex} code to a name (called a {\em tag}): this
+{\latex} code together with its tag defines the notion of an {\em
+{\ActiveDVI} record}.
+
+\paragraph{Warning!} The entire DVI image of an {\ActiveDVI} record
+{\em must} fit on a single DVI page. The corresponding check is left
+to the writer of the document.
+
+The command defining an {\ActiveDVI} record is as follows:
+%
+\Medskip\noindent
+\docdef \advirecord \doctt{[play]}\docarg{tag}\docarg{latex code}
+\\
+\docenv{advirecording}{\doctt{[play]}\docarg{tag}\docarg{latex code}%
+\docid {text}}
+
+\begin{quote}
+This command processes \docid{latex code} and records the
+corresponding DVI output, then binds it to the tag \docid{tag}. While
+recording, the DVI output is not displayed, unless the option
+\doctt{play} is set.
+
+{\ActiveDVI} records may be nested. In this case, the inner record is
+bound to its own tag as usual; in addition, if the inner record is
+defined with the \doctt{play} option, it is also recorded as a part of
+the outer tag record.
+
+If the environment syntax form of {\ActiveDVI} record definition is
+used, the \docid{latex code} may contain fragile commands.
+\end{quote}
+
+To play an {\ActiveDVI} record, the corresponding DVI must have been
+recorded on the current DVI page and before issuing the play command.
+With the proviso that these requirements are satisfied, the syntax of
+the command to display an {\ActiveDVI} record is as follows:
+%
+\Medskip\noindent
+\docdef \adviplay\docopt{color}\docarg{tag}
+\begin{quote}
+This command plays the DVI code previously recorded and bound to \docid{tag}.
+
+The optional argument changes the text color to \docid{color} during replay. 
+\end{quote}
+
+\subsection{{\ActiveDVI} anchors}
+
+{\ActiveDVI} gives the ability to define {\em {\ActiveDVI}
+anchors}: an anchor is specified by (1) an {\ActiveDVI} record, (2) a {\latex}
+piece of code that defines the area of the page where the anchor is
+active, and (3) an activation method.
+
+The anchor is {\em activated} when some mouse events specified by the
+activation method occur in the area. The anchor is {\em de-activated}
+when the event that triggered the activation does not hold any more.
+
+The {\ActiveDVI} record associated with the anchor is automatically
+rendered \emph{anew} each time the anchor is activated.  The page is
+reset to its original appearance when the anchor is de-activated.
+
+The activation method of an anchor may be either \doctt{over} or
+\doctt{click}. If the activation method is \doctt{over}, the anchor is
+activated whenever the mouse pointer is inside the anchor area;
+conversely, the anchor is de-activated when the mouse leaves the
+anchor area. If the activation method is \doctt{click}, the anchor is
+activated whenever the button is pressed inside the anchor area;
+conversely, the anchor is de-activated when the button is released.
+%
+\Medskip\noindent
+\docdef \advianchor\docopt{activation}\docarg{tag}\docarg{text}
+\\
+\docenv{advianchoring}{\docopt{activation}\docarg{tag}%
+\docid {text}}
+
+\begin{quote}
+This command defines the DVI rendering of \docarg{text} as an
+{\ActiveDVI} anchor area that plays the {\ActiveDVI} record bound to
+\docid{tag} when the anchor is activated.
+
+The argument \docid{activation} specifies the activation method of the
+anchor.
+
+If the environment syntax form is used, \docid{text} may contain
+fragile commands.
+\end{quote}
+
+\subsection{Images}
+
+Images can be encapsulated into the presentation using the Caml library
+CamlImages provided with the distribution of {\ActiveDVI} (see
+section~\ref {advi-graphicx}).
+
+Images can be {\em lighten} by specifying an alpha value (a
+floating point number between 0 and 1) that measures the mixing
+between the background and the image.
+
+Images can also be {\em blended,} meaning that you can choose the
+algorithm that superimposes the image to the background.
+Blending modes are reminiscent of the Ghostscript blending options: the blend
+mode must be one of the following: {\tt normal}, {\tt multiply},
+{\tt screen}, {\tt overlay}, {\tt dodge}, {\tt burn}, {\tt darken},
+{\tt lighten}, {\tt difference}, {\tt exclusion}, (\doctt{none} means
+unset).
+
+\begin{verbatim}
+{\setblend{burn}
+  {\setalpha{0.5}
+    {\includegraphics[width = 0.7\textwidth]{bar.eps}}}}
+\end{verbatim}
+
+{\setblend{burn}
+  {\setalpha{0.5}
+    {\includegraphics[width = 0.7\textwidth]{bar.eps}}}}
+
+%% {\setblend{normal}
+%%   {\setalpha{0.5}
+%%     {\includegraphics[width = 0.7\textwidth]{bar.eps}}}}
+
+\subsection{Colors}
+
+\subsubsection*{The \doctt{color} {\latex} package}
+
+In {\ActiveDVI}, colors can be specified with the conventions of the
+{\latex} package \doctt{color.sty}, that is, it should either be a
+previously defined color or a specification of the form
+\docopt{model} \docarg{model color specification}.
+
+For example, the following specifications are all correct:
+\begin{quote}
+\begin{verbatim}
+\color{blue}
+\color[named]{Yellow}
+\color[rgb]{0.7,0.3,0.8}
+\end{verbatim}
+\end{quote}
+
+\subsubsection*{Named colors}
+
+Colors can be named using the keyword \docid{named}.  If you use named
+colors, the color names are case sensitive and should generally be
+capitalized; for instance: \verb"\color[named]{White}" specifies the
+white color. Hence, {\tt {\char92}color[named]\{Red\}\{{\it some
+text}\}} writes {\it some text} in {\color[named]{Red}{red}}.
+
+The names of available colors can be found in the {\tt dvipsnam.def}
+file, generally at location\\
+{\tt /usr/share/texmf/tex/latex/graphics/dvipsnam.def}.
+
+To give an idea, the names and colors available on a standard installation of
+{\latex} are:
+
+{\color[named]{GreenYellow}{GreenYellow}} $\quad$
+{\color[named]{Yellow}{Yellow}} $\quad$
+{\color[named]{Goldenrod}{Goldenrod}} $\quad$
+{\color[named]{Dandelion}{Dandelion}} $\quad$
+{\color[named]{Apricot}{Apricot}} $\quad$
+
+{\color[named]{Peach}{Peach}} $\quad$
+{\color[named]{Melon}{Melon}} $\quad$
+{\color[named]{YellowOrange}{YellowOrange}} $\quad$
+{\color[named]{Orange}{Orange}} $\quad$
+{\color[named]{BurntOrange}{BurntOrange}} $\quad$
+
+{\color[named]{Bittersweet}{Bittersweet}} $\quad$
+{\color[named]{RedOrange}{RedOrange}} $\quad$
+{\color[named]{Mahogany}{Mahogany}} $\quad$
+{\color[named]{Maroon}{Maroon}} $\quad$
+{\color[named]{BrickRed}{BrickRed}} $\quad$
+
+{\color[named]{Red}{Red}} $\quad$
+{\color[named]{OrangeRed}{OrangeRed}} $\quad$
+{\color[named]{RubineRed}{RubineRed}} $\quad$
+{\color[named]{WildStrawberry}{WildStrawberry}} $\quad$
+{\color[named]{Salmon}{Salmon}} $\quad$
+
+{\color[named]{CarnationPink}{CarnationPink}} $\quad$
+{\color[named]{Magenta}{Magenta}} $\quad$
+{\color[named]{VioletRed}{VioletRed}} $\quad$
+{\color[named]{Rhodamine}{Rhodamine}} $\quad$
+{\color[named]{Mulberry}{Mulberry}} $\quad$
+
+{\color[named]{RedViolet}{RedViolet}} $\quad$
+{\color[named]{Fuchsia}{Fuchsia}} $\quad$
+{\color[named]{Lavender}{Lavender}} $\quad$
+{\color[named]{Thistle}{Thistle}} $\quad$
+{\color[named]{Orchid}{Orchid}} $\quad$
+{\color[named]{DarkOrchid}{DarkOrchid}} $\quad$
+
+{\color[named]{Purple}{Purple}} $\quad$
+{\color[named]{Plum}{Plum}} $\quad$
+{\color[named]{Violet}{Violet}} $\quad$
+{\color[named]{RoyalPurple}{RoyalPurple}} $\quad$
+{\color[named]{BlueViolet}{BlueViolet}} $\quad$
+
+{\color[named]{Periwinkle}{Periwinkle}} $\quad$
+{\color[named]{CadetBlue}{CadetBlue}} $\quad$
+{\color[named]{CornflowerBlue}{CornflowerBlue}} $\quad$
+{\color[named]{MidnightBlue}{MidnightBlue}} $\quad$
+
+{\color[named]{NavyBlue}{NavyBlue}} $\quad$
+{\color[named]{RoyalBlue}{RoyalBlue}} $\quad$
+{\color[named]{Blue}{Blue}} $\quad$
+{\color[named]{Cerulean}{Cerulean}} $\quad$
+{\color[named]{Cyan}{Cyan}} $\quad$
+{\color[named]{ProcessBlue}{ProcessBlue}} $\quad$
+
+{\color[named]{SkyBlue}{SkyBlue}} $\quad$
+{\color[named]{Turquoise}{Turquoise}} $\quad$
+{\color[named]{TealBlue}{TealBlue}} $\quad$
+{\color[named]{Aquamarine}{Aquamarine}} $\quad$
+{\color[named]{BlueGreen}{BlueGreen}} $\quad$
+
+{\color[named]{Emerald}{Emerald}} $\quad$
+{\color[named]{JungleGreen}{JungleGreen}} $\quad$
+{\color[named]{SeaGreen}{SeaGreen}} $\quad$
+{\color[named]{Green}{Green}} $\quad$
+{\color[named]{ForestGreen}{ForestGreen}} $\quad$
+
+{\color[named]{PineGreen}{PineGreen}} $\quad$
+{\color[named]{LimeGreen}{LimeGreen}} $\quad$
+{\color[named]{YellowGreen}{YellowGreen}} $\quad$
+{\color[named]{SpringGreen}{SpringGreen}} $\quad$
+
+{\color[named]{OliveGreen}{OliveGreen}} $\quad$
+{\color[named]{RawSienna}{RawSienna}} $\quad$
+{\color[named]{Sepia}{Sepia}} $\quad$
+{\color[named]{Brown}{Brown}} $\quad$
+{\color[named]{Tan}{Tan}} $\quad$
+
+{\color[named]{Gray}{Gray}} $\quad$
+{\color[named]{Black}{Black}} $\quad$
+
+\subsubsection*{The CMYK specifications of colors}
+
+You may also explicitly use a CMYK (Cyan, Magenta, Yellow, Black)
+specification. In this case the cyan, magenta, yellow and black values
+follow the \docid{cmyk} keyword, and are given as a list of four
+integers in the range 0.0 .. 1.0.
+For instance, {\tt {\char92}color[cmyk]\{0,1,0,0\}} is a valid specification
+for {\color[cmyk]{0,1,0,0}{magenta}}.
+
+\subsubsection*{The RGB specifications of colors}
+
+RGB (Red, Green, Blue) specifications are similar to the CMYK
+specifications: following the \docid{rbg} keyword, the red, green, or
+blue color values, are given as floating point numbers in the range
+0.0 .. 1.0.  Hence, {\tt{{\char92}color[rgb]\{1.0,0.0,0.0\}}} is a
+valid specification for {\color[rgb]{1.0,0.0,0.0}{red}}.
+
+\subsubsection*{The X -Window System colors}
+
+{\ActiveDVI} provides the package \doctt{xwindows-colors}, an
+extension to the \doctt{color} package, that defines a large set of
+the X Window System color names, as found in the file {\tt rgb.txt}
+of a typical X installation (this file is generally located on {\tt
+/usr/X11R6/lib/X11/rgb.txt}). To know which colors are available look
+at the source file of the package {\tt xwindows-colors.sty} in the
+directory {\tt tex} of the distribution.
+
+\subsection{Background}
+
+You can modify the background of your presentation in the {\latex}
+source of the pages. Background can be defined either as a plain
+color, as an image, or as a gradient (or as a combination of these!).
+
+You can specify a global option to the background settings, so that these
+settings are used for the remaining pages of the presentation
+(otherwise the presenter resets the background options at each new page).
+
+To modify the background of your presentation, you can:
+
+\begin{itemize}
+  \item define the background color,
+  \item define a gradient function to be run on the background (or a
+   defined area of the background) using the predefined color gradients,
+  \item add a background image (which can be alpha-blended on top of
+   the background color).
+\end{itemize}
+
+If these options are used \emph{together}, they are applied in this
+order: first the solid background color is drawn, then the gradient
+function is applied, finally the image is drawn on the resulting
+background.
+%
+\Medskip\noindent
+\docdef \advibg \doctt {[global]}\docarg{decl}
+\begin{quote}
+where \docid{decl} is a list of settings of the following from:
+
+\dockey[none]{color}{color}
+\begin{quote}
+Set the background color to \docid{color}.
+If \docid{color} is \doctt{none} this unsets the background color. 
+Otherwise, \docid{color} must follow the notation above to designate colors.
+\end{quote}
+
+\dockey[none]{image}{file}
+\begin{quote}
+Use the image found in \docid{file} as background (\doctt{none} means unset).
+\end{quote}
+
+\dockey[auto]{fit}{fit style}
+\begin{quote}
+Fit the background image according to \docid{style}, which may be 
+one of the following keywords:
+\begin{center}
+\tt auto \hfill {\rm or} \hfill
+\begin{tabular}{l@{\qquad}c@{\qquad}r}
+topleft    & top     & topright\\
+left       & center  & right \\
+bottomleft & bottom  & bottomright\\
+\end{tabular}
+\end{center}
+The {\tt auto} fit style means scaling the image as desired in both directions
+so that it fits the entire page. Other styles only force the same scaling
+factor in both directions:
+
+\begin {itemize}
+
+\item Corner-styles means set the image in the corresponding corner
+and scale it to cover the entire page.
+
+\item {\tt center} means set the image in the center of the page and
+scale it to cover the entire page.
+
+\item Segment-styles means adjust the image and the page on the
+segment (in which case, the image may not completely cover the page on
+the opposite side).
+
+\end {itemize}
+\end{quote}
+
+\dockey[none]{alpha}{float}
+\begin{quote}
+Set the alpha channel factor for the background image to \docid{float}
+(\doctt{none} means unset). An alpha factor of $0$ means that the
+image is not visible at all; conversely, an alpha factor of $1$ means that the
+image covers the background.
+\end{quote}
+
+\dockey[none]{blend}{blend mode}
+\begin{quote}
+Set the blend mode to \docid{blend mode}, which are reminiscent of
+Ghostscript blending options. The blend mode should be one of the
+following: {\tt normal}, {\tt multiply}, {\tt screen}, {\tt overlay},
+{\tt dodge}, {\tt burn}, {\tt darken}, {\tt lighten}, {\tt
+difference}, {\tt exclusion}, (\doctt{none} means unset).
+\end{quote}
+
+\dockey[none]{gradient}{function}
+\begin{quote}
+Set the gradient function to \docid{function}, one of the
+predefined functions that convert the plain background color into a
+color gradient from the chosen color \verb"colorstart" to the color
+\verb"colorstop" (which is white by default). Available gradients are:
+\begin {itemize}
+
+\item \verb|hgradient| horizontal gradient (the gradient is a serie of
+vertical lines),
+\item \verb|vgradient| vertical gradient (the gradient is a serie of
+horizontal lines),
+\item \verb|d1gradient| first bissector gradient (the gradient is a serie of
+lines which are parallel to the first bissector),
+\item \verb|d2gradient| second bissector gradient (the gradient is a serie of
+lines which are parallel to the second bissector),
+\item \verb|cgradient| centered gradient (the gradient is a serie of
+concentric squares),
+\item \verb|circgradient| circular gradient (the gradient is a serie
+of concentric circles).
+\end {itemize}
+\end{quote}
+
+\dockey[white]{colorstart}{color}
+\begin{quote}
+Set the starting color of the gradient. When left unspecified defaults to
+white.
+\end{quote}
+
+\dockey[background]{colorstop}{color}
+\begin{quote}
+Set the end color of the gradient. When left unspecified defaults to
+the background color.
+\end{quote}
+
+\dockey[0]{xstart}{int}
+\begin{quote}
+Set the abscissa of the lower left point of the area where the
+gradient is drawn.
+\end{quote}
+
+\dockey[0]{ystart}{int}
+\begin{quote}
+Set the ordinate of the lower left point of the area where the
+gradient is drawn.
+\end{quote}
+
+\dockey[1.0]{width}{float}
+\begin{quote}
+Set the width of the area where the gradient is drawn.
+The width is a number in the range \verb|[0 .. 1]| that gives the
+ratio of the area width with respect to the page width (hence $0.0$
+means a null width and $1.0$ means the entire page width).
+\end{quote}
+
+\dockey[1.0]{height}{float}
+\begin{quote}
+Set the height of the area where the gradient is drawn.
+The width is a number in the range \verb|[0 .. 1]| that gives the
+ratio of the area height with respect to the page height (hence $0.0$
+means a null height and $1.0$ means the entire page height).
+\end{quote}
+
+\dockey[0.5]{xcenter}{float}
+\begin{quote}
+For a centered or circular gradient, set the abscissa of the center
+point of the gradient into the gradient area. {\tt xcenter} is a ratio
+of the gradient area's width. It defaults to $0.5$, meaning
+the middle of the gradient area width.
+\end{quote}
+
+\dockey[0.5]{ycenter}{float}
+\begin{quote}
+For a centered or circular gradient, set the ordinate of the center
+point of the gradient into the gradient area. {\tt ycenter} is a ratio
+of the gradient area's height. It defaults to $0.5$, meaning
+the middle of the gradient area height.
+\end{quote}
+
+\goodbreak
+\dockey{none}{}
+\begin{quote}
+Unset all background parameters.
+This key must appear on its own, no arguments or keys are allowed. 
+\end{quote}
+The optional parameter \doctt{global} indicates that
+the definition is global and will affect the following pages, 
+as well as the current page.
+
+By default, the background settings only affect the current page.
+\end{quote}
+
+\subsection{Transitions}
+
+\docdef \advitransition \doctt {[global]}\docarg {decl}
+\begin{quote}
+where \docid{decl} is a list of settings of the following from:
+
+\dockey{none}{} or \dockey{slide}{} or \dockey{block}{} or \dockey{wipe}{}
+\begin{quote}
+Set the transition mode to the corresponding key.
+One of this key is mandatory (if several are provided the last one is
+selected).
+\end{quote}
+
+\dockey{from}{direction}
+\begin{quote}
+Make the transition come from \docid{direction}. Directions should be
+one of the following:
+\begin{center}
+\tt
+\begin{tabular}{l@{\qquad}c@{\qquad}r}
+topleft    &  top     & topright\\
+left       &  center  & right \\
+bottomleft &  bottom  & bottomright\\
+\end{tabular}
+\end{center}
+\end{quote}
+The default direction, to be used when no local or global direction has been
+specified, is determined dynamically: \verb"right" when coming from
+previous page, \verb"left" when coming from next page, and \verb"top"
+otherwise.
+
+\dockey{steps}{n}
+\begin{quote}
+Make the transition in \docid{n} steps. 
+\end{quote}
+As for \docdef \advibg, the optional parameter \doctt{global} indicates that
+the definition is global and will affect the following pages, 
+as well as the current page. 
+
+By default, the transition definitions affect the current page only. 
+\end{quote}
+%
+\Medskip\noindent
+\docdef \advitransbox \docarg {key=val list}\docarg{hbox material}
+\begin{quote}
+where \docid {key=val list} is as above and \docarg{hbox material} is
+whatever can follow an \docdef \hbox{} command. In particular, the material
+may contain verbatim commands, since as for the \docdef\hbox{} it is
+parsed incrementally.
+\end{quote}
+
+The optional parameter \doctt{global} indicates that the definition is
+global and will affect the following pages, as well as the current
+page.
+
+By default, the transition affects the current page only.
+
+\subsection{Embedded applications}
+
+To animate your show, {\ActiveDVI} can launch arbitrary applications
+you need.
+
+\subsubsection{Launching embedded applications}
+
+The {\latex} command to launch an application during the presentation is 
+%
+\Medskip\noindent
+\docdef \adviembed\docopt{key=value list}\docarg{command} 
+
+\begin{quote}
+where \docid{key=value list} is a list of bindings of the following kind:
+
+\dockey{name}{name}
+\begin{quote}
+Allows to refer to the embedded application as \docid{name}. 
+Anonymous applications have actually the default name \doctt{anonymous}.
+\end{quote}
+
+\dockey{ephemeral}{name}
+
+\begin{quote}
+This is the default case: the application is specific to a given
+page. An \doctt{ephemeral} application is automatically launched
+whenever the page is displayed, and automatically killed when the page
+is turned.
+\end{quote}
+
+\dockey{persistent}{name}
+
+\begin{quote}
+A \doctt{persistent} application is launched only once and keeps
+running in the background; however, {\ActiveDVI} automatically
+hides and shows the window where the application runs, so that the
+application is visible only on the page where it has been launched.
+\end{quote}
+
+\dockey{sticky}{name}
+\begin{quote}
+A \doctt{stiky} application is launched only once, keeps running, and
+remains visible when turning pages. It is also resized and moved as
+necessary to fit the page size.
+\end{quote}
+
+\dockey{raw}{name}
+\begin{quote}
+A \doctt{raw} application is launched each time its embedding command
+is encountered. A \doctt{raw} application is not managed {\em
+automatically} by {\ActiveDVI}, except for the initial launching and
+the final clean-up that occurs when {\ActiveDVI} exits; hence, you can
+completely monitor the \doctt{raw} applications graphical behavior,
+using the \doctt{advikillembed} command and the window mapping
+facilities for \doctt{raw} applications described below.
+\end{quote}
+
+\dockey{width}{dim}\\
+\dockey{height}{dim}
+
+\begin{quote}
+The application takes \docid{dim} width (respectively height) space in 
+{\latex}. Both values default to 0pt.
+
+These dimensions are also substituted for all occurrences of \verb"@g" in
+the command string.
+\end{quote}
+
+\end{quote}
+
+\subsubsection{Monitoring embedded applications}
+
+To monitor embedded applications, {\ActiveDVI} provides the
+\doctt{advikillembed} primitive to send a signal to any named embedded
+application. For \doctt{raw} applications, there are additional
+functions to map or un-map the window allocated to a named \doctt{raw}
+application. Mapping or un-mapping windows of non-\doctt{raw}
+applications is unspecified, since it may interfere in a non trivial
+way with {\ActiveDVI}'s automatic treatment of those applications.
+
+\subsubsection*{Monitoring a single application}
+%
+\Medskip\noindent
+\docdef \advikillembed \docarg{name}
+\begin{quote}
+Kill the embedded application named \docid{name}.
+An optional signal value or symbolic name can be given to send to the
+designed process: for instance, {\tt {\char92}advikillembed[SIGUSR1]\{clock\}}
+will send the {\tt SIGUSR1} signal to the embedded application named
+{\tt clock}.
+
+Signal value defaults to -9.
+\end{quote}
+%
+\Medskip\noindent
+\docdef \advimapembed \docarg{name}
+\begin{quote}
+Map the window of the (\doctt{raw}) embedded application named \docid{name}.
+\end{quote}
+%
+\Medskip\noindent
+\docdef \adviunmapembed \docarg{name}
+\begin{quote}
+Un-map the window of the (\doctt{raw}) embedded application named \docid{name}.
+\end{quote}
+
+\subsubsection*{Monitoring a group of embedded applications}
+
+The primitives \doctt{advikillallembed}, \doctt{advimapallembed}, and
+\doctt{adviunmapallembed} behave the same as their non-{\tt all}
+counterparts, except that they operate on all the applications that
+have been launched with the given name.
+%
+\Medskip\noindent
+\docdef \advikillallembed \docarg{name}
+\begin{quote}
+Similar to \doctt{advikillembed}
+but kill all the embedded applications named \docid{name}.
+\end{quote}
+%
+\Medskip\noindent
+\docdef \advimapallembed \docarg{name}
+\begin{quote}
+Map the windows of all the (\doctt{raw}) embedded applications named
+\docid{name}.
+\end{quote}
+%
+\Medskip\noindent
+\docdef \adviunmapallembed \docarg{name}
+\begin{quote}
+Un-map the windows of all the (\doctt{raw}) embedded applications named
+\docid{name}.
+\end{quote}
+%
+\subsection{Active anchors}
+%
+Active anchors are annotated pieces of text that get associated
+activation records. To define an active anchor, the command is
+%
+\Medskip\noindent
+\docdef \advianchor \docopt{decl}\docarg{tag}\docarg {text}
+\\
+\docenv{advianchor}{\docopt{decl}\docarg{tag} \docid {text}}
+\begin{quote}
+The text is first displayed as usual, then the anchor is drawn
+according to the style given by \docid{decl}, and made active. 
+Its activation, which depends on the mode given by \docid{decl}, 
+will play the record named \docid{tag}. 
+
+The declarations \docid{decl} are of the following form:
+\begin{description}
+\item [\doctt{over}, \doctt{click}, \textrm{or} \doctt{stick}]\indent\par 
+The mode \doctt{stick} plays the tag \docid{tag} on
+click. The mode \doctt{click} is similar, except that it restores the
+previous state when leaving the anchor area. The mode \doctt{over} is as
+\doctt{click} but display the \docid{tag} when the mouse is \doctt{over}
+the anchor instead of waiting for a click.
+\item [\doctt{box}, \doctt{invisible}, or \doctt{underline}]\indent\par
+this defines the style in which the anchor should be drawn.
+The default style is \doctt{box}.
+\end{description}
+In the environment form, \docid{text} may contain fragile commands. 
+\end{quote}
+%
+\Medskip\noindent
+\docdef \adviemphasize \docopt{color}\docarg {text}
+\begin{quote}
+This makes an invisible anchor around \docid{text}, which when activated
+will redraw text in a box colored with \docid{color}, which defaults to
+\doctt{yellow}. 
+\end{quote}
+
+\subsection{Postscript specials}
+
+{\ActiveDVI} can deal with most of PStricks by calling {\tt
+ghostscript} on included Postscripts. Basic change of coordinates are
+implemented, but this feature remain fragile, as {\ActiveDVI} must in
+turn call {\tt ghostscript} to get the new coordinates. Also,
+rotations will definitely not work for text, which is rendered by
+{\ActiveDVI} and cannot be rotated.
+
+\subsubsection{Overlays}
+
+\index{overlays}
+
+The {\tt overlay} class implements overlays with PStricks. By contrast,
+{\ActiveDVI} implements overlays directly, using records and plays.
+This is more efficient, and of course more natural.
+(In fact, {\ActiveDVI} chooses the cumulative semantics of overlays,
+displaying all layers below the current overlay.)
+
+The {\tt xprosper} style, derived from the {\tt prosper} class, uses 
+the {\tt overlay} class and works with {\ActiveDVI} in exactly the same
+way (relaxing the \verb|\overlay@loop| macro inhibits all layers, but the first
+page).
+
+\subsubsection{PStricks known to work}
+
+{\ActiveDVI} can deal with main PStricks. In particular, 
+the following work
+\begin {itemize}
+
+\item[+]
+Simple drawings, such as \verb"\psframe", \verb"\ovalnode", \ldots.
+
+\item[+]
+Connections between nodes {\tt \string \ncline}, {\tt \string \ncarc},
+also works.
+
+\item[+]
+Labels over arrows \verb"\Aput", \verb"Bput", etc.
+
+\item[+] 
+{\tt\string\SpecialCoor}, {\em i.e.} commands of the form
+{\tt \string \rput (A)\{bla bla\}} works where {\tt A} is a node name. 
+
+\item[+]
+Embeddded-Postcript figures, including scaling.
+
+\end {itemize}
+Other PStricks may or may not work.
+
+
+\softtarget{advi-slides}{%
+ \section{The {\doctt{advi-slides.sty}} {\latex} package}}
+
+{\ActiveDVI} provides this specialized {\latex} package to facilitate
+writing presentation slides in the spirit of SliTeX. See examples in
+the directory {\tt examples/slitex}.
+
+\section{Auxiliary {\latex} packages}
+
+\subsection{The \texttt{superpose} package}
+
+This package allows superposition of horizontal material, creating 
+the smallest horizontal box that fits all of the superpositions.
+\begin{verbatim}
+\usepackage{superpose}
+\end{verbatim}
+The package defines a single environment:
+%
+\Medskip\noindent
+\docenv{superpose}{\docopt{alignment}\docid {list}}
+\begin{quote}
+The \docid{alignment} can be one the letters \doctt c (default value), \doctt
+l, or \doctt r.
+
+Items of the \docid{list} are separated by \verb"\\" as in tabular
+environments. 
+Each item should be a horizontal material.
+\end{quote}
+
+\subsection{The \texttt{bubble} package}
+
+This package draws bubbles over some text. 
+\begin{verbatim}
+\usepackage{bubble}
+\usepackage[ps]{bubble}
+\end{verbatim}
+By default bubbles are produced using the \doctt{epic} and \doctt{eepic}
+packages, for portability. However, for better rendering and easier 
+parameterization, bubbles can also be drawn using the \doctt{ pst-node}
+package of the PStricks collection. This is what the \doctt{ps} option
+is designed for.
+
+The package defines a single command:
+%
+\Medskip\noindent
+\docdef \bubble \docopt{key=value list}\docarg{anchor}%
+    \docopt{ps options}\docpar {pos}\docarg{text}
+\begin{quote}
+The \docid{key=value list} is a list of bindings of the following kind:
+
+\dockey[yellow]{bg}{color}
+\begin{quote}
+The background color for annotations. 
+\end{quote}
+
+\dockey[yellow]{unit}{dim}
+\begin{quote}
+Set the package unit to \docid{dim}.
+\end{quote}
+
+\dockey[c]{col}{colspec}
+\begin{quote}
+Where \docid{colspec} is a column specification for the tabular
+environment. Moreover, the following abbreviations are recognized:
+
+\smallskip
+\tt
+\begin{tabular}{|l|l|}
+\hline
+\rm\em key & \rm expands to \\
+\hline
+c &  col=c\\
+l &  col=l\\
+r &  col=r\\
+p=\docid{w} & col=p\docarg{w}\\
+%\cline{1-2}
+\hline
+\end{tabular}
+\begin{tabular}{|l|l|}
+\hline
+\rm\em key & \rm expands to \\
+\hline
+C &  col=\{>\{\$\}c<\{\$\}\}\\
+L &  col=\{>\{\$\}l<\{\$\}\}\\
+R &  col=\{>\{\$\}r<\{\$\}\}\\
+P\docid{w} &  \doctt{col=\{>\{\$\}p\docarg{w}<\{\$\}\}}\\
+%\cline{1-2}
+\hline
+\end{tabular}
+\end{quote}
+
+\docid{pos} is the optional relative position of the annotation, 
+it defaults to $1,1$, and is counted in the package units. 
+
+\docid{ps options} are passed to the command \docdef\psset) 
+in \doctt{ps} mode and ignored otherwise. 
+\end{quote}
+Parameters (color and tabular columns specifications) can also 
+be set globally using the command:
+%
+\Medskip \noindent
+\docdef \bubbleset\docarg{key=value list}
+
+\subsection{The \texttt{advi-annot} package}
+
+This package uses active anchors and the bubbles package to 
+provide annotations by raising a bubble when the cursor is over the anchor.
+
+The package defines a single command
+%
+\Medskip\noindent
+\docdef \adviannot \docopt{key=value list}\docarg{anchor}%
+    \docopt{ps options}\docpar {pos}\docarg{text}
+\begin{quote}
+whose options are identical to those of the {\docdef \bubble} macro; however
+the bubble appears within an active anchor.
+\end{quote}
+
+%Annotation location can also be invisible \advi{C}{\tt{ }}instead of visible.
+
+\subsection{The {\doctt{advi-graphicx}} {\latex} package}
+\label {advi-graphicx}
+
+This 3-lines long package loads the {\tt graphicx.sty} package and provides
+declarations so that JPEG, EPS, TIF, TIFF source images can be embedded:
+{\ActiveDVI} will preview these images directly while other drivers
+will translate them on demand. 
+
+\appendix
+
+\section{Limitations}
+
+\subsection*{Postscript Fonts}
+
+Postscript fonts are not natively handled by {\ActiveDVI}. You must
+use the command {\tt dvicopy} to expand those virtual fonts to base
+fonts before visualization with {\ActiveDVI}.
+(For instance, {\tt dvicopy talk.dvi talk.expanded; advi talk.expanded} very
+often does the trick.)
+
+\subsection*{In-lined Postscript and Ghostscript}
+
+PS relies on {\tt ghostscript} to display Postscript in-lined specials.
+However, some earlier releases of {\tt ghostscript} 
+implements the Postscript {\tt flushpage} command as a {\tt XFlush} call
+which does not force the evaluation of commands, and thus makes the 
+synchronization between {\tt ghostscript} and {\ActiveDVI} drawings
+uncontrollable. In this case, the interleaving of in-lined postscript 
+and other material may be inconsistent. 
+
+Fortunately, recent versions of ghostscript $(> 6.5)$ have
+fixed this problem by using {\tt XSync(false)} instead.
+If you use those versions of ghostscript, in-lined specials should be
+correctly rendered.
+
+Unfortunately, some releases of version 6.5x also carry a small but
+fatal bug for \ActiveDVI, that will hopefully be fixed in future
+releases. A workaround is available here
+\url{http://cristal.inria.fr/~remy/ghostscript/}.
+
+\subsection*{In-lined Postscript change of coordinates}
+
+So far, the implementation of in-lined Postscript does not correctly handle
+complex change of coordinates.  (See PStricks section). 
+
+\section{Reporting bugs}
+
+Please, send bug reports to 
+\url{mailto:advi@inria.fr}. 
+\\
+See \url{http://gallium.inria.fr/advi} for up to date information.
+
+
+\softtarget{activedvikeys}{%
+ \section{{Key bindings}}}
+
+
+\let \Newpage \newpage
+
+\def \newpage {}
+
+\input{splash_header.tex}
+
+\input{splash_contents.tex}
+
+\softtarget{writingkeys}{%
+ \section{{Key bindings for scratch writings}}}
+
+\input{scratch_write_splash_contents.tex}
+
+\softtarget{drawingkeys}{%
+ \section{{Key bindings for scratch drawings}}}
+
+\input{scratch_draw_splash_contents.tex}
+
+\def \newpage{\Newpage}
+
+%To make the \section*{Index} behave as \section{Index}
+\let \Section \section\def \section*{\Section}
+\printindex
+
+\end{document}
+
+% LocalWords:  DVI Didier Weis advi INRIA LGPL Miquel Furuse Botlan XBuffer pst
+% LocalWords:  XSelection Hyperref hyperref dvips advirecording advianchoring
+% LocalWords:  CamlImages topleft topright bottomleft bottomright hbox PStricks
+% LocalWords:  advianchor eepic pstricks ps pos bg colspec bubbleset in-lined
+% LocalWords:  flushpage XFlush XSync

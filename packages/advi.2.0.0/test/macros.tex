@@ -1,0 +1,158 @@
+\documentclass[10pt]{article}
+
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{advi}
+\usepackage{alltt}
+\usepackage{color}
+
+\begin{document}
+
+\noindent
+{\bf\Large {\ActiveDVI} macros}\\
+
+\noindent
+\includegraphics[width=\textwidth]{bar.eps}
+
+\section{Pause}
+
+\begin{description}
+\item[Syntax] \verb"\advipause"
+\item[Effect] Stop the DVI command rendering at its occurrence.
+\end{description}
+
+\begin{minipage}[t]{0.5\textwidth}
+\begin{alltt}
+Please hit space!{\color{blue}\verb"\"advipause}\verb"\\"
+Ok, let's continue.
+\end{alltt}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+Please hit space!\\ \advipause Ok, let's continue.
+\end{minipage}
+
+\section{Wait}
+
+\begin{description}
+\item[Syntax] \verb"\adviwait["{\em{sec}}\verb"]"
+\item[Effect] Delay the DVI command rendering for {\em{sec}} seconds.
+\item[Note] Due to the interval timer calls in the graphics library,\\
+  the delay tends to be longer than the specified {\em{sec}} seconds.
+\end{description}
+
+\begin{minipage}[t]{0.5\textwidth}
+\begin{alltt}
+Let's animate a bit.\verb"\advipause\\"
+Un,{\color{blue}\verb"\adviwait[1.5]"}
+Deux,{\color{blue}\verb"\adviwait[1.5]"}
+Trois{\color{blue}\verb"\adviwait{1.5]"}!! 
+\end{alltt}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+Let's animate a bit.\advipause\\
+Un,\adviwait[1.5]
+Deux,\adviwait[1.5]
+Trois\adviwait[1.5]!! 
+\end{minipage}
+
+\section{Record and Play -- Color change}
+
+\begin{description}
+\item[Syntax] \verb"\advirecord[play]{"{\em{this}}\verb"}{"{\em{txt}}\verb"}"
+\item[Effect] Associates the DVI commands within {\em{txt}} to
+  the {\ActiveDVI} tag {\em{this}}.
+\item[Note] This macro is used to change the color of {\em{txt}}
+later,\\
+ with the combination of the \verb"\textcolor" macro.\\
+  The scope of the tag is restricted to the current page.\\
+  By using the \verb"\advirecord[play]{}{}" macro with the same tag name\\
+  more than once, different parts of the page can be associated to the same tag.
+\item[Bug] If the tagged text {\em{txt}} contains other tag related
+ commands inside, they are ignored.
+\end{description}
+
+\begin{description}
+\item[Syntax] \verb"\textcolor{" {\em{color}} \verb"}{\adviplay"
+                      {\em{this}} \verb"}}"
+\item[Effect] Change the color of the texts associated to the tag {\em{this}}.
+\item[Note] You need to use the style \verb"color.sty" from the
+\verb"graphics" {\LaTeX} package.
+\end{description}
+
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+\begin{alltt}
+{\color{blue}\verb"\advirecord[play]{red}{Red}"},
+{\color{blue}\verb"\advirecord[play]{green}{Green}"}, and
+{\color{blue}\verb"\advirecord[play]{blue}{Blue}"} are
+{\color{blue}\verb"\advirecord[play]{red}{Rouge}"},
+{\color{blue}\verb"\advirecord[play]{green}{Vert}"}, and
+{\color{blue}\verb"\advirecord[play]{blue}{Bleu}"} in French.
+\verb"\bigskip"
+Difficult to remember ?
+Then, hit space!\verb"\advipause"
+{\color{blue}\verb"\textcolor{red}{\adviplay{red}}"}
+{\color{blue}\verb"\textcolor{green}{\adviplay{green}}"}
+{\color{blue}\verb"\textcolor{blue}{\adviplay{blue}}"}
+\end{alltt}
+\end{minipage}\advipause
+\begin{minipage}[t]{0.5\textwidth}
+\advirecord[play]{red}{Red},
+\advirecord[play]{green}{Green}, and
+\advirecord[play]{blue}{Blue} are
+\advirecord[play]{red}{Rouge},
+\advirecord[play]{green}{Vert}, and
+\advirecord[play]{blue}{Bleu} in French.\advipause
+
+\bigskip
+Difficult to remember ?
+Then, hit space!\advipause
+\textcolor{red}{\adviplay{red}}
+\textcolor{green}{\adviplay{green}}
+\textcolor{blue}{\adviplay{blue}}
+\end{minipage}
+
+\bigskip
+\noindent
+Easy, no ? Hit space to continue!\advipause
+
+\section{Record and Play -- Hiding}
+
+\begin{description}
+\item[Syntax]  \verb"\advirecord{"{\em{this}}\verb"}{"{\em{txt}}\verb"}"
+\item[Effect] The DVI commands are associated to the tag {\em{this}}\\
+  as with the macro call \verb"\advirecord[play]{"{\em{this}}\verb"}{"{\em{txt}}\verb"}",\\ 
+  but the {\em{txt}} text argument is not rendered.
+\item[Note] The hidden text can be displayed later by calling the\\
+  \verb"\adviplay" macro.
+\item[Bug] If the tagged text {\em{txt}} contains other tag related
+  commands inside, they are ignored.
+\end{description}
+
+\begin{alltt}
+\verb"\begin{tabular}[t]{cccc}"
+\verb"  One & " {\color{blue}\verb"\advirecord{tag2}{Two}"} \verb" &" {\color{blue}\verb"\advirecord{tag3}{Three}"} \verb"%"
+\verb"      & Caml" {\color{blue}\verb"\advirecord{tag2}{s}"} \verb"\\"
+\verb"  \includegraphics[width=0.1\textwidth]{../tex/caml.eps}&"
+\verb" " {\color{blue}\verb"\advirecord{tag2}"}
+\verb"   " {\color{blue}\verb"{\includegraphics[width=0.1\textwidth]{../tex/caml.eps}}"} \verb"}&"
+\verb" " {\color{blue}\verb"\advirecord{tag3}"}
+\verb"   " {\color{blue}\verb"{\includegraphics[width=0.1\textwidth]{../tex/caml.eps}}"} \verb"}"
+\verb"\end{tabular}"
+\color{blue}\verb"\advipause"
+\verb"\adviplay{tag2}"
+\verb"\advipause"
+\verb"\adviplay{tag3}"
+\end{alltt}
+\begin{tabular}[t]{cccc}
+  One & \advirecord{tag2}{Two} & \advirecord{tag3}{Three} & Caml\advirecord{tag2}{s}\\
+  \includegraphics[width=0.1\textwidth]{../tex/caml.eps}&
+  \advirecord{tag2}{\includegraphics[width=0.1\textwidth]{../tex/caml.eps}}&
+  \advirecord{tag3}{\includegraphics[width=0.1\textwidth]{../tex/caml.eps}}
+\end{tabular}
+\advipause
+\adviplay{tag2}
+\advipause
+\adviplay{tag3}
+
+\end{document}

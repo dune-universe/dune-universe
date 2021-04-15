@@ -1,0 +1,16 @@
+*.byt
+*.bin
+config.log
+config.cache
+config.status
+Makefile.config
+Makefile
+Makefile.in
+configure
+aclocal.m4
+autom4te.cache
+install-sh
+missing
+depcomp
+config.ml
+.depend

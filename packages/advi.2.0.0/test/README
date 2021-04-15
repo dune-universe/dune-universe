@@ -1,0 +1,28 @@
+                         Active-DVI
+
+This directory contains demonstration examples that could also serve
+as templates and/or documentation for many features of Active-DVI.
+
+Namely:
+  - General demonstration is in file \verb"demo.tex"
+  - Background setting facility demonstration is in file \verb"background.tex"
+  - Slide transition demonstration is in file \verb"trans.tex"
+  - Text movement demonstration is in file \verb"trans2.tex"
+  - Advanced text movement demonstration is in file \verb"trans3.tex"
+
+Usage:
+    - you need a Gnu-make compatible make command on your system
+    - you need advi to be up and running
+
+To build the examples, type in:
+
+    make
+
+To view the demos, type in:
+
+    advi demo.dvi
+    advi background.dvi
+    advi trans.dvi
+    advi trans2.dvi
+    advi trans3.dvi
+    advi demo2.dvi

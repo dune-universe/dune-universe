@@ -1,0 +1,4 @@
+*.dvi
+.advi
+*.log
+*.aux
