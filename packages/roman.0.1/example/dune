@@ -1,0 +1,3 @@
+(executable
+  (name romanexample)
+  (libraries roman))

@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name mirage-unix)
-(version v4.0.0)
