@@ -1,4 +1,0 @@
-(library
- (name conduit_lwt_ssl)
- (public_name conduit-lwt-ssl)
- (libraries conduit-lwt lwt_ssl))

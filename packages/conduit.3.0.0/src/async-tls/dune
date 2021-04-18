@@ -1,4 +1,0 @@
-(library
- (name conduit_async_tls)
- (public_name conduit-async-tls)
- (libraries conduit-tls conduit-async))

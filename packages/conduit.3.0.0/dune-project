@@ -1,3 +1,0 @@
-(lang dune 2.0)
-(name conduit)
-(version v3.0.0)

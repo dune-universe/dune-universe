@@ -1,8 +1,0 @@
-(library
- (name conduit)
- (public_name conduit)
- (libraries stdlib-shims ipaddr domain-name))
-
-(documentation
- (package conduit)
- (mld_files howto readme))

@@ -1,0 +1,53 @@
+(library
+ (name art)
+ (modules art)
+ (public_name art)
+ (libraries fmt)
+ (ocamlopt_flags -O3 -unbox-closures -unbox-closures-factor 20)
+ (instrumentation
+  (backend bisect_ppx)))
+
+(library
+ (name rowex)
+ (modules rowex)
+ (public_name rowex)
+ (libraries fmt logs)
+ (ocamlopt_flags -O3)
+ (foreign_stubs
+  (language c)
+  (flags
+   (:standard)
+   (:include sse.sexp))
+  (names rowex)))
+
+(library
+ (name persistent)
+ (modules persistent hashset)
+ (public_name rowex.persistent)
+ (libraries rowex)
+ (ocamlopt_flags -O3 -unbox-closures -unbox-closures-factor 20)
+ (foreign_stubs
+  (language c)
+  (flags
+   (:standard)
+   (:include endian.sexp)
+   (:include sse.sexp))
+  (names persistent)))
+
+(library
+ (name part)
+ (modules part)
+ (libraries mmap persistent)
+ (foreign_stubs
+  (language c)
+  (names part)))
+
+(rule
+ (targets endian.sexp)
+ (action
+  (run ../conf/endian.exe)))
+
+(rule
+ (targets sse.sexp)
+ (action
+  (run ../conf/sse.exe)))
