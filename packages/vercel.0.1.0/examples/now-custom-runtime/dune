@@ -1,0 +1,8 @@
+(executable
+ (name basic)
+ (libraries lambda-runtime logs.fmt fmt.tty yojson))
+
+(env
+ (static
+  (flags
+   (:standard -ccopt -static))))

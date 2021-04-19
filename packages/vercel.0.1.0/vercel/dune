@@ -1,0 +1,6 @@
+(library
+ (public_name vercel)
+ (libraries bigstringaf lwt lambda-runtime yojson ppx_deriving_yojson.runtime
+   result base64 piaf)
+ (preprocess
+  (pps ppx_deriving_yojson)))

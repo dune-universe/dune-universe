@@ -1,0 +1,8 @@
+(executable
+ (name basic)
+ (libraries vercel logs.fmt fmt.tty piaf lwt result))
+
+(env
+ (static
+  (flags
+   (:standard -ccopt -static))))

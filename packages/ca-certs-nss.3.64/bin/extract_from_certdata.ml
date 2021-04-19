@@ -200,7 +200,7 @@ let filter_trusted ?(purpose = fun (_, _) -> true) db =
     db (M.empty, 0)
 
 let header =
-  "(* automatically extracted from certdata.txt by ca-certs-nss v3.63.1. *)"
+  "(* automatically extracted from certdata.txt by ca-certs-nss v3.64. *)"
 
 let stats ucount tcount dcount =
   Fmt.strf "(* processed %d certificates, %d untrusted, %d trusted. *)%s"
@@ -266,6 +266,6 @@ let output =
 let cmd =
   let doc = "Extract NSS certdata.txt into OCaml code" in
   ( Term.(term_result (const jump $ setup_log $ input $ output)),
-    Term.info "extract-from-certdata" ~version:"3.63.1" ~doc )
+    Term.info "extract-from-certdata" ~version:"3.64" ~doc )
 
 let () = match Term.eval cmd with `Ok () -> exit 0 | _ -> exit 1

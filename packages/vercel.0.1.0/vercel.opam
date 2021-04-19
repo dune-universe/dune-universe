@@ -1,0 +1,31 @@
+version: "0.1.0"
+opam-version: "2.0"
+maintainer: "Antonio Nuno Monteiro <anmonteiro@gmail.com>"
+authors: [ "Antonio Nuno Monteiro <anmonteiro@gmail.com>" ]
+license: "BSD-3-clause"
+homepage: "https://github.com/anmonteiro/aws-lambda-ocaml-runtime"
+bug-reports: "https://github.com/anmonteiro/aws-lambda-ocaml-runtime/issues"
+dev-repo: "git+https://github.com/anmonteiro/aws-lambda-ocaml-runtime.git"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "1.7"}
+  "result"
+  "yojson"
+  "lwt"
+  "base64"
+  "piaf"
+  "ppx_deriving_yojson"
+  "lambda-runtime"
+  "alcotest" {with-test}
+]
+synopsis:
+  "A custom runtime for Vercel.com (Now v2) written in OCaml"
+description:
+  """
+  lambda-runtime is an OCaml custom runtime for AWS Lambda. The vercel
+  package provides an adapter and API for lambda-runtime that works with
+  Vercel's (Now v2) service.
+  """

@@ -1,0 +1,9 @@
+(executable
+ (name basic)
+ (libraries vercel logs.fmt fmt.tty piaf lwt lwt.unix uri bigstringaf
+   bigarray-compat result yojson))
+
+(env
+ (static
+  (flags
+   (:standard -ccopt -static))))
