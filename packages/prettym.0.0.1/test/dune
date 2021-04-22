@@ -1,0 +1,10 @@
+(executable
+ (name test)
+ (modules test)
+ (libraries base64 fmt jsonm alcotest prettym))
+
+(rule
+ (alias runtest)
+ (deps %{exe:test.exe})
+ (action
+  (run ./test.exe --color=always)))

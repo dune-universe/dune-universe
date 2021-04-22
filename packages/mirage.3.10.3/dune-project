@@ -1,4 +1,0 @@
-(lang dune 2.0)
-(name mirage)
-(version v3.10.3)
-(formatting disabled)
