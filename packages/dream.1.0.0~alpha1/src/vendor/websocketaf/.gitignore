@@ -1,0 +1,11 @@
+.*.sw[po]
+_build/
+_tests/
+lib_test/tests_
+*.native
+*.byte
+*.docdir
+.merlin
+*.install
+node_modules
+_esy

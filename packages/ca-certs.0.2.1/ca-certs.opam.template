@@ -1,0 +1,18 @@
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test & os != "macos"} # the opam sandbox on macos leads to test failures (ocaml/opam#4389)
+    "@doc" {with-doc}
+  ]
+]
+tags: ["org:mirage"]
+depexts: [
+  ["ca_root_nss"] {os = "freebsd"}
+]

@@ -1,0 +1,16 @@
+(library
+ (public_name dream)
+ (wrapped false)
+ (libraries
+  caqti-lwt
+  dream.cipher
+  dream.graphql
+  dream.http
+  dream.middleware
+  dream.pure
+  dream.sql
+  graphql-lwt
+  logs
+  lwt
+  lwt.unix
+ ))

@@ -1,0 +1,11 @@
+(executable
+ (public_name dream_eml)
+ (name main)
+ (modules main)
+ (libraries eml)
+ (instrumentation (backend bisect_ppx)))
+
+(library
+ (name eml)
+ (modules eml)
+ (instrumentation (backend bisect_ppx)))

@@ -1,0 +1,20 @@
+(library
+ (public_name dream.localhost)
+ (name dream__localhost))
+
+(rule
+ (target dream__localhost.ml)
+ (deps
+  (:certificate localhost.crt)
+  (:key localhost.key))
+ (action
+  (with-stdout-to
+   %{target}
+   (progn
+    (echo "let certificate = {ssl|")
+    (cat %{certificate})
+    (echo "|ssl}\n\n")
+    (echo "let key = {key|")
+    (cat %{key})
+    (echo "|key}\n")
+   ))))

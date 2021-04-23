@@ -1,0 +1,30 @@
+(tests
+ (names test_hacl
+        test_merkle
+        test_base58
+        test_ed25519
+        test_p256
+        test_blake2b
+        test_pvss
+        test_crypto_box
+        test_prop_signature_pk
+        test_prop_signature
+        test_prop_hacl_hash
+        test_deterministic_nonce
+        test_signature)
+ (libraries tezos-stdlib
+            tezos-crypto
+            data-encoding
+            alcotest
+            alcotest-lwt
+            crowbar)
+ (package tezos-crypto)
+ (flags (:standard -open Tezos_stdlib
+                   -open Tezos_crypto
+                   -open Tezos_error_monad.TzLwtreslib
+                   -open Data_encoding)))
+
+(rule
+ (alias runtest_lint)
+ (deps (glob_files *.ml{,i}))
+ (action (run %{lib:tezos-tooling:lint.sh} %{deps})))
