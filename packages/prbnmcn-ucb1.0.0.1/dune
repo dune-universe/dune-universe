@@ -1,0 +1,2 @@
+(library (name ucb1) (public_name prbnmcn-ucb1)
+  (ocamlopt_flags (-warn-error -39)))

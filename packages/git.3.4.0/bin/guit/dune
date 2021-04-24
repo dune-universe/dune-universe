@@ -1,0 +1,47 @@
+(executable
+ (name fetch)
+ (modules fetch)
+ (package git-unix)
+ (public_name guit.fetch)
+ (libraries
+  git
+  git.nss.git
+  logs
+  fmt
+  mtime
+  mtime.clock.os
+  lwt
+  lwt.unix
+  fmt.cli
+  logs.cli
+  cstruct
+  domain-name
+  mirage-flow
+  fmt.tty
+  fpath
+  result
+  cmdliner
+  rresult
+  mimic
+  git-unix
+  git-cohttp-unix))
+
+(executable
+ (name v)
+ (modules v)
+ (package git-unix)
+ (public_name guit.v)
+ (libraries
+  result
+  fpath
+  cmdliner
+  mtime
+  mtime.clock.os
+  rresult
+  logs
+  logs.cli
+  fmt.tty
+  fmt.cli
+  lwt
+  lwt.unix
+  git-unix))
