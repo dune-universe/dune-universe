@@ -202,7 +202,7 @@ let opt_vm_name =
   Arg.(value & opt vm_c Name.root & info [ "n" ; "name"] ~doc)
 
 let compress_level default =
-  let doc = "Compression level (0 for no compression, 1-3 fixed with static huffman, 4-9 dynamic with canonic huffman)" in
+  let doc = "Compression level (0 - 9), a higher value results in smaller data, but uses more CPU " in
   Arg.(value & opt int default & info [ "compression-level" ] ~doc)
 
 let force =
@@ -309,7 +309,7 @@ let since_count since count = match since with
   | Some since -> `Since since
 
 let version =
-  Fmt.strf "version v1.1.0 protocol version %a"
+  Fmt.strf "version v1.1.1 protocol version %a"
     Vmm_commands.pp_version Vmm_commands.current
 
 let default_tmpdir =
