@@ -1,0 +1,4 @@
+(lang dune 2.8)
+(name docteur)
+(version v0.0.1)
+(cram enable)

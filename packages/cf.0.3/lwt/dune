@@ -1,0 +1,7 @@
+(library
+ (name cf_lwt)
+ (public_name cf-lwt)
+ (enabled_if
+  (= %{system} macosx))
+ (optional)
+ (libraries cf lwt.unix threads.posix))

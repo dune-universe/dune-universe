@@ -1,0 +1,9 @@
+*.byte
+*.docdir
+*.install
+*.native
+.merlin
+Session.vim
+_build
+pkg/META
+*.code-workspace

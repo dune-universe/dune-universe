@@ -1,0 +1,14 @@
+(library
+ (name docteur_unix)
+ (public_name docteur.unix)
+ (libraries
+  logs
+  docteur.analyze
+  mirage-kv
+  git
+  digestif
+  lwt
+  carton
+  art
+  bigstringaf
+  mirage-unix))

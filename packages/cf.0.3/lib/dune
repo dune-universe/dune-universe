@@ -1,0 +1,41 @@
+(library
+ (foreign_stubs
+  (language c)
+  (names cf_stubs cf_util))
+ (name cf)
+ (public_name cf)
+ (enabled_if
+  (= %{system} macosx))
+ (libraries ctypes.stubs ctypes.foreign)
+ (optional)
+ (c_library_flags -framework CoreFoundation))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/types.ml types.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/types_detected.ml types_detected.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/bindings.ml bindings.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/generated.ml generated.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/cf_stubs.c cf_stubs.c)))
