@@ -1,0 +1,6 @@
+(lang dune 2.0)
+
+(name capnp-rpc)
+(version v1.1)
+
+(formatting disabled)

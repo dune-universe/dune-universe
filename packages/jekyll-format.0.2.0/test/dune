@@ -1,0 +1,6 @@
+(test
+ (name test)
+ (flags -w -32)
+ (deps
+  (glob_files *.md))
+ (libraries jekyll-format alcotest bos))

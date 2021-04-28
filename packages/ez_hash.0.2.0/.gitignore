@@ -1,0 +1,12 @@
+/solidity-test
+/solidity-alcotest
+*~
+_build
+.merlin
+.vscode
+/_drom
+/_opam
+/_build
+
+
+

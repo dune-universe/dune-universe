@@ -1,0 +1,7 @@
+(executable
+  (name clustering_test)
+  (libraries prbnmcn-clustering)
+)
+
+(rule (alias runtest_clustering) (action (run %{exe:clustering_test.exe})))
+(rule (alias runtest) (deps (alias runtest_clustering)) (action (progn)))
