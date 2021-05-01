@@ -1,0 +1,11 @@
+(executable
+ (name print_events)
+ (enabled_if
+  (= %{system} macosx))
+ (libraries cf-lwt fsevents-lwt))
+
+(alias
+ (name runtest)
+ (enabled_if
+  (= %{system} macosx))
+ (deps print_events.exe))

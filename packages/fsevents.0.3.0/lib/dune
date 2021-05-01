@@ -1,0 +1,41 @@
+(library
+ (foreign_stubs
+  (language c)
+  (names fsevents_stubs))
+ (name fsevents)
+ (public_name fsevents)
+ (enabled_if
+  (= %{system} macosx))
+ (libraries ctypes.stubs ctypes.foreign cf)
+ (optional)
+ (c_library_flags -framework CoreServices))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/types.ml types.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/types_detected.ml types_detected.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/bindings.ml bindings.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/generated.ml generated.ml)))
+
+(rule
+ (enabled_if
+  (= %{system} macosx))
+ (action
+  (copy# ../lib_gen/fsevents_stubs.c fsevents_stubs.c)))

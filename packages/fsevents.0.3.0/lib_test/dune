@@ -1,0 +1,13 @@
+(executable
+ (name test)
+ (enabled_if
+  (= %{system} macosx))
+ (libraries lwt.unix alcotest cf-lwt fsevents-lwt))
+
+(rule
+ (alias runtest)
+ (action
+  (run ./test.exe))
+ (enabled_if
+  (= %{system} macosx))
+ (package fsevents-lwt))
