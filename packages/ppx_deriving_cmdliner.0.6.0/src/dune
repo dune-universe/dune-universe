@@ -1,0 +1,17 @@
+(library
+ (name ppx_deriving_cmdliner_runtime)
+ (public_name ppx_deriving_cmdliner.runtime)
+ (synopsis "Runtime components of [@@deriving cmdliner]")
+ (modules ppx_deriving_cmdliner_runtime)
+ (libraries ppx_deriving.runtime result))
+
+(library
+ (name ppx_deriving_cmdliner)
+ (public_name ppx_deriving_cmdliner)
+ (synopsis "[@@deriving cmdliner]")
+ (libraries ppx_deriving.api)
+ (preprocess (pps ppxlib.metaquot))
+ (ppx_runtime_libraries ppx_deriving_cmdliner.runtime cmdliner)
+ (flags :standard -w -9-16-27-39)
+ (modules ppx_deriving_cmdliner)
+ (kind ppx_deriver))

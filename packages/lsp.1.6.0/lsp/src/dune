@@ -1,0 +1,15 @@
+(include_subdirs unqualified)
+
+(library
+ (name lsp)
+ (public_name lsp)
+ (libraries jsonrpc ppx_yojson_conv_lib result stdune threads.posix uutf
+   yojson)
+ (lint
+  (pps ppx_yojson_conv)))
+
+(cinaps
+ (files types.ml types.mli)
+ (libraries lsp_gen))
+
+(ocamllex uri_lexer)
