@@ -1,5 +1,0 @@
-(lang dune 2.7)
-(name irmin)
-(version 2.5.3-13-g302981e6a)
-(allow_approximate_merlin)
-(cram enable)

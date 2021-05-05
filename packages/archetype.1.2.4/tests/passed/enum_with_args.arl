@@ -1,0 +1,18 @@
+archetype enum_with_args
+
+enum t =
+| A <nat * string>
+| B <nat>
+| C
+
+variable res : nat = 0
+
+entry exec() {
+  var o : t = A(1, "");
+
+  match o with
+  | A (v, s) -> res := v + length(s)
+  | B v -> res := v
+  | C -> res := 0
+  end
+}

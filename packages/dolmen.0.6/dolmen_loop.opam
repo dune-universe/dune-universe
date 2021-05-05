@@ -1,0 +1,28 @@
+version: "0.6"
+opam-version: "2.0"
+name: "dolmen_loop"
+maintainer: "Guillaume Bury <guillaume.bury@gmail.com>"
+authors: "Guillaume Bury <guillaume.bury@gmail.com>"
+license: "BSD-2-Clause"
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" {>= "4.02.3"}
+  "dolmen" {= version }
+  "dolmen_type" {= version }
+  "dune" { >= "2.7" }
+  "gen"
+  "odoc" { with-doc }
+]
+tags: [ "logic" "computation" "automated theorem prover" ]
+homepage: "https://github.com/Gbury/dolmen"
+dev-repo: "git+https://github.com/Gbury/dolmen.git"
+bug-reports: "https://github.com/Gbury/dolmen/issues"
+
+doc: "http://gbury.github.io/dolmen"
+synopsis: "A tool library for automated deduction tools"
+description:
+"Dolmen Loop is a library of useful helpers to parse
+and loop over statements found in automated deduction files."

@@ -1,0 +1,9 @@
+(library
+ (name sihl_cache)
+ (public_name sihl-cache)
+ (libraries sihl)
+ (preprocess
+  (pps ppx_deriving_yojson lwt_ppx)))
+
+(documentation
+ (package sihl-cache))
