@@ -1,30 +1,32 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
-let v = Backend.v
+(** Irmin watchers.
 
-let mode = (Backend.mode :>  [ `FSEvents | `Inotify | `Polling ])
+    {e 0.5.0 — {{:https://github.com/mirage/irmin-watcher} homepage}} *)
 
-let hook = Core.hook v
+val v : Core.t
+(** [v id p f] is the listen hook calling [f] everytime a sub-path of [p] is
+    modified. Return a function to call to remove the hook. Default to polling
+    if no better solution is available. FSevents and Inotify backends are
+    available. *)
 
-type stats = {
-  watchdogs : int;
-  dispatches: int;
-}
+val mode : [ `FSEvents | `Inotify | `Polling ]
 
-let stats () =
-  let w = Core.watchdog v in
-  let d = Core.Watchdog.dispatch w in
-  { watchdogs  = Core.Watchdog.length w;
-    dispatches = Core.Dispatch.length d }
+type stats = { watchdogs : int; dispatches : int }
 
-let set_polling_time f =
-  match mode with
-  | `Polling -> Core.default_polling_time := f
-  | _        -> ()
+val hook : Core.hook
+(** [hook t] is an {!Irmin.Watcher} compatible representation of {!v}. *)
+
+val stats : unit -> stats
+(** [stats ()] is a snapshot of [v]'s stats. *)
+
+val set_polling_time : float -> unit
+(** [set_polling_time f] set the polling interval to [f]. Only valid when
+    [mode = `Polling]. *)
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire

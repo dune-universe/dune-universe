@@ -20,8 +20,8 @@ type associativity =
           [x + y + z] results in a syntax error. *)
 
 type priority = float
-(** Priority of operators. If [*] has a higher priority than [+], than [x + y *
-    z] is parsed [x + (y * z)]. *)
+(** Priority of operators, also called binding power. If [*] has a higher
+    priority than [+], than [x + y * z] is parsed [x + (y * z)]. *)
 
 (** A type to designate operators and their properties. *)
 type operator =
@@ -51,6 +51,10 @@ module Make : functor (Sup : SUPPORT) -> sig
   (** Raised when there is a priority or associativiy conflict between two
       operators. The arguments are the terms that generate the conflict. *)
 
+  exception UnexpectedBin of Sup.term
+  (** Raised when a binary operator appears without left context. If [+] is a
+      binary operator, it is raised in, e.g., [+ x x] or [x + + x x]. *)
+
   exception TooFewArguments
   (** Raised when more arguments are expected. It is raised for instance on
       partial application of operators, such as [x +]. *)
@@ -66,7 +70,9 @@ module Make : functor (Sup : SUPPORT) -> sig
       @raise TooFewArguments when the stream [s] is empty or does not have
                              enough elements.
       @raise OpConflict when the input terms cannot be parenthesised
-                        unambiguously. *)
+                        unambiguously.
+      @raise UnexpectedBin when a binary operator appear without a left
+                           context. *)
 end =
 functor
   (Sup : SUPPORT)
@@ -76,6 +82,7 @@ functor
 
     exception OpConflict of Sup.term * Sup.term
     exception TooFewArguments
+    exception UnexpectedBin of Sup.term
 
     (* NOTE: among the four functions operating on streams, only [expression]
        consumes elements from it. *)
@@ -88,6 +95,9 @@ functor
       match Sup.get tbl t with
       | Some (Una, rbp) ->
           Sup.make_appl t (expression ~tbl ~rbp ~rassoc:Neither strm)
+      | Some (Bin _, _) -> raise (UnexpectedBin t)
+      (* If the line above is erased, [+ x x] is parsed as [(+ x) x], and
+         [x + + x x] as [(+ x) ((+ x) x)]. *)
       | _ -> t
 
     (** [led ~tbl ~strm ~left t assoc bp] is the production of term [t] with
@@ -152,5 +162,5 @@ functor
       with Stream.Failure -> raise TooFewArguments
 
     let expression : table -> Sup.term Stream.t -> Sup.term =
-     fun tbl strm -> expression ~tbl ~rbp:0. ~rassoc:Neither strm
+     fun tbl -> expression ~tbl ~rbp:neg_infinity ~rassoc:Neither
   end

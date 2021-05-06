@@ -1,26 +1,28 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
 open Lwt.Infix
 
 let src = Logs.Src.create "irw-fsevents" ~doc:"Irmin watcher using FSevents"
+
 module Log = (val Logs.src_log src : Logs.LOG)
 
 let create_flags = Fsevents.CreateFlags.detailed_interactive
+
 let run_loop_mode = Cf.RunLoop.Mode.Default
 
 let start_runloop dir =
   Log.debug (fun l -> l "start_runloop %s" dir);
-  let watcher = Fsevents_lwt.create 0. create_flags [dir] in
+  let watcher = Fsevents_lwt.create 0. create_flags [ dir ] in
   let stream = Fsevents_lwt.stream watcher in
   let event_stream = Fsevents_lwt.event_stream watcher in
   Cf_lwt.RunLoop.run_thread (fun runloop ->
       Fsevents.schedule_with_run_loop event_stream runloop run_loop_mode;
-      if not (Fsevents.start event_stream)
-      then prerr_endline "failed to start FSEvents stream")
+      if not (Fsevents.start event_stream) then
+        prerr_endline "failed to start FSEvents stream")
   >|= fun _scheduler ->
   (* FIXME: should probably do something with the scheduler *)
   let stop_scheduler () =
@@ -29,15 +31,17 @@ let start_runloop dir =
     Fsevents_lwt.invalidate watcher;
     Fsevents_lwt.release watcher
   in
-  stream, stop_scheduler
+  (stream, stop_scheduler)
 
 let listen stream fn =
   let path_of_event { Fsevents_lwt.path; _ } = path in
-  let iter () = Lwt_stream.iter_s (fun e ->
-      let path = path_of_event e in
-      Log.debug (fun l -> l "fsevents: %s" path);
-      fn @@ path
-    ) stream
+  let iter () =
+    Lwt_stream.iter_s
+      (fun e ->
+        let path = path_of_event e in
+        Log.debug (fun l -> l "fsevents: %s" path);
+        fn @@ path)
+      stream
   in
   Core.stoppable iter
 
@@ -54,22 +58,22 @@ let v =
     start_runloop dir >>= fun (stream, stop_runloop) ->
     let rec wait_for_changes () =
       match List.rev !events with
-      | []   -> Lwt_condition.wait cond >>= wait_for_changes
-      | h::t -> events := List.rev t; Lwt.return (`File h)
+      | [] -> Lwt_condition.wait cond >>= wait_for_changes
+      | h :: t ->
+          events := List.rev t;
+          Lwt.return (`File h)
     in
     let unlisten =
       listen stream (fun path ->
           events := path :: !events;
           Lwt_condition.signal cond ();
-          Lwt.return_unit
-        ) in
-    Hook.v ~wait_for_changes ~dir f >|= fun unpoll ->
-    fun () ->
-      stop_runloop () >>= fun () ->
-      unlisten () >>= fun () ->
-      unpoll ()
+          Lwt.return_unit)
+    in
+    Hook.v ~wait_for_changes ~dir f >|= fun unpoll () ->
+    stop_runloop () >>= fun () ->
+    unlisten () >>= fun () -> unpoll ()
   in
-  Core.create listen
+  lazy (Core.create listen)
 
 let mode = `FSEvents
 

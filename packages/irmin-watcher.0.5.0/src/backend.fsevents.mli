@@ -1,24 +1,19 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
-(** Active polling backend for Irmin watchers.
+(** FSevents backend for Irmin watchers.
 
-    {e 0.4.1 — {{:https://github.com/mirage/irmin-watcher }homepage}} *)
+    {e 0.5.0 — {{:https://github.com/mirage/irmin-watcher} homepage}} *)
 
-open Core
+val v : Core.t Lazy.t
+(** [v id p f] is the hook calling [f] everytime a sub-path of [p] is modified.
+    Return a function to call to remove the hook. Use the FSevent framework to
+    be notified on filesystem changes. *)
 
-val with_delay: float -> t
-(** [with_delay delay id p f] is the hook calling [f] everytime a
-    sub-path of [p] is modified. Return a function to call to remove
-    the hook. Active polling is done every [delay] seconds. *)
-
-val v: t
-(** [v] is [with_delay !default_polling_time]. *)
-
-val mode: [`Polling]
+val mode : [ `FSEvents ]
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire

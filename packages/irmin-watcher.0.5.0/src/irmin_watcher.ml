@@ -1,20 +1,24 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
-(** Inotify backend for Irmin watchers.
+let v = Lazy.force Backend.v
 
-    {e 0.4.1 — {{:https://github.com/mirage/irmin-watcher }homepage}} *)
+let mode = (Backend.mode :> [ `FSEvents | `Inotify | `Polling ])
 
-val v: Core.t
-(** [v id p f] is the hook calling [f] everytime a sub-path of [p] is
-    modified. Return a function to call to remove the hook. Use
-    inofity to be notified on filesystem changes. *)
+let hook = Core.hook v
 
-val mode: [`Inotify | `Polling]
-(** [mode] is [Inotify] on Linux and [`Polling] on Darwin. *)
+type stats = { watchdogs : int; dispatches : int }
+
+let stats () =
+  let w = Core.watchdog v in
+  let d = Core.Watchdog.dispatch w in
+  { watchdogs = Core.Watchdog.length w; dispatches = Core.Dispatch.length d }
+
+let set_polling_time f =
+  match mode with `Polling -> Core.default_polling_time := f | _ -> ()
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire

@@ -1,27 +1,22 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
-open Lwt.Infix
+(** Active polling backend for Irmin watchers.
 
-let src = Logs.Src.create "irw-polling" ~doc:"Irmin watcher using using polling"
-module Log = (val Logs.src_log src : Logs.LOG)
+    {e 0.5.0 — {{:https://github.com/mirage/irmin-watcher} homepage}} *)
 
-let with_delay delay =
-  Log.info (fun l -> l "Polling mode");
-  let wait_for_changes () = Lwt_unix.sleep delay >|= fun () -> `Unknown in
-  Core.create (fun dir -> Hook.v ~wait_for_changes ~dir)
+open Core
 
-let mode = `Polling
+type event = [ `Unknown | `File of string ]
+(** The type for change event. *)
 
-let v =
-  Log.info (fun l -> l "Polling mode");
-  let wait_for_changes () =
-    Lwt_unix.sleep !Core.default_polling_time >|= fun () -> `Unknown
-  in
-  Core.create (fun dir -> Hook.v ~wait_for_changes ~dir)
+val v : wait_for_changes:(unit -> event Lwt.t) -> dir:string -> Watchdog.hook
+(** [v ~wait_for_changes ~dir] is the watchdog hook using [wait_for_changes] to
+    detect filesystem updates in the directory [dir]. The polling implemention
+    just calls [Lwt_unix.sleep]. *)
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire

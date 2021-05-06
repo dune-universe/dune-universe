@@ -1,3 +1,11 @@
+### 0.5.0 (2020-04-30)
+
+- Switch to GitHub Actions from Travis (#31, @avsm)
+- Initialise backends only when needed via a
+  lazy watcher interface (#31, @samoht @avsm)
+- Use fsevents and cf-lwt packages (#31, @avsm)
+- Use ocamlformat.0.18.0 (#31, @avsm)
+
 ### 0.4.1 (2019-07-02)
 
 - Clearer name for hook logger (@talex5, #21)

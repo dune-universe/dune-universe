@@ -1,19 +1,30 @@
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
-   irmin-watcher 0.4.1
+   irmin-watcher 0.5.0
   ---------------------------------------------------------------------------*)
 
-(** FSevents backend for Irmin watchers.
+open Lwt.Infix
 
-    {e 0.4.1 — {{:https://github.com/mirage/irmin-watcher }homepage}} *)
+let src = Logs.Src.create "irw-polling" ~doc:"Irmin watcher using using polling"
 
-val v: Core.t
-(** [v id p f] is the hook calling [f] everytime a sub-path of [p] is
-    modified. Return a function to call to remove the hook. Use the
-    FSevent framework to be notified on filesystem changes. *)
+module Log = (val Logs.src_log src : Logs.LOG)
 
-val mode: [`FSEvents]
+let listen ~wait_for_changes dir =
+  Log.info (fun l -> l "Polling mode");
+  Hook.v ~wait_for_changes ~dir
+
+let with_delay delay =
+  let wait_for_changes () = Lwt_unix.sleep delay >|= fun () -> `Unknown in
+  Core.create (listen ~wait_for_changes)
+
+let mode = `Polling
+
+let v =
+  let wait_for_changes () =
+    Lwt_unix.sleep !Core.default_polling_time >|= fun () -> `Unknown
+  in
+  lazy (Core.create (listen ~wait_for_changes))
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2016 Thomas Gazagnaire

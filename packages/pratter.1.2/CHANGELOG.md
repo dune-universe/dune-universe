@@ -3,6 +3,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.2] -- 2021-05-05
+### Added
+- Walkthrough in README.md.
+### Fixed
+- Parsing a binary operator without left context fails.
+- Binding power can be negative.
+
 ## [1.1] -- 2021-01-23
 ### Added
 - Non associative operators

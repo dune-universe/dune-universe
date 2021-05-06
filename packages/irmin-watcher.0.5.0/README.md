@@ -1,6 +1,6 @@
 ## irmin-watcher — Portable Irmin watch backends using FSevents or Inotify
 
-0.4.1
+0.5.0
 
 irmin-watcher implements [Irmin's watch hooks][watch] for various OS,
 using FSevents in OSX and Inotify on Linux.

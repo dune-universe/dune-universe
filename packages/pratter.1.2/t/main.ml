@@ -123,6 +123,13 @@ let unary_appl_in () =
   in
   Alcotest.(check tterm) "f ! x" (SupPrat.expression tbl not_parsed) parsed
 
+let double_unary () =
+  (* --x = -(-x) *)
+  let tbl = { empty with unary = StrMap.(add "-" 1.0 empty) } in
+  let not_parsed = Stream.of_list [ symb "-"; symb "-"; symb "x" ] in
+  let parsed = Appl (symb "-", Appl (symb "-", symb "x")) in
+  Alcotest.check tterm "--x" (SupPrat.expression tbl not_parsed) parsed
+
 let precedences_left_same () =
   (* x + y * z = (x + y) * z when bp(+) = bp( * ) and both are left
      associative *)
@@ -159,7 +166,7 @@ let precedences_lt_not_assoc () =
   (* x + y * z = x + (y * z) when bp(+) < bp( * ) and both are not
      associative *)
   let tbl =
-    Pratter.(StrMap.(empty |> add "+" (1.0, Neither) |> add "*" (1.1, Neither)))
+    Pratter.(StrMap.(empty |> add "+" (0., Neither) |> add "*" (0.1, Neither)))
   in
   let tbl = { empty with binary = tbl } in
   let not_parsed =
@@ -175,7 +182,8 @@ let precedences_gt_not_assoc () =
   (* x + y * z = (x + y) * z when bp(+) > bp( * ) and both are not
      associative *)
   let tbl =
-    Pratter.(StrMap.(empty |> add "+" (1.1, Neither) |> add "*" (1.0, Neither)))
+    Pratter.(StrMap.(empty |> add "+" (-1., Neither) |> add "*" (-1.1, Neither)))
+    (* NOTE that negative binding powers are accepted. *)
   in
   let tbl = { empty with binary = tbl } in
   let not_parsed =
@@ -186,6 +194,28 @@ let precedences_gt_not_assoc () =
     add_args tbl (symb "*") [ left; symb "z" ]
   in
   Alcotest.check tterm "x + y * z" (SupPrat.expression tbl not_parsed) parsed
+
+let mixing_una_bin () =
+  (* !x + y = (!x) + y when bp(!) > bp(+) *)
+  let binary = StrMap.singleton "+" (1.0, Pratter.Neither) in
+  let unary = StrMap.singleton "!" 1.1 in
+  let tbl = { binary; unary } in
+  let not_parsed = Stream.of_list [ symb "!"; symb "x"; symb "+"; symb "y" ] in
+  let parsed =
+    add_args tbl (symb "+") [ add_args tbl (symb "!") [ symb "x" ]; symb "y" ]
+  in
+  Alcotest.check tterm "(!x) + y" (SupPrat.expression tbl not_parsed) parsed
+
+let mixing_una_bin_bis () =
+  (* !x + y = !(x + y) when bp(+) > bp(!) *)
+  let binary = StrMap.singleton "+" (1.0, Pratter.Neither) in
+  let unary = StrMap.singleton "!" 0.9 in
+  let tbl = { binary; unary } in
+  let not_parsed = Stream.of_list [ symb "!"; symb "x"; symb "+"; symb "y" ] in
+  let parsed =
+    add_args tbl (symb "!") [ add_args tbl (symb "+") [ symb "x"; symb "y" ] ]
+  in
+  Alcotest.check tterm "!(x + y)" (SupPrat.expression tbl not_parsed) parsed
 
 let precedences_eq_not_assoc () =
   (* x + y * z fails when bp(+) = bp( * ) and both are not associative *)
@@ -228,9 +258,35 @@ let partial_unary () =
       with SupPrat.TooFewArguments -> true )
     true
 
+let bin_start_expr () =
+  (* [+ x x] raises [UnexpectBin +]: [+] has no left context. *)
+  let tbl =
+    { empty with binary = StrMap.singleton "+" (1.0, Pratter.Neither) }
+  in
+  let not_parsed = Stream.of_list [ symb "+"; symb "x"; symb "x" ] in
+  Alcotest.check tterm "+ x x"
+    ( try
+        ignore (SupPrat.expression tbl not_parsed);
+        assert false
+      with SupPrat.UnexpectedBin t -> t )
+    (symb "+")
+
+let bin_bin () =
+  (* x + + x raises [UnexpectBin +]: the second [+] has no left context. *)
+  let tbl =
+    { empty with binary = StrMap.singleton "+" (1.0, Pratter.Neither) }
+  in
+  let not_parsed = Stream.of_list [ symb "x"; symb "+"; symb "+"; symb "x" ] in
+  Alcotest.check tterm "x + + x"
+    ( try
+        ignore (SupPrat.expression tbl not_parsed);
+        assert false
+      with SupPrat.UnexpectedBin t -> t )
+    (symb "+")
+
 let _ =
   let open Alcotest in
-  run "Binary"
+  run "Simple terms"
     [
       ( "binary"
       , [
@@ -248,10 +304,18 @@ let _ =
           test_case "simple" `Quick simple_unary
         ; test_case "application head" `Quick unary_appl
         ; test_case "application argument" `Quick unary_appl_in
+        ; test_case "double" `Quick double_unary
+        ] )
+    ; ( "mixes"
+      , [
+          test_case "prefix infix" `Quick mixing_una_bin
+        ; test_case "infix prefix" `Quick mixing_una_bin_bis
         ] )
     ; ( "errors"
       , [
           test_case "partial binary" `Quick partial_binary
         ; test_case "partial unary" `Quick partial_unary
+        ; test_case "binary no left" `Quick bin_start_expr
+        ; test_case "binary successive" `Quick bin_bin
         ] )
     ]
