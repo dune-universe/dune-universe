@@ -1,0 +1,15 @@
+(executable
+ (name eml_compiler)
+ (public_name eml_compiler)
+ (libraries common sedlex uutf menhirLib ppxlib containers)
+ (modules eml_compiler)
+ (flags :standard -w +39))
+
+(library
+ (name ppx_eml)
+ (public_name embedded_ocaml_templates.ppx_eml)
+ (wrapped false)
+ (kind ppx_rewriter)
+ (libraries common sedlex uutf menhirLib ppxlib containers)
+ (modules ppx_eml)
+ (flags :standard -w +39))

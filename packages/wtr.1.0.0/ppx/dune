@@ -1,0 +1,7 @@
+(library
+ (name wtr_ppx)
+ (public_name wtr.ppx)
+ (kind ppx_rewriter)
+ (libraries wtr uri ppxlib)
+ (preprocess
+  (pps ppxlib.metaquot)))

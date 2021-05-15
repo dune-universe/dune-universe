@@ -1,0 +1,7 @@
+(executable
+  (name Tests)
+  (libraries qcheck typeset))
+
+(rule
+ (alias  runtest)
+ (action (run ./Tests.exe)))

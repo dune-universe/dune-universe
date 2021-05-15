@@ -1,0 +1,4 @@
+(lang dune 2.0)
+(name multipart_form)
+(version v0.3.0)
+(implicit_transitive_deps false)

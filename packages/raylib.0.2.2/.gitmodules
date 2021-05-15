@@ -1,3 +1,0 @@
-[submodule "src/c/vendor"]
-	path = src/c/vendor
-	url = https://github.com/raysan5/raylib

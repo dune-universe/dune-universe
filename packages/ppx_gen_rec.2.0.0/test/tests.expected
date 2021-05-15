@@ -1,0 +1,2 @@
+"foo"
+(, { Flow_ast.Program.statements = []; comments = None; all_comments = [] })

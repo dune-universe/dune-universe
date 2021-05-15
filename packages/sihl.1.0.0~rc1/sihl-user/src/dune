@@ -1,0 +1,9 @@
+(library
+ (name sihl_user)
+ (public_name sihl-user)
+ (libraries sihl)
+ (preprocess
+  (pps lwt_ppx)))
+
+(documentation
+ (package sihl-user))

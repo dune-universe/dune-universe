@@ -1,0 +1,38 @@
+(executable
+ (name test)
+ (modules test test_ns)
+ (libraries
+  fmt
+  base64
+  camlzip
+  bigarray-compat
+  bigstringaf
+  checkseum.c
+  de
+  zl
+  gz
+  lzo
+  alcotest))
+
+(executable
+ (name test_deflate)
+ (modules test_deflate)
+ (libraries fmt de bigstringaf alcotest))
+
+(rule
+ (alias runtest)
+ (package decompress)
+ (deps
+  (:test test_deflate.exe)
+  (source_tree corpus))
+ (action
+  (run %{test} --color=always)))
+
+(rule
+ (alias runtest)
+ (package decompress)
+ (deps
+  (:test test.exe)
+  (source_tree corpus))
+ (action
+  (run %{test} --color=always)))

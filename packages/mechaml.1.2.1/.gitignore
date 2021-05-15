@@ -1,0 +1,27 @@
+header
+headerize.sh
+
+tags
+.vim-last-repl
+.merlin
+
+/test.ml
+
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*.docdir
+
+# build
+_build/
+*.install
+
+# ocamlbuild targets
+*.byte
+*.native

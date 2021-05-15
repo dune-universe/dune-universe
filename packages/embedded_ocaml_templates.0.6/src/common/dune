@@ -1,0 +1,12 @@
+(library
+ (name common)
+ (package embedded_ocaml_templates)
+ (libraries sedlex uutf menhirLib ppxlib containers pprint ocaml)
+ (inline_tests)
+ (preprocess
+  (pps sedlex.ppx ppx_inline_test))
+ (flags :standard -w +39))
+
+(menhir
+ (flags --table --canonical)
+ (modules parser))

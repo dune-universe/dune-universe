@@ -1,0 +1,13 @@
+(library
+ (name luv)
+ (public_name luv)
+ (libraries luv.c result)
+ (flags (:standard -w -49 -open Result)))
+
+(rule
+ (targets require.mli require.ml)
+ (action
+  (run feature/detect_features.exe require.ml 99)))
+
+(documentation
+ (package luv))

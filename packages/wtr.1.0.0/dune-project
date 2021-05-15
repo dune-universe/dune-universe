@@ -1,0 +1,33 @@
+(lang dune 2.8)
+
+(name wtr)
+
+(version v1.0.0)
+
+(using mdx 0.1)
+
+(generate_opam_files true)
+
+(implicit_transitive_deps false)
+
+(source
+ (github lemaetech/wtr))
+
+(license MPL-2.0)
+
+(authors "Bikal Lem, <gbikal@gmail.com>")
+
+(maintainers "Bikal Lem")
+
+(package
+ (name wtr)
+ (synopsis "Well Typed Router")
+ (description "Wtr - A typed router for OCaml web applications")
+ (depends
+  (ocaml
+   (>= 4.12.0))
+  (uri
+   (>= 4.2.0))
+  (ppxlib
+   (>= 0.22.0))
+  (mdx :with-test)))

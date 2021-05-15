@@ -1,0 +1,10 @@
+node_modules/
+_esy/
+_build/
+.merlin
+META
+.vscode/
+.DS_Store
+*.tar.gz
+*.install
+*.zip

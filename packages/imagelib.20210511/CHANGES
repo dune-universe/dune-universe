@@ -1,0 +1,16 @@
+## ocaml-imagelib_20210511
+
+- Fix inflate of PNG images
+
+## ocaml-imagelib_20210402
+
+- update to new decompress 1.3.0
+
+## ocaml-imagelib_20210116
+
+- Fix alpha handling for GIF and resizing
+- Add transparency support to PNG
+
+## ocaml-imagelib_20200929
+
+- Port to dune 2.0

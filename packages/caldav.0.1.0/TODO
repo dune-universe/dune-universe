@@ -1,0 +1,212 @@
+- which XML properties are supported (see webdav.ml:create_properties)?  which can be modified by a client?
+- do we implement the right HTTP error codes?
+- caldav collection properties (RFC 4791 Sec 5.2)
+- MKCALENDAR HTTP verb (RFC 4791 Sec 5.3)
+- REPORT (from CalDAV including XML requests, answers, collation)
+- tests (wir haben: icalendar/ics, webdav-xml. was fehlt: webdav/http und caldav/http)
+- apple's ist umfangreich - dokumentieren was schon funktioniert und was wir denken, dass funktionieren sollte
+
+- Access control (both WebDAV and CalDAV layers)
+- service discovery of calendars
+- Persistent storage
+- WebUI
+
+DONE:
+- client interoperability: thunderbird! calendar.app! create and delete and rename event, todo
+- slash normalisation with prefix
+- timezone and date normalisation
+- finish tests for access control for all verbs
+- implement access control for report, and covered by test suite
+- access control (WebDAV)
+- user management (config file: users, hostname, routing, etc.)
+- how to add user and set acl
+- unsafe_find and unsafe_add: comment reasons
+- test access control with apple and thunderbird
+- readonly xml props (sind live properties) - there may still be more (in caldav/acl)
+- access control into separate module
+- move stuff to webdav_api
+- curl command to add a user, delete a user, access control, change password
+- curl command to add group, add group members, delete group members, delete group
+- add custom salting
+- mode for TOFU (everybody can create their user if not already taken)
+- ACL/policy configuration via property in root folder
+- configure default group membership for newly created users via webdav property
+- make a mirage unikernel
+- unikernel parameter: http vs https (certificates), root password, file system root / data directory, trust on first use, hostname
+- remove hardcoded users
+- stored URLs contain scheme, hostname, and port
+--> should instead be relative!?
+--> or absolute, but not containing scheme, hostname, port
+- test and adapt calendar-home-set with multiple entries:
+ - does it work with clients? no
+ - which path is a "new calendar" created in? unclear
+ => man kann alles in ein verzeichnis dumpen, filenames sind uniqe
+- put all calendars into one dir, control access via acl
+- fix deletion of calendars
+- Fs.to_string should return a leading /
+- client interoperability: android! create new todo lists and new calendars, use different users
+- attachments
+- automatic discovery of calendar url
+  - .well-known/caldav is supported
+  - DNS TXT record is out of scope for caldav
+- add group calendar, remove group calendar
+- persistent storage (irmin/git?) (mirage-fs-unix works for us!)
+- test read-only (group) calendar - check whether client report properly back that they can't create an event
+- make a running calendar server for robur internally
+- monitoring (status code, measure duration between request and reply)
+- rework Logging: less messages, more useful data
+- getetag may not exist on disk, who updates it for directories when resources are modified?
+   - unit test: 
+    - check on disk if parent updates lastmodified when kid writes 
+    - check on disk if parent updates lastmodified when kid deletes 
+    - check on disk if parent updates etag when kid writes
+    - check on disk if parent updates etag when kid deletes
+- add test to delete in directory, last-modified + etag of parent must change!
+- relative path/urls, simplify Webdav_api.uri_string
+
+-- PROFILING
+
+- single calendar with 10 000 ics files in /root/calendar on X250
+ - GET /root/calendar takes ~3s to run
+ - profiling with landmarks shows that most time is spent in Webdav_xml.tree (87%)
+   - this is our call into Xmlm
+ -> what should our SLA be?
+ -> bottleneck is not in our code!
+ - using s-expression instead of XMLM reduces the time spend in reading metadata from 87% to 2.5%
+
+-- ENDE NOTIZEN
+
+- improve log message style: constant time unit of duration, group request + response time + response code, tab separate fields 
+- add other log prefix/source called measurement, containing the above line
+- deploy the improved code with s-expressions 
+
+- compute 95th percentile of response time, in miliseconds, from log output:
+  grep response\ time output.20181120 | cut -d ' ' -f10 | perl -pe 's/([[:digit:]].+)ms/$1*1000/e' | sed -E 's/us//g' | sort -n | awk '{all[NR] = $0} END{print all[int(NR*0.95 - 0.5)]}'
+  => baseline is 102 seconds, from where we want to improve 
+- from output to a histogram:
+  (a) grep response\ time output.20181120 | cut -d ' ' -f10 | perl -pe 's/([[:digit:]].+)us/int($1*0.001)/e' | perl -pe 's/([[:digit:]].+)ms/int($1)/e' > durations-ms.txt
+  (b) cat durations-ms.txt  | sort -n | uniq -c | awk '{print $2,$1}' | sort -n | less
+  (c) awk '{$2=sprintf("%-*s", $2, ""); gsub(" ", "=", $2); printf("%-10s%s\n", $1, $2)}' durations-ms-total.txt  > data.out
+
+- profiling data - which functions take how much time? -> optimize or add more yields
+  => landmarks library, ppx preprocessor, env variable OCAML_LANDMARKS="auto,format=json,output=output.json,allocation"
+  open "$(ocamlfind query landmarks-viewer)/landmarks_viewer.html"
+
+^ DONE ----------------------------------
+-- TODO before release ------------------
+
+- rename xml files
+- version number for our property data format "robur:fileformat"
+- take a look at the logs again: 
+ - which type of request is exceptionally slow (95th percentile)
+ - measure more? metrics library (median, durchschnitt, 90th perc, 99 perc?)
+- a key in the KV store should not know about segments
+
+- add request id?
+
+- research threading/quotas:
+   - lwt pick with timeout - when will cancel kill a task exactly?
+   - does cohttp have a lwt task per request or connection? how does keepalive work with cohttp?
+- add a timeout
+- limit compute resource per request, per calendar entry, per calendar size
+- how to give ownership of a calendar to a group
+- how to modify robur_ns, "newgroups"
+- how to modify default policy for calendars?
+- apache benchmark - how many requests per second are possible for GET/PUT/DELETE?
+  - many concurrent GETs of the same event --> 200
+    - 1000 requests, 1 connection: Requests per second: 40.71 [#/sec] (mean)
+    - 1000 requests, 5 connections: Requests per second: 71.81 [#/sec] (mean)
+    - 1000 requests, 10 connections: Requests per second: 74.98 [#/sec] (mean)
+    - 1000 requests, 15/17 connections: Requests per second: 74.45 [#/sec] (mean)
+    - 1000 requests, 20 connections: test aborted after 10 failures, 95 requests completed
+    - 1000 requests, 25 connections: test aborted after 10 failures
+    - 1000 requests, 50 connections: test aborted after 10 failures
+  - calendar with many events, listing (server has to append all events)
+    - 1000 items, 10 requests, 1 connection: Time per request: 3595.288 [ms] (mean)
+  - while doing a big REPORT, others are waiting for this request to finish
+    - takes > 40s when one REPORT on 1000 items is done, and a single GET
+- profile why a report with 1000 ics files is slow (cpu bound? io bound? - test with mirage-fs-mem) find out which function is the bottleneck
+- SLA: 30s? how many items are allowed to meet this SLA? how to setup a limit?
+- replayable log to discover client usage of the HTTP endpoints
+  - design an experiment and warn users
+- how to set (Xml.robur_ns, "default_groups")?
+- configure default acl for calendars as "public" or "private"
+  - per user? per server?
+  - who can configure that?
+ - script to make calendar public / private
+  - curl commands to make calendar public/private/read-only/protected (freebusy only)
+  - a private calendar which should turn into a public one: how to adjust all the event ACLs? maybe DAV:inherited ACL?
+- access control XML content when forbidden
+  - for a resource where GET is forbidden, check that PROPFIND is also forbidden
+- check that all exposed functions in webdav_api (HTTP requests) checks ACL before accessing data
+- test internationalisation (unicode)
+  - create and delete events with unicode data in summary
+  - umlauts, chinese characters, danish crossed o, japanese, indian
+  - right-to-left
+  - test properties: keys and values
+- report time-range: may have only one of start or end
+  - test: may lead to recurring events that occur forever -> DoS?
+  - limit how many days in recur_events (upper limit 500 days)
+  - limit how many events are returned by server
+  - limit how many events are in a calendar
+  - limit byte-size of each event before storing on disk (maybe 1MB)
+- rename calendars (displayname) to include hostname
+- warn that ics CLASS property not supported, "may lead to data leaks"
+  - describe workaround to set ACL via curl
+- describe we don't support EXDATE RDATE
+- report issue to cohttp:
+  http request with query parameter that is empty leads to an empty reply:
+   curl -v -X PUT "http://root:toor@127.0.0.1:8080/user?name=user5&password= &foo=bar"
+ - describe in our docs this known bug
+- revise client interop documentation
+  - davdroid needs to start with "http(s)://"
+  - FirefoxOS needs a trailing /calendars
+- document client behaviour for creating events in read-only calendars
+  - calendar.app on macos reports an error and lets me revert to server
+  - davdroid doesn't report an error, davdroid pretends it was written on the server even on sync
+  - ipad doesn't report an error, event disappears on sync
+
+-- TODO for sure after release
+
+- blackberry comma topic, debug with mato
+- KV updates for irmin/git, weekly check with thomas
+- getlastmodified is not being updated on a directory if a file in it is deleted
+
+-- NICE to have
+
+- check TODOs in the code and fix
+- check assert false in the code and fix
+- research scope of implementing calendar sharing
+ - calendar sharing
+  - free-busy-query report
+   - component_in_timerange implementations (todo/freebusy)
+  - inboxes
+- report text-match
+- icalendar CLASS property: public / private / ...
+  - do clients set this property? android davdroid can do this
+  - server may use this to infer whether an event should be shown
+  - we already support acl per event
+    - if acl changes, modify CLASS property
+- sync-collection (WebDAV) ctag
+  - faster sync
+  - less computational work for server
+- webUI
+- recurence exdate, rdate: for now, we don't support this
+- more tests from apple's test suite
+- preserve creation-date on write_component if it was already there
+  - when an event is modified, Webdav_api.write_component is used to write it to disk.
+    this function uses Properties.create, which records the current timestamp for
+    both creationTime and modificationTime.
+  - correct behaviour: set only modificationTime on modification
+- report CalDAV 7.8.6 - 7.8.10
+   - 7.8.6 Example: Retrieval of Event by UID
+   - 7.8.7.  Example: Retrieval of Events by PARTSTAT
+   - 7.8.8.  Example: Retrieval of Events Only
+   - 7.8.9.  Example: Retrieval of All Pending To-Dos
+   - 7.8.10. Example: Attempt to Query Unsupported Property
+- recurrence < daily
+
+-- milestone supporting full WebDAV
+
+- implement ACL for writing acls, forbid to write acl in PROPPATCH / MKCOL / MKCALENDAR
+- locking (WebDAV)
