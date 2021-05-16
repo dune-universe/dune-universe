@@ -1945,7 +1945,7 @@ let unit_or_header_of_ast { print_passes } s ?(toplevel_macros=F.Map.empty) p =
       (w_symbol_table s Flat.pp_program) p;
 
   s, {
-    version = "1.13.2";
+    version = "1.13.4";
     code = p;
     symbol_table = Symbols.prune (State.get Symbols.table s) p.Flat.symbols
   }

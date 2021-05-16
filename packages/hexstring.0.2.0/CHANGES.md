@@ -1,3 +1,7 @@
+## 0.2.0 (2020-05-14)
+
+The decode API cannot panic anymore!
+
 ## 0.1.2 (2020-05-14)
 
 Let's see if this works.

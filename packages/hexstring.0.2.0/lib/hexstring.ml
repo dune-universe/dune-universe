@@ -18,7 +18,7 @@ let%test "encoding" =
   let hexstring = encode bytearray in
   hexstring = "01020304"
 
-(* decoding "01" *)
+(* helper to decode a byte *)
 
 let decode_1char = function
   | '0' -> Ok 0
@@ -60,27 +60,28 @@ let%test "decoding two erroneous chars" =
   let d = decode_2chars ('z', 'f') in
   Result.is_error d
 
-(* decode, this can panic... props to whoever can make it not panic *)
+(* decoding hexstring -> bytearray *)
 
-let decode (hexstring : string) : (bytes, string) result =
-  let len = String.length hexstring in
-  if len mod 2 <> 0 then Error "length must be a multiple of 2"
-  else if len = 0 then Ok Bytes.empty
-  else
-    let res = Bytes.make (len / 2) '\x00' in
-    let () =
-      for i = 0 to (len / 2) - 1 do
-        let c1 = hexstring.[i * 2] in
-        let c2 = hexstring.[(i * 2) + 1] in
-        let c =
-          match decode_2chars (c1, c2) with
-          | Ok c -> c
-          | Error _ -> failwith "error"
-        in
-        Bytes.set res i c
-      done
-    in
-    Ok res
+let rec parse_string (res : bytes) (offset : int) (ss : string) =
+  match String.length ss with
+  | 0 -> Ok res
+  | _ -> (
+      let byte = Str.first_chars ss 2 in
+      let rest = Str.string_after ss 2 in
+      let c1 = byte.[0] in
+      let c2 = byte.[1] in
+      match decode_2chars (c1, c2) with
+      | Error err -> Error err
+      | Ok c ->
+          Bytes.set res offset c;
+          parse_string res (offset + 1) rest)
+
+let decode hexstring =
+  match String.length hexstring with
+  | len when len mod 2 <> 0 -> Error "length must be a multiple of 2"
+  | len ->
+      let res = Bytes.make (len / 2) '\x00' in
+      parse_string res 0 hexstring
 
 let%test "decoding empty hexstring" =
   let d = decode "" in
@@ -88,6 +89,10 @@ let%test "decoding empty hexstring" =
 
 let%test "decoding bad-length hexstring" =
   let d = decode "1" in
+  Result.is_error d
+
+let%test "decoding bad-char hexstring" =
+  let d = decode "120z" in
   Result.is_error d
 
 let%test "decoding valid hexstring" =

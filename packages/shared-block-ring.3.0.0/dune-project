@@ -1,0 +1,6 @@
+(lang dune 2.7)
+
+(name shared-block-ring)
+(version 3.0.0)
+
+(formatting disabled)

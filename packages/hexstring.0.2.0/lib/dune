@@ -1,7 +1,7 @@
 (library
  (name hexstring)
  (public_name hexstring)
- (libraries)
+ (libraries str)
  (inline_tests)
  (preprocess
   (pps ppx_inline_test)))

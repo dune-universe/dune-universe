@@ -1,0 +1,3 @@
+(executable
+ (name tests)
+ (libraries hexstring qcheck))

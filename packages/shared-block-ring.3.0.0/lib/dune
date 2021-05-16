@@ -1,0 +1,20 @@
+(library
+ (name shared_block)
+ (public_name shared-block-ring)
+ (synopsis "Simple persistent queue over a block device")
+ (libraries
+  cstruct
+  duration
+  io-page
+  lwt
+  mirage-block
+  mirage-clock
+  mirage-time
+  result
+  rresult
+  sexplib
+  sexplib0)
+ (instrumentation
+  (backend bisect_ppx))
+ (preprocess
+  (pps ppx_sexp_conv)))

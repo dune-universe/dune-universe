@@ -1,0 +1,20 @@
+(test
+ (name test)
+ (libraries
+  cstruct
+  duration
+  io-page
+  io-page-unix
+  logs
+  logs.fmt
+  logs.lwt
+  lwt
+  lwt.unix
+  mirage-block-unix
+  mirage-clock-unix
+  ounit2
+  rresult
+  sexplib
+  shared-block-ring)
+ (preprocess
+  (pps ppx_sexp_conv)))

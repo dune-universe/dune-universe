@@ -104,7 +104,7 @@ let _ =
     | "-document-builtins" :: rest -> doc_builtins := true; eat_options rest
     | "-D" :: var :: rest -> vars := API.Compile.StrSet.add var !vars; eat_options rest
     | ("-h" | "--help") :: _ -> Printf.eprintf "%s" usage; exit 0
-    | "-version" :: _ -> Printf.printf "%s\n" "1.13.2"; exit 0
+    | "-version" :: _ -> Printf.printf "%s\n" "1.13.4"; exit 0
     | "--" :: rest -> rest
     | x :: rest -> x :: eat_options rest
   in

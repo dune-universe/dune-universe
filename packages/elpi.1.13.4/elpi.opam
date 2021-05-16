@@ -1,4 +1,4 @@
-version: "1.13.2"
+version: "1.13.4"
 opam-version: "2.0"
 maintainer: "Enrico Tassi <enrico.tassi@inria.fr>"
 authors: [ "Claudio Sacerdoti Coen" "Enrico Tassi" ]
@@ -19,7 +19,7 @@ depends: [
   "camlp5" {< "7.99"}
   "ppxlib" {>= "0.12.0" }
   "re" {>= "1.7.2"}
-  "ppx_deriving"
+  "ppx_deriving" {>= "4.2"}
   "ANSITerminal" {with-test}
   "cmdliner" {with-test}
   "dune" {>= "2.2.0"}
