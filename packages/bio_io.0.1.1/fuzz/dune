@@ -1,0 +1,3 @@
+(executable
+ (name fuzz_fasta_in_channel)
+ (libraries core_kernel bio_io))

@@ -1,0 +1,6 @@
+#
+# AFL dictionary for FASTA files
+# ==============================
+#
+
+header_marker=">"
