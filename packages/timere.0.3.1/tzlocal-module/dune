@@ -1,6 +1,0 @@
-(library
- (name timere_tzlocal)
- (public_name timere.tzlocal)
- (virtual_modules timere_tzlocal)
- (default_implementation timere.tzlocal.unix)
-)

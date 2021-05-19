@@ -1,0 +1,28 @@
+(rule
+ (targets int64_utils.ml)
+ (deps    ../src/int64_utils.ml)
+ (action  (copy %{deps} %{targets}))
+)
+
+(rule
+ (targets parser_components.ml)
+ (deps    ../desc/parser_components.ml)
+ (action  (copy %{deps} %{targets}))
+)
+
+(executables
+ (flags     (-w "+a-4-9-29-37-40-42-44-48-50-32-30@8"))
+ (names gen_time_zone_data
+ )
+ (libraries oseq
+            re
+            mparser
+            containers
+            fileutils
+            ptime
+            timedesc
+            timedesc.tzdb.none
+            timedesc.tzlocal.none
+            bigarray
+ )
+)
