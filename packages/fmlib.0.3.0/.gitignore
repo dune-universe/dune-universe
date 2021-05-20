@@ -1,0 +1,6 @@
+_build/
+fmlib.install
+todo.*
+*.swp
+.merlin
+gh-pages/
