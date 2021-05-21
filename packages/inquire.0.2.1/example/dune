@@ -1,4 +1,0 @@
-(executables
- (names confirm custom_impl minimal raw_select select password input)
- (libraries lwt inquire.lambda-term inquire)
- (flags -open StdLabels))
