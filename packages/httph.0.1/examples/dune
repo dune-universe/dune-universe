@@ -1,0 +1,3 @@
+(executable
+ (name techempower)
+ (libraries httph yojson))

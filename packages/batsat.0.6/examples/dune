@@ -1,0 +1,18 @@
+(executable
+  (name par_solver) ; parallel solver
+  (libraries containers containers-thread batsat tracy tracy-client)
+  (modes native)
+  (modules lexer par_solver)
+  (flags :standard -warn-error -a+8))
+
+(ocamllex (modules lexer))
+
+(executable
+  (name par_sudoku) ; parallel sudoku solver
+  (libraries containers containers-thread iter batsat tracy
+             tracy-client
+             )
+  (modes native)
+  (modules par_sudoku)
+  (flags :standard -warn-error -a+8))
+

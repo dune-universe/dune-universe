@@ -15,3 +15,6 @@ batsat = "^0.5"
 
 [workspace]
 
+[profile.release]
+debug = 1
+lto = "thin"

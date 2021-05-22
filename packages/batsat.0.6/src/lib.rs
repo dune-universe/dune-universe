@@ -15,8 +15,10 @@ pub struct Solver {
     assumptions: Vec<Lit>,
 }
 
+struct SolverPtr(*mut Solver);
+
 /// Use a custom block to manipulate the solver
-impl ocaml::Custom for Solver {
+impl ocaml::Custom for SolverPtr {
     const TYPE: ocaml::custom::CustomType = ocaml::custom::CustomType {
         name: "solver",
         fixed_length: None,
@@ -36,18 +38,34 @@ impl ocaml::Custom for Solver {
 }
 
 unsafe extern "C" fn delete_solver_value(v: Value) {
-    eprintln!("delete value");
-    std::ptr::drop_in_place(v.custom_mut_ptr_val::<Solver>())
+    //eprintln!("delete value");
+    let p: *mut SolverPtr = v.custom_mut_ptr_val();
+    let solver_ptr = &mut *p;
+    if solver_ptr.0.is_null() {
+        panic!("double free")
+    }
+
+    std::ptr::drop_in_place(solver_ptr.0);
+    solver_ptr.0 = std::ptr::null_mut(); // prevent double free
 }
 
-impl Solver {
+impl SolverPtr {
     fn new() -> Self {
-        Solver {
+        let s = Solver {
             s: InnerSolver::default(),
             vars: Vec::new(),
             cur_clause: vec![],
             assumptions: vec![],
-        }
+        };
+        let b = Box::new(s);
+        SolverPtr(Box::into_raw(b))
+    }
+
+    /// Access the inner solver.
+    #[inline]
+    fn get(&mut self) -> &mut Solver {
+        assert!(!self.0.is_null());
+        unsafe { &mut *self.0 }
     }
 }
 
@@ -86,20 +104,20 @@ impl ops::DerefMut for Solver {
 }
 
 #[ocaml::func]
-pub fn ml_batsat_new() -> Pointer<Solver> {
-    let r = Pointer::alloc_custom(Solver::new());
+pub fn ml_batsat_new() -> Pointer<SolverPtr> {
+    let r = Pointer::alloc_custom(SolverPtr::new());
     r
 }
 
 #[ocaml::func]
-pub fn ml_batsat_simplify(mut solver: Pointer<Solver>) -> bool {
-    solver.as_mut().simplify()
+pub fn ml_batsat_simplify(mut solver: Pointer<SolverPtr>) -> bool {
+    solver.as_mut().get().simplify()
 }
 
 /// Add literal, or add clause if the lit is 0
 #[ocaml::func]
-pub fn ml_batsat_addlit(mut solver: Pointer<Solver>, lit: isize) -> bool {
-    let solver = solver.as_mut();
+pub fn ml_batsat_addlit(mut solver: Pointer<SolverPtr>, lit: isize) -> bool {
+    let solver = solver.as_mut().get();
     let mut r = true;
     if lit == 0 {
         // push current clause into vector `clauses`, reset it
@@ -118,16 +136,20 @@ pub fn ml_batsat_addlit(mut solver: Pointer<Solver>, lit: isize) -> bool {
 
 /// Add assumption into the solver
 #[ocaml::func]
-pub fn ml_batsat_assume(mut solver: Pointer<Solver>, lit: isize) {
-    let solver = solver.as_mut();
+pub fn ml_batsat_assume(mut solver: Pointer<SolverPtr>, lit: isize) {
+    let solver = solver.as_mut().get();
     assert!(lit != 0);
     let lit = solver.get_lit(lit);
     solver.assumptions.push(lit);
 }
 
 #[ocaml::func]
-pub fn ml_batsat_solve(mut solver: Pointer<Solver>) -> bool {
-    let solver = solver.as_mut();
+pub fn ml_batsat_solve(mut solver: Pointer<SolverPtr>) -> bool {
+    // the inner pointer cannot move, even though the ocaml value will
+    // once we release the lock
+    let solver = solver.as_mut().get();
+
+    ocaml::release_lock();
     let r = {
         let (s, _, assumptions) = solver.decompose();
         let lb = s.solve_limited(&assumptions);
@@ -136,12 +158,13 @@ pub fn ml_batsat_solve(mut solver: Pointer<Solver>) -> bool {
         lb != lbool::FALSE
     };
     //println!("res: {:?}, model: {:?}", r, solver.get_model());
+    ocaml::acquire_lock();
     r
 }
 
 #[ocaml::func]
-pub fn ml_batsat_value(mut solver: Pointer<Solver>, lit: isize) -> isize {
-    let solver = solver.as_mut();
+pub fn ml_batsat_value(mut solver: Pointer<SolverPtr>, lit: isize) -> isize {
+    let solver = solver.as_mut().get();
     let r = if lit.abs() >= solver.num_vars() as isize {
         lbool::UNDEF
     } else {
@@ -152,8 +175,8 @@ pub fn ml_batsat_value(mut solver: Pointer<Solver>, lit: isize) -> isize {
 }
 
 #[ocaml::func]
-pub fn ml_batsat_value_lvl_0(mut solver: Pointer<Solver>, lit: isize) -> isize {
-    let solver = solver.as_mut();
+pub fn ml_batsat_value_lvl_0(mut solver: Pointer<SolverPtr>, lit: isize) -> isize {
+    let solver = solver.as_mut().get();
     let r = if lit.abs() >= solver.num_vars() as isize {
         lbool::UNDEF
     } else {
@@ -165,8 +188,8 @@ pub fn ml_batsat_value_lvl_0(mut solver: Pointer<Solver>, lit: isize) -> isize {
 }
 
 #[ocaml::func]
-pub fn ml_batsat_check_assumption(mut solver: Pointer<Solver>, lit: isize) -> bool {
-    let solver = solver.as_mut();
+pub fn ml_batsat_check_assumption(mut solver: Pointer<SolverPtr>, lit: isize) -> bool {
+    let solver = solver.as_mut().get();
 
     // check unsat-core
     let lit = solver.get_lit(lit);
@@ -180,9 +203,10 @@ fn int_of_lit(lit: Lit) -> isize {
 }
 
 #[ocaml::func]
-pub fn ml_batsat_unsat_core(solver: Pointer<Solver>) -> Vec<isize> {
-    let solver = solver.as_ref();
+pub fn ml_batsat_unsat_core(mut solver: Pointer<SolverPtr>) -> Vec<isize> {
     let core = solver
+        .as_mut()
+        .get()
         .s
         .unsat_core()
         .iter()
@@ -192,32 +216,32 @@ pub fn ml_batsat_unsat_core(solver: Pointer<Solver>) -> Vec<isize> {
 }
 
 #[ocaml::func]
-pub fn ml_batsat_nvars(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_nvars(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.num_vars() as isize
 }
 
 #[ocaml::func]
-pub fn ml_batsat_nclauses(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_nclauses(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.num_clauses() as isize
 }
 
 #[ocaml::func]
-pub fn ml_batsat_nconflicts(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_nconflicts(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.num_conflicts() as isize
 }
 
 #[ocaml::func]
-pub fn ml_batsat_nprops(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_nprops(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.num_propagations() as isize
 }
 
 #[ocaml::func]
-pub fn ml_batsat_ndecisions(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_ndecisions(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.num_decisions() as isize
 }
 
@@ -231,14 +255,14 @@ caml!(ml_batsat_nrestarts, |ptr|, <res>, {
 */
 
 #[ocaml::func]
-pub fn ml_batsat_n_proved(solver: Pointer<Solver>) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_n_proved(mut solver: Pointer<SolverPtr>) -> isize {
+    let solver = solver.as_mut().get();
     solver.s.proved_at_lvl_0().len() as isize
 }
 
 #[ocaml::func]
-pub fn ml_batsat_get_proved(solver: Pointer<Solver>, i: usize) -> isize {
-    let solver = solver.as_ref();
+pub fn ml_batsat_get_proved(mut solver: Pointer<SolverPtr>, i: usize) -> isize {
+    let solver = solver.as_mut().get();
     let lit = solver.s.proved_at_lvl_0()[i];
     let lit = lit.var().idx() as isize * if lit.sign() { 1 } else { -1 };
     lit

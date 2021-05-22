@@ -1,5 +1,5 @@
 opam-version: "2.0"
-version: "0.5"
+version: "0.6"
 author: "simon.cruanes.2007@m4x.org"
 synopsis: "OCaml bindings for batsat, a SAT solver in rust"
 maintainer: "simon.cruanes.2007@m4x.org"

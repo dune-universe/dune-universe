@@ -10,6 +10,7 @@ module Lit = struct
   type t = int
   let make n = assert (n>0); n
   let neg n = -n
+  let make_with_sign b i = let x = make i in if b then x else neg x
   let abs = abs
   let sign n = n > 0
   let to_int n = n
@@ -94,6 +95,10 @@ let proved_lvl_0 s =
 let solve ?(assumptions=[||]) s =
   Array.iter (fun x -> Raw.assume s x) assumptions;
   Raw.solve s |> check_ret_
+
+let solve_is_sat ?assumptions s =
+  try solve ?assumptions s; true
+  with Unsat -> false
 
 let is_in_unsat_core s lit = Raw.check_assumption s lit
 

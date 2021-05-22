@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name: "httph"
+version: "0.1"
+synopsis: "Minimal OCaml to the httpserver.h http server toolkit"
+description: """
+A very simple OCaml http toolkit intended to be a very straightforward set of bindings to the underlying
+httpserver.h C library.
+"""
+maintainer: "Travis Brady <travis.brady@gmail.com>"
+authors: "Travis Brady <travis.brady@gmail.com>"
+license: "MIT"
+homepage: "https://github.com/travisbrady/ocaml-httph"
+bug-reports: "https://github.com/travisbrady/ocaml-httph/issues"
+dev-repo: "git://git@github.com:travisbrady/ocaml-httph.git"
+depends: [
+  "dune" {>= "2.8"}
+  "ocaml" {>= "4.12.0"}
+  "yojson" {>= "1.7.0"}
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs "@install"]
+]

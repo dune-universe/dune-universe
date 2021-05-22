@@ -1,0 +1,8 @@
+(library
+ (name            httph)
+ (public_name     httph)
+ (foreign_stubs
+  (language c)
+  (names mystubs)
+  (flags -O3 -I./lib))
+ )
