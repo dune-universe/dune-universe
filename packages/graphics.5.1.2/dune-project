@@ -1,6 +1,6 @@
 (lang dune 2.1)
 (name graphics)
-(version 5.1.1)
+(version 5.1.2)
 
 (generate_opam_files true)
 
