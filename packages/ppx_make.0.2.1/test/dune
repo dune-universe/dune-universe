@@ -1,0 +1,5 @@
+(test
+ (name test_make)
+ (preprocess
+  (pps ppx_make))
+ (libraries ounit2))

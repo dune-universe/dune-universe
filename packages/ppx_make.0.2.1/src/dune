@@ -1,0 +1,6 @@
+(library
+ (public_name ppx_make)
+ (kind ppx_deriver)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (libraries ppxlib))

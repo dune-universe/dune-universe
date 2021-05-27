@@ -1,0 +1,8 @@
+(executable
+  (name ctoxml_bin)
+  (public_name ctoxml)
+  (package ctoxml)
+  (libraries FrontC))
+
+(cram
+  (deps %{bin:ctoxml}))
