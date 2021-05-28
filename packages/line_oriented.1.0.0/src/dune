@@ -1,0 +1,12 @@
+
+(library
+  (name line_oriented)
+  (public_name line_oriented)
+  (modules line_oriented)
+  (libraries batteries))
+
+;; never installed executables
+(executables
+  (names test)
+  (modules test)
+  (libraries line_oriented batteries dolog))
