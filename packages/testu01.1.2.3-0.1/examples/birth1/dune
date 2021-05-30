@@ -1,0 +1,27 @@
+(executable
+ (name birth1)
+ (libraries testu01))
+
+(rule
+ (with-stdout-to birth1.output
+  (pipe-stdout
+   (run ./birth1.exe)
+   (system "grep -v '^HOST ='")
+   (system "grep -v '^CPU time used'"))))
+
+(rule
+ (with-stdout-to birth1.expected
+  (progn
+   (with-stdin-from birth1.res
+    (pipe-stdout
+     (system "grep -v '^HOST ='")
+     (system "grep -v '^CPU time used'")))
+   (echo "\n\n\n\n"))))
+
+(rule
+ (alias runtest)
+ (action (diff birth1.output birth1.expected))
+ (enabled_if %{arch_sixtyfour}))
+
+;; This test uses the value 2147483647 which is not representable in an int on a
+;; 32-bit OCaml implementation. It is only enabled on 64-bit architectures.

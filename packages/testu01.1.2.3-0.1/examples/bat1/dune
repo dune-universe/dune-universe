@@ -1,0 +1,25 @@
+(executable
+ (name bat1)
+ (libraries testu01))
+
+(rule
+ (with-stdout-to bat1.output
+  (pipe-stdout
+   (run ./bat1.exe)
+   (system "tail -n 20")
+   (system "grep -v '^ Total CPU time:'"))))
+
+(rule
+ (with-stdout-to bat1.expected
+  (progn
+   (with-stdin-from bat1.res
+    (system "grep -v '^ Total CPU time:'"))
+   (echo "\n\n\n"))))
+
+(rule
+ (alias runtest)
+ (action (diff bat1.output bat1.expected))
+ (enabled_if %{arch_sixtyfour}))
+
+;; This test uses the value 2147483647 which is not representable in an int on a
+;; 32-bit OCaml implementation. It is only enabled on 64-bit architectures.

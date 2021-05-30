@@ -1,0 +1,8 @@
+(executable
+ (name bat3)
+ (libraries testu01))
+
+(rule
+ (deps vax.bin)
+ (action
+  (with-stdout-to bat3.output (run ./bat3.exe))))

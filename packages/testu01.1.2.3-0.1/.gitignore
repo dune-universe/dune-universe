@@ -1,0 +1,8 @@
+*~
+*#
+/_build
+/*.opam
+/lib
+/bin
+/doc
+/doc-online

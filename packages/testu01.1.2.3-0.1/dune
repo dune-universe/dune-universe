@@ -1,0 +1,21 @@
+(library
+ (name testu01_dummy_module)
+ (public_name testu01)
+ (libraries testu01.testu01 testu01.probdist))
+
+;; Generate documentation
+;;
+;; We generate the index of the documentation from the README. Except that the
+;; README has links to the online API documentation. We rewrite those to local
+;; links.
+
+(rule
+ (deps README.md)
+ (action
+  (progn
+   (system "sed -i 's|https://lesboloss-es.github.io/ocaml-testu01/|./|' README.md")
+   (with-stdout-to index.mld (run md2mld README.md)))))
+
+(documentation
+ (package testu01)
+ (mld_files index))

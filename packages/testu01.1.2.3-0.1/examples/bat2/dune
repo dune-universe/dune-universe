@@ -1,0 +1,23 @@
+(executable
+ (name bat2)
+ (libraries testu01))
+
+(rule
+ (deps vax.bin)
+ (action
+  (with-stdout-to bat2.output
+   (pipe-stdout
+    (run ./bat2.exe)
+    (system "grep -v '^ Total CPU time:'")))))
+
+(rule
+ (with-stdout-to bat2.expected
+  (progn
+   (echo "\n")
+   (with-stdin-from bat2.res
+    (system "grep -v '^ Total CPU time:'"))
+   (echo "\n\n\n"))))
+
+(rule
+ (alias runtest)
+ (action (diff bat2.output bat2.expected)))
