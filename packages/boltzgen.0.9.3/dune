@@ -1,0 +1,34 @@
+(library
+        (name boltzgen_runtime)
+        (public_name boltzgen)
+        (modules gen_test_lib question_type type sum_type recursive_type_gen type_lib parse_from_compiler gen_for_caseine math)
+        (libraries ocaml-compiler-libs.common unix)
+        (modes byte native))
+
+(executable
+         (name exec_inside)
+         (modules exec_inside)
+         (libraries boltzgen_runtime ocaml-compiler-libs.toplevel)
+         (modes byte))
+
+(executable
+        (name gen_test)
+        (public_name boltzgen)
+        (modules gen_test)
+        (instrumentation (backend bisect_ppx))
+        (libraries boltzgen_runtime cmdliner unix)
+        (modes byte native))
+
+
+(documentation
+        (package boltzgen)
+        (mld_files :standard))
+
+(rule
+ (with-stdout-to boltzgen.1
+  (run boltzgen --help=groff)))
+
+(install
+ (section man)
+ (package boltzgen)
+ (files   boltzgen.1))

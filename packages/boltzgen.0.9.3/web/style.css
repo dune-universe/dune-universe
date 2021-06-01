@@ -1,0 +1,23 @@
+.alert {
+    background-color:red;
+
+}
+
+#funspec {
+    width:500px;
+    height:100px;
+}
+#reference {
+    width:500px;
+    height:100px;
+}
+
+.sig {
+    background-color:lightgreen;
+}
+
+.code {
+    width: 100%;
+    height: 300px;
+    background-color: lightgray;
+}

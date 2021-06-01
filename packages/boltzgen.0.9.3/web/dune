@@ -1,0 +1,56 @@
+;;(library
+;; (name toploop_results)
+;; (wrapped false)
+;; (modules Toploop_results)
+;;)
+
+;;(library
+;; (name toploop)
+;; (wrapped false)
+;; (modes byte)
+;; (modules Toploop_ext)
+;; (flags :standard -w -27 -w -32)
+;; (libraries ocaml-compiler-libs.common ocaml-compiler-libs.toplevel
+;;            toploop_results)
+;;)
+
+;;(library
+;; (name toploop_jsoo)
+;; (wrapped false)
+;; (modes byte)
+;; (flags :standard -warn-error A-4-42-44-45-48-9-58)
+;; (libraries js_of_ocaml-compiler toploop)
+;; (modules Toploop_jsoo)
+;; (preprocess (pps js_of_ocaml-ppx))
+;;)
+
+(executable
+        (name gen_test_web)
+        (link_flags (:standard -linkall))
+        (libraries boltzgen_runtime js_of_ocaml js_of_ocaml-ppx js_of_ocaml-compiler js_of_ocaml-toplevel)
+        (modules gen_test_web html)
+        (preprocess (pps js_of_ocaml-ppx))
+        (optional)
+        (flags :standard -w -27)
+        (modes byte))
+
+(rule
+ (targets export.txt)
+ (deps gen_test_web.bc)
+ (action (run jsoo_listunits -o %{targets} stdlib)))
+
+(rule
+ (targets gen_test_web.js)
+ (action
+    (run %{bin:js_of_ocaml}
+         --export %{dep:export.txt}
+         --toplevel
+         --pretty
+         +toplevel.js +dynlink.js
+         %{dep:gen_test_web.bc}
+         -o %{targets}
+    )))
+
+(alias
+  (name default)
+  (deps gen_test_web.js index.html style.css))

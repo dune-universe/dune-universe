@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+          "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <title>OCaml test gen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="gen_test_web.js"></script>
+  </head>
+  <body>
+    Boltzman : <input id="b_value" value="5.0"></input>
+      Size : <input id="max_val" value="100.0"></input>
+    Evaluate reference : <input id="eval_ref" type="checkbox"></input>
+    Generate for caseine : <input id="gen_caseine" type="checkbox"></input>
+<br>
+    <textarea id="funspec">type 'a tree =
+   Empty
+ | Node of 'a tree * 'a * 'a tree
+val sum: int list tree -> int
+      </textarea>
+    <textarea id="reference">let rec sum = function
+  Empty -> 0
+| Node (lhs,l,rhs) -> sum lhs + (List.fold_left (+) 0 l) + sum rhs
+</textarea> 
+    <div id="alert" class="alert"></div>
+    <div id="sigt" class="sig"></div>
+    <textarea id="result" class="code"> </textarea>
+
+
+  </body>
+</html>
