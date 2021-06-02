@@ -1,0 +1,7 @@
+(alias
+ (name default)
+ (deps
+   (alias_rec lib/default)
+   (alias_rec examples/default)
+   (alias_rec bin/default)
+   (alias_rec tests/default)))

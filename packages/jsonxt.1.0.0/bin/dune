@@ -1,0 +1,4 @@
+(executables
+ (modes byte exe)
+ (names jsonxtool)
+ (libraries jsonxt))

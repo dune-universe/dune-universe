@@ -1,0 +1,11 @@
+(executables
+ (names process1)
+ (libraries jsonxt))
+
+(alias
+ (name default)
+ (deps))
+
+(alias
+ (name examples)
+ (deps process1.exe))

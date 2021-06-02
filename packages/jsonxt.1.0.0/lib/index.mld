@@ -1,0 +1,166 @@
+{1 JSON parsers for files, strings and more}
+
+Jsonxt provides a number JSON parsers and writers with
+a focus on performance especially for the core file and
+string functions
+
+{2 API Documentation}
+- See the {!module:Jsonxt} API documentation for detailed module
+  and function documentation
+
+{2 Quick Start}
+The following covers various use cases
+
+{3 Convert a string and print the internal representation}
+{[
+let () =
+  let json = Jsonxt.Basic.of_string "[1,2,3]" in
+  print_endline (Jsonxt.Utilities.json_to_string_repr json);;
+]}
+
+{3 Reading a file and printing to stdout}
+{[
+let () = 
+  let json = Jsonxt.Basic.of_file "test.json" in
+  Jsonxt.Basic.to_channel_hum stdout json;;
+]}
+
+{3 Using the json_stream parser }
+The json_stream parser returns a stream of json elements
+rather than a json tree.  The following is example using
+the [Stream.t] interface to process the stream
+{[
+open Printf
+
+let parse_stream_string s =
+  let stream = Jsonxt.Basic_stream.stream_from_string s in
+  Stream.iter
+    (fun el ->
+     let s = Jsonxt.Utilities.json_stream_to_string_repr el in
+     printf "%s " s)
+    stream;
+  printf "\n"
+
+let () =
+    let json_s = {| [ { "id":10, "str":"foo" }, { "id":11, "str":"bar" } ] |} in
+    parse_stream_string json_s;;
+]}
+
+{3 Reading and writing a file using the monadic functions}
+{[
+module IO = struct
+  type 'a t = 'a
+
+  let return v = v
+  let (>>=) v f = f v
+end
+
+module JsonIO = Jsonxt.Basic_monad.Make(IO)
+open IO
+
+let _ =
+  let ic = open_in "test.json" in
+  let reader buf len = return (input ic buf 0 len) in
+  let writer s = return (output_string stdout s) in
+  JsonIO.read_json ~reader ()
+  >>= function
+    | Error err -> print_endline ("ERROR: " ^ err); return ()
+    | Ok json -> JsonIO.write_json_hum ~writer json
+;;
+]}
+
+{3 Yojson compatibility}
+To use Jsonxt's Yojson compatibility module create a [yojson.ml] file in
+the project's source directory with the following contents:
+{[
+include Jsonxt.Yojson
+]}
+Note that compatibility is mostly a thin layer on top of Jsonxt.
+In particular the error reporting by the utils module uses
+the [Failure] exception rather than Yojson's specialist exceptions.
+See the {!module:Jsonxt.Yojson} module API documentation for more details
+
+{3 Using ppx_yojson_conv}
+
+The following is an example using ppx_yojson_conv:
+{[
+module Item = struct
+  type t = {
+    str : string
+  ; cost : float
+  } [@@deriving yojson]
+end
+
+module Stock = struct
+  type t = {
+    desc : string
+  ; inventory : int
+  ; backorder : int option
+  ; items : Item.t list
+  } [@@deriving yojson]
+end
+
+let () =
+  let item1 = { Item.str = "Store Baked Beans"; cost = 1.22 } in
+  let item2 = { Item.str = "Branded Baked Beans"; cost = 1.47 } in
+  let stock = { Stock.desc = "Beans"; inventory = 2; backorder = Some 3; items = [item1; item2] } in
+  let json = Stock.yojson_of_t stock in
+  print_endline (Yojson.Safe.show json);
+  print_endline (Yojson.Safe.pretty_to_string json);
+]}
+
+{3 Async example}
+An example of how to use the monad based parser and writer with async.  Note
+that async and core libraries need to be installed.
+{[
+open Core
+open Async
+
+module Json_async = struct
+  module Json_of_async = Jsonxt.Basic_monad.Make(struct
+      type 'a t = 'a Deferred.t
+
+      let return = Deferred.return
+      let (>>=) = Deferred.Monad_infix.(>>=)
+    end)
+
+
+  let reader inc buf size =
+    Reader.read inc ~len:size buf
+    >>= function
+    | `Eof -> return 0
+    | `Ok len -> return len
+
+  let read inc =
+    let reader = reader inc in
+    Json_of_async.read_json ~reader ()
+
+  let write outc =
+    let writer buf = Writer.write outc buf |> return in
+    Json_of_async.write_json ~writer
+
+end
+
+let run () =
+  Reader.open_file "./asyncdata.json"
+  >>= fun inc -> Json_async.read inc
+  >>= function
+      | Error err -> raise (Failure err)
+      | Ok json -> begin
+          Json_async.write (force Writer.stdout) json
+          >>= fun () -> printf "\n"; shutdown 0 |> return
+        end
+
+let () =
+  ignore (run ());
+  never_returns (Scheduler.go ())
+]}
+
+{2 Performance}
+Performance in general is similar to Yojson for reading depending to some extent
+on the input.
+
+Writing wise, jsonxt is similar or slightly faster depending on the type of output.
+Jsonxt optimises integer values in floats and uses integer conversion which is 4-5
+times faster.  This means there is very little penalty for using [`Float] to store
+an integer

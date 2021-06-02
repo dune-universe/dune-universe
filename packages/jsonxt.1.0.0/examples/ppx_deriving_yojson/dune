@@ -1,0 +1,13 @@
+(executables
+ (modes byte exe)
+ (names ppx_yojson_example)
+ (preprocess (pps ppx_deriving_yojson))
+ (libraries jsonxt ppx_deriving_yojson.runtime))
+
+(alias
+ (name default)
+ (deps))
+
+(alias
+ (name ppx_deriving_yojson_example)
+ (deps ppx_yojson_example.exe))

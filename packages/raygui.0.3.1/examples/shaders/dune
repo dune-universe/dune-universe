@@ -1,4 +1,0 @@
-(executable
- (name shaders_raymarching)
- (modules Shaders_raymarching)
- (libraries raylib))

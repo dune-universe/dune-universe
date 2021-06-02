@@ -1,0 +1,7 @@
+(ocamllex compliant_lexxer compliant_lexxer_monad)
+
+(library
+ (name jsonxt)
+ (public_name jsonxt))
+
+(documentation (package jsonxt) (mld_files index))

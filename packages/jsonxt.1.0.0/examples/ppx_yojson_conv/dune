@@ -1,0 +1,13 @@
+(executables
+ (modes byte exe)
+ (names ppx_yojson_example)
+ (preprocess (pps ppx_yojson_conv))
+ (libraries jsonxt ppx_yojson_conv_lib))
+
+(alias
+ (name default)
+ (deps))
+
+(alias
+ (name ppx_yojson_conv_example)
+ (deps ppx_yojson_example.exe))

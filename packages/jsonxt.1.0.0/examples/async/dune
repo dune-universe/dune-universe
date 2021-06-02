@@ -1,0 +1,11 @@
+(executables
+ (names example_async)
+ (libraries jsonxt async core))
+
+(alias
+ (name default)
+ (deps))
+
+(alias
+ (name examples_async)
+ (deps example_async.exe))
