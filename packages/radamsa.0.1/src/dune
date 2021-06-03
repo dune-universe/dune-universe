@@ -1,0 +1,16 @@
+(library (name radamsa) (public_name radamsa)
+  (foreign_stubs (language c) (names stubs))
+  (foreign_archives radamsa)
+)
+
+(data_only_dirs radamsa_c)
+
+(rule
+ (deps (source_tree radamsa_c))
+ (targets libradamsa.a dllradamsa.so)
+ (action 
+ (no-infer
+  (progn
+    (chdir radamsa_c (run make))
+    (copy radamsa_c/libradamsa.a libradamsa.a)
+    (copy radamsa_c/libradamsa.so dllradamsa.so)))))
