@@ -1,4 +1,0 @@
-(library
- (name spin_std)
- (public_name spin.std)
- (libraries base unix lwt lwt.unix logs logs.lwt))

@@ -1,8 +1,0 @@
-(executable
- (name main)
- (public_name spin)
- (libraries spin spin_std cmdliner fmt fmt.tty logs.fmt logs.cli)
- (flags
-  (:standard -open Spin_std)))
-
-(include_subdirs unqualified)

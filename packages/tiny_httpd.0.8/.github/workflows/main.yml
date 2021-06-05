@@ -1,0 +1,20 @@
+name: build
+on: [push, pull_request]
+jobs:
+  run:
+    name: Build
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [macos-latest, ubuntu-latest, windows-latest]
+        ocaml-compiler: [ '4.04.0', '4.11.0' ]
+    steps:
+    - uses: actions/checkout@master
+    - uses: avsm/setup-ocaml@v2
+      with:
+        ocaml-compiler: ${{ matrix.ocaml-compiler }}
+    - run: opam pin -n .
+    - run: opam depext -yt tiny_httpd tiny_httpd_camlzip
+    - run: opam install -t . --deps-only
+    - run: opam exec -- dune build
+    - run: opam exec -- dune runtest

@@ -1,6 +1,0 @@
-(lang dune 2.0)
-
-(name jsonxt)
-(version v1.0.0)
-
-(formatting disabled)

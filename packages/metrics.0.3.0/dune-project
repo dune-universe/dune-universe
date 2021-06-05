@@ -1,0 +1,4 @@
+(lang dune 1.4)
+(name metrics)
+(version v0.3.0)
+(using fmt 1.0)

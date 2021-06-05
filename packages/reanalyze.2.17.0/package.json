@@ -1,0 +1,28 @@
+{
+  "name": "reanalyze",
+  "version": "2.17.0",
+  "private": true,
+  "description": "Analyzers for Dead Code/Types and termination",
+  "license": "MIT",
+  "scripts": {
+    "build": "dune build @check @all -p reanalyze",
+    "clean": "dune clean -p reanalyze",
+    "test": "node ./scripts/run_integration_tests.js",
+    "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
+    "build:examples": "(cd examples/deadcode && npm run clean && npm run build && npm run analyze) & (cd examples/termination && npm run clean && npm run build && npm run analyze)",
+    "dce": "./_build/default/src/Reanalyze.exe -suppress src/nothing -unsuppress doesnotexist -dce-cmt _build",
+    "exception": "./_build/default/src/Reanalyze.exe -exception-cmt _build",
+    "preversion": "npm test",
+    "version": "node scripts/bump_version_module.js && git add -A src/",
+    "postversion": "git push && git push --tags"
+  },
+  "author": "Cristiano Calcagno",
+  "keywords": [
+    "rescript",
+    "tooling"
+  ],
+  "bugs": {
+    "url": "https://github.com/cristianoc/reanalyze/issues"
+  },
+  "homepage": "https://github.com/cristianoc/reanalyze#readme"
+}

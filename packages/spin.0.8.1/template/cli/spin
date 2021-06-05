@@ -1,0 +1,4 @@
+(inherit (official bin))
+
+(name cli)
+(description "Command Line Interface releasable on Opam")
