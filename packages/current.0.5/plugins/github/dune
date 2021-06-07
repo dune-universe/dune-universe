@@ -1,0 +1,32 @@
+(library
+ (public_name current_github)
+ (libraries
+   astring
+   base64
+   cmdliner
+   cohttp
+   cohttp-lwt
+   cohttp-lwt-unix
+   cstruct
+   current
+   current.cache
+   current.term
+   current_git
+   current_web
+   duration
+   ptime
+   fmt
+   logs
+   lwt
+   lwt.unix
+   mirage-crypto
+   mirage-crypto-pk
+   prometheus
+   result
+   rresult
+   uri
+   x509
+   tyxml
+   tyxml.functor
+   yojson)
+ (preprocess (pps ppx_deriving_yojson)))

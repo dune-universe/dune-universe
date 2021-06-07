@@ -1,5 +1,0 @@
-(lang dune 2.0)
-(name current)
-(version v0.4)
-(implicit_transitive_deps false)
-(formatting disabled)
