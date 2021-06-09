@@ -1,0 +1,96 @@
+(library
+ (name testu01_vendor)
+ (public_name testu01.vendor)
+ (preprocess no_preprocessing)
+ (foreign_archives testu01_vendor probdist_vendor mylib_vendor))
+
+(rule
+ (targets
+  libtestu01_vendor.a dlltestu01_vendor.so
+  libprobdist_vendor.a dllprobdist_vendor.so
+  libmylib_vendor.a dllmylib_vendor.so
+
+  addstr.h bbattery.h bitset.h chrono.h config.h fbar.h fcho.h fcong.h fdist.h
+  ffam.h ffsr.h finv.h fknuth.h fmarsa.h fmass.h fmultin.h fnpair.h fres.h
+  fspectral.h fstring.h ftab.h fvaria.h fwalk.h gdefconf.h gdef.h gofs.h gofw.h
+  mystr.h num2.h num.h rijndael-alg-fst.h scatter.h scomp.h sentrop.h sknuth.h
+  smarsa.h smultin.h snpair.h sres.h sspacings.h sspectral.h sstring.h
+  statcoll.h svaria.h swalk.h swrite.h tables.h tu01_sha1.h uautomata.h ubrent.h
+  ucarry.h ucrypto.h ucubic.h udeng.h ufile.h ugfsr.h ugranger.h uinv.h uknuth.h
+  ulcg.h ulec.h umarsa.h umrg.h unif01.h unumrec.h uquad.h usoft.h utaus.h
+  utezuka.h util.h utouzin.h uvaria.h uweyl.h uwu.h uxorshift.h vectorsF2.h
+  wdist.h)
+ (deps TestU01.zip)
+
+ (action
+  (progn
+   (system "unzip *.zip")
+   (chdir TestU01
+    (progn
+     (system ./configure)
+     (system make)))
+   (system "cp TestU01/include/*.h .")
+   (system "cp TestU01/testu01/.libs/libtestu01.a libtestu01_vendor.a")
+   (system "cp TestU01/testu01/.libs/libtestu01.so dlltestu01_vendor.so")
+   (system "cp TestU01/probdist/.libs/libprobdist.a libprobdist_vendor.a")
+   (system "cp TestU01/probdist/.libs/libprobdist.so dllprobdist_vendor.so")
+   (system "cp TestU01/mylib/.libs/libmylib.a libmylib_vendor.a")
+   (system "cp TestU01/mylib/.libs/libmylib.so dllmylib_vendor.so")))
+
+ (enabled_if (<> %{ocaml-config:system} macosx)))
+
+;; Important notes:
+;;
+;; - We use (system ./configure) instead of (run ./configure) because (run ...)
+;;   needs to check the existence of the programs statically, which we cannot
+;;   have since ./configure comes from the previous unzipping.
+;;
+;; - We keep the sources in the official zip file because the timestamps of the
+;;   files are important. The unzipping keeps the original timestamps, while
+;;   letting Dune handle the file would end up in Dune copying them and loosing
+;;   this (precious) information.
+;;
+;; - We specify a lot of *.h files as dependencies, although they are not really
+;;   needed elsewhere in this repository. We just took the list of all *.h files
+;;   that belong to TestU01 and put them here so that Dune knows about them.
+
+(rule
+ (targets
+  libtestu01_vendor.a dlltestu01_vendor.so
+  libprobdist_vendor.a dllprobdist_vendor.so
+  libmylib_vendor.a dllmylib_vendor.so
+
+  addstr.h bbattery.h bitset.h chrono.h config.h fbar.h fcho.h fcong.h fdist.h
+  ffam.h ffsr.h finv.h fknuth.h fmarsa.h fmass.h fmultin.h fnpair.h fres.h
+  fspectral.h fstring.h ftab.h fvaria.h fwalk.h gdefconf.h gdef.h gofs.h gofw.h
+  mystr.h num2.h num.h rijndael-alg-fst.h scatter.h scomp.h sentrop.h sknuth.h
+  smarsa.h smultin.h snpair.h sres.h sspacings.h sspectral.h sstring.h
+  statcoll.h svaria.h swalk.h swrite.h tables.h tu01_sha1.h uautomata.h ubrent.h
+  ucarry.h ucrypto.h ucubic.h udeng.h ufile.h ugfsr.h ugranger.h uinv.h uknuth.h
+  ulcg.h ulec.h umarsa.h umrg.h unif01.h unumrec.h uquad.h usoft.h utaus.h
+  utezuka.h util.h utouzin.h uvaria.h uweyl.h uwu.h uxorshift.h vectorsF2.h
+  wdist.h)
+ (deps TestU01.zip)
+
+ (action
+  (progn
+   (system "unzip *.zip")
+   (chdir TestU01
+    (progn
+     (system ./configure)
+     (system make)))
+   (system "cp TestU01/include/*.h .")
+   (system "cp TestU01/testu01/.libs/libtestu01.a libtestu01_vendor.a")
+   (system "cp TestU01/testu01/.libs/libtestu01.dylib dlltestu01_vendor.so")
+   (system "cp TestU01/probdist/.libs/libprobdist.a libprobdist_vendor.a")
+   (system "cp TestU01/probdist/.libs/libprobdist.dylib dllprobdist_vendor.so")
+   (system "cp TestU01/mylib/.libs/libmylib.a libmylib_vendor.a")
+   (system "cp TestU01/mylib/.libs/libmylib.dylib dllmylib_vendor.so")))
+
+ (enabled_if (= %{ocaml-config:system} macosx)))
+
+;; Important note:
+;;
+;; This other rule is the same as the first one except that, on macOS, the
+;; dynamic libraries end in .dylib and not .so. I wish I knew a better way to do
+;; this, that would factorise the whole rule.

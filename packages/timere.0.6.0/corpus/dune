@@ -1,0 +1,15 @@
+(executables
+   (flags     (-g -w "+a-4-9-29-37-40-42-44-48-50-32"))
+   (names date_times
+          hmss
+          timeres
+          spans
+   )
+   (libraries 
+      containers
+      timedesc
+      timere
+      timere-parse
+      fmt
+   )
+)
