@@ -1,0 +1,7 @@
+(library
+  (name pgocaml_ppx)
+  (public_name pgocaml_ppx)
+  (kind ppx_rewriter)
+  (preprocess (pps ppx_optcomp ppxlib.metaquot))
+  (libraries ppxlib pgocaml)
+  (modules ppx_pgsql))
