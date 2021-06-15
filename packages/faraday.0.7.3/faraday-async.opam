@@ -1,4 +1,4 @@
-version: "0.7.2"
+version: "0.7.3"
 opam-version: "2.0"
 maintainer: "Spiros Eliopoulos <spiros@inhabitedtype.com>"
 authors: [ "Spiros Eliopoulos <spiros@inhabitedtype.com>" ]
@@ -12,9 +12,10 @@ build: [
   ["dune" "runtest" "-p" name] {with-test}
 ]
 depends: [
-  "ocaml" {>= "4.02.0"}
-  "dune" {>= "1.0"}
+  "ocaml" {>= "4.08.0"}
+  "dune" {>= "1.11"}
   "faraday" {>= "0.5.0"}
-  "lwt"
+  "core" {>= "v0.14.0"}
+  "async" {>= "v0.14.0"}
 ]
-synopsis: "Lwt support for Faraday"
+synopsis: "Async support for Faraday"
