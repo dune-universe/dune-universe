@@ -1,0 +1,40 @@
+name: CI
+
+on: [push]
+
+jobs:
+  cancel_previous_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.4.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    runs-on: ${{ matrix.os }}
+    needs: cancel_previous_run
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup OCaml
+      uses: avsm/setup-ocaml@v1.1.3
+    - name: Install depext module
+      run: opam install -y depext
+    - name: Pin locally
+      run: opam pin -y add --no-action .
+      # opam dexpext update fails on macos for some reason
+    - name: Update packages and install locally
+      run: opam depext -u -y -i ffmpeg
+      if: matrix.os != 'macos-latest'
+    - name: Install locally
+      run: opam depext -y -i ffmpeg
+      if: matrix.os == 'macos-latest'
+      # tests fail for some reason on OSX
+      # disabling them b/c they are tested
+      # locally -- Romain (on macos for now..)
+    - name: Run tests locally
+      run: eval $(opam env) && dune runtest
+      if: matrix.os != 'macos-latest'

@@ -1,4 +1,0 @@
-database_driver=mysql
-database_args=localhost:3306:links:12345
-coerce_null_integers=on
-null_integer=-1
