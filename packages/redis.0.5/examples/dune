@@ -1,0 +1,15 @@
+(executable
+ (libraries threads containers redis-lwt redis-sync)
+ (flags :standard -safe-string -warn-error -a+8)
+ (modes native)
+ (name examples))
+
+
+(alias
+  (name runtest)
+  (locks ../test)
+  (package redis-lwt)
+  (action
+    (progn
+      (echo "do a merge sort on redis for n=100")
+      (run ./examples.exe --name bench_merge_sort -n 100))))

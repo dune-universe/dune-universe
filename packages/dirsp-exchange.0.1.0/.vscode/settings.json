@@ -1,0 +1,7 @@
+{
+    "restructuredtext.confPath": "${workspaceFolder}",
+    // The Python extension ... loaded because of the conf.py Sphinx module ... prints Python activations
+    // commands to the Terminal, which interferes with the OCaml extension when it tries to evaluate OCaml
+    // commands in its own Terminal.
+    "python.terminal.activateEnvironment": false,
+}

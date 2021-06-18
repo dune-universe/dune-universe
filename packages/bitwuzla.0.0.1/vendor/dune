@@ -1,0 +1,90 @@
+(data_only_dirs cadical symfpu btor2tools bitwuzla)
+
+(subdir bitwuzla
+ (include_subdirs unqualified)
+ (dirs contrib src)
+ (subdir src
+  (rule
+ (deps ../COPYING)
+ (target bzlaconfig.h)
+ (action
+  (with-stdout-to %{target}
+   (progn
+    (echo "#ifndef BZLACONFIG_H_INCLUDED\n")
+    (echo "#define BZLACONFIG_H_INCLUDED\n")
+    (echo "#define BZLA_VERSION \"%{version:bitwuzla}\"\n")
+    (echo "#define BZLA_GIT_ID \"\"\n")
+    (echo "#define BZLA_LICENSE ")
+    (pipe-stdout
+     (progn
+      (echo "STRINGIFY(\n")
+      (cat %{deps})
+      (echo "\n)\n"))
+     (run gcc -E -P -D"STRINGIFY(...)=# __VA_ARGS__" -))
+    (echo "#endif"))))))
+ (foreign_library
+ (archive_name bitwuzla)
+ (language c)
+ (names :standard \ bzlamain bitwuzlamain pybitwuzla_utils)
+ (include_dirs src)
+ (extra_deps
+   src/bzlaconfig.h
+   ../cadical/src/ccadical.h
+   ../btor2tools/src/btor2parser/btor2parser.h)
+ (flags :standard
+        -I../cadical/src
+        -I../btor2tools/src
+        -DBZLA_HAVE_PTHREADS -DBZLA_HAVE_SIGNALS
+        -DBZLA_USE_CADICAL -DBZLA_USE_SYMFPU -DNBZLALOG -DNDEBUG))
+ (foreign_library
+ (archive_name bitwuzlaxx)
+ (language cxx)
+ (names bzlafp)
+ (include_dirs src)
+ (extra_deps ../.symfpu_tree)
+ (flags :standard
+        -I..
+        -DBZLA_HAVE_PTHREADS -DBZLA_HAVE_SIGNALS
+        -DBZLA_USE_CADICAL -DBZLA_USE_SYMFPU -DNBZLALOG -DNDEBUG)))
+
+(subdir btor2tools
+ (include_subdirs unqualified)
+ (dirs src)
+ (foreign_library
+ (archive_name btor2parser)
+ (language c)
+ (names btor2parser)
+ (include_dirs src)))
+
+(subdir cadical
+ (include_subdirs unqualified)
+ (dirs src)
+ (foreign_library
+ (archive_name cadical)
+ (language cxx)
+ (names :standard \ mobical cadical)
+ (include_dirs src)
+ (flags :standard -DNDEBUG -DNBUILD)
+ (extra_deps ../.cadical_tree)))
+
+(rule
+ (deps (source_tree symfpu) (file bitwuzla/contrib/symfpu_20201114.patch))
+ (target .symfpu_tree)
+ (action
+  (no-infer
+   (progn
+    (with-stdin-from bitwuzla/contrib/symfpu_20201114.patch
+     (run patch -p1 --directory symfpu))
+    (write-file %{target} "")))))
+
+(rule
+ (deps
+  (file cadical/src/reap.cpp)
+  (file quickfix-size_t-doe-not-name-a-type.patch))
+ (target .cadical_tree)
+ (action
+  (no-infer
+   (progn
+    (with-stdin-from quickfix-size_t-doe-not-name-a-type.patch
+     (run patch -p1 --directory cadical))
+    (write-file %{target} "")))))

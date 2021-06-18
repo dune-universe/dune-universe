@@ -1,0 +1,49 @@
+(library
+ (name common_test_integration)
+ (package comby)
+ (modules
+  test_helpers
+  test_cli_helper
+  test_script
+  test_extract_regex
+  test_cli
+  test_cli_list
+  test_statistics
+  test_offset_conversion
+  test_parse_rule
+  test_rewrite_parts
+  test_parse_template
+  test_substitute
+  test_rewrite_rule
+  test_integration
+  test_match_rule
+  test_python_string_literals
+  test_hole_extensions
+  test_match_offsets
+  test_generic
+  test_string_literals
+  test_c_style_comments
+  test_nested_comments
+  test_c
+  test_bash
+  test_go
+  test_c_separators
+  test_pipeline
+  test_user_defined_language
+  test_nested_matches
+  test_regex_holes
+  test_template_constraints
+  test_custom_metasyntax
+  test_rewrite_attributes
+  )
+ (inline_tests)
+ (preprocess (pps ppx_expect ppx_sexp_message ppx_deriving_yojson))
+ (libraries
+  comby
+  cohttp-lwt-unix
+  core
+  camlzip))
+
+(alias
+(name runtest)
+(deps (source_tree example) (source_tree example/src/.ignore-me)))

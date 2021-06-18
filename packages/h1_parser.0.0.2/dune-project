@@ -1,0 +1,67 @@
+(lang dune 2.8)
+
+(name h1)
+(version 0.0.2)
+
+(authors "Anurag Soni")
+
+(maintainers "Anurag Soni <anurag@sonianurag.com>")
+
+(generate_opam_files true)
+
+(documentation "https://anuragsoni.github.io/h1")
+
+(source
+ (github anuragsoni/h1))
+
+(license MIT)
+
+(package
+ (name bytebuffer)
+ (synopsis "Extensible buffers built on top of bigarrays")
+ (depends
+  base_bigstring
+  (alcotest :with-test)
+  (ocaml
+   (>= 4.11.0))))
+
+(package
+ (name h1_parser)
+ (synopsis "Parser for HTTP 1.1")
+ (depends
+  (ocaml
+   (>= 4.11.0))
+  (cohttp
+   (>= 4.0.0))
+  base_bigstring
+  (base :with-test)
+  (alcotest :with-test)
+  (ppx_sexp_conv :with-test)
+  (ppx_compare :with-test)
+  (ppx_here :with-test)
+  (base_quickcheck :with-test)
+  (ppx_assert :with-test)))
+
+(package
+ (name h1_async)
+ (synopsis "Async based http server")
+ (depends
+  (ocaml
+   (>= 4.11.0))
+  (h1
+   (= :version))
+  core
+  async
+  (bytebuffer
+   (= :version))
+  ppx_jane))
+
+(package
+ (name h1)
+ (synopsis "HTTP 1.1 server state machine")
+ (depends
+  (ocaml
+   (>= 4.11.0))
+  (h1_parser
+   (= :version))
+  base_bigstring))

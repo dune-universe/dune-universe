@@ -1,0 +1,21 @@
+(library
+ (public_name bitwuzla.z)
+ (optional)
+ (name bitwuzla_z)
+ (modules bitwuzla_z)
+ (foreign_stubs (language c) (names z_stubs)
+  (include_dirs vendor/bitwuzla/src (lib zarith)))
+ (libraries zarith bitwuzla.c))
+
+(library
+ (public_name bitwuzla.c)
+ (name bitwuzla_c)
+ (modules bitwuzla_c)
+ (foreign_archives
+   vendor/bitwuzla/bitwuzla
+   vendor/bitwuzla/bitwuzlaxx
+   vendor/btor2tools/btor2parser
+   vendor/cadical/cadical)
+ (foreign_stubs (language c) (names c_stubs)
+  (include_dirs vendor/bitwuzla/src/api/c))
+ (c_library_flags :standard -lstdc++ -lgmp -lpthread))

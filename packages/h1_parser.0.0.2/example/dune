@@ -1,0 +1,6 @@
+(executable
+ (name main_async)
+ (modules main_async)
+ (preprocess
+  (pps ppx_jane))
+ (libraries core async h1_async))

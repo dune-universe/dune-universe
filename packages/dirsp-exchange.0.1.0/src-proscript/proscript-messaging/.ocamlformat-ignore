@@ -1,0 +1,6 @@
+# Do not format any of the Prosecco original files, so they can be audited with sha256sum
+ps2pv/ast.ml
+ps2pv/globals.ml
+ps2pv/lexer.ml
+ps2pv/pretty.ml
+ps2pv/parser.mly

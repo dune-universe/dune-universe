@@ -1,0 +1,43 @@
+(library
+ (name redis_test)
+ (modules test)
+ (wrapped false)
+ (flags :standard -safe-string -warn-error -a)
+ (libraries containers unix redis ounit2))
+
+(executable
+ (name test_sync)
+ (modules test_sync)
+ (flags :standard -safe-string)
+ (libraries redis_test redis_sync threads))
+
+(executable
+ (name test_lwt)
+ (modules test_lwt)
+ (flags :standard -safe-string)
+ (libraries redis_test redis_lwt))
+
+(executable
+ (name reg_78)
+ (modules reg_78)
+ (modes native)
+ (flags :standard -safe-string)
+ (libraries redis_lwt))
+
+(alias
+ (name runtest)
+ (locks ../test)
+ (package redis-lwt)
+ (action (run ./test_lwt.exe -ci true -runner sequential)))
+
+(alias
+ (name runtest)
+ (locks ../test)
+ (package redis-lwt)
+ (action (run ./reg_78.exe)))
+
+(alias
+ (name runtest)
+ (locks ../test)
+ (package redis-sync)
+ (action (run ./test_sync.exe -ci true -runner sequential)))

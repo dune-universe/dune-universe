@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "OCaml Debug: ps2ocaml kobeissi_bhargavan_blanchet.ml",
+            "type": "ocamlearlybird",
+            "request": "launch",
+            "program": "${workspaceFolder}/_build/default/src/ps2ocaml.exe",
+            "stopOnEntry": true,
+            "yieldSteps": 4096,
+            "onlyDebugGlob": "<${workspaceFolder}/**/*>",
+            "env": {
+                "CAML_LD_LIBRARY_PATH": "${env:HOME}/.opam/default/lib/stublibs:${env:HOME}/.opam/default/lib/ocaml/stublibs:${env:HOME}/.opam/default/lib/ocaml"
+            },
+            "arguments": [
+                "${workspaceFolder}/src/proscript-messaging/ps/sp.js",
+                "-p",
+                "them:t record_them",
+                "-p",
+                "msg:t record_msg",
+                "-o",
+                "${workspaceFolder}/src/kobeissi_bhargavan_blanchet.ml"
+            ]
+        }
+    ]
+}

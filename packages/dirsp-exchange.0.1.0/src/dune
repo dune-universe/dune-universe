@@ -1,0 +1,35 @@
+; ------------------------------
+; Create dirsp-exchange library
+; Includes the protocols:
+; * KBB2017
+; ------------------------------
+
+(library
+ (name dirsp_exchange)
+ (public_name dirsp-exchange)
+ (modules dirsp_exchange)
+ (libraries dirsp-exchange-kbb2017)
+ (preprocess
+  (pps ppx_deriving_protobuf))
+ (flags
+  (:standard
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 632 |       let initEphemeralKey =
+   ; (warning 26 [unused-var]): unused variable initEphemeralKey.
+   -w
+   -26
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 350 |     let newKeyPair id =
+   ; (warning 27 [unused-var-strict]): unused variable id.
+   -w
+   -27
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 155 |     let fromBitstring a = ProScript.Encoding.hexStringTo12ByteArray a
+   ; (warning 32 [unused-value-declaration]): unused value fromBitstring.
+   -w
+   -32
+   ; workaround for kobeissi_bhargavan_blanchet_intf.ml ...
+   ; 62 | [@@deriving protobuf]
+   ; (warning 39 [unused-rec-flag]): unused rec flag.
+   -w
+   -39)))

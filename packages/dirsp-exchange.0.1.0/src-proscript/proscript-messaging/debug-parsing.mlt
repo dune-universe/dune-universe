@@ -1,0 +1,16 @@
+(* https://dune.readthedocs.io/en/stable/toplevel-integration.html
+
+   Normally 'dune utop' just works, or even 'make utop-noautogen'.
+   This is the fallback script if neither are working!
+
+   Use the following in plain old 'utop' (not 'dune utop'):
+       #use "src-proscript/proscript-messaging/debug-parsing.mlt";;
+ *)
+
+#use_output "dune top --ignore-promoted-rules";;
+#require "menhirLib";;
+#require "pcre";;
+#require "ulex";;
+#require "str";;
+#directory "_build/default/src-proscript";;
+#load "_build/default/src-proscript/dirsp_ps2ocamlcore.cma";;

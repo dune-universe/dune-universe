@@ -1,0 +1,9 @@
+{
+  "syntax": [
+    [ "Hole", [ "Everything" ], [ "Delimited", "$", null ] ],
+    [ "Hole", [ "Alphanum" ], [ "Delimited", "?", null ] ]
+  ],
+  "identifier":
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_",
+  "aliases": []
+}

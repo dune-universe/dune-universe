@@ -1,0 +1,12 @@
+[submodule "vendor/cadical"]
+	path = vendor/cadical
+	url = git@github.com:arminbiere/cadical.git
+[submodule "vendor/symfpu"]
+	path = vendor/symfpu
+	url = https://github.com/martin-cs/symfpu.git
+[submodule "vendor/btor2tools"]
+	path = vendor/btor2tools
+	url = git@github.com:Boolector/btor2tools.git
+[submodule "vendor/bitwuzla"]
+	path = vendor/bitwuzla
+	url = git@github.com:bitwuzla/bitwuzla.git

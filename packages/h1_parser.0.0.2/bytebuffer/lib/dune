@@ -1,0 +1,4 @@
+(library
+ (name bytebuffer)
+ (public_name bytebuffer)
+ (libraries base_bigstring))

@@ -1,0 +1,3 @@
+(library
+ (public_name h1_parser)
+ (libraries base_bigstring cohttp))

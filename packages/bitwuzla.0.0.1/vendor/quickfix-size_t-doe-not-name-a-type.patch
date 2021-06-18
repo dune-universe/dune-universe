@@ -1,0 +1,13 @@
+diff --git a/src/reap.cpp b/src/reap.cpp
+index 93a26b8..5d28246 100644
+--- a/src/reap.cpp
++++ b/src/reap.cpp
+@@ -1,7 +1,7 @@
+-#include "reap.hpp"
+ #include<cstring>
+ #include<cassert>
+ #include <climits>
++#include "reap.hpp"
+ 
+ void Reap::init() {
+   for(auto & bucket : buckets)

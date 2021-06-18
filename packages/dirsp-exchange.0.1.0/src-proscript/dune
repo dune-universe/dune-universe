@@ -1,0 +1,333 @@
+; ----------------
+; Directory Layout
+; ----------------
+;
+; We create multiple libraries in this root directory in violation of Dune's
+; recommendation of one library per directory.
+; We do this to preserve the audit history for the proscript-messaging/ subdirectory,
+; which is in use by these same multiple libraries.
+
+(include_subdirs
+ ; needed since files are spread in multiple subdirectories
+ unqualified)
+
+; --------------------------
+; Create ps2ocaml executable
+; --------------------------
+
+; The camlp4 compilation rule:
+
+(rule
+ ; Use the legacy ocamlbuild tool (from Makefile.dirsp) to produce most of the
+ ; bytecode (.cmo) + native code (.cmx) objects for the ps2ocaml command line.
+ ; The module information (.cmi) is also needed by Dune and other tools like utop.
+ (targets
+  lexer.cmi
+  lexer.cmo
+  lexer.cmx
+  lexer.o
+  lexerror.cmi
+  lexerror.cmo
+  lexerror.cmx
+  lexerror.o
+  parser.cmi
+  parser.cmo
+  parser.cmx
+  parser.o
+  globals.cmi
+  globals.cmo
+  globals.cmx
+  globals.o
+  ast.cmi
+  ast.cmo
+  ast.cmx
+  ast.o)
+ (deps
+  proscript-messaging/ps2pv/_tags
+  proscript-messaging/ps2pv/lexer.ml
+  proscript-messaging/ps2pv/lexerror.ml
+  proscript-messaging/ps2pv/parser.mly
+  proscript-messaging/ps2pv/globals.ml
+  proscript-messaging/ps2pv/ast.ml)
+ (action
+  (no-infer
+   (progn
+    (chdir
+     proscript-messaging/ps2pv
+     (run
+      ocamlbuild
+      -tag
+      debug
+      -j
+      4
+      -use-ocamlfind
+      lexer.cmi
+      lexer.cmo
+      lexer.cmx
+      lexer.o
+      lexerror.cmi
+      lexerror.cmo
+      lexerror.cmx
+      lexerror.o
+      parser.cmi
+      parser.cmo
+      parser.cmx
+      parser.o
+      globals.cmi
+      globals.cmo
+      globals.cmx
+      globals.o
+      ast.cmi
+      ast.cmo
+      ast.cmx
+      ast.o))
+    (copy proscript-messaging/ps2pv/_build/lexer.cmi lexer.cmi)
+    (copy proscript-messaging/ps2pv/_build/lexer.cmo lexer.cmo)
+    (copy proscript-messaging/ps2pv/_build/lexer.cmx lexer.cmx)
+    (copy proscript-messaging/ps2pv/_build/lexer.o lexer.o)
+    (copy proscript-messaging/ps2pv/_build/lexerror.cmi lexerror.cmi)
+    (copy proscript-messaging/ps2pv/_build/lexerror.cmo lexerror.cmo)
+    (copy proscript-messaging/ps2pv/_build/lexerror.cmx lexerror.cmx)
+    (copy proscript-messaging/ps2pv/_build/lexerror.o lexerror.o)
+    (copy proscript-messaging/ps2pv/_build/parser.cmi parser.cmi)
+    (copy proscript-messaging/ps2pv/_build/parser.cmo parser.cmo)
+    (copy proscript-messaging/ps2pv/_build/parser.cmx parser.cmx)
+    (copy proscript-messaging/ps2pv/_build/parser.o parser.o)
+    (copy proscript-messaging/ps2pv/_build/globals.cmi globals.cmi)
+    (copy proscript-messaging/ps2pv/_build/globals.cmo globals.cmo)
+    (copy proscript-messaging/ps2pv/_build/globals.cmx globals.cmx)
+    (copy proscript-messaging/ps2pv/_build/globals.o globals.o)
+    (copy proscript-messaging/ps2pv/_build/ast.cmi ast.cmi)
+    (copy proscript-messaging/ps2pv/_build/ast.cmo ast.cmo)
+    (copy proscript-messaging/ps2pv/_build/ast.cmx ast.cmx)
+    (copy proscript-messaging/ps2pv/_build/ast.o ast.o)))))
+
+(library
+ (name dirsp_ps2ocamlcore)
+ (libraries ulex menhirLib pcre str)
+ ; WARNING
+ ; -------
+ ; We need to create a dependency between ps2ocamlcore and the camlp4
+ ; compilation rule. There isn't a clean way, so in the dirsp-ps2ocaml.opam
+ ; we force '-j 1' so the build is serial.
+ (preprocessor_deps
+  (file lexer.cmi)
+  (file lexer.cmo)
+  (file lexer.cmx)
+  (file lexer.o))
+ (preprocess
+  (pps
+   ; As noted above, we need any ppx.
+   ; ppx_deriving_protobuf is not needed by the translator!
+   ppx_deriving_protobuf))
+ ; < End hack
+ (modules dirsp_ps2ocamlcore ast2ocaml astpredicates)
+ (modes
+  ; We must use bytecode only because:
+  ; 1. Dune creates a .cmxs for native mode. But a shared .cmxs library
+  ;    does not allow duplicated definitions like src-proscript/globals.cmx that we could
+  ;    specify in ocamlopt_flags. (Ex. "Globals" is defined in both src-proscript/globals.cmx
+  ;    and also in ps2ocamlcore.cmxa, so when ocamlopt tries to combine all the libraries
+  ;    it will fail).
+  ;    A .cma archive library and a .cmxa static library do not have that problem
+  ; 2. We have no way to get ocamlopt_flags to include .cmo for bytecode linking and
+  ;    .cmx for native code linking. We simply have to pick one extension. So we
+  ;    must pick .cmo since some platforms have no support for native code.
+  byte)
+ (library_flags
+  (:standard
+   ; library should include the camlp4 compiled objects, in the correct linking order necessary
+   src-proscript/globals.cmo
+   src-proscript/parser.cmo
+   src-proscript/lexerror.cmo
+   src-proscript/lexer.cmo))
+ (flags
+  (:standard
+   -I
+   src-proscript/
+   ; workaround for globals.ml ...
+   ; 56 |     | _ as n -> if (!escape_unicode && n>=127) or n=0x2028 or n=0x2029 then "\\u"^(sprintf "%04x" n) else utf8_char n in
+   ; Error (alert deprecated): Stdlib.or
+   ; Use (||) instead.
+   -alert
+   -deprecated)))
+
+(executable
+ (name dirsp_ps2ocaml)
+ (public_name dirsp-ps2ocaml)
+ (package dirsp-ps2ocaml)
+ (modules dirsp_ps2ocaml)
+ (modes
+  ; since ps2ocamlcore is bytecode only, we have to be as well
+  ; or we get "No implementations provided" error
+  byte)
+ (flags
+  (:standard
+   ; include the code compiled by the camlp4 compilation rule
+   -I
+   src-proscript/
+   ; workaround for globals.ml ...
+   ; 56 |     | _ as n -> if (!escape_unicode && n>=127) or n=0x2028 or n=0x2029 then "\\u"^(sprintf "%04x" n) else utf8_char n in
+   ; Error (alert deprecated): Stdlib.or
+   ; Use (||) instead.
+   -alert
+   -deprecated))
+ (libraries dirsp_ps2ocamlcore))
+
+(tests
+ ; Since ast2ocaml is used in ps2ocaml, which has a special build system, we can't do inline tests.
+ ; We make a test with pure Dune dependencies (no camlp4 source code) simply so we can run tests defined
+ ; in external files.
+ (names ast2ocaml_tests)
+ (package dirsp-ps2ocaml)
+ (libraries alcotest dirsp_ps2ocamlcore pcre menhirLib str)
+ (modules ast2ocaml_tests)
+ (modes
+  ; since dirsp_ps2ocamlcore is bytecode only, we have to be as well
+  ; or we get "No implementations provided" error
+  byte)
+ (flags
+  (:standard
+   ; include the code compiled by the camlp4 compilation rule
+   -I
+   src-proscript/
+   ; workaround for ast.ml ...
+   ; 1 | open Printf
+   ; (warning 33 [unused-open]): unused open Stdlib.Printf.
+   -w
+   -33
+   ; workaround for globals.ml ...
+   ; 56 |     | _ as n -> if (!escape_unicode && n>=127) or n=0x2028 or n=0x2029 then "\\u"^(sprintf "%04x" n) else utf8_char n in
+   ; Error (alert deprecated): Stdlib.or
+   ; Use (||) instead.
+   -alert
+   -deprecated))
+ (action
+  (run %{test} -e)))
+
+(documentation
+ (package dirsp-ps2ocaml)
+ (mld_files ("index")))
+
+; ------------------------------
+; Create dirsp-proscript library
+; ------------------------------
+
+(library
+ (name dirsp_proscript)
+ (public_name dirsp-proscript)
+ (modules dirsp_proscript)
+ (libraries cstruct ppx_deriving_protobuf.runtime))
+
+(library
+ (name dirsp_proscript_mirage)
+ (public_name dirsp-proscript-mirage)
+ (modules dirsp_proscript_mirage)
+ (libraries dirsp-proscript mirage-crypto-rng.lwt mirage-crypto-ec)
+ (preprocess
+  (pps ppx_deriving_protobuf)))
+
+(tests
+ (names
+  dirsp_proscript_mirage_tests_random
+  dirsp_proscript_mirage_tests_dh25519
+  dirsp_proscript_mirage_tests_edh25519
+  dirsp_proscript_mirage_tests_encoding
+  dirsp_proscript_mirage_tests_hash
+  dirsp_proscript_mirage_tests_aes)
+ (package dirsp-proscript-mirage)
+ (libraries alcotest dirsp-proscript-mirage iter str)
+ (modules
+  dirsp_proscript_mirage_tests_random
+  dirsp_proscript_mirage_tests_dh25519
+  dirsp_proscript_mirage_tests_edh25519
+  dirsp_proscript_mirage_tests_encoding
+  dirsp_proscript_mirage_tests_hash
+  dirsp_proscript_mirage_tests_aes
+  dirsp_proscript_mirage_test_helpers
+  dirsp_proscript_mirage_testvectors_x25519
+  dirsp_proscript_mirage_testvectors_hmac_sha256
+  dirsp_proscript_mirage_testvectors_aes_gcm)
+ (action
+  (run %{test} -e)))
+
+; --------------------------------
+; Generate source code for KBB2017
+; --------------------------------
+
+; This is generated here because proscript-messaging/ps/sp.js is here
+
+(rule
+ (target kobeissi_bhargavan_blanchet.ml)
+ (deps
+  (:proscript_input proscript-messaging/ps/sp.js)
+  (:gen %{bin:dirsp-ps2ocaml}))
+ (mode promote)
+ (action
+  ; dirsp-ps2ocaml.exe ps/sp.js -p 'them:t record_them' -p 'msg:t record_msg' -p 'Type_sendoutput.a:t record_sendoutput' -add_apachev2license "2021 Diskuv, Inc." -whitelist_module_for_letin TOPLEVEL -whitelist_module_for_letin HANDLE -disable_strictequals_assertions -o kobeissi_bhargavan_blanchet.ml
+  (progn
+   (run
+    %{gen}
+    %{proscript_input}
+    -p
+    "them:t record_them"
+    -p
+    "msg:t record_msg"
+    -p
+    "Type_sendoutput.a:t record_sendoutput"
+    -add_apachev2license
+    "2021 Diskuv, Inc."
+    -whitelist_module_for_letin
+    "TOPLEVEL"
+    -whitelist_module_for_letin
+    "HANDLE"
+    -disable_strictequals_assertions
+    -o
+    %{target})
+   (run ocamlformat --inplace %{target}))))
+
+; ------------------------------
+; Create KBB2017 library
+; ------------------------------
+
+(library
+ (name dirsp_exchange_kbb2017)
+ (public_name dirsp-exchange-kbb2017)
+ (modules
+  dirsp_exchange_kbb2017
+  kobeissi_bhargavan_blanchet
+  Kobeissi_bhargavan_blanchet_intf
+  Kobeissi_bhargavan_blanchet_shims)
+ (libraries dirsp-proscript)
+ (preprocess
+  (pps ppx_deriving_protobuf))
+ (flags
+  (:standard
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 632 |       let initEphemeralKey =
+   ; (warning 26 [unused-var]): unused variable initEphemeralKey.
+   -w
+   -26
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 350 |     let newKeyPair id =
+   ; (warning 27 [unused-var-strict]): unused variable id.
+   -w
+   -27
+   ; workaround for kobeissi_bhargavan_blanchet.ml ...
+   ; 155 |     let fromBitstring a = ProScript.Encoding.hexStringTo12ByteArray a
+   ; (warning 32 [unused-value-declaration]): unused value fromBitstring.
+   -w
+   -32
+   ; workaround for kobeissi_bhargavan_blanchet_intf.ml ...
+   ; 62 | [@@deriving protobuf]
+   ; (warning 39 [unused-rec-flag]): unused rec flag.
+   -w
+   -39)))
+
+(tests
+ (names dirsp_exchange_kbb2017_tests)
+ (package dirsp-exchange-kbb2017)
+ (libraries alcotest dirsp-proscript-mirage dirsp-exchange-kbb2017)
+ (modules dirsp_exchange_kbb2017_tests)
+ (action
+  (run %{test} -e)))

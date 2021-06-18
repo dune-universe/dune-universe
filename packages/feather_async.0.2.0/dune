@@ -1,0 +1,13 @@
+(executable
+ (name example)
+ (modules example)
+ (libraries base stdio feather feather_async)
+ (preprocess (pps ppx_let ppx_expect ppx_string)))
+
+(library
+ (name feather_async)
+ (public_name feather_async)
+ (inline_tests)
+ (modules feather_async)
+ (libraries base async feather)
+ (preprocess (pps ppx_let ppx_expect ppx_string)))

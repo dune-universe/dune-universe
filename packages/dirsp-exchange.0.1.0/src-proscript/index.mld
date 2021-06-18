@@ -1,0 +1,6 @@
+{0 dirsp-ps2ocaml}
+
+[dirsp-ps2ocaml] is an executable that translates the restricted subset of JavaScript called "ProScript" into OCaml.
+
+Online documentation is available
+at {{:https://diskuv.github.io/dirsp-exchange/src-proscript/proscript-messaging/PS2OCAML.html} Translating ProScript into OCaml}

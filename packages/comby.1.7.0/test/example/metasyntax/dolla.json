@@ -1,0 +1,9 @@
+{
+  "syntax": [
+    [ "Hole", [ "Everything" ], [ "Delimited", "$", null ] ],
+    [ "Regex", "$", "~", "$" ] // order is significant!
+  ],
+  "identifier":
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_",
+  "aliases": []
+}

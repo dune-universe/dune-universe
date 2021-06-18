@@ -1,0 +1,4 @@
+(test
+ (package bytebuffer)
+ (name test_bytebuffer)
+ (libraries bytebuffer alcotest))

@@ -1,0 +1,5 @@
+(library
+ (public_name h1_async)
+ (libraries core async bytebuffer h1)
+ (preprocess
+  (pps ppx_jane)))
