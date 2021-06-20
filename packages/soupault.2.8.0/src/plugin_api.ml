@@ -314,7 +314,7 @@ module Html = struct
     | Some node -> to_general node |> Soup.delete
 
   let create_element name text =
-    let text = CCOpt.get_or ~default:"" text in
+    let text = Option.value ~default:"" text in
     ElementNode (Soup.create_element ~inner_text:text name)
 
   let create_text text = GeneralNode (Soup.create_text text)
@@ -327,7 +327,7 @@ module Html = struct
   let strip_tags node =
     match node with
     | None -> ""
-    | Some node -> to_general node |> Html_utils.get_element_text |> CCOpt.get_or ~default:""
+    | Some node -> to_general node |> Html_utils.get_element_text |> Option.value ~default:""
 
   let clone_content node =
     let* node = node in
@@ -677,8 +677,8 @@ let rec lua_of_toml v =
   | TomlInteger i -> I.Value.int.embed i
   | TomlFloat f -> I.Value.float.embed f
   | TomlString s -> I.Value.string.embed s
-  | TomlArray vs -> (List.map lua_of_toml vs) |> (I.Value.list I.Value.value).embed
-  | TomlTable vs | TomlInlineTable vs | TomlTableArray vs ->
+  | TomlArray vs | TomlTableArray vs -> (List.map lua_of_toml vs) |> (I.Value.list I.Value.value).embed
+  | TomlTable vs | TomlInlineTable vs  ->
     List.map (fun (k, v) -> (k, lua_of_toml v)) vs |>
     I.Value.Table.of_list |> I.Value.table.embed
   | TomlLocalTime s -> I.Value.string.embed s

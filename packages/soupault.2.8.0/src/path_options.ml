@@ -46,20 +46,15 @@ let is_handmade_clean_url settings page_file =
 
 let section_matches ?(include_subsections=false) settings site_dir actual_path conf_path =
    (* Remove trailing slashes *)
-   let conf_path = FilePath.concat site_dir conf_path |> Re.replace (Re.Perl.compile_pat "/+$") ~f:(fun _ -> "") in
+   let conf_path = FilePath.concat site_dir conf_path |> Utils.normalize_path in
    let page_dir = FilePath.dirname actual_path in
    let page_dir =
      if (is_handmade_clean_url settings actual_path)
      then FilePath.dirname page_dir
      else page_dir
    in
-   (* is_subdir doesn't consider a dir its own subdir,
-      so we need to handle the same dir case explicitly.
-
-      Moreover, it returns a false positive if the child matches the beginning but doesn't have a trailing slash,
-      so here's this fixup.
-    *)
-   (include_subsections && (FilePath.is_subdir conf_path page_dir)) || (conf_path = page_dir)
+   (* is_subdir doesn't consider a dir its own subdir, so we need to handle the same dir case explicitly. *)
+   (include_subsections && (FilePath.is_subdir page_dir conf_path))  || (conf_path = page_dir)
 
 let page_included settings options site_dir page_file =
   if (List.exists (regex_matches page_file) options.regexes_exclude) ||
