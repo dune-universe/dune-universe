@@ -1,0 +1,4 @@
+(library
+ (name internal)
+ (public_name mula.internal)
+ )

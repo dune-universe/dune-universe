@@ -1,0 +1,6 @@
+(library
+ (name mula)
+ (public_name mula)
+ (libraries mula.internal)
+ (inline_tests)
+ (preprocess (pps ppx_inline_test)))
