@@ -1,0 +1,48 @@
+#!/usr/bin/env ocaml
+
+#load "unix.cma"
+
+let version = "2.2"
+let subversion = "stable"
+
+let prefix = ref (Filename.concat (Sys.getcwd ()) "_build/install/default/")
+
+let get_stdlib_prefix () = Filename.concat !prefix "share/zelus"
+
+let get_current_date () =
+  let open Unix in
+  let t = gmtime @@ time () in
+  Printf.sprintf
+    "%.2d-%.2d-%d-%d:%d"
+    (1900 + t.tm_year) (1 + t.tm_mon) t.tm_mday 
+    t.tm_hour t.tm_min
+
+let () =
+  let options =
+    [
+      "--prefix", Arg.Set_string prefix, " Installation prefix";
+    ]
+  in
+  Arg.parse
+    options
+    (fun cmd ->
+      Printf.eprintf "Don't know what to do with \"%s\".\n" cmd;
+      exit 1)
+    "Usage: ./configure [OPTIONS]";
+
+  (* Generate configuration module. *)
+  let statements =
+    let dquote s = "\"" ^ s ^ "\"" in
+    [
+      "version", dquote @@ version;
+      "subversion", dquote @@ subversion;
+      "stdlib", dquote @@ get_stdlib_prefix ();
+      "date", dquote @@ get_current_date ();
+    ]
+  in
+  let oc = open_out_bin "zconfig.ml" in
+  List.iter
+    (fun (x, s) -> Printf.fprintf oc {|let %s = %s
+|} x s)
+    statements;
+  close_out oc;

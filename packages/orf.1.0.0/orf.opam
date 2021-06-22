@@ -1,0 +1,19 @@
+opam-version: "2.0"
+authors: "Francois Berenger"
+maintainer: "unixjunkie@sdf.org"
+homepage: "https://github.com/UnixJunkie/orf"
+bug-reports: "https://github.com/UnixJunkie/orf/issues"
+dev-repo: "git+https://github.com/UnixJunkie/orf.git"
+license: "LGPL w/ linking exception"
+build: ["dune" "build" "-p" name "-j" jobs]
+depends: [
+  "batteries"
+  "cpm"
+  "dolog"
+  "dune" {>= "1.10"}
+  "minicli"
+  "ocaml"
+  "parany"
+  "line_oriented"
+]
+synopsis: "Random Forests Classifier or Regressor"

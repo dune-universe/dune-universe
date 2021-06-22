@@ -1,0 +1,13 @@
+
+(library
+ (name orf)
+ (public_name orf)
+ (modules RFC RFR utls)
+ (private_modules utls)
+ (libraries batteries cpm dolog parany line_oriented))
+
+; private executable; not installed
+(executable
+ (name test)
+ (modules test)
+ (libraries orf minicli line_oriented))
