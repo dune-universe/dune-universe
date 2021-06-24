@@ -1,0 +1,4 @@
+(library
+ (name srt_constants)
+ (public_name srt.constants)
+ (libraries ctypes.stubs))

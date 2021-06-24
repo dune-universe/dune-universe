@@ -1,0 +1,77 @@
+(rule
+ (targets gen_stubs.exe)
+ (deps
+  (:build_native ./build_native.sh)
+  (:ml ./gen_stubs.ml))
+ (action
+  (run %{build_native} %{ocaml-config:system} %{ml} %{targets} -I ../stubs -I
+    ../stubs/.srt_stubs.objs/native/ -I ../stubs/.srt_stubs.objs/byte/ -I
+    ../stubs/locked -I ../stubs/locked/.srt_stubs_locked.objs/native/ -I
+    ../stubs/locked/.srt_stubs_locked.objs/byte/
+    %{lib-private:srt.constants:srt_constants.cmxa}
+    %{lib-private:srt.types:srt_types.cmxa}
+    %{lib-private:srt.stubs:srt_stubs.cmxa}
+    %{lib-private:srt.stubs:locked/.srt_stubs_locked.objs/native/srt_stubs_locked.cmx})))
+
+(rule
+ (targets gen_types_c.exe)
+ (deps
+  (:build_native ./build_native.sh)
+  (:ml ./gen_types_c.ml))
+ (action
+  (run %{build_native} %{ocaml-config:system} %{ml} %{targets} -I ../types -I
+    ../types/.srt_types.objs/native/ -I ../types/.srt_types.objs/byte/
+    %{lib-private:srt.constants:srt_constants.cmxa}
+    %{lib-private:srt.types:srt_types.cmxa})))
+
+(rule
+ (targets gen_types.c)
+ (deps
+  (:exec ./exec.sh)
+  (:gen ./gen_types_c.exe))
+ (action
+  (system "./%{exec} %{ocaml-config:system} ./%{gen} %{targets}")))
+
+(rule
+ (targets c_flags)
+ (action
+  (run ../config/discover.exe)))
+
+(rule
+ (targets gen_types_c_target.exe)
+ (deps
+  (:c_flags ./c_flags)
+  (:c_code ./gen_types.c))
+ (action
+  (run %{ocaml-config:c_compiler} -I %{lib:ctypes:} -I
+    %{ocaml-config:standard_library} %{read-lines:c_flags} -o %{targets}
+    %{c_code})))
+
+(rule
+ (targets gen_constants_c.exe)
+ (deps
+  (:build_native ./build_native.sh)
+  (:ml gen_constants_c.ml))
+ (action
+  (run %{build_native} %{ocaml-config:system} %{ml} %{targets} -I
+    ../constants -I ../constants/.srt_constants.objs/native/ -I
+    ../constants/.srt_constants.objs/byte/
+    %{lib-private:srt.constants:srt_constants.cmxa})))
+
+(rule
+ (targets gen_constants.c)
+ (deps
+  (:exec ./exec.sh)
+  (:gen ./gen_constants_c.exe))
+ (action
+  (system "./%{exec} %{ocaml-config:system} ./%{gen} %{targets}")))
+
+(rule
+ (targets gen_constants_c_target.exe)
+ (deps
+  (:c_flags ./c_flags)
+  (:c_code ./gen_constants.c))
+ (action
+  (run %{ocaml-config:c_compiler} -I %{lib:ctypes:} -I
+    %{ocaml-config:standard_library} %{read-lines:c_flags} -o %{targets}
+    %{c_code})))

@@ -1,4 +1,0 @@
-(library
- (name srt_types)
- (public_name srt.types)
- (libraries ctypes.stubs))

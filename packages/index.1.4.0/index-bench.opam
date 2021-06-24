@@ -1,0 +1,35 @@
+version: "1.4.0"
+opam-version: "2.0"
+synopsis: "Index benchmarking suite"
+maintainer: "Clement Pascutto"
+authors: ["Clement Pascutto" "Thomas Gazagnaire" "Ioana Cristescu"]
+license: "MIT"
+homepage: "https://github.com/mirage/index"
+bug-reports: "https://github.com/mirage/index/issues"
+depends: [
+  "ocaml" {>= "4.03.0"}
+  "cmdliner"
+  "dune" {>= "2.7.0"}
+  "fmt"
+  "index" {= version}
+  "metrics"
+  "metrics-unix"
+  "ppx_deriving_yojson"
+  "re"
+  "stdlib-shims"
+  "yojson"
+  "ppx_repr"
+  "tezos-context-hash"
+  "mtime"
+  "logs" {>= "0.7.0"}
+  "optint" {>= "0.1.0" & with-test}
+  "progress" {>= "0.1.1"}
+  "repr" {>= "0.2.1" & with-test}
+  "rusage" {>= "1.0.0" & with-test}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name] {with-test}
+]
+dev-repo: "git+https://github.com/mirage/index.git"

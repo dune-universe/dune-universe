@@ -1,0 +1,19 @@
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
+
+(library
+ (name srt_stubs)
+ (public_name srt.stubs)
+ (libraries srt.types ctypes.stubs posix-socket))
+
+(rule
+ (targets srt_generated_types.ml)
+ (deps
+  (:exec ../generator/exec.sh)
+  (:gen ../generator/gen_types_c_target.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (system "%{exec} %{ocaml-config:system} %{gen}"))))

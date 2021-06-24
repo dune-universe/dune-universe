@@ -1,0 +1,14 @@
+(library
+ (name srt_types)
+ (public_name srt.types)
+ (libraries ctypes.stubs srt.constants))
+
+(rule
+ (targets srt_generated_constants.ml)
+ (deps
+  (:exec ../generator/exec.sh)
+  (:gen ../generator/gen_constants_c_target.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (system "%{exec} %{ocaml-config:system} %{gen}"))))

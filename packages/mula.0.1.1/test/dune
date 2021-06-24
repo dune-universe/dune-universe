@@ -1,0 +1,5 @@
+(library
+ (name mula_tests)
+ (inline_tests)
+ (libraries mula)
+ (preprocess (pps ppx_inline_test)))
