@@ -1,0 +1,263 @@
+name: CICD
+
+env:
+  PROJECT_NAME: unison
+  PROJECT_DESC: "`unison` file synchronizer"
+  PROJECT_EXES: "unison unison-fsmonitor"
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+        - { os: macos-10.15   , ocaml-version: 4.12.0 }
+        - { os: macos-10.15   , ocaml-version: 4.11.2 }
+        - { os: macos-10.15   , ocaml-version: 4.10.2 }
+        - { os: macos-10.15   , ocaml-version: 4.09.1 }
+        - { os: macos-10.15   , ocaml-version: 4.08.1 }
+        - { os: macos-10.15   , ocaml-version: 4.07.1 }
+        - { os: macos-10.15   , ocaml-version: 4.05.0 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.12.0 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.11.2 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.10.2 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.10.0+musl+static+flambda }
+        - { os: ubuntu-18.04  , ocaml-version: 4.09.1 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.08.1 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.07.1 }
+        - { os: ubuntu-18.04  , ocaml-version: 4.05.0 }
+        - { os: windows-latest , ocaml-version: 4.12.0+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.11.2+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.10.2+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.10.2+mingw32c }
+        - { os: windows-latest , ocaml-version: 4.09.1+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.08.1+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.07.1+mingw64c }
+        - { os: windows-latest , ocaml-version: 4.05.0+mingw64c }
+
+    runs-on: ${{ matrix.job.os }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Initialize workflow variables
+      id: vars
+      shell: bash
+      run: |
+        outputs() { for var in "$@" ; do echo steps.vars.outputs.${var}="${!var}"; echo ::set-output name=${var}::${!var}; done; }
+        # normalize to pre-compiled ocaml compiler variants for windows/Cygwin (decreases OCaml install time by 50%)
+        case '${{ matrix.job.ocaml-version }}' in
+          *+*) OCAML_COMPILER='ocaml-variants.${{ matrix.job.ocaml-version }}' ;;
+            *) OCAML_COMPILER='ocaml-base-compiler.${{ matrix.job.ocaml-version }}' ;;
+        esac
+        OCAML_VARIANT='${{ matrix.job.ocaml-version }}'
+        outputs OCAML_VARIANT OCAML_COMPILER
+        # architecture/platform vars
+        EXE_suffix='' ; case '${{ matrix.job.os }}' in windows-*) EXE_suffix=".exe" ;; esac
+        MinGW_ARCH='x86_64' ; case '${{ matrix.job.ocaml-version }}' in *+mingw32*) MinGW_ARCH='i686' ;; *+mingw64*) MinGW_ARCH='x86_64' ;; esac
+        MSVC_ARCH='' ; case '${{ matrix.job.ocaml-version }}' in *+msvc32*) MSVC_ARCH='x86' ;; *+msvc64*) MSVC_ARCH='x64' ;; esac
+        STATIC='false' ; case '${{ matrix.job.ocaml-version }}' in *+musl*) STATIC='true' ;; esac
+        outputs EXE_suffix MinGW_ARCH MSVC_ARCH STATIC
+        case '${{ matrix.job.os }}' in macos-*) echo "MACOSX_DEPLOYMENT_TARGET=10.6" >> $GITHUB_ENV ;; esac
+        # staging environment
+        STAGING_DIR='_staging'
+        outputs STAGING_DIR
+        # parse commit reference info
+        echo GITHUB_REF=${GITHUB_REF}
+        echo GITHUB_SHA=${GITHUB_SHA}
+        REF_NAME="${GITHUB_REF#refs/*/}"
+        unset REF_BRANCH ; case "${GITHUB_REF}" in refs/heads/*) REF_BRANCH="${GITHUB_REF#refs/heads/}" ;; esac;
+        unset REF_TAG ; case "${GITHUB_REF}" in refs/tags/*) REF_TAG="${GITHUB_REF#refs/tags/}" ;; esac;
+        REF_SHAS="${GITHUB_SHA:0:8}"
+        outputs REF_BRANCH REF_NAME REF_SHAS REF_TAG
+        # deployable tag? (ie, leading "vM" or "M"; M == version number)
+        unset DEPLOY ; if [[ $REF_TAG =~ ^[vV]?[0-9].* ]]; then DEPLOY='true' ; fi
+        outputs DEPLOY
+        # package name
+        PKG_suffix='.tar.gz' ; case '${{ matrix.job.os }}' in windows-*) PKG_suffix='.zip' ;; esac;
+        PKG_OS='linux' ; case '${{ matrix.job.os }}' in macos-*) PKG_OS='${{ matrix.job.os }}' ;; windows-*) PKG_OS='windows' ;; esac;
+        PKG_STATIC='' ; case '${{ matrix.job.ocaml-version }}' in *+static*) PKG_STATIC='.static' ;; esac;
+        PKG_ARCH='x86_64' ; case '${{ matrix.job.ocaml-version }}' in *+32bit* | *+mingw32*) PKG_ARCH='i386' ;; esac;
+        PKG_VER="${REF_TAG:-$REF_SHAS}"
+        PKG_BASENAME="${PROJECT_NAME}-${PKG_VER}+ocaml-${OCAML_VARIANT/%+*/}+${PKG_ARCH}.${PKG_OS}${PKG_STATIC}"
+        PKG_NAME="${PKG_BASENAME}${PKG_suffix}"
+        PKG_DIR="${STAGING_DIR}/${PKG_BASENAME}"
+        outputs PKG_VER PKG_BASENAME PKG_DIR PKG_NAME PKG_OS PKG_suffix
+
+    - name: Create/configure any needed build/workspace
+      shell: bash
+      run: |
+        # create build/work space
+        mkdir -p '${{ steps.vars.outputs.STAGING_DIR }}'
+        mkdir -p '${{ steps.vars.outputs.PKG_DIR }}'
+        mkdir -p '${{ steps.vars.outputs.PKG_DIR }}'/bin
+
+    - name: Select Xcode version 11.7 for OCaml 4.05 (macOS)
+      if: runner.os == 'macOS' && matrix.job.ocaml-version == '4.05.0'
+      ## Xcode >= 12 breaks building lablgtk with OCaml 4.05 (a bug fixed in OCaml >= 4.06)
+      run: |
+        sudo xcode-select -s "/Applications/Xcode_11.7.app"
+
+    - name: Enable/config MSVC environment (if/when needed)
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: "${{ steps.vars.outputs.MSVC_ARCH }}"
+      if: contains(matrix.job.ocaml-version, '+msvc')
+
+    - name: Use OCaml ${{ matrix.job.ocaml-version }}
+      uses: ocaml/setup-ocaml@v2
+      with:
+        ocaml-compiler: "${{ steps.vars.outputs.OCAML_COMPILER }}"
+        opam-pin: false
+        opam-depext: false
+      # setup-ocaml can prepare the build environment from unison.opam
+      # We're not relying on that capability here, to make sure the builds
+      # also work without using unison.opam
+
+    ## note: at this point, after OCaml installation, windows platforms will use Cygwin bash as the default
+    ##   ... Cygwin bash cannot handle shell scripts containing CRLF EOLs (which are what is generated by GHA on windows platforms)
+    ##   ... so, "igncr" must be added to SHELLOPTS
+
+    - name: Prepare Cygwin environment (Windows)
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        echo %CYGWIN_ROOT_BIN%>> %GITHUB_PATH%
+        echo %CYGWIN_ROOT_WRAPPERBIN%>> %GITHUB_PATH%
+        echo SHELLOPTS=igncr>> %GITHUB_ENV%
+
+    - name: lablgtk install
+      ## [2020-09] non-working/unavailable for MSVC or musl OCaml variants ; also, non-working for 32bit OCaml variant (see [GH:garrigue/lablgtk#64](https://github.com/garrigue/lablgtk/issues/64))
+      if: ${{ ! ( contains(matrix.job.ocaml-version, '+msvc') || contains(matrix.job.ocaml-version, '+musl') || contains(matrix.job.ocaml-version, '+32bit') ) }}
+      run: opam depext --install --verbose --yes lablgtk
+
+    - shell: bash
+      run: |
+        opam exec -- make src OSTYPE=$OSTYPE UISTYLE=text STATIC=${{ steps.vars.outputs.STATIC }}
+        # stage
+        # * notes: darwin/macos doesn't build `unison-fsmonitor`
+        for file in ${PROJECT_EXES} ; do
+          if [ -f "src/${file}${{ steps.vars.outputs.EXE_suffix }}" ]; then
+            cp "src/${file}${{ steps.vars.outputs.EXE_suffix }}" '${{ steps.vars.outputs.PKG_DIR }}/bin'
+            echo "'src/${file}${{ steps.vars.outputs.EXE_suffix }}' copied to '${{ steps.vars.outputs.PKG_DIR }}/bin'"
+          fi
+        done
+
+    - run: opam exec -- make test
+
+    - if: steps.vars.outputs.STATIC != 'true' ## unable to build static gtk for linux or windows/Cygwin MinGW platforms
+      shell: bash
+      run: |
+        opam exec -- make src OSTYPE=$OSTYPE UISTYLE=gtk2 STATIC=${{ steps.vars.outputs.STATIC }}
+        # stage
+        # * copy only main/first project binary
+        project_exe_stem=${PROJECT_EXES%% *}
+        cp "src/${project_exe_stem}${{ steps.vars.outputs.EXE_suffix }}" "${{ steps.vars.outputs.PKG_DIR }}/bin/${project_exe_stem}-gtk2${{ steps.vars.outputs.EXE_suffix }}"
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: unison-${{ steps.vars.outputs.REF_SHAS }}.ocaml-${{ matrix.job.ocaml-version }}.${{ matrix.job.os }}
+        path: ${{ steps.vars.outputs.PKG_DIR }}/bin/*
+
+    - name: Package
+      # if: steps.vars.outputs.DEPLOY
+      shell: bash
+      run: |
+        ## package artifact(s)
+        PKG_DIR='${{ steps.vars.outputs.PKG_DIR }}'
+        # `strip` binaries
+        strip "${PKG_DIR}/bin"/*'${{ steps.vars.outputs.EXE_suffix }}'
+        # README and LICENSE
+        (shopt -s nullglob; for f in [R]'EADME'{,.*}; do cp $f "${PKG_DIR}"/ ; done)
+        (shopt -s nullglob; for f in [L]'ICENSE'{-*,}{,.*}; do cp $f "${PKG_DIR}"/ ; done)
+        # collect any needed dlls/libraries
+        case '${{ matrix.job.os }}' in
+          windows-*)
+            # dlls
+            dll_refs() { eval "$(opam env)" ; eval "$(ocaml-env cygwin)" ; objdump -x "$@" | grep -Po "\S+[.]dll$" | xargs -I{} 2>/dev/null which "{}" | sort -u ; }
+            filtered_dll_refs() { list="$(dll_refs "$@" | grep -vF "$(cygpath ${WINDIR})" | perl -lape '$_ = qq/@{[sort @F]}/')" ; echo "$list" ; }
+            recursive_filtered_dll_refs() { list="$(filtered_dll_refs "$@")" ; n=0 ; while [ $n -lt $(echo "$list" | wc -l) ]; do n=$(echo "$list" | wc -l) ; list="$(filtered_dll_refs $list)" ; done ; echo "$list" ; }
+            IFS=$'\n' DLL_list=( "$(recursive_filtered_dll_refs "${PKG_DIR}"/bin/*)" )
+            for dll in ${DLL_list[@]} ; do cp "${dll}" "${PKG_DIR}"/bin ; done
+            TARGET_ARCH_ID='x86_64'; case '${{ matrix.job.ocaml-version }}' in *+mingw32*|*+msvc32*) TARGET_ARCH_ID='i686' ;; esac
+            # required gdk support files
+            mkdir "${PKG_DIR}"/lib
+            cp -r /usr/${TARGET_ARCH_ID}-w64-mingw32/sys-root/mingw/lib/gdk-pixbuf-2.0 "${PKG_DIR}"/lib/
+            # update loader.cache to point to local relative installation
+            mv "${PKG_DIR}"/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache "${PKG_DIR}"/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache.original
+            cat "${PKG_DIR}"/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache.original | sed -E 's#([^"]*)(lib/gdk-pixbuf-2.0/2.10.0/loaders/[^"]*[.]dll)#../\2#' > "${PKG_DIR}"/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+            rm "${PKG_DIR}"/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache.original
+            ;;
+        esac
+        # create compressed package
+        pushd "${PKG_DIR}"/ >/dev/null
+        case '${{ matrix.job.os }}' in
+          windows-*) 7z -y a '../${{ steps.vars.outputs.PKG_NAME }}' * | tail -2 ;;
+          *) tar czf '../${{ steps.vars.outputs.PKG_NAME }}' * ;;
+        esac
+        popd >/dev/null
+
+    - name: Publish
+      if: steps.vars.outputs.DEPLOY
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ${{ steps.vars.outputs.STAGING_DIR }}/${{ steps.vars.outputs.PKG_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - if: runner.os == 'macOS'
+      name: "macOS: Build and package Unison.app"
+      id: macapp
+      run: |
+        opam exec -- make src UISTYLE=mac
+
+        # package
+        APP_NAME=Unison-${{ steps.vars.outputs.PKG_VER }}.ocaml-${{ matrix.job.ocaml-version }}.${{ matrix.job.os }}.app.tar.gz
+        echo ::set-output name=APP_NAME::${APP_NAME}
+
+        tar czf ${APP_NAME} -C src/uimac/build/Default Unison.app
+
+    - if: runner.os == 'macOS'
+      name: "macOS: Upload Unison.app artifact"
+      uses: actions/upload-artifact@v2
+      with:
+        name: Unison-${{ steps.vars.outputs.REF_SHAS }}.ocaml-${{ matrix.job.ocaml-version }}.${{ matrix.job.os }}.app
+        path: ${{ steps.macapp.outputs.APP_NAME }}
+
+    - if: runner.os == 'macOS' && steps.vars.outputs.DEPLOY
+      name: "macOS: Publish Unison.app"
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ steps.macapp.outputs.APP_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  opam_dune_build:
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+        - { os: ubuntu-latest  , ocaml-compiler: 4.12.x }
+
+    runs-on: ${{ matrix.job.os }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use OCaml ${{ matrix.job.ocaml-compiler }}
+      uses: ocaml/setup-ocaml@v2
+      with:
+        ocaml-compiler: "${{ matrix.job.ocaml-compiler }}"
+
+    - run: opam install . --deps-only
+
+    - run: opam exec -- dune build && cp -L ./_build/install/default/bin/unison* ./src/
+
+#    - run: opam exec -- make test

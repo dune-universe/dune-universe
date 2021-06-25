@@ -1,0 +1,22 @@
+{
+  "docs": {
+    "Introduction": [
+      "introduction"
+    ],
+    "Getting started": [
+      "install",
+      "run"
+    ],
+    "Concepts": [
+      "ocaml-core",
+      "type-definitions",
+      "module-system",
+      "gadts",
+      "attributes",
+      "configuration"
+    ],
+    "Examples": [
+      "examples"
+    ]
+  }
+}
