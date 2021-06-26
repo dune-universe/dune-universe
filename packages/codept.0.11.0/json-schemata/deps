@@ -1,0 +1,32 @@
+{
+  "$schema" : "http://json-schema.org/schema#",
+  "title" : "codept.0.11.0/deps",
+  "description" : "dependencies and module-to-files mapping of ocaml project",
+  "definitions" : {},
+  "type" : "object",
+  "properties" : {
+    "version" : { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" },  { "type" : "number" } ] },
+    "dependencies" : { "description":"Infered dependencies", "type" : "array",
+      "items" : { "type" : "object",
+        "properties" : {
+          "file" : { "description":"File name", "type" : "string" },
+          "deps" : { "description":"list of dependencies", "type" : "array", "items" : { "type" : "array", "items" : { "type" : "string" } } }
+          }, "required" : [ "file" ] } },
+    "local" : { "description":"Modules provided by local files", "type" : "array",
+      "items" : { "description":"This type keeps track of which implementation file (.ml) and interface file (.mli) provided a toplevel module",
+        "type" : "object",
+        "properties" : {
+          "module" : { "description":"Toplevel module", "type" : "array", "items" : { "type" : "string" } },
+          "ml" : { "description":"Implementation (.ml) file", "type" : "string" },
+          "mli" : { "description":"Interface (.mli) file", "type" : "string" }
+          }, "required" : [ "module" ] } },
+    "lib" : { "description":"Modules provided by libraries", "type" : "array",
+      "items" : { "description":"Library dependency: module path followed by the library path", "type" : "object",
+        "properties" : {
+          "module" : { "type" : "array", "items" : { "type" : "string" } },
+          "lib" : { "type" : "array", "items" : { "type" : "string" } }
+          }, "required" : [ "module", "lib" ] } },
+    "unknown" : { "description":"Unknown modules", "type" : "array", "items" : { "type" : "array", "items" : { "type" : "string" } } }
+    },
+  "required" : [ "version", "dependencies" ]
+  }

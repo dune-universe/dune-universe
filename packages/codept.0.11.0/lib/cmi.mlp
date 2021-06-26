@@ -1,0 +1,103 @@
+(** Extract module level definitions from cmi files *)
+
+let cmi_infos path =
+  Cmi_format.read_cmi path
+
+let rec mmap f l = match l with
+  | [] -> []
+  | a :: q -> f a @ mmap f q
+
+
+open Types
+
+module Ident = struct
+# oo, 4.06
+  let name x= x.Ident.name
+# 4.06, oo
+  let name x = Ident.name x
+#end
+# oo, 4.10
+  let make x = Some x
+  let pure x = x
+# 4.10, oo
+  let make x = x
+  let pure x = Some x
+#end
+end
+
+let bind id mt = let open M2l in
+  Bind {name= Ident.make id; expr = Constraint(Abstract,mt)}
+
+let bind_sig id mt = let open M2l in
+  Bind_sig { name = Ident.make id; expr = Option.( mt >< Abstract)}
+
+let module_declaration module_type id md = bind id @@ module_type md.md_type
+let module_type_declaration module_type id mtd =
+  bind_sig id Option.( mtd.mtd_type >>| module_type)
+
+module P = Path
+module L = Longident
+let rec path_to_lid  = function
+    | P.Pident s -> L.Lident (Ident.name s)
+# oo, 4.08
+    | P.Pdot (p,s,_n) -> L.Ldot (path_to_lid p,s)
+# 4.08, oo
+    | P.Pdot (p,s) -> L.Ldot(path_to_lid p,s)
+#end
+    | P.Papply (f,x) -> L.Lapply (path_to_lid f, path_to_lid x)
+let from_path x = Longident_converter.from_lid (path_to_lid x)
+
+
+module Arg = Module.Arg
+
+let rec signitem =
+  function
+  | Sig_value _ (*val … *)
+  | Sig_type _ (* type … *)
+  | Sig_typext _ (* type 字 += … *)
+  | Sig_class _ (* class … *)
+  | Sig_class_type _ (* class …*) -> []
+# oo, 4.08
+  | Sig_module  (id, md, _) ->
+# 4.08, oo
+  | Sig_module  (id, _, md, _, _) ->
+#end
+    [module_declaration module_type Ident.(pure (name id)) md]
+# oo, 4.08
+  | Sig_modtype (id, mtd) ->
+# 4.08, oo
+  | Sig_modtype (id, mtd, _ ) ->
+#end
+  [module_type_declaration module_type Ident.(pure (name id)) mtd]
+and signature x = mmap signitem x
+and module_type  = function
+  | Mty_ident p -> M2l.Ident (from_path p)
+  | Mty_signature s -> M2l.Sig (List.map Loc.nowhere @@ signature s)
+# oo, 4.10
+  | Mty_functor (id, mto, mt) ->
+    let open M2l in
+    let name = Ident.name id in
+    let arg = Option.( mto >>|module_type >>| fun s ->
+                       {Arg.name = Ident.make name; signature = s} ) in
+    Fun { arg ; body = module_type mt}
+# 4.10, oo
+  | Mty_functor (arg, mt) ->
+    let open M2l in
+    let arg = match arg with
+        | Named(name,mt) ->
+          Some {Arg.name = Option.fmap Ident.name name ; signature = module_type mt }
+        | Unit -> None
+    in
+    Fun { arg; body = module_type mt }
+#end
+# oo, 4.04
+  | Mty_alias p ->
+# 4.04, 4.08
+  | Mty_alias (_,p) ->
+# 4.08, oo
+  | Mty_alias p ->
+#end
+     M2l.Alias (Paths.Expr.concrete @@ from_path p)
+let m2l path =
+  let cm2i = cmi_infos path in
+  List.map Loc.nowhere @@ signature @@ cm2i.cmi_sign

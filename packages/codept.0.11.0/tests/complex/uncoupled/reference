@@ -1,0 +1,17 @@
+[[1m[36mNotification[0m]: [1muncoupled/a.ml:l1.0−6[0m,
+a non-resolvable module, [1mN[0m, has been replaced by an approximation
+[[1m[35mWarning[0m]: [1muncoupled/a.ml:l2.0−6[0m, name resolution for [1mB[0m was ambiguous, due
+to the opening of the external module [1mN[0m, at location [1ml1.0−6[0m. Spurious
+dependencies might be inferred due to this ambiguity.
+{
+"version" : [0, 11, 0],
+"dependencies" :
+  [{ "file" : "uncoupled/a.ml", "deps" : [["N"], ["B"]] },
+  { "file" : "uncoupled/b.ml" },
+  { "file" : "uncoupled/c.ml", "deps" : [["N"]] }],
+"local" :
+  [{ "module" : ["A"], "ml" : "uncoupled/a.ml" },
+  { "module" : ["B"], "ml" : "uncoupled/b.ml" },
+  { "module" : ["C"], "ml" : "uncoupled/c.ml" }],
+"unknown" : [["N"]]
+}

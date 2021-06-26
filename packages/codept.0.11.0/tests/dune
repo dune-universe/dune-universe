@@ -1,0 +1,37 @@
+(executable (name step_by_step) (modules Step_by_step)
+  (libraries bundled)
+)
+
+(executable
+  (name run) (modules Run)
+  (libraries unix codept_lib bundled)
+)
+
+(executable
+  (name serialization) (modules Serialization)
+  (libraries unix codept_lib)
+)
+
+(executable
+  (name integrated) (modules Integrated)
+  (libraries unix codept_lib)
+)
+
+(rule
+ (alias   runtest)
+ (deps run.exe)
+ (action (run %{exe:run.exe} ../../.. ))
+)
+
+(rule
+ (alias   runtest)
+ (deps run.exe)
+ (action (run %{exe:serialization.exe}))
+)
+
+
+(rule
+ (alias   runtest)
+ (deps ../full/codept.exe step_by_step.exe)
+ (action (run %{exe:integrated.exe}))
+)

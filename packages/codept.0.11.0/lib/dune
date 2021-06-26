@@ -1,0 +1,50 @@
+; on old versions of OCaml (<= 4.06), the compilation requires the [unused-open] warning ??!
+(env
+ (release
+  (ocamlc_flags (:standard -w +33 ))
+  (ocamlopt_flags (:standard -w +33 ))
+ )
+)
+
+(ocamllex (modules slex))
+(menhir (modules sparser))
+
+(library
+  (name codept_lib)
+  (wrapped false)
+  (libraries compiler-libs.common)
+  (flags (:standard -w -30))
+)
+
+
+(rule
+  (targets pparse_compat.ml)
+  (deps pparse_compat.mlp ../preprocessor.exe)
+  (action (run ../preprocessor.exe %{targets}))
+)
+
+(rule
+  (targets format_compat.ml)
+  (deps (:gen ../preprocessor.exe) format_compat.mlp )
+  (action (run %{gen} %{targets}))
+)
+
+(rule
+  (targets format_tags.ml)
+  (deps format_tags.mlp (:gen ../preprocessor.exe))
+  (action (run %{gen} %{targets}))
+)
+
+
+(rule
+  (targets ast_converter.ml)
+  (deps ast_converter.mlp (:gen ../preprocessor.exe))
+  (action (run %{gen} %{targets}))
+)
+
+
+(rule
+  (targets cmi.ml)
+  (deps cmi.mlp (:gen ../preprocessor.exe))
+  (action (run %{gen} %{targets}))
+)

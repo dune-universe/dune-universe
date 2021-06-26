@@ -1,0 +1,3 @@
+(lang dune 2.0)
+(name md2mld)
+(version 0.5.1)

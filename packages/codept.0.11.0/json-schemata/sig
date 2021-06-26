@@ -1,0 +1,293 @@
+{
+  "$schema" : "http://json-schema.org/schema#",
+  "title" : "codept/sig/0.11.0",
+  "description" : "module level ocaml signature",
+  "definitions" :
+  {"Module" : {
+   "module'" : {
+   "1" : {
+   "oneOf" :[{"type" : "object",
+     "properties" : {
+       "M" : { "type" : "object",
+         "properties" : {
+           "origin" : {
+             "oneOf" :[{"type" : "object",
+               "properties" : {
+                 "Unit" : { "type" : "array",
+                    "items" :[
+                      { "type" : "array",
+                         "items" :[
+                           {
+                             "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                               "properties" : {
+                                 "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                 }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                  "Special" : { "type" : "string" }
+                                                                                  }, "required" : [ "Special" ]}] },
+                            { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "array", "items" : { "type" : "string" } } ] }
+                 }, "required" : [ "Unit" ]},{"enum" : ["Submodule"]},{"enum" : ["First_class"]},{"enum" : ["Arg"]},{"type" : "object",
+               "properties" : {
+                 "Phantom" : { "type" : "array",
+                    "items" :[ { "type" : "string" },
+                       { "type" : "array",
+                          "items" :[
+                            { "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                                  "Some" : { "type" : "string" }
+                                                                                  }, "required" : [ "Some" ]}] },
+                             { "oneOf" :[{"enum" : ["First_class_module"]},{"enum" : ["External"]}] },
+                             { "type" : "array",
+                                "items" :[
+                                  { "type" : "array",
+                                     "items" :[
+                                       {
+                                         "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                           "properties" : {
+                                             "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                             }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                              "Special" : { "type" : "string" }
+                                                                                              }, "required" : [ "Special" ]}] },
+                                        { "type" : "array", "items" : { "type" : "string" } } ] },
+                                   {
+                                     "oneOf" :[{"enum" : ["Nowhere"]},{"type" : "object",
+                                       "properties" : {
+                                         "Simple" : { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" },  { "type" : "number" } ] }
+                                         }, "required" : [ "Simple" ]},{"type" : "object",
+                                       "properties" : {
+                                         "Multiline" : { "type" : "array",
+                                            "items" :[ { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] },
+                                               { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] } ] }
+                                         }, "required" : [ "Multiline" ]}] } ] } ] } ] }
+                 }, "required" : [ "Phantom" ]},{"enum" : ["Namespace"]}] },
+           "modules" : { "type" : "array", "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } },
+           "module_types" : { "type" : "array",
+             "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+           }, "required" : [  ] }
+       }, "required" : [ "M" ]},{"type" : "object", "properties" : {
+                                                      "Alias" : { "type" : "array", "items" : { "type" : "string" } }
+                                                      }, "required" : [ "Alias" ]},{"type" : "object",
+     "properties" : {
+       "Fun" : { "type" : "array",
+          "items" :[
+            {
+              "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                  "Some" : { "$ref":"#/definitions/Module/module'/2" }
+                                                                  }, "required" : [ "Some" ]}] },  { "$ref":"#/definitions/Module/module'/1" } ] }
+       }, "required" : [ "Fun" ]},{"type" : "object",
+     "properties" : {
+       "Abstract" : { "type" : "array",
+          "items" :[
+            { "type" : "array",
+               "items" :[
+                 {
+                   "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                     "properties" : {
+                       "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                       }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                        "Special" : { "type" : "string" }
+                                                                        }, "required" : [ "Special" ]}] },
+                  { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "number" } ] }
+       }, "required" : [ "Abstract" ]},{"type" : "object", "properties" : {
+                                                             "Link" : { "type" : "array", "items" : { "type" : "string" } }
+                                                             }, "required" : [ "Link" ]},{"type" : "object",
+     "properties" : {
+       "Namespace" : { "type" : "array", "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+       }, "required" : [ "Namespace" ]}]
+   },
+   "2" : { "type" : "array",
+    "items" :[ { "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                     "Some" : { "type" : "string" }
+                                                                     }, "required" : [ "Some" ]}] },
+       {
+         "oneOf" :[{"type" : "object",
+           "properties" : {
+             "M" : { "type" : "object",
+               "properties" : {
+                 "origin" : {
+                   "oneOf" :[{"type" : "object",
+                     "properties" : {
+                       "Unit" : { "type" : "array",
+                          "items" :[
+                            { "type" : "array",
+                               "items" :[
+                                 {
+                                   "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                     "properties" : {
+                                       "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                       }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                        "Special" : { "type" : "string" }
+                                                                                        }, "required" : [ "Special" ]}] },
+                                  { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "array", "items" : { "type" : "string" } } ] }
+                       }, "required" : [ "Unit" ]},{"enum" : ["Submodule"]},{"enum" : ["First_class"]},{"enum" : ["Arg"]},{
+                     "type" : "object",
+                     "properties" : {
+                       "Phantom" : { "type" : "array",
+                          "items" :[ { "type" : "string" },
+                             { "type" : "array",
+                                "items" :[
+                                  {
+                                    "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                                        "Some" : { "type" : "string" }
+                                                                                        }, "required" : [ "Some" ]}] },
+                                   { "oneOf" :[{"enum" : ["First_class_module"]},{"enum" : ["External"]}] },
+                                   { "type" : "array",
+                                      "items" :[
+                                        { "type" : "array",
+                                           "items" :[
+                                             {
+                                               "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                                 "properties" : {
+                                                   "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                                   }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                                    "Special" : { "type" : "string" }
+                                                                                                    }, "required" : [ "Special" ]}] },
+                                              { "type" : "array", "items" : { "type" : "string" } } ] },
+                                         {
+                                           "oneOf" :[{"enum" : ["Nowhere"]},{"type" : "object",
+                                             "properties" : {
+                                               "Simple" : { "type" : "array",
+                                                  "items" :[ { "type" : "number" },  { "type" : "number" },  { "type" : "number" } ] }
+                                               }, "required" : [ "Simple" ]},{"type" : "object",
+                                             "properties" : {
+                                               "Multiline" : { "type" : "array",
+                                                  "items" :[ { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] },
+                                                     { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] } ] }
+                                               }, "required" : [ "Multiline" ]}] } ] } ] } ] }
+                       }, "required" : [ "Phantom" ]},{"enum" : ["Namespace"]}] },
+                 "modules" : { "type" : "array",
+                   "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } },
+                 "module_types" : { "type" : "array",
+                   "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+                 }, "required" : [  ] }
+             }, "required" : [ "M" ]},{"type" : "object", "properties" : {
+                                                            "Alias" : { "type" : "array", "items" : { "type" : "string" } }
+                                                            }, "required" : [ "Alias" ]},{"type" : "object",
+           "properties" : {
+             "Fun" : { "type" : "array",
+                "items" :[
+                  {
+                    "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                        "Some" : { "$ref":"#/definitions/Module/module'/2" }
+                                                                        }, "required" : [ "Some" ]}] },  { "$ref":"#/definitions/Module/module'/1" } ] }
+             }, "required" : [ "Fun" ]},{"type" : "object",
+           "properties" : {
+             "Abstract" : { "type" : "array",
+                "items" :[
+                  { "type" : "array",
+                     "items" :[
+                       {
+                         "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                           "properties" : {
+                             "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                             }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                              "Special" : { "type" : "string" }
+                                                                              }, "required" : [ "Special" ]}] },
+                        { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "number" } ] }
+             }, "required" : [ "Abstract" ]},{"type" : "object", "properties" : {
+                                                                   "Link" : { "type" : "array", "items" : { "type" : "string" } }
+                                                                   }, "required" : [ "Link" ]},{"type" : "object",
+           "properties" : {
+             "Namespace" : { "type" : "array",
+               "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+             }, "required" : [ "Namespace" ]}] } ]
+   } }  } },
+  "type" : "object",
+  "properties" : {
+    "version" : { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" },  { "type" : "number" } ] },
+    "sig" : { "type" : "array",
+      "items" : { "type" : "array",
+         "items" :[ { "type" : "string" },
+            {
+              "oneOf" :[{"type" : "object",
+                "properties" : {
+                  "M" : { "type" : "object",
+                    "properties" : {
+                      "origin" : {
+                        "oneOf" :[{"type" : "object",
+                          "properties" : {
+                            "Unit" : { "type" : "array",
+                               "items" :[
+                                 { "type" : "array",
+                                    "items" :[
+                                      {
+                                        "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                          "properties" : {
+                                            "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                            }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                             "Special" : { "type" : "string" }
+                                                                                             }, "required" : [ "Special" ]}] },
+                                       { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "array", "items" : { "type" : "string" } } ] }
+                            }, "required" : [ "Unit" ]},{"enum" : ["Submodule"]},{"enum" : ["First_class"]},{"enum" : ["Arg"]},{
+                          "type" : "object",
+                          "properties" : {
+                            "Phantom" : { "type" : "array",
+                               "items" :[ { "type" : "string" },
+                                  { "type" : "array",
+                                     "items" :[
+                                       {
+                                         "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                                             "Some" : { "type" : "string" }
+                                                                                             }, "required" : [ "Some" ]}] },
+                                        { "oneOf" :[{"enum" : ["First_class_module"]},{"enum" : ["External"]}] },
+                                        { "type" : "array",
+                                           "items" :[
+                                             { "type" : "array",
+                                                "items" :[
+                                                  {
+                                                    "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                                      "properties" : {
+                                                        "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                                        }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                                         "Special" : { "type" : "string" }
+                                                                                                         }, "required" : [ "Special" ]}] },
+                                                   { "type" : "array", "items" : { "type" : "string" } } ] },
+                                              {
+                                                "oneOf" :[{"enum" : ["Nowhere"]},{"type" : "object",
+                                                  "properties" : {
+                                                    "Simple" : { "type" : "array",
+                                                       "items" :[ { "type" : "number" },  { "type" : "number" },  { "type" : "number" } ] }
+                                                    }, "required" : [ "Simple" ]},{"type" : "object",
+                                                  "properties" : {
+                                                    "Multiline" : { "type" : "array",
+                                                       "items" :[ { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] },
+                                                          { "type" : "array",  "items" :[ { "type" : "number" },  { "type" : "number" } ] } ] }
+                                                    }, "required" : [ "Multiline" ]}] } ] } ] } ] }
+                            }, "required" : [ "Phantom" ]},{"enum" : ["Namespace"]}] },
+                      "modules" : { "type" : "array",
+                        "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } },
+                      "module_types" : { "type" : "array",
+                        "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+                      }, "required" : [  ] }
+                  }, "required" : [ "M" ]},{"type" : "object", "properties" : {
+                                                                 "Alias" : { "type" : "array", "items" : { "type" : "string" } }
+                                                                 }, "required" : [ "Alias" ]},{"type" : "object",
+                "properties" : {
+                  "Fun" : { "type" : "array",
+                     "items" :[
+                       {
+                         "oneOf" :[{"enum" : ["None"]},{"type" : "object", "properties" : {
+                                                                             "Some" : { "$ref":"#/definitions/Module/module'/2" }
+                                                                             }, "required" : [ "Some" ]}] },  { "$ref":"#/definitions/Module/module'/1" } ] }
+                  }, "required" : [ "Fun" ]},{"type" : "object",
+                "properties" : {
+                  "Abstract" : { "type" : "array",
+                     "items" :[
+                       { "type" : "array",
+                          "items" :[
+                            {
+                              "oneOf" :[{"enum" : ["Local"]},{"enum" : ["Unknown"]},{"type" : "object",
+                                "properties" : {
+                                  "Pkg" : { "type" : "array", "items" : { "type" : "string" } }
+                                  }, "required" : [ "Pkg" ]},{"type" : "object", "properties" : {
+                                                                                   "Special" : { "type" : "string" }
+                                                                                   }, "required" : [ "Special" ]}] },
+                             { "type" : "array", "items" : { "type" : "string" } } ] },  { "type" : "number" } ] }
+                  }, "required" : [ "Abstract" ]},{"type" : "object", "properties" : {
+                                                                        "Link" : { "type" : "array", "items" : { "type" : "string" } }
+                                                                        }, "required" : [ "Link" ]},{"type" : "object",
+                "properties" : {
+                  "Namespace" : { "type" : "array",
+                    "items" : { "type" : "array",  "items" :[ { "type" : "string" },  { "$ref":"#/definitions/Module/module'/1" } ] } }
+                  }, "required" : [ "Namespace" ]}] } ] } }
+    },
+  "required" : [ "version", "sig" ]
+  }
