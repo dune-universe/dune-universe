@@ -1,3 +1,0 @@
-(executable
- (name stack)
- (libraries progress progress.unix unix))

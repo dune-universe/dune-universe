@@ -1,8 +1,0 @@
-(library
- (name http_multipart_formdata)
- (public_name http-multipart-formdata)
- (libraries fmt reparse))
-
-(documentation
- (package http-multipart-formdata)
- (mld_files index))
