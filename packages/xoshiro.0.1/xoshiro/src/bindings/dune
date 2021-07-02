@@ -1,0 +1,7 @@
+(library
+ (name xoshiro_bindings)
+ (implements xoshiro)
+ (public_name xoshiro.bindings)
+ (libraries
+  xoshiro.256++.bindings
+  xoshiro.splitmix64.pure))

@@ -1,0 +1,7 @@
+(lang dune 2.8)
+
+(name reparse)
+
+(version v3.0.1)
+
+(using mdx 0.1)

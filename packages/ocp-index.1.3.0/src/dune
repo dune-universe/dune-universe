@@ -1,0 +1,90 @@
+(library
+ (name indexOptions)
+ (modules indexOptions)
+ (libraries cmdliner ocp-index.lib)
+ (preprocess
+  (action
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (flags :standard -w -9))
+
+(rule
+  (targets ocp_index_version.ml)
+  (action (with-stdout-to %{targets} (echo "let version = \"%{version:ocp-index}\""))))
+
+(executable
+ (public_name ocp-index)
+ (package ocp-index)
+ (name indexMain)
+ (modules ocp_index_version indexMain)
+ (preprocess
+  (action
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries unix ocp-index.lib cmdliner indexOptions)
+ (flags :standard -w -9))
+
+(rule
+  (targets ocp_grep_version.ml)
+  (action (with-stdout-to %{targets} (echo "let version = \"%{version:ocp-index}\""))))
+
+(executable
+ (public_name ocp-grep)
+ (package ocp-index)
+ (name grepMain)
+ (modules ocp_grep_version grepMain)
+ (preprocess
+  (action
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries unix ocp-index.lib re re.posix cmdliner)
+ (flags :standard -w -9))
+
+(rule
+  (targets ocp_browser_version.ml)
+  (action (with-stdout-to %{targets} (echo "let version = \"%{version:ocp-browser}\""))))
+
+(executable
+ (public_name ocp-browser)
+ (package ocp-browser)
+ (name browserMain)
+ (modules ocp_browser_version browserMain)
+ (preprocess
+  (action
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries unix re lambda-term ocp-index.lib cmdliner indexOptions)
+ (flags :standard -w -9-3))
+
+(rule
+ (targets ocp-index.1)
+ (deps
+  (:< indexMain.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{<} --help=groff))))
+
+(rule
+ (targets ocp-grep.1)
+ (deps
+  (:< grepMain.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{<} --help=groff))))
+
+(rule
+ (targets ocp-browser.1)
+ (deps
+  (:< browserMain.exe))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{<} --help=groff))))
+
+(install
+ (package ocp-index)
+ (section man)
+ (files ocp-index.1 ocp-grep.1))
+
+(install
+ (package ocp-browser)
+ (section man)
+ (files ocp-browser.1))

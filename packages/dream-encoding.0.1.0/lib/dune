@@ -1,0 +1,6 @@
+(library
+ (name dream_encoding)
+ (public_name dream-encoding)
+ (libraries dream decompress.de decompress.gz)
+ (preprocess
+  (pps lwt_ppx)))

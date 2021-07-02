@@ -1,0 +1,7 @@
+*~
+*#
+/_build
+/*.opam
+/bin
+/lib
+/doc

@@ -1,0 +1,51 @@
+name: Main workflow
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.12.0
+          - 4.11.1
+          - 4.10.2
+          - 4.09.1
+          - 4.08.1
+          - 4.07.1
+          - 4.06.1
+          - 4.05.0
+          - 4.04.2
+          - 4.03.0
+          - 4.02.3
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      OPAMCONFIRMLEVEL: unsafe-yes
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - run: echo | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh) --dev
+      - run: sudo apt-get install bubblewrap
+
+      - run: opam init --compiler ${{ matrix.ocaml-version }}
+
+      - run: opam install --deps-only . --with-test --with-doc
+
+      - run: opam exec -- dune build @install
+
+      - run: opam exec -- dune build @runtest
+
+      - run: opam exec -- dune build @doc
+
+      - run: opam install .
+      - run: opam reinstall -t .
+      - run: opam reinstall -d .

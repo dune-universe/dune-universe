@@ -1,0 +1,3 @@
+(library
+ (name libCrusher)
+ (libraries testu01))

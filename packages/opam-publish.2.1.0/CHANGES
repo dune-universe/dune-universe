@@ -1,0 +1,68 @@
+2.1.0:
+* Added an '--output-patch' option to allow use without a Github account
+* Use the latest opam libraries (2.1.0~rc) with better format-preserving printing
+* Avoid submission of packages without a reachable archive, except if `--force`
+  was set or they are `conf` packages
+
+2.0.3:
+* Drop Github token generation feature, no longer supported by Github API.
+* Use newer `github` library, avoiding warning with deprecated authentication method
+* Allow publication of packages without URL (for conf packages)
+* Added flag `--no-browser` to disable browser popup
+* Fix detection of package names when specifying opam file names on the command-line
+
+2.0.2:
+* git related fixes:
+  * github remote detection
+  * `not a git repository` error
+* New option --packages-directory to indicate where package descriptions are stored
+
+2.0.1:
+* Handle descr, url and files in the rewriting
+* Minor fix
+
+2.0.0:
+* Switch default branch from 2.0.0 to master
+* Minor fix
+
+2.0.0~beta:
+* Now based on opam 2 libs and intended for publications in the 2.0 format
+  (inclusive opam files, etc.)
+* Bumped version number to avoid confusion with opam versions
+* Removed the two-step operation ("prepare" and "publish"). A single invocation
+  does all
+* Removed looking up current opam pinnings and repositories for metadata, which
+  was too complex and counter-intuitive. Now opam files are looked up only in
+  the specified directories or archives
+* Multiple publications without added complexity
+* Simplified command-line: URLs, directories, opam files, package names can be
+  specified directly on the command-line, and repeated for multiple
+  publications
+* Allow providing the auth token directly
+
+0.3.5:
+* Support <pkgname>.opam files
+* Add Travis CI tests
+* Support the simultaneous publication of multiple packages from the same repo
+
+0.3.4:
+* Resolve issue with newer version of github 2.2.0
+* Port to opam-lib 1.3.0
+
+0.3.3:
+* Update for github >= 2.0.0
+
+0.3.2:
+* Add --msg argument to the 'submit' command
+
+0.3.1:
+* Guess the parameters when using github-hosted repos (use github archive from latest annotated tag)
+
+0.3.0:
+* Add two-factor authentication support
+* Now requires github >= 1.0.0, opam-lib = 1.2.2
+* Use the finer lint results from opam-lib
+* Fix a terminal corruption bug from Ctrl-C at password prompt
+* Improve GitHub API error reporting
+* Fix GitHub token file permissions security vulnerability
+* Fix GitHub token errors for revoked or unknowable (since 2015/04/20) tokens

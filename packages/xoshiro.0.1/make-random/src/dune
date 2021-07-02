@@ -1,0 +1,4 @@
+(library
+ (name makeRandom)
+ (public_name make-random)
+ (modules_without_implementation bits sig))

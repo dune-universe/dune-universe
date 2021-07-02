@@ -1,0 +1,11 @@
+_build
+.merlin
+*.install
+examples/**/dune-get
+examples/**/duniverse
+.DS_Store
+.*.swp
+_opam
+*.lock
+.vscode
+_ocaml

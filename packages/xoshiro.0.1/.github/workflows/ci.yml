@@ -1,0 +1,131 @@
+name: CI
+
+on:
+  - pull_request
+  - push
+
+jobs:
+
+  ## ========================= [ OPAM-based CI ] ========================= ##
+
+  opam:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest,  ocaml-version: 4.02.3, no-tests: no-tests }
+          - { os: ubuntu-latest,  ocaml-version: 4.03.0, no-tests: no-tests }
+          - { os: ubuntu-latest,  ocaml-version: 4.04.2, no-tests: no-tests }
+          - { os: ubuntu-latest,  ocaml-version: 4.05.0, no-tests: no-tests }
+          - { os: ubuntu-latest,  ocaml-version: 4.06.1 }
+          - { os: ubuntu-latest,  ocaml-version: 4.07.1 }
+          - { os: ubuntu-latest,  ocaml-version: 4.08.1 }
+          - { os: ubuntu-latest,  ocaml-version: 4.09.1 }
+          - { os: ubuntu-latest,  ocaml-version: 4.10.2 }
+          - { os: ubuntu-latest,  ocaml-version: 4.11.2 }
+          - { os: ubuntu-latest,  ocaml-version: 4.12.0, deploy-doc: deploy-doc }
+          - { os: macos-latest,   ocaml-version: 4.12.0, no-tests: no-tests }
+          - { os: windows-latest, ocaml-version: 4.12.0, no-tests: no-tests }
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - name: Install Dune/OPAM Dependencies
+        run: |
+          opam install dune
+          opam exec -- dune build 2>/dev/null || true
+          opam pin . --no-action
+          for pkg in $(opam pin list --short); do
+            if [ "${{ matrix.no-tests }}" = no-tests ]; then
+              opam depext $pkg --with-doc
+              opam install $pkg --deps-only --with-doc
+            else
+              opam depext $pkg --with-doc --with-test
+              opam install $pkg --deps-only --with-doc --with-test
+            fi
+          done
+          ## FIXME: The caught failure of dune build is here to mitigate #4487.
+        if: runner.os != 'Windows'
+
+      - name: Install Dune/OPAM Dependencies (Windows)
+        run: |
+          opam install dune
+          opam exec -- dune build
+          opam pin . --no-action
+          opam pin list --short | ForEach {
+            if ("${{ matrix.no-tests }}" -eq "no-tests") {
+              opam depext $_ --with-doc
+              opam install $_ --deps-only --with-doc
+            } else {
+              opam depext $_ --with-doc --with-test
+              opam install $_ --deps-only --with-doc --with-test
+            }
+          }
+        if: runner.os == 'Windows'
+
+      - name: Try Building
+        run: opam exec -- make
+
+      - name: Run Tests
+        run: opam exec -- make test
+        if: matrix.no-tests != 'no-tests'
+
+      - name: Try Building Documentation
+        run: opam exec -- make doc
+
+      - name: Try Installing
+        run: opam exec -- make install
+
+      - name: Try Uninstalling
+        run: opam exec -- make uninstall
+
+      - name: Try Cleaning
+        run: opam exec -- make clean
+
+      - name: Generate Documentation for Auto-Deployment
+        run: opam exec -- make doc
+        if: github.event_name == 'push' && matrix.deploy-doc == 'deploy-doc'
+
+      - name: Auto-Deploy Documentation
+        uses: Niols/deploy-odoc-action@main
+        with:
+          GENERATED_DOC_DIR: doc/
+        if: github.event_name == 'push' && matrix.deploy-doc == 'deploy-doc'
+
+  ## ======================== [ Docker-based CI ] ======================== ##
+
+  docker:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        tag:
+          - alpine
+          - archlinux
+          - centos
+          - debian
+          - debian-testing
+          - debian-unstable
+          - fedora
+          - opensuse
+          - oraclelinux
+          - ubuntu
+          - ubuntu-lts
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build . --file .github/workflows/ci.dockerfile --build-arg tag=${{matrix.tag}}

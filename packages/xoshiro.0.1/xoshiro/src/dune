@@ -1,0 +1,6 @@
+(library
+ (name xoshiro)
+ (public_name xoshiro)
+ (virtual_modules xoshiro)
+ (default_implementation xoshiro.bindings)
+ (libraries make-random))

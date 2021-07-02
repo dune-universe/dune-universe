@@ -1,0 +1,4 @@
+(library
+ (name xoshiro256plusplus_pure)
+ (public_name xoshiro.256++.pure)
+ (libraries make-random))
