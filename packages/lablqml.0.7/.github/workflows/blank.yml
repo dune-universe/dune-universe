@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  build:
+    defaults:
+      run:
+        shell: sh
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          #- macos-latest
+          - ubuntu-20.04
+        ocaml-version:
+          #- 4.11.0
+          - 4.10.1
+          #- 4.09.1
+          #- 4.08.1
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.7.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - run: sudo add-apt-repository ppa:beineri/opt-qt-5.15.2-focal
+      - run: sudo apt install qt515quickcontrols2 libgl-dev --no-install-recommends --yes
+      #- run: . ./qt515-env.sh
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-version }}
+          dune-cache: true
+
+      - name: Retrieve date for cache key
+        id: cache-key
+        run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: bash
+
+      - name: Restore opam cache
+        id: opam-cache
+        uses: actions/cache@v2
+        with:
+          path: "~/.opam"
+          # invalidate cache daily, gets built daily using a scheduled job
+          key: ${{ steps.cache-key.outputs.date }}
+
+
+      - run: sh -c '. ./qt515-env.sh && opam pin add conf-qt.dev . --no-action'
+      - run: sh -c '. ./qt515-env.sh && opam depext conf-qt.dev --yes'
+      - run: sh -c '. ./qt515-env.sh && opam install conf-qt.dev --yes'
+
+      - run: sh -c '. ./qt515-env.sh && opam pin add lablqml.dev . --no-action'
+      - run: sh -c '. ./qt515-env.sh && opam depext lablqml.dev --yes --with-doc --with-test'
+      - run: sh -c '. ./qt515-env.sh && opam install . --deps-only --with-doc --with-test'
+
+      - name: Building lablqml
+        run: sh -c '. ./qt515-env.sh && opam exec -- dune build -p lablqml'
+      - name: Testing lablqml
+        run: sh -c '. ./qt515-env.sh && opam exec -- dune runtest -p lablqml'
+
+      - name: Building lablqml demos
+        run: sh -c '. ./qt515-env.sh && opam exec -- dune build -p lablqml,lablqmlDemos'
+      - name: Testing lablqml demos
+        run: sh -c '. ./qt515-env.sh && opam exec -- dune runtest -p lablqml,lablqmlDemos'

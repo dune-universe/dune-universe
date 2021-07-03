@@ -1,0 +1,10 @@
+*~
+*.a
+*.annot
+*.cmi
+*.cmx
+*.cmxa
+*.o
+_build
+.merlin
+lilv.install

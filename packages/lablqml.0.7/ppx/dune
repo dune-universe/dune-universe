@@ -1,0 +1,14 @@
+(library
+ (name ppx_qt_rewriter)
+ (modules Gencpp TypeRepr ppxQtCfg generation2 Ppx_qt)
+ (public_name lablqml.ppx)
+ (libraries unix base stdio ppxlib myparser)
+ (kind ppx_rewriter)
+ (preprocess
+  (pps
+   ppxlib.metaquot
+   ppx_show
+   ppx_string_interpolation
+   ppx_inline_test))
+ (flags
+  (:standard -warn-error -A -w -9-3)))

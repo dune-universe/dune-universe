@@ -1,0 +1,16 @@
+(executable
+ (name amp)
+ (modules amp)
+ (libraries lilv))
+
+(executable
+ (name inspect)
+ (modules inspect)
+ (libraries lilv))
+
+(rule
+ (alias runtest)
+ (deps
+  (:inspect ./inspect.exe))
+ (action
+  (run %{inspect})))

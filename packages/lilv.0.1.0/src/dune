@@ -1,0 +1,11 @@
+(library
+ (name lilv)
+ (public_name lilv)
+ (libraries ctypes ctypes.foreign)
+ (c_library_flags
+  (:include c_library_flags.sexp)))
+
+(rule
+ (targets c_flags.sexp c_library_flags.sexp)
+ (action
+  (run ./config/discover.exe)))

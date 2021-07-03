@@ -1,0 +1,22 @@
+;(rule
+; (with-stdout-to
+;  lablqml.1
+;  (run %{bin:dune} --help=groff)))
+
+;(install
+;  (section man)
+;  (package lablqml)
+;  (files lablqml.1))
+
+
+(include dune.inc)
+
+(rule
+ (alias runtest)
+ (mode promote)
+ (deps
+  (package lablqml))
+ (action
+  (with-stdout-to
+   dune.inc
+   (run bash %{dep:update-jbuild.sh}))))
