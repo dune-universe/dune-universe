@@ -1,0 +1,10 @@
+_build
+*~
+*.install
+*.merlin
+_opam
+.envrc
+\#*
+.#*
+.*.swp
+**/.DS_Store
