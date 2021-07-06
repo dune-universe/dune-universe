@@ -1,0 +1,82 @@
+(test
+ (name test_chan)
+ (libraries domainslib)
+ (modules test_chan)
+ (modes native))
+
+(test
+ (name fib)
+ (modules fib)
+ (modes native))
+
+(test
+ (name fib_par)
+ (libraries domainslib)
+ (modules fib_par)
+ (modes native))
+
+(test
+ (name enumerate_par)
+ (libraries domainslib)
+ (modules enumerate_par)
+ (modes native))
+
+(test
+ (name game_of_life)
+ (modules game_of_life)
+ (modes native))
+
+(test
+ (name game_of_life_multicore)
+ (libraries domainslib)
+ (modules game_of_life_multicore)
+ (modes native))
+
+(test
+ (name LU_decomposition_multicore)
+ (libraries domainslib)
+ (flags (:standard -runtime-variant d))
+ (modules LU_decomposition_multicore)
+ (modes native))
+
+
+(test
+ (name spectralnorm2)
+ (modules spectralnorm2)
+ (modes native))
+
+(test
+  (name sum_par)
+  (libraries domainslib)
+	(modules sum_par)
+	(modes native))
+
+(test
+  (name task_exn)
+  (libraries domainslib)
+	(modules task_exn)
+	(modes native))
+
+(test
+ (name task_throughput)
+ (libraries domainslib)
+ (modules task_throughput)
+ (modes native))
+
+(test
+ (name spectralnorm2_multicore)
+ (libraries domainslib)
+ (modules spectralnorm2_multicore)
+ (modes native))
+
+(test
+ (name summed_area_table)
+ (libraries domainslib)
+ (modules summed_area_table)
+ (modes native))
+
+(test
+ (name prefix_sum)
+ (libraries domainslib unix)
+ (modules prefix_sum)
+ (modes native))

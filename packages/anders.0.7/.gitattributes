@@ -1,0 +1,4 @@
+Makefile linguist-detectable=false
+*.mll linguist-language=OCaml
+*.mly linguist-language=OCaml
+*.ml linguist-language=OCaml

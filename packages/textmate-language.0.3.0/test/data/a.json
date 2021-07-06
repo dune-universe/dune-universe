@@ -1,0 +1,28 @@
+{
+    "name": "a",
+    "scopeName": "source.a",
+    "patterns": [{ "include": "#expr" }],
+    "repository": {
+        "expr": {
+            "patterns": [
+                {
+                    "match": "a",
+                    "name": "keyword.letter"
+                },
+                { "include": "#parens" }
+            ]
+        },
+        "parens": {
+            "begin": "\\(",
+            "end": "\\)",
+            "beginCaptures": {
+                "0": { "name": "punctuation.paren.open" }
+            },
+            "endCaptures": {
+                "0": { "name": "punctuation.paren.close" }
+            },
+            "name": "expression.group",
+            "patterns": [{ "include": "#expr" }]
+        }
+    }
+}

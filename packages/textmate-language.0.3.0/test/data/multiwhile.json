@@ -1,0 +1,40 @@
+{
+    "name": "multiwhile",
+    "scopeName": "source.multiwhile",
+    "patterns": [
+        { "include": "#xlist" },
+        { "include": "#ylist" }
+    ],
+    "repository": {
+        "xlist": {
+            "begin": "X",
+            "while": "x",
+            "beginCaptures": {
+                "0": { "name": "xbegin" }
+            },
+            "whileCaptures": {
+                "0": { "name": "xwhile" }
+            },
+            "name": "xlist",
+            "patterns": [
+                { "include": "#xlist" },
+                { "include": "#ylist" }
+            ]
+        },
+        "ylist": {
+            "begin": "Y",
+            "while": "y",
+            "beginCaptures": {
+                "0": { "name": "ybegin" }
+            },
+            "whileCaptures": {
+                "0": { "name": "ywhile" }
+            },
+            "name": "ylist",
+            "patterns": [
+                { "include": "#xlist" },
+                { "include": "#ylist" }
+            ]
+        }
+    }
+}

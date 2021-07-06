@@ -1,0 +1,14 @@
+{- Run-time Bool Type:
+   - Bool type.
+   - Theorems are in bool_theory module.
+
+   HoTT 1.8 The type of booleans
+
+   Copyright (c) Groupoid Infinity, 2014-2021. -}
+
+module bool where
+
+def bool := Π (α : U), α → α → α
+def true  : bool := λ (α : U) (t f : α), t
+def false : bool := λ (α : U) (t f : α), f
+def ite (α : U) (a b : α) (f : bool) : α := f α a b

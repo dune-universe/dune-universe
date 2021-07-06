@@ -1,0 +1,27 @@
+{
+    "name": "while",
+    "scopeName": "source.while",
+    "patterns": [{ "include": "#while" }],
+    "repository": {
+        "inner": {
+            "patterns": [
+                {
+                    "match": "c",
+                    "name": "keyword.letter"
+                }
+            ]
+        },
+        "while": {
+            "begin": "a",
+            "while": "b",
+            "beginCaptures": {
+                "0": { "name": "begin" }
+            },
+            "whileCaptures": {
+                "0": { "name": "while" }
+            },
+            "name": "expression.group",
+            "patterns": [{ "include": "#inner" }]
+        }
+    }
+}
