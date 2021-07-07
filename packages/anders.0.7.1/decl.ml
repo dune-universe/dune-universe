@@ -27,7 +27,7 @@ let checkDecl ctx d : ctx =
   match d with
   | Annotated (p, a, e) ->
     let set = infer ctx a in let t = eval a ctx in
-    if not (isVSet set) then raise (ExpectedVSet set) else ();
+    if not (isSet set) then raise (ExpectedVSet set) else ();
     let v = name p in check (upGlobal ctx v t (var v)) e t;
     Env.add (name p) (Global, t, getTerm e ctx) ctx
   | NotAnnotated (p, e) ->
@@ -45,11 +45,11 @@ let rec checkLine st : line -> state =
     Printf.printf "Checking: %s\n" name; flush_all ();
     (checkDecl ctx d, checked)
   | Option (opt, value) ->
-    (match opt with
-    | "girard"   -> girard  := getBoolVal opt value
-    | "pre-eval" -> preeval := getBoolVal opt value
-    | _          -> raise (UnknownOption opt));
-    st
+    begin match opt with
+      | "girard"   -> girard  := getBoolVal opt value
+      | "pre-eval" -> preeval := getBoolVal opt value
+      | _          -> raise (UnknownOption opt)
+    end; st
   | Import x -> let path = ext x in if Files.mem path checked then st else checkFile st path
 and checkFile p path =
   let (ctx, checked) = p in

@@ -23,7 +23,7 @@
     done; !res
 }
 
-let lat1   = [^ '\t' ' ' '\r' '\n' '(' ')' ':' '.' ',' '/' '<' '>']
+let lat1   = [^ '\t' ' ' '\r' '\n' '(' ')' '[' ']' ':' '.' ',' '/' '<' '>']
 let beg    = lat1 # '-'
 let bytes2 = ['\192'-'\223']['\128'-'\191']
 let bytes3 = ['\224'-'\239']['\128'-'\191']['\128'-'\191']
@@ -38,12 +38,12 @@ let utf8    = lat1|bytes2|bytes3|bytes4
 let ident   = beg utf8*
 let ws      = ['\t' ' ']
 let colon   = ':'
-let defeq   = ":=" | "\xE2\x89\x94" | "\xE2\x89\x9C" | "\xE2\x89\x9D" (* ≔ | ≜ | ≝ *)
-let arrow   = "->" | "\xE2\x86\x92" (* → *)
-let prod    = "*"  | "\xC3\x97"     (* × *)
-let lam     = "\\" | "\xCE\xBB"     (* λ *)
-let pi      = "\xCE\xA0"            (* Π *)
-let sigma   = "\xCE\xA3"            (* Σ *)
+let defeq   = ":="     | "\xE2\x89\x94" | "\xE2\x89\x9C" | "\xE2\x89\x9D" (* ≔ | ≜ | ≝ *)
+let arrow   = "->"     | "\xE2\x86\x92" (* → *)
+let prod    = "*"      | "\xC3\x97"     (* × *)
+let lam     = "\\"     | "\xCE\xBB"     (* λ *)
+let pi      = "forall" | "\xCE\xA0"     (* Π *)
+let sigma   = "sigma"  | "\xCE\xA3"     (* Σ *)
 let def     = "definition" | "def" | "theorem" | "lemma" | "corollary" | "proposition"
 let axiom   = "axiom"|"postulate"
 
@@ -64,6 +64,7 @@ rule main = parse
 | def             { DEF }              | colon           { COLON }
 | ','             { COMMA }            | '_'             { NO }
 | '('             { LPARENS }          | ')'             { RPARENS }
+| '['             { LSQ }              | ']'             { RSQ }
 | '/'             { DIRSEP }           | ".1"            { FST }
 | ".2"            { SND }              | pi              { PI }
 | sigma           { SIGMA }            | "?"             { HOLE }
@@ -74,5 +75,7 @@ rule main = parse
 | lam             { LAM }              | arrow           { ARROW }
 | prod            { PROD }             | kan as s        { KAN (getLevel s) }
 | "PathP"         { PATHP }            | "transp"        { TRANSP }
-| pre as s        { PRE (getLevel s) } | ident as s      { IDENT s }
+| "Id"            { ID }               | "ref"           { REF }
+| "idJ"           { IDJ }              | pre as s        { PRE (getLevel s) }
+| "Partial"       { PARTIAL }          | ident as s      { IDENT s }
 | eof             { EOF }

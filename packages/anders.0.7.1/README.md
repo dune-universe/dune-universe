@@ -1,6 +1,8 @@
 Anders
 ======
 
+[![OPAM](https://img.shields.io/github/v/release/groupoid/anders.svg)](https://opam.ocaml.org/packages/anders/)
+
 CCHM homotopy system type checker based on Mini-TT for OCaml.
 
 Features
