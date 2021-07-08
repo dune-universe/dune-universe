@@ -1,0 +1,100 @@
+# seed = 1013219512
+#@inputs
+"U":real
+@#
+#@outputs
+"Heat_on":bool
+@#
+#@locals
+"temp_float__Dudt":real
+@#
+#step 1
+17.0000 #outs T 
+#locs 0.0000 
+#step 2
+17.0000 #outs T 
+#locs 0.7495 
+#step 3
+17.7495 #outs T 
+#locs 1.8546 
+#step 4
+19.6041 #outs T 
+#locs 0.3648 
+#step 5
+19.9689 #outs T 
+#locs 0.6658 
+#step 6
+20.6348 #outs F 
+#locs 0.1093 
+#step 7
+20.7440 #outs F 
+#locs -2.0367 
+#step 8
+18.7073 #outs F 
+#locs -4.0988 
+#step 9
+14.6086 #outs T 
+#locs -1.5143 
+#step 10
+13.0942 #outs T 
+#locs 1.7047 
+#step 11
+14.7990 #outs T 
+#locs 0.4567 
+#step 12
+15.2557 #outs T 
+#locs 0.5208 
+#step 13
+15.7765 #outs T 
+#locs 1.8002 
+#step 14
+17.5767 #outs T 
+#locs 0.9888 
+#step 15
+18.5655 #outs T 
+#locs 0.8065 
+#step 16
+19.3720 #outs T 
+#locs 0.7214 
+#step 17
+20.0934 #outs F 
+#locs 1.8262 
+#step 18
+21.9196 #outs F 
+#locs -2.8752 
+#step 19
+19.0444 #outs F 
+#locs -2.4766 
+#step 20
+16.5677 #outs F 
+#locs -2.5972 
+#step 21
+13.9706 #outs T 
+#locs -1.6174 
+#step 22
+12.3532 #outs T 
+#locs 1.0642 
+#step 23
+13.4173 #outs T 
+#locs 1.0250 
+#step 24
+14.4424 #outs T 
+#locs 1.3724 
+#step 25
+15.8148 #outs T 
+#locs 1.8060 
+#step 26
+17.6208 #outs T 
+#locs 0.7024 
+#step 27
+18.3232 #outs T 
+#locs 0.6014 
+#step 28
+18.9246 #outs T 
+#locs 1.2588 
+#step 29
+20.1834 #outs F 
+#locs 0.9527 
+#step 30
+21.1361 #outs F 
+#locs -2.4303 

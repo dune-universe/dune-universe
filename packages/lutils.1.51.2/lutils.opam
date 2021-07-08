@@ -1,0 +1,34 @@
+opam-version: "2.0"
+maintainer: "erwan.jahier@imag.fr"
+authors: "Erwan Jahier"
+license: "CeCILL-2.1"
+homepage:
+  "https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutils/"
+bug-reports:
+  "https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutils/issues"
+doc: "http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lustre-v6"
+
+depends: [
+  "ocaml" {>= "4.02"}
+  "dune"  {>= "1.2"}
+  "base-unix"
+  "ocamlfind"
+  "num"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ]
+install: [make "install"]
+post-messages:
+  "The last version can be obtained via (opam repo add) http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/opam-repository/"
+dev-repo:
+  "git+https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutils.git"
+synopsis: "Tools and libs shared by Verimag/synchronous tools (lustre, lutin, rdbg)"
+description: """
+The lutils library contains various modules shared between tools developped at
+Verimag in the synchronous group. Those modules deal with:
+- generate and parse RIF files
+- generate dro files (to call luciole)
+
+The gnuplot-rif tool vizualise RIF files using gnuplot. 
+"""

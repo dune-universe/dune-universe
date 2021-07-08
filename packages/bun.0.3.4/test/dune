@@ -1,0 +1,32 @@
+(executable
+ (name short)
+ (ocamlopt_flags -afl-instrument)
+ (modules short)
+ (libraries crowbar))
+
+(executable
+ (name long)
+ (ocamlopt_flags -afl-instrument)
+ (modules long)
+ (libraries crowbar))
+
+(rule
+ (alias runtest)
+ (deps ../src/bun.exe short.exe)
+ (locks core)
+ (action
+  (setenv AFL_NO_AFFINITY 1
+  (setenv AFL_SKIP_CPUFREQ 1
+   (progn
+    (with-stdout-to
+      "shorttest-output"
+      (bash "! timeout 30s ../src/bun.exe -vv --max-cores=2 ./short.exe"))
+    (bash "grep 'Crashes found!' shorttest-output || (cat shorttest-output; echo FAILED; exit 1)")
+    (cat shorttest-output))))))
+
+(rule
+ (alias longtest)
+ (deps ../src/bun.exe long.exe)
+ (locks core)
+ (action
+  (run timeout 65s ../src/bun.exe -vv ./long.exe)))

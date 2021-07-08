@@ -1,0 +1,12 @@
+(library
+ (name lutils)
+ (public_name lutils)
+ (libraries unix str num)
+ (wrapped false)
+ (synopsis "A lib shared by Verimag/synchronous tools (lustre-v6, lutin, rdbg).")
+ )
+
+(rule
+ (targets lutilsVersion.ml)
+ (deps generate-version.sh)
+ (action (run ./generate-version.sh)))

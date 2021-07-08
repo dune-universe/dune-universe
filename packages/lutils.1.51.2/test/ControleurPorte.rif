@@ -1,0 +1,321 @@
+# seed = 1013219512
+#@inputs
+"demande_pass":bool
+"demande_porte":bool
+"pass_baissee":bool
+"pass_rentree":bool
+"porte_ouverte":bool
+"porte_fermee":bool
+"en_marche":bool
+"debut_ramassage":bool
+"fin_ramassage":bool
+@#
+#@outputs
+"baisser_pass":bool
+"rentrer_pass":bool
+"ouvrir_porte":bool
+"fermer_porte":bool
+"porte_et_pass_ok":bool
+@#
+#@locals
+@#
+#step 1
+F T F F F F F T F #outs F F F F T 
+#locs 
+#step 2
+F T F F F F F F F #outs F F F F T 
+#locs 
+#step 3
+F T F T T F F F T #outs F F F T T 
+#locs 
+#step 4
+F F F F F T T F F #outs F F F F T 
+#locs 
+#step 5
+T T F F T F F T F #outs T F F F F 
+#locs 
+#step 6
+F F F F F F F F F #outs F F F F F 
+#locs 
+#step 7
+F T T F F F F F T #outs F F T F F 
+#locs 
+#step 8
+T F F T F F F F F #outs F F F F F 
+#locs 
+#step 9
+T F T F T F F F F #outs F F T F F 
+#locs 
+#step 10
+T F F T F T F F F #outs F T F F T 
+#locs 
+#step 11
+T F T F F F T F F #outs F F F F T 
+#locs 
+#step 12
+T F F F F F T F F #outs F F F F T 
+#locs 
+#step 13
+F T F F F F F T F #outs T F F F F 
+#locs 
+#step 14
+T F T F F T F F F #outs F T T F F 
+#locs 
+#step 15
+T T T F F T F F F #outs F T F F F 
+#locs 
+#step 16
+T T F T F F F F T #outs F F F F T 
+#locs 
+#step 17
+T F F F F F T F F #outs F F F F T 
+#locs 
+#step 18
+F T F F F F F T F #outs F F T F F 
+#locs 
+#step 19
+F T T F F T F F T #outs F F F F F 
+#locs 
+#step 20
+F T F F T F F F F #outs F F F F F 
+#locs 
+#step 21
+T F F T F T F F F #outs F F F F T 
+#locs 
+#step 22
+F T F F F F T F F #outs F F F F T 
+#locs 
+#step 23
+F T F T F F F T F #outs F F T F F 
+#locs 
+#step 24
+T F F F F F F F T #outs F F F F T 
+#locs 
+#step 25
+T F T F T F T F F #outs F F T F F 
+#locs 
+#step 26
+T F F T F F F T F #outs T F F F F 
+#locs 
+#step 27
+T F F T T F F F T #outs F F F T F 
+#locs 
+#step 28
+F T F T F F F F F #outs F F F F F 
+#locs 
+#step 29
+T T F F F T F F F #outs F T F F T 
+#locs 
+#step 30
+T T F T T F T F F #outs F F F F T 
+#locs 
+#step 31
+F T F T F F F T F #outs F F T F F 
+#locs 
+#step 32
+F T F T F T F F F #outs F F F F T 
+#locs 
+#step 33
+F T F F F T F F T #outs F F F F T 
+#locs 
+#step 34
+T T T F F T T F F #outs F T T F F 
+#locs 
+#step 35
+F T F T T F F T F #outs T F F F F 
+#locs 
+#step 36
+F T F F F F F F F #outs F F F F F 
+#locs 
+#step 37
+T F T F F T F F F #outs F T T F F 
+#locs 
+#step 38
+F T T F T F F F T #outs F F F T F 
+#locs 
+#step 39
+T T T F F F F F F #outs F F F F F 
+#locs 
+#step 40
+F F F F F T F F F #outs F T F F F 
+#locs 
+#step 41
+T T F T T F F F F #outs F F F F F 
+#locs 
+#step 42
+F T T F F T F F F #outs F T T F F 
+#locs 
+#step 43
+T T T F F T F F F #outs F T F F F 
+#locs 
+#step 44
+F F F F F T F F F #outs F T F F F 
+#locs 
+#step 45
+T T F T F F F F F #outs F F F F T 
+#locs 
+#step 46
+T T F F T F T F F #outs F F F F T 
+#locs 
+#step 47
+T F T F F F F T F #outs T F T F F 
+#locs 
+#step 48
+T T F T T F F F T #outs F F F T F 
+#locs 
+#step 49
+T F F T T F F F F #outs F F F F F 
+#locs 
+#step 50
+F T F F F T F F F #outs F T F F T 
+#locs 
+#step 51
+F F T F T F T F F #outs F F F F T 
+#locs 
+#step 52
+F T F T F F F T F #outs F F T F F 
+#locs 
+#step 53
+F F T F F F F F F #outs F F F F F 
+#locs 
+#step 54
+T F F T T F F F F #outs F F F F F 
+#locs 
+#step 55
+T F F F F F F F T #outs F F F T F 
+#locs 
+#step 56
+F F F F F T F F F #outs F F F F T 
+#locs 
+#step 57
+F T F F F F T F F #outs F F F F T 
+#locs 
+#step 58
+T T F T F F T F F #outs F F F F T 
+#locs 
+#step 59
+F T F T F F T F F #outs F F F F T 
+#locs 
+#step 60
+T T T F F F T F F #outs F F T F F 
+#locs 
+#step 61
+T F F F T F T F F #outs F F F F F 
+#locs 
+#step 62
+T T F T F T F T F #outs T T F F T 
+#locs 
+#step 63
+T T F T F F F F F #outs F F F F T 
+#locs 
+#step 64
+F F F F F F F F T #outs F F F T T 
+#locs 
+#step 65
+T F F F T F T F F #outs F F F F T 
+#locs 
+#step 66
+T T F F F F F T F #outs T F F F F 
+#locs 
+#step 67
+T T F T F F F F T #outs F F F T F 
+#locs 
+#step 68
+F F F F F F F F F #outs F F F F F 
+#locs 
+#step 69
+F T T F F T F F F #outs F T T F F 
+#locs 
+#step 70
+F T T F F T F F F #outs F T F F F 
+#locs 
+#step 71
+F F T F F T F F F #outs F T F F F 
+#locs 
+#step 72
+T T F F T F F F F #outs F F F F F 
+#locs 
+#step 73
+T F F T F F F F F #outs F F F F F 
+#locs 
+#step 74
+T F F T T F F F F #outs F F F F F 
+#locs 
+#step 75
+T T T F F F F F F #outs F F T F F 
+#locs 
+#step 76
+T F T F F F F F F #outs F F F F F 
+#locs 
+#step 77
+T F F F T F F F F #outs F F F F F 
+#locs 
+#step 78
+F F F F F T F F F #outs F T F F F 
+#locs 
+#step 79
+T T F T F F F F F #outs F F F F T 
+#locs 
+#step 80
+F T F F F F T F F #outs F F F F T 
+#locs 
+#step 81
+T F T F T F F T F #outs T F T F F 
+#locs 
+#step 82
+F F F F F T F F F #outs F T F F F 
+#locs 
+#step 83
+F T T F F F F F F #outs F F T F F 
+#locs 
+#step 84
+T T F F F T F F T #outs F T F F F 
+#locs 
+#step 85
+T F F F T F F F F #outs F F F F F 
+#locs 
+#step 86
+F T F T T F F F F #outs F F F F F 
+#locs 
+#step 87
+F T F F F T F F F #outs F T F F T 
+#locs 
+#step 88
+F F F T T F T F F #outs F F F F T 
+#locs 
+#step 89
+T T F T F F T F F #outs F F F F T 
+#locs 
+#step 90
+F T F T F F T F F #outs F F F F T 
+#locs 
+#step 91
+T F F F F F F T F #outs T F F F F 
+#locs 
+#step 92
+T F F F T F F F F #outs F F F F F 
+#locs 
+#step 93
+F T T F F F F F T #outs F F T F F 
+#locs 
+#step 94
+F T F T F F F F F #outs F F F F F 
+#locs 
+#step 95
+T F T F T F F F F #outs F F T F F 
+#locs 
+#step 96
+T T F T F T F F F #outs F T F F T 
+#locs 
+#step 97
+T F T F F F T F F #outs F F F F T 
+#locs 
+#step 98
+T F T F T F T F F #outs F F F F T 
+#locs 
+#step 99
+T F F F F F F T F #outs T F F F F 
+#locs 
+#step 100
+T T F F F F F F T #outs F F F T F 
+#locs 

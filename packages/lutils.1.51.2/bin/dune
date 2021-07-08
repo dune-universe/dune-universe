@@ -1,0 +1,8 @@
+(executable
+ (name gnuplotRifMain)
+  (libraries unix str num lutils)
+)
+(install
+ (section bin)
+ (files (gnuplotRifMain.exe as gnuplot-rif))
+)

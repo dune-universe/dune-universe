@@ -1,0 +1,39 @@
+
+Tools and libs shared by other Verimag/synchronous tools (lustre, lutin, rdbg).
+
++ The lutils ocaml library contains various modules shared between
+  tools. Those modules deal with:
+  - generate and parse RIF files
+  - generate dro files (to call luciole) 
++ =gnuplot-rif= is a stand alone executable that vizualises RIF files
+  using gnuplot.
+
+* Installing =lutils= via opam
+
+#+BEGIN_SRC sh
+$ opam repo add verimag-sync-repo "http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/opam-repository"
+$ opam update
+$ opam install lutils
+#+END_SRC
+
+* Installing the git source
+
+#+BEGIN_SRC sh 
+git clone https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutils/lutils.git
+cd lutils
+opam install dune num
+mv Makefile.version.hide Makefile.version
+make configure
+make
+#+END_SRC
+
+* Tests 
+
+#+BEGIN_SRC sh
+make test
+#+END_SRC
+
+* Docker 
+
+nb: the content of this repo is also available via the
+=jahierwan/verimag-sync-tools= docker image
