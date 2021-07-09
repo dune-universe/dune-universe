@@ -1,0 +1,91 @@
+let between(x, min, max : real) : bool = ((min < x) and (x < max))
+let cross_product(ux,uy,vx,vy:real) : real = (ux*vy-uy*vx)
+
+
+let is_inside(px,py,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y : real) : bool = 
+    let p1p_x = px-p1x in
+    let p1p_y = py-p1y in
+    let p2p_x = px-p2x in
+    let p2p_y = py-p2y in
+    let p3p_x = px-p3x in
+    let p3p_y = py-p3y in
+    let p4p_x = px-p4x in
+    let p4p_y = py-p4y in
+    let p2p1_x = p1x-p2x in
+    let p2p1_y = p1y-p2y in
+    let p1p4_x = p4x-p1x in
+    let p1p4_y = p4y-p1y in
+    let p4p3_x = p3x-p4x in
+    let p4p3_y = p3y-p4y in
+    let p3p2_x = p2x-p3x in
+    let p3p2_y = p2y-p3y in
+        cross_product(p2p1_x, p2p1_y, p2p_x, p2p_y) >= 0.0 and --  p2p1 ^ p2p < 0
+        cross_product(p1p4_x, p1p4_y, p1p_x, p1p_y) >= 0.0 and --  p1p4 ^ p1p < 0
+        cross_product(p4p3_x, p4p3_y, p4p_x, p4p_y) >= 0.0 and --  p4p3 ^ p4p < 0
+        cross_product(p3p2_x, p3p2_y, p3p_x, p3p_y) >= 0.0     --  p3p2 ^ p3p < 0
+
+
+let delta = 5.0
+
+--                 p1                 
+-- (0,ymax)---------------------(xmax,ymax)
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |  p2
+-- | p4                                   |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- (0,0)----------------------------(xmax,0)
+--                 p3
+
+
+-- let cross_product(ux,uy,vx,vy:real) : real = (ux*vy-uy*vx)
+
+-- p est à droite du vecteur p1p2 ssi p1p2 ^ p1p < 0.0
+let adroite(px,py,p1x,p1y,p2x,p2y:real) = 
+    cross_product(p2x-p1x, p2y-p1y, px-p1x, py-p1y) < 0.0
+
+node ivrogne (p1, p2, p3, p4 : real; -- pourcentage
+     x_min, x_max, y_min, y_max : real)
+returns(x, y:  real) =
+
+  let p1x:real = p1*x_max/100. in
+  let p1y:real = y_max in
+  let p2x:real = x_max in
+  let p2y:real = p2*y_max/100. in 
+  let p3x:real = p3*x_max/100.in 
+  let p3y:real = y_min in 
+  let p4x:real = x_min in 
+  let p4y:real = p4*y_max/100. in
+  let cstr() = 
+      is_inside(x,y, p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y) 
+  in
+  
+       { cstr() |> x = 2. and y = 2. }
+   fby
+   loop { 
+     cstr() and   
+     between(x, pre x - delta, pre x + delta) and
+     between(y, pre y - delta, pre y + delta) 
+     |>
+     cstr()
+
+   }
+
+
+node idiot (t:bool) returns(x,y:real) =
+     assert x = 10. in
+     run x,y := ivrogne(20., 20., 20., 20., 0., 100., 0., 200.)
+
+node simu (t:bool) returns(x,y:real) =
+     run x,y := ivrogne(2., 2., 2., 2., 0., 100., 0., 200.) 

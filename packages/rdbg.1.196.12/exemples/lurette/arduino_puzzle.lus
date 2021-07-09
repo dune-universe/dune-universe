@@ -1,0 +1,4 @@
+node arduino_puzzle(red,blue:bool) returns (led1,led2,led3,led4,led5:bool);
+let
+  led1,led2,led3,led4,led5=puzzle1(edge(red), edge(blue));
+tel

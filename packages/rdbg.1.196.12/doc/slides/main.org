@@ -1,0 +1,850 @@
+#+OPTIONS:toc:2
+#+OPTIONS: TeX:t LaTeX:t  
+#+TODO: todo  cont  | done 
+
+# XXX l'option d:t empeche d'avoir 2 colonnes !!!!!
+#+OPTIONS: H:3 num:t toc:t \n:nil  ::t |:t ^:t -:t f:t *:t skip:t  tags:not-in-toc
+# INFOJS_OPT: toc:t ltoc:t mouse:underline
+#+INFOJS_OPT:  buttons:nil  toc:    sdepth:3  
+
+#+INFOJS_OPT: path:org-info.js
+
+#+LINK_UP: http://orgmode.org/worg/org-tutorials/org-beamer/tutorial.html
+#+LINK_HOME:http://www-verimag.imag.fr/
+#+STYLE: <link rel="stylesheet" type="text/css" href="slides.css" />
+
+### http://orgmode.org/worg/org-tutorials/org-beamer/tutorial.html
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [nowasysym]
+#+BEAMER_FRAME_LEVEL: 2
+#+LATEX_HEADER: 
+
+
+#+BEAMER_HEADER_EXTRA: \usefonttheme{structurebold}
+
+#+LANGUAGE: en
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col)  %7BEAMER_extra(Extra)
+#+LATEX_HEADER: \input{mybeamer}
+#+LATEX_HEADER: % \usepackage{underscore}
+#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}\frametitle{Plan}\setcounter{tocdepth}{3}\tableofcontents[currentsection]\end{frame}}
+#+LATEX_HEADER: \hypersetup{pdfcreator=Erwan Jahier,pdfnewwindow=true}
+#+OPTIONS: LaTeX:dvipng
+
+#+AUTHOR: \href{grille.pdf}{rdbg: design choices}
+#+TITLE: \href{main.pdf}{rdbg: a Reactive Program debugger}
+#+BEAMER_HEADER_EXTRA: \author[\href{grille.pdf}{rdbg}]{\href{grille.pdf}{Erwan Jahier (Verimag, Grenoble, France)}}
+#+BEAMER_HEADER_EXTRA: \title[\href{main.pdf}{rdbg: design choices}]{\href{main.pdf}{rdbg: design choices}}
+# LATEX_HEADER: \institute{Verimag/CNRS}
+# \fbox{\begin{minipage}{0.5\textwidth}
+# \fcolorbox{couleur cadre}{couleur fond}{texte}       
+#    \end{minipage}}
+ 
+
+* rdbg : a programmable debugger for reactive programs
+
+** =rdbg= is based on 3 orthogonal ideas
+#+begin_latex
+\input{3d}
+#+end_latex 
+
+** Debugging Reactive Programs (dimension 1)
+
+- Reactive systems -- continuously interact with their environment
+  - We need a lot of inputs 
+  - The feedback  loop makes it  difficult to provide  realistic inputs
+    offline \pause
+  - Need to program reactive programs environments   \pause
+
+- Testing Reactive Programs 
+  - *Lurette*:  the tool  that performs all  the red  tape (plumbering)
+      between the SUT, its env, and the oracles
+  - *Lutin*: a language to program non-deterministic reactive systems  \pause
+    
+  
+- The idea was to reuse the  Lurette infrastructure  \pause
+  - to provide inputs    \pause
+  - When a bug is found during testing, everything is ready for debug   \pause
+  - Oracles sometimes need to be debugged
+
+** =rdbg=: a Programmable debugger  (dimension 2)
+
+- *Why* programmable?
+  - because debugger users are programmers (always) 
+  - ``tailorisation'' \pause
+  - Moreover it's not hard to do!
+
+\pause
+
+*Claim: Given*
+
+  1. a *host language* (with  good libs and REPL) \pause
+  2. a *pre-defined instrumentation* of the  debuggee process, 
+\pause
+  it's easy to build  a  *extensible*  debugger on top of  a *tiny* API 
+   \pause \rightarrow *separation of concerns*
+  
+** Coroutine via Continuations (dimension 3)
+
+   
+*** Coroutine between Debugger - debuggee             :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+#+begin_latex
+\input{coroutine}
+#+end_latex 
+
+*** coroutine                                  :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.6
+    :END:
+- Usually implemented  via 2 processes communicating via 
+  - signals/ptrace (gdb)
+  - pipes or sockets (camldebug, jdwp, ...)
+
+- pb : context switches cost \pause
+
+- using *continuations* : only one process
+
+
+** 4 levels of Stakeholders
+
+- Level 1: End-users  can *use* existing commands  \pause
+- Level 2: Advanced  users  can  *program* debugging  commands \pause
+- Level 3: Compiler    experts    *provide*    the    runtime
+  instrumentation (a/k.a., rdbg plugins) \pause
+- Level 4: The framework designer (bb) 
+
+#+BEGIN_LaTeX
+\end{frame}
+\begin{frame}
+\frametitle{Plan}
+\tableofcontents
+#+END_LaTeX
+
+
+* A motivating demo (Level 1)
+** demo 
+
+#+BEGIN_SRC sh
+cd demo/heater
+make clean ; ls
+cat Makefile
+make sut
+make env
+make lurette
+make rdbg
+n 
+ni 10
+b 
+bi 6
+s si
+g 23
+cg 
+cgf
+cd demo/lutin-tuto
+n n n n s
+#+END_SRC
+
+
+
+
+* Only a tiny API is necessary (Level 2)
+** The =rdbg= API 
+
+The whole user API lies in the definition of =rdbg= event (=Event.t=) \pause
+
+- Source level info
+ -  node/function name
+ -  language (e.g., "lutin" or "lustre")
+ -  input variables (names and types)
+ -  input variables 
+ -  lazily: file names, line numbers, call stack  \pause
+
+- Runtime info 
+ -  Event number
+ -  Step number;
+ -  Execution depth
+ -  Data state 
+ -  Event kind  (Call, Exit, Internal) 
+\pause
+
+- Navigation 
+ - Go to the next event ;  \pause
+ - Terminate 
+
+\pause
+ =run  : session_args -> Event.t= \pause \hfill and that's all! \hfill  ~
+
+** The =rdbg= =ocaml= API 
+  
+#+BEGIN_SRC tuareg
+type kind = Ltop | Call | Exit | MicroStep of string 
+
+type t = { 
+  name : string; (* node name *)
+  lang : string; (* e.g., "lutin" or "lustre" *)
+  inputs  : var list;  
+  outputs : var list;  
+  sinfo : (unit -> src_info) option;  
+(* Runtime info *)
+  nb    : int;  
+  step  : int; 
+  depth : int; 
+  data  : Data.subst list;   
+  kind  : kind; (* Call, Exit, MicroStep *) 
+(* Navigation *)
+  next  : unit -> t;  
+  terminate: unit -> unit }  
+#+END_SRC 
+
+ =run  : args -> Event.t=  \hfill  that's all!  \hfill 
+
+** What can be done with this small kernel
+
+- test/debug/monitor within the same framework
+- Move forward and  Backwards
+- *Conditional breakpoints*
+- =gdb= like Breakpoints
+- Debugger Customisation
+  - *Adding hooks*
+  - *custom traces*
+  - *custom commands*
+- Profiling, *monitoring*
+- _Opening an emacs at the current line
+- _Computing CFG_ (300 loc)
+- Experimenting coverage criterion 
+- \ldots
+** Step forward 
+
+#+BEGIN_SRC tuareg
+let (next:Event.t -> Event.t)= fun e -> e.next ()
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let (next:Event.t -> Event.t)= fun e -> print_event e; e.next ()
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let rec (nexti:Event.t -> int -> Event.t)= fun e cpt ->
+    if cpt > 0 then nexti (next e) (cpt-1) else e
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let rec (goto_i:Event.t -> int -> Event.t)= fun e i -> 
+    if e.nb < i then goto_i (next e) i else e
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let rec (goto_s:Event.t -> int -> Event.t)= fun e i -> 
+    if e.step < i then goto_s (next e) i else e
+#+END_SRC
+
+#+ATTR_LaTeX: width=1cm placement=[h!]
+[[./demonstration.jpg]]
+[[./demo/demo_heater.ml::50][Demo]]
+
+** Conditional breakpoints
+#+BEGIN_SRC tuareg
+let rec (next_cond:Event.t -> (Event.t -> bool) -> Event.t) =
+  fun e cond ->  '\pause'
+    let ne = next e in  '\pause'
+      if cond ne then ne '\pause'
+      else next_cond ne cond
+#+END_SRC
+
+ex : 
+ - spot the time when an invariant is violated \pause
+ - implement the step (s)  command seen during the motivating demo
+
+#+BEGIN_SRC tuareg
+ let s e = next_cond e (fun ne -> ne.kind=Exit && ne.name = e.name
+                                               && ne.depth = e.depth)
+#+END_SRC
+
+#+ATTR_LaTeX: width=1cm placement=[h!]
+[[./demonstration.jpg]]
+[[./demo/demo_heater.ml::60][Demo]]
+ 
+** Moving backwards
+#+BEGIN_SRC tinytuareg 
+let rev_cond e (p:Event.t->bool) =
+#+END_SRC  
+
+#+begin_latex
+\vspace{-1cm}
+\input{time-travel}
+#+end_latex 
+\pause
+\pause
+\pause
+\pause
+\pause
+\pause
+\pause
+\pause
+\pause
+
+#+BEGIN_SRC tinytuareg
+let (rev_cond : Event.t -> (Event.t -> bool) -> Event.t) = fun e p -> 
+  let rec aux2 e i = (* search if there exist an event e2 in [e.nb;i[ s.t. p e2 
+      otherwise, recursive search into [e.nb-check_rate; e.nb[  *) 
+    assert (e.nb<i);
+    let e = if p e then e else next_cond e (fun e -> p e || e.nb = i) in
+      if p e then aux3 e e i (* search for a more recent event satisfying p *) else (* e.nb=i *)
+        let x = (e.nb / !ckpt_rate) -1 in
+        if x < 0 then find_ckpt 0 else aux2 (find_ckpt x) ((x+1) * !ckpt_rate -1)
+  and aux3 e e_good i = (* search if there exist an event e in ]e_good.n;i[ s.t. p e *)
+    if e.nb = i then e_good else 
+        let e = next_cond e (fun e -> p e || e.nb = i) in
+        let e_good = if p e then e else e_good in
+          aux3 e e_good i
+  in
+    if e.nb = 1 then failwith "Cannot move backwards from the first event.\n" else
+      let x = ((e.nb - 1)/ !ckpt_rate) in
+      let last_e = find_ckpt x in
+      if last_e.nb = e.nb-1 then aux2 (find_ckpt (x-1)) (e.nb-1) else aux2 last_e (e.nb-1)
+(* move backwards until a breakpoint is reached *)
+let (rev : Event.t -> Event.t) = fun e -> 
+  let stop e = List.exists (break_matches e) !breakpoints in rev_cond e stop
+#+END_SRC  
+
+** Adding hooks to =next=
+
+#+BEGIN_SRC tuareg
+let (hooks: (string * (Event.t -> unit)) list ref) = 
+  ref [("print_event",print_event)] 
+'\pause'
+let rec (next : Event.t -> Event.t) =
+  fun e -> 
+    let ne = e.next () in
+       List.iter (fun (_,f) -> f ne) !hooks;
+       ne
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let (add_hooks: string * (Event.t -> unit) -> unit) = 
+  fun h -> hooks := (h::!hooks)
+
+let (del_hooks: string -> unit) = 
+  fun str -> hooks := List.remove_assoc str !hooks
+#+END_SRC
+
+** Custom traces
+#+BEGIN_SRC tuareg
+let my_print_event e = 
+  [...] ;;
+
+del_hooks "print_event";;
+add_hooks ("print_event",my_print_event);;
+#+END_SRC
+#+ATTR_LaTeX: width=1cm placement=[h!]
+[[./demonstration.jpg]]
+[[./demo/demo_heater.ml::90][Demo]]
+
+** Shortcuts
+#+BEGIN_SRC ocaml
+let e = ref (run())
+let n () = e:=next !e 
+let ni i = e:=nexti !e i 
+let r () = e:=ref (run())
+...
+#+END_SRC
+** Monitoring
+
+#+begin_src ocaml
+let cpt = ref 0
+let rec count e =
+  match getb_val "b", getr_val "x" in
+    | Some b, Some x -> if (b and 3 < x and x < 10) 
+                        then c:=c+1;
+    | _,_ -> ();
+  count (e.next())
+#+end_src
+
+Everything can also be compiled to native code for efficiency
+
+** gdb like Breakpoints
+
+Set breakpoints  via strings the form:  "node" or "file::line"
+
+#+BEGIN_SRC tuareg
+let brkpts = ref [] '\pause'
+
+let (break : string -> unit) = fun str -> '\pause'
+  brkpts := str::!brkpts '\pause' 
+
+let (delete : unit -> unit) = fun () -> brkpts := [] '\pause'
+
+let (continue : Event.t -> Event.t) = '\pause' fun e -> 
+    let stop e = List.exists (brk_matches e) !brkpts in  '\pause'
+      next_cond e stop 
+#+END_SRC
+
+** gdb like Breakpoints (cont)
+
+#+BEGIN_SRC tuareg
+let (brk_matches : Event.t -> string -> bool) = 
+fun e b ->  '\pause'
+ let si_match_file str si =
+   (si.file = str || basename si.file = str) in '\pause'
+ let si_match_line ln {line=(d,f)} = 
+  (d <= ios && ios i <= f) in '\pause'
+  match e.sinfo, Str.split (Str.regexp "::") b with '\pause'
+  | None, _ |  _, [] -> false (* no more BP *) '\pause'
+  | Some src, str::tail ->  let src = src() in '\pause'
+    match tail with 
+     | [ln] -> List.exists
+       (fun si -> si_match_file str si && 
+                  si_match_line ln si) src.atoms
+     | [] -> List.exists (si_match_file str) src.atoms
+     | _  -> false
+#+END_SRC
+#+ATTR_LaTeX: width=1cm placement=[h!]
+[[./demonstration.jpg]]
+[[./demo/demo_heater.ml::80][Demo]]
+
+** Profiling
+
+#+BEGIN_SRC tuareg
+let prof_tbl = Hashtbl.create 50 '\pause'
+let incr_prof si = 
+  try let cpt = Hashtbl.find prof_tbl si in
+      Hashtbl.replace prof_tbl si (cpt+1) '\pause' 
+  with Not_found -> Hashtbl.add prof_tbl si 1 '\pause'
+
+let (prof_add: Event.t -> unit) =
+  fun e ->     
+    match to_lut_evt e.kind, e.sinfo with
+      | (Sat | Nsat), Some src -> 
+          List.iter incr_prof (src()).atoms
+      | _ -> ()
+let set_profiler on =
+  if on then add_hooks ("profile",prof_add)
+        else del_hooks "profile"
+#+END_SRC
+#+ATTR_LaTeX: width=1cm placement=[h!]
+[[./demonstration.jpg]]
+[[./demo/demo_heater.ml::110][Demo]]
+
+** Time Profiling
+
+- Save the =Unix.time()= at =call= events
+- Accumulate the difference at =exit= events
+
+
+** Computing CFG
+
+cf file:demo/demo.org
+
+
+** Experimenting with Coverage criterion
+
+cf file:demo/demo.org
+
+* Design choices for the kernel (Level 4)  
+** Choice of the  host language (1)
+
+- We need
+  - real/eval/print/loop toplevel interpreter
+  - good support (librairies, tools, community) \pause
+
+- There is no  perfect choice: =Ocaml= is not that bad
+- Only users who want to add debugging commands need to know =Ocaml=
+
+** Defining Reactive Events (2)
+
+- An event is an observation point Closely related to the language
+  semantics \pause
+ 
+- Defining event should  rather be a concern of the language plugin developper, but 
+
+- We want events that  are *versatile*  enough to
+  *capture  any  reactive  languages operational  semantics*!  \pause
+
+
+
+  Well, at least on *any synchronous languages* operational semantics
+  \ldots \pause Well, at least on Lustre and Lutin!
+\pause
+    + =Call= : when entering a node
+    + =Exit= : when exiting a node
+    + =Microstep= : holds info related to the lang micro-step \pause
+
+  
+
+- Events specific to Lutin:
+  + =microstep("try")= /  =microstep("sat")= / =microstep("unsat")= : a choice is performed in the program control structure
+
+** Debugger/debuggee communications  (3)
+
+- Signals+Runtime instrumentation  (gdb, ocamldebug)
+  - fixed set of commands
+
+- Pipes, sockets (javadbg)
+  - watch out the context switches
+
+- *Continuations*
+  - No msg writing/parsing between the 2 entities
+  - No  context switches, which  matters for debugging  programs that
+    interact at each step with the debuggee
+  - Very easy instrumentation (once the code is CPS...)
+
+** Coroutine via CPS: From Lurette to rdbg [1/4]
+
+#+BEGIN_SRC tuareg
+-- Vanilla lurette top loop          
+let p a b = a+b          
+let step_env a = p a 1   
+let step_sut a = p a 2   
+let rec loop i a =       
+ if i>42 then            
+  raise (End a) else     
+  let b = step_env a in  
+  let c = step_sut b in  
+   loop (i+1) c          
+#+END_SRC
+** Coroutine via CPS: From Lurette to rdbg [2/4]
+
+#+BEGIN_SRC tuareg
+-- lurettop loop          -- CPS version 
+let p a b = a+b           let p a b ct = ct (a+b) '\pause'
+let step_env a = p a 1    let step_env a ct = p a 1 ct '\pause'
+let step_sut a = p a 2    let step_sut a ct = p a 2 ct '\pause'
+let rec loop i a =        let rec loop i a = 
+ if i>42 then              if i > 42 then 
+  raise (End a) else        raise (End a) else  
+  let b = step_env a in     step_env a (loop2 i) '\pause'
+  let c = step_sut b in   and loop2 i b = step_sut b  
+   loop (i+1) c                            (loop (i+1))
+#+END_SRC
+** Coroutine via CPS: From Lurette to rdbg [3/4]
+
+The CPS  functions never return
+
+Hence it's easy to add events at each event locations
+
+
+#+BEGIN_SRC tuareg
+type event = 
+  { 
+    next : unit -> event;
+    msg  : string ; 
+ -- step:int; 
+ -- depth:int; 
+ -- data: substs; 
+ -- src: string; 
+ -- ...
+}
+#+END_SRC
+
+** Coroutine via CPS: From Lurette to rdbg [4/4]
+ 
+\begin{semiverbatim}
+let plus a b cont = \uncover<4->{\alert<2->{ \{ 
+  msg  = sprintf("%i+%i" a b); 
+  next = fun () -> }} cont (a+b) \uncover<4->{\alert<2->{\}}}
+let step_env a cont = \uncover<2->{\alert<2->{\{ 
+  msg  = "step_env" ; 
+  next = fun () -> }} plus a 1 cont \uncover<2->{\alert<2->{\}}}
+let step_sut a cont = \uncover<3->{\alert<2->{\{ 
+  msg  = "step_sut" ; 
+  next = fun () -> }} plus a 2 cont \uncover<3->{\alert<2->{\}}}
+let rec loop2 i b = step_sut b (loop (i+1))
+and loop i a = 
+  if a > 42 then raise (End a) 
+            else  \uncover<5>{\alert<2->{\{ msg  = "top"; 
+  next = fun () ->}}step_env a (loop2 i)\uncover<5->{\alert<2->{\}}}
+
+\end{semiverbatim}
+
+# ne compile pas sans ce qui suit !!????
+#+BEGIN_SRC c
+
+#+END_SRC
+
+* Runtime Instrumentation  (Level 3) 
+
+** Design choices for the runtime instrumentation  (Level 3) 
+- What to instrument?
+  - an interpreter 
+  - the source/binary/intermediate code
+  - runtime or static (by the compiler) instrumentation
+
+- *Granularity* of the instrumentation: trade-off between efficiency and completeness
+
+** The V6 compilation process
+#+begin_latex
+\input{v6-compiling-chain}
+#+end_latex 
+
+** The =rdbg= Language Plugin Mechanism
+
+To  plug onto  =rdbg=, one  just  need to  provide cma/cmxs  (dynamic
+ocamlopt code library) that implements this interface:
+
+#+BEGIN_SRC tuareg
+type sl = (string * Data.v) list (* substitutions *) 
+type e = Event.t (* a shortcut for the remaining *)  '\pause'
+type t = {
+ inputs:(Data.ident*Data.t) list; (* name and type *)
+ outputs : (Data.ident * Data.t) list; (* ditto *) 
+ init_inputs  : sl; 
+ init_outputs : sl;  '\pause'
+ step     : (sl -> sl); (* Lurette step *) '\pause'  
+ step_dbg : (sl -> e -> ( sl -> e -> e) -> e); (* RDBG step *) '\pause'
+ kill: string -> unit; 
+}
+#+END_SRC
+
+** Instrumenting =soc= 
+
+#+BEGIN_SRC lustre
+soc foo(i1, ..., im) returns (o1,..., on);
+let
+  ... -- some equations
+tel
+soc bar(...) returns(...);
+let
+  ...;
+  '\underline{\texttt{(x1,...,xn) = foo(y1,...,ym)}}'; -- how to evaluate this expression?
+  ...;
+tel
+#+END_SRC
+\pause
+- node =bar= is compiled into a =soc=, and:
+ - =soc.ins= = =(i1, ..., im)= ; =soc.out= = =(o1,..., on)=
+ - =argsO= = =(x1,...,xn)= ;  =argsI= = =(y1,...,ym)= \pause
+
+#+BEGIN_SRC tuareg
+let soc_step soc argsI argsO env = -- where "env" holds variables values '\pause'
+ let env1 = args2params argsI soc.ins env in  '\pause'
+ let env2 = do_the_step soc env1 in '\pause' 
+ let env3 = params2args soc.out argsO env2 in '\pause'
+ env3
+#+END_SRC
+
+** A CPS soc interpreter to add events (1/2)
+#+BEGIN_SRC tuareg
+let soc_step soc argsI argsO env = 
+ let env1 = args2params argsI soc.ins env in  
+ let env2 = do_the_step soc env1 in 
+ let env3 = params2args soc.out argsO env2 in 
+ env3 
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let step soc argsI argsO env '\underline{(cont: env -> `a):`a}' = 
+ let env1 = args2params argsI soc.ins env in  
+ let env2 = do_the_step soc env1 in 
+ let env3 = params2args soc.out argsO env2 in 
+ '\underline{cont}' env3
+#+END_SRC
+\pause
+#+BEGIN_SRC tuareg
+let step soc argsI argsO env '\underline{(cont: env -> Event.t):Event.t}' = 
+ let env1 = args2params argsI soc.ins env in  
+ let env2 = do_the_step soc env1 in 
+ let env3 = params2args soc.out argsO env2 in 
+ { 
+    name = soc.name;
+    kind = Exit; data = get_data env3;
+    next = (fun () -> cont env3);
+ } 
+#+END_SRC
+** A CPS soc interpreter to add events (2/2)
+
+#+BEGIN_SRC tuareg
+let step soc argsI argsO env cont = 
+ let env1 = args2params argsI soc.ins env in
+ let env2 = do_the_step soc env1 (* goal: expose env1 HERE *) in 
+ let env3 = params2args soc.out argsO env2 in 
+ cont env3
+#+END_SRC
+\pause 
+#+BEGIN_SRC tuareg
+let soc_step soc invals argsI argsO env cont =
+  let env1 = arg2params argsI soc.ins env in
+  let cont2 env2 = (* We introduce a fake function call HERE *)
+    let env3 = param2args soc.out argsO env2 in
+    cont env3 
+  in 
+  cont2 (do_the_step soc env1)
+#+END_SRC
+\pause 
+#+BEGIN_SRC tuareg
+let soc_step soc invals argsI argsO env cont =
+  let env1 = arg2params argsI soc.ins env in
+  let cont2 env2 = 
+    let env3 = param2args soc.out argsO env2 in
+    cont env3 
+  in 
+  {  name = soc.name; kind = Call; data = get_data env1;
+     next = fun()-> cont2 (do_the_step soc env1) } 
+#+END_SRC
+
+** A CPS soc interpreter to add events (epilogue)
+
+All together
+
+#+BEGIN_SRC tuareg
+let soc_step soc invals argsI argsO env cont =
+  let env1 = arg2params argsI soc.ins env in
+  let cont2 env2 = 
+    let env3 = param2args soc.out argsO env2 in
+    {
+      name = soc.name; 
+      kind = Exit; data = get_data env3;
+      next = fun () -> cont env3;
+    }  
+  in 
+  { 
+    name = soc.name; 
+    kind = Call; data = get_data env1;
+    next = (fun () -> cont2 (do_the_step soc env1));
+  } 
+#+END_SRC
+ 
+** Instrumenting generated code
+
+#+ATTR_LATEX: width=.6\linewidth
+#+begin_latex 
+\includegraphics[width=.4\linewidth]{figs/v6-compiling-chain.pdf}
+#+end_latex 
+
+- Would be more efficient
+
+- Instrumenting C code
+ - Require  Interfacing C/Ocaml (easy)
+ - Have C code  in C (possible but less easy)
+
+- Instrumenting Ocaml code
+ - need a Ocaml Soc pretty-printer
+ - still subject to divergence
+
+** Instrumenting ocaml code
+
+The binding between args and params in done by the host language
+
+#+BEGIN_SRC tuareg
+let (n1_step: ti1 * ... *tim -> to1 * ... * ton) = 
+fun (i1, ..., im)
+  let v1, o1 = n2_step(i1) in
+  ...
+  let on = n4_step(v3,im) in
+  (o1, ..., on)
+#+END_SRC 
+
+We'd need a step of type 
+#+BEGIN_SRC tuareg
+ step_dbg : (sl -> e -> ( sl -> e -> e) -> e); 
+#+END_SRC 
+
+** Encapsulate the generate node 
+
+Encapsulate the generate node into a function with the rigth profile
+
+#+BEGIN_SRC tuareg
+let n1_step_dbg : (sl -> e -> ( sl -> e -> e) -> e) =
+ fun sl e cont -> 
+  let (i1, ..., im) = get_n2_inputs sl in
+  let (o1, ..., on) = n2_step(i1, ..., im) in
+  let sl = set_n2_outputs (o1, ..., on) in
+  cont sl e
+#+END_SRC 
+
+** Adding events 
+
+Adding events is then similar to the soc interpreter instrumentation.
+
+#+BEGIN_SRC tuareg
+let n2_step_dbg sl e cont  =  
+  let (i1, ..., im) = get_n2_inputs sl in
+  let cont2 sl2 =  
+    let (o1, ..., on) = n2_step(i1, ..., im) in
+    let sl = set_n2_outputs (o1, ..., on) in
+      let sl3 = param2args soc.out argsO sl2 in
+    {
+      name = soc.name; 
+      kind = Exit; 
+      next = fun () -> cont sl3;
+    }  
+  in 
+  { 
+    name = soc.name; 
+    kind = Call;
+    data = sl;
+    next = (fun () ->  cont2 (do_the_step soc sl1));
+  } 
+#+END_SRC 
+\pause
+
+nb: for inner node calls, we need a deeper instrumentation
+
+** Inner nodes  :noexport:
+#+BEGIN_SRC tuareg :noexport:
+let (n2_step: ti1 * ... * tim -> (to1 * ... * ton -> `a) -> `a = 
+fun (i1, ..., im) cont ->
+  let cont2 (v1, o1) = xxx_step i1 in
+  let v1, o1 = xxx_step(i1) in
+  ...
+  let on = xxx_step(v3,im) in
+  (o1, ..., on)
+#+END_SRC 
+
+
+
+* Conclusion
+** Performance 
+ 
+- Cost of the instrumentation
+ - Less than 1\% of penalty Lutin programs
+ - 20 \% of penalty on the Lustre soc interpreter
+
+\pause
+
+- bytecode versus native code => x3
+\pause
+
+- The Lustre  interpreter is 3 order  of magnitude slower than  the C
+  code  (hence  the idea  mentionned  earlier  of instrumenting  some
+  generated ocaml code)
+\pause
+
+But note that all this is generally dominated by the cost of the Lutin environment!
+
+# XXX comparer =lus2lic -exec= avec =lus2lic -2c -o a.out; ./a.out= 
+     
+** About =rdbg= design choices
+
+*** Cons
+- Requires an Ocaml interface
+- Requires CPS \pause
+
+*** Pros
+- Lightweight implementation (reuse ocaml libs and REPL) \pause
+- Programmable! \pause
+
+- *Separation of concerns* \pause
+ - a simple plugin API :  =step_dbg= \pause
+ - a tiny kernel:  =run : Rdbg.args -> Event.t=  
+ - a rich set of commands easily build on top of it 
+ - which could be reused on other languages 
+ 
+- same tool for test and debug (debug oracles !) 
+** The end
+
+- Install
+#+BEGIN_SRC smallsh
+$ opam repo add verimag-sync-repo "http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/opam-repository"
+$ opam install rdbg lustre-v6 lutin
+#+END_SRC
+
+\pause
+
+\vfill \center  Thanks for your attention \vfill
+
+
+

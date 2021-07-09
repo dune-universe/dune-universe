@@ -1,0 +1,75 @@
+#############################################################################"
+# non-reg tests
+
+
+unit-test: build
+	 ./_build/default/bin/ounitTestRun.exe -output-html-dir test/html  -output-junit-file test/result-junit.xml
+
+# extern tools (language plugins)
+LUTIN := $(shell command -v lutin 2> /dev/null)
+V6 := $(shell command -v lv6 2> /dev/null)
+LUCIOLE := $(shell command -v luciole 2> /dev/null)
+
+gitlab-test: unit-test basic_test 
+test: unit-test basic_test luciole_test test_plugin 
+ifndef LUCIOLE
+	$(warning "Luciole is not available please install it (cf lustre v4 distrib)")
+endif
+ifndef LUTIN
+	$(warning "lutin is not available please install it (opam install lutin)")
+endif
+	echo "test done"
+
+test_plugin:lustre_test lutin_test lutin_lustre_test
+
+# use local tools first
+export RDBG := $(shell command -v `pwd`/_build/default/bin/rdbg.exe || \
+                       command -v rdbg)
+export RDBG_BATCH := $(shell command -v `pwd`/_build/default/bin/rdbgbatch.exe || \
+							        command -v rdbg-batch)
+export RDBG_TOP := $(shell command -v `pwd`/_build/default/bin/rdbgstart.exe || \
+	 							command -v rdbg-top)
+
+basic_test: ocaml_test
+
+ocaml_test:
+	cd exemples/ocaml; make test
+
+luciole_test:
+ifdef LUCIOLE
+	cd exemples/luciole; make test
+endif
+
+lustre_test:
+ifdef V6
+	cd exemples/lustre; make test
+endif
+
+lutin_test:
+ifdef LUTIN
+	cd exemples/lutin; make test
+endif
+
+lutin_lustre_test:
+ifdef LUTIN
+ifdef V6
+	cd exemples/socket; make test
+	cd exemples/stdio; make test
+	cd exemples/session; make test 
+	cd exemples/lurette; make test 
+	cd exemples/custom-interpreter; make test 
+	cd exemples/square; make test 
+endif
+endif
+
+clean_test:
+	cd exemples/square; make clean
+	cd exemples/socket; make clean
+	cd exemples/custom-interpreter; make clean
+	cd exemples/ocaml; make clean
+	cd exemples/lutin; make clean
+	cd exemples/lustre; make clean
+	cd exemples/stdio; make clean
+	cd exemples/luciole; make clean
+	cd exemples/session; make clean 
+	cd exemples/lurette; make clean 

@@ -1,0 +1,70 @@
+
+-- detect a pulse with a 3 states automaton
+type pulse_state = enum { wait_true, wait_false, tic };
+node pulse(s:bool) returns (res:bool);
+var 
+ pre_st:pulse_state;
+ st:pulse_state;
+let 
+  pre_st = wait_true fby st;
+  st = merge pre_st 
+      (wait_true  -> if s when wait_true(pre_st) then wait_false else wait_true)
+      (wait_false -> if not s when wait_false(pre_st) then tic else wait_false)
+      (tic        -> wait_true);
+  res = (st=tic);
+tel;
+
+-- period in ms of the base clock
+const period = 100;
+
+
+function min(x,y:int) returns (res:int);
+let
+  res = if x < y then x else y;
+tel
+
+-- true when a signal is true during at least n milli-seconds
+node during (n:int; s:bool) returns (res:bool);
+var
+  cpt:int;
+let
+
+  cpt = 0 -> merge s (false -> 0) 
+                     (true -> min(n,pre(cpt)+period) when s);
+  res = (cpt = n);
+tel;
+
+node chrono_v4(pressed, released:bool) returns (time:int); -- );
+ var
+  init, -- wait for press, chrono=0
+  pre_wr, wr,   -- wait for release
+  stop,   -- stoped; wait for press
+  running   -- the chrono is running
+   : bool;
+let
+-- Si ce assert n'est pas répercuté dans le prog lutin qui servira d'env,
+-- le wcet calculé par ogensim sera faux !
+-- XXX le contenu de cet assert est transmis à Otawa ???
+  assert(#(pressed, released));
+  pre_wr = false fby wr;
+  init = true -> merge pre_wr
+                       (true  -> during(3000,pressed) when pre_wr)
+                       (false ->  (pre(init) and not pressed) when not pre_wr);
+
+  running = false -> (   (pre(wr) and released)
+                  or (pre(running) and not pulse(pressed)) );
+
+  stop = false -> (   (pre(running) and pulse(pressed))
+                  or (pre(stop) and not pressed) );
+
+  wr = false -> merge pre_wr
+                    (true  -> ((not released) and not during(3000,pressed)) when pre_wr)
+                    (false -> (  (pre(init) and pressed)
+                              or (pre(stop) and pressed)) when not pre_wr);
+
+ 
+ time = 0 -> merge running 
+             (false -> (if init then 0 else pre(time)) when not running)
+             (true -> (pre(time) + period) when running);
+
+tel;

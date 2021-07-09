@@ -1,0 +1,5 @@
+This directory contains a simple example illustrating how rdbg can
+connect 2 lutin programs, one playing the role of the sut, and the
+other one playing the role of its environment.
+
+

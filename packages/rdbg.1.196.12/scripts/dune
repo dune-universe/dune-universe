@@ -1,0 +1,20 @@
+(install
+ (files simec_trap)
+ (section bin)
+ (package rdbg)
+)
+(install
+ (files read-rif.sh)
+ (section bin)
+ (package rdbg)
+)
+(install
+ (files ecexe-rif)
+ (section bin)
+ (package rdbg)
+)
+(install
+ (files luciole-rif)
+ (section bin)
+ (package rdbg)
+)

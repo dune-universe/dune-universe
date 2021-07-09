@@ -1,0 +1,58 @@
+
+RDBG a programmable debugger that targets reactive programs for which
+a rdbg-plugin exists. A pre-print of a [[http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/rdbg/rdbg-scopes-pre-print.pdf][scopes 2016 paper is available
+here]].
+
+
+* Installing =rdbg= via opam
+
+End users ougth to install =rdbg= via opam.
+
+#+BEGIN_SRC sh
+$ opam repo add verimag-sync-repo "http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/opam-repository"
+$ opam update
+$ opam install rdbg
+#+END_SRC
+
+* Installing =rdbg= via pre-compiled binaries
+
+cf the Install section of http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lustre-v6/
+
+* Installing the (git controlled) source
+
+You first need to install dune and gnu-make. To have all the necessary
+dependencies, it migth help to use opam
+
+#+BEGIN_SRC sh
+opam install lutils rdbg
+opam remove lutils rdbg
+#+END_SRC
+
+
+Then you should install lutils (either via opam or via the git repo)
+https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutils
+
+Then 'make' should build all the executables, 'make install' should
+install everything, and 'make test' ougth to exit with a 0 return
+code.
+
+#+BEGIN_SRC sh
+opam install lutils ounit
+git clone https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/rdbg/rdbg.git
+cd rdbg
+make
+make install
+make test
+#+END_SRC
+
+* Useful links
+
+To use the rdbg top-level, the following tip holds
+
+http://mirror.ocamlcore.org/wiki.cocan.org/tips_for_using_the_ocaml_toplevel.html
+ 
+* Contribute 
+
+To  contribute, you  need  to create  an account  on https://gricad-gitlab.univ-grenoble-alpes.fr
+
+-----

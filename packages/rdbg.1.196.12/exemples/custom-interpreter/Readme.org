@@ -1,0 +1,4 @@
+A example illustrating how rdbg can be used to customize an interpreter 
+(here, the lustre-v6 one) so that local variables values are printed.
+
+cf Makefile for an exemple of use.

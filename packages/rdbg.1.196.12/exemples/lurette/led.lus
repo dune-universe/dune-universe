@@ -1,0 +1,206 @@
+include "arduino_puzzle.lus"
+
+const F=false;
+const T=true;
+      
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+const Eteint=false;
+const Allume=true;
+
+const led1_0 = Allume; -- demo : a mettre Vrai au debut, puis a faux apres la 1ere expe
+const led2_0 = Allume;
+const led3_0 = Eteint;
+const led4_0 = Eteint;
+const led5_0 = Eteint; 
+  
+----------------------------------------------------------------------------
+-- blue => permutation circulaire
+-- red  => inverse l'état des leds 2 et 4
+node puzzle1 (red,blue:bool) returns (led1,led2,led3,led4,led5:bool);
+let
+  led1 = led1_0 -> if blue then pre(led5) else pre(led1) ;
+  led2 = led2_0 -> if blue then pre(led1) else if red then not(pre(led2))
+                                                      else     pre(led2) ;
+  led3 = led3_0 -> if blue then pre(led2) else pre(led3) ;
+  led4 = led4_0 -> if blue then pre(led3) else if red then not(pre(led4))
+                                                      else     pre(led4) ;
+  led5 = led5_0 -> if blue then pre(led4) else pre(led5) ;
+tel
+
+----------------------------------------------------------------------------
+-- blue => permutation circulaire
+-- red  => inverse l'état de la led 5
+node puzzle2 (red,blue:bool) returns (led1,led2,led3,led4,led5:bool);
+let
+  led1 = led1_0 -> if blue then pre(led5) else pre(led1) ;
+  led2 = led2_0 -> if blue then pre(led1) else pre(led2) ;
+  led3 = led3_0 -> if blue then pre(led2) else pre(led3) ;
+  led4 = led4_0 -> if blue then pre(led3) else pre(led4) ;
+  led5 = led5_0 -> if blue then pre(led4) else  
+                   if red  then not(pre(led5)) else pre(led5) ;
+tel
+
+----------------------------------------------------------------------------
+-- blue => permutation circulaire
+-- red  => inverse une led qui circule a chaque pression de boutons
+node puzzle3 (red,blue:bool) returns (led1,led2,led3,led4,led5:bool);
+var
+  X1, X2, X3, X4, X5 : bool;
+let
+  X1, X2, X3, X4, X5 = (true,F, F,  F, F) ->  
+    if red or blue then
+      (
+        if pre X1 then (F, F, F, F, true) else
+        if pre X2 then (true, F, F, F, F) else
+        if pre X3 then (F, true, F, F, F) else
+        if pre X4 then (F, F, true, F, F) else
+                       (F, F, F, true, F)
+      )
+    else (pre X1, pre X2, pre X3, pre X4, pre X5);
+  
+  led1 = led1_0 -> if blue then pre(led5) else
+                   if red and X1 then not(pre(led1)) else pre(led1);
+  led2 = led2_0 -> if blue then pre(led1) else
+                   if red and X2 then not(pre(led2)) else pre(led2);
+  led3 = led3_0 -> if blue then pre(led2) else
+                   if red and X3 then not(pre(led3)) else pre(led3);
+  led4 = led4_0 -> if blue then pre(led3) else
+                   if red and X4 then not(pre(led4)) else pre(led4);
+  led5 = led5_0 -> if blue then pre(led4) else
+                   if red and X5 then not(pre(led5)) else pre(led5);
+tel
+      
+----------------------------------------------------------------------------
+-- blue => permutation circulaire
+-- red  => inverse une led qui circule a chaque pression mais 
+--         dans un sens different selon la couleur du bouton pressé
+node puzzle4 (red,blue:bool) returns (led1,led2,led3,led4,led5:bool);
+var
+  X1, X2, X3, X4, X5 : bool;
+let
+  X1, X2, X3, X4, X5 = (F, F, F, F, true) ->  
+    if red then
+      (
+        if pre X1 then (F, true, F, F, F) else
+        if pre X2 then (F, F, true, F, F) else
+        if pre X3 then (F, F, F, true, F) else
+        if pre X4 then (F, F, F, F, true) else
+                       (true, F, F, F, F)
+       )
+    else if blue then
+      (
+        if pre X1 then (F, F, F, F, true) else
+        if pre X2 then (true, F, F, F, F) else
+        if pre X3 then (F, true, F, F, F) else
+        if pre X4 then (F, F, true, F, F) else
+                       (F, F, F, true, F)
+      )
+    else (pre X1, pre X2, pre X3, pre X4, pre X5);
+  
+  led1 = led1_0 -> if blue then pre(led5) else
+                   if red and X1 then not(pre(led1)) else pre(led1);
+  led2 = led2_0 -> if blue then pre(led1) else
+                   if red and X2 then not(pre(led2)) else pre(led2);
+  led3 = led3_0 -> if blue then pre(led2) else
+                   if red and X3 then not(pre(led3)) else pre(led3);
+  led4 = led4_0 -> if blue then pre(led3) else
+                   if red and X4 then not(pre(led4)) else pre(led4);
+  led5 = led5_0 -> if blue then pre(led4) else
+                   if red and X5 then not(pre(led5)) else pre(led5);
+tel
+----------------------------------------------------------------------------
+-- phase d'init sur les 5 premieres pressions : le bleu etteint , et le rouge allume
+-- blue => la led courante devient le xor des leds autours 
+-- red  => la led courante devient le and des leds autours
+-- la led courante est le premiere au debut, puis la deuxieme, etc.  
+
+const led1_p5 = F;
+const led2_p5 = F;
+const led3_p5 = F;
+const led4_p5 = T;
+const led5_p5 = F;
+
+  
+node puzzle5(red,blue:bool)
+returns (led1,led2,led3,led4,led5:bool);
+var
+  X1, X2, X3, X4, X5 : bool;
+let
+  X1, X2, X3, X4, X5 = (F, F, F, F, true) ->  
+    if red or blue then
+      (
+        if pre X1 then (F, true, F, F, F) else
+        if pre X2 then (F, F, true, F, F) else
+        if pre X3 then (F, F, F, true, F) else
+        if pre X4 then (F, F, F, F, true) else
+                       (true, F, F, F, F)
+       )
+    else (pre X1, pre X2, pre X3, pre X4, pre X5);
+  
+  led1 = led1_p5 -> if blue and X1 then (pre(led5) xor pre(led2)) else
+                      if red  and X1 then (pre(led5) and pre(led2)) else pre(led1);
+  led2 = led2_p5 -> if blue and X2 then (pre(led1) xor pre(led3)) else
+                      if red  and X2 then (pre(led1) and pre(led3)) else pre(led2);
+  led3 = led3_p5 -> if blue and X3 then (pre(led2) xor pre(led4)) else
+                      if red  and X3 then (pre(led2) and pre(led4)) else pre(led3);
+  led4 = led4_p5 -> if blue and X4 then (pre(led3) xor pre(led5)) else
+                      if red  and X4 then (pre(led3) and pre(led5)) else pre(led4);
+  led5 = led5_p5 -> if blue and X5 then (pre(led4) xor pre(led1)) else
+                      if red  and X5 then (pre(led4) and pre(led1)) else pre(led5);
+tel
+
+----------------------------------------------------------------------------
+
+-- red  => inversion  de la led 1
+-- blue => allume la led suivant la première led eteinte
+-- pour l'odre lexicographique (i.e.,led1<led2<led3<led4<led5)
+
+node puzzle6(red,blue:bool)
+returns (led1,led2,led3,led4,led5:bool);
+var
+  --  Xi = je suis la led qui suit la plus petite led eteinte 
+  X2, X3, X4, X5 : bool;
+let
+  X2, X3, X4, X5 = (true, F, F, F) ->  
+        if not(pre(led1)) then (true, F, F, F) else
+        if not(pre(led2)) then (F, true, F, F) else
+        if not(pre(led3)) then (F, F, true, F) else
+        if not(pre(led4)) then (F, F, F, true) else (F, F, F, F);
+  
+  led1 = F -> if red then not(pre(led1)) else pre(led1);
+  led2 = F -> if blue and X2 then not(pre(led2)) else pre(led2);
+  led3 = F -> if blue and X3 then not(pre(led3)) else pre(led3);
+  led4 = F -> if blue and X4 then not(pre(led4)) else pre(led4);
+  led5 = F -> if blue and X5 then not(pre(led5)) else pre(led5);
+tel
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+-- Pour lesar 
+node puzzle_has_no_solution <<
+   node puzzle(red,blue:bool) 
+   returns (led1,led2,led3,led4,led5:bool)>>
+(red,blue:bool) returns (no_sol:bool);
+var
+  led1,led2,led3,led4,led5:bool;
+let
+  assert(red xor blue);
+  led1,led2,led3,led4,led5=puzzle(red,blue);
+  no_sol = not (led1 and led2 and led3 and led4 and led5);
+tel
+
+node puzzle1_has_no_solution = puzzle_has_no_solution <<puzzle1>>
+node puzzle2_has_no_solution = puzzle_has_no_solution <<puzzle2>>
+node puzzle3_has_no_solution = puzzle_has_no_solution <<puzzle3>>
+node puzzle4_has_no_solution = puzzle_has_no_solution <<puzzle4>>
+node puzzle5_has_no_solution = puzzle_has_no_solution <<puzzle5>>
+node puzzle6_has_no_solution = puzzle_has_no_solution <<puzzle6>>
+
+
+node edge(s:bool) returns (res:bool);
+let
+  res= false -> not pre(s) and s;
+tel
+
+  

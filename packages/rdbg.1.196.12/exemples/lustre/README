@@ -1,0 +1,5 @@
+This directory contains a simple example illustrating how rdbg-batch can
+connect 2 lustre programs, one playing the role of the sut, and the
+other one playing the role of its environment.
+
+its actually simpler to use rdbg, which generates the glue ocaml code

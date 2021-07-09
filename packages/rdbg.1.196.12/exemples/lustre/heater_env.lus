@@ -1,0 +1,7 @@
+node heater_env(Heat_on:bool) returns (T, T1, T2, T3 : real);
+let
+ T= 15.0 -> pre(T) + if Heat_on then 0.5 else -0.5;
+ T1=T;
+ T2=T;
+ T3=T;
+tel

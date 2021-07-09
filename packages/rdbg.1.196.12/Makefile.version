@@ -1,0 +1,17 @@
+
+
+SHA:=$(shell git log -1 --pretty=format:"%h"|| echo "opam")
+
+BRANCH:=$(shell git branch | grep "*" | cut -d ' ' -f 2 || basename `pwd` | echo "opam")
+
+# if it is not a git version, it has to be an opam version!
+VERSION:=$(shell git describe --tags || basename `pwd` | cut -d '.' -f2-4)
+
+
+.PHONY:doc/version.tex
+doc/version.tex:
+	date +VERSION_DATE=%d-%m-%y > $@ ; \
+	echo "\\\newcommand{\\\version}{$(VERSION)}" > $@ ; \
+	echo "\\\newcommand{\\\sha}{$(SHA)}" >> $@ ; \
+	echo "\\\newcommand{\\\versionname}{none}" >> $@ ; \
+	echo "\\\newcommand{\\\versiondate}{`date +%d-%m-%y`}" >> $@

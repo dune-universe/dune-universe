@@ -1,0 +1,25 @@
+# The random engine was initialized with the seed 1
+#inputs "T":real "T1":real "T2":real "T3":real 
+#outputs "Heat_on":bool 
+#step 0
+7.00 7.00 7.00 7.00 #outs t
+#step 1
+7.20 7.25 7.16 7.19 #outs t
+#step 2
+7.40 7.35 7.33 7.39 #outs t
+#step 3
+7.60 7.64 7.59 7.63 #outs t
+#step 4
+7.80 7.78 7.82 7.70 #outs t
+#step 5
+8.00 8.05 7.99 8.06 #outs t
+#step 6
+8.20 8.13 8.27 8.19 #outs t
+#step 7
+8.40 8.39 8.38 8.41 #outs t
+#step 8
+8.60 8.59 8.70 8.55 #outs t
+#step 9
+8.80 8.89 8.86 8.83 #outs t
+#step 10
+9.00 8.96 8.92 8.95 #outs t

@@ -1,0 +1,333 @@
+{0 Memprof-limits — Memory limits, allocation limits, and thread
+cancellation for OCaml}
+
+The entry point of this package is the module {!Memprof_limits}.
+
+This package lets you interrupt {i tasks} in a thread-safe and
+resource-safe way, when a resource limit is reached or a cancellation
+token is set. A task is an {{: #isolation} isolated} piece of
+computation running within a thread.
+
+{i Global memory limits} interrupt a task when the major heap exceeds
+a certain size. {i Allocation limits} interrupt a task when a certain
+number of words have been allocated, a portable mesure of time elapsed
+and quantity of work done. {i Token limits} interrupt an allocating
+task when an arbitrary token is set.
+
+The implementation uses OCaml's Memprof statistical profiler engine
+with a low sampling rate that does not affect performance.
+
+{1 Global memory limits}
+
+{!section:Memprof_limits.global_memory_limits} let you bound the
+memory consumption of specific tasks in your program, in terms of
+memory used by the whole program (total major heap size). If several
+concurrent tasks run under a global memory limit, the task the most
+likely to be interrupted first is the one that allocates the most
+frequently. After the memory limit has been exceeded, there is a
+probability less than 10{^ -50} that the task is still not interrupted
+after it allocates 8.8 more MiB.
+
+Once interrupted, the program will keep interrupting all the tasks
+running under a global memory limit, until the program shuts down
+gracefully, or an attempt to free up space with [Gc.compact ()]
+succeeds. The latter is useful in situations where the allocated
+memory does not escape the task and therefore terminating it is likely
+to free up space, for instance in situations where data is acquired
+and validated inside a thread before this data is published to the
+rest of the program.
+
+{2:example1 Example}
+
+A worker task allocates 3M words simultaneously live, causing a peak
+memory consumption of 2.3 GiB on 64-bit (without counting the GC
+overhead). The monitor interrupts the task when the major heap reaches
+1 GiB (including the GC overhead).
+
+{[
+(* worker *)
+let f () =
+  let rec alloc n x =
+    if n = 0 then x else alloc (n-1) (()::x)
+  in
+  (* allocate 2.3 GiB *)
+  alloc 100_000_000 []
+
+(* monitor *)
+let g () =
+  match Memprof_limits.limit_global_memory f with
+  | Ok x -> print_endline "success"
+  | Error _ -> print_endline "out of memory" ; Gc.compact ()
+
+(* main *)
+let () =
+  Memprof_limits.start_memprof_limits () ;
+  (* 1 GiB memory limit *)
+  Memprof_limits.set_global_memory_limit (1024 * 1024) ;
+  g ()
+]}
+
+{2:use-cases1 Use cases}
+
+- The {{: https://github.com/Gbury/mSAT} mSAT} solver and the {{:
+  http://www.zenon-prover.org/} Zenon} theorem prover offer to limit
+  their memory consumption by failing gracefully, which is implemented
+  by raising from a {!Stdlib.Gc.alarm}. Limiting memory seems to be a
+  standard feature of theorem provers (this is for instance also a
+  feature of {{: http://leanprover.github.io/} Lean}). Compared to the
+  [Gc.alarm] trick, memprof-limits readily supports threads and
+  provides tools to enforce resource safety, which enables porting
+  this feature to {{: https://coq.inria.fr/} theorem provers written
+  in OCaml that lack it}.
+
+{1 Allocation limits}
+
+{!section:Memprof_limits.allocation_limits} let you bound the
+execution of specific tasks in your program, measured in number of
+allocations (thousands of words, or kw). Allocation limits count
+allocations but not deallocations, and are therefore a measure of the
+work done which can be more suitable (consistent, portable) than
+wall-clock time.
+
+Guarantees on the number of allocations that can be done without being
+interrupted for a given limit, with good probability (e.g. 10{^ -50}) are
+given by a {{:
+https://gitlab.com/gadmm/memprof-limits/-/blob/master/doc/statistical.md}
+statistical analysis}.
+
+{%html:<img
+src="https://gitlab.com/gadmm/memprof-limits/-/raw/master/doc/limit.svg"
+/>%}
+
+{2:example2 Example}
+
+A worker task allocates 300M words, only 3k of which live
+simultaneously. This comes close to an allocation limit of 330M words
+set by the monitor. The probability that the worker is interrupted is
+less than 10{^ -50}, and thus the computation successfully completes, in
+about a second.
+
+{[
+(* worker *)
+let f () =
+  let rec alloc n x =
+    if n = 0 then x else alloc (n-1) (()::x)
+  in
+  (* allocate 300'000 kw *)
+  for i = 0 to 100_000 do ignore (alloc 1_000 []) done
+
+(* monitor *)
+let g () =
+  match Memprof_limits.limit_allocations ~limit:330_000L f with
+  | Ok ((), n) -> Printf.printf "success (est. alloc. %#Lu kw)\n" n
+  | Error _ -> print_endline "out of fuel"
+
+(* main *)
+let () =
+  Memprof_limits.start_memprof_limits () ;
+  g ()
+]}
+
+{2:use-cases2 Use cases}
+
+- A {{:
+  https://simonmar.github.io/posts/2017-01-24-asynchronous-exceptions.html}
+  blog post} by Simon Marlow explains the benefits of allocation
+  limits in Haskell to limit the resource consumption of clients in a
+  server.
+
+- Allocation limits are used in the {{: http://leanprover.github.io/}
+  Lean} theorem prover to time-out proofs that take too long in a way
+  that is deterministic across machines. Lack of portability is in
+  contrast the object of a warning for the {{:
+  https://coq.inria.fr/refman/proof-engine/ltac.html#timeout} timeout}
+  tactic in Coq, which measures the time elapsed in seconds.
+
+{5 Discussion: precise vs. statistical limits}
+
+The two examples above feature precise rather than statistical
+allocation counts. Would it be better to count allocations precisely?
+In the first case, the statistical nature is irrelevant since a safety
+margin on the allocation limit is likely to be chosen much greater
+than what is required for a good accuracy according to the statistical
+analysis. In the second case, the success of a computation coming too
+close to a limit might happen to not always be reproducible. Thus,
+after success, if the returned estimated allocation count falls within
+a window of uncertainty according to the statistical analysis, then
+the limit should be increased a bit if one wants to keep it in a proof
+and make the proof reliable. But such a concern can already be there
+with precise limits, if allocation patterns can change through
+compiler optimisation settings and compiler evolution (as it is the
+case with flambda). In this situation, a precise count might already
+not guarantee portability when it falls too close to the limit, and
+the statistical nature forces to take this problem into consideration.
+
+{1 Token limits}
+
+{!section:Memprof_limits.token_limits} let you interrupt tasks
+arbitrarily by setting a {!Memprof_limits.Token}. Note that the
+interruption is reliable for CPU-bound, allocating tasks, but could be
+less reliable for IO-bound tasks. Refer to the statistical analysis
+for the probability of occurrence of a memprof-limit callback in
+relationship with the allocation rate.
+
+{2:example3 Example}
+
+Five worker threads race to push their next number in an increasing
+sequence. When the user presses Ctrl+C, all worker threads stop and
+the winner is the one that reached the highest number.
+
+{[
+let l = Atomic.make []
+
+(* worker *)
+let f i =
+  let rec push j =
+    let oldl = Atomic.get l in
+    let newl = (i,j) :: oldl in
+    if not (Atomic.compare_and_set l oldl newl)
+    then push j else push (j + 1)
+  in
+  push 0
+
+(* monitor *)
+let h () =
+  let token = Memprof_limits.Token.create () in
+  let handler _ = Memprof_limits.Token.set token in
+  Sys.(set_signal sigint (Signal_handle handler)) ;
+  let g i =
+    Memprof_limits.limit_with_token ~token (fun () -> f i)
+  in
+  let threads = List.init 5 (fun i -> Thread.create g i) in
+  List.iter Thread.join threads ;
+  print_endline "All threads stopped." ;
+  let max a b = if snd b >= snd a then b else a in
+  let (i,j) = List.fold_left max (-1, -1) (Atomic.get l) in
+  Printf.printf "max = %n, winning thread = %n.\n" j i
+
+let () =
+  Memprof_limits.start_memprof_limits () ;
+  h ()
+]}
+
+{2:use-cases3 Use cases}
+
+Memprof-limits is currently incompatible with exceptions arising from
+signal handlers, such as {!Stdlib.Sys.Break} on Ctrl+C, since they can
+damage its internal state. In the context of CPU-bound tasks from the
+other limits, token limits make it possible to implement differently
+the interruption when a signal arrives, by setting a token inside the
+signal handler without raising from it. Tokens are also more general,
+since they implement the arbitrary cancellation of threads from other
+threads or signal handlers. They also benefit from the
+interrupt-safety features of memprof-limits described next.
+
+Note that on Unix, when an OCaml signal handler is set and a signal
+arrives, an ongoing system call either restarts, and thus is not
+interruptible by memprof-limits, or it raises the exception
+{!Unix.Unix_error}[(EINTR, _, _)], which must be handled. Which system
+calls in the standard library are non-interruptible and which ones
+raise is currently undocumented.
+
+{1:isolation Interrupt- and resource-safety}
+
+Interrupts raised by Memprof-limits can leave the world in an invalid
+state. For the program to be guaranteed to recover from interrupts,
+tasks running under limits must be {i interrupt-safe}.
+
+The main strategy in achieving interrupt-safety is through isolation:
+the world state must only be accessed through interrupt-safe
+abstractions. Memprof-limits lets you define such abstractions, for
+instance by defining resources using the combinator
+{!Memprof_limits.Masking.with_resource} and by modifying the external
+state in transactional style. {{!recovering} The interrupt-safety
+discipline is explained in more detail here}.
+
+Opening the module {!Memprof_limits.Resource_bind} defines a binder
+[let&] which provides a RAII-style notation for initialising a
+resource that is cleaned-up at the end of the scope.
+
+{2:example4 Example}
+
+The following concurrent implementation of the Myth of Sisyphus is
+guaranteed to never deadlock or fail prematurely.
+
+{[
+open Memprof_limits.Resource_bind
+
+type m = { mutex : Mutex.t ; mutable valid : bool }
+
+let with_lock = Memprof_limits.Masking.with_resource
+  ~acquire:(fun l ->
+            Mutex.lock l.mutex ;
+            if not l.valid then (Mutex.unlock l.mutex ; raise Exit) ;
+            l)
+  ~release:(fun l ->
+            if Memprof_limits.is_interrupted () then l.valid <- false ;
+            Mutex.unlock l.mutex)
+
+let lock = { mutex = Mutex.create () ; valid = true }
+let stack = Stack.create ()
+
+let rec f () =
+  let () =
+    let& _ = with_lock lock in
+    let n = Stack.length stack in
+    Stack.push n stack
+  in
+  f ()
+
+let g () =
+  match Memprof_limits.limit_global_memory f with
+  | Ok x -> assert false
+  | Error _ -> ()
+  | exception Exit -> ()
+
+let rec h () =
+  let threads = List.init 2 (fun _ -> Thread.create g ()) in
+  List.iter Thread.join threads ;
+  Stack.clear stack ;
+  lock.valid <- true ;
+  Gc.compact () ;
+  print_endline "start again" ;
+  h ()
+
+let () =
+  Memprof_limits.start_memprof_limits () ;
+  Memprof_limits.set_global_memory_limit (1024 * 1024) ;
+  h ()
+]}
+
+{1 Profiling}
+
+Memprof-limits interrupts tasks by raising exceptions from
+{!Stdlib.Gc.Memprof} asychronous callbacks. To profile an application
+using Memprof-limits, use the compatible reimplementation of Memprof
+{!Memprof_limits.Memprof}.
+
+{1 Limitations}
+
+{i Asynchronous exceptions:} The internal state of memprof-limits is
+protected against exceptions arising from Memprof callbacks, which
+includes the exception memprof-limits itself raises. However, due to
+limited OCaml support, race conditions involving asynchronous
+exceptions of other origins (e.g. {!Stdlib.Sys.Break} from
+{!Stdlib.Sys.catch_break}) can leave memprof-limits in an invalid
+state and should be considered fatal. The same limitation affects the
+features described in the section {!section:isolation}.
+
+{i Lwt/Async compatiblity:} To my knowledge, Lwt/Async promises do not
+support interruption by asynchronous exceptions. Memprof-limits can be
+used inside “detached threads” (see {{:
+https://ocsigen.org/lwt/5.3.0/api/Lwt_preemptive} Lwt_preemptive}, {{:
+https://github.com/hcarty/mwt} Mwt}).
+
+{1 Index}
+
+{!modules: Memprof_limits Memprof_limits.Token Memprof_limits.Masking
+Memprof_limits.Resource_bind Memprof_limits.Memprof}
+
+- A {{:
+https://gitlab.com/gadmm/memprof-limits/-/blob/master/doc/statistical.md}
+statistical analysis} of limits.
+- A {{!recovering} guide to recover from interrupts}.

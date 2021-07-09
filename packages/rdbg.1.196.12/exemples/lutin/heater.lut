@@ -1,0 +1,91 @@
+let abs(x : real) : real = 
+    if x > 0.0 then x else -x
+
+let between(x, min, max : real) : bool = 
+	((min < x) and (x < max))
+
+node draw_temp(h:bool; t:real) returns (nt:real) =
+   assert (abs(t - nt) < 1.0 ) in
+     loop    { if h then nt >= t else nt <= t }
+
+node temp(Heat_on : bool) 
+returns (T,T1, T2, T3 : real) =
+
+ assert abs(T-T1) < 0.5 in
+ assert abs(T-T2) < 0.5 in
+ assert abs(T-T3) < 0.5 in
+
+    between(T, 6.0, 9.0)
+  fby    
+    loop 
+      run T := draw_temp(Heat_on, pre T)
+
+
+-----------------------------------------------------------------
+let FAILURE = -999.0 -- a fake temperature given when all sensors are broken
+let TMIN = 6.0
+let TMAX = 9.0
+let DELTA = 0.5
+
+-- returns the average values of 2 reals
+let average(a, b : real) : real = 
+  (a+b)/2.0 
+
+-- returns the maximum values of 2 reals
+let max3 (a,b,c  : real) : real =
+   if a<b then (if b < c then c else b) else
+   if a<c then c else a
+
+let min3 (a,b,c  : real) : real =
+   if a>b then (if b > c then c else b) else
+   if a>c then c else a
+
+-- returns  the median values of 3 reals
+let median(a, b, c : real) : real =
+	 a + b + c - min3(a,b,c) - max3 (a,b,c) 
+
+
+let noneoftree (f1, f2, f3 : bool)  : bool =
+	 ((not f1) and (not f2) and (not f3)) 
+
+let alloftree (f1, f2, f3 : bool) : bool =
+  (f1 and f2 and f3) 
+
+let oneoftree (f1, f2, f3 : bool) : bool =
+    ((f1 and (not f2) and (not f3)) or
+     (f2 and (not f1) and (not f3)) or
+     (f3 and (not f1) and (not f2)))
+
+node ctrl (T,T1, T2, T3 : real)
+returns (Heat_on : bool;
+V12,  V13,  V23 : bool;
+Tguess : real) =
+
+-- exist V12,  V13,  V23 : bool in
+-- exist Tguess : real in
+
+ Heat_on = true fby
+ loop
+  (V12 = (abs(T1-T2) < DELTA)) and -- Are T1 and T2 valid?
+  (V13 = (abs(T1-T3) < DELTA)) and -- Are T1 and T3 valid?
+  (V23 = (abs(T2-T3) < DELTA)) and -- Are T2 and T3 valid?
+
+  (Tguess = 
+    if noneoftree(V12, V13, V23) then FAILURE else 
+    if oneoftree(V12, V13, V23) then median(T1, T2, T3) else
+    if alloftree(V12, V13, V23) then median(T1, T2, T3) else
+
+    -- 2 among V1, V2, V3 are false 
+     if V12 then average(T1, T2) else
+     if V13 then average(T1, T3) else 
+        -- V23 is necessarily true,  hence T1 is wrong *)
+        average(T2, T3) 
+
+    ) 
+    and
+
+  (Heat_on =  
+     if Tguess = FAILURE then false else
+     if Tguess < TMIN    then true  else
+     if Tguess > TMAX    then false else
+                        pre Heat_on)

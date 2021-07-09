@@ -1,0 +1,9 @@
+(library
+ (name memprof_limits)
+ (public_name memprof-limits)
+ (synopsis "Memory limits based on memprof")
+ (private_modules limits_callbacks
+                  thread_map
+                  thread_map_core
+                  memprof_server)
+ (libraries threads))

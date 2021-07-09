@@ -1,0 +1,16 @@
+#!/bin/sh
+saofdm=$1
+dir=`dirname $saofdm`
+l_fic=/tmp/l.$$
+
+sed -n -e "/^MODEL.*$/,/^LIBRARY.*$/ p" $saofdm \
+   | sed -n -e "/^MODEL.*$/,/^NOTES_TYPE.*$/ p" \
+	| sed -n -e "/^MODEL.*$/,/^DIAG_SEM.*$/ p" \
+	| sed -n -e "/^MODEL.*$/,/^DIAG_MET.*$/ p" \
+   | egrep -v "(^$|^MODEL|^LIBRARY|^NOTES_TYPE|^DIAG_SEM|^DIAG_MET)" > $l_fic.s
+
+for saofd in `cat $l_fic.s`
+   do
+       sed -n -e "s/^node *\([^ (]*\) *(.*/\1/p" $dir/$saofd.saofd
+   done
+

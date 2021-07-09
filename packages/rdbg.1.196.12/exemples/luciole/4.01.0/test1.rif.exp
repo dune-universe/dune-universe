@@ -1,0 +1,9 @@
+# The random engine was initialized with the seed 1
+#inputs "T":real "T1":real "T2":real "T3":real 
+#outputs "Heat_on":bool 
+#step 0
+0.00 0.00 0.00 0.00 #outs t
+#step 1
+0.00 0.00 0.00 0.00 #outs t
+#step 2
+0.00 0.00 0.00 0.00 #outs t

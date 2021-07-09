@@ -1,0 +1,6 @@
+This directory contains a simple example illustrating how rdbg, lurette, and
+rdbg-batch can connect together programs that read/write their IO on stdio in RIF.
+
+
+
+

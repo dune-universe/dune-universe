@@ -1,0 +1,38 @@
+#!/bin/sh
+set -x #echo on
+
+TOOL=luciole-rif
+
+
+if [ "$#" -eq 0 ]; then
+    echo "usage: $TOOL [any sys call that reads/writes in RIF]
+examples:
+   $TOOL lutin env.lut -n main
+   $TOOL lv6 -exec controller.lus -n main 
+
+nb: this is an experimental script that uses rdbg
+   "
+    exit 01
+fi
+
+case $1 in
+    *lutin|*lus2lic|*lv6)
+        eval  "lurette  --luciole -o luciole.rif  -l 1000 -sut \"$@ -rif\""
+        ;;
+    *sasa*)
+        # In order to turn around a luciole limitation w.r.t. the display (luciole cannot
+        # display the values of the sasa initial configuration), one just needs to
+        # perform a step without triggering any node
+        eval  "lurette --luciole  --missing-vars-last -o sasa.rif -l 1000 -sut \"$@ -rif\""
+        ;;
+    *)
+        eval  "lurette --luciole  -o luciole.rif -l 1000 -sut \"$@\""
+        ;;
+esac
+rm rdbg_luciole.c
+rm rdbg_luciole.dro
+
+echo "@0: bye"
+# pbs: 
+#  - killing luciole does not kill the process
+#  

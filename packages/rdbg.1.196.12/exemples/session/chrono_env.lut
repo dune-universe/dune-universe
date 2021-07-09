@@ -1,0 +1,16 @@
+node chrono_bad_env(time:int) returns( pressed:bool;released:bool) =
+  loop true
+
+node chrono_fair_env(time:int) returns( pressed:bool;released:bool) =
+  loop not (pressed and released)
+
+node chrono_real_env(time:int) returns( pressed:bool;released:bool) =
+ let P = pressed and not released in
+ let R = not pressed and released in
+ let nothing = not pressed and not released in
+ loop
+  {
+     |5:  nothing
+     |5:  loop [1, 5] P fby loop [0, 10] nothing fby R -- a pulse
+     |1:  loop [30, 50] P -- re-init the chrono
+ }

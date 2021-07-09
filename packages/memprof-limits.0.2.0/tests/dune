@@ -1,0 +1,7 @@
+(tests
+ (names test_global_memory_limit
+        test_allocation_limit
+        test_memprof_compat
+        test_high_sampling_rate
+        test_token_limits)
+ (libraries memprof-limits))

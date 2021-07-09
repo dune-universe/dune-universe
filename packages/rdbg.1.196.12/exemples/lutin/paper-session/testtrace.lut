@@ -1,0 +1,10 @@
+let between(x, min, max : int) : bool = ((min < x) and (x < max))
+
+node sut(T:int) returns (b:bool) = loop true 
+
+node env(b:bool) returns (T : int) = 
+   T = 0 fby
+   loop { 
+    | b and T = pre T fby T = 1 + pre T 
+    | not b and between(T,9,42) }
+      

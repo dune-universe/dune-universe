@@ -1,0 +1,54 @@
+(executable
+ (name rdbgwrap)
+ (libraries rdbg threads)
+ (modules Rdbgwrap GenSessions)
+)
+
+; The batch executor
+; currently not usable because of Dynlink issues (cf, e.g.,  ../exemples/lutin/Makefile: test1)
+; indeed, to use lutin or lustre-v6 packages, we need to link modules that are part of
+; rdbg-batch (Int_misc, Unix, etc.) and Dynlink complains about that.
+; - Solution 1: compile rdbg-batch with lutin and lustre-v6 included (as lurette) with it 
+;  breaks the whole  plugin philosophy of rdbg
+; - Solution 2: wait for ocamlnat (indeed, the point of rdbg-batch is efficiency)
+(executable
+  (name rdbgbatch)
+  (libraries  rdbg) ; findlib.dynload
+  (link_flags (-linkall)); mandatory (cf https://discuss.ocaml.org/t/objects-and-dynlink/1720/3)
+  (modules Rdbgbatch)
+)
+
+;; The interactive interpreter
+(executable
+ (name rdbgstart)
+ (libraries  bigarray compiler-libs.toplevel rdbg)
+ (modules Rdbgstart)
+ (link_flags (-linkall)) ; mandatory
+ (modes      byte)
+)
+
+(executable
+ (name call_via_socket)
+ (libraries str unix)
+ (modules Call_via_socket)
+ (modes   native)
+)
+
+;; ounit testing
+(executable
+ (name ounitTestRun)
+ (libraries str num oUnit lutils)
+ (modules ounitTestRun)
+)
+
+(install
+ (section bin)
+ (package rdbg)
+ (files
+   (rdbgwrap.exe as rdbg)
+   (rdbgstart.exe as rdbg-top)
+   (rdbgbatch.exe as rdbg-batch)
+   (call_via_socket.exe as call-via-socket)
+   (ounitTestRun.exe as unit-test)
+  )
+)

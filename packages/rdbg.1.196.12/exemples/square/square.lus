@@ -1,0 +1,24 @@
+node squareR <<const n : int>>(x,presqrt:real)returns (Sqrt:real);
+var sqrt:real;
+    ecart:bool;
+let
+	ecart = (abs(presqrt-sqrt)<0.0005);
+	sqrt = (0.5*(presqrt + x/presqrt));
+
+	Sqrt = with(n<=1) then sqrt
+			 else (merge ecart
+                                (true -> sqrt when ecart)
+				(false -> (squareR<<(n-1)>> (x,sqrt)) when not ecart));
+	
+tel
+
+node square(x:real) returns (Sqrt:real);
+let
+	Sqrt = squareR <<30>> (x,1.0);
+tel
+
+node abs(x:real) returns (y:real);
+let
+    y = if x >= 0.0 then x else -x;
+tel
+

@@ -1,7 +1,0 @@
-(library
- (name memprof_limits)
- (modes byte native)
- (public_name memprof-limits)
- (synopsis "Memory limits based on memprof")
- (wrapped false)
- (libraries threads))

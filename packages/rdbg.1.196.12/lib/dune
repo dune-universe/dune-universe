@@ -1,0 +1,47 @@
+(library
+  (name rdbg)
+  (public_name rdbg)
+  (libraries dynlink lutils)
+  (wrapped false)
+;  (library_flags (-linkall))
+  (modules RdbgMain RdbgRun RdbgArg RdbgStdLib LutinRdbg LucioleRun ExtTool
+           StdioRun Callgraph Tagcov RifRun RdbgWrapperArgs
+           Expr RdbgEvent OcamlRM OcamlRun
+           RdbgPlugin RdbgMisc RdbgVersion Coverage
+  )
+  (synopsis "The necessary modules for using rdbg from an ocaml toplevel.")
+)
+
+
+(documentation
+ (package rdbg)
+; (mld_files RdbgEvent rdbStdLib)
+)
+
+(rule
+ (targets rdbgVersion.ml)
+ (deps generate-version.sh)
+ (action (run ./generate-version.sh)))
+
+
+;(library
+;  (name rdbgPlugin)
+;  (public_name rdbg-plugin)
+;  (libraries  lutils)
+;  (library_flags -linkall)
+;  (wrapped false)
+;;  (modules Expr RdbgEvent OcamlRM OcamlRun RdbgPlugin RdbgMisc RdbgVersion Coverage)
+;  (modules  Expr RdbgEvent RdbgPlugin )
+;  (synopsis
+;   "The necessary modules to plug languages interpreters (lustre v6, lutin) on rdbg.")
+;)
+
+;(library
+;  (name rifRun)
+;  (public_name rdbg4lurette)
+;  (libraries str dynlink lutils rdbg-plugin)
+;  (wrapped false)
+;  (modules ExtTool RdbgRun RifRun StdioRun LucioleRun RdbgArg RdbgWrapperArgs)
+;  (synopsis
+;    "The necessary modules to build a static lurette (which does not rely on ocaml).")
+;)

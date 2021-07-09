@@ -1,0 +1,222 @@
+{0 A guide to recover from interrupts}
+
+{%html:<blockquote>%}
+“\[…\] {i Note that the Interrupt exception dates back to the
+original SML90 language definition. It was excluded from the SML97
+version to avoid its malign impact on ML program semantics, but
+without providing a viable alternative.}” \[The Isabelle/ML manual,
+2010\]
+{%html:</blockquote>%}
+
+{2 Summary}
+
+For the program to recover from an interruption:
+- The task must simply be written like any program on its own,
+  programmed to clean-up and “fail fast” in the event of a failure,
+  using the provided resource-management features.
+- The monitor must make sure not to share state with the task,
+  unless write access to this state is protected under a resource
+  abstraction.
+
+{1 Introduction}
+
+Memprof-limits interrupts tasks by raising an exception at some
+allocation point chosen randomly by the memprof engine, if some limit
+is reached. It is in general not possible to reason about where this
+exception will arise nor to handle it locally: there are far too many
+possible locations in the code. Such exceptions are called {i
+asynchronous exceptions} or {i interrupts} \[Reppy, 1990\].
+
+The advantage of asynchrony is that the user code always remains
+responsive to memprof-limits interruptions, without requiring user
+code nor libraries it depends on to be reorganised to actively poll
+memprof-limits. The downside is that the asynchronous interrupt is
+akin to other exceptions denoting unexpected conditions causing the
+failure of the whole task at hand, such as
+{!exception:Stdlib.Out_of_memory}, {!exception:Stdlib.Stack_overflow},
+{!exception:Stdlib.Assert_failure}… The recovery from these unexpected
+exceptions is subject to some discipline, which we describe now.
+
+In short:
++ Do not rely on the returned exception,
++ Re-raise exceptions promptly,
++ Ensure isolation of state.
+
+{1 1. Do not rely on the returned exception}
+
+Catching a specific asynchronous interrupt is not reliable and in
+general hides bugs. The exception could have been caught in the user
+code with the intention of re-raising it, but another unexpected
+exception arose in the meanwhile, causing the original exception to be
+discarded. Yet it may very well be that the first exception arising in
+the wrong place was the cause of the second one, in which case the
+intention was to catch the first exception. In addition, exceptions
+are sometimes wrapped, such as inside the
+{!exception:Stdlib.Fun.Finally_raised} and {!exception:Dynlink.Error}
+exceptions in the OCaml stdlib, in order to augment them with
+contextual information.
+
+The indiscernability of asynchronous interrupts was noticed in
+Standard ML, which has attempted to solve it by representing all
+causes of interruption (out of memory, stack overflow, Ctrl+C…) with a
+single exception [Interrupt]. While Standard ML's notion of dedicated
+interrupt has never been part of OCaml, we can emulate it as a
+programmer discipline, by never matching on specific interrupts, and
+using the catch-all [_] instead. This amounts to {i treating all
+asynchronous interrupts, bugs, and uncaught exceptions} as being
+equivalent at that boundary.
+
+{2:1.1 In the case of memprof-limits}
+
+Memprof-limits handles this for you. In order to reliably tell whether
+a computation has been interrupted, it records instead with a flag
+whether it has previously raised an exception due to this particular
+limit instance.
+
+The generic form to handle the return value is the following.
+
+{[
+match Memprof_limits.limit_global_memory task with
+| Ok result -> …
+| Error exn1 -> (* limit reached *) …
+| exception exn2 -> (* some other error *) …
+]}
+
+The [Error] case is encountered whenever the computation of [task] has
+been interrupted by the corresponding limit being reached, whether the
+task has returned normally for some reason (exception caught and
+discarded), has let through the exception raised by memprof-limits, or
+has raised any other exception instead. In the latter case, this
+exception is [exn1] above, the latest exception raised in the task
+after interruption. [exn1] can be discarded {i assuming that the
+monitored computation was properly isolated} (see further below).
+
+If the limit has not been reached, no exception arising from the task
+is caught by memprof-limits ([exn2] above).
+
+{1 2. Re-raise exceptions promptly}
+
+Software relying on interrupts, such as Isabelle or Coq, have found
+necessary to request from users that they re-raise interrupts
+promptly. For instance, the Isabelle/ML manual states:
+
+{%html:<blockquote>%}
+“{i Isabelle/ML user code needs to terminate promptly on interruption,
+without guessing at its meaning to the system infrastructure.
+Temporary handling of interrupts for cleanup of global resources etc.
+needs to be followed immediately by re-raising of the original
+exception.}”
+{%html:</blockquote>%}
+
+For this purpose, both Isabelle/ML and the OCaml libraries of Coq
+offer predicates to test whether an exception is an interrupt, so that
+the user can act accordingly.
+
+{2:2.1 In the case of memprof-limits}
+
+OCaml does not have a built-in notion of interrupt and therefore does
+not provide such a predicate. However, another property comes save
+memprof-limits: if it happened that an interrupt was not re-raised
+promptly, then the task would be interrupted again soon.
+
+It is still possible for adversarial code to systematically catch and
+discard all interrupts, but it is unlikely that such code can achieve
+anything useful given that further interruptions are imminent. In
+practice, memprof-limits expects some cooperation from the task to not
+do anything like this. It is recommended not to use the catch-all [_]
+with exceptions without re-raising the exception promptly, and to
+prefer combinators such as {!val:Stdlib.Fun.protect} or
+{!Memprof_limits.Masking.with_resource}, which ensure that the
+interrupt is not discarded. Using the predicate
+{!Memprof_limits.is_interrupted} inside when-clauses of catch-alls
+helps you avoid catching interrupts.
+
+{1 3. Ensure isolation of state}
+
+We have mentioned that memprof-limits catches all exceptions if a
+limit is reached, which amounts to treating bugs and uncaught
+exceptions as interrupts too. In fact the memprof-limits functions
+that execute tasks act as an {i isolation boundary}, similar to a
+toplevel prompt or a thread.
+
+One aspect of isolation concerns the consistency of state in the
+program. An exception raised asynchronously can corrupt the program
+state if it occurs in the middle of a block meant to maintain some
+invariant. Then, it is the responsibility of the person catching the
+interrupt to make sure that no corrupt state escapes the boundary.
+This is done in two fashion:
+
+- {i Internal} state is one that is not shared outside of the task.
+  Since the interrupt has the intent of halting the computation of the
+  task, internal state is permitted to be corrupted in a transient
+  manner during resource clean-up, since nobody will be there to
+  witness the corrupted state after the task terminates.
+
+- If some state is shared outside of the task, its modification must
+  be done in such a way that it does not becomes corrupted by
+  interruption. The first example concerns resource allocation, which
+  must be paired with deallocation. Another example concerns
+  modifications to some state that in case of failure is rolled back
+  to a previous value, or invalidated in order to communicate the
+  failure. For instance, in the Rust language, the release action
+  associated to a mutex lock is responsible not only for unlocking the
+  mutex, but also for “poisoning” it in case of error, meaning that
+  the data it protects cannot be accessed normally any further \[The
+  Rust Team, 2010\].
+
+Thus, one can program the task without having to reason about
+interrupts: indeed, corrupted internal state disappears along with the
+task, whereas it is the role of the monitor of the task to ensure that
+no external state is shared with the task except through
+interrupt-safe abstractions.
+
+{2:3.1 In the case of memprof-limits}
+
+Memprof-limits offers {!val:Memprof_limits.Masking.with_resource},
+which can be used to clean-up resources reliably and to implement
+interrupt-safe abstractions. Checking whether clean-up was triggered
+by an interrupt (to implement rollback or poisoning) can be done using
+{!val:Memprof_limits.is_interrupted}.
+
+The case of global values can be seen as escaping the control of the
+monitor. Ideally, they should all be interrupt-safe by default. In the
+OCaml stdlib, some global state is interrupt-safe, but it is currently
+undocumented which one is and which one is not.
+
+{1 Bibliography}
+
++ John Reppy (1990), “{i Asynchronous signals in Standard ML}”,
+  Technical Report TR 90-1144, Department of Computer Science, Cornell
+  University, 1990.
+  {%html:<br />%}{: https://people.cs.uchicago.edu/~jhr/papers/1990/cornell-tr-1144.pdf}
++ David Abrahams (2000), “{i Exception-safety in generic components:
+  Lessons learned from specifying exception-safety for the C++ standard
+  library}”, in LNCS 1766 (Springer Verlag, 2000), 69-79,
+  {%html:<br />%}{: https://doi.org/10.1007/3-540-39953-4_6}
++ Simon Marlow, Simon Peyton Jones, Andrew Moran, and John Reppy
+  (2001). “{i Asynchronous exceptions in Haskell}”. SIGPLAN Notices 36,
+  nᵒ5 (2001): 274-85.
+  {%html:<br />%}{: https://doi.org/10.1145/381694.378858}
++ Joe Armstrong (2003), “{i Making reliable distributed systems in the
+  presence of software errors}”, Ph.D. thesis, Royal Institute of
+  Technology, Sweden, 2003.
+  {%html:<br />%}{: http://urn.kb.se/resolve?urn=urn:nbn:se:ri:diva-22455}
++ Johannes Siedersleben (2006), “{i Errors and Exceptions – Rights and
+  Obligations}”, in C. Dony et al. (Eds.): {i Advanced Topics in Exception
+  Handling Techniques}, LNCS 4119 (Springer Verlag, 2006), 275-287.
+  {%html:<br />%}{: https://doi.org/10.1007/11818502_15}
++ The Isabelle developers (2010), “Interrupts” in {i Isabelle/ML
+  manual}, documented circa 2010-2015.
+  {%html:<br />%}{: http://isabelle.in.tum.de/dist/library/Doc/Implementation/ML.html}
++ Joe Duffy (2016), “{i The Error Model}” in a series of blog posts on the
+  Midori project, 2016.
+  {%html:<br />%}{: http://joeduffyblog.com/2016/02/07/the-error-model/}
++ The Rust team (2017), “Poisoning” in {i The Rustonomicon}, 2017 (the
+  feature itself was implemented circa 2012).
+  {%html:<br />%}{: https://doc.rust-lang.org/nomicon/poisoning.html}
++ Tony Garnock-Jones (2017). “{i Conversational Concurrency}”, Ph.D.
+  thesis, Northeastern University, 2017.
+  {%html:<br />%}{: http://hdl.handle.net/2047/D20261862}
++ Michael Snoyman (2018), “{i Asynchronous Exception Handling in
+  Haskell}”, blog post, 2018.
+  {%html:<br />%}{: https://www.fpcomplete.com/blog/2018/04/async-exception-handling-haskell/}

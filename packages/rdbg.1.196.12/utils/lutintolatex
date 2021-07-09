@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# to generate colored latex version of lutin files
+
+
+
+FILE=$1
+
+sed -e 's/type /\\kwd{type} /g' $FILE \
+	| sed -e 's/{/\\{/g' \
+	| sed -e 's/}/\\}/g' \
+	| sed -e 's/--\(.*\)$/\\commentaire{--\1}/g' \
+	| sed -e 's/\"\(.*\)"/\\commentaire{\"\1\"}/g' \
+	| sed -e 's/loop/\\kwd{loop}/g' \
+	| sed -e 's/ \:=/\\kwd{ \:=}/g' \
+	| sed -e 's/ fby/\\kwd{ fby}/g' \
+	| sed -e 's/\&\>/\\kwd{\&\>}/g' \
+	| sed -e 's/try /\\kwd{try }/g' \
+	| sed -e 's/trap /\\kwd{trap }/g' \
+	| sed -e 's/catch /\\kwd{catch }/g' \
+	| sed -e 's/do /\\kwd{do }/g' \
+   | sed -e 's/const/\\kwd{const}/g' \
+   | sed -e 's/extern/\\kwd{extern}/g' \
+   | sed -e 's/node/\\kwd{node}/g' \
+   | sed -e 's/run /\\kwd{run }/g' \
+   | sed -e 's/include/\\kwd{include}/g' \
+   | sed -e 's/returns/\\kwd{returns}/g' \
+   | sed -e 's/type /\\kwd{type }/g' \
+   | sed -e 's/let /\\kwd{let }/g' \
+   | sed -e 's/assert /\\kwd{assert }/g' \
+   | sed -e 's/exist /\\kwd{exist }/g' \
+   | sed -e 's/ in/\\kwd{ in}/g' \
+   | sed -e 's/if /\\kwd{if }/g' \
+   | sed -e 's/then/\\kwd{then}/g' \
+   | sed -e 's/else/\\kwd{else}/g' \
+	| sed -e 's/ or / \\kwddd{ or} /g' \
+	| sed -e 's/ if / \\kwddd{ if } /g' \
+	| sed -e 's/trace/\\kwddd{trace}/g' \
+	| sed -e 's/bool/\\kwddd{bool}/g' \
+	| sed -e 's/real/\\kwddd{real}/g' \
+	| sed -e 's/int/\\kwddd{int}/g' \
+	| sed -e 's/then / \\kwddd{then } /g' \
+	| sed -e 's/ else/ \\kwddd{ else} /g' \
+	| sed -e 's/ pre/ \\kwddd{ pre} /g' \
+	| sed -e 's/ and/ \\kwddd{ and} /g' \
+	| sed -e 's/ not/ \\kwddd{ not} /g' \
+   | sed -e 's/ true/\\kwddd{ true}/g' \
+	| sed -e 's/ false/\\kwddd{ false}/g' \
+
+	> $FILE.tex
+
+
