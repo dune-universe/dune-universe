@@ -1,0 +1,5 @@
+(library
+ (name non_empty_list)
+ (public_name non_empty_list)
+ (libraries base)
+ (preprocess (pps ppx_deriving.eq ppx_deriving.ord ppx_deriving.show)))

@@ -1,0 +1,29 @@
+version: "0.1"
+opam-version: "2.0"
+maintainer: "ajo41@cam.ac.uk"
+authors: ["Alistair O'Brien"]
+homepage: "https://github.com/johnyob/ocaml-non-empty-list"
+bug-reports: "https://github.com/johnyob/ocaml-non-empty-list/issues"
+dev-repo: "git+https://github.com/johnyob/ocaml-non-empty-list.git"
+name: "non_empty_list"
+depends: [ 
+  "ocaml" { >= "4.08.0" }
+  "dune" { >= "2.8" }
+  "base" { >= "0.14.1" }
+  "ppx_deriving" { >= "4.5" }
+  "ocamlformat"
+  "alcotest" {with-test}
+]
+license: "MIT"
+synopsis: "A non empty list library for OCaml"
+description: """
+A list that is known, statically, to be nonempty. 
+The hd and tl functions don't require option types, or exceptions, improving safety.  
+
+This library follows closely Janestreet's Base library,
+providing similar complexity and functions to Base.List. 
+"""
+build: [
+  ["dune" "build" "-p" name]
+]
+run-test: ["dune" "runtest" "-p" name]
