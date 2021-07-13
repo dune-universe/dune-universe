@@ -1,0 +1,24 @@
+(executable
+ (name quickstart)
+ (modules quickstart)
+ (libraries bitwuzla))
+
+(executable
+ (name pushpop)
+ (modules pushpop)
+ (libraries bitwuzla))
+
+(executable
+ (name checksatassuming)
+ (modules checksatassuming)
+ (libraries bitwuzla))
+
+(executable
+ (name unsatcore)
+ (modules unsatcore)
+ (libraries bitwuzla))
+
+(executable
+ (name unsatassumption)
+ (modules unsatassumption)
+ (libraries bitwuzla))

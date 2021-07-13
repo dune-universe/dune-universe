@@ -1,3 +1,0 @@
-# This file won't parse, on purpose
-# It shouldn't be interpreted by ocamlformat
-this_is_an_error = true

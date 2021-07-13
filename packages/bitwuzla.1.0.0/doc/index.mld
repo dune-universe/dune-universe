@@ -1,0 +1,458 @@
+{1 Bitwuzla Ocaml API }
+
+Bitwuzla is an SMT solver for the theories of fixed-size bit-vectors,
+floating-point arithmetic, arrays and uninterpreted functions and their
+combinations.
+
+{2:quickstart Quickstart }
+
+You will want to create some expressions and assert formulas.
+For example, consider the following SMT-LIB input:
+
+{v
+(set-logic QF_BV)
+(set-option :produce-models true)
+(declare-const x (_ BitVec 8))
+(declare-const y (_ BitVec 8))
+(assert
+    (distinct
+        ((_ extract 3 0) (bvsdiv x (_ bv2 8)))
+        ((_ extract 3 0) (bvashr y (_ bv1 8)))))
+(check-sat)
+(get-model)
+(exit)
+v}
+
+This input is created and asserted as follows:
+
+{[
+  (* First, create a Bitwuzla instance. *)
+  let open Bitwuzla.Once () in
+  (* Create a bit-vector sort of size 8. *)
+  let bv8 = Sort.bv 8 in
+  (* Create two bit-vector variables of that sort. *)
+  let x = Term.const bv8 "x" and y = Term.const bv8 "y" in
+  (* Create bit-vector values one and two of the same sort. *)
+  let one = Term.Bv.one bv8 and two = Term.Bv.of_int bv8 2 in
+  (* (bvsdiv x (_ bv2 8)) *)
+  let sdiv = Term.Bv.sdiv x two in
+  (* (bvashr y (_ bv1 8)) *)
+  let ashr = Term.Bv.shift_right y one in
+  (* ((_ extract 3 0) (bvsdiv x (_ bv2 8))) *)
+  let sdive = Term.Bv.extract ~hi:3 ~lo:0 sdiv in
+  (* ((_ extract 3 0) (bvashr x (_ sortbv1 8))) *)
+  let ashre = Term.Bv.extract ~hi:3 ~lo:0 ashr in
+  (*
+     (assert
+       (distinct
+         ((_ extract 3 0) (bvsdiv x (_ sortbv2 8)))
+         ((_ extract 3 0) (bvashr y (_ sortbv1 8)))))
+  *)
+  assert' @@ Term.distinct sdive ashre;
+]}
+
+After asserting formulas, satisfiability can be determined via
+{!val:check_sat}.
+
+{[
+  (* (check-sat) *)
+  let result = check_sat () in
+]}
+
+If the formula is satifiable, it is possible to query the value
+of expressions via {!val:get_value} as well as its concrete value
+via {!val:assignment}.
+
+{[
+  assert (result = Sat);
+  let xval = get_value x and yval = get_value y in
+  Format.printf "assignment of x: %s@\n"
+  @@ Z.format "%08b" @@ Term.Bv.assignment xval;
+  Format.printf "assignment of y: %s@\n"
+  @@ Z.format "%08b" @@ Term.Bv.assignment yval;
+]}
+
+It is also possible to query the model value of expressions that do not
+occur in the input formula.
+
+{[
+  let x2 = Term.Bv.mul x x in
+  let x2val = get_value x2 in
+  Format.printf "assignment of x * x: %s@\n"
+  @@ Z.format "%08b" @@ Term.Bv.assignment x2val;
+]}
+
+We can then let the garbage collector delete the Bitwuzla instance,
+but if we want to release the resources earlier, it is possible to
+call the funcion {!val:unsafe_close ()} as the last action of the session.
+
+{[
+  unsafe_close ()
+]}
+
+{2 Examples }
+
+All examples can be found in directory
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples} examples}.
+Assuming Bitwuzla was built from sources, run the following command to build
+and run an example:
+
+[dune exec -- examples/quickstart.exe # replace quickstart by other examples]
+
+{3 Quickstart example}
+
+The example used in the {!section:quickstart} guide.
+
+The SMT-LIB input for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/quickstart.smt2} examples/quickstart.smt2}.
+The source code for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/quickstart.ml} examples/quickstart.ml}.
+
+{[
+let () =
+
+  (* First, create a Bitwuzla instance. *)
+  let open Bitwuzla.Once () in
+
+  (* Create a bit-vector sort of size 8. *)
+  let bv8 = Sort.bv 8 in
+
+  (* Create two bit-vector variables of that sort. *)
+  let x = Term.const bv8 "x" and y = Term.const bv8 "y" in
+
+  (* Create bit-vector values one and two of the same sort. *)
+  let one = Term.Bv.one bv8 and two = Term.Bv.of_int bv8 2 in
+
+  (* (bvsdiv x (_ bv2 8)) *)
+  let sdiv = Term.Bv.sdiv x two in
+
+  (* (bvashr y (_ bv1 8)) *)
+  let ashr = Term.Bv.shift_right y one in
+
+  (* ((_ extract 3 0) (bvsdiv x (_ bv2 8))) *)
+  let sdive = Term.Bv.extract ~hi:3 ~lo:0 sdiv in
+
+  (* ((_ extract 3 0) (bvashr x (_ sortbv1 8))) *)
+  let ashre = Term.Bv.extract ~hi:3 ~lo:0 ashr in
+
+  (*
+     (assert
+       (distinct
+         ((_ extract 3 0) (bvsdiv x (_ sortbv2 8)))
+         ((_ extract 3 0) (bvashr y (_ sortbv1 8)))))
+  *)
+  assert' @@ Term.distinct sdive ashre;
+
+  (* (check-sat) *)
+  let result = check_sat () in
+  assert (result = Sat);
+
+  (* (get-model) *)
+  let xval = get_value x and yval = get_value y in
+  Format.printf "assignment of x: %s@\n" @@ Z.format "%08b"
+  @@ Term.Bv.assignment xval;
+  Format.printf "assignment of y: %s@\n" @@ Z.format "%08b"
+  @@ Term.Bv.assignment yval;
+  let x2 = Term.Bv.mul x x in
+  let x2val = get_value x2 in
+  Format.printf "assignment of x * x: %s@\n" @@ Z.format "%08b"
+  @@ Term.Bv.assignment x2val;
+
+  (* Finally, delete the Bitwuzla instance. *)
+  unsafe_close ()
+]}
+
+{3 Incremental example with push and pop}
+
+An incremental example with [push] and [pop].
+
+The SMT-LIB input for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/pushpop.smt2} examples/pushpop.smt2}.
+The source code for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/pushpop.ml} examples/pushpop.ml}.
+
+{[
+let () =
+
+  (* First, create a Bitwuzla instance enabling incremental solving. *)
+  let open Bitwuzla.Incremental () in
+
+  (* Create a bit-vector sort of size 1 and another of size 2. *)
+  let bv1 = Sort.bv 1 and bv2 = Sort.bv 2 in
+
+  (* (declare-const o0 (_ BitVec 1)) *)
+  let o0 = Term.const bv1 "o0"
+  (* (declare-const o1 (_ BitVec 1)) *)
+  and o1 = Term.const bv1 "o1"
+  (* (declare-const s0 (_ BitVec 2)) *)
+  and s0 = Term.const bv2 "s0"
+  (* (declare-const s1 (_ BitVec 2)) *)
+  and s1 = Term.const bv2 "s1"
+  (* (declare-const s2 (_ BitVec 2)) *)
+  and s2 = Term.const bv2 "s2"
+  (* (declare-const goal (_ BitVec 2)) *)
+  and goal  = Term.const bv2 "goal"
+
+  (* Create bit-vector values zero, one, three. *)
+  and zero  = Term.Bv.zero bv2
+  and one2  = Term.Bv.one bv2
+  and three = Term.Bv.of_int bv2 3 in
+
+  (* Add some assertions. *)
+  assert' @@ Term.equal s0 zero;
+  assert' @@ Term.equal goal three;
+
+  (* Push, assert, check sat and pop. *)
+  push 1;
+  assert' @@ Term.equal s0 goal;
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result @@ check_sat ();
+  pop 1;
+
+  (* (assert (= s1 (ite (= o0 (_ sortbv1 1)) (bvadd s0 one) s0))) *)
+  assert' @@ Term.equal s1 (Term.ite o0 (Term.Bv.add s0 one2) s0);
+
+  (* Push, assert, check sat and pop. *)
+  push 1;
+  assert' @@ Term.equal s1 goal;
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result @@ check_sat ();
+  pop 1;
+
+  (* (assert (= s2 (ite (= o1 (_ sortbv1 1)) (bvadd s1 one) s1))) *)
+  assert' @@ Term.equal s2 (Term.ite o1 (Term.Bv.add s1 one2) s1);
+
+  (* Push, assert, check sat and pop. *)
+  push 1;
+  assert' @@ Term.equal s1 goal;
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result @@ check_sat ();
+  pop 1;
+
+  (* Finally, delete the Bitwuzla instance. *)
+  unsafe_close ()
+]}
+
+{3 Incremental example with check-sat-assuming}
+
+This example shows how to implement the example above with [check-sat-assuming]
+instead of [push] and [pop].
+
+The SMT-LIB input for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/checksatassuming.smt2} examples/checksatassuming.smt2}.
+The source code for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/checksatassuming.ml} examples/checksatassuming.ml}.
+
+{[
+let () =
+
+  (* First, create a Bitwuzla instance enabling incremental solving. *)
+  let open Bitwuzla.Incremental () in
+
+  (* Create a bit-vector sort of size 1 and another of size 2. *)
+  let bv1 = Sort.bv 1 and bv2 = Sort.bv 2 in
+
+  (* (declare-const o0 (_ BitVec 1)) *)
+  let o0 = Term.const bv1 "o0"
+  (* (declare-const o1 (_ BitVec 1)) *)
+  and o1 = Term.const bv1 "o1"
+  (* (declare-const s0 (_ BitVec 2)) *)
+  and s0 = Term.const bv2 "s0"
+  (* (declare-const s1 (_ BitVec 2)) *)
+  and s1 = Term.const bv2 "s1"
+  (* (declare-const s2 (_ BitVec 2)) *)
+  and s2 = Term.const bv2 "s2"
+  (* (declare-const goal (_ BitVec 2)) *)
+  and goal  = Term.const bv2 "goal"
+
+  (* Create bit-vector values zero, one, three. *)
+  and zero  = Term.Bv.zero bv2
+  and one2  = Term.Bv.one bv2
+  and three = Term.Bv.of_int bv2 3 in
+
+  (* Add some assertions. *)
+  assert' @@ Term.equal s0 zero;
+  assert' @@ Term.equal goal three;
+
+  (* (check-sat-assuming ((= s0 goal))) *)
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result
+  @@ check_sat_assuming [| Term.equal s0 goal |];
+
+  (* (assert (= s1 (ite (= o0 (_ sortbv1 1)) (bvadd s0 one) s0))) *)
+  assert' @@ Term.equal s1 (Term.ite o0 (Term.Bv.add s0 one2) s0);
+
+  (* (check-sat-assuming ((= s1 goal))) *)
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result
+  @@ check_sat_assuming [| Term.equal s1 goal |];
+
+  (* (assert (= s2 (ite (= o1 (_ sortbv1 1)) (bvadd s1 one) s1))) *)
+  assert' @@ Term.equal s2 (Term.ite o1 (Term.Bv.add s1 one2) s1);
+
+  (* (check-sat-assuming ((= s2 goal))) *)
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result
+  @@ check_sat_assuming [| Term.equal s2 goal |];
+
+  (* Finally, delete the Bitwuzla instance. *)
+  unsafe_close ()
+]}
+
+{3 Unsat core example}
+
+This example shows how to extract an unsat core. It creates bit-vector
+and floating-point terms and further illustrates how to create lambda terms
+([define-fun]).
+
+The SMT-LIB input for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/unsatcore.smt2} examples/unsatcore.smt2}.
+The source code for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/unsatcore.ml} examples/unsatcore.ml}.
+
+{[
+let () =
+
+  (* First, create a Bitwuzla instance enabling unsat core extraction. *)
+  let open Bitwuzla.Unsat_core () in
+
+  (* Create a bit-vector sort of size 2 and another of size 4. *)
+  let bv2 = Sort.bv 2 and bv4 = Sort.bv 4
+  (* Create Float16 floatinf-point sort. *)
+  and fp16 = Sort.fp ~exponent:5 16 in
+
+  (* Create bit-vector variables. *)
+  (* (declare-const x0 (_ BitVec 4)) *)
+  let x0 = Term.const bv4 "x0"
+  (* (declare-const x1 (_ BitVec 2)) *)
+  and x1 = Term.const bv2 "x1"
+  (* (declare-const x2 (_ BitVec 2)) *)
+  and x2 = Term.const bv2 "x2"
+  (* (declare-const x3 (_ BitVec 2)) *)
+  and x3 = Term.const bv2 "x3"
+  (* (declare-const x4 Float16) *)
+  and x4 = Term.const fp16 "x4" in
+
+  (* Create FP positive zero. *)
+  let fpzero = Term.Fp.pos_zero fp16
+  (* Create BV zero of size 4. *)
+  and bvzero = Term.Bv.zero bv4 in
+
+  (* (define-fun f0 ((a Float16)) Bool (fp.gt a (_ +zero 5 11))) *)
+  let f0 = Term.Uf.lambda [ fp16 ] (fun [ a ] -> Term.Fp.gt a fpzero) in
+
+  (* (define-fun f1 ((a Float16)) (_ BitVec 4) (ite (f0 a) x0 #b0000)) *)
+  let f1 = Term.Uf.lambda [ fp16 ] (fun [ a ] ->
+      Term.ite (Term.Uf.apply f0 [ a ]) x0 bvzero) in
+
+  (* (define-fun f2 ((a Float16)) (_ BitVec 2) ((_ extract 1 0) (f1 a))) *)
+  let f2 = Term.Uf.lambda [ fp16 ] (fun [ a ] ->
+      Term.Bv.extract ~hi:1 ~lo:0 (Term.Uf.apply f1 [ a ])) in
+
+  (* (assert (! (bvult x2 (f2 (_ +zero 5 11))) :named assertion0)) *)
+  assert' ~name:"assertion0"
+  @@ Term.Bv.ult x2 (Term.Uf.apply f2 [ fpzero ]);
+
+  (* (assert (! (= x1 x2 x3) :named assertion1)) *)
+  assert' ~name:"assertion1"
+  @@ Term.Bl.logand (Term.equal x1 x2) (Term.equal x2 x3);
+
+  (* (assert (!(= x4 ((_ to_fp_unsigned 5 11) RNE x3)) :named assertion2)) *)
+  assert' ~name:"assertion2"
+  @@ Term.equal x4 (Term.Fp.of_sbv ~exponent:5 16 Term.Rm.rne x3);
+
+  (* (check-sat) *)
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result @@ check_sat ();
+
+  (* (get-unsat-core) *)
+  Format.printf "Unsat core: {";
+  Array.iter (fun a -> Format.printf " %a" Term.pp a) @@ get_unsat_core ();
+  Format.printf " }@\n";
+
+  (* Finally, delete the Bitwuzla instance. *)
+  unsafe_close ()
+]}
+
+{3 Unsat assumptions example}
+
+This example shows how to implement the example above with
+[get-unsat-assumptions].
+
+The SMT-LIB input for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/unsatassumption.smt2} examples/unsatassumption.smt2}.
+The source code for this example can be found at
+{{: https://github.com/bitwuzla/ocaml-bitwuzla/tree/master/examples/unsatassumption.ml} examples/unsatassumption.ml}.
+
+{[
+let () =
+
+  (* First, create a Bitwuzla instance enabling unsat core extraction. *)
+  let open Bitwuzla.Incremental () in
+
+  (* Create a bit-vector sort of size 2 and another of size 4. *)
+  let bv2 = Sort.bv 2 and bv4 = Sort.bv 4
+  (* Create Float16 floatinf-point sort. *)
+  and fp16 = Sort.fp ~exponent:5 16 in
+
+  (* Create bit-vector variables. *)
+  (* (declare-const x0 (_ BitVec 4)) *)
+  let x0 = Term.const bv4 "x0"
+  (* (declare-const x1 (_ BitVec 2)) *)
+  and x1 = Term.const bv2 "x1"
+  (* (declare-const x2 (_ BitVec 2)) *)
+  and x2 = Term.const bv2 "x2"
+  (* (declare-const x3 (_ BitVec 2)) *)
+  and x3 = Term.const bv2 "x3"
+  (* (declare-const x4 Float16) *)
+  and x4 = Term.const fp16 "x4" in
+
+  (* Create FP positive zero. *)
+  let fpzero = Term.Fp.pos_zero fp16
+  (* Create BV zero of size 4. *)
+  and bvzero = Term.Bv.zero bv4 in
+
+  (* (define-fun f0 ((a Float16)) Bool (fp.gt a (_ +zero 5 11))) *)
+  let f0 = Term.Uf.lambda [ fp16 ] (fun [ a ] -> Term.Fp.gt a fpzero) in
+
+  (* (define-fun f1 ((a Float16)) (_ BitVec 4) (ite (f0 a) x0 #b0000)) *)
+  let f1 = Term.Uf.lambda [ fp16 ] (fun [ a ] ->
+      Term.ite (Term.Uf.apply f0 [ a ]) x0 bvzero) in
+
+  (* (define-fun f2 ((a Float16)) (_ BitVec 2) ((_ extract 1 0) (f1 a))) *)
+  let f2 = Term.Uf.lambda [ fp16 ] (fun [ a ] ->
+      Term.Bv.extract ~hi:1 ~lo:0 (Term.Uf.apply f1 [ a ])) in
+
+  (* (define-fun assumption0 () Bool (bvult x2 (f2 (_ +zero 5 11)))) *)
+  let assumption0 = Term.Bv.ult x2 (Term.Uf.apply f2 [ fpzero ]) in
+
+  (* (define-fun assumption1 () Bool (= x1 x2 x3)) *)
+  let assumption1 = Term.Bl.logand (Term.equal x1 x2) (Term.equal x2 x3) in
+
+  (* (define-fun assumption2 () Bool (= x4 ((_ to_fp_unsigned 5 11) RNE x3))) *)
+  let assumption2 =
+    Term.equal x4 (Term.Fp.of_sbv ~exponent:5 16 Term.Rm.rne x3) in
+
+  (* (check-sat) *)
+  Format.printf "Expect: unsat@\n";
+  Format.printf "Bitwuzla: %a@\n" pp_result
+  @@ check_sat_assuming
+    ~names:[| "assumption0"; "assumption1"; "assumption2" |]
+    [| assumption0; assumption1; assumption2 |];
+
+  (* (get-unsat-core) *)
+  Format.printf "Unsat core: {";
+  Array.iter (fun a -> Format.printf " %a" Term.pp a)
+  @@ get_unsat_assumptions ();
+  Format.printf " }@\n";
+
+  (* Finally, delete the Bitwuzla instance. *)
+  unsafe_close ()
+]}
+
+{2 Interface }
+
+The {!module:Bitwuzla} library proposes the following sessions:
+- {!module: Bitwuzla.Once} (for one time check and model query);
+- {!module: Bitwuzla.Incremental} (for incremental solving);
+- {!module: Bitwuzla.Unsat_core} (for unsatifiable core generation).

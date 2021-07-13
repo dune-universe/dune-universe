@@ -1,3 +1,0 @@
-ocamlformat: ignoring "tests/edge_cases.ml" (syntax error)
-File "tests/edge_cases.ml", line 21, characters 4-5:
-Error: Syntax error: wildcard "_" not expected.

@@ -1,0 +1,44 @@
+on: [push, pull_request]
+name: CI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ocaml-compiler:
+          - 4.08.1
+          - 4.09.1
+          - 4.10.1
+          - 4.11.0
+          - 4.12.0
+        package:
+          - bitwuzla-c
+          - bitwuzla
+        test:
+          -
+          - --with-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+
+      - run: opam pin add . --no-action
+
+      - run: opam depext ${{ matrix.package }} --yes ${{ matrix.test }}
+
+
+      - run: opam install ${{ matrix.package }} --deps-only ${{ matrix.test }}
+
+      - run: opam exec -- dune build --only-packages ${{ matrix.package }} @install
+
+      - if: matrix.test != ''
+        run: opam exec -- dune build --only-packages ${{ matrix.package }} @runtest
