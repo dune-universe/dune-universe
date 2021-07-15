@@ -1,0 +1,6 @@
+
+
+node predef01(x,y: bool^42) returns (o: bool^42);
+let
+	o = map<<or, 42>>(x,y);
+tel

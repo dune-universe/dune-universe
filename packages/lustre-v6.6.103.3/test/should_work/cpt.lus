@@ -1,0 +1,5 @@
+node cpt(evt: bool; reset: bool) returns (cpt: int);
+let
+  cpt = if reset then 0
+        else (0 -> pre(cpt)) + (if evt then 1 else 0);
+tel

@@ -1,0 +1,9 @@
+type Toto = struct {
+	x : int = 1;
+	y : int = 2
+}; 
+
+node struct0 (dummy : int) returns (z : Toto);
+let
+	z = Toto { x = 3 };
+tel

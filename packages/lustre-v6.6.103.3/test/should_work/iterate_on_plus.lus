@@ -1,0 +1,82 @@
+-- nonreg: "--expand-nodes -esa"
+node O(x: bool) returns (y: bool);
+let
+   y = false -> pre x; -- y = 0 x
+tel
+
+node I(x: bool) returns (y: bool);
+let
+   y = true -> pre x; -- y = 1 x
+tel
+
+--node adder=plus;
+node plus(x,y: bool) returns (s: bool);
+var c: bool;
+let
+   c = O(if c then (x or y) else (x and y));
+   s = c xor x xor y;
+tel
+
+
+node tabtimes<<const n: int; const dummy: bool>> (
+	xin, yin : bool
+) returns (
+	z : bool
+);
+var
+	------------------
+	-- time :
+	-- T[i]_i = 1 T[i]_j = 0 
+	T : bool^n;
+	------------------
+	-- x bits:
+	-- XB[i]_t = x_i if t >= i
+	--         = 0 else
+	------------------
+	XB : bool^n;
+	------------------
+	-- y window:
+	-- WY[i]_t = y_(t-i) si t >= i
+	--         = 0 sinon
+	WY : bool^n;
+	------------------
+	-- Sum arguments:
+	-- A[i]_t = if XB[i]_t then
+	-- WY[i]_t else false
+	A : bool^n;
+	------------------
+	-- Sum accumulator:
+	------------------
+	S : bool^n;
+	--APRES n ticks :
+	timeout : bool;
+	
+	x, y : bool;
+let
+	--input filtering:
+	--enforce 0 after timeout
+	x = xin and not timeout;
+	y = yin and not timeout;
+
+	T[0] = true -> false;
+	T[1..n-1] = false^(n-1) -> pre T[0..n-2];
+	timeout = (false -> pre timeout) or T[n-1];
+
+	--XB = if T then x^n else (false^n -> pre XB);
+	XB = map<<Lustre::if,n>>(T, x^n, map<<O,n>>(XB));
+
+	WY[0] = y;
+	WY[1..n-1] = false^(n-1) -> pre WY[0..n-2];
+
+	A = map<<Lustre::if,n>>(XB, WY, false^n);
+
+	S[0] = A[0];
+	--S[1..n-1] = map<<adder,n-1>>(S[0..n-2], A[1..n-1]);
+	S[1..n-1] = map<<plus,n-1>>(S[0..n-2], A[1..n-1]);
+
+	z = if timeout then dummy else S[n-1];
+tel
+
+node iterate_on_plus = tabtimes<<4,false>>;
+
+

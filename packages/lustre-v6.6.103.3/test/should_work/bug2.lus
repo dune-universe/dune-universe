@@ -1,0 +1,12 @@
+
+
+-- bug :  l'affichage du champ f2 est bizzare (rien a voir avec l'expansion des 
+-- types structurés cependant.) ->  ("{ f2=_v1_0, _v1_1 ; f1=42 }")
+
+type s =  { f1: int ; f2: int^2 };
+
+node bug2(x:s) returns (i: s^2);
+let 
+
+  i = s { f1 = 42; f2 = [5, 6] } ^ 2;
+tel

@@ -1,0 +1,5 @@
+extern node imp(x: int) returns (y: int);
+node import1(a,b: int) returns (c: int);
+let
+  c = imp(a) + imp(b);
+tel

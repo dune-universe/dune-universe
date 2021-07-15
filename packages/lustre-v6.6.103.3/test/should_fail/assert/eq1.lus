@@ -1,0 +1,11 @@
+
+node eq1 (a,b,c,d,e: bool)
+returns (w,x,y,z: bool);
+let
+  w = if b or c then not (d and e) else false;
+  x = true;
+  y = #(c,d);
+  z = (w <> c) and not e;
+  assert not (d and e);
+tel
+  

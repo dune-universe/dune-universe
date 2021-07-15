@@ -1,0 +1,6 @@
+
+node noAlarm(alarm : bool) returns (ok : bool);
+let
+	ok = not alarm;
+tel
+

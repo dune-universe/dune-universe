@@ -1,0 +1,5 @@
+node aux(ck: bool)
+returns (x: int);
+let
+	x = pre(x) +1;
+tel

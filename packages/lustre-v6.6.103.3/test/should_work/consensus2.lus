@@ -1,0 +1,7 @@
+node consensus<<const n : int>>(T: bool^n) 
+returns (a: bool); 
+let
+  a = with (n = 1) then T[0]
+      else T[0] and consensus << n-1 >> (T[1 .. n-1]);
+tel
+node consensus2 = consensus<<8>>;

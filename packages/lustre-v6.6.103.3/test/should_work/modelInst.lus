@@ -1,0 +1,43 @@
+-- Un modele simple
+-------------------
+model m1
+  needs 
+    type t;
+	
+  provides
+    node n ( init, in : t ) returns ( ok : t );
+	
+  body
+
+node n(init, in: t) returns (ok: t);
+let
+  ok = init -> pre in;
+tel
+  end
+
+  
+
+-- le package principal definit une instance de "m1" localement
+---------------------------------------------------------------- 
+package Pint = m1( t=int );
+package Pbool = m1( t=bool );
+package Preal = m1( t=real );
+  
+package modelInst
+  uses Pint;
+  provides node modelInst(i: int; ray : real) returns (oint: int; obool: bool; oreal: real);
+
+  body
+	
+  
+const pi = 3.14159;
+      
+node modelInst(i: int; ray : real) returns (oint: int; obool: bool; oreal: real);
+let
+  oint = Pint::n(0, i);
+  obool = Pbool::n(true, i < 50);
+  oreal = Preal::n(0., 0. -> pi * ray * ray);
+tel 
+  
+  end
+

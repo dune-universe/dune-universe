@@ -1,0 +1,23 @@
+all:test
+
+testdir=$(shell pwd)
+
+
+tmpdirs:
+	[ -d tmp ] || mkdir tmp
+runtest: 
+	runtest --tool lus2lic  lus2lic.tests/non-reg.exp
+
+test: lus2lic ec2c runtest 
+
+
+lus2lic:
+	ln -s ../bin/lus2lic
+
+# requires ec2c (distributed in the lv4 package)
+ec2c:
+	ln -s `which ec2c`
+
+
+
+

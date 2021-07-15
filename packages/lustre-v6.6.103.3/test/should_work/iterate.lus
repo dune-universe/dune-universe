@@ -1,0 +1,51 @@
+node iterate(IN1 : int^10; IN2:int^10) 
+returns (
+	OUT : int^10;
+	out_map1 : int^10;
+	out_map2 : int^10;
+	out_red1 : int;
+	out_fill1, out_fill2 : int^10;
+	out_fillred1 : int;
+	out_fillred2, out_fillred3 : int^10);
+var
+  bidon : int;
+let
+  out_map1, out_map2 = map<<mapped;10>>(IN1, IN2);  -- Copie a l'identique les entrees dans les sorties
+  out_red1 = red<<redduced;10>>(0, IN1, IN2);       -- permet de calculer la somme des elements des 2 tableaux d'entree
+  bidon, out_fill1, out_fill2 = fill<<filled;10>>(0);      -- construit [0, 1, 2, ... , 9] et [0, 2, 4, ... , 18]
+  out_fillred1, out_fillred2, out_fillred3, OUT =      
+          fillred<<fill_redduced;10>>(0, IN1, IN2);
+tel
+
+
+
+node mapped(elt_in1, elt_in2 : int) returns (elt_out1, elt_out2 : int);
+let
+  elt_out1 = elt_in1;
+  elt_out2 = elt_in2;
+tel
+
+
+
+node redduced(accu_in : int ; elt_in1,  elt_in2 : int) returns (accu_out : int);
+let
+   accu_out = accu_in + elt_in1 + elt_in2;
+tel
+
+
+node filled(accu_in : int) returns (accu_out : int; elt_out1, elt_out2 : int);
+let
+   accu_out = accu_in + 1;
+   elt_out1 = accu_in;
+   elt_out2 = accu_in * 2;
+tel
+
+node fill_redduced(accu_in : int ; elt_in1,  elt_in2 : int) returns (accu_out : int; elt_out1, elt_out2, elt_out3 : int);
+let
+   accu_out = accu_in + 1;
+   elt_out1 = elt_in1;
+   elt_out2 = elt_in2;
+   elt_out3 = elt_in1 + elt_in2;
+tel
+ 
+

@@ -1,0 +1,6 @@
+-- Test de l'operateur diese
+
+function test_diese(a:bool; b:bool) returns ( res: bool);
+let
+	res =  #(a,b);
+tel

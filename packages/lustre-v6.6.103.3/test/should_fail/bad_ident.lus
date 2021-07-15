@@ -1,0 +1,11 @@
+  
+node bad_ident(x':bool) returns (res:bool);
+let
+  res = x';
+tel
+  -- end of bad_ident
+
+node bad_ident2(double:bool) returns (res:bool);
+let
+  res = double;
+tel

@@ -1,0 +1,1487 @@
+node o2l_feux_compl (
+  TD,
+  TI,
+  CP,
+  AB,
+  LP : bool)
+returns(
+  veilleuses,
+  codes,
+  phares,
+  anti_b,
+  longue_p : bool);
+var
+  o2l_A_0, o2l_P_0,
+  o2l_A_1, o2l_P_1,
+  o2l_A_2, o2l_P_2,
+  o2l_A_3, o2l_P_3,
+  o2l_A_4, o2l_P_4,
+  o2l_A_5, o2l_P_5,
+  o2l_A_6, o2l_P_6,
+  o2l_A_7, o2l_P_7,
+  o2l_A_8, o2l_P_8,
+  o2l_A_9, o2l_P_9,
+  o2l_A_10, o2l_P_10,
+  o2l_A_11, o2l_P_11,
+  o2l_A_12, o2l_P_12,
+  o2l_A_13, o2l_P_13,
+  o2l_A_14, o2l_P_14,
+  o2l_A_15, o2l_P_15: bool;
+let
+  assert #(
+    o2l_A_0, 
+    o2l_A_1, 
+    o2l_A_2, 
+    o2l_A_3, 
+    o2l_A_4, 
+    o2l_A_5, 
+    o2l_A_6, 
+    o2l_A_7, 
+    o2l_A_8, 
+    o2l_A_9, 
+    o2l_A_10, 
+    o2l_A_11, 
+    o2l_A_12, 
+    o2l_A_13, 
+    o2l_A_14, 
+    o2l_A_15);
+
+  assert #(
+    o2l_P_0, 
+    o2l_P_1, 
+    o2l_P_2, 
+    o2l_P_3, 
+    o2l_P_4, 
+    o2l_P_5, 
+    o2l_P_6, 
+    o2l_P_7, 
+    o2l_P_8, 
+    o2l_P_9, 
+    o2l_P_10, 
+    o2l_P_11, 
+    o2l_P_12, 
+    o2l_P_13, 
+    o2l_P_14, 
+    o2l_P_15);
+
+  o2l_P_0 = true -> pre o2l_A_0;
+
+  o2l_A_0 = 
+      o2l_P_0 and
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_1 and
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_2 and
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_3 and
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_4 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_5 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_6 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_7 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP);
+
+  o2l_P_1 = false -> pre o2l_A_1;
+
+  o2l_A_1 = 
+      o2l_P_0 and
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_1 and
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_2 and
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_3 and
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_4 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_5 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_6 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_7 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP);
+
+  o2l_P_2 = false -> pre o2l_A_2;
+
+  o2l_A_2 = 
+      o2l_P_0 and
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_1 and
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_2 and
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_3 and
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_4 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_5 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_6 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_7 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP);
+
+  o2l_P_3 = false -> pre o2l_A_3;
+
+  o2l_A_3 = 
+      o2l_P_0 and
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_1 and
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_2 and
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_3 and
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_4 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_5 and
+      TI and 
+      (if TD
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_6 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_7 and
+      TI and 
+      (if TD
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP);
+
+  o2l_P_4 = false -> pre o2l_A_4;
+
+  o2l_A_4 = 
+      o2l_P_0 and
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_1 and
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_2 and
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_3 and
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_4 and
+      not TI and 
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_5 and
+      not TI and 
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_6 and
+      not TI and 
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_7 and
+      not TI and 
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_8 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_9 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_10 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_11 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_12 and
+      TI and 
+      not AB and 
+      not LP
+    or
+      o2l_P_13 and
+      TI and 
+      not AB and 
+      LP
+    or
+      o2l_P_14 and
+      TI and 
+      AB and 
+      not LP
+    or
+      o2l_P_15 and
+      TI and 
+      AB and 
+      LP;
+
+  o2l_P_5 = false -> pre o2l_A_5;
+
+  o2l_A_5 = 
+      o2l_P_0 and
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_1 and
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_2 and
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_3 and
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_4 and
+      not TI and 
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_5 and
+      not TI and 
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_6 and
+      not TI and 
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_7 and
+      not TI and 
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_8 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_9 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_10 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_11 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_12 and
+      TI and 
+      not AB and 
+      LP
+    or
+      o2l_P_13 and
+      TI and 
+      not AB and 
+      not LP
+    or
+      o2l_P_14 and
+      TI and 
+      AB and 
+      LP
+    or
+      o2l_P_15 and
+      TI and 
+      AB and 
+      not LP;
+
+  o2l_P_6 = false -> pre o2l_A_6;
+
+  o2l_A_6 = 
+      o2l_P_0 and
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_1 and
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_2 and
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_3 and
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_4 and
+      not TI and 
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_5 and
+      not TI and 
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_6 and
+      not TI and 
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_7 and
+      not TI and 
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_8 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_9 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_10 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_11 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_12 and
+      TI and 
+      AB and 
+      not LP
+    or
+      o2l_P_13 and
+      TI and 
+      AB and 
+      LP
+    or
+      o2l_P_14 and
+      TI and 
+      not AB and 
+      not LP
+    or
+      o2l_P_15 and
+      TI and 
+      not AB and 
+      LP;
+
+  o2l_P_7 = false -> pre o2l_A_7;
+
+  o2l_A_7 = 
+      o2l_P_0 and
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_1 and
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_2 and
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_3 and
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_4 and
+      not TI and 
+      not TD and 
+      AB and 
+      LP
+    or
+      o2l_P_5 and
+      not TI and 
+      not TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_6 and
+      not TI and 
+      not TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_7 and
+      not TI and 
+      not TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_8 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         LP
+       else
+         AB and 
+         LP)
+    or
+      o2l_P_9 and
+      TI and 
+      (if CP
+       then
+         AB and 
+         not LP
+       else
+         AB and 
+         not LP)
+    or
+      o2l_P_10 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         LP
+       else
+         not AB and 
+         LP)
+    or
+      o2l_P_11 and
+      TI and 
+      (if CP
+       then
+         not AB and 
+         not LP
+       else
+         not AB and 
+         not LP)
+    or
+      o2l_P_12 and
+      TI and 
+      AB and 
+      LP
+    or
+      o2l_P_13 and
+      TI and 
+      AB and 
+      not LP
+    or
+      o2l_P_14 and
+      TI and 
+      not AB and 
+      LP
+    or
+      o2l_P_15 and
+      TI and 
+      not AB and 
+      not LP;
+
+  o2l_P_8 = false -> pre o2l_A_8;
+
+  o2l_A_8 = 
+      o2l_P_4 and
+      not TI and 
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_5 and
+      not TI and 
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_6 and
+      not TI and 
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_7 and
+      not TI and 
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP and 
+      AB and 
+      LP
+    or
+      o2l_P_12 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_14 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_15 and
+      not TI and 
+      CP and 
+      AB and 
+      LP;
+
+  o2l_P_9 = false -> pre o2l_A_9;
+
+  o2l_A_9 = 
+      o2l_P_4 and
+      not TI and 
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_5 and
+      not TI and 
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_6 and
+      not TI and 
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_7 and
+      not TI and 
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP and 
+      AB and 
+      LP
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_12 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_14 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_15 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP;
+
+  o2l_P_10 = false -> pre o2l_A_10;
+
+  o2l_A_10 = 
+      o2l_P_4 and
+      not TI and 
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_5 and
+      not TI and 
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_6 and
+      not TI and 
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_7 and
+      not TI and 
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP and 
+      AB and 
+      LP
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_12 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_14 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_15 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP;
+
+  o2l_P_11 = false -> pre o2l_A_11;
+
+  o2l_A_11 = 
+      o2l_P_4 and
+      not TI and 
+      TD and 
+      AB and 
+      LP
+    or
+      o2l_P_5 and
+      not TI and 
+      TD and 
+      AB and 
+      not LP
+    or
+      o2l_P_6 and
+      not TI and 
+      TD and 
+      not AB and 
+      LP
+    or
+      o2l_P_7 and
+      not TI and 
+      TD and 
+      not AB and 
+      not LP
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP and 
+      AB and 
+      LP
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_12 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_14 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_15 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP;
+
+  o2l_P_12 = false -> pre o2l_A_12;
+
+  o2l_A_12 = 
+      o2l_P_8 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_9 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_10 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_11 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP and 
+      not LP and 
+      not AB
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP and 
+      LP and 
+      not AB
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP and 
+      not LP and 
+      AB
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP and 
+      LP and 
+      AB;
+
+  o2l_P_13 = false -> pre o2l_A_13;
+
+  o2l_A_13 = 
+      o2l_P_8 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_9 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_10 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_11 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP and 
+      LP and 
+      not AB
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP and 
+      not LP and 
+      not AB
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP and 
+      LP and 
+      AB
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP and 
+      not LP and 
+      AB;
+
+  o2l_P_14 = false -> pre o2l_A_14;
+
+  o2l_A_14 = 
+      o2l_P_8 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_9 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_10 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_11 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP and 
+      not LP and 
+      AB
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP and 
+      LP and 
+      AB
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP and 
+      not LP and 
+      not AB
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP and 
+      LP and 
+      not AB;
+
+  o2l_P_15 = false -> pre o2l_A_15;
+
+  o2l_A_15 = 
+      o2l_P_8 and
+      not TI and 
+      CP and 
+      AB and 
+      LP
+    or
+      o2l_P_9 and
+      not TI and 
+      CP and 
+      AB and 
+      not LP
+    or
+      o2l_P_10 and
+      not TI and 
+      CP and 
+      not AB and 
+      LP
+    or
+      o2l_P_11 and
+      not TI and 
+      CP and 
+      not AB and 
+      not LP
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP and 
+      LP and 
+      AB
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP and 
+      not LP and 
+      AB
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP and 
+      LP and 
+      not AB
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP and 
+      not LP and 
+      not AB;
+
+  veilleuses = 
+      o2l_P_0 and
+      TD
+    or
+      o2l_P_1 and
+      TD
+    or
+      o2l_P_2 and
+      TD
+    or
+      o2l_P_3 and
+      TD
+    or
+      o2l_P_4 and
+      not TI and 
+      not TD
+    or
+      o2l_P_5 and
+      not TI and 
+      not TD
+    or
+      o2l_P_6 and
+      not TI and 
+      not TD
+    or
+      o2l_P_7 and
+      not TI and 
+      not TD
+    or
+      o2l_P_8 and
+      TI
+    or
+      o2l_P_9 and
+      TI
+    or
+      o2l_P_10 and
+      TI
+    or
+      o2l_P_11 and
+      TI
+    or
+      o2l_P_12 and
+      TI
+    or
+      o2l_P_13 and
+      TI
+    or
+      o2l_P_14 and
+      TI
+    or
+      o2l_P_15 and
+      TI;
+
+  codes = 
+      o2l_P_4 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_5 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_6 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_7 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP
+    or
+      o2l_P_12 and
+      not TI and 
+      CP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP
+    or
+      o2l_P_14 and
+      not TI and 
+      CP
+    or
+      o2l_P_15 and
+      not TI and 
+      CP;
+
+  phares = 
+      o2l_P_8 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_9 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_10 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_11 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP;
+
+  anti_b = 
+      o2l_P_4 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_5 and
+      (if TI
+       then
+         TD
+       else
+         TD)
+    or
+      o2l_P_8 and
+      not TI and 
+      not CP and 
+      not AB
+    or
+      o2l_P_9 and
+      not TI and 
+      not CP and 
+      not AB
+    or
+      o2l_P_10 and
+      not TI and 
+      not CP and 
+      AB
+    or
+      o2l_P_11 and
+      not TI and 
+      not CP and 
+      AB
+    or
+      o2l_P_12 and
+      not TI and 
+      CP
+    or
+      o2l_P_13 and
+      not TI and 
+      CP;
+
+  longue_p = 
+      o2l_P_8 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_10 and
+      (if TI
+       then
+         CP
+       else
+         CP)
+    or
+      o2l_P_12 and
+      not TI and 
+      not CP and 
+      not LP
+    or
+      o2l_P_13 and
+      not TI and 
+      not CP and 
+      LP
+    or
+      o2l_P_14 and
+      not TI and 
+      not CP and 
+      not LP
+    or
+      o2l_P_15 and
+      not TI and 
+      not CP and 
+      LP;
+tel

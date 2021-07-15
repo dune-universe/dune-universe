@@ -1,0 +1,28 @@
+-- nonreg: --expand-nodes
+node up(in: int) returns (out: int);
+let
+  out = pre(in) + 1 ;
+tel
+
+node down(in: int) returns (out: int);
+let
+  out = pre(in) - 1 ;
+tel
+
+node activation1(evt: bool; reset: bool) returns (scie: int);
+var
+  go_up : bool;
+let
+  go_up = true -> if (pre(scie)>=5) then false
+                  else if (pre(scie)<=0) then true
+                       else pre(go_up);
+
+  scie = if reset then 0
+         else (0 -> 	
+               if (go_up)
+               then up(scie)
+               else down(scie) ) ;
+
+
+
+tel

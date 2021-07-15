@@ -1,0 +1,21 @@
+
+node when_tuple(a, b,  c: bool) returns (x: bool when a; y: bool when a);
+
+let 
+  -- XXX should we accept that ?
+  (x, y) = tutu((b, c) when a);
+
+tel
+
+
+
+node titi(x: int; clk :  bool) returns (a, b, c :  int when clk);
+let
+  (a, b, c)= (x, x, x) when clk;
+tel
+extern node toto(u: bool; v: bool) returns (x: bool; y: bool);
+
+node tutu(u: bool; v: bool) returns (x: bool; y: bool);
+let
+  (x,y)= (u,v);
+tel

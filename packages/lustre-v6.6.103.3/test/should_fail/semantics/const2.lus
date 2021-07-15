@@ -1,0 +1,19 @@
+const
+-- Ylv6:  const2 Error : at `->' in file `const2.lus' (l.15/c.24)  : not allowed in constant expression.
+
+  e3 = true when false -> true;
+  M = 3;
+  P= 2;
+  N = M*P;
+  O= M;
+  c10=12;
+
+type
+  t1 = int;
+  t2 = t1^M;
+  t3 = t2^N;
+  t4 = t3^O;
+  t5 = t4^P;
+  t6 = t5^c10;
+  t7 = t6^O;
+  t8 = t7^O;

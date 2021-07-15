@@ -1,0 +1,36 @@
+-- Not so simple "tupled" node call
+
+node minmax6(a,b,c,d,e,f:int)
+	returns(n1,n2,n3,n4,n5,n6:int);
+var
+	min_ab, MAX_ab :int;
+	min_cd, MAX_cd :int;
+	min_ef, MAX_ef :int;
+	
+	m1,m2,m4,m5 :int;
+	M1,M2,M3,M5 :int;
+
+
+let
+	(min_ab, MAX_ab) = minmax(a,b);	
+	(min_cd, MAX_cd) = minmax(c,d);
+	(min_ef, MAX_ef) = minmax(e,f);
+	
+	(m1,M1) = minmax(min_cd, min_ef);
+	(m2,M2) = minmax(MAX_ab, MAX_cd);
+
+	(n1,M3) = minmax(min_ab, m1);
+	(m4,n6) = minmax(M2, MAX_ef);
+	
+	(m5,M5) = minmax(M1, m2);
+	
+	(n2,n3) = minmax(M3, m5);
+	(n4,n5) = minmax(M5, m4);
+tel
+
+
+node minmax(a,b:int)
+	returns(min,max:int);
+let
+	(min,max) = if (a<=b) then (a,b) else (b,a);
+tel

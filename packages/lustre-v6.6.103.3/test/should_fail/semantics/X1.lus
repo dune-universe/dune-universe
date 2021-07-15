@@ -1,0 +1,6 @@
+node X1 (b: bool; n: int)
+returns (m: int);
+let
+  m = current(n when b);
+tel
+

@@ -1,0 +1,12 @@
+type A_int_2 = int^2;
+node zzz2(i1:int; i2:A_int_2) returns (o:int);
+var
+   _acc1:int;
+   _v1:int;
+   _v2:int;
+let
+   _acc1 = i1 + _v1;
+   _v1 = i2[0];
+   o = _acc1 + _v2;
+   _v2 = i2[1];
+tel

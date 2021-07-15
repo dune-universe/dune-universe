@@ -1,0 +1,12 @@
+package complex 
+provides
+  type t; -- Encapsulation
+  const i:t; 
+  node re(c: t) returns (r:real); ---  
+body
+  type t = struct { re :  real ; im :  real };
+  const i:t = t { re = 0. ; im = 1. };
+  node re(c: t) returns (re:real); 
+  let re = c.re; tel;
+  node complex = re;
+end

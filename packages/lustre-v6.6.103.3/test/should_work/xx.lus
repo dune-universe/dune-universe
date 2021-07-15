@@ -1,0 +1,5 @@
+function xx(i1:int; i2:A_int_2) returns (o:int);
+let
+   o = Lustre::red<<Lustre::plus, 2>>(i1, i2);
+tel
+type A_int_2 = int^2;

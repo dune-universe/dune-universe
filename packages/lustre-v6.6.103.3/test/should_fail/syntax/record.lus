@@ -1,0 +1,12 @@
+type 
+
+  struct1 = {a: int; b: real};
+  struct2 = {a: real; b: struct1};
+
+  -- does not work in ocaml either...
+  struct2bis = {a: real; b: {a: real; b:real}};
+
+node record(a: struct2) returns (b: struct);
+	let
+		b = {a = a.x; b = { a = a.b.y; b = a.b.z } };
+	tel

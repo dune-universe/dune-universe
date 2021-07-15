@@ -1,0 +1,11 @@
+
+-- UniqueOutput.check ne voit pas la double definition ici!!!!
+-- (nb :  en mode expand-struct,  ca marche...)
+
+type s =  { f1: int ; f2: int^2 };
+
+node test(y: s^4^4; z: int) returns(x: s^4^4);
+let
+  x [1 .. 2][0][0].f1 = z ;
+  x=y;
+tel

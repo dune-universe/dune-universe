@@ -1,0 +1,11 @@
+
+set timeout 30
+
+# for some reason [glob should_work/[a-n]*.lus] does not work
+set ok_files [lsort [glob should_work/{a,b,c,d,e,f,g,h,i,j,k,l,m,A,B,C,D,E,F,G,H,I,J,K,L,M}*.lus]]
+
+# should be a fresh dir...
+set tmp [pwd]/tmp1/
+
+
+nonreg_exec_and_2c $ok_files $tmp

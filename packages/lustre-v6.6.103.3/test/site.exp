@@ -1,0 +1,311 @@
+# Time-stamp: <modified the 03/03/2020 (at 15:24) by Erwan Jahier> 
+# 
+# (nonreg-)test harness main file
+
+set testdir [pwd]
+set lus2lic "./lus2lic"
+set ec2c "./ec2c"
+set ec2c "./myec2c"
+set test_lus2lic_no_node "$testdir/../utils/test_lus2lic_no_node_rdbg"
+set test_lus2lic_no_node "$testdir/../utils/test_lus2lic_no_node"
+set compare_exec_and_2c "$testdir/../utils/compare_exec_and_2c"
+
+set timeout 10
+
+proc should_work { test_name command_line args } {
+    global verbose
+
+    set cl [file tail $command_line]
+    set cl $command_line
+
+    set failed 0
+
+    # When verbose, tell the user what we are running
+    if { $verbose > 1 } {
+        send_user "starting $command_line\n"
+    }
+    # Running the program.
+    eval spawn $command_line {*}$args  
+    set pid [exp_pid]
+    puts "PID: $pid ($command_line $args)"
+    expect {
+        # Check for any warning messages in the output first
+        Warning {
+            set failed 0
+            exp_continue
+        }
+        Error {
+            set failed 1
+            exp_continue
+        }
+        "ec program must contain a single node" {
+            set failed 1
+            exp_continue
+        }
+        "unexpected operator: " {
+            set failed 1
+            exp_continue
+        }
+        "error" {
+            set failed 1
+            exp_continue
+        }
+        "kcg name clash" {
+            set failed 0
+            exp_continue
+        }
+        "ERROR" {
+            set failed 1
+            exp_continue
+        }
+        "oops: an internal" {
+            set failed 1
+            exp_continue
+        }
+        "undeclared ident" {
+            set failed 1
+            exp_continue
+        }
+        "egmentation fault" {
+            set failed 1
+            exp_continue
+        }
+        "rdbg -lurette: ok" {
+            pass "$cl $args"
+        }
+        "lurettetop ok" {
+            pass "$cl $args"
+        }
+        # to avoid that match_max (the expect buffer size) is reached 
+        # which truncate the outputs
+        "\n" {
+            exp_continue
+        }
+        eof {
+            if $failed {
+                fail "$test_name: $cl $args"
+            } else {
+                pass "$cl $args"
+            }
+        }
+        # Timeout requires inspection to determine the cause of failure.
+        timeout {
+            unresolved "Time out: $cl $args"
+        }
+    }
+    return $spawn_id
+}
+proc should_fail { test_name fail_kind command_line args } {
+    global verbose
+
+    set failed 0
+    set cl [file tail $command_line]
+    # When verbose, tell the user what we are running
+    if { $verbose > 1 } {
+        send_user "starting $cl\n"
+    }
+    # Running the program.
+    eval spawn $command_line  {*}$args
+    expect {
+       "oops: an internal" {
+           expect eof
+           fail "$test_name ($fail_kind): $cl $args"
+        }
+        Error {
+            set failed 1
+            exp_continue
+        }
+        "\n" {
+            exp_continue
+        }
+        eof {
+            if $failed {
+                xfail "$test_name ($fail_kind): $cl $args" 
+            } else {
+                xpass "$test_name ($fail_kind): $cl $args"
+            }
+        }
+        timeout {
+            unresolved "Time out $test_name ($fail_kind): $cl $args"
+            exit
+        }
+    }
+    return $spawn_id
+}
+
+proc nonemptyfile {filename} {
+  set rc [catch {file size $filename} size]
+  return [expr {$rc == 0 && $size > 0}]
+}
+
+package require fileutil
+
+# test if file $f contain the string $str
+proc does_not_contain_string {f str} {
+    set occ  [llength [fileutil::grep $str $f]]
+    if { ($occ == 1 ) } { puts " $f contains $occ occurence of $str" }
+    if { ($occ > 1 ) } { puts " $f contains $occ occurence(s) of $str" }
+    return [expr { $occ == 0 }]
+}
+
+proc does_not_contain_left_slices {f} {
+    set lines [fileutil::grep "\\.\\..*=" $f]
+    
+    set occ  [llength $lines]
+    if { ($occ == 1 ) } { puts " $f contains $occ occurence of left slices" }
+    if { ($occ > 1 ) } { puts " $f contains $occ occurence(s) of left slices" }
+
+    return [expr { $occ == 0 }]
+
+}
+
+
+
+# do no try to use lurette on files that contains extern nodes or package.
+# Package won't work  because appending the tested lustre file with the 
+# generated oracle as I do is wrong in presence of package (fixme)
+proc do_ecexe_vs_exec {f} {
+    if { 
+        [does_not_contain_string "$f" "enum "] &&
+        [does_not_contain_string "$f" "extern"] &&
+        [does_not_contain_string "$f" "package"] 
+    } { 
+        return 1
+    }
+    return 0
+}
+
+proc do_2c {f} {
+    if { 
+        [does_not_contain_string "$f" "extern"] &&
+        [does_not_contain_string "$f" "package"] 
+    } { 
+        return 1
+    }
+    return 0
+}
+
+# not robust to race...
+proc get_free_port {} {
+    set sock [socket -server localhost 0]
+    set l [fconfigure $sock -sockname]
+    set port [lindex $l 2]
+    close $sock
+    return $port
+}
+
+proc port_used {port} {
+    if { [catch {set sock [socket -server localhost $port] }]} {
+        return 1
+    } else {
+        close $sock
+        return 0
+    }
+}
+proc get_next_free_port {port} {
+    while { [port_used $port] } {
+        set port [expr "$port + 1"]
+    }
+    return $port
+}
+
+# get the option (to pass to lus2lic) at the first line of the lustre file
+proc read_opt {f} {
+    set oc [open $f]
+    set line [gets $oc]  
+    set res ""
+    if { [string range $line 0 9] == "-- nonreg:" } {
+        set res [string range $line  10 end]
+    }
+    return $res
+}
+
+proc nonreg_exec_and_2c {files tmp} {
+    global lus2lic
+    global compare_exec_and_2c
+
+    foreach f $files {
+        eval spawn "cp -f $f $tmp"
+    }
+    cd $tmp
+    foreach f $files {
+        set f_no_ext [file rootname $f]
+        set bf [file tail $f_no_ext]
+        set f [file tail $f]
+        set opt [read_opt $f]
+        set node [file tail $f_no_ext]
+        set port [get_free_port]
+
+        eval spawn "$lus2lic -lic $opt -o $bf.lic $f -n $node"
+        wait -i $spawn_id
+        if { [nonemptyfile "$bf.lic"] &&  [does_not_contain_left_slices "$f"] } {
+            set id1 [should_work "Generate c code  " "$lus2lic $opt" "-2c $f -n $node"]
+            wait -i $id1
+        
+            if { [nonemptyfile "${node}_${node}.c"]  && [do_2c "$f"] } {
+                set id2 [should_work "Check that the generated C code compiles  " \
+                             "sh ${node}.sh"]
+                wait -i $id2
+                catch { exp_close -i $id2 }
+                catch { exp_wait  -i $id2 } output
+            
+                if { [nonemptyfile "${node}.exec"] && [do_2c "$f"] } {
+                    set id3 [should_work "Try to compare lus2lic -exec and -2c" \
+                                 "$compare_exec_and_2c" "$f" "$port" "$opt"]
+                    catch { exp_close -i $id3 }
+                    catch { exp_wait  -i $id3 } output                   
+            }
+            }
+            catch { exp_close -i $id1 }
+            catch { exp_wait  -i $id1 } output
+        }
+    }
+    return 0
+}
+
+
+proc nonreg_exec_and_ecexe {files tmp} {
+    global lus2lic
+    global ec2c
+    global test_lus2lic_no_node
+
+    foreach f $files {
+        eval spawn "cp -f $f $tmp"
+    }
+    cd $tmp
+    foreach f $files {
+        set port [get_free_port]
+        set f_no_ext [file rootname $f]
+        set bf [file tail $f_no_ext]
+        set f [file tail $f]
+        set opt [read_opt $f]
+        set node [file tail $f_no_ext]
+
+        set id1 [should_work "without any option" "$lus2lic" "$opt" "-lic -o $bf.lic $f -n $node"]
+        wait -i $id1
+        if { [nonemptyfile "$bf.lic"] } {
+            set id2 [should_work "Generate ec code  " "$lus2lic" "-ec -o $bf.ec $f -n $node"]
+            wait -i $id2
+        
+            if { [nonemptyfile "$bf.ec"] && [does_not_contain_string "$f" "merge"] } {
+                set id3 [should_work "Try ec2c on the result" "$ec2c" "-o $bf.c $bf.ec"]
+                wait -i $id3
+                catch { exp_close -i $id3 }
+                catch { exp_wait  -i $id3 } output
+            }
+        
+            if { [nonemptyfile "$bf.c"] && [do_ecexe_vs_exec "$f"] } {
+                set id4 [should_work "Try to compare lus2lic -exec and ecexe" \
+                         "$test_lus2lic_no_node" "$f"  "$opt"]
+                catch { exp_close -i $id4 }
+                catch { exp_wait  -i $id4 } output
+            }
+            catch { exp_close -i $id2 }
+            catch { exp_wait  -i $id2 } output
+        }
+        catch { exp_close -i $id1 }
+        catch { exp_wait  -i $id1 } output
+    }
+    return 0
+}
+

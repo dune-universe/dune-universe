@@ -1,0 +1,11 @@
+
+node patrick (a,b:int; c,d: bool) 
+returns (s:int);
+var 
+  x: int;
+  y: int;
+let
+  assert (a>0);
+  assert (b>0);
+  s = if c then a else 1 + if d then b else 4;
+tel

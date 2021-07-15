@@ -1,0 +1,589 @@
+-- =============================================================================================
+-- Plus_Memo_Errs
+-- =============================================================================================
+
+const 
+	  BID_LAST    = 2.2 ;
+	  BID_VAL     = 3.3 ;	 -- foo value, easily observable, for the
+						     -- if branches where we should'nt go !
+
+      DELTA_ROLL  = 14.9 ;   -- cf table 1 page 12. deg/sec
+      DELTA_PITCH = 3.0 ;
+      DELTA_YAW   = 2.73 ;
+
+      XFAIL_SAFE_ROLL_VALUE  =  1.1 ;  -- should be 0, but 1 is easier to observe
+      FAIL_SAFE_ROLL_VALUE  =  1.0 ;  -- should be 0, but 1 is easier to observe
+      FAIL_SAFE_PITCH_VALUE =  4.0 ; 
+      FAIL_SAFE_YAW_VALUE   =  4.0 ;
+	  OneSecond             = 10  ; -- number of cycles.
+
+	  CROSS_CH_TOL_ROLL     = 51.0 ;
+	  CROSS_CH_TOL_PITCH    = 10.1 ;
+	  CROSS_CH_TOL_YAW      = 10.0 ;
+
+
+	  NRmaxR                =  25.3 ;
+	  NRminR                = -25.3 ;       -- NominalRange for roll
+
+	  NRmaxP                =  5.1 ;
+	  NRminP                = -5.1 ;       -- NominalRange for pitch
+
+	  NRmaxY                =  5.0 ;
+	  NRminY                = -5.0 ;       -- NominalRange for yaw
+
+	  HORmaxR               =  285.0 ;
+	  HORminR               = -285.0 ;     -- Hard Over Range for roll
+
+	  HORmaxP               =  57.0 ;
+	  HORminP               = -57.0 ;      -- Hard Over Range for pitch
+
+	  HORmaxY               =  57.0 ;
+	  HORminY               = -57.0 ;	    -- Hard Over Range for yaw
+
+
+	  TIME5                 = 4      ;      -- specified in point 5, page 4 (value ?)
+
+	  SAFE_COUNTER_TIME     = 3      ; 
+	  TIME_ROLL             = 3      ;
+	  TIME_CROSS_ROLL       = 3      ; 
+
+
+
+
+---------------------------------------------------
+-- Some comparisons needed by FailDetect (for roll)
+---------------------------------------------------
+
+node InNominalRange (r : real) returns (i : bool) ;
+let
+	i = (r < NRmaxR) and (r > NRminR) ; 
+tel
+
+node InHardoverRange (r : real) returns (i : bool) ;
+let
+	i = (r > HORmaxR) or (r < HORminR) ; 
+tel
+
+
+
+
+
+---------------------------------------------------------------------------------------
+-- A main program that does the job, but only for one channel (roll or yaw, pitch being
+-- a little special).
+---------------------------------------------------------------------------------------
+
+node onlyroll (
+     xa1, xb1, xa2, xb2, xa3, xb3, xa4, xb4 : real ;  -- transmitted measures
+     ongroundreset, inairreset : bool ;  -- resets
+     disc1, disc2, disc3, disc4 : bool ; -- the wire is disconnected
+     choff1, choff2, choff3, choff4 : bool ;  -- channel offline
+) returns (
+     x : real ; -- the secure value
+     debug_localfailure1, debug_localfailure2, debug_localfailure3, debug_localfailure4 : bool ;
+     debug_cross_failure1, debug_cross_failure2,debug_cross_failure3,debug_cross_failure4 : bool ;
+     debug_ch_failed1, debug_ch_failed2,debug_ch_failed3,debug_ch_failed4 : bool ;
+     debug_st1, debug_st2, debug_st3, debug_st4 : int ;  
+)
+var
+	x1, x2, x3, x4 : real ; -- the values computed by the four channels
+	f1, f2, f3, f4 : bool  ; -- the failure statuses as seen by the four channels
+	ask1, ask2, ask3, ask4 : bool ; -- requests to become reset inhibited
+	allowed1, allowed2, allowed3, allowed4 : bool ; -- answers of the global allocator
+
+let
+    debug_ch_failed1 = f1 ;
+    debug_ch_failed2 = f2 ;
+    debug_ch_failed3 = f3 ;
+    debug_ch_failed4 = f4 ;
+
+
+    (x1, f1, ask1, debug_localfailure1, debug_cross_failure1, debug_st1) = Channel (
+			    ongroundreset, inairreset,
+		            choff1,
+		            xa1, xb1,
+		            disc1,
+		            0.0 -> pre (x2), 0.0 -> pre(x3), 0.0 -> pre(x4), 
+			    false -> pre(f2),false -> pre(f3),false -> pre(f4),
+			    allowed1) ;
+
+    (x2, f2, ask2, debug_localfailure2, debug_cross_failure2, debug_st2) = Channel (
+			    ongroundreset, inairreset,
+		            choff2,
+		            xa2, xb2,
+		            disc2,
+		            0.0 -> pre (x1), 0.0 -> pre(x3), 0.0 -> pre(x4), 
+			    false -> pre(f1), false -> pre(f3), false -> pre(f4),
+			    allowed2) ;
+
+    (x3, f3, ask3, debug_localfailure3, debug_cross_failure3, debug_st3) = Channel (
+			    ongroundreset, inairreset,
+		            choff3,
+		            xa3, xb3,
+		            disc3,
+		            0.0 -> pre (x1), 0.0 -> pre(x2), 0.0 -> pre(x4), 
+                            false -> pre(f1), false -> pre(f2), false -> pre(f4),
+			    allowed3) ;
+
+    (x4, f4, ask4, debug_localfailure4, debug_cross_failure4, debug_st4) = Channel (
+			    ongroundreset, inairreset,
+		            choff4,
+		            xa4, xb4,
+		            disc4,
+		            0.0 -> pre (x1), 0.0 -> pre(x2), 0.0 -> pre(x3), 
+                            false -> pre(f1), false -> pre(f2), false -> pre(f3),
+			    allowed4) ;
+
+    (allowed1, allowed2, allowed3, allowed4) = 
+  --- [R1] pb d'init: je met à false
+       (false,false,false,false) ->
+	pre Allocator (ask1, ask2, ask3, ask4, ongroundreset) ;
+
+    x = Calculate (x1, x2, x3, x4, f1, f2, f3, f4) ;
+tel
+
+
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+node Channel (
+	ongroundreset, inairreset : bool ; -- the global inputs 
+	choffi : bool ; -- channel offline 
+	xai, xbi : real ;  -- two inputs
+	disci : bool ; -- inputs disconnected
+	pxother1, pxother2, pxother3 :  real ; -- values computed by the other channels (pre)
+	pfother1, pfother2, pfother3 : bool ; -- failure statuses of the other channels (pre)
+	allowedi : bool ; -- allowed to become reset inhibited
+)
+returns (
+	xi : real ; -- the value computed by this channel
+	fi : bool ; -- the failure status of this channel
+	aski : bool ; -- a request to become reset inhibited
+	debug_localfailure : bool ; -- for observation purposes
+	debug_cross_failure : bool ; -- for observation purposes
+	debug_st : int ; -- for observation purposes
+)
+var
+	local_failure : bool ;
+let
+	(xi, local_failure)  = Monitor (xai, xbi, disci) ;
+
+	(fi, debug_cross_failure, debug_st, aski) = FailDetect (
+		local_failure, xi, 
+		ongroundreset, inairreset, 
+		choffi, 
+		pxother1, pxother2, pxother3,
+		pfother1, pfother2, pfother3,
+      allowedi) ;
+
+	debug_localfailure = local_failure ;
+	
+tel
+
+
+---------------------------------------------------------------------------------------------
+-- Monitor : a part of the channel, that looks for local failures, and chooses one
+-- of the two values, to be transmitted to other channels.
+---------------------------------------------------------------------------------------------
+node Monitor (
+	xa, xb : real ;  -- two values 
+	disc : bool ;    -- the wires are disconnected
+)
+returns (
+	local_value  : real ; -- the value seen by this channel 
+	inline_monitor_failed : bool ; -- detection of a local fault
+) 
+let    
+	-- locally detected failures :
+	-- the two values on the same channel differ two much 
+	-- for a two long time, or the wires are disconnected
+
+	inline_monitor_failed  =
+		maintain (TIME_ROLL,
+			abs (xa - xb) > DELTA_ROLL)
+			or disc ;
+
+	-- and transmit the first value (how to choose ?)
+	local_value = xa ;
+tel
+
+
+---------------------------------------------------------------------------------------------
+-- The main fail detection, with states and reactions to the resets.
+-- There are 3 states :
+--          1)   OK and unlatched faults
+--	    2)   Latched faults, resest allowed
+--	    3)   Latched faults, reset inhibited
+-- The transitions : 
+--          
+-- The way failure is computed (the output) :
+--          in state 1, failure is computed at each step, depending on the non-latched failure
+--	                causes
+--	    in states 2 and 3 : failure = true
+---------------------------------------------------------------------------------------------
+node FailDetect (
+	local_failure : bool ; 
+	xi : real ;
+	ongroundreset, inairreset : bool ;
+	choffi : bool ;
+	pxother1, pxother2, pxother3 : real ; -- other values (pre)
+	pfother1, pfother2, pfother3 : bool ; -- other failures (pre)
+   a: bool ; -- permission to become reset inhibited
+)
+returns (
+	failure : bool ; -- failure detected by this channel
+	debug_cross_failure : bool ; -- for observation
+	debug_st : int ; -- for observation (the state)
+   r : bool ; -- request to become reset inhibited
+)
+var
+	cross_failure : bool ; 
+	ps, state : int ; -- only 1, 2, 3 are relevant
+	from1to2, from1to3, from2to3, from2to1, from3to1 : bool ;
+	NLfaults : bool ;
+	will_latch, reset, foreign_failure : bool ;
+let
+	-- the state -------------------------------------------------------
+	debug_st  = state ;
+	ps        = 1 -> pre(state) ;     -- FABIEN RAJOUTE " 1 -> "
+	state     = 1 ->
+		    if ps=1 then
+	 		    if pre(reset) then 1	  -- reset has priority
+			    else if pre(from1to2) then 2 
+			    else if pre(from1to3) then 3
+			    else 1 
+		    else if ps=2 then 
+			    if pre(from2to1) then 1       -- reset has priority
+			    else if pre(from2to3) then 3
+			    else 2 
+		    else -- ps=3
+			    if pre(from3to1) then 1       -- reset has priority
+			    else 3 ;
+
+
+	-- The output ------------------------------------------------------
+	failure = (state = 2) or (state = 3) or (state = 1 and NLfaults) ;
+
+	-- previous version :
+	-- failure = local_failure or cross_failure or choffi ;
+
+	-- All the transitions ---------------------------------------------
+
+	reset = ongroundreset or (inairreset and not cross_failure) ;
+	foreign_failure = pfother1 or pfother2 or pfother3 ;
+
+	-- non-latched failures
+	NLfaults = choffi or local_failure ; 
+
+	-- latched faults of the first kind (and not reset). go to state 2 only, because the value
+	-- is not in the nominal range, so it might be a "small" error
+
+	from1to2 = will_latch and not InNominalRange (xi) ;
+	will_latch = cross_failure ;
+
+	-- latched faults of the second kind (and not reset). go immediately to state 3 where
+	-- reset is inhibited, because the value is in its nominal range, so this is a real
+	-- error.
+
+	from1to3 = a and will_latch and  InNominalRange (xi) ;
+
+	-- reason for a latched fault to become reset inhibited : will_latch followed immediately
+	-- by a foreign failure, or local failure occurs
+	from2to3 = a and (pre(will_latch) and  foreign_failure  or local_failure) ;
+
+	-- only on ground reset can do that
+	from3to1 = ongroundreset ;
+
+	-- onground reset can do that, and also inair reset if the values are ok
+	from2to1 = reset ;
+	
+   -- request to beconme reset inhibited
+    r = false ->
+          -- (pre(state) = 1 and cross_failure and InNominalRange (xi))
+		  (pre(state) = 1 and cross_failure)
+           or (pre(state) = 2 and
+               (pre(cross_failure) and  foreign_failure) or local_failure);
+
+
+	-- Cross channel comparisons ---------------------------------------------------
+	-- for cross failure, the value xi should be compared only to the foreign values
+	-- that are ok. 
+	-- An error is reported when values differ two much for a too long time
+
+	cross_failure = values_nok (
+		pfother1, pfother2, pfother3,
+		xi, pxother1, pxother2, pxother3) ;
+
+	-- debug -----------------------------------------------------------------------
+	debug_cross_failure = cross_failure ;
+tel
+
+
+
+---------------------------------------------------------------------------------------------
+-- Cross-channel comparisons. The local value xi is compared to those among the foreign
+-- ones that are not declared failed (that's why we need the fail statuses of the three
+-- foreign channels).
+-- Be careful with the position of the MAINTAIN....
+-- Well, we don't really know whether the failure is related to the SAME error being maintained
+-- during TIME_CROSS_ROLL steps, or if it's simply defined by : there has been an error
+-- for at least TIME_CROSS_ROLL steps (but not necessarily the same).
+-- the program below takes the second option.
+---------------------------------------------------------------------------------------------
+
+node values_nok (
+	pfother1, pfother2, pfother3 : bool ; -- foreign values status
+	xi : real ; -- local value 
+	pxother1, pxother2, pxother3 : real ; -- foreign values 
+) 
+returns ( 
+	r : bool -- there is a cross channel error
+)
+var
+	one, two, three : bool ; -- comparisons of xi with the three foreign values
+let
+	one   = abs (xi - pxother1) > CROSS_CH_TOL_ROLL ;
+	two   = abs (xi - pxother2) > CROSS_CH_TOL_ROLL ;
+	three = abs (xi - pxother3) > CROSS_CH_TOL_ROLL ;
+	
+
+	r     =  maintain(TIME_CROSS_ROLL, 
+			  if pfother1 then  -- don't take this one into account
+				if pfother2 then -- the same
+				      if pfother3 then 
+					  false 
+				      else
+					  three 
+			        else 
+ 				      if pfother3 then 
+					  two
+				      else
+					 (two and three)
+			  else if pfother2 then
+				if pfother3 then one else (one and three)
+			  else if pfother3 then
+				(one and two)
+			  else
+				(one and two and three)) ;
+
+
+tel 
+
+
+
+
+
+---------------------------------------------------------------------------------------------
+-- Allocator, for allowing the channels to become reset inhibited
+---------------------------------------------------------------------------------------------
+node Allocator(r1,r2,r3,r4,reset: bool)
+returns (a1,a2,a3,a4: bool);
+-- receives requests from the 4 units
+-- delivers autorizations
+-- ensures that at most 2 authorized since the last reset
+var nb_aut, already: int;
+let
+   already = if (true -> reset) then 0 else pre(nb_aut);
+   a1 = r1 and already <= 1;
+   a2 = r2 and 
+        (  (not r1 and already <= 1)
+        or (r1 and already = 0) 
+        );
+   a3 = r3 and
+        (  (not r1 and not r2  and already <= 1)
+        or (#(r1,r2) and already = 0) 
+        );
+   a4 = r4 and
+        (  (not r1 and not r2 and not r3 and already <= 1)
+        or (#(r1,r2,r3) and already = 0) 
+        );
+   nb_aut = if (true -> reset) then 0
+            else pre(nb_aut) +
+                 if a1 then 1 else 0 +
+                 if a2 then 1 else 0 +
+                 if a3 then 1 else 0 +
+                 if a4 then 1 else 0 ;
+tel
+
+
+---------------------------------------------------------------------------------------------
+-- the voter
+---------------------------------------------------------------------------------------------
+node Calculate (
+	x1, x2, x3, x4 : real ;  -- four values given by the channels
+	f1, f2, f3, f4 : bool ; -- failure statuses seen by the four channels 
+) 
+returns  (
+	x : real 
+)
+var 
+	zero_roll, one_roll, two_roll, three_roll : bool ; -- numbers of failures 
+	cpt_roll : int ; -- a counter 
+let
+	cpt_roll = 0 -> if three_roll then SAFE_COUNTER_TIME
+	else if pre (cpt_roll)>0 then pre(cpt_roll) - 1
+	else 0 ;
+
+
+	zero_roll  = noneof (f1, f2, f3, f4) ;
+	one_roll   = oneoffour (f1, f2, f3, f4) ;
+	two_roll   = twooffour (f1, f2, f3, f4) ;
+	three_roll = threeoffour (f1, f2, f3, f4) ;
+
+	x = if (zero_roll and cpt_roll = 0 ) then
+		OlympicAverage (x1, x2, x3, x4)
+	else if (one_roll and cpt_roll = 0 ) then
+		Median (x1, x2, x3, x4, f1, f2, f3, f4 )
+	else if (two_roll and cpt_roll = 0 ) then
+		Average (x1, x2, x3, x4, f1, f2, f3, f4 )
+	else FAIL_SAFE_ROLL_VALUE ;
+
+tel
+
+
+
+node noneof (f1, f2, f3, f4 : bool) returns (r : bool) 
+let
+	 r = not f1 and not f2 and not f3 and not f4 ;
+tel 
+
+node oneoffour (f1, f2, f3, f4 : bool) returns (r : bool) 
+let
+	r = f1 and not f2 and not f3 and not f4 or
+	    f2 and not f1 and not f3 and not f4 or
+	    f3 and not f1 and not f2 and not f4 or
+	    f4 and not f1 and not f2 and not f3 ;
+tel 
+
+node twooffour (f1, f2, f3, f4 : bool) returns (r : bool) 
+let
+	r = f1 and (f2 and not f3 and not f4  or
+		    f3 and not f2 and not f4  or
+	 	    f4 and not f2 and not f3)  or
+            f2 and (f1 and not f3 and not f4  or
+		    f3 and not f1 and not f4  or
+	 	    f4 and not f1 and not f3)  or
+            f3 and (f2 and not f1 and not f4  or
+		    f1 and not f2 and not f4  or
+	 	    f4 and not f2 and not f1)  or
+	    f4 and (f2 and not f3 and not f1  or
+		    f3 and not f2 and not f1  or
+	 	    f1 and not f2 and not f3) ; 
+tel
+
+node threeoffour (f1, f2, f3, f4 : bool) returns (r : bool) 
+let
+	r = oneoffour (not f1, not f2, not f3, not f4) ;
+tel 
+
+
+node Median (x1, x2, x3, x4 : real ; f1, f2, f3, f4 : bool) returns (r : real)
+-- one of the four f is true exactly
+let
+	r = if f1 then MedianValue3 (x2, x3, x4)
+	    else if f2 then MedianValue3 (x1, x3, x4)
+	    else if f3 then MedianValue3 (x1, x2, x4)
+	    else            MedianValue3 (x1, x2, x3) ;
+tel
+
+
+node Average (x1, x2, x3, x4 : real ; f1, f2, f3, f4 : bool) returns (r : real)
+-- two of the f are true, exactly
+let
+	r = if f1 then 
+	      if f2 then Average2 (x3, x4) 
+	      else if f3 then Average2 (x2, x4) 
+	      else Average2 (x3, x2)
+	else if f2 then 
+	      if f1 then Average2 (x3, x4) 
+	      else if f3 then Average2 (x1, x4) 
+	      else Average2 (x3, x1) 
+	else if f3 then 
+	      if f2 then Average2 (x1, x4) 
+	      else if f4 then Average2 (x2, x1) 
+	      else Average2 (x4, x2) 
+	else 
+	      if f2 then Average2 (x3, x1) 
+	      else if f3 then Average2 (x2, x1) 
+	      else Average2 (x3, x2) ;
+tel
+
+
+-- ==========================================================================
+-- Some arithmetic functions 
+-- ==========================================================================
+
+node abs (v : real) returns (a : real) ;
+let
+	a = if v >= 0.0 then v else -v ;
+tel
+
+
+
+
+node OlympicAverage (one, two, three, four : real) returns (m : real) ;
+let
+     m = (one + two + three + four 
+         - max4 (one, two, three, four)
+         - min4 (one, two, three, four)) / 2.0 ;
+tel
+
+node MedianValue3 (a, b, c : real) returns (z : real); 
+let
+	z = a + b + c - min2 (a, min2(b,c)) - max2 (a, max2(b,c)) ;
+tel
+
+node Average2(a, b: real) returns (z : real); 
+let 
+	z = (a+b) / 2.0 ; 
+tel
+
+
+
+node max4 (one, two, three, four : real) returns (m : real) ;
+let
+	m = max2 (max2 (one, two), max2 (three, four)) ;
+tel
+
+node max2 (one, two  : real) returns (m : real) ;
+let
+	m = if one > two then one else two ;
+tel
+
+node min4 (one, two, three, four : real) returns (m : real) ;
+let
+	m = min2 (min2 (one, two), min2 (three, four)) ;
+tel
+
+node min2 (one, two  : real) returns (m : real) ;
+let
+	m = if one < two then one else two ;
+tel
+
+
+-- ==========================================================================
+-- Some time functions 
+-- ==========================================================================
+
+
+node maintain (n : int ; val : bool) returns (m : bool) ;
+var cpt : int ;
+let
+	cpt = (if val then 1 else 0) ->
+	       (if val then pre(cpt) + 1 else 0) ;
+
+	m   = (cpt >= n) ;
+tel
+
+
+
+
+
+
+
+
+
+
+
+
+
+

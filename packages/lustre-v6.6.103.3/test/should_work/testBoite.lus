@@ -1,0 +1,106 @@
+package testBoite
+
+
+
+provides
+
+node testBoite(dataGET, 
+           dataPUT : bool; 
+           dataIN : int when dataPUT)
+--returns (dataOUT : int when dataGET);
+returns (--localData_clock : bool;
+         --localData : int when localData_clock;
+         dataOUT : int when dataGET);
+--var localData_clock : bool;
+--    localData : int when localData_clock;
+  --  pLocalData : int;
+
+
+
+body
+
+node testBoite(dataGET, 
+           dataPUT : bool; 
+           dataIN : int when dataPUT)
+returns (dataOUT : int when dataGET);
+
+
+var localData_clock : bool;
+    localData : int when localData_clock;
+  --  pLocalData : int;
+let
+  assert(localData_clock->true);
+  localData_clock = (dataPUT and (not dataGET)) 
+                       -> (dataPUT and (not dataGET)) 
+                          or (pre(localData_clock) and not(dataGET));
+
+  localData = (if dataPUT 
+               then current(dataIN)
+               else current(pre(localData))) when localData_clock;
+
+-- if dataPUT and dataGET
+-- then -1
+-- else if dataPUT and not dataGET
+--      then dataIN
+--      else if dataGET and not dataPUT
+--           then -1
+--           else pre(localData)
+
+
+  dataOUT = (current(
+                    (if dataPUT 
+                     then current(dataIN)
+                     else current(localData)) when localData_clock)) when dataGET;
+
+--     if dataGET and dataPUT
+--     then dataIN
+--     else if not(dataGET and localData_clock and not(dataPUT))
+--          then -1 
+--          else localData
+
+
+--   dataOUT = current(localData)  when dataGET;
+tel
+
+
+
+
+-- boite aux lettres
+node boite2(dataIN : int; dataGET, dataPUT : bool)
+returns (dataOUT : int; localData : int);
+--         localDataErasedFromBoiteCP : int;
+--         localDataCopydFromBoiteCP : int; 
+--         copyBoiteCPEvent, erasedBoiteCPEvent : bool);
+--var localData : int;
+  --  pLocalData : int;
+let
+
+  localData = -1 -> if dataPUT 
+                    then dataIN 
+                    else if dataGET
+                         then -1
+                         else pre localData;
+  -- observation dans Boite CP
+  -- ecrasement
+--  localDataErasedFromBoiteCP = -1 -> if dataPUT or dataGET
+--                                     then pre localData
+--				      else -1;
+--  erasedBoiteCPEvent = dataPUT or dataGET;
+
+--  localDataCopydFromBoiteCP = -1;-- if dataPUT
+                                   -- then localData
+                                   -- else -1;
+--  copyBoiteCPEvent = false; -- dataPUT;
+ 
+
+  --  localData = dataIN when dataPUT;
+
+  --pLocalData = localData -> pre(localData);
+
+  dataOUT = if dataGET 
+            then pre localData --pLocalData
+            else -1;
+tel
+
+
+end

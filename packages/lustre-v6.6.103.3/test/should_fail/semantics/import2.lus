@@ -1,0 +1,6 @@
+node imp(x,y: int) returns (z,t: int);
+node import2(a: int) returns (d: int);
+var c: int;
+let
+	(c,d) = imp(a,c);
+tel

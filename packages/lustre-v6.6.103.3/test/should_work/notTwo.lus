@@ -1,0 +1,6 @@
+
+node notTwo(a, b : bool) returns (o : bool);
+let
+	o = not (a and b) ;
+tel
+

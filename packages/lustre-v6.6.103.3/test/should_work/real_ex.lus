@@ -1,0 +1,5 @@
+node real_ex (x:real) returns (y:real);
+let
+  y=x;
+tel
+

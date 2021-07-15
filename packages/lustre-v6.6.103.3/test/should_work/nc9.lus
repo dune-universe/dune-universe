@@ -1,0 +1,39 @@
+-- Appel de noeuds avec sortie multiple
+-- Attention : les deux appels de n2 dans n1 se reduisent
+--             a un appel avec lus2dc.
+
+node nc9 (nc9e1:int) returns (ok:bool);
+var nc9b1:int;
+let
+
+	nc9b1 = n1(nc9e1);
+	
+	ok = (nc9b1 = nc9e1*16);
+
+tel
+
+
+
+
+node n1(n1e1:int) returns (n1s:int);
+let
+	n1s = n2(n1e1,n1e1) + n2(n1e1,n1e1);				
+tel
+
+node n2(n2e1,n2e2:int) returns (n2s:int);
+let
+	n2s = n3(n2e1,n2e1) + n3(n2e2,n2e2);				
+tel
+
+node n3(n3e1,n3e2:int) returns (n3s:int);
+var n3i1,n3i2:int;
+let
+	(n3i1, n3i2) = n4(n3e1,n3e1,n3e2,n3e2);	
+	n3s = n3i1 + n3i2;				
+tel
+
+node n4(n4e1,n4e2,n4e3,n4e4:int) returns (n4s1,n4s2:int);
+let
+	n4s1 = n4e1 + n4e2 ;
+	n4s2 = n4e3 + n4e4 ;			
+tel

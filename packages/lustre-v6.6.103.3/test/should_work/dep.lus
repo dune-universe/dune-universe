@@ -1,0 +1,9 @@
+
+node dep( x : int )
+returns ( u,v,y :int);
+
+let
+	u = x -> x + pre(x) ;
+	v = 0 -> pre(y) + 1 ;
+	y = 0 -> pre(v) + 1 ;
+tel

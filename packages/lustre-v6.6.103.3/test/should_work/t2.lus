@@ -1,0 +1,55 @@
+
+node consensus <<
+	const n : int
+>>
+(
+	T : bool^n
+) returns (
+	a : bool
+);
+let
+	a = with (n = 1)
+		then  T[0]
+		else T[0] and consensus <<n-1>> (T[1..n-1]);
+tel
+
+(*
+Et pourquoi pas étendre la notion de params statiques ???
+*)
+
+node fold_left  <<
+	type t1;
+	type t2;
+	const n : int;
+	node treat(x:t1; y:t2) returns (z:t1)
+>> (
+	a : t1; X : t2^n 
+) returns (
+	c : t1
+);
+let
+	c = with (n = 1) then a
+	    else
+	       fold_left  << t1, t2, n-1, treat >> (
+				treat(a, X[0]),
+				X[1 .. n-1]
+	       );
+tel
+
+-- Alors :
+node consensus_6(X : bool^6) returns (c : bool);
+let
+	c = fold_left << bool,bool,6, Lustre::and >>(true, X);
+tel
+
+node t2 = consensus_6;
+-- Voire même :
+
+node consensus_6_bis = fold_left  << bool,bool,6, Lustre::and >> ;
+
+-- Ou encore :
+
+node consensus_bis  << const n : int >> =
+	fold_left  << bool,bool,n, Lustre::and >> ;
+
+

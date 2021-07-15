@@ -1,0 +1,27 @@
+node uu
+  (x: bool; y: bool; z: bool)
+returns
+  (a: bool);
+
+var
+  V112_X: bool; V111_X: bool; V119_X: bool; 
+  V118_X: bool; V126_X: bool; V125_X: bool; 
+  V135_A_forbiden: bool; V136_B_forbiden: bool;
+
+let
+  a = ((not (V111_X and V135_A_forbiden)) and (not (V125_X and V136_B_forbiden)
+  ));
+  V112_X = (false -> (pre (y or V112_X)));
+  V111_X = (if y then x else (if V112_X then (x or (pre V111_X)) else true));
+  V119_X = (false -> (pre (y or V119_X)));
+  V118_X = (if y then x else (if V119_X then (x and (pre V118_X)) else true));
+  V126_X = (false -> (pre (V118_X or V126_X)));
+  V125_X = (if V118_X then z else (if V126_X then (z or (pre V125_X)) else true
+  ));
+  V135_A_forbiden = (false -> (if ((pre V111_X) and (not V111_X)) then true 
+  else (if ((pre V125_X) and (not V125_X)) then false else (pre V135_A_forbiden
+  ))));
+  V136_B_forbiden = (true -> (if ((pre V125_X) and (not V125_X)) then true else 
+  (if ((pre V111_X) and (not V111_X)) then false else (pre V136_B_forbiden))));
+tel
+

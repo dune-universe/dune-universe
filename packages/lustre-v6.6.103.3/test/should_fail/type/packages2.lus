@@ -1,0 +1,15 @@
+package stupid
+ provides
+  type t1;
+  type t2;
+  node n(x: t1; y: t2) returns (z: t2);
+
+body
+  type t1;
+  type t2;
+  node n(x: int; y: t2) returns (z: t2);
+  let
+    z=y;
+  tel
+
+end

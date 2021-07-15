@@ -1,0 +1,76 @@
+package testPilote
+
+provides 
+node testPilote(Hpilote, semAutP : bool; --
+--            HupdatePiloteData : bool;
+            dataBoiteCP : int) 
+returns (--semMemTakeP, 
+         putMemP, dataGET : bool; 
+         HupdatePiloteData : bool;
+         piloteData : int when HupdatePiloteData;
+  --         localDataErasedFromPilote : int when Hpilote;
+  --         erasedPiloteEvent, copyPiloteEvent : bool;
+  --         localDataCopiedFromPilote : int when Hpilote;
+         );
+
+
+body
+
+node testPilote(Hpilote, semAutP : bool; --
+--            HupdatePiloteData : bool;
+            dataBoiteCP : int) 
+returns (--semMemTakeP, 
+         putMemP, dataGET : bool; 
+         HupdatePiloteData : bool;
+         piloteData : int when HupdatePiloteData;
+--         localDataErasedFromPilote : int when Hpilote;
+--         erasedPiloteEvent, copyPiloteEvent : bool;
+--         localDataCopiedFromPilote : int when Hpilote;
+         );
+var localData : int when ckLocalData;
+    ckLocalData : bool;
+let
+  assert(HupdatePiloteData->true);
+
+  dataGET = Hpilote;
+  
+  ckLocalData = false -> true;
+
+  localData = (if Hpilote then dataBoiteCP else current(pre localData)) when ckLocalData;
+              ---1 -> if Hpilote
+              --then dataBoiteCP
+              --else pre localData;
+
+
+--  semMemTakeP = Hpilote;
+
+
+  HupdatePiloteData = Hpilote and semAutP;
+
+  piloteData = current(localData) when HupdatePiloteData;
+               --if (semAutP and Hpilote)
+               --then localData --current(localData)
+               --else -1;
+
+  putMemP = semAutP and Hpilote;
+
+
+  -- observation dans pilote
+  -- ecrasement
+--  localDataErasedFromPilote = (-1 -> pre localData) when Hpilote;
+                              -- -1 -> if Hpilote
+                              --      then pre localData
+                              --      else -1;
+--  erasedPiloteEvent = Hpilote;
+
+--  localDataCopiedFromPilote = (localData) when Hpilote;
+                               -- -1 -> if Hpilote
+                               --     then localData
+                               --     else -1;
+--  copyPiloteEvent = Hpilote;
+ assert HupdatePiloteData = Hpilote and semAutP;
+tel
+
+
+
+end

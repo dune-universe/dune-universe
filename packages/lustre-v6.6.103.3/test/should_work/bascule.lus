@@ -1,0 +1,6 @@
+node bascule (r,s:bool) returns (q,n:bool);
+let
+  q = (true) -> ((not(pre(r))) and (not(pre(n))));
+  n = (false) -> ((not(pre(s))) and (not(pre(q))));
+--  assert #(r,s);
+tel

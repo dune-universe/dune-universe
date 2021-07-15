@@ -1,0 +1,35 @@
+type 
+  t1; t2; t3;
+  string = int^a;
+  string2d = string^a;
+  structT = {x: int;  y: real;  z: string2d^a};
+  tabStruct = structT^2;
+const 
+  a: int = 4;
+  b: bool = true;
+  c: real = 3.14;
+
+node hanane(a1: bool; b1:  string2d; c1: tabStruct) 
+  returns (res: bool);
+let
+  assert(a1->true);
+  res = current(hanane_clk(a1,b1 when a1, c1 when a1));
+tel
+node hanane_clk(a1: bool; b1:  string2d when a1; c1: tabStruct when a1) 
+  returns (res: bool when a1);
+var
+  h1: int^4;
+  h2: tabStruct;
+  h3: int when a1;
+  h4: real when a1;
+  h5: string2d^a when a1;
+  h6: string2d ;
+let
+  res = true -> (h1[0]>1) when a1;
+  h1 = current(if pre res then b1[1] else b1[2]);
+  h2 = current(c1);
+  h3 = c1[0].x + c1[1].z[2][1][0];
+  h4 = c1[1].y;
+  h5 = c1[1].z;
+  h6 = current(c1[1].z[2]);
+tel

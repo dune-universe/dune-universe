@@ -1,0 +1,43 @@
+
+# Timeout reduced to 3 seconds
+set timeout 20
+
+set tmp ./tmp/
+
+#set command_line "~/lus2lic/objlinux/lus2lic"
+
+# Programs that should work, but that do not
+
+set files [lsort [glob  -nocomplain should_work/broken/*.lus]]
+
+foreach f $files {
+    set bf [file rootname $f]
+    set basef [file tail $bf]
+    set bf $tmp[file tail $bf]
+
+    should_work "without any option" "$lus2lic" "    -o $bf.out $f -n $basef"
+    should_work "Generate ec code  " "$lus2lic" "-ec -o $bf.ec  $f -n $basef"
+}
+
+
+# Programs that should fail, but that do not
+proc iter_should_fail { fail_kind } {
+    global lus2lic tmp
+
+    set files  [lsort [glob -nocomplain should_fail/$fail_kind/broken/*.lus]]
+    foreach f $files {
+        set bf [file rootname $f]
+        set bf $tmp[file tail $bf]
+        should_fail "Test bad programs" "$fail_kind" "$lus2lic -lic" "-o $bf.lic $f -n $basef"
+    }
+}
+
+iter_should_fail "syntax"
+iter_should_fail "type"
+iter_should_fail "clock"
+iter_should_fail "semantics"
+iter_should_fail "assert"
+iter_should_fail "exec"
+
+
+

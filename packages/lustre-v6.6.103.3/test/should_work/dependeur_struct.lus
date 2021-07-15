@@ -1,0 +1,27 @@
+(*  This file is another trivial test for dependency analysis *)
+
+(* time_in_min must be calculated before minute and hour *)
+
+type
+  time = {	h:      int;	-- hour
+                m: 	int;	-- minute
+		s: 	int;	-- second
+		ms: 	int	-- ms		
+	};
+
+node dependeur_struct(
+		time_in_ms:int -- time of the day in millisecond from 00:00
+		) returns (theTime:time);
+var
+	time_in_min: int;
+	time_in_second: int;
+let
+	
+	theTime.h = time_in_min div 60 ; -- hour 
+	theTime.m = time_in_min mod 60 ; -- minute
+	time_in_min = time_in_second div 60 ;
+	theTime.s = time_in_second mod 60 ; -- second
+	time_in_second = time_in_ms div 1000 ;
+	theTime.ms = time_in_ms mod 1000 ; -- ms
+	
+tel

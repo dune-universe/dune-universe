@@ -1,0 +1,5 @@
+node aux1(a,b:int) returns (c,d:int);
+let
+  (c,d) = if(a>0) then pre(a,b)
+			else (pre(a)+1, pre(b)+1);
+tel

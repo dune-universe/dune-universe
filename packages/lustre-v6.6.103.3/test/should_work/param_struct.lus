@@ -1,0 +1,11 @@
+--- A node parametrized by a constant structure
+node mk_tab<<type t; const init: t; const size: int>>
+       (a:t) returns (res: t^size);
+let
+  res =  init ^ size;
+tel
+
+type toto = struct  {a : int; b : int};
+const c = toto {a = 1; b=1 };
+
+node param_struct = mk_tab<<toto, c, 3>>;

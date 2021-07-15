@@ -1,0 +1,447 @@
+-- Etude de cas ELMU
+-- Maquette du noeud Normal
+-- Version Originale :  P.Raymond - Mai 2002
+-- Version "courante" : L.Morel - Novembre 2002
+
+
+------------------------------------------
+-- Constantes
+------------------------------------------
+const NBC = 20;
+const NBG = 4;
+--pour remplacer le type enumere T_EtatCharge
+const EC_ON = 0;
+const EC_OFF = 1;
+const EC_NON_CTRL = 2;
+const EC_LESTAGE = 3;
+const EC_DELESTAGE = 4;
+-- pour remplacer le type enumere T_ComChg
+const COM_ERR = 0;
+const COM_ON = 1;
+const COM_OFF = 2;
+
+
+
+
+
+
+
+----------------------------------------
+--Types :
+------------------------------------------
+--Ils sont tres abstraits,
+--on ne s'interesse pas a la fonctionnalite
+--mais juste a la structure generale en
+--iterateurs.
+--Dans les donnees ``globales'' on n'utilise
+--que l'info chg2gen, pour illustrer le 
+--principe de selection/fusion, les autres
+--donnees sont purement decoratives.
+-----------------------------------------
+-- Lionel : j'ai remplace les types
+-- enumeres par des entiers....
+type INTNBC = int^NBC;
+type BOOLNBC = bool^NBC;
+type INTNBG = int^NBG;
+
+type T_EntreeGlob = {
+	chg2gen      : INTNBC;  -- ch2gen[i] est le Numero du generateur sur lequel 
+                                -- la charge i est branchee (correspondance charge/generateur)
+	mesure_chgs  : INTNBC;  -- Les charges qu'on a
+	mesure_gens  : INTNBG}; -- Les generateurs
+
+type T_InfoChgIndiv = {
+	mesure_chg : int};
+
+type T_InfoChgGlob = {
+	chg2gen : INTNBC};
+
+--type T_EtatCharge = enum {
+--	EC_ON; EC_OFF; EC_NON_CTRL; EC_LESTAGE; EC_DELESTAGE};
+type T_EtatCharge = int;
+
+type T_InfoGenIndiv = {
+	mesure_gen : int};
+
+type T_InfoGenGlob = {
+    elt_bidon : int; 
+	chg2gen : INTNBC};
+
+--type T_ComChg = enum {
+--	COM_ERR; COM_ON; COM_OFF};
+type T_ComChg = int;
+type T_ComChgNBC = T_ComChg^NBC;
+
+
+
+
+----------------------------------------
+-- Utilitaires
+----------------------------------------
+-- "copie" d'un tableau a l'identite
+function id(elt_in : int) returns (elt_out : int);  -- OK
+let
+   elt_out = elt_in;
+tel
+-- remplissage d'un tableau avec 0; 1; 2; ...
+function incr_acc( acc_in : int) returns ( acc_out: int; res : int); -- OK
+let
+	res = acc_in;
+	acc_out = res + 1;
+tel
+
+
+
+
+
+-------------------------------------------------
+-- Extraction des infos globales pour traiter_chg
+-------------------------------------------------
+function extract_info_chg_glob (EntreeGlob : T_EntreeGlob)  
+	returns (InfoChgGlob : T_InfoChgGlob); -- OK
+let
+	InfoChgGlob = T_InfoChgGlob {chg2gen =  map<<id;NBC>>(EntreeGlob.chg2gen)};
+tel
+
+
+
+
+
+
+
+
+
+------------------------------------------------------
+-- Extraction des infos individuelles pour traiter_chg
+------------------------------------------------------
+function int2InfoChgIndiv (m : int) -- OK
+	returns (InfoChgIndiv : T_InfoChgIndiv);
+let
+	InfoChgIndiv = T_InfoChgIndiv{mesure_chg = m};
+tel
+
+function extract_tab_info_chg_indiv (EntreeGlob : T_EntreeGlob) -- OK
+	returns (TabInfoChgIndiv : T_InfoChgIndiv^NBC); 
+let
+	TabInfoChgIndiv = map<<int2InfoChgIndiv; NBC>>(EntreeGlob.mesure_chgs);
+tel
+
+
+
+
+
+
+
+
+-------------------------------------------------
+-- Extraction des infos globales pour traiter_gen
+-------------------------------------------------
+function extract_info_gen_glob (EntreeGlob : T_EntreeGlob)  -- OK
+	returns (InfoGenGlob : T_InfoGenGlob);
+let
+	InfoGenGlob = T_InfoGenGlob{
+                        elt_bidon = 0;
+                        chg2gen = map<<id;NBC>>(EntreeGlob.chg2gen)};
+tel
+
+
+
+------------------------------------------------------
+-- Extraction des infos individuelles pour traiter_gen
+------------------------------------------------------
+function int2InfoGenIndiv (m : int)   -- OK
+	returns (InfoGenIndiv : T_InfoGenIndiv);
+let
+	InfoGenIndiv = T_InfoGenIndiv{mesure_gen = m};
+tel
+
+function extract_tab_info_gen_indiv (EntreeGlob : T_EntreeGlob)  -- OK
+	returns (TabInfoGenIndiv : T_InfoGenIndiv^NBG);
+let
+	TabInfoGenIndiv = map<<int2InfoGenIndiv; NBG>>(EntreeGlob.mesure_gens);
+tel
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+--Fusion : c'est un red de fusion_tab_com,
+--qui est lui-meme un map de  fusion_une_com
+---------------------------------------------------
+-- accessoire : prendre (ou non) une ComChg
+function fusion_une_com (in_com  : T_ComChg ;     --- OK 
+					 cur_com : T_ComChg ;
+					 cur_val : bool) 
+	returns (out_com : T_ComChg);
+let
+	out_com = if (cur_val) then cur_com else in_com ;
+tel
+
+-- accessoire : completer un tableau de ComChg modulo un tableau de bool
+function fusion_tab_com (acc_in : T_ComChg^NBC;    -- OK
+					 TabCom : T_ComChg^NBC;
+					 TabVal : bool^NBC) 
+	returns (acc_out : T_ComChg^NBC);
+let
+	acc_out = map<<fusion_une_com; NBC>>(acc_in, TabCom, TabVal);
+tel
+
+-- Le VRAI noeud de fusion
+function fusion_com (AllTabComChg : T_ComChgNBC^NBG ;    -- OK
+				 AllTabComVal : BOOLNBC^NBG) 
+	returns (TabComChg : T_ComChgNBC);
+ var
+	Vide  : T_ComChgNBC ;
+let
+	Vide = COM_ERR^NBC;
+	TabComChg = red<<fusion_tab_com; NBG>>(Vide,            --acc d'entree
+                                        AllTabComChg,
+                                        AllTabComVal);	
+tel
+
+
+------------------------------------------------------
+--Maquette du noeud traite_chg :
+--   on fait abstraction de la fonctionnalite
+----------------------------------------------------
+function trChItere(acc_in : int; elt : int) returns (acc_out : int);  -- OK
+-- Pour l'instant,  calcul du max
+let
+  acc_out = if(acc_in>elt) then acc_in else elt;
+tel
+
+function traite_charge(InfoChgIndiv : T_InfoChgIndiv; -- un entier                     --OK
+					   InfoChgGlob   : T_InfoChgGlob)-- un tableau de NBC entier
+	returns (EtatCharge : T_EtatCharge);-- un entier
+-- Pour l'instant, determine le max
+-- plus grand que InfoChgIndiv.mesure_chg
+let
+  EtatCharge = red<<trChItere;NBC>>(InfoChgIndiv.mesure_chg, 
+                                    InfoChgGlob.chg2gen);
+  -- EtatCharge contient le maximum des elements de InfoChgGlob.chg2gen 
+  -- qui sont plus grands que InfoChgIndiv.mesure_chg
+tel
+
+
+
+
+
+----------------------------------------------------
+--Maquette du noeud traite_gen :
+--  On a juste mis le calcul du TabComVal,
+--   le reste etant realise par un ``noeud'' abstrait
+----------------------------------------------------
+function traite_genCore_itere(acc_in : int;               -- OK
+                          elt1 : bool; 
+                          elt2 : int) 
+     returns (acc_out : int; elt : int); 
+let
+  elt = if(elt1)
+        then elt2
+        else acc_in;
+  acc_out = acc_in;
+tel
+
+function traite_gen_core (indice_gen : int ;                   -- OK
+                      InfoGenIndiv  : T_InfoGenIndiv ;
+                      InfoGenGlob    : T_InfoGenGlob ;
+                      TabEtatCharge : T_EtatCharge^NBC;
+                      TabComVal     : BOOLNBC) 
+	returns (TabComChg  : T_ComChg^NBC);
+var bidon : int;
+let
+   bidon, TabComChg = fillred<<traite_genCore_itere;NBC>>(indice_gen, TabComVal, InfoGenGlob.chg2gen);
+tel
+
+
+
+
+function egal_indice(indice, val : int) returns (r : bool);   -- OK
+let 
+  r = val = indice; 
+tel
+
+
+         
+
+
+function traite_gen(indice_gen : int ;                          -- OK
+                   InfoGenIndiv  : T_InfoGenIndiv ;
+                   InfoGenGlob    : T_InfoGenGlob ;
+                   TabEtatCharge : T_EtatCharge^NBC;
+                   --TabIndiceGen : int^NBC
+                   )
+returns (TabComChg  : T_ComChg^NBC;
+         TabComVal : BOOLNBC
+         );
+--var inter : int^NBC;
+var 
+	TabIndiceGen : int^NBC;
+	bidon : int;	
+let
+  TabComChg = traite_gen_core(indice_gen,
+                              InfoGenIndiv,
+                              InfoGenGlob,
+                              TabEtatCharge,
+                              TabComVal);
+  TabComVal = map<<egal_indice;NBC>>(TabIndiceGen, InfoGenGlob.chg2gen);
+  bidon, TabIndiceGen = fill<<copie;NBC>>(indice_gen);
+tel
+
+
+
+
+function copie(acc_in : int)                -- OK
+     returns (acc_out : int; elt : int);
+let
+   acc_out = acc_in;
+   elt = acc_in;
+tel
+
+
+
+
+
+
+-------------------------------------------------------------------
+-- extraction des charges a partir des Entrees globales
+-------------------------------------------------------------------
+function extrCharge(EntreeGlob : T_EntreeGlob)                -- OK
+     returns (TabInfoChgIndiv : T_InfoChgIndiv^NBC;
+              TabInfoChgGlob   : T_InfoChgGlob^NBC);
+let
+--extraction du tableau des infos individuelles de charge
+    -- Ext
+	TabInfoChgIndiv = extract_tab_info_chg_indiv(EntreeGlob); 
+    -- TabInfoChgIndiv[i] contient les infos seulement les infos concernant la charge i
+
+	--extraction et dispatch des infos globales
+    -- ExtDis
+	TabInfoChgGlob = extract_info_chg_glob(EntreeGlob)^NBC; 
+    -- TabInfoChgGlob[i] contient le chg2gen[i] des entrees globales.
+tel
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+-- extraction des generateurs a partir des Entrees globales
+-------------------------------------------------------------------
+function extrGen(EntreeGlob : T_EntreeGlob)                      -- OK
+     returns (TabInfoGenIndiv : T_InfoGenIndiv^NBG;
+              TabInfoGenGlob   : T_InfoGenGlob^NBG;
+              TabIndiceGen  : INTNBG;);
+
+	var 
+		bidon : int;
+let
+	--extraction du tableau des infos individuelles de generateur
+	TabInfoGenIndiv = extract_tab_info_gen_indiv( EntreeGlob );
+
+	--extraction et dispatch des infos globales
+	TabInfoGenGlob = extract_info_gen_glob( EntreeGlob )^NBG; 
+
+	--tableaux des indices de gen
+	bidon, TabIndiceGen = fill<<incr_acc; NBG>>(0);
+tel
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+-- Traitement Global des charges                                 
+-----------------------------------------------------------------
+function traiteChg(TabInfoChgIndiv : T_InfoChgIndiv^NBC; -- tableau de NBC entiers  --OK
+               TabInfoChgGlob : T_InfoChgGlob^NBC) -- tableau de NBC*NBC entiers
+     returns (TabEtatCharge : T_EtatCharge^NBC);-- tableau de NBC entiers
+let
+  TabEtatCharge = map<<traite_charge; NBC>>(
+                                            TabInfoChgIndiv,
+                                            TabInfoChgGlob
+                                            );
+    --Compare le i-eme element de TabInfoChgIndiv avec le max de la 
+    -- i-eme colonne de TabInfoChgGlob
+tel
+
+
+
+
+
+
+-------------------------------------------------------------------
+-- Traitement Global des generateurs                               
+-------------------------------------------------------------------
+function traiteGen(TabIndiceGen  : INTNBG;               -- OK
+               TabInfoGenIndiv : T_InfoGenIndiv^NBG;
+               TabInfoGenGlob   : T_InfoGenGlob^NBG;
+               TabEtatCharge : T_EtatCharge^NBC)
+returns (AllTabComChg  :T_ComChgNBC^NBG;
+              AllTabComVal  : BOOLNBC^NBG);
+let
+  AllTabComChg, AllTabComVal = map<<traite_gen; NBG>> (TabIndiceGen,
+                               TabInfoGenIndiv,
+                               TabInfoGenGlob,
+							   TabEtatCharge^NBG);
+tel
+	
+
+
+
+
+
+
+	
+-------------------------------------------------------
+-- Noeud principal                                     
+-------------------------------------------------------
+function  ELMU(EntreeGlob : T_EntreeGlob) --Contient (au moins) les valeurs des charges et des generateurs du systeme
+-- OK OK OK 
+	returns (TabComChg : T_ComChg^NBC);
+var
+	TabInfoChgIndiv : T_InfoChgIndiv^NBC;
+	TabInfoChgGlob   : T_InfoChgGlob^NBC;
+	TabEtatCharge   : T_EtatCharge^NBC;
+
+	TabInfoGenIndiv : T_InfoGenIndiv^NBG;
+	TabInfoGenGlob   : T_InfoGenGlob^NBG;
+
+	TabIndiceGen  : INTNBG;
+
+	AllTabComChg  :  T_ComChgNBC^NBG;
+	AllTabComVal  : BOOLNBC^NBG;
+let
+
+-- Les 2 boites de gauche
+  TabInfoChgIndiv, TabInfoChgGlob = extrCharge(EntreeGlob);
+
+
+--traitement des charges
+   TabEtatCharge = traiteChg(TabInfoChgIndiv, TabInfoChgGlob);
+
+-- Les 4 boites au milieu a droite
+    TabInfoGenIndiv, TabInfoGenGlob, TabIndiceGen = extrGen(EntreeGlob);
+    
+
+ --traitement des generateurs
+    AllTabComChg, AllTabComVal = traiteGen(TabIndiceGen,
+										   TabInfoGenIndiv,
+										   TabInfoGenGlob,
+										   TabEtatCharge);
+
+-- Le calcul "Fus" tout a droite
+	TabComChg = fusion_com(AllTabComChg, AllTabComVal);
+
+tel

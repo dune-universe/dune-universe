@@ -1,0 +1,22 @@
+
+
+node n(x,y: int) returns(a,b: int);
+var 
+  v1,v2: int;
+let
+  v1 = x+y;
+  v2 = x*y;
+  a = v1*x;
+  b = v2*y;
+tel
+
+
+node test_node_expand(x,y: int) returns (o1, o2: int);
+let
+  -- to avoid overflow during automated test generation
+  assert(-1000 < x); 
+  assert(x < 1000); 
+  assert(-1000 < y); 
+  assert(y < 1000); 
+  o1,o2 = n(x, y);
+tel

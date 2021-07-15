@@ -1,0 +1,76 @@
+-----------------------------
+-- modSimple: un model simple 
+--    * necessite : un type
+--    * fournit : un noeud 
+----------------------------
+model modSimple
+  needs type t;
+  provides
+    node fby1(init, fb: t) returns (next: t);
+body
+  node fby1(init, fb: t) returns (next: t);
+  let
+    next = init -> pre fb;
+  tel
+end
+
+-----------------------
+-- qq instances de modSimple
+-----------------------
+package pint is modSimple(t=int);
+package pbool is modSimple(t=bool);
+package preal is modSimple(t=real);
+
+
+--------------------------
+-- un package intermediaire
+-------------------------
+package inter
+  uses pbool, pint, preal;
+  provides 
+    node preced(in: int) returns (out, out2: selType);
+    const n : int;
+    type selType;
+body
+   
+  type selType = { i: int; b: bool; r: real };
+
+  -----------------------
+  -- qq instances de modSimple
+  -----------------------
+   --package pint is modSimple(int);
+   --package pbool is modSimple(bool);
+   --package preal is modSimple(real);
+
+   --package pSel is modSimple( { i: int; b: bool; r: real } );
+        
+	const n: int = -4;
+	node preced(in: selType) returns (out, out2: selType);
+	let
+                out2 = selType { i = 0; b = true; r = 0.}; --pSel::fby1(in);
+  		out.i = pint::fby1(out2.i, in.i);
+  		out.b = pbool::fby1(out2.b, in.b);
+  		out.r = preal::fby1(out2.r, in.r);
+	tel 
+end
+---------------------------
+-- le package principal
+--------------------------
+package mainPack
+        uses inter;
+        provides 
+                node preced(in: inter::selType) returns (out: inter::selType); 
+body
+  
+     type  T = int^N;
+     const X = N;
+           N : int = -2 * inter::n;
+ 
+       -- node preced(in: bool) returns (out: bool);
+        node preced(in: inter::selType) returns (out: inter::selType);
+        var out2 : inter::selType;
+        let
+                out, out2 =  inter::preced( in );
+        tel 
+end
+

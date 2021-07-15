@@ -1,0 +1,35 @@
+---------------------------
+-- A pipelining algorithm
+-- inspired from 7.1 in holenderski's paper
+-- "compositional verif of synchronous networks"
+--------------------------
+--
+-- Author : L. Morel
+-- started on : July 1st 2002
+-- last update : July 1st 2002
+
+
+const size = 10;
+
+
+node oneStep_pipe(accu_in : bool; elt_in :  bool)
+     returns (accu_out :  bool;
+              elt_out :  bool);
+let
+  elt_out = true->pre(not(accu_in));  
+  -- at rank 'i+1' accu_in contains tab[i-1] and elt_in contains tab[i]
+  accu_out = elt_in;
+tel
+
+
+
+node pipeline(in :  bool^size) 
+     returns(out :  bool^size);
+var accu_out : bool;
+        --var_inter : bool;
+let
+   accu_out, out = fillred<<oneStep_pipe;size>>(true->pre(accu_out), in);
+--      var_inter = true -> pre(accu_out);
+--      accu_out, out = fillred<<oneStep_pipe;size>>(var_inter, in);
+tel
+----

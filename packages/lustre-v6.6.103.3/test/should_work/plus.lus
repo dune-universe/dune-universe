@@ -1,0 +1,9 @@
+node plus(a: int ; b: int) returns (c, d, e, f: int);
+let
+  c = Lustre::iplus(a, b);
+  d = a + b;
+  e = if(boolred<<0,1,2>>(true^2)) then a else b;
+  f = if(nor(c<b, Lustre::lte(c,b))) then a 
+      else b + if(boolred<<0,0,2>>([c<b, Lustre::lte(c,b)])) then a 
+      else b;
+tel

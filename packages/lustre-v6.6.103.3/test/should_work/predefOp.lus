@@ -1,0 +1,118 @@
+/**********************************************
+ *  - Exemples d´utilisation des opérateurs 
+ *     prédéfinis dans les itérateurs.     
+ *     ------------------------------ 
+ *********************************************/
+
+
+/*===========================================================*/
+/**  déclarations de constantes **/
+/**=============================**/
+const L = 2;
+const H = 3;
+
+/*===========================================================*/
+/**    déclarations de types    **/
+/**=============================**/
+type 
+  Reg_L = bool^L;       -- tableau de booléen
+  T_Reg_H = Reg_L^H;    -- matrice de booléen
+  Tab_L = int^L;        -- tableau d´entier
+  T_Tab_H = Tab_L^H;    -- matrice d´entier
+
+/*===========================================================*/
+/**  déclarations d´opérateurs  **/
+/**=============================**/
+
+--  initialise une matrice de booleen:  
+-------------------------------------
+node initmatbool( iacc : bool ) returns ( sacc : bool; R :  T_Reg_H );
+let
+      ( sacc, R ) = fill<< fill<< bitalt ; L >> ; H >>( iacc );
+tel
+
+node bitalt ( iacc : bool) returns (oacc: bool ; res : bool);
+let 
+  res = iacc;
+  oacc = not(res);
+tel
+
+--  initialise une matrice d´entier 0, 1, 2...:  
+-------------------------------------
+node initmatint( iacc : int ) returns ( sacc : int; R :  T_Tab_H );
+let
+      ( sacc, R ) = fill<< fill<< incremental ; L >> ; H >>( iacc );
+tel
+
+node incremental ( iacc : int ) returns ( oacc: int ; res : int );
+let 
+  res = iacc;
+  oacc = res + 1;
+tel
+
+
+-- calcule la matrice (L, H) des "xor" des entrées:   
+---------------------------------------------------
+node composematbool ( i1, i2 : T_Reg_H ) returns ( s1 : T_Reg_H );
+let
+       --s1 = map<< map<< xor ; L>> ; H>>( i1, i2 );
+       --s1 = map<< map<< and ; L>> ; H>>( i1, i2 );
+       --s1 = map<< map<< or ; L>> ; H>>( i1, i2 );
+       s1 = map<< map<< =>,  L>>,  H>>( i1, i2 );
+tel
+
+-- calcule arithmethique sur les entrées:   
+---------------------------------------------------
+node composematint ( i1, i2 : T_Tab_H ) returns ( s1 : T_Tab_H; s2 : T_Reg_H );
+let
+       --s1 = map<< map<< + ; L>> ; H>>( i1, i2 );
+       --s1 = map<< map<< - ; L>> ; H>>( i1, i2 );
+       --s1 = map<< map<< div ; L>> ; H>>( i1, i2 );
+       s1 = map<< map<< / ,  L>> ,  H>>( i1, i2 );
+       s2 = map<< map<< >= ,  L>> ,  H>>( i1, i2 );
+tel
+
+-- compte le nombre de case a vrai dans une matrice: 
+---------------------------------------------------
+node reducematbool(iacc : int; I: T_Reg_H ) returns (res : int);
+let 
+  res = red<< red <<incr, L >>,  H >>(iacc, I);
+tel
+
+node incr(init: int; b: bool) returns (res : int);
+let 
+  res = if(b = true) then init+1 else init;
+tel
+
+-- somme des éléments d´une matrice: 
+---------------------------------------------------
+node reducematint(iacc : int; I: T_Tab_H ) returns (res : int);
+let 
+  res = red<< red << + ; L >> ; H >>(iacc, I);
+tel
+
+-- noeud principale 
+-------------------
+node predefOp2( a: bool ) returns ( nbTrue: int ;   init1, init2 : T_Reg_H ;  XORMAT : T_Reg_H );
+var 
+   bid1, bid2 : bool;
+let 
+    bid1, init1 = initmatbool(a);
+    bid2, init2 = initmatbool(not a);
+    XORMAT = composematbool(init1, init2);
+    nbTrue = reducematbool(0, XORMAT);
+
+tel
+
+
+node predefOp( a: int ) returns ( res: int ;   init1, init2, matres1 : T_Tab_H ;  matres2 : T_Reg_H ;);
+var 
+   bid1, bid2 : int;
+let 
+     bid1, init1 = initmatint(a);
+     bid2, init2 = initmatint(a*a);
+     matres1, matres2 = composematint(init1, init2);
+     res = reducematint(0, matres1);
+tel
+
+

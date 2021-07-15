@@ -1,0 +1,163 @@
+--robot direction control setting
+
+             
+-- stop = 0
+-- forward =1 
+-- back = 2   
+-- right = 3   
+
+-- soft_left = 4(right wheel frwd and left wheel stop)
+-- soft_right =5(left wheel frwd and right wheel stop)      
+-- soft_left_2 = 6 (right wheel back and left wheel stop)    
+-- soft_right_2 =7  (left wheel back and right wheel stop)
+-- Veer_Soft_Right_Turn= 8  (this will set the left and right motor velocity with  veering softly in right)
+-- Veer_Soft_Left_Turn= 9   (this will set the left and right motor velocity with  veering softly in left) 
+-- Veer_Hard_Right_Turn= 10  (this will set the left and right motor velocity with veering hardly in right)
+-- Veer_Hard_Left_Turn= 11  (this will set the left and right motor velocity with  veering hardly in left)  
+
+
+const WHITE = 100;
+const REQ_GAP =40;
+const LEFT_OBS_DIST =150;
+const FRONT_OBS_DIST = 100;
+const REQ_RIGHT_DEGREE = 90;
+
+node whiteline(r_line,m_line,l_line: int) returns(dir,velocity:int);
+ 
+let
+       
+    velocity = 255 ;
+          
+    dir =
+          --all sensor on the line 
+         
+       if(m_line<WHITE and l_line< WHITE and r_line < WHITE) then 1 -- forward
+
+      --center & right sensor on the line
+       else if (m_line< WHITE and l_line>WHITE and  r_line < WHITE ) then 8 --veer soft right
+
+     -- left & center in on the line                
+       else if(m_line< WHITE and l_line<WHITE and  r_line > WHITE) then 9 --veer soft left
+      
+       --only right sensor on line
+       else if (m_line> WHITE and l_line>WHITE and  r_line < WHITE) then  10  --veer hard right
+
+       --only left sensor is on line
+       else if(m_line> WHITE and l_line<WHITE and  r_line > WHITE) then   11--veer hard left
+       
+        else  0 ; -- when all sensor are out of line
+tel
+
+--collision detection in front of the robot
+
+
+
+ node CD(f_ir:int) returns(presence:bool)
+ let
+   presence = (f_ir>100);
+
+-- 1 imply there is no obstacle in front
+--0 imply there is a obstacle in front
+
+  tel
+------------------
+node gap1(left_ir:int) returns(avail:bool)
+  let
+
+  avail = if(left_ir > LEFT_OBS_DIST) then true else false; --1 = there is a gap
+  
+tel
+---------------------------------------------------------
+node STARTPOS(l_gap:bool;shaft_l:int) returns(start:int);
+let
+
+start = 0 -> if(shaft_l = 0 and l_gap  ) then 0 
+           else if (not (pre(l_gap)) and (shaft_l<>0)) then (shaft_l)
+           else pre(start);  
+
+tel
+--------------------------------------------------------
+node PARKING_LENGHT(shaft_l,start_pos:int) returns(park_lenght:bool);
+ let
+  park_lenght = ((shaft_l - start_pos) > REQ_GAP) ;  -- true indicate sufficient parking space else not sufficient
+ tel
+-------------------------------------------
+node required_back1(shaft_l,start_back:int) returns(done_back1:bool);
+  let
+       done_back1 = (shaft_l -start_back = 20);
+  tel
+
+
+----------------
+node STARTBACK1_POS(gap_found:bool;shaft_l:int) returns(back1:int);
+let
+    back1 = 0 -> if(shaft_l = 0 and gap_found  ) then 0
+                 else if(pre(gap_found) and shaft_l<>0 ) then shaft_l 
+                 else pre(back1);
+tel
+
+type mode = enum { forward ,  waiting,  buzzer_on,  backing1,  turn_right, backing2, buzzer_off };
+
+
+node carV2(RIGHT_WHITELINE_VALUE,MIDDLE_WHITELINE_VALUE,LEFT_WHITELINE_VALUE,FRONT_IR_VALUE,LEFT_IR_VALUE,SHAFT_COUNT_LEFT:int) 
+ returns(DIRECTION,VELOCITY:int; BUZZER:bool);
+
+var dir1,vel1,empty_start_pos,mode,start_back_pos,start_rightturn_pos:int; blocked,enough_gap,left_gap,enough_back1,turn_r_Complete :bool;
+
+
+
+-- mode =1 : forward
+-- mode = 2 : waiting
+-- mode =3 : parking(buzzer on)
+-- mode =4 : parking(backing1)
+-- mode =5 : parking(turn right)
+-- mode =6 : parking(bcking2)
+-- mode =7 :stop(buzzer off)
+let  
+   left_gap = false -> gap1(LEFT_IR_VALUE);
+   (dir1,vel1) =  whiteline(RIGHT_WHITELINE_VALUE,MIDDLE_WHITELINE_VALUE,LEFT_WHITELINE_VALUE);
+    blocked =  false ->CD(FRONT_IR_VALUE); 
+
+    empty_start_pos = 0 -> STARTPOS(left_gap,SHAFT_COUNT_LEFT);
+    enough_gap = false -> PARKING_LENGHT(SHAFT_COUNT_LEFT, empty_start_pos);
+
+    start_back_pos  = 0 -> if (enough_gap) then STARTBACK1_POS(enough_gap,SHAFT_COUNT_LEFT) else 0;
+    enough_back1 = false ->  if (enough_gap) then required_back1(SHAFT_COUNT_LEFT, start_back_pos) else false;
+
+ --   turn_r_Complete = false -> if(enough_back = 1) then TURN_RIGHT(REQ_RIGHT_DEGREE) else 0;
+    start_rightturn_pos = 0 -> if ((pre(mode)=4) and (enough_back1)) then SHAFT_COUNT_LEFT else pre(start_rightturn_pos);
+    turn_r_Complete = false -> ((pre(mode)=5) and (SHAFT_COUNT_LEFT - start_rightturn_pos >= 25)) ;  
+
+   mode = 1 -> if(pre(mode) = 1 and  not blocked and not enough_gap ) then 2  --  waiting mode
+                else if(pre(mode) = 1 and blocked and not enough_gap) then 1  -- farward  mode
+                else if(pre(mode) = 2 and not blocked  and not enough_gap ) then 2    -- waiting mode
+                 else if(pre(mode) = 2 and blocked and not enough_gap ) then 1   --  farward mode
+                  else if(pre(mode) =2 and enough_gap) then 3 -- parking mode(buzzer on)
+                  else if(pre(mode) = 1 and enough_gap) then 3-- parking mode(buzzer on)
+                 else if(pre(mode) = 3) then 4 -- first back by small amount  (parking back)
+                 else if(pre(mode)=4 and not enough_back1 ) then 4-- not enough backing
+                 else if(pre(mode)=4 and enough_back1 ) then 5  -- complete backing process, goes to turn right mode
+                 else if(pre(mode) = 5 and not turn_r_Complete ) then 5-- not completed turning
+                 else if(pre(mode) = 5 and turn_r_Complete) then 6 -- after turn right , go to stop mode
+                  else 6;
+                  
+     -- blocked =-- 1 imply there is no obstacle in front, 0 imply there is a obstacle in front=> there 
+       
+  (DIRECTION,VELOCITY) = if (mode =1 or mode =3) 
+                         then (dir1,vel1) 
+                         else
+                           if(mode =4) 
+                           then (2,vel1) 
+                           else 
+                             if(mode = 5) 
+                             then (3,vel1) 
+                             else  (0,0);
+  BUZZER   =  (mode = 3 or mode = 4 or mode = 5)  ; 
+  -- buzzer on imply that car is parking mode else off
+ 
+  tel
+  
+
+ 
+
+

@@ -1,0 +1,20 @@
+
+-- This is a bit weird but it is valid Lustre...
+node test(b1, b2 : bool) returns (b3, b4, b5, b6 : bool);
+let
+    b3, b4, b5, b6 = (three_outputs(two_outputs(b1,b2),true), false);
+tel
+
+node three_outputs(c1, c2, c3 : bool) returns (c4, c5, c6 : bool);
+let 
+    c4, c5, c6 = (true, false, true) -> if c1 
+                                        then ((c1,c2),c3)
+                                        else (c1,(c2,c3)); 
+tel
+
+node two_outputs(c1, c2 : bool) returns (c4, c5 : bool);
+let
+    c4 = false -> pre c1;
+    c5 = true -> pre c2;
+tel
+

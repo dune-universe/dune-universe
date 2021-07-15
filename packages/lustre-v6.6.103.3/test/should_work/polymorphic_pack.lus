@@ -1,0 +1,17 @@
+model iter 
+needs 
+   const size: t;
+   type t;
+   node n(x,y:t) returns (z:t);
+provides 
+   node polymorphic_pack(x, y: t^size) returns (z:t^size);
+body
+   node polymorphic_pack(x, y: t^size) returns (z:t^size);
+   let
+     z = map<<n, size>>(x, y);
+   tel
+end
+
+package polymorphic_pack = iter(size=3, t=int, n=Lustre::iplus);
+
+ 

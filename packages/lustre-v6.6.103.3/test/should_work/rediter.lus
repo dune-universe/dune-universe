@@ -1,0 +1,9 @@
+function max(init: int; a: int) returns (b: int);
+let 
+  b = if(init>a) then init else a;
+tel
+
+function rediter(a: int^5^3) returns (b: int);
+let 
+  b = red<<red<<max; 5>>; 3>>(0, a);
+tel

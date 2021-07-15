@@ -1,0 +1,28 @@
+
+
+--type zetype = int^4;
+
+(*
+node overplus = map<<+,4>>;
+
+node overmat = map<<overplus, 7>>
+
+node toto(x,y: int^4^7) returns (o: int^4^7);
+let o = overmat(x,y); tel
+
+node titi(x,y: int^4^7) returns (o: int^4^7);
+let o = map<<overplus, 7>>(x,y); tel
+
+node tutu(x,y: real^4) returns (o: real^4);
+let o = overplus(x,y); tel
+*)
+
+node over2(x,y: int^13^22) returns (o: int^13^22);
+let o = map<<
+				map<<+,13>>,
+			22>>(x,y); tel
+
+(*
+node over2(x,y: int^55) returns (o: int^55);
+let o = map<<+,55>>(x,y); tel
+*)

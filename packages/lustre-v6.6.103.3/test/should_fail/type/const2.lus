@@ -1,0 +1,30 @@
+const
+  M = if ((c1*2-2) mod 2 = (1+1)*2 div 2 - 2) then 3 else 6; 
+  N = if (c1>3) then 4 else 7; 
+  O = if (not c7 xor 2>3) then 5 else 8; 
+  P = (-N-M*O+3) div -3;
+  c1: int = 2;
+  c2: bool = true;
+  c3: real = 3.14;
+  c4, c5, c6: int^2;
+  c7 = true or false and c2 => true xor false;
+  c8: int = c1*3;
+  c9=not false;
+  c10=3;
+
+
+  e1 = if(2<>6.5) then true+1 else 2->4;
+
+
+
+type
+  t1 = int;
+  t2 = t1^M;
+  t3 = t2^N;
+  t4 = t3^O;
+  t5 = t4^P;
+  t6 = t5^c10;
+  t7 = t6^O;
+  t8 = t7^O;
+
+node const2 = Lustre::and;

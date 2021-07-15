@@ -1,0 +1,9 @@
+
+(* ne passe pas DoNotPoly... Normal. *)
+node truc = map<<+,42>>;
+
+(* PASSE DoNotPoly ... *)
+node trac = map<<Lustre::iplus,42>>;
+ 
+(* ne passe pas DoNotPoly ... *)
+node ply01 = trac;

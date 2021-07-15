@@ -1,0 +1,14 @@
+node mouse1(click,clock:bool; delay:int) returns (single_click,double_click: bool);
+var clock_decount: int; counting, more_than_one_click: bool;
+let
+  single_click = not counting and not (false-> pre more_than_one_click);
+  more_than_one_click = click and (false -> pre(counting));
+  double_click = not counting and (false-> pre more_than_one_click);
+  counting = (clock_decount > 0);
+  clock_decount = if click and (true -> not pre(counting)) then 
+                     if clock then delay - 1 else delay
+                  else if clock and (false -> pre(counting)) 
+                  then pre(clock_decount) - 1
+                  else 0 -> pre(clock_decount);
+tel
+

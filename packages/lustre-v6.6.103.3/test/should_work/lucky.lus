@@ -1,0 +1,45 @@
+node lucky (signal : int; action : bool) returns (alarm : bool);
+var
+    active : bool;
+    begin,en : bool;
+let
+    active = (signal > 20) -> if pre(active) then (signal > 10) else  (signal > 20);
+    begin = active and (false -> not pre(active));
+    en = (not active) and (false -> pre active);
+    alarm = (not once_from_to(action,begin,en)) or (stable(active) > 10);
+tel
+
+-- " o compte le nombre des derniers pas consécutifs 
+--   pendant lesquels i n'a pas changé de valeur "
+node stable(i : bool) returns (o : int);
+let
+    o = if (true -> (i = pre(i))) then (1 + (0 -> pre(o))) else 0;
+tel
+
+-- " X vaut vrai ssi C a valu vrai au moins une fois 
+--   entre A et B "
+node once_from_to (C,A,B: bool) returns (X: bool);
+let
+        X = implies(B, false -> pre(once_since(C,A)));
+tel
+
+-- " X vaut vrai ssi C a valu vrai depuis A "
+node once_since (C,A: bool) returns (X: bool);
+let
+        X = if A then C else 
+            if after(A) then C or (false -> pre(X))
+            else false;
+tel
+
+-- " XimpliesY est vrai ssi X=>Y "
+node implies(X,Y : bool) returns (XimpliesY : bool);
+let
+        XimpliesY = (not X) or Y;
+tel
+
+-- " afterX vaut vrai ssi X a valu vrai dans le passe "
+node after (X: bool) returns (afterX: bool);
+let
+        afterX = false -> pre(X or afterX);
+tel
+

@@ -1,0 +1,6 @@
+
+
+node condact2(c,x,y : int) returns (o: int);
+let
+	o = condact<<+, 0>>(c,x,y);
+tel  

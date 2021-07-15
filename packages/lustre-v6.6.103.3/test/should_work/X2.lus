@@ -1,0 +1,7 @@
+node X2 (b: bool; n: int)
+returns (m: int);
+let
+  assert(b->true);
+  m = 0 -> current(n when b);
+tel
+

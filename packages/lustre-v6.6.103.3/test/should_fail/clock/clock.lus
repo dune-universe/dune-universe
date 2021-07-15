@@ -1,0 +1,24 @@
+
+-- Entree sur entree:  ok
+extern node clock2(u: bool; v: bool when u) returns (y: bool );
+
+-- Sortie sur sortie:  ok
+extern node clock3(u: bool) returns (x: bool; y: bool when x);
+
+
+-- Entree sur entree et sortie sur sortie:  ok
+extern node clock4(u: bool; v: bool when u) returns (x: bool; y: bool when x);
+
+-- Noeud principal.
+node clock(a: bool; b: bool) returns (c: bool; d: bool when c);
+var
+  z: bool;
+  x: bool when z;
+  y: bool when x;
+let 
+	--  c = clock2(a, (b or b) when a) or (true->a); 
+	--  d = clock2(a, b when a) when c;
+  y = clock2(a, b when a) when x; -- ok
+  (z, x) = clock3(z);-- ok
+  (c, d) = clock4(a, b when d); -- a la place de clock4(a, b when c)
+tel

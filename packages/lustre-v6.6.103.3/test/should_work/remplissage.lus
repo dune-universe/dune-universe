@@ -1,0 +1,269 @@
+package remplissage
+
+provides
+
+node remplissage(dataBoiteCP_IN, 
+              localDataFromRead, 
+              localErasedDataFromBoiteCP, 
+              localCopyedDataFromBoiteCP, 
+              localErasedDataFromPilote, 
+              localCopyedDataFromPilote, 
+              localErasedDataFromMem, 
+              localCopyedDataFromMem : int; 
+              productionEvent, 
+              consumptionEvent, 
+              eraseMemEvent,
+              eraseBoiteCPEvent, 
+              erasePiloteEvent, 
+              copyBoiteCPEvent,
+              copyPiloteEvent, 
+              copyMemEvent : bool) 
+returns (retard, indiceCount : int; HindiceCount : bool);
+
+
+body
+
+type accChangeTab = {numEvent : int; cpt : int; indice : int};
+
+function change_tab2(tabIn : int^10;
+                indiceIn : int;
+                num_event : int)
+returns (tabOut : int^10);
+var accOut : accChangeTab;
+let 
+  accOut, tabOut = 
+    fillred<<change_elt2, 10>>(accChangeTab{numEvent = num_event; cpt = 0; indice = indiceIn}, tabIn);
+tel
+
+
+
+function change_elt2(accIn : accChangeTab; 
+                 --num_event : int; 
+                 --cptOut : int; 
+                 --indiceIn : int; 
+                 eltIn : int) 
+returns (accOut : accChangeTab;
+         --num_event : int; 
+         --cptOut : int; 
+         --indiceIn : int; 
+         eltOut : int);
+let
+  eltOut = if(accIn.indice = accIn.cpt)
+           then if accIn.numEvent=0
+                then 1 
+                else if accIn.numEvent=1 or accIn.numEvent=3 or accIn.numEvent=7
+                     then eltIn-1
+                     else if accIn.numEvent=2 or accIn.numEvent=4 or accIn.numEvent=6
+                          then eltIn+1
+                          else eltIn
+           else eltIn;
+
+  accOut = accChangeTab{numEvent = accIn.numEvent; 
+                        indice = accIn.indice;
+                        cpt = accIn.cpt+1};
+
+tel
+
+
+
+
+type accObserver = {nbCopy : int^10; 
+                    indice : int};
+
+
+node remplissage(dataBoiteCP_IN, 
+              localDataFromRead, 
+              localErasedDataFromBoiteCP, 
+              localCopyedDataFromBoiteCP, 
+              localErasedDataFromPilote, 
+              localCopyedDataFromPilote, 
+              localErasedDataFromMem, 
+              localCopyedDataFromMem : int; 
+              productionEvent, 
+              consumptionEvent, 
+              eraseMemEvent,
+              eraseBoiteCPEvent, 
+              erasePiloteEvent, 
+              copyBoiteCPEvent,
+              copyPiloteEvent, 
+              copyMemEvent : bool) 
+returns (retard, indiceCount : int; HindiceCount : bool);
+var 
+--  accIterOut : accObserver;--
+--  nbrCopy : int^10;  -- pour stocker le nombre de copies,  nbrCopy[i] : nb de copies dans le syst?me d'un donn?e identifi?e par "i"
+  CptRetard : int^10;  -- les horloges qui mesurent le retard correspondant ? chaque don?e (?)
+
+
+  numEvent_tab : bool^8;--
+  value_tab : int^8;--
+  nbrCopy : int^10;
+--  indiceBidon : int;
+let
+  numEvent_tab = [productionEvent, 
+                  consumptionEvent, 
+                  eraseMemEvent,
+                  copyMemEvent, 
+                  eraseBoiteCPEvent,  
+                  copyBoiteCPEvent,
+                  erasePiloteEvent,
+                  copyPiloteEvent
+                 ];
+  value_tab = [dataBoiteCP_IN, 
+               localDataFromRead, 
+               localErasedDataFromMem, 
+               localCopyedDataFromMem, 
+               localErasedDataFromBoiteCP, 
+               localCopyedDataFromBoiteCP, 
+               localErasedDataFromPilote, 
+               localCopyedDataFromPilote
+              ];
+
+  nbrCopy = updateNbrCopy(numEvent_tab, value_tab);
+
+  CptRetard = updateCptRetard(nbrCopy);
+
+  retard = calculRetard(consumptionEvent, CptRetard, localDataFromRead);
+  
+  indiceCount, HindiceCount = updateIndice(nbrCopy);
+
+--   nbrCopy = for(i=0;i<8;i++){
+--     if num_event_tab[i]=true
+--     then nbrCopy = change_tab2(pre(nbrCopy), value_tab[i], i)
+--     else nbrCopy = pre(nbrCopy)
+--   }
+tel
+
+
+
+type tIterRetard = {conEvent : bool; 
+                    dataFromRead : int; 
+                    retardCalcule : int; 
+                    cpt : int};
+
+
+
+
+node calculRetard(consumptionEvent : bool; 
+                  CptRetard : int^10; 
+                  localDataFromRead : int)
+returns (retard : int);
+var accOut : tIterRetard;
+let
+  accOut = red<<updateRetard;10>>(tIterRetard{conEvent = consumptionEvent; 
+                                   dataFromRead = localDataFromRead; 
+                                   retardCalcule = -1;
+                                   cpt = 0}, 
+                       CptRetard);
+  retard = accOut.retardCalcule;
+tel
+
+
+node updateRetard(accIn : tIterRetard; elt : int) returns (accOut : tIterRetard);
+let
+  accOut = tIterRetard{conEvent = accIn.conEvent;
+                       dataFromRead = accIn.dataFromRead;
+                       retardCalcule = -1 -> if accIn.conEvent and accIn.cpt=accIn.dataFromRead
+                                             then elt
+                                             else -1;
+                       cpt = accIn.cpt+1};
+tel
+
+
+
+
+
+
+node updateNbrCopy(numEvent_tab : bool^8;
+                   value_tab : int^8)
+returns (nbrCopy : int^10);
+var accIterOut : accObserver;
+let
+  accIterOut = accObserver{nbCopy = (-1)^10;
+                           indice =  0} 
+                -> red<<Niter;8>>(accObserver{
+                                              nbCopy = pre(accIterOut.nbCopy);
+                                              indice = 0
+                                  }, 
+                                  numEvent_tab, value_tab);
+  nbrCopy = accIterOut.nbCopy;
+tel
+
+
+function Niter(accIn : accObserver;
+           --{tabIn : int^10; 
+           -- indice : int;
+           --}; 
+            numEvent : bool;
+            value_tab : int)
+returns (accOut : accObserver);
+         --{tabOut : int^10;
+         -- indiceOut : int;
+         --})
+let 
+  accOut = accObserver{nbCopy = if numEvent 
+                                then change_tab2(accIn.nbCopy, value_tab, accIn.indice) 
+                                else accIn.nbCopy;
+                       indice = accIn.indice+1};
+tel
+
+
+
+--   indCount = -1 -> if consumptionEvent and (nbrCopy[localDataFromRead]=0)
+-- 	      then localDataFromRead
+-- 	      else -1;
+
+--   HrinsCount = false ->  consumptionEvent and (nbrCopy[localDataFromRead]=0)
+
+
+type tCounterIter = {indice : int; Hindice : bool; cpt : int};
+
+
+
+
+
+node updateIndice(nbrCopy : int^10)
+returns (indiceCount : int;
+         HindiceCount : bool);
+var iterOut : tCounterIter;
+let
+  iterOut = red<<countIter;10>>(tCounterIter{indice = -1 ; Hindice = false; cpt = 0}, nbrCopy);
+  indiceCount = iterOut.indice;
+  HindiceCount = iterOut.Hindice;
+tel
+
+node countIter(accIn : tCounterIter; eltCopy : int) 
+returns (accOut : tCounterIter);
+let
+  accOut = if pre(eltCopy<>-1) and pre(eltCopy<>0) and eltCopy=0
+           then tCounterIter{indice = accIn.cpt;
+                              Hindice = true;
+                              cpt = accIn.cpt+1}
+           else tCounterIter{indice = accIn.indice;
+                              Hindice = accIn.Hindice;
+                              cpt = accIn.cpt+1};
+tel
+
+
+
+
+-----------
+node updateCptRetard(nbrCopy : int^10) 
+returns (CptRetard : int^10);
+let
+  CptRetard = (-1)^10 -> map<<checkCopy;10>>(nbrCopy, pre(CptRetard));
+tel
+
+
+
+
+node checkCopy(eltCopy : int; oldCptRetard : int) returns (newCptRetard : int);
+let
+  newCptRetard = if(pre(eltCopy=-1) and eltCopy=1)
+                 then 0
+                 else if pre(eltCopy<>-1) and pre(eltCopy<>0) and eltCopy=0
+                      then -1
+                      else oldCptRetard+1;
+tel
+
+
+end

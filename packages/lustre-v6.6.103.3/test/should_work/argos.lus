@@ -1,0 +1,11 @@
+node argos(a,b:bool) returns (s0,s1,s2:bool);
+var t0,t1,x,y:bool;
+let
+	s0 = true -> pre(s0 and not a);
+	s1 = false ->pre(s1 or (s0 and a and x));
+	s2 = false ->pre(s2 or (s0 and a and not x));
+	y = s0 and a;
+	t0 = true -> pre((t0 and not b) or (t1 and b));
+	t1 = false -> pre((t1 and not b) or (t0 and b));
+	x = t0 and y;
+tel

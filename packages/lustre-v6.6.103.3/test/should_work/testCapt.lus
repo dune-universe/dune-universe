@@ -1,0 +1,57 @@
+package testCapt
+
+provides 
+node testCapt(Hcapt : bool)
+--          HrinstCount : bool; 
+--          indCount : int)
+returns (dataPUT : bool; 
+         stampedData : int when Hcapt);
+--         productionEvent : bool);--stampedData : int when Hcapt); 
+
+
+body
+
+
+node testCapt(Hcapt : bool)
+          --HrinstCount : bool; 
+          --indCount : int)
+returns (dataPUT : bool; 
+         stampedData : int when Hcapt);
+--         productionEvent : bool);--stampedData : int when Hcapt); 
+var localCnt : int;
+--    indCountTab : bool^10;
+let
+  assert(Hcapt->true);
+--recherche d'un indice libre
+--for (localCnt=0;indCountTab[localCnt]=true,localCnt); 
+--  localCnt = 0 -> if Hcapt 
+--                  then pre(localCnt) + 1
+--                  else pre(localCnt);
+  dataPUT = Hcapt;
+  stampedData = localCnt when Hcapt;
+
+-- production observed
+
+-- il faut utiliser productionEvent = Hcapt
+-- il faut utiliser dataCP_IN
+--  productionEvent = Hcapt;
+
+-- gestion de num d'occurence
+-- indCountTab[indCount] = false -> if HrinstCount
+-- 		      then false
+-- 		      else pre(indCountTab[indCount]);
+
+-- indCountTab[localCnt] = false -> if Hcapt
+-- 		      then true
+-- 		      else pre(indCountTab[localCnt]);
+
+-- A RAJOUTER !!! 
+--  localCnt, indCountTab = updateCnt(indCount, HrinstCount, Hcapt, true^10->pre(indCountTab));
+
+   localCnt = 0 -> pre(localCnt)+1;
+
+tel
+
+
+
+end

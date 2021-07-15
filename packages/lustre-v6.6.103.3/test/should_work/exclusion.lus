@@ -1,0 +1,17 @@
+-- Test de l'operateur exclusion
+-- [YR ; 3 novembre 1997]
+
+node exclusion(a:bool; b:bool; c:bool; d:bool)
+returns ( xor_a_b: bool;
+			 xor_c_d: bool;
+			 xor_a_b_c: bool;
+			 xor_a_b_c_d: bool;
+			 xor_xor_ab_xor_cd: bool);
+let
+	xor_a_b =  #(a,b);
+	xor_c_d =  #(d,c);
+	xor_a_b_c =  #(a,b,c);
+	xor_a_b_c_d =  #(a,b,c,d);
+	
+	xor_xor_ab_xor_cd = #(#(a,b), #(c,d));
+tel

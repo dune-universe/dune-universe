@@ -1,0 +1,13 @@
+
+ 
+node toto_n<<node f(a, b: int) returns (x: real); const n : int>>(a: int) 
+--                                     ^^^^^^^^ should be an int
+returns (x: int^n);
+var v : int;
+let
+  v = f(a, 1);
+  x =  v ^ n;
+tel
+
+node parametric_node2 = toto_n<<Lustre::iplus, 3>>;
+

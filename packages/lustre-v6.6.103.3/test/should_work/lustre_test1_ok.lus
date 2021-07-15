@@ -1,0 +1,79 @@
+node subsys1
+        (s1:real)
+returns (s2:real);
+var Discrete_Filter:real;
+let
+	Discrete_Filter = TransFnc_1(s1);
+	s2 = Discrete_Filter  ;
+
+	
+tel
+
+node lustre_test1_ok
+        (In1:real;cl1_2:bool;cl1_4:bool; In2:real;cl2_6:bool; In3:bool)
+returns (out1:real;Out2:real;Out3:real);
+
+let
+  assert(cl1_2->true);
+  assert(cl1_4->true);
+  out1, Out2, Out3 = lustre_test1_ok_clk(In1,cl1_2,cl1_4, In2,cl2_6 when cl1_2, In3 when cl1_4);
+tel
+
+node lustre_test1_ok_clk
+        (In1:real;cl1_2:bool;cl1_4:bool; In2:real;cl2_6:bool when cl1_2; In3:bool when cl1_4)
+returns (out1:real;Out2:real;Out3:real);
+var Sum:real;
+    Unit_Delay1:real;
+     zoh1:real  when cl1_4;
+     zoh2:real  when cl2_6;
+     subsys1_Trigger:bool  when cl1_4;
+     subsys1_s1:real  when cl1_4;
+     subsys1_s2:real  when cl1_4;
+     Unit_Delay1_:real  when cl1_2;
+     Out2_:real  when cl1_2;
+let
+	Sum = In1 +Unit_Delay1 ;
+	Unit_Delay1_ = if cl2_6 then current zoh2
+		else (0.0 when cl1_2) -> pre Unit_Delay1_;
+	Unit_Delay1 = if cl1_2 then current Unit_Delay1_
+		else 0.0 -> pre Unit_Delay1;
+	zoh1 = In1 when cl1_4 ;
+	zoh2 = In2 when cl2_6 ;
+	out1 = Sum  ;
+
+	Out2_ = if cl2_6 then current zoh2
+		else (0.0 when cl1_2) -> pre Out2_;
+	Out2 = if cl1_2 then current Out2_
+		else 0.0 -> pre Out2;
+	Out3 = if cl1_4 then current subsys1_s2
+		else 0.0 -> pre Out3;
+			----  node-calls
+	subsys1_Trigger = rising (In3);
+	subsys1_s1 = zoh1;
+	(subsys1_s2) = if subsys1_Trigger
+		then current subsys1((subsys1_s1) when subsys1_Trigger)
+		else (0.0) when cl1_4 -> pre (subsys1_s2);
+	
+tel
+
+
+
+/********** Edges *********/
+
+node rising (in :bool)
+returns (out :bool);
+let
+	out = false -> in and not pre in;
+tel
+
+
+/*********** The  Transfer Functions  ***********/
+
+node TransFnc_1(E:real) returns(S:real);
+var Sm_1 :real;
+let
+	S = 1.0*E - 0.5*Sm_1 ;
+	Sm_1 = 0.0->pre(S) ;
+	
+tel
+

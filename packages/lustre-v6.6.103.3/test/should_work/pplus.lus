@@ -1,0 +1,4 @@
+node pplus(a: int ; b: int) returns (d: int);
+let
+  d = a + b;
+tel

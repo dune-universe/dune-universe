@@ -1,0 +1,16 @@
+
+node ex (i : bool) returns (o : bool);
+let
+   o = true -> pre(i) and trueNode(i);
+tel
+
+function trueNode(x : bool) returns (y : bool);
+let
+   y = x or id(true,false);
+tel
+
+function id(f,a:bool) returns (g:bool);
+let
+   g = f or a;
+tel
+

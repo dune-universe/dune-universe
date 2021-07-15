@@ -1,0 +1,10 @@
+
+-- KO, mais pas où il faudrait ...
+
+node ma_macro<<const i : int>>(x: int) returns (y: int);
+let
+   y = i + x;
+tel
+
+-- n.b. ko à l'utilisation uniquement
+node ts02 = ma_macro<<32.0>>;

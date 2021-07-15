@@ -1,0 +1,10 @@
+
+node assertion(a:bool; b:bool; c:bool; d:bool)
+returns (ok: bool);
+let
+	assert #(a);
+	assert #(a,b);
+	assert #(a,b,c);
+	assert #(a,b,c,d);
+	ok = true;
+tel

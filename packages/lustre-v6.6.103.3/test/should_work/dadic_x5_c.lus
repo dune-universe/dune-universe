@@ -1,0 +1,8 @@
+-- nonreg: dadic.lus
+package dadic_x5_c
+uses dadic;
+provides 
+	node dadic_x5_c(x:bool)returns (y:bool);
+body
+	node dadic_x5_c = Mult<<5>>;
+end

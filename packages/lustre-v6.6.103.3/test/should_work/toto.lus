@@ -1,0 +1,17 @@
+type s =  { f1: int ; f2: int^2 };
+
+node simple(a:s) returns (o: s^3);
+let 
+  o = a^3;
+tel
+
+
+node toto(x:s) returns (
+                           o: s^3^2; 
+                           i: s^2);
+let 
+  o[0] = simple(x);
+  o[1] = simple(x);
+
+  i = s { f1 = 42; f2 = [5, 6] } ^ 2;
+tel

@@ -1,0 +1,17 @@
+-- Well, this one is acceptable after all...
+-- Well, not as long as there is no polymorphic syntax in lic
+
+
+node toto = map<<+,  3>>;
+
+node titi(c,d:real^3)returns(y:real^3);
+let
+  y = toto(c,d);
+tel
+
+node bad_call03(a,b:int^3; c,d:real^3) returns (x : int^3; y:real^3);
+let
+
+  x = toto(a,b);
+  y = toto(c,d);
+tel

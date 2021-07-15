@@ -1,0 +1,4 @@
+node bred (a: bool^2) returns (x:bool);
+	let
+		x = boolred<<0,1,2>>(a);
+	tel

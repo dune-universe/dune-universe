@@ -1,0 +1,14 @@
+
+
+const f=false;
+const t=true;
+const mask=[
+	[f,t,f,f,f,f,t],
+	[t,f,t,f,f,f,f],
+	[f,t,f,t,f,f,f],
+	[t,f,f,f,f,t,f]];
+
+node matrix_constant(x:bool^7^4) returns (z:bool^7^4);
+let
+  z =  map<< map<<or, 7>>, 4 >>(mask, x);
+tel

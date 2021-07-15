@@ -1,0 +1,76 @@
+(******************************************************
+dadic.lv6 version 1.00
+******************************************************)
+
+package dadic
+provides
+	(* O : x -> 2*x *)
+	node O(x : bool) returns (y : bool);
+	(* I : x -> 2*x + 1 *)
+	node I(x : bool) returns (y : bool);
+	(* Add : x,y -> x + y *)
+	node Add(x, y : bool) returns (xpy : bool);
+	(* Chs : x -> -x *)
+	node Chs(x : bool) returns (ux : bool);
+	(* Mult : const n, x -> n*x *)
+	node Mult<<const n : int>>(x : bool) returns (y : bool);
+	(* OfInt : const n -> x *)
+
+  (* for the nonreg test *)
+  node dadic(x : bool) returns (y : bool);
+body
+
+node O(x : bool) returns (y : bool);
+let y = false -> pre x; tel
+
+node I(x : bool) returns (y : bool);
+let y = true -> pre x; tel
+
+node Add(x, y : bool) returns (xpy : bool);
+var
+	c : bool;
+let
+	c = if (false -> pre c) then (x or y) else (x and y);
+	xpy = ((false-> pre c) = (x = y));
+tel
+
+node Chs(x : bool) returns (ux : bool);
+var 
+	after_x : bool;
+let
+	ux = if (after_x) then (not x) else (x);
+	after_x = false -> pre(after_x or x);
+tel
+
+node Mult<<const n : int>>(x : bool) returns (y : bool);
+let
+	y = with (n < 0) then (
+			Mult<<-n>>(Chs(x))
+	    ) 
+	    else with (n = 0) then false
+	    else with (n = 1) then x
+	    else with ((n mod 2) = 0) then (
+	       Mult<<n div 2>>(O(x))	
+	    ) else ( --(n div 2) = 1
+	       Add(Mult<<n div 2>>(O(x)), x)
+	    );
+
+tel
+
+(* ici -> pas de noeuds sans entree ? *)
+node OfInt<<const n : int>>(_:bool) returns (y : bool);
+let
+	y = with (n = -1) then true
+	    else with (n = 0) then false
+	    else with ((n mod 2) = 0) then
+	       O(OfInt<<n div 2>>(true))
+	    else with (n > 0) then
+	       I(OfInt<<n div 2>>(true))
+	    else
+	       --attention aux négatifs !
+	       I(OfInt<<(n-1) div 2>>(true));
+tel
+
+node dadic = Mult<<42>>;
+end
+

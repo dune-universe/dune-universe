@@ -1,0 +1,15 @@
+-- [YR 5/11/97]
+-- La librairie pty.h de Pascal Raymond est sensible a la
+-- longueur des chaines construites a partir d'un format.
+
+-- Cette longueur depend dans notre generateur de code C
+-- des noms des noeud, des parametres, des variables, des champs.
+
+-- Ce fichier permet de tester des cas extremes
+-- qui suivant la loi de Murphy, vont certainement se retrouver.
+
+node long_et_stupide_nom_de_noeud(long_parametre:int)
+returns (long_et_stupide_nom_de_sortie:int);
+let
+	long_et_stupide_nom_de_sortie = long_parametre + 0 fby long_parametre;
+tel

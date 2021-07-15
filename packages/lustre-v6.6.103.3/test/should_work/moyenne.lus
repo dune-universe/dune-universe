@@ -1,0 +1,39 @@
+------------------------------------------------
+-- Une moyenne incrementale,  version pour ludic
+-- Incremental mean, version for ludic debugger
+--             Author : L.Morel
+--             Last Update :  Aug 20th 2002
+------------------------------------------------
+
+
+const size=10;
+
+type moyenne_accu = struct {sum :  real;
+                     moyenne : real;
+                     rank : real};
+
+function moyenne_step(accu_in : moyenne_accu; elt_in : real) returns (accu_out : moyenne_accu);
+let
+  accu_out = moyenne_accu {
+    sum = accu_in.sum + elt_in;
+    moyenne = (accu_in.sum + elt_in)/(accu_in.rank+1.0);
+    rank = accu_in.rank+1.0
+};
+
+tel
+
+
+
+
+
+function moyenne(Tab : real^size)
+     returns (moy : real);
+var accu_out : moyenne_accu;
+let
+   accu_out = red<<moyenne_step, size>>( moyenne_accu  {sum = 0.0;
+                                        moyenne = 0.0;
+                                        rank = 0.0}, 
+                                       Tab);
+   moy = accu_out.moyenne;
+tel
+----

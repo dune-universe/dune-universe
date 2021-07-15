@@ -1,0 +1,27 @@
+node nc4 (nc4e1,nc4e2:bool) returns (nc4s:bool);
+var nc4b1:bool;
+	 nc4b2:bool;
+let
+	nc4b1 = n1(nc4e1 or nc4e2, nc4e1 and nc4e2);
+	nc4s = (nc4b1 and not nc4b2) ;
+	nc4b2 = n2(nc4e1 and nc4e2, nc4e1 or nc4e2);
+tel
+
+
+node n1(n1e1,n1e2:bool) returns (n1s:bool);
+var n1b1:bool;
+	 n1b2:bool;
+let
+	n1b1 = n1e1 or n1e2 ;
+	n1b2 = n1e1 and n1e2 ;
+	n1s = (n1b1 or n1b2);				
+tel
+
+node n2(n2e1,n2e2:bool) returns (n2s:bool);
+var n2b1:bool;
+	 n2b2:bool;
+let
+	n2b1 = n2e1 and n2e2 ;
+	n2b2 = n2e1 or n2e2 ;
+	n2s = (n2b1 and n2b2);			
+tel

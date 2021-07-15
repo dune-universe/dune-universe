@@ -1,0 +1,9 @@
+
+extern function bip(x,y : bool) returns (z,t : bool);
+
+node call06(x,y : bool) returns (z,t : bool);
+let
+  assert (x=>z);
+  (z,t) = bip(x,y);
+
+tel

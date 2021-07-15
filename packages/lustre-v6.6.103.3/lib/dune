@@ -1,0 +1,18 @@
+(library
+  (name Lv6Run)
+  (public_name lustre-v6)
+  (libraries extlib num rdbg)
+  (wrapped false)
+ ; (library_flags (-linkall))
+
+;  (modules 
+;  )
+  (synopsis "An API to call the Lustre v6 interpreter from rdbg (and ocaml as a side effect).")
+)
+(ocamllex lv6lexer)
+(ocamlyacc lv6parser)
+
+(rule
+ (targets lv6version.ml)
+ (deps generate-version.sh)
+ (action (run ./generate-version.sh)))

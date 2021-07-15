@@ -1,0 +1,21 @@
+node X (c: bool; n:int)
+returns (d: bool; m: int; p:int);
+var
+  m_on_c :int when c; 
+  p_on_d:int when d;
+
+let
+  assert(c->true);
+  d,m_on_c,p_on_d = X_clk(c, n when c);
+  m = current (m_on_c);
+  p = current (p_on_d);
+tel
+
+node X_clk (c: bool; n:int when c)
+returns (d: bool; m: int when c; p:int when d);
+let
+  m = 0 when c -> pre(m) + n;
+  d = c and (current(m)<=10);
+  p = 0 when d -> pre(p) + 1 when d;
+tel
+

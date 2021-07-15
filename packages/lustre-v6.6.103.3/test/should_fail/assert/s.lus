@@ -1,0 +1,5 @@
+node s (a,b:int) returns (t:int);
+let
+  assert a=0;
+	t=b;
+tel

@@ -1,0 +1,18 @@
+
+  -- XXX il manque la def d'un type tableau intermediaire !!
+
+
+type s =  { f1: int ; f2: int };
+
+node simple(x:s) returns (o: s^3);
+let 
+  o = x^3;
+tel
+
+node bug(x:s) returns (o: s^3^2; i: int);
+let 
+  o[0] = simple(x);
+  o[1] = simple(x);
+--  i = 2;
+  i = o[0][1].f1;
+tel

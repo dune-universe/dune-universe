@@ -1,0 +1,16 @@
+# if it is not a git version, it has to be an opam version!
+
+SHA:=$(shell git log -1 --pretty=format:"%h" || echo "opam")
+BRANCH:=$(shell git branch | grep "*" | cut -d ' ' -f 2 || basename `pwd` | echo "opam")
+VERSION=$(shell git describe --tags --abbrev=0 || basename `pwd` | cut -d '.' -f2-4)
+
+gen_version:
+	rm -f lib/lv6version.ml
+
+lib/lv6version.ml: Makefile
+	echo "(** Automatically generated from Makefile.version *) " > $@
+	echo "let tool = \"lv6\"" >> $@
+	echo "let str=\"$(VERSION)\"" >> $@ 
+	echo "let sha=\"$(SHA)\"" >> $@ 
+	echo "let branch = \"$(BRANCH)\"" >> $@
+	echo "let maintainer = \"erwan.jahier@univ-grenoble-alpes.fr\"">> $@

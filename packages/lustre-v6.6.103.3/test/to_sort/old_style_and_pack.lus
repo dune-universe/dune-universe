@@ -1,0 +1,20 @@
+ 
+
+package toto
+
+provides
+  node titi(x:int) returns (y:int);
+
+body
+
+  node titi(x:int) returns (y:int);
+  let
+    y = x + 2;
+  tel
+end
+
+-- mixing v6 packages and v4 implicit package
+node main(x:int) returns (y:int);
+  let
+    y = toto: : titi(x);
+  tel

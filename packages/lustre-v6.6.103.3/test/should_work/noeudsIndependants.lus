@@ -1,0 +1,12 @@
+
+node equals(a, b : int) returns (r : bool);
+let
+  r = a = b;
+tel
+
+node gt(a, b : int) returns (r : bool);
+let
+  r = a > b;
+tel
+
+node noeudsIndependants = gt

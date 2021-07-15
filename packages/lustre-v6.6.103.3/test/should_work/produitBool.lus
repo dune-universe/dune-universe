@@ -1,0 +1,129 @@
+const size :  int = 10;
+
+
+-- ligne[i] = acc_in.multiplieur[i] si i>=acc_in.acc_in_PLC.rank et i<acc_in.acc_in_PLC.rank + size
+-- ligne[i] = 0 sinon
+node shift(acc_in : Tacc_in) returns (ligne : bool^(2*size));
+var 
+  bidon : Tacc_inShift2;
+let
+  bidon, ligne = fill<<shiftFill;2*size>>(
+        Tacc_inShift2{multiplieur = acc_in.multiplieur; -- cet accumulateur n'est pas modifié
+                rank = acc_in.rank;  -- cet accumulateur n'est pas modifié
+                actual_rank = 0});  -- ce accumulateur sert juste à compter. A la fin il vaut toujours 20
+tel
+
+node shiftFill(acc_in : Tacc_inShift2) returns (acc_out : Tacc_inShift2; elt_out : bool);
+let
+  acc_out = 
+   Tacc_inShift2 {--acc_in_PLC =  acc_in.acc_in_PLC;
+     multiplieur = acc_in.multiplieur;
+     rank = acc_in.rank;
+     actual_rank = acc_in.actual_rank + 1};
+
+  elt_out =-- if(acc_in.actual_rank>=acc_in.acc_in_PLC.rank
+           --    and acc_in.actual_rank<acc_in.acc_in_PLC.rank+size)
+           -- then selectElementOfRank_inArray_(acc_in.actual_rank, acc_in.acc_in_PLC.multiplieur)
+           -- else false;
+    if(acc_in.actual_rank>=acc_in.rank
+       and acc_in.actual_rank<acc_in.rank+size)
+    then selectElementOfRank_inArray_(acc_in.actual_rank - acc_in.rank, acc_in.multiplieur)
+    else false;
+tel
+
+
+
+
+-- est-ce qu'un element est dans un tableau
+type T_isElementOf_ = {eltToSearch : bool; iselementof : bool};
+
+node _isElementOf_(e : bool; t : bool^size) returns (iselementof : bool);
+var acc_out : T_isElementOf_;
+let
+  acc_out = red<<iterated_isElementOf_; size>>(
+        T_isElementOf_{eltToSearch = e; iselementof = false}, t);
+  iselementof = acc_out.iselementof;
+tel
+
+
+node iterated_isElementOf_(acc_in : T_isElementOf_; elt_in : bool) returns (acc_out : T_isElementOf_);
+let
+  acc_out = T_isElementOf_{
+             eltToSearch = acc_in.eltToSearch;
+             iselementof = acc_in.iselementof or acc_in.eltToSearch = elt_in};
+tel
+
+type iteratedStruct = {currentRank : int; rankToSelect : int; elementSelected : bool};
+
+-- noeud de selection d'un element dans un tableau
+node selectElementOfRank_inArray_(rankToSelect : int;array : bool^size) returns (elementSelected : bool)
+var iterationResult : iteratedStruct;
+let
+  iterationResult = red<<selectOneStage;size>>(
+                               iteratedStruct{currentRank = 0; 
+                                               rankToSelect = rankToSelect; 
+                                               elementSelected = array[0]}, 
+                                               array);
+  elementSelected = iterationResult.elementSelected; 
+tel
+
+
+node selectOneStage(acc_in : iteratedStruct; currentElt : bool) returns (acc_out : iteratedStruct)
+let
+  acc_out = iteratedStruct
+            {currentRank = acc_in.currentRank+1;
+             rankToSelect = acc_in.rankToSelect;
+             elementSelected = if(acc_in.currentRank=acc_in.rankToSelect)
+                               then currentElt
+                               else acc_in.elementSelected};
+tel
+
+
+
+
+type Tacc_in = {
+     multiplieur : bool^size; 
+     rank : int};
+
+type Tacc_inShift = {
+     acc_in_PLC : Tacc_in; 
+     actual_rank : int
+     };
+
+
+type Tacc_inShift2 = {
+     multiplieur : bool^size;
+     rank : int;
+     actual_rank : int};
+
+
+
+node PLC(acc_in  : Tacc_in; multiplicande : bool) 
+returns (acc_out:  Tacc_in; ligne : bool^(2*size));
+let
+  ligne = if multiplicande=false
+          then multiplicande ^ (2*size)
+          else shift(acc_in);
+
+-- R1: fix that non-def output
+  acc_out= acc_in;
+tel
+
+
+node produitBool(multiplicande, multiplieur : bool^size)
+--returns (produit :  bool^(2*n));
+returns (matrice : bool^(2*size)^size);
+-- var bidon : Tacc_in;
+--    matrice : bool^2size^size;
+let
+
+-- R1:  C'est tout faux ce bidule. Je commente
+--  bidon, matrice = fillred<<PLC, size>>(
+--                                        Tacc_in{multiplieur = multiplieur; rank = 0}, 
+--
+--                                        multiplicande);
+  matrice = true^(2*size)^size;
+
+tel
+
+

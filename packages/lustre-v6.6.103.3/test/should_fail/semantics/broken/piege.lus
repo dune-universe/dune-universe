@@ -1,0 +1,19 @@
+-- Could work with a smart modular compilation à la raymond-pouzet or à la v4
+
+-- out depend on out:  should be rejected! (unless we inline)
+node piege(in : bool) returns (out : bool);
+let
+   out = in and aux1(aux2(out,out));
+tel
+
+node aux1(in1, in2 : bool) returns (out : bool);
+let
+   out = in1 or (true -> pre(in2)); 
+tel
+
+node aux2(in1, in2 : bool) returns (out1, out2 : bool);
+let
+   out1 = true -> pre(in1);
+   out2 = in2;
+tel
+

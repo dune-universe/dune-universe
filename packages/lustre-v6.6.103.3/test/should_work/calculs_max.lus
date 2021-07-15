@@ -1,0 +1,80 @@
+--Exemple qui calcule les deux max d'un tableaux et leur indice
+-- Computes the 2 maximum values of an array of integers (along with their indices)
+--             Author : L.Morel
+--             Started on :  ???? (a long long time ago)
+--             Last update : August 21th 2002 (for compliance to ludic)
+
+
+const taille = 10;
+
+type struct_max = {max1 : int; 
+     max2 : int;
+     imax1 : int; 
+     imax2 : int; 
+     icourant : int};
+
+
+
+type struct_fill_bool = {imax1 : int; 
+     imax2 : int; 
+     icourant : int};
+
+type int_arrays = int^taille;
+
+type bool_arrays = bool^taille;
+
+
+function max(strin : struct_max; ecourant : int) 
+                returns (strout : struct_max);
+
+
+let
+        strout = 
+                        if (ecourant<=strin.max2)
+                        then struct_max{max1= strin.max1; 
+                                  max2= strin.max2; 
+                                  imax1= strin.imax1; 
+                                  imax2= strin.imax2; 
+                                  icourant= strin.icourant+1}
+                        else  if ((ecourant>strin.max2) and (ecourant<=strin.max1))
+                                   then struct_max{max1= strin.max1; 
+                                                 max2= ecourant; 
+                                                 imax1= strin.imax1; 
+                                                 imax2= strin.icourant; 
+                                                 icourant= strin.icourant+1}
+                                   else --ecourant>max1
+                                              struct_max{max1= ecourant;
+                                                   max2= strin.max1; 
+                                                   imax1= strin.icourant;
+                                                   imax2= strin.imax1; 
+                                                   icourant= strin.icourant+1};
+tel
+
+
+function fill_bool(s_in : struct_fill_bool) returns (s_out : struct_fill_bool ; elt : bool);
+let
+  s_out = struct_fill_bool{imax1= s_in.imax1; 
+  imax2= s_in.imax2; 
+  icourant= s_in.icourant+1};
+  elt = (s_in.icourant = s_in.imax1) or (s_in.icourant = s_in.imax2);
+tel
+
+
+function calculs_max(A : int_arrays) returns (res : bool_arrays);
+var
+     local_struct: struct_max;
+	tmp: struct_fill_bool;
+let
+        local_struct = red<<max;taille>>(struct_max{max1= 0; 
+                                          max2= 0; 
+                                          imax1= -1; 
+                                          imax2= -1; 
+                                          icourant= 0},
+                                          A);
+        tmp, res = fill<<fill_bool;taille>>(struct_fill_bool{imax1= local_struct.imax1; 
+                                imax2= local_struct.imax2; 
+                                icourant= 0});
+tel
+----
+
+

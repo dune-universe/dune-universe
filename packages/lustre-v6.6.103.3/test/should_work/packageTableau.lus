@@ -1,0 +1,413 @@
+model packageTableauModel
+needs 
+  type elementType;
+  const size : int; -- on doit supposer que size>0;
+  node _isEqualTo_(e1 : elementType; e2 : elementType) returns (isequalto : bool);
+  node _isGreaterThan_(e1 : elementType; e2 : elementType) returns (isgreaterthan : bool);
+
+provides
+  type arrayType = elementType^size;
+  node selectElementOfRank_inArray_(rankToSelect : int;array : arrayType) returns (elementSelected : elementType);
+  node getMaximumIn_(array : arrayType) returns (maximumElement : elementType);
+  node getRank_ofMaximumIn_(array : arrayType) returns (rankOfMaximumElement : int);
+  node getMinimumIn_(array : arrayType) returns (minimumElement : elementType);
+  node getRank_ofMinimumIn_(array : arrayType) returns (rankOfMinimumElement : int);
+  node _isLoselySorted(array : arrayType) returns (array_isLoselySorted : bool);
+  node sort_(array : arrayType) returns (arraySorted : arrayType);   
+  node _isElementOf_(e : elementType; t : arrayType) returns (iselementof : bool);
+-- on peut encore imaginer:  
+-- 1) echange de 2 éléments dans un tableau (donnés par leurs indices)
+-- 2) interclassement de 2 tableaux
+  
+--node interleaving(array1 : arrayType; array2 : arrayType) returns (interleavedArray : elementType^(2*size));
+
+-- pour tester:  on choisit un elementType facile: les entiers. 
+--const size = 10;
+--type elementType = int;
+
+--node _isEqualTo_(e1 : elementType; e2 : elementType) returns (isequalto : bool);
+--let
+--  isequalto = e1 = e2;
+--tel
+
+--node _isGreaterThan_(e1, e2 : elementType) returns (isgreaterthan : bool);
+--let
+--  isgreaterthan = e1>e2;
+--tel
+
+body
+
+node _isGreaterOrEqualTo_(e1, e2 : elementType) returns (ge : bool);
+let
+  ge = _isGreaterThan_(e1, e2) or _isEqualTo_(e1, e2);
+tel
+
+-- Type fourni: le type "tableau d'éléments elementType"
+type arrayType = elementType^size;
+
+
+-- constantes et types internes
+type iteratedStruct = {currentRank : int; rankToSelect : int; elementSelected : elementType};
+-- les types suivants sont uniquement utilisés pour l'algorithme de tri
+type Sort_accu = {CurrentRank : int;
+				  Tab : arrayType};
+type Exchange_accu = {MinVal : elementType;
+					  MinRank : int;
+					  RankFrom : int;
+					  CurrentVal : elementType;
+					  Rank : int};
+
+type Select_accu = {RankToFind : int;
+					CurrentRank : int;
+					Val : elementType};
+
+type MinFR_accu = {MinVal : elementType;
+                   MinRank : int;
+                   RankFrom : int;
+                   Rank : int};
+
+
+-- est-ce qu'un element est dans un tableau
+type T_isElementOf_ = {eltToSearch : elementType; iselementof : bool};
+
+node _isElementOf_(e : elementType; t : arrayType) returns (iselementof : bool);
+var acc_out : T_isElementOf_;
+let
+  acc_out = red<<iterated_isElementOf_, size>>(T_isElementOf_{eltToSearch = e; iselementof = false}, t);
+  iselementof = acc_out.iselementof;
+tel
+
+
+node iterated_isElementOf_(acc_in : T_isElementOf_; elt_in : elementType) returns (acc_out : T_isElementOf_);
+let
+  acc_out = T_isElementOf_{
+             eltToSearch = acc_in.eltToSearch;
+             iselementof = acc_in.iselementof or _isEqualTo_(acc_in.eltToSearch, elt_in)};
+tel
+
+
+
+-- noeud de selection d'un element dans un tableau
+-- assume : rankToSelect>=0
+-- guarantee : _isElementOf_(elementSelected, array);
+node selectElementOfRank_inArray_
+%ASSUME:assumeSelectElementOfRank_inArray_%
+%GUARANTEE:guaranteeSelectElementOfRank_inArray_%
+(rankToSelect : int;array : arrayType) returns (elementSelected : elementType)
+var iterationResult : iteratedStruct;
+let
+  iterationResult = red<<selectOneStage, size>>(iteratedStruct{currentRank = 0; rankToSelect = rankToSelect; elementSelected = array[0]}, array);
+  elementSelected = iterationResult.elementSelected; 
+tel
+
+node assumeSelectElementOfRank_inArray_(rankToSelect : int;array : arrayType) returns (assumeOK : bool);
+let
+  assumeOK = rankToSelect >= 0;
+tel
+
+node guaranteeSelectElementOfRank_inArray_(rankToSelect : int;array : arrayType; elementSelected : elementType) returns (guaranteeOK : bool);
+let
+  guaranteeOK = _isElementOf_(elementSelected, array);
+tel
+
+
+-- assume : acc_in.currentRank>=0
+-- guarantee : acc_out.currentRank>acc_in.currentRank
+node selectOneStage(acc_in : iteratedStruct; currentElt : elementType) returns (acc_out : iteratedStruct);
+let
+  acc_out = iteratedStruct{currentRank = acc_in.currentRank+1;
+             rankToSelect = acc_in.rankToSelect;
+             elementSelected = if(acc_in.currentRank=acc_in.rankToSelect)
+                               then currentElt
+                               else acc_in.elementSelected};
+tel
+
+--node assumeSelectOneStage(
+
+
+
+
+-- determination du maximum
+-- guarantee : forall<<_isGreaterOrEqualTo_;size>>(maximumElement^size, array);
+node getMaximumIn_(array : arrayType) returns (maximumElement : elementType);
+let
+  maximumElement = red<<selectMax, size>>(array[0], array);
+tel
+
+-- guarantee : _isGreaterOrEqualTo_(e, e1) or _isGreaterOrEqualTo_(e, e2)
+node selectMax(e1, e2 : elementType) returns (e : elementType);
+let
+  e = if(_isGreaterThan_(e1, e2)) then e1 else e2;
+tel
+
+
+
+-- determination du rang du maximum
+node getRank_ofMaximumIn_(array : arrayType) returns (rankOfMaximumElement : int);
+var local : currentRank_withMemorizedRank;
+let
+  local = red<<selectMaxRank, size>>(currentRank_withMemorizedRank{currentRank = 0; rankOfMemorizedVal = 0; memorizedVal = array[0]}, array);
+  rankOfMaximumElement = local.rankOfMemorizedVal;
+tel
+
+type currentRank_withMemorizedRank = {currentRank : int; rankOfMemorizedVal : int; memorizedVal : elementType};
+
+
+
+-- assume : acc_in.currentRank>=0
+-- guarantee : acc_out.currentRank>acc_in.currentRank
+node selectMaxRank(acc_in : currentRank_withMemorizedRank; e1 : elementType) returns (acc_out : currentRank_withMemorizedRank);
+let
+  acc_out = currentRank_withMemorizedRank{currentRank = acc_in.currentRank+1;
+             rankOfMemorizedVal = if(_isGreaterThan_(e1, acc_in.memorizedVal)) then acc_in.currentRank else acc_in.rankOfMemorizedVal;
+             memorizedVal = if(_isGreaterThan_(e1, acc_in.memorizedVal)) then e1 else acc_in.memorizedVal};
+tel
+
+
+
+
+-- determination du minimum
+-- guarantee : forall<<_isGreaterOrEqualTo_;size>>(array, minimumElement^size);
+node getMinimumIn_(array : arrayType) returns (minimumElement : elementType);
+var maximum : elementType;
+let
+  maximum = getMaximumIn_(array);
+  minimumElement = red<<selectMin, size>>(maximum, array);
+tel
+
+
+node selectMin(e1, e2 : elementType) returns (e : elementType);
+let
+  e = if(_isGreaterThan_(e1, e2)) then e2 else e1;
+tel
+
+
+-- determination du rang du minimum
+-- guarantee rankOfMaximumElement>=0;
+node getRank_ofMinimumIn_(array : arrayType) returns (rankOfMinimumElement : int);
+var minElement : elementType;
+let
+  minElement = getMinimumIn_(array);
+  rankOfMinimumElement = red<<selectMinRank, size>>(currentRank_withMemorizedRank{currentRank = 0; rankOfMemorizedVal = 0; memorizedVal = minElement}, array).rankOfMemorizedVal;
+tel
+
+
+-- assume : acc_in.currentRank>=0
+-- guarantee : acc_out.currentRank>acc_in.currentRank
+node selectMinRank(acc_in : currentRank_withMemorizedRank; elt : elementType) returns (acc_out : currentRank_withMemorizedRank);
+let
+  acc_out = currentRank_withMemorizedRank{currentRank = acc_in.currentRank+1;
+             rankOfMemorizedVal = if(_isEqualTo_(acc_in.memorizedVal, elt)) then acc_in.currentRank else acc_in.rankOfMemorizedVal;
+             memorizedVal = acc_in.memorizedVal};
+tel
+
+
+type forSortingAlgo =  {previousElement : elementType; sortedUpToHere : bool};
+
+-- est-ce que le tableau est ordonné ?
+node _isLoselySorted(array : arrayType) returns (array_isLoselySorted : bool);
+var result : forSortingAlgo;
+let 
+  result = red<<isLocallyLoselySorted, size>>(forSortingAlgo{previousElement = array[0]; sortedUpToHere = true}, array);
+  array_isLoselySorted = result.sortedUpToHere;
+tel
+
+node isLocallyLoselySorted(acc_in : forSortingAlgo; elt : elementType) returns (acc_out : forSortingAlgo);
+let
+  acc_out = forSortingAlgo{previousElement = elt; 
+             sortedUpToHere = _isGreaterOrEqualTo_(elt, acc_in.previousElement) and acc_in.sortedUpToHere};
+tel
+
+
+
+-- Tri d'un tableau
+-- guarantee : _isLoselySorted(arraySorted);
+node sort_(array : arrayType) returns (arraySorted : arrayType); 
+var 
+	UnarySort_accu_out : Sort_accu;
+let
+	UnarySort_accu_out = red<<UnarySort, size>>(
+                                             Sort_accu{CurrentRank = 0;
+                                             Tab = array}, -- Values given for test
+                                             array);	-- same
+	arraySorted = UnarySort_accu_out.Tab;
+tel
+
+
+
+
+-- Unary_sort takes as input an array of integers (accu_in.Tab).
+-- First, it determines the minimum of the elements that are after the rank 'accu_in.currentRank'
+-- 			in accu_in.Tab (it gets its rank and value)
+-- Then it gets the current element of Tab (determinex by accu_in.currentRank) : 
+--      'select' iteration
+--		and switches it with the next minimum	'Exchange' iteration
+-- accu_in.CurrentRank : indice permettant d'identifier les élements
+--                       traités jusque là. A cet étage de l'itération, on trie les élements
+--                       d'indice compris entre accu_in.CurrentRank et la taille du tableau -1
+-- accu_in.Tab : tableau en cours de tri, Tab est tel que \forall i, j < accu_in.CurrentRank. i<j => Tab[i]<Tab[j]
+-- accu_out.CurrentRank : accu_in.CurrentRank + 1 : à l'étage suivant de l'itération, on s'occupera de trier
+--                        les élements d'incide compris entre accu_out.CurrentRank et la taille du tableau -1
+-- accu_in.Tab : tableau en cours de tri, Tab est tel que \forall i, j < accu_out.CurrentRank. i<j => Tab[i]<Tab[j]
+node UnarySort(accu_in : Sort_accu ; eltIn :  int) 
+	returns (accu_out : Sort_accu);
+var
+	accu_out_select : Select_accu;
+-- accu_out_select.RankToFind : rang de l'élement dont on cherche la valeur
+-- accu_out_select.CurrentRank : rang courant dans l'itération
+-- accu_out_select.Val : valeur de l'élement de rang RankToFind
+	accu_out_min : MinFR_accu; 
+-- accu_out_min.MinVal : valeur du minimum
+-- accu_out_min.MinRank : rang du minimum
+-- acc_out_min.RankFrom : rang à partir duquel on cherche le minimum
+-- accu_out_min.Rank :  rang courant (inutile en dehors de l'itération
+	accu_out_exchange : Exchange_accu;
+-- accu_out_exchange.MinVal : Valeur du minimum dans la tranche considérée
+-- accu_out_exchange.MinRank : rang du minimum dans la tranche considérée
+-- accu_out_exchange.RankFrom : rang à partir duquel on fait l'échange
+-- accu_out_exchange.CurrentVal :               -- les 4 premieres valeurs ne changent jamis
+-- accu_out_exchange.Rank : rang ou on en est dans le parcours de l'échange
+	localTab : arrayType; 
+-- localTab : tableau calculé (trié un cran plus loin)
+let
+  -- je commence par trouver le minimum à partir de accu_in.CurrentRank
+  accu_out_min = red<<minFromRank, size>>(MinFR_accu{MinVal = 0; 
+                                         MinRank = accu_in.CurrentRank;
+                                         RankFrom = accu_in.CurrentRank;
+                                         Rank = 0},  
+                                         accu_in.Tab);
+
+  -- ensuite, je trouve la valeur du rang courant (rang où j'en suis 
+  -- de l'itération de UnarySort
+  accu_out_select = red<<select, size>>(Select_accu{RankToFind = accu_in.CurrentRank;
+                                       CurrentRank = 0;
+                                       Val = 0}, 
+                                       accu_in.Tab);
+
+  -- puis j'échange le minimum trouvé et l'élement de rang courant
+  --    (courant dans l'itération de UnarySort)
+  accu_out_exchange, localTab = fillred<<Exchange_i_j, size>>(Exchange_accu{MinVal = accu_out_min.MinVal;
+                                                             MinRank = accu_out_min.MinRank;
+                                                             RankFrom = accu_out_select.RankToFind;
+                                                             CurrentVal = accu_out_select.Val;
+                                                             Rank = 0},
+                                                             accu_in.Tab);
+  accu_out = Sort_accu{CurrentRank = accu_in.CurrentRank + 1;
+                       Tab = localTab};
+tel
+
+
+
+
+
+node minFromRank(accu_in : MinFR_accu; TabEltIn : elementType)
+	returns (accu_out : MinFR_accu);
+let
+  accu_out = MinFR_accu{MinVal = if (accu_in.Rank<=accu_in.RankFrom) 
+                                 then TabEltIn
+                                 else
+                                   if (accu_in.Rank>=accu_in.RankFrom)    
+                                   -- I can start looking at TabEltIn
+                                   then if(TabEltIn<accu_in.MinVal)
+                                   -- I compare the current elt with 
+                                   -- the minimum of the elements already observed
+                                        then TabEltIn			            
+                                        -- the current elt is smaller,  
+                                        -- then, I remember it as the new minimum
+                                        else accu_in.MinVal	            
+                                       -- It's not a minimum,  
+                                       -- I remember the one I observed before
+                                   else accu_in.MinVal; 	                
+                                   -- I'm still not in the zone of the array 
+                                   --I want to search a minimum in
+                        MinRank = if (accu_in.Rank>accu_in.RankFrom)   
+                                  then if(TabEltIn<accu_in.MinVal)
+                                       then accu_in.Rank
+                                       else accu_in.MinRank
+                                  else accu_in.MinRank ;
+                       RankFrom = accu_in.RankFrom;
+                       --Never changes (rank from which I want 
+                       --               to start the search)
+                       Rank = accu_in.Rank + 1	                        
+                       -- Current rank for this iteration
+                       };
+tel
+
+
+
+
+-- les acc servent juste à mémoriser les valeurs qu'on veut 
+node Exchange_i_j(accu_in : Exchange_accu ; eltIn : elementType) 
+	returns (accu_out : Exchange_accu ; eltOut : elementType);
+let
+	accu_out = Exchange_accu{MinVal = accu_in.MinVal;
+				             MinRank = accu_in.MinRank;
+				             RankFrom = accu_in.RankFrom;
+				             CurrentVal = accu_in.CurrentVal;
+				             Rank = accu_in.Rank + 1};
+
+	eltOut = if(accu_in.Rank = accu_in.MinRank)
+			 then accu_in.CurrentVal
+			 else if(accu_in.Rank = accu_in.RankFrom)
+				  then accu_in.MinVal
+				  else eltIn;
+tel
+
+
+
+-- selection function.
+node select(accu_in : Select_accu; elt : elementType) 
+	returns (accu_out : Select_accu);
+let
+	accu_out = Select_accu{ RankToFind = accu_in.RankToFind;
+				CurrentRank = accu_in.CurrentRank + 1;
+				Val =  if(accu_in.RankToFind=accu_in.CurrentRank)
+					  then elt
+					  else accu_in.Val};
+tel
+
+end
+package util
+ provides node igt(i, j: int) returns (res: bool);
+ body
+node igt(i, j: int) returns (res: bool);
+let
+  res = i > j;
+tel
+end
+--package intArray is packageTableau(int, 10, Lustre::eq, Lustre::igt);
+--package intArray is packageTableau(int, 10, =,  Lustre::igt);
+
+package intArray = 
+  packageTableauModel(
+                 elementType=int, 
+                 size=10, 
+                 _isEqualTo_=Lustre::eq, 
+                 _isGreaterThan_=util::igt);
+
+package packageTableau
+  uses intArray;--, intArray2, intArray3;
+  provides node packageTableau(a : int^10) returns (tri : int^10; pos_min, min, pos_max, max: int);
+
+body 
+
+node packageTableau(a : int^10) returns ( tri : int^10; 
+                               pos_min, 
+                               min, 
+                               pos_max, 
+                               max: int);
+let
+  min = intArray::getMinimumIn_(a);
+  pos_min = intArray::getRank_ofMinimumIn_(a);
+  max = intArray::getMaximumIn_(a);
+  pos_max = intArray::getRank_ofMaximumIn_(a);
+  tri = intArray::sort_(a);
+tel
+
+
+end
+
+
+
+
+

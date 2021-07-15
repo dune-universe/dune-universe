@@ -1,0 +1,5 @@
+
+node impl_priority(x: int) returns (ok: bool)
+let
+  ok = x=1 => true;
+tel

@@ -1,0 +1,40 @@
+
+set timeout 20
+
+set tmp [pwd]/tmp/
+
+
+should_work "Unit tests" "$lus2lic" "-unit"
+
+
+
+# Programs that should fail
+proc iter_should_fail { fail_kind } {
+    global lus2lic test_lus2lic_no_node tmp
+
+    set files  [lsort [glob should_fail/$fail_kind/*.lus]]
+
+    foreach f $files {
+        eval spawn "cp -f $f $tmp"
+    }
+    set spwd [pwd]
+    cd $tmp
+    foreach f $files {
+        set bf [file rootname $f]
+        set bf $tmp[file tail $bf]
+        set id [should_fail "Test bad programs" "$fail_kind" "$test_lus2lic_no_node" "$f"]
+        wait -i $id
+        catch { exp_close -i $id }
+        catch { exp_wait  -i $id } output
+    }
+    cd $spwd
+}
+#        set id [should_fail "Test bad programs" "$fail_kind" "$lus2lic" "-o $bf.lic $f"]
+
+iter_should_fail "syntax"
+iter_should_fail "type"
+iter_should_fail "clock"
+iter_should_fail "semantics"
+iter_should_fail "exec"
+iter_should_fail "assert"
+

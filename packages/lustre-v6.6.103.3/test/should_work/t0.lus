@@ -1,0 +1,17 @@
+-- Test main node load
+
+extern function max(x : int; y : int) returns (mx: int);
+
+node min(x : int; y : int) returns (mn : int);
+let
+	mn = if (x <= y) then x else y;
+tel
+
+node min_n<<const n: int>>(T : int^n) returns (mn : int);
+let
+	mn = with (n = 1) then T[0]
+	     else min(T[0], min_n<<n-1>>(T[1..n-1]));
+tel 
+
+node min_4 = min_n<<4>>;
+node t0 = min_4;

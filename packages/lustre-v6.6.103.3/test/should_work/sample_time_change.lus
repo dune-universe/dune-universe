@@ -1,0 +1,63 @@
+/*
+file generated on    :		Fri Nov 14 17:29:48 MET 2003
+using the compiler   :		Simulink to Lustre   CURRENT VERSION!!!
+*/
+
+
+/**************** The MainNode node of the model ****************/
+node MainNode (In3:real)
+returns (Out2:real);
+var cl1_4_2, cl1_12_3 :bool;
+    Out2_ :real when cl1_4_2 ;
+let
+	cl1_4_2 = make_cl1_4_2(true) ;
+	cl1_12_3 = make_cl1_12_3(true) ;
+	(Out2_) = sample_time_change (cl1_4_2, cl1_12_3, In3 when cl1_12_3);
+	Out2 = if cl1_4_2 then current Out2_ else 0.0 -> pre Out2 ;
+tel
+
+
+/****************** All the nodes of the Model ******************/
+node sample_time_change (cl1_4_2, cl1_12_3:bool; In3:real when cl1_12_3)
+returns (Out2:real when cl1_4_2);
+var Unit_Delay1:real when cl1_12_3;
+    Unit_Delay2:real when cl1_4_2;
+let
+	Unit_Delay1 = 0.0 when cl1_12_3 -> pre In3 ;
+	Unit_Delay2 = 0.0 when cl1_4_2 -> pre Unit_Delay2 ;
+	Out2 = Unit_Delay2 ;
+tel
+
+
+(**************************** Clocks ****************************)
+node make_cl1_4_2(in: bool) returns (out: bool);
+var cl1, cl2, cl3, cl4, pha1, pha2 :bool ;
+let
+	cl1 = true -> pre cl2 ;
+	cl2 = false -> pre cl3 ;
+	cl3 = false -> pre cl4 ;
+	cl4 = false -> pre cl1 ;
+	pha1 = false -> pre cl1 ;
+	pha2 = false -> pre pha1 ;
+	out = pha2 ;
+tel
+node make_cl1_12_3(in: bool) returns (out: bool);
+var cl1, cl2, cl3, cl4, cl5, cl6, cl7, cl8, cl9, cl10, cl11, cl12, pha1, pha2, pha3 :bool ;
+let
+	cl1 = true -> pre cl2 ;
+	cl2 = false -> pre cl3 ;
+	cl3 = false -> pre cl4 ;
+	cl4 = false -> pre cl5 ;
+	cl5 = false -> pre cl6 ;
+	cl6 = false -> pre cl7 ;
+	cl7 = false -> pre cl8 ;
+	cl8 = false -> pre cl9 ;
+	cl9 = false -> pre cl10 ;
+	cl10 = false -> pre cl11 ;
+	cl11 = false -> pre cl12 ;
+	cl12 = false -> pre cl1 ;
+	pha1 = false -> pre cl1 ;
+	pha2 = false -> pre pha1 ;
+	pha3 = false -> pre pha2 ;
+	out = pha3 ;
+tel

@@ -1,0 +1,12 @@
+-- there is a loop !!!
+const n = m * 2;
+
+const m = x + y;
+
+const x = t + 1;
+
+const t = n mod 2;
+
+const y = 42;
+
+node x = Lustre::and

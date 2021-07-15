@@ -1,0 +1,61 @@
+const delai_vigilence = 3 ;
+      delai_reprise = 4 ;
+      delai_alarme = 6 ;
+
+node edge (in : bool) returns (edge : bool);
+let
+  edge = false -> in and not pre(in);
+tel
+
+node bascule (init, set, reset : bool) returns (etat : bool);
+let
+  etat = init -> if set and not pre(etat) then true
+		 else if reset and pre(etat) then false
+		 else pre(etat);
+tel
+
+node decompte (init :bool; val_init : int ; decr :bool) returns (n : int);
+let
+  n = 0 -> if init then val_init
+	   else if decr then pre(n) - 1 else pre(n);
+tel
+
+node alarme (MA, code, pb_hab, pb_tmp : bool)
+	    returns
+	    (alarme : bool; en_marche:bool);
+
+var demande_entree : bool;
+    vigilence_partielle : bool;
+    reprise : bool;
+    tps_vigilence, tps_reprise, tps_alarme : int;
+
+let
+  	assert #(MA, code);
+	--assert #(2);
+	
+  en_marche = bascule (false, MA, MA and pre(demande_entree));
+  demande_entree = bascule (false, code, pre(tps_vigilence)=0);
+  vigilence_partielle = bascule (false,
+				edge(en_marche) or edge(demande_entree),
+				pre(tps_vigilence)=0);
+  tps_vigilence = decompte (edge(en_marche) or edge(demande_entree),
+		            delai_vigilence,
+		            en_marche and pre(tps_vigilence)>0);
+  tps_alarme = decompte (edge(alarme), delai_alarme,
+                         pre(alarme) and pre(tps_alarme)>0);
+  reprise = bascule (false,
+		    pre(alarme) and pre(tps_alarme)=0,
+		    pre(tps_reprise)=0);
+  tps_reprise = decompte (edge(reprise), delai_reprise,
+			  pre(reprise) and pre(tps_reprise>0));
+  alarme = false ->
+	    if en_marche and not reprise and
+	       (pb_hab
+	       or
+	       (pb_tmp and not vigilence_partielle))
+            then true
+	    else if pre(alarme) and
+		    (pre(tps_alarme)=0 or edge(not en_marche))
+                 then false
+		 else pre(alarme);
+tel

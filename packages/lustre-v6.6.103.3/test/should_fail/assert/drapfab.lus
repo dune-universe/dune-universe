@@ -1,0 +1,42 @@
+node drapfab (bleu, rouge, vert : bool)
+		returns (
+--arret, 
+--indet, 
+a_or_i,
+direct 
+--indirect 
+:bool);
+var
+
+arret, 
+indet : bool;
+
+let
+  assert # (bleu, rouge, vert);
+  assert bleu or rouge or vert;
+
+  direct = false -> ((rouge and pre(bleu))
+		     or
+		     (vert and pre(rouge))
+		     or
+		     (bleu and pre(vert)));
+(*
+  indirect = false -> ((bleu and pre(rouge))
+		       or
+		       (rouge and pre(vert))
+		       or
+		       (vert and pre(bleu)));
+*)
+	a_or_i = indet or arret;
+
+  indet = true -> ((rouge and pre(rouge) and not pre(false -> pre(rouge)))
+		   or
+		   (bleu and pre(bleu) and not pre(false -> pre(bleu)))
+		   or
+		   (vert and pre(vert) and not pre(false -> pre(vert))));
+  arret = false -> ((rouge and pre(rouge) and pre(false -> pre(rouge)))
+		   or
+		   (bleu and pre(bleu) and pre(false -> pre(bleu)))
+		   or
+		   (vert and pre(vert) and pre(false -> pre(vert))));
+tel

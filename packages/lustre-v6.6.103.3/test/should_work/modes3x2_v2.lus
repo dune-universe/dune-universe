@@ -1,0 +1,83 @@
+(* version modifiée pour enlever le cycle combinatoire du au pre
+calculé dans le switch *)
+
+type data = int;
+
+-- version pour otawa
+-- function A0(x:data) returns (y:data);
+-- function A1(x:data) returns (y:data);
+-- function A2(x:data) returns (y:data);
+-- function B0(x:data) returns (y:data);
+-- function B1(x:data) returns (y:data);
+
+
+-- version pour simu
+
+node A0(x:data) returns (y:data); let y = 3; tel
+node A1(x:data) returns (y:data); let y = 23; tel
+node A2(x:data) returns (y:data); let y = 43; tel
+node B0(x:data) returns (y:data); let y = 15; tel
+node B1(x:data) returns (y:data); let y = 5; tel
+
+
+
+node switch(init, on, off: bool) returns (s: bool);
+var
+  ps:bool;
+let
+	ps = init -> pre s;
+	s = if ps then not off else on;
+tel
+
+node copy(x:bool) returns (y: bool);
+let
+	y = x;
+tel
+
+node A(x:data; ca1, ca2: bool) returns (y:data);
+var
+	idle, low, high: bool;
+	pidle, plow, phigh: bool;
+let
+	idle = switch(true, ca1, ca1);
+  pidle = true -> pre idle;
+  (* E cycle entre low et high ! *)
+	low = switch(false, pidle and ca1 or phigh and ca2, ca1 or ca2);
+	high = switch(false, plow and not ca1 and ca2, ca1 or ca2);
+   plow = false -> pre low;
+   phigh = false -> pre high;
+	y = if idle then current (A0 (x when idle))
+	    else if low then current (A1 (x when low))
+	    else if high then current (A2 (x when high))
+		 else (0 -> pre y) ;
+tel
+
+node B(x:data; _nom, _sby: bool) returns (z:data);
+var
+	nom, sby: bool;
+let
+	nom = copy(_nom);
+	sby = copy(_sby);
+	z = if nom then current (B0(x when nom))
+	    else if sby then current (B1(x when sby))
+		 else (0 -> pre z);
+tel
+
+node modes3x2_v2(x:data; on_off, toggle: bool) returns (res: data);
+var
+	y, z : data;	
+	sby : bool;
+	nom : bool;
+let
+--	assert #(on_off, toggle);
+
+	y = A(x, on_off, toggle);
+	z = B(y, nom, sby);
+
+	(* coordination commandes *)
+	--pcritic, critic = switch(false, on_off, on_off);
+	--sleep = pcritic and (on_off or toggle);
+	sby = (on_off = (true -> pre nom));
+	nom = (on_off = (false -> pre sby));
+	res = y + z;
+tel

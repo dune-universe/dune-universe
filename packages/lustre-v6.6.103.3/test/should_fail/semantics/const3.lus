@@ -1,0 +1,4 @@
+const pi = 3.1416;
+const right = pi/2.;
+
+node const3 = Lustre::and

@@ -1,0 +1,33 @@
+type 
+  t = bool^3^4;
+  t2 = bool^7^8^9^10;
+
+const 
+ n : t;
+ m = n[3][2];
+
+ s :  t2;
+ o = s[9][8][7][6]; 
+
+node tranche(a: bool^3) returns (res: bool);
+var 
+  x: bool^3;
+  y: real;
+  z: t;
+  x1 :  bool^3^2;
+
+let
+  y = 1.;
+  x[if(1>2) then -2 else 0] = true;
+  x[1..2] = a[1..2];
+  res = if x[1] then x[0] else x[2];
+  z[0][0] = true;
+  z[0][1] = true;
+  z[0][2] = true;
+  z[1][0] = true;
+  z[1][1..2] = x[1..2];
+  z[2..3]= x1;
+  x1[0] = x;
+  x1[1] = x;
+  --x[0] = x1[0][0]; 
+tel

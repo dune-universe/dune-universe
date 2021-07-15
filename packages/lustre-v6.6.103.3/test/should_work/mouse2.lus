@@ -1,0 +1,40 @@
+node mouse2
+	(	
+	click:bool;
+	clock:bool;
+	delay:int
+	) 
+	returns
+	(
+	single: bool;
+	ddouble: bool
+	);
+var 
+	clock_decount: int;
+	counting: bool; 
+	more_than_one_click: bool;
+let
+  single = edge(not counting) and not (false-> pre more_than_one_click);
+  ddouble = edge(not counting) and (false-> pre more_than_one_click);
+  more_than_one_click = click and (false -> pre(counting));
+  counting = (clock_decount > 0);
+  clock_decount = if click and (true -> not pre(counting)) then 
+                     if clock then delay - 1 else delay
+                  else if clock and (false -> pre(counting)) 
+                  then pre(clock_decount) - 1
+                  else 0 -> pre(clock_decount);
+tel
+
+
+
+node edge
+	(
+	x:bool
+	) 
+	returns
+	(
+	e: bool
+	);
+let
+	e = false -> x and not pre x;
+tel

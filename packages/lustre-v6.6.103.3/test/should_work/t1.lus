@@ -1,0 +1,44 @@
+
+node consensus << const n : int >>
+( T : bool^n) returns ( a : bool);
+let
+	a = with (n = 1)
+		then  T[0]
+		else T[0] and consensus << n-1 >> (T[1..n-1]);
+tel
+
+(*
+Et pourquoi pas étendre la notion de params statiques ???
+*)
+
+
+node consensus4 = consensus<<4>>;
+
+node fold_left <<
+	type t1;
+	type t2;
+	const n : int;
+	node treat (x:t1; y:t2) returns (z:t1)
+   >>
+(a : t1; X : t2^n) returns (c : t1);
+let
+	c = with (n = 1) then a
+	    else
+	       fold_left << t1, t2, n-1, treat >> (
+				treat(a, X[0]),
+				X[1..n-1]
+	       );
+tel
+
+node bt_void<<const n: int>>(t : bool^n) returns (x : bool);
+let
+	x = fold_left<<Lustre::or>>(false, t);
+tel
+
+(* devrait marcher ? *)
+node bt_void_bis<<const n: int>>(i : bool; t  : bool^n) returns (o: bool) = 
+  fold_left<<bool,bool,n,Lustre::or>>;
+
+node t1 = bt_void_bis<<8>>
+
+(* node bt_void(t : bool array) = fold<<operator or>>(false, t); *)

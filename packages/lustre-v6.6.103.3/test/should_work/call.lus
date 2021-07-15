@@ -1,0 +1,14 @@
+extern function f(a: int) returns (b: int);
+extern function p(a: int) returns (x,y: int);
+
+node n(a: int; b: bool) returns (x, y: int);
+let
+	(x,y) = if b then (f(a),0) else (0,a);
+tel
+
+node call (a: int; b: bool) returns (x, y: int);
+var u,v: int;
+let
+	(u,v) = p(a);
+	(x,y) = n(a,b);
+tel

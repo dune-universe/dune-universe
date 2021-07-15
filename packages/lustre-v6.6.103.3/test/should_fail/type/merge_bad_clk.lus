@@ -1,0 +1,12 @@
+type trival = enum { Pile, Face, Tranche }; ---
+node merge_bad_clk(clk: trival; ---
+   i1 : int when Pile(clk) ; 
+   i2 : int when Face(clk); 
+   i3 : int when Tranche(clk)) 
+returns (y: int); ---
+let
+    y = merge clk
+        (Pile ->    i2) -- bad clock !!
+        (Face ->    i1) -- bad clock !!
+        (Tranche -> i3);
+tel

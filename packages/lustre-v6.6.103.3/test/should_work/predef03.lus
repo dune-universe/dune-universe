@@ -1,0 +1,7 @@
+
+
+
+node predef03(x: bool^13) returns (o: bool);
+let
+	o = boolred<<1,2,13>>(x);
+tel

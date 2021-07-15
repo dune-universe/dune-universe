@@ -1,0 +1,54 @@
+--include "INCL/stdincl.lus"
+--include "INCL/observers.lus"
+
+extern node xedge(x: bool) returns (y: bool);
+
+node my_switch (set,reset,initial:bool) returns (level:bool);
+let
+  level = initial -> if set and not pre(level) then true
+		     else if reset and pre(level) then false
+                          else pre(level);
+tel
+
+-- partie arbitrage attachee a chaque processus
+-- la ressource est accorde au processus (grant)
+--     s'il la demande (request) quand il recoit le jeton (token)
+--     et redevient libre lorsqu'il arrete de l'utiliser
+-- le jeton est passe (new_token)
+--            s'il avait ete recu au pas precedent et que
+--            le processus ne demande pas la ressource
+--            ou si le processus arrete d'utiliser la ressource
+
+node process (request, token:bool) returns (grant, new_token:bool);
+let
+  grant = my_switch (token and request, not request, token and request);
+  new_token = false -> (pre(token) and not request) or xedge(not grant);
+tel
+
+-- arbitre pour quatre processus organises en anneau 
+
+node mutex (req0, req1, req2, req3 : bool)
+	   returns (grant0, grant1, grant2, grant3 : bool);
+var token0, token1, token2, token3 : bool;
+    new_token0, new_token1, new_token2, new_token3 : bool;
+let
+  (grant0, new_token0) = process (req0, token0);
+  (grant1, new_token1) = process (req1, token1);
+  (grant2, new_token2) = process (req2, token2);
+  (grant3, new_token3) = process (req3, token3);
+  token0 = true -> pre new_token3;
+  token1 = false -> pre new_token0;
+  token2 = false -> pre new_token1;
+  token3 = false -> pre new_token2;
+tel
+
+-- verification de l'exclusion mutuelle
+
+node arbitre (req0, req1, req2, req3 : bool) returns (ok : bool);
+var gr0, gr1, gr2, gr3 : bool;
+let
+  (gr0, gr1, gr2, gr3) = mutex (req0, req1, req2, req3);
+  -- un processus au plus peut utiliser la ressource
+  ok =  #(gr0, gr1, gr2, gr3);
+tel
+

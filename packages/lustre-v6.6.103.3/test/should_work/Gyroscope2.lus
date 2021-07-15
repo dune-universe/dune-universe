@@ -1,0 +1,371 @@
+const DELTA_ROLL = 2.0;
+const DELTA_PITCH = 2.0;
+const DELTA_YAW = 2.0;
+const GOD_ROLL = 15.0;
+const GOD_PITCH = 16.0;
+const GOD_YAW = 14.0;
+const DELTA_TO_GOD_ROLL = 2.0;
+const DELTA_TO_GOD_PITCH = 2.0;
+const DELTA_TO_GOD_YAW = 2.0;
+const CROSS_CHANNEL_TOLERANCE = 1.0;
+type Valid_ChannelT={local_failure : bool; local_value : real};
+type Faulty_ChannelT={valuea : real; valueb : real};
+type Faulty_Array=Faulty_ChannelT^4^3;
+type CFF_Eltstruct={indx : int; indx_toChange : int; value : Valid_ChannelT};
+type CFF_struct={indx : int; indx_toChange : int; tabToFill : Valid_ChannelT^3};
+
+
+node countFalse(accu_in : real; elt_in : Valid_ChannelT) returns (accu_out : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   accu_out = if(elt_in.local_failure) then accu_in else (accu_in + 1.0);
+tel
+
+
+node countValidChannels(channels : Valid_ChannelT^4) returns (nb : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   nb = red<<countFalse;4>>(0.0,channels);
+tel
+
+
+node sum(accu_in : real; elt_in : real) returns (accu_out : real);
+-- Assumes : 
+-- var : 
+-- varBidon : real(varBidon < elt_in);
+-- Guarantees : 
+-- var : 
+-- otherVarBidon : real((elt_in + otherVarBidon) < accu_out);
+-- Body : 
+let
+   accu_out = (accu_in + elt_in);
+tel
+
+
+node masking(channel : Valid_ChannelT) returns (out : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   out = if(channel.local_failure) then 0.0 else channel.local_value;
+tel
+
+
+node abs(in : real) returns (out : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   out = if((in < 0.0)) then -(in) else in;
+tel
+
+
+node TooFar(nbToFarIn : int; channel : Faulty_ChannelT; god : real; delta_to_god : real) returns (nbToFarOut : int);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   nbToFarOut = if((abs((channel.valuea - god)) < delta_to_god)) then (nbToFarIn + 1) else nbToFarIn;
+tel
+
+
+
+node assumeVoter(channels : Valid_ChannelT^4; god : real; delta_to_god : real) returns (assumeOK : bool);
+let
+   assumeOK = true;
+tel
+
+
+node iteratedVoter(acc_in :  bool; channel : Valid_ChannelT; god,  delta_to_god, vote : real) returns (acc_out : bool);
+let
+  acc_out = acc_in and (channel.local_failure or (abs((vote - channel.local_value)) < delta_to_god));
+tel
+
+node guaranteeVoter(channels : Valid_ChannelT^4; god : real; delta_to_god : real; vote : real) returns (guaranteeOK : bool);
+let
+  guaranteeOK = red<<iteratedVoter;4>>(true, channels, god^4, delta_to_god^4, vote^4);
+tel
+
+
+
+node Voter
+%ASSUME:assumeVoter%
+%GUARANTEE:guaranteeVoter%
+(channels : Valid_ChannelT^4; god : real; delta_to_god : real) returns (vote : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- (channels.local_failure or (abs((vote - channels.local_value)) < delta_to_god));
+-- Body : 
+   var globalSum : real; nbValid : real; mask : real^4; 
+let
+   nbValid = countValidChannels(channels);
+   globalSum = red<<sum;4>>(0.0,mask);
+   vote = (globalSum / nbValid);
+   mask = map<<masking;4>>(channels);
+tel
+
+
+node addOneChannelIter(acc_in : CFF_Eltstruct; elt_in : Valid_ChannelT) returns (acc_out : CFF_Eltstruct; elt_out : Valid_ChannelT);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   acc_out = CFF_Eltstruct{indx = (acc_in.indx + 1);
+                          indx_toChange = acc_in.indx_toChange;
+                          value = acc_in.value};
+   elt_out = if((acc_in.indx = acc_in.indx_toChange)) then acc_in.value else elt_in;
+tel
+
+
+node addOneChannel(indx_toChange : int; channeltToAdd : Valid_ChannelT; tabToFill : Valid_ChannelT^3) returns (tabToFillAfter : Valid_ChannelT^3);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var acc_out : CFF_Eltstruct; 
+let
+   acc_out,tabToFillAfter = fillred<<addOneChannelIter;3>>(CFF_Eltstruct{	
+                                                           indx = 0; 
+                                                           indx_toChange = indx_toChange;
+                                                           value = channeltToAdd }, 
+                                                           tabToFill);
+tel
+
+
+node CFC_iter(structIn : CFF_struct; currentChannel : Valid_ChannelT) returns (structOut : CFF_struct);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   structOut = CFF_struct{
+     indx = (structIn.indx + 1);
+     indx_toChange = structIn.indx_toChange;
+     tabToFill = if((structIn.indx_toChange = structIn.indx)) then structIn.tabToFill else addOneChannel(structIn.indx, currentChannel, structIn.tabToFill)};
+tel
+
+
+node ComputeForeignChannels(currentChannelIndx : int; allChannels : Valid_ChannelT^4) returns (foreignChannels : Valid_ChannelT^3);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var acc_out : CFF_struct; localtabToFill : Valid_ChannelT; 
+let
+  localtabToFill = Valid_ChannelT{local_failure = false;
+                                  local_value = 0.0};
+  acc_out = red<<CFC_iter;4>>(CFF_struct{indx = 0;
+                              indx_toChange = currentChannelIndx;
+                              tabToFill = localtabToFill^3},allChannels);
+  foreignChannels = acc_out.tabToFill;
+tel
+
+
+node compare_rolls(acc_in : Valid_ChannelT; channel : Valid_ChannelT) returns (acc_out : Valid_ChannelT; diff : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   acc_out = acc_in;
+   diff = (abs((acc_in.local_value - channel.local_value)) > CROSS_CHANNEL_TOLERANCE);
+tel
+
+
+node selectFailure(from : Valid_ChannelT) returns (failure : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+  failure = from.local_failure;
+tel
+
+
+node values_nok(localChannel : Valid_ChannelT; foreign_Channels : Valid_ChannelT^3) returns (cross_failure : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var diff : bool^3; lc : Valid_ChannelT; 
+let
+  lc,diff = fillred<<compare_rolls;3>>(localChannel,
+                                       foreign_Channels);
+  cross_failure = if(selectFailure(foreign_Channels[0])) 
+                  then if(selectFailure(foreign_Channels[1])) 
+                       then if(selectFailure(foreign_Channels[2])) 
+                            then false 
+                            else diff[2] 
+                       else if(selectFailure(foreign_Channels[2])) 
+                            then diff[1] 
+                            else (diff[1] and diff[2]) 
+                  else if(selectFailure(foreign_Channels[1])) 
+                       then if(selectFailure(foreign_Channels[2])) 
+                            then diff[0] 
+                            else (diff[0] and diff[2]) 
+                       else if(selectFailure(foreign_Channels[2])) 
+                            then (diff[0] and diff[1]) 
+                            else ((diff[0] and diff[1]) and diff[2]);
+tel
+
+
+node CrossFailDetect(currentChannel : int; localChannel : Valid_ChannelT; previousOutChannel : Valid_ChannelT^4) returns (crossFailure : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var foreign_Channels : Valid_ChannelT^3; 
+let
+   foreign_Channels = ComputeForeignChannels(currentChannel, previousOutChannel);
+   crossFailure = values_nok(localChannel, foreign_Channels);
+tel
+
+
+
+
+
+node assumeChannel(previousOutChannel : Valid_ChannelT^4; 
+                   nbInChannel : int;
+                   inChannel : Faulty_ChannelT; 
+                   delta : real; god : real; delta_to_god : real) 
+returns (assumeOK : bool);
+let
+   assumeOK = true;
+tel
+
+
+node guaranteeChannel(previousOutChannel : Valid_ChannelT^4; 
+                      nbInChannel : int;
+                      inChannel : Faulty_ChannelT; 
+                      delta : real; god : real; delta_to_god : real; 
+                      nextOutChannel : Faulty_ChannelT^4; outChannel : Valid_ChannelT) 
+returns (guaranteeOK : bool);
+let
+   guaranteeOK = outChannel.local_failure or ((abs((inChannel.valuea - outChannel.local_value)) < delta) and (abs((inChannel.valueb - outChannel.local_value)) < delta));
+tel
+
+
+
+
+node Channel
+%ASSUME:assumeChannel%
+%GUARANTEE:guaranteeChannel%
+(previousOutChannel : Valid_ChannelT^4; 
+             nbInChannel : int; 
+             inChannel : Faulty_ChannelT; 
+             delta : real; god : real; delta_to_god : real) 
+returns (nextOutChannel : Valid_ChannelT^4; outChannel : Valid_ChannelT);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- (outChannel.local_failure or ((abs((inChannel.valuea - outChannel.local_value)) < delta) and (abs((inChannel.valueb - outChannel.local_value)) < delta)));
+-- Body : 
+   var localChannel : Valid_ChannelT; 
+let
+   localChannel = Valid_ChannelT{local_failure = (abs((inChannel.valuea - inChannel.valueb)) > delta);
+                   local_value = if((abs((inChannel.valuea - inChannel.valueb)) > delta)) then 0.0 else ((inChannel.valuea + inChannel.valueb) / 2.0)};
+   outChannel = Valid_ChannelT{local_failure = (localChannel.local_failure or CrossFailDetect(nbInChannel, localChannel,previousOutChannel));
+                 local_value = localChannel.local_value};
+   nextOutChannel = previousOutChannel;
+tel
+
+
+
+
+node assumeEvaluateAxis(channels : Faulty_ChannelT^4; delta : real; god : real; delta_to_god : real) returns (assumeOK : bool);
+var NbToFar : int;
+let
+   NbToFar = red<<TooFar;4>>(0,channels,god^4,delta_to_god^4);
+   assumeOK = NbToFar <= 1;
+tel
+
+
+node guaranteeEvaluateAxis(channels : Faulty_ChannelT^4; delta : real; god : real; delta_to_god : real; AxisValue : real) returns (guaranteeOK : bool);
+let
+  guaranteeOK = abs((AxisValue - god)) < delta_to_god;
+tel
+
+
+node EvaluateAxis
+%ASSUME:assumeEvaluateAxis%
+%GUARANTEE:guaranteeEvaluateAxis%
+(channels : Faulty_ChannelT^4; delta : real; god : real; delta_to_god : real) returns (AxisValue : real);
+-- Assumes : 
+-- var : 
+-- NbToFar : int((NbToFar = red<<TooFar;4>>(0,channels,god^4,delta_to_god^4)) and (NbToFar <= 1));
+-- Guarantees : 
+-- (abs((AxisValue - god)) < delta_to_god);
+-- Body : 
+   var resChannels : Valid_ChannelT^4; dumbChannel : Valid_ChannelT^4; initChannels : Valid_ChannelT^4; fillredInit : Valid_ChannelT^4; 
+let
+   initChannels =  Valid_ChannelT {local_failure = false; local_value = 0.0}^4;
+   dumbChannel,resChannels = fillred<<Channel;4>>(fillredInit,[0,1,2,3],channels,delta^4,god^4,delta_to_god^4);
+   AxisValue = Voter(resChannels, god, delta_to_god);
+   fillredInit = (initChannels -> pre(resChannels));
+tel
+
+
+node ValueIsSecure(secure_value : real; delta_to_god_value : real; god_value : real) returns (is_valid : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   is_valid = (abs((secure_value - god_value)) < delta_to_god_value);
+tel
+
+
+node ValueIsSecureII(accu_in : bool; secure_value : real; delta_to_god_value, god_value : real) returns (is_valid : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   is_valid = ((abs((secure_value - god_value)) < 2.0) and accu_in);
+tel
+
+
+node Gyroscope2(axis : Faulty_Array) returns (valid : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var secure_values : real^3; 
+let
+   secure_values = map<<EvaluateAxis;3>>(axis,
+                                         [DELTA_ROLL,DELTA_PITCH,DELTA_YAW],
+                                         [GOD_ROLL,GOD_PITCH,GOD_YAW],
+                                         [DELTA_TO_GOD_ROLL,DELTA_TO_GOD_PITCH,DELTA_TO_GOD_YAW]);
+--   valid = forall<<ValueIsSecure;3>>(secure_values,[DELTA_TO_GOD_ROLL,DELTA_TO_GOD_PITCH,DELTA_TO_GOD_YAW],[GOD_ROLL,GOD_PITCH,GOD_YAW]);
+   valid = red<<ValueIsSecureII;3>>(true, 
+                                  secure_values, 
+                                  [DELTA_TO_GOD_ROLL,DELTA_TO_GOD_PITCH,DELTA_TO_GOD_YAW],
+                                  [GOD_ROLL,GOD_PITCH,GOD_YAW]);
+tel

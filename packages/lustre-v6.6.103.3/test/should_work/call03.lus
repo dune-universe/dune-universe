@@ -1,0 +1,10 @@
+
+node tutu = map<<or, 2>>;
+
+
+
+node call03(x,y : bool^2) returns (z : bool^2);
+let
+	z = tutu(x,y);
+tel
+extern function momo(x,y : bool) returns (z : bool);

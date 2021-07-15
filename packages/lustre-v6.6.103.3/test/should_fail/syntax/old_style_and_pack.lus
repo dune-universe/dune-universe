@@ -1,0 +1,20 @@
+ 
+
+package toto
+
+provides
+  node titi(x:int) returns (y:int);
+
+body
+
+  node titi(x:int) returns (y:int);
+  let
+    y = x + 2;
+  tel
+end
+
+
+node main(x:int) returns (y:int);
+  let
+    y = toto: : titi(x);
+  tel

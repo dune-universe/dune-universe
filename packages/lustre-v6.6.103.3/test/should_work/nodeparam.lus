@@ -1,0 +1,14 @@
+
+
+node f<<node g(x,y: int) returns (z: int)>>(x,y: int) returns (z:int);
+let
+   z = g(x,g(x,y));
+tel
+
+node g<<const k:int>>(x,y:int) returns (z:int);
+let
+   z = x+y+k;
+tel
+
+
+node nodeparam = f<< g<<42>> >>;

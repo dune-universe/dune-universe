@@ -1,0 +1,8 @@
+
+
+node clock2(a: int; b: int) returns (c: int when a);
+
+let 
+  c = 1 + 1 + b when a;-- should fail since a cannot be of type int!
+
+tel

@@ -1,0 +1,9 @@
+
+(* une macro user-defined surchargée *)
+
+node mypoly<<const n : int; type t; node f (i:t) returns (o:t)>>(x, y: t^n) returns (z: t^n);
+let
+   z = map<<+, n>>(x,y);
+tel
+
+node over3=mypoly<<42, int, Lustre::iminus>>;

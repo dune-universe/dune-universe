@@ -1,0 +1,8 @@
+node trivial2(x:bool) returns (y: bool);
+let
+	y = edge(edge(x));
+tel
+
+
+node edge(x:bool) returns (e: bool);
+let e = false -> x and not pre x; tel

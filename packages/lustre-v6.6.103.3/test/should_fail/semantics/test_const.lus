@@ -1,0 +1,46 @@
+type 
+  t1; t2; t3;
+  h = int;
+  h1 = int;
+  h2 = int;
+  h3 = int;
+  t11 = t1^2;
+  t22 = t2^2;
+  t33 = int^c4;
+  arr = int^c4;
+  arr2 = int^c4;
+  arr3 = arr;
+  arr4 = arr;
+  t4  = b^4;
+  t41 = t4;
+  t42 = t4;
+  t43 = t41;
+  t5  = {c1: int; c2: bool^5; c3: t3^3; c4: t3^3};
+  t55 = {c4: bool; c2: bool^5; c3: t3^3; c4: t3^3};
+  t56 = t5;
+  t6  = t1^4;
+  t65 = t1^4;
+  t7  = t8; 
+  t8  = t9;
+  t9  = int;
+ a   = t4^(2+3);
+  b   = t6;
+  e = t1;
+  e1 = e;
+  couleur = enum{bleu, vert, rouge};
+  flag = {c1: couleur; c2: couleur; c3: couleur};
+  structure = {c1: int; c2: real; c3: bool};
+
+const 
+  c1, c2, c3: int;
+  ext: int;
+  c4: int = 5+2+3+4;
+  c5 = true;
+  c6 = ext;
+  c7 = bleu;
+  c8 = c5 or c5;
+  --c8 = c4*3+5;
+  c9 = c4+3=7;
+  c10 = not(c5 and c9);   
+
+node test_const(a: int) returns (a: int);

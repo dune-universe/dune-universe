@@ -1,0 +1,28 @@
+
+node Clock1ms_node(dummy : bool)
+returns (Clock1ms : bool) ;
+let
+        Clock1ms = true -> ( not pre(Clock1ms) ) ;
+tel
+
+node Clock2ms_node(dummy : bool)
+returns (Clock2ms : bool) ;
+let
+   Clock2ms = true -> ( not pre(Clock2ms) ) ;
+tel
+
+node clock1_2ms_clk(dummy : bool)
+returns (Clock1ms: bool; Clock2ms : bool when Clock1ms) ;
+let
+  assert(Clock1ms->true);
+	Clock1ms = Clock1ms_node(dummy);
+	Clock2ms = Clock2ms_node(dummy when Clock1ms);
+tel
+
+node clock1_2ms(dummy : bool) returns (Clock1ms: bool; Clock2ms : bool) ;
+var
+  Clock2ms_on_Clock1ms : bool when Clock1ms;
+let
+  Clock1ms, Clock2ms_on_Clock1ms = clock1_2ms_clk(dummy);
+  Clock2ms = current( Clock2ms_on_Clock1ms);
+tel

@@ -1,5 +1,0 @@
-(env (dev (flags (:standard -warn-error -A))))
-(ocamllex lexer)
-(menhir (modules parser))
-(executable (name anders) (package anders) (public_name anders))
-(documentation (package anders))

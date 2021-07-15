@@ -1,0 +1,17 @@
+
+
+node n1(n1e1,n1e2:bool) returns (n1s:bool);
+var n1b1:bool;
+	 n1b2:bool;
+let
+	n1b1 = n1e1 or n1e2 ;
+	n1b2 = n1e1 and n1e2 ;
+	n1s = (n1b1 or n1b2);				
+tel
+
+node fresh_name (b:bool) returns (res:bool);
+var _n1e1_1:bool;
+let
+  _n1e1_1 = not b;
+  res = n1(b, _n1e1_1);
+tel

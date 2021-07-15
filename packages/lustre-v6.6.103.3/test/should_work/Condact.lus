@@ -1,0 +1,48 @@
+/***********************************************
+-- File: Condact.lus 
+-- Author: Yussef   
+-- Date: 19/03/2004 
+***********************************************/
+
+--------------------------------------
+-- Generic Package Condact
+------------------------------------- 
+
+package Util 
+   provides function carre(e: int) returns (s: int);
+body
+  function carre(e: int) returns (s: int);
+    let
+      s = e*e;
+    tel
+end
+
+
+package TestCondact  = Condact(t1=int, t2=int, n=Util::carre);
+
+
+model Condact 
+   needs 
+      type t1; 
+      type t2;
+      node n(x: t1) returns (y: t2);
+      
+   provides node C(c: bool; d: t2; x: t1) returns (y: t2);
+
+body 
+   node C(c: bool; d: t2; x: t1) returns (y: t2);
+      let 
+         y = if c then n(x)
+                  else d -> pre y;
+      tel
+end
+
+    
+
+package Condact
+uses TestCondact;
+provides 
+  node Condact(c: bool; d: t2; x: t1) returns (y: t2);
+body
+  node Condact = TestCondact::C;
+end

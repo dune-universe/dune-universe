@@ -1,0 +1,35 @@
+node PCOND1(h0:bool; hA,hB,hC:bool ;
+            A:int ; B:int ; C:bool;
+            hD:bool; D:bool)
+returns (hX:bool);
+var
+  hX_on_h0: bool when h0;
+  hA_on_h0: bool when h0;
+  hB_on_h0: bool when h0;
+  hC_on_h0: bool when h0; 
+  hD_on_hC_on_h0: bool when hC_on_h0; 
+ hX_init:bool;
+let
+  assert((h0=true)->true);
+  assert((hA=true)->true);
+  assert((hB=true)->true);
+  assert((hC=true)->true);
+  hX_init = h0 or (false fby h0);
+  hX = if hX_init then current(hX_on_h0) else false;
+  hA_on_h0 = hA when h0;
+  hB_on_h0 = hB when h0;
+  hC_on_h0 = hC when h0;
+  hD_on_hC_on_h0 = hD when hC_on_h0;
+  hX_on_h0 = PCOND1_clk(h0,hA when h0,hB when h0,
+                        hC when h0,A when hA_on_h0,B when hB_on_h0,C when hC_on_h0,
+                        hD when hC_on_h0,D  when hD_on_hC_on_h0);
+tel
+
+
+node PCOND1_clk(h0:bool; hA,hB,hC:bool when h0;
+                A:int when hA; B:int when hB; C:bool when hC;
+                hD:bool when hC; D:bool when hD)
+returns (hX:bool when h0);
+let
+  hX = hC and current(hD) and h0 when h0;
+tel

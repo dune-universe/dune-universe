@@ -1,0 +1,8 @@
+
+type mybool = enum { True, False }; 
+
+
+node merge_bad(clk : bool ; i1  : int when clk ; i2 : int when not clk) returns (y: int); 
+let
+    y = merge clk (false-> i2) (True -> i1) ;
+tel

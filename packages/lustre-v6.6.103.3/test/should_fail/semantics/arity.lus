@@ -1,0 +1,9 @@
+node arity(a,b:int) returns (x,y: int);
+let
+	x,y = myplus(a,b); -- bad arity!
+tel
+
+node myplus(a,b:int) returns (x: int);
+let
+	x = a+b;
+tel

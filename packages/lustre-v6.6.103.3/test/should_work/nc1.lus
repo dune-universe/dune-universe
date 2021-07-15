@@ -1,0 +1,16 @@
+node nc1 (nc1e1,nc1e2:bool) returns (nc1s:bool);
+var nc1b1:bool;
+let
+	nc1b1 = n1(nc1e1,nc1e2);
+	nc1s = (nc1b1 or nc1e1) ;
+tel
+
+
+node n1(n1e1,n1e2:bool) returns (n1s:bool);
+var n1b1:bool;
+	 n1b2:bool;
+let
+	n1b1 = n1e1 or n1e2 ;
+	n1b2 = n1e1 and n1e2 ;
+	n1s = (n1b1 or n1b2);				
+tel

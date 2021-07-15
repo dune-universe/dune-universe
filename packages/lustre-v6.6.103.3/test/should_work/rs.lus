@@ -1,0 +1,6 @@
+node rs(r,s:bool) returns(q:bool);
+var n: bool;
+let
+   q = false -> not pre(r) and not pre(n);
+   n = true -> not pre(s) and not pre(q);
+tel

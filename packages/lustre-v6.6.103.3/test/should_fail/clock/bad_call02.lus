@@ -1,0 +1,7 @@
+
+-- clock checking of predefined ops
+
+node bad_call02(a:int; c:bool) returns (x : int);
+let
+	x = a when c;
+tel 

@@ -1,0 +1,48 @@
+name: OCaml
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+#          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-version:
+          - 4.12.0
+          - 4.11.2
+          - 4.10.1
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam depext anders --yes
+      - run: opam install . --deps-only
+      - run: opam exec -- dune build
+      - run: opam install .
+      - run: opam exec -- dune exec anders silent check lib/mltt.anders
+      - run: opam exec -- dune exec anders silent check lib/buddhism.anders
+      - run: opam exec -- dune exec anders silent check lib/cat.anders
+      - run: opam exec -- dune exec anders silent check lib/church.anders
+      - run: opam exec -- dune exec anders silent check lib/fun.anders
+      - run: opam exec -- dune exec anders silent check lib/impredicative.anders
+      - run: opam exec -- dune exec anders silent check lib/kraus.anders
+      - run: opam exec -- dune exec anders silent check lib/leibniz.anders
+      - run: opam exec -- dune exec anders silent check lib/list.anders
+      - run: opam exec -- dune exec anders silent check lib/mltt.anders
+      - run: opam exec -- dune exec anders silent check lib/path.anders
+      - run: opam exec -- dune exec anders silent check lib/pi.anders
+      - run: opam exec -- dune exec anders silent check lib/topos.anders

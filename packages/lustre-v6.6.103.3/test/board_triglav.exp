@@ -1,0 +1,4 @@
+# load_generic_config "unix";
+
+set_board_info hostname triglav
+set_board_info username jahier

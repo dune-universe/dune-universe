@@ -1,0 +1,22 @@
+node mouse3(
+	click:bool;
+	clock:bool
+	; 
+	delay: int
+	)
+returns (
+	clock_decount: int
+	);
+var 
+	counting: bool;
+let
+	counting = (clock_decount > 0);
+	clock_decount = 
+		if click and (true->not pre(counting)) then
+			if clock then delay - 1
+			else delay
+		else 
+			if clock and (false -> pre(counting))
+			then pre(clock_decount) - 1
+         else 0 -> pre(clock_decount);
+tel

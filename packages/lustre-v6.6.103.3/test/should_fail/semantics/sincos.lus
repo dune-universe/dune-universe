@@ -1,0 +1,11 @@
+-- there is a loop !
+node sincos(omega:real) returns (sin, cos: real);
+let
+ sin = omega * integrator(cos,0.1,0.0);
+ cos = omega * integrator(-sin,0.1,1.0);
+tel
+node integrator(F,STEP,init: real) returns (Y: real); 
+let 
+  Y = init -> pre(Y) + ((F + pre(F))*STEP)/2.0; 
+tel -- del
+

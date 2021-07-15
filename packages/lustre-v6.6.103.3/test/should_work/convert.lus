@@ -1,0 +1,6 @@
+node convert(x:int; y:real) returns (a:int; b:real);
+let
+  b = Lustre::int2real(x);
+  a = Lustre::real2int(y);
+tel
+  -- end of convert

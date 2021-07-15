@@ -1,0 +1,30 @@
+
+type 
+	arrayb = bool^3 ;
+	arrayi = int^2^3 ;
+
+node morel(b : bool; i : int) returns (b1, b2, b3 : bool; i1, i2, i3 : int);
+let
+	b1, b2, b3, i1, i2, i3 = tab(b,i);
+tel
+
+node tab(b : bool; i : int) returns (b1, b2, b3 : bool; i1, i2, i3 : int);
+var
+	tabb : arrayb;
+	tabi : arrayi;
+let
+	b1, b2, b3 = (tabb[0], tabb[1], tabb[2]) ;
+	i1, i2, i3 = (tabi[0][0]+tabi[0][1], tabi[1][0]+tabi[1][1], tabi[2][0]+tabi[2][1]);
+
+	tabb[0] = b;
+        tabb[1..2] = [true, false] ;
+
+	tabi[2] = mcmorel(i) ;
+	tabi[0..1] = [ [10,100], [1000,10000] ] ;
+tel
+
+node mcmorel(i:int) returns (t:int^2);
+let
+	t = [i,i] -> [pre(t[0])+1,pre(t[1])+2] ;
+tel
+

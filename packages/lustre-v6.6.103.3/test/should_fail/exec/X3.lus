@@ -1,0 +1,16 @@
+
+node X3(n:int; b: bool)
+returns (m: int);
+var c: bool when b;
+    d: bool when c;
+	p,u : int when b;
+	q,r: int when c;
+let
+	c = (p>=(0 when b)) ;
+	p = n when b;
+	q = p when c;
+	d = q <=((10 when b) when c);
+	r = current(q when d);
+	u = current(r);
+	m = current(u);
+tel

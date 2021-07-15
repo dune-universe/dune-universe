@@ -1,0 +1,6 @@
+extern function momo(x,y : bool) returns (z : bool);
+
+node call05(x,y : bool) returns (z : bool);
+let
+	z = momo(x,y);
+tel

@@ -1,0 +1,25 @@
+
+-- should fail because of a combinational loop (f4 and cpt)
+
+node cpt_dc
+   (
+   evt : bool;
+   reset : bool
+   )
+returns
+   (
+   cpt : int
+   );
+
+var
+   _f3 : bool;
+   _f4 : int;
+   
+let
+   _f3 = false;
+   _f4 = cpt;
+   cpt = if (reset) then (0) else ((if (_f3) then (0) else (_f4)) + (if (evt
+) then (1) else (0)));
+   
+tel
+

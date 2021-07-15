@@ -1,0 +1,39 @@
+
+type 
+	arrayb = bool^3 ;
+	arrayi = int^2^3 ;
+
+	tube = {in:int; out:int} ;
+	toto = {titi:tube; tutu:bool} ;
+
+node morel5(t : toto; b : arrayb; i : arrayi) 
+returns (b1, b2, b3 : bool; i1, i2, i3 : int);
+let
+	b1, b2, b3, i1, i2, i3 = tab(t,b,i);
+tel
+
+node tab(yo : toto; tabb : arrayb; tabi : arrayi) 
+returns (b1, b2, b3 : bool; i1, i2, i3 : int);
+let
+	b1, b2, b3 = (tabb[0], tabb[1], tabb[2] or yo.tutu );
+	i1, i2, i3 = (tabi[0][0]+tabi[0][1], tabi[1][0]+tabi[1][1] + 
+                      yo.titi.in , tabi[2][0]+tabi[2][1] + yo.titi.out );
+
+	--tabb[0] = b;
+	---tabb[1..2] = [true, false] ;
+
+	--(tabi[2], tabi[0..1]) = mcmorel(i) ;
+	--tabi[0..1] = [ [10,100], [1000,10000] ] ;
+tel
+
+node mcmorel(i:int) returns (t:int^2; u:int^2^2);
+var
+	yo : toto;
+let
+	yo.titi = tube {in=i; out=i+1} ;
+	yo.tutu = true ;
+	t = [yo.titi.in, yo.titi.out] -> [pre(t[0])+1,pre(t[1])] ;
+	u = [ [10,100], [1000,10000] ] ;
+	--t = [ 2, 3 ] ;
+tel
+

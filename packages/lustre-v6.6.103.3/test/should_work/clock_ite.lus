@@ -1,0 +1,19 @@
+
+
+node clock_ite(a: bool; b: bool) returns (c: bool);
+ var
+  c_on_a: bool when a;
+
+let 
+  assert(a->true);
+  c_on_a = clock_ite_clk(a,b);
+  c = current(c_on_a);
+tel
+node clock_ite_clk(a: bool; b: bool) returns (c: bool when a);
+-- var
+--  z: bool;
+
+let 
+  c = if a when a then (b when a) else (not b when a);
+
+tel

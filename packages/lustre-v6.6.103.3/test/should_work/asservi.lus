@@ -1,0 +1,106 @@
+-- nonreg: --expand-nodes
+type pendule;
+
+const T=0.1; L=2.0; G=10.0; 
+
+
+node I(dx:real) returns (x:real); --un integrateur
+-------------------------------------------------------------
+--integration par rectangle de pas T
+-------------------------------------------------------------
+let
+	 x = 0.0-> pre (T *dx + x); 
+tel;
+
+node I2(d2x:real) returns (x:real);
+var dx:real;
+let
+	dx = I(d2x);
+	x =  dx -> T *dx +  pre x; 
+tel;
+
+node D(x:real) returns (d:real);
+-------------------------------------------------------------
+--derivation par difference finie de pas T
+-------------------------------------------------------------
+let 
+	d=0.0-> (x- pre x)/T;
+tel;
+
+node PEND( d2x0,d2y0:real) returns (teta:real);
+-------------------------------------------------------------
+--equation du pendule	
+--teta angle du pendule avec la verticale
+--d2x0,d2y0 derivees secondes des coordonnees du pied
+--L longueur du pendule
+--G accelleration de la pesanteur
+-------------------------------------------------------------
+let
+-- ??? ne peut pas marcher! ??? Si: ca marche en mode -en si ce noeud 
+-- est appelé comme il faut (i.e., PEND( val -> qque chose))
+-- 
+  teta = I2((sin(teta)*(d2y0+G) -cos(teta)*d2x0)/L);
+tel;
+
+node jeu(x0,y0:real) returns (p:pendule);
+-------------------------------------------------------------
+--pendule pilote a la main
+--x0,y0 sont les coordonnees du pied
+-------------------------------------------------------------
+var d2x0,d2y0,teta,x,y:real;
+let	
+	-----------------------------------------------------
+	--derivation
+	-----------------------------------------------------
+	d2x0=D(D(x0));
+	d2y0=D(D(y0));
+	-----------------------------------------------------
+	--pendule
+	-----------------------------------------------------
+	teta = PEND(d2x0,d2y0);
+	-----------------------------------------------------
+	--geometrie
+	-----------------------------------------------------
+	x = x0+L*sin(teta);
+	y = y0+L*cos(teta);
+	p = make_pend(x0,y0,x,y);
+tel;
+
+	
+	
+node asservi(delta:real) returns (p:pendule);
+-------------------------------------------------------------
+--pendule asservi
+--delta est une pichenette en derivee seconde initiale
+-------------------------------------------------------------
+var d2x0,d2y0,teta,x0,y0,x,y:real;
+let
+	-----------------------------------------------------
+	--loi de regulation
+	-----------------------------------------------------
+	d2y0 =0.0;
+	d2x0 = delta -> 8.0*G*sin(teta)/cos(teta)
+			+sqrt(1.0*G*L)*D(teta) 
+			+0.5*x0/L;
+	-----------------------------------------------------
+	--pendule
+	-----------------------------------------------------
+	teta = PEND( delta -> d2x0,d2y0);
+	-----------------------------------------------------
+	--geometrie
+	-----------------------------------------------------
+	x  = x0+L*sin(teta);
+	y  = y0+L*cos(teta);
+	x0 = I2(d2x0);
+	y0 = I2(d2y0);
+	p  = make_pend(x0,y0,x,y);
+	
+tel;
+
+extern function sin(x:real) returns (y:real);
+
+extern function cos(x:real) returns (y:real);
+
+extern function sqrt(x:real) returns (y:real);
+
+extern function make_pend(x0,y0,x,y:real) returns (p:pendule);

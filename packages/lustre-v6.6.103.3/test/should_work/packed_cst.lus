@@ -1,0 +1,19 @@
+
+package packed_cst
+
+provides
+  function packed_cst(x:int) returns (y:int);
+
+body
+  const i : int =1 ;
+  const j : int =1 ;
+  const k : int =1 ;
+
+  function packed_cst(x:int) returns (y:int);
+  var z,t: int;
+  let
+    z = i+j;
+    t = j-k;
+    y = x + 2*z + 3*t;
+  tel
+end

@@ -1,0 +1,5 @@
+node FALLING_EDGE (X: bool) returns (Y: bool);
+let
+ Y = EDGE(not X);
+tel
+node EDGE (X: bool) returns (Y: bool); let Y = false -> X and not pre(X); tel -- del

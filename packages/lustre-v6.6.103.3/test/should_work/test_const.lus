@@ -1,0 +1,22 @@
+type t_binary = struct {valeur: bool; validite: bool};
+
+type t_PACQ_bin_inputs = t_binary;
+
+
+const PAS_DE_COMMANDE_PACQbis : t_PACQ_bin_inputs = 
+      t_binary { valeur = true; validite = false };
+
+
+
+const toto: bool = true;
+
+node TDF_sans_PACQ (
+     dummy:bool;
+) returns (
+   BINARY_INPUTS_PACQ_DIV_I : t_PACQ_bin_inputs;
+);
+let
+   BINARY_INPUTS_PACQ_DIV_I = PAS_DE_COMMANDE_PACQbis;
+
+tel
+node test_const = TDF_sans_PACQ

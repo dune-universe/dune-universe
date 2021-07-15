@@ -1,0 +1,4 @@
+node compteur(evt: bool) returns (cpt: int);
+let
+  cpt = (0 -> pre(cpt)) + (if evt then 1 else 0);
+tel

@@ -1,0 +1,26 @@
+const m = 2;
+const n = 2;
+function n_node_alias(i1:int; i2_0:int; i2_1:int) returns (o:int);
+var
+   _acc1:int;
+let
+   o = Lustre::plus(_acc1, i2_1);
+   _acc1 = Lustre::plus(i1, i2_0);
+tel
+-- end of node n_node_alias
+function aa(a:int) returns (res:int);
+var
+   _acc1:int;
+   _v1_0:int;
+   _v1_1:int;
+   _v2_0_0:int;
+   _v2_0_1:int;
+   _v2_1_0:int;
+   _v2_1_1:int;
+let
+   (_v2_0_0, _v2_0_1, _v2_1_0, _v2_1_1) = (_v1_0, _v1_1, _v1_0, _v1_1);
+   (_v1_0, _v1_1) = (1, 1);
+   res = n_node_alias(_acc1, _v2_1_0, _v2_1_1);
+   _acc1 = n_node_alias(0, _v2_0_0, _v2_0_1);
+tel
+-- end of node matrice2

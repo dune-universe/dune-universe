@@ -1,0 +1,11 @@
+
+node toto = Lustre::and;
+
+extern function momo(x,y : bool) returns (z : bool);
+
+
+node call01(x,y : bool) returns (z : bool);
+let
+	z = toto(x,y);
+tel
+

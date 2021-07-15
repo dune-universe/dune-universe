@@ -1,0 +1,24 @@
+type T=int;
+type H = {x:S; y:T};
+type U = {a:int; b:H};
+type S;
+type V = U^4;
+type W = T^(size+2);
+
+const c = true;
+const size = 16;
+const pi = 3.1416;
+const u = #(true, false, true);
+
+extern function f1 (x: int) returns (y: int);
+
+extern function f2 (u,v: int) returns (s: int; t: bool);
+
+node simple(e:bool; a:U) returns (b: int);
+var x: int;
+let 
+  x=a.a;
+  b= x+1;
+  assert e or (a.a=0);
+tel
+

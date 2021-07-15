@@ -1,0 +1,20 @@
+const n = 2;
+const m = 3;
+const p = 5;
+
+node mapdeRed(init : int^n; init2 : int) returns (r : int^n; --);
+--var 
+  T :  int^2^3;
+  bid :  int;
+);
+let
+  bid, T = fill<<fill<<incr;n>>;m>>(init2);
+  r = red<<map<<+;n>>;m>>(init, T);
+tel
+
+node incr(incr_i: int) returns (incr_accu, incr_s: int);
+let
+  incr_accu = incr_i + 1;
+  incr_s = incr_i; 
+tel
+

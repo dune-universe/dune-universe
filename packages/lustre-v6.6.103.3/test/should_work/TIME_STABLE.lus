@@ -1,0 +1,12 @@
+node TIME_STABLE(set, second: bool; delay: int) returns (level: bool);
+var ck: bool;
+let
+  level = current(STABLE((set,delay) when ck));
+  ck = true  ->  set or second;
+tel
+node STABLE (set: bool; delay: int) returns (level: bool);
+var count: int; 
+let 
+ level = (count > 0); 
+ count = if set then delay else if false -> pre(level) then pre(count)-1 else 0;
+tel 

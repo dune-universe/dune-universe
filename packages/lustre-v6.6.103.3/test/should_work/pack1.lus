@@ -1,0 +1,25 @@
+package pack1
+
+provides 
+node n1(ck : bool) returns (out : int when ck; ckout : bool);
+node pack1(ck : bool; in : int) returns (out : int when ck);
+const toto:  int =3;
+
+body
+
+const toto:  int =3;
+node n1(ck : bool) returns (out : int when ck; ckout : bool);
+var cpt : int;
+let
+  cpt = 0 -> pre(cpt)+1;
+  out = cpt when ck;
+  ckout = ck;
+tel 
+
+node pack1(ck : bool; in : int) returns (out : int when ck);
+let
+  assert(ck->true);
+  out = in when ck;
+tel 
+
+end

@@ -1,0 +1,41 @@
+
+node X6(n:int; b: bool)
+returns 
+	(m: int;
+	 c: bool;
+    d: bool;
+	p,u : int;
+	q,r: int);
+var
+ 	 c1: bool when b;
+    d1: bool when c1;
+	p1,u1 : int when b;
+	q1,r1: int when c1 ;
+let
+  assert(b->true);
+  m,c1,d1,p1,u1,q1,r1= X6_clk(n,true->b);
+  c = current(c1);
+  d = current(current(d1));
+  p = current(p1);
+  u = current(u1);
+  q = current(current(q1));
+  r = current(current(r1));
+tel
+  
+
+node X6_clk(n:int; b: bool)
+returns 
+	(m: int;
+	 c: bool when b;
+    d: bool when c;
+	p,u : int when b;
+	q,r: int when c);
+let
+	c = true->(p>=(0 when b)) ;
+	p = n when b;
+	q = p when c;
+	d =  true-> q <=((10 when b) when c);
+	r = current(q when d);
+	u = current(r);
+	m = current(u);
+tel

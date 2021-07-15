@@ -1,0 +1,30 @@
+type pendule;
+
+const T=0.1; L=2.0; G=10.0; 
+
+extern function sin(x:real) returns (y:real);
+
+extern function cos(x:real) returns (y:real);
+
+extern function make_pend(x0,y0,x,y:real) returns (p:pendule);
+
+
+node deconne(delta:real) returns (p:pendule);
+-------------------------------------------------------------
+--pendule asservi
+--delta est une pichenette en derivee seconde initiale
+-------------------------------------------------------------
+var teta,x0,y0,x,y:real;
+let
+	
+	-----------------------------------------------------
+	--geometrie
+	-----------------------------------------------------
+	teta = 3.14;
+	x0 = 0.;
+	y0 = 0.;
+	x  = x0+L*sin(teta);
+	y  = y0+L*cos(teta);
+	p  = make_pend(x0,y0,x,y);
+	
+tel;

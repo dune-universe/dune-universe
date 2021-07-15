@@ -1,0 +1,47 @@
+
+(*
+node consensus<<const n : int>>(T: bool^n) returns (a: bool) =
+with (n=1) then {
+	a = T[0];
+} else {
+	a = T[0] and consensus<<n-1>>(T[1..n-1]);
+}
+
+node consensus<<const n : int>>(T: bool^n) returns (a: bool) = 
+with (n=1) then 
+let
+	a = T[0];
+tel
+else
+let
+	a = T[0] and consensus<<n-1>>(T[1..n-1]);
+tel
+*)
+node consensus_gen<<const n : int>>(T: bool^n) returns (a: bool); 
+let
+	a = with (n = 1)
+		then T[0]
+		else T[0] and consensus_gen << n-1 >> (T[1 .. n-1]);
+tel
+
+node consensus = consensus_gen<<8>>
+(*
+node consensus(T: bool list) returns (a: bool); 
+let
+	a = with (T.size = 1) then T.head
+	    else  T.head and consensus(T.tail);
+tel
+*)
+
+node c8 = consensus_gen<<8>>;
+
+
+
+
+
+node main (T : bool^4) returns (c : bool);
+let
+	c = consensus_gen<<4>>(T);
+tel
+
+node main2 = consensus_gen<<10>>;

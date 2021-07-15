@@ -1,0 +1,158 @@
+-----------------------------------------------
+-- Bus arbiter (de Simone's version)
+-- Syntax for Ludic
+--             Author : Lionel Morel
+--             Started : June 18th 2002
+--             Last Updated : August 20th 2002
+------------------------------------------------
+
+const size = 10;
+
+type cell_accu = {
+     token : bool;
+     grant : bool
+     };
+
+type tabType = bool^size;
+
+
+node oneCell(accu_in : cell_accu; 
+                         req : bool)
+        returns(accu_out : cell_accu;
+                        ackout : bool);
+let
+  ackout = (req and accu_in.token and accu_in.grant) and not (false -> pre(ackout));
+  accu_out = 
+    cell_accu {
+      token = accu_in.token;
+      grant = not(req) and accu_in.grant
+    };
+tel
+
+
+
+node deSimone(new_token : bool ; request : tabType) 
+        returns (acknowledge : tabType);
+var accu_out : cell_accu;
+let
+        accu_out, acknowledge = fillred<<oneCell, size>>(cell_accu{
+                                                         token = new_token;
+                                                         grant = true}, 
+                                                         request);
+tel
+
+
+-- property 1 :
+-- forall i!=j : AG !(acki and ackj)
+node prop1(request : tabType) returns (ok : bool);
+var acknowledge : tabType;
+        nb_acknowledge : int;
+let
+        acknowledge = deSimone(true, request);
+        nb_acknowledge = red<<prop1_iter;size>>(0,acknowledge);
+        ok = nb_acknowledge<=1;
+tel
+
+
+node prop1_iter(accu_in : int; elt_in : bool) 
+        returns (accu_out : int);
+let
+        accu_out = accu_in + (if elt_in then 1 else 0);
+tel
+-- There should be a possibility of 
+-- writing the "ok" equation without using an integer
+-- to count number of 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- property 1_bis : 
+-- same but only using booleans
+-- no more integers
+--node prop1_bis(request : bool^size) returns (ok : bool);
+--var acknowledge : bool^size;
+--let
+--      acknowledge = deSimone(request);
+--      ok = atMostOne(acknowledge);
+--tel
+
+
+-- at Most one element of an array of booleans is true
+--type atMost_struct = {hasBeen0 : bool,
+--                                        hasBeen1 : bool,
+--                                        hasBeen2 : bool,
+--                                        atMost1 : bool};
+
+
+--node atMostOne(tab : bool^size)
+--      returns (ok : bool);
+--var accu_out : atMost_struct;
+--let
+
+--      accu_out = red<<atMostOne_iter;size>>({hasBeen0 : true,
+--                                                                                 hasBeen1 : false,
+--                                                                                 hasBeen2 : false,
+--                                                                                 atMost1 : true},
+--                                                                                tab);
+--
+--      ok = accu_out.atMost1;
+--tel
+
+
+
+--node atMostOne_iter(accu_in : atMost_struct;
+--                elt_in : bool)
+--      returns (accu_out : atMost_struct);
+--let
+--      accu_out = {hasBeen0 : accu_in.hasBeen0, 
+--                              hasBeen1 : accu_in.hasBeen1 or 
+--                                                 (accu_in.hasBeen0 
+--                                                      and elt_in),
+--                              hasBeen2 : accu_in.hasBeen2 or 
+--                                                 (accu_in.hasBeen1 
+--                                                      and elt_in),
+--                              atMost1 : not(accu_in.hasBeen2 or 
+--                                                 (accu_in.hasBeen1 
+--                                                      and elt_in))};
+--tel
+
+
+
+
+-- property 2 : 
+-- forall i : AG AF(reqi => acki)
+-- traduisible en lustre ? 
+--property 3 :
+-- forall i : AG (acki => reqi)
+--node prop2(request : bool^size)
+--      returns(ok : bool);
+--var
+--      acknowledge : bool^size;
+--let
+--      acknowledge = deSimone(request);
+--      ok = red<<iter_impl;size>>(true,acknowledge,request);
+--tel
+--node iter_impl(accu_in : bool; req, ack : bool)
+--      returns (accu_out : bool);
+--let
+--      accu_out = implies(req,ack) and accu_in;
+--tel
+--node implies(a,b : bool) returns (c : bool);
+--let
+--      c = not(a) or b;
+--tel
+
+
+
+----

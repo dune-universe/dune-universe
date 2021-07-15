@@ -1,0 +1,8 @@
+type alias = int;
+type pair = struct { a:alias ; b:int };
+type color = enum { blue, white, black };
+
+node type_decl(i1, i2: int) returns (x: pair);
+let
+  x= pair {a=i1; b=i2};
+tel

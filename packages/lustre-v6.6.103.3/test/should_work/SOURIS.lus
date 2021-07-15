@@ -1,0 +1,143 @@
+(* Nom de l'etudiant : Emmanuelle IDRAC *)
+(* Nom d'utilisateur : idrac *)
+(* Filiere et Option : MCS *)
+(* Interpretation : B *)
+
+(* Ce programme est en fait le codage d'un automate a 4 etats:
+   
+   - etat0 ou etat initial: on n'a pas recu de clic;
+   - etat1 on a recu un seul clic
+   - etat2 on a recu 2 clics en moins de 5 tops (le double-clic est possible)
+   - etat3 on a recu 2 clics en moins de 7 tops (plus de double-clic possible)
+          
+On utilise un certain nombre de variables, detaillees plus loin, pour :
+   - verifier la validite des transitions entre les etats
+   - afficher les resultats (clics logiques)
+   - garder en memoire certains parametres (date, SIMPLE_2)
+     ex1 : lorsqu'on a B1 T T T T T T B1 T T : simple B1 puis il faut reprendre
+                                              le compte avec count = 2
+     ex2 : B1 T T T T T T B1 B2 B3 : simple1, simple1, simple2, ..
+           est different de 
+           B1 B2 B3 : simple1, simple2, ...
+           car on doit garder en memoire les simples qu'on n'a pas eu le temps
+           "d'afficher"
+          
+*)
+
+node SOURIS (B1:bool; B2:bool; B3:bool; TOP:bool) 
+returns (SIMPLE:bool; DOUBLE:bool; TRIPLE:bool; BOUTON:int);
+var count : int; prev : int ; date :int;
+    SIMPLE_2 : bool ;
+    clic : bool; chgt : bool ; 
+    fin_tps : bool ; fin_tps2 : bool ;
+    etat0 : bool ; etat1 : bool ; etat2 : bool ; etat3 : bool;
+
+
+(* signification des parametres :
+   --> parametres d'entree :
+           -- Bi : vrai des que le bouton i vient d'etre presse.
+           -- TOP: vrai a chaque top d'horloge.
+   --> parametres de sortie :
+           -- SIMPLE: vrai si on a detecte un clic physique "simple"
+           -- DOUBLE: ......................................"double"
+           -- TRIPLE: ......................................"triple"
+           -- BOUTON: si un clic logique a ete detecte, numero du bouton clique
+                      sinon 0.
+  --> parametres internes :
+          -- count : compteur des nombres de tops initialises a 0,1 ou date
+          -- prev : memoire du bouton presse precedent
+          -- date : memoire de la valeur de count au moment du 2nd clic
+
+          -- SIMPLE_2 : vrai lorsque 2 simples clics sont detectes au meme pas
+                        ex : B1 6tops B1 B2 8tops -> simple1,simple1,simple2
+
+         -- clic : vrai si il y a eu un clic et que celui-ci est valide.
+         -- chgt : vrai si on ne clique pas sur le meme bouton que precedement
+
+         -- fin_tps : vrai si le nombre de tops est > 7
+         -- fin_tps2: vrai si le nombre de tops est > 5
+
+         -- etati : booleen representant l'etat du systeme.
+*)
+
+let
+date = 0 -> if ((etat2 or etat3) and pre(etat1)) 
+             then count
+             else pre(date);
+
+chgt = false -> if not clic
+                 then false
+                 else if (B3 and prev = 3) or
+                         (B1 and prev = 1) or
+                         (B2 and prev = 2) or
+                         (prev = 0) or
+                         (not B1 and not B2 and not B3)
+                      then false
+                      else  true ;
+clic = (B1 xor B2 xor B3) and not (B1 and B2 and B3) ;
+prev = 0 -> if pre(B1) then 1
+             else if pre(B2) then 2
+                   else if pre(B3) then 3
+                         else pre(prev);
+
+ 
+fin_tps = false -> if TOP then (pre(count) > 6) else (pre(count) > 7);
+fin_tps2 = false -> if TOP then (pre(count) > 4) else (pre(count) > 5);
+
+count = 0 -> if etat1 and ( pre(etat0) or
+                           (pre(etat1) and chgt) or
+                           (pre(etat2) and chgt) or
+                           (pre(etat3) and chgt))
+              then if TOP then 1
+                          else 0
+              else if etat1 and (pre(etat2) or pre(etat3)) 
+                    then if TOP
+                          then (pre(count) - pre(date) + 1)
+                          else (pre(count) - pre(date))
+                    else if TOP then pre(count) + 1
+                                else pre(count);
+ 
+etat0 = true -> if (pre(etat1) and fin_tps and (not clic)) or
+                   (pre(etat2) and clic and (not chgt) ) or
+                   (pre(etat2) and fin_tps ) or
+                   (pre(etat3) and clic and (not chgt) ) or
+                   (pre(etat0) and (not clic))
+                 then true
+                 else false;
+                  
+etat1 = false -> if (pre(etat0) and  clic) or
+                    (pre(etat2) and chgt) or
+                    (pre(etat3) and (chgt or fin_tps)) or
+                    (pre(etat1) and (not clic) and (not fin_tps))or
+                    (pre(etat1) and chgt)
+                  then true
+                  else false;
+
+etat2 = false -> if (pre(etat1) and  clic and  not fin_tps2 and not chgt) or
+                    (pre(etat2) and not clic and not fin_tps)
+                  then true
+                  else false;
+
+etat3 = false -> if (pre(etat1) and  clic and fin_tps2 and not chgt) or
+                    (pre(etat3) and not clic and not fin_tps)
+                  then true
+                  else false;
+
+BOUTON = 0 -> if ((SIMPLE and not pre(SIMPLE_2)) or DOUBLE or TRIPLE)
+               then prev
+               else if (SIMPLE and pre(SIMPLE_2))
+                     then pre(prev)
+                     else 0;
+ 
+SIMPLE = false -> (pre(etat1) and etat0) or
+                  (pre(etat1) and chgt) or
+                  (pre(etat3) and etat1 and fin_tps) or
+                  (pre(etat3) and etat1 and chgt) or
+                   pre(SIMPLE_2);
+SIMPLE_2 = false -> (pre(etat3) and etat1 and chgt) or
+                    (pre(etat1) and pre(SIMPLE_2) and chgt);
+DOUBLE = false -> (pre(etat2) and chgt) or 
+                  (pre(etat2) and fin_tps);
+TRIPLE = false -> (pre(etat3) and etat0) or (pre(etat2) and not fin_tps and not chgt and etat0); 
+tel
+

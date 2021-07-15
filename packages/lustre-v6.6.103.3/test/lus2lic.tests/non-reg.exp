@@ -1,0 +1,90 @@
+
+set timeout 20
+
+set ok_files [lsort [glob should_work/*.lus]}
+
+set id [should_work "Unit tests" "$lus2lic" "-unit"]
+wait -i $id
+
+# should be a fresh dir...
+set tmp ./tmp/
+eval file delete [lsort [glob -nocomplain $tmp*]]
+
+foreach f $ok_files {
+    set basef [file rootname $f]
+    set bf $tmp[file tail $basef]
+    set basef [file tail $basef]
+
+    set id1 [should_work "without any option" "$lus2lic -lic" "-o $bf.lic $bf -n $basef"]
+    wait -i $id1
+    # if { [nonemptyfile "$bf.lic"] } {
+        set id2 [should_work "Generate ec code  " "$lus2lic" "-ec -o $bf.ec $f -n $basef"]
+        wait -i $id2
+        
+        if { [nonemptyfile "$bf.ec"] } {
+            set id3 [should_work "Try ec2c on the result" "$ec2c" "-o $bf.c $bf.ec -n $basef"]
+            wait -i $id3
+            catch { exp_close -i $id3 }
+        catch { exp_wait  -i $id3 } output
+        }
+        
+        if { [nonemptyfile "$bf.c"] && [do_ecexe_vs_exec "$f"] } {
+            set id4 [should_work "Try to compare lus2lic -exec and ecexe" "$test_lus2lic_no_node" "$f"]
+            catch { exp_close -i $id4 }
+            catch { exp_wait  -i $id4 } output
+        }
+        set id5 [should_work "Generate c code  " "$lus2lic" "-2c $f -n $basef"]
+        wait -i $id5
+        
+        if { [nonemptyfile "${basef}_${basef}.c"] } {
+        eval spawn "rm -f a.out"
+            if { [nonemptyfile "${basef}_${basef}_ext.c"] } {
+                set id6 [should_work "Check that the generated C code compiles  " "gcc ${basef}_${basef}.c ${basef}_${basef}_ext.c ${basef}_${basef}_loop.c"]
+            } else {
+                set id6 [should_work "Check that the generated C code compiles  " "gcc ${basef}_${basef}.c ${basef}_${basef}_loop.c"]
+            }
+            wait -i $id6
+            catch { exp_close -i $id6 }
+            catch { exp_wait  -i $id6 } output
+            
+            if { [nonemptyfile a.out] && [do_2c_vs_exec "$f"] } {
+                set id7 [should_work "Try to compare lus2lic -exec and -2c" "$compare_exec_and_2c" "$f"]
+                catch { exp_close -i $id7 }
+                catch { exp_wait  -i $id7 } output                   
+            }
+        }
+        catch { exp_close -i $id5 }
+        catch { exp_wait  -i $id5 } output
+        catch { exp_close -i $id2 }
+        catch { exp_wait  -i $id2 } output
+    #}
+    catch { exp_close -i $id1 }
+    catch { exp_wait  -i $id1 } output
+}
+
+
+# Programs that should fail
+proc iter_should_fail { fail_kind } {
+    global lus2lic test_lus2lic_no_node tmp
+
+    set files  [lsort [glob should_fail/$fail_kind/*.lus]]
+    foreach f $files {
+        set bf [file rootname $f]
+        set bf $tmp[file tail $bf]
+        set id [should_fail "Test bad programs" "$fail_kind" "$test_lus2lic_no_node" "$f"]
+        wait -i $id
+        catch { exp_close -i $id }
+        catch { exp_wait  -i $id } output
+    }
+}
+#        set id [should_fail "Test bad programs" "$fail_kind" "$lus2lic" "-o $bf.lic $f"]
+
+iter_should_fail "syntax"
+iter_should_fail "type"
+iter_should_fail "clock"
+iter_should_fail "semantics"
+iter_should_fail "exec"
+iter_should_fail "assert"
+
+
+

@@ -1,0 +1,49 @@
+# Time-stamp: <modified the 24/06/2015 (at 14:56) by Erwan Jahier> 
+#
+# Test the -kcg option
+
+set timeout 20
+
+set ok_files [lsort [glob should_work/*.lus]]
+
+set s2c "/usr/local/tools/lustre/misc/scade-win32/621/bin/s2c"
+
+set tmp [pwd]/tmp/
+
+proc test_kcg  {files tmp} {
+    global lus2lic
+    global s2c
+
+    foreach f $files {
+        eval spawn "cp -f $f $tmp"
+    }
+    cd $tmp
+    foreach f $files {
+        set port [get_free_port]
+        set f_no_ext [file rootname $f]
+        set bf [file tail $f_no_ext]
+        set f [file tail $f]
+        set opt [read_opt $f]
+        set node [file tail $f_no_ext]
+        
+        # generates the lustre scade file
+        set id1 [should_work "Test -kcg  " "$lus2lic $opt" "-kcg -o ${bf}_scade.lus $f -n $node"]
+        wait -i $id1
+     
+        if { [nonemptyfile "${bf}_scade.lus"] } {
+            # Call the scade generator on it
+            set id2 [should_work "Check that the generated scade code compiles  " \
+                         "$s2c  ${bf}_scade.lus  -node $node"]
+
+            # XXX TODO : test that the generated C code compiles
+
+            catch { exp_close -i $id2 }
+            catch { exp_wait  -i $id2 } output
+        }
+        catch { exp_close -i $id1 }
+        catch { exp_wait  -i $id1 } output
+    }
+    return 0
+}
+
+test_kcg  $ok_files $tmp

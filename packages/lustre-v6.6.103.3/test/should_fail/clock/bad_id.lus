@@ -1,0 +1,7 @@
+
+
+node bad_id(c: bool; x: int) returns (y: int when b);
+let
+
+  y = 1+1+(x when c);
+tel

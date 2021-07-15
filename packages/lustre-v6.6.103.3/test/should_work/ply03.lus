@@ -1,0 +1,5 @@
+
+function ply03(x,y: int) returns (o: int^42);
+let
+	o = if (x < y) then 0^42 else map<<+,42>>(x^42, y^42);
+tel

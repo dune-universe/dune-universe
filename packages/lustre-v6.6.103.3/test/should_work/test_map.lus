@@ -1,0 +1,18 @@
+
+function myplus<<type t>>(e1, e2 : t) returns (res : t);
+let
+   res = e1 + e2;
+tel
+
+const n=4;
+node titi<<type t>> = map<<myplus<<t>>,n>>;
+function toto(x,y: int^n) returns (o: int^n);
+let
+	o = map<<+, n>>(x,y);
+	(* o = titi<<int>>(x,y); *)
+tel
+
+function test_map(a,b: real^n) returns (c: real^n);
+let
+	c = titi<<real>>(a,b);
+tel

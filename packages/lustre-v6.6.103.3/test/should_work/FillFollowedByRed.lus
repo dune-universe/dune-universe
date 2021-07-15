@@ -1,0 +1,38 @@
+
+
+node filled(acc_in : real) returns (acc_out : real; elt_out : real);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   acc_out = (acc_in + 1.);
+   elt_out = (acc_in + 1.);
+tel
+
+
+node reduced(acc_in : bool; elt_in : real) returns (ok : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+let
+   ok = acc_in and (0. < elt_in);
+tel
+
+
+node FillFollowedByRed(initFill : real) returns (ok : bool);
+-- Assumes : 
+-- true;
+-- Guarantees : 
+-- true;
+-- Body : 
+   var TabOutFill : real^10; 
+       bidon : real;
+let
+   bidon,TabOutFill = fill<<filled;10>>(initFill);
+--   TabOutFill = fill<<filled;10>>(0);
+   ok = red<<reduced;10>>(true,TabOutFill);
+tel

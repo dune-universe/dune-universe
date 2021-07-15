@@ -1,0 +1,1802 @@
+==> lus2lic0.sum <==
+Test run by jahier on Mon Jul  5 17:32:08 
+Native configuration is x86_64-pc-linux-gnu
+
+		=== lus2lic0 tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running ./lus2lic.tests/test0.exp ...
+PASS: ./lus2lic -unit
+XFAIL: Test bad programs (syntax): test_lus2lic_no_node should_fail/syntax/carligths.lus
+XFAIL: Test bad programs (syntax): test_lus2lic_no_node should_fail/syntax/old_style_and_pack.lus
+XFAIL: Test bad programs (syntax): test_lus2lic_no_node should_fail/syntax/record.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/Gyro.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/Gyro2.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/condact2.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/const2.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_bad.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_bad_clk.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_bad_enum.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_bad_type.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_node.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/merge_not_exhaustive.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/packages.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/packages2.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/parametric_node.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/parametric_node2.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/parametric_node3.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/parametric_node4.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/t1.lus
+XFAIL: Test bad programs (type): test_lus2lic_no_node should_fail/type/ts02.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/bad_call02.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/bad_id.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/clock.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/clock2.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/inonout.lus
+XFAIL: Test bad programs (clock): test_lus2lic_no_node should_fail/clock/when_enum.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/X1.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/arity.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/aux.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/aux1.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/bad_call01.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/const2.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/const3.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/depend.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/deploop.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/import2.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/m.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/not_a_constant.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/parametric_node4.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/patrick.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/sargs.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/sincos.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/t.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/test_const.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/tranche.lus
+XFAIL: Test bad programs (semantics): test_lus2lic_no_node should_fail/semantics/x.lus
+XFAIL: Test bad programs (exec): test_lus2lic_no_node should_fail/exec/X3.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/alarme.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/assertion.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/drapfab.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/eq1.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/lecteur.lus
+XFAIL: Test bad programs (assert): test_lus2lic_no_node should_fail/assert/s.lus
+
+==> lus2lic1.sum <==
+Test run by jahier on Mon Jul  5 17:32:08 
+Native configuration is x86_64-pc-linux-gnu
+
+		=== lus2lic1 tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running ./lus2lic.tests/test1.exp ...
+PASS: ./lus2lic  {-2c COUNTER.lus -n COUNTER}
+PASS: sh COUNTER.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c COUNTER.lus  {}
+PASS: ./lus2lic  {-2c CURRENT.lus -n CURRENT}
+PASS: sh CURRENT.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c CURRENT.lus  {}
+PASS: ./lus2lic  {-2c Condact.lus -n Condact}
+PASS: ./lus2lic  {-2c EDGE.lus -n EDGE}
+PASS: sh EDGE.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c EDGE.lus  {}
+PASS: ./lus2lic  {-2c ELMU.lus -n ELMU}
+PASS: sh ELMU.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ELMU.lus  {}
+PASS: ./lus2lic  {-2c FALLING_EDGE.lus -n FALLING_EDGE}
+PASS: sh FALLING_EDGE.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c FALLING_EDGE.lus  {}
+PASS: ./lus2lic  {-2c FillFollowedByRed.lus -n FillFollowedByRed}
+PASS: sh FillFollowedByRed.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c FillFollowedByRed.lus  {}
+PASS: ./lus2lic  {-2c Gyroscope.lus -n Gyroscope}
+PASS: sh Gyroscope.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c Gyroscope.lus  {}
+PASS: ./lus2lic  {-2c Gyroscope2.lus -n Gyroscope2}
+PASS: sh Gyroscope2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c Gyroscope2.lus  {}
+PASS: ./lus2lic  {-2c aa.lus -n aa}
+PASS: sh aa.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c aa.lus  {}
+PASS: ./lus2lic  {-2c access.lus -n access}
+PASS: sh access.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c access.lus  {}
+PASS: ./lus2lic  --expand-nodes {-2c activation1.lus -n activation1}
+PASS: sh activation1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c activation1.lus  { --expand-nodes}
+PASS: ./lus2lic  --expand-nodes {-2c activation2.lus -n activation2}
+PASS: sh activation2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c activation2.lus  { --expand-nodes}
+PASS: ./lus2lic  {-2c activation_ec.lus -n activation_ec}
+PASS: sh activation_ec.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c activation_ec.lus  {}
+PASS: ./lus2lic  {-2c after.lus -n after}
+PASS: sh after.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c after.lus  {}
+PASS: ./lus2lic  {-2c alias.lus -n alias}
+PASS: sh alias.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c alias.lus  {}
+PASS: ./lus2lic  {-2c amaury.lus -n amaury}
+PASS: sh amaury.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c amaury.lus  {}
+PASS: ./lus2lic  {-2c arbitre.lus -n arbitre}
+PASS: ./lus2lic  {-2c argos.lus -n argos}
+PASS: sh argos.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c argos.lus  {}
+PASS: ./lus2lic  {-2c array_concat.lus -n array_concat}
+PASS: sh array_concat.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c array_concat.lus  {}
+PASS: ./lus2lic  {-2c array_concat2.lus -n array_concat2}
+PASS: sh array_concat2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c array_concat2.lus  {}
+PASS: ./lus2lic  {-2c array_equals.lus -n array_equals}
+PASS: sh array_equals.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c array_equals.lus  {}
+PASS: ./lus2lic  {-2c arrays.lus -n arrays}
+PASS: sh arrays.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c arrays.lus  {}
+PASS: ./lus2lic  --expand-nodes {-2c asservi.lus -n asservi}
+PASS: ./lus2lic  {-2c bad_call03.lus -n bad_call03}
+PASS: sh bad_call03.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bad_call03.lus  {}
+PASS: ./lus2lic  {-2c bascule.lus -n bascule}
+PASS: sh bascule.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bascule.lus  {}
+PASS: ./lus2lic  {-2c bob.lus -n bob}
+PASS: sh bob.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bob.lus  {}
+PASS: ./lus2lic  {-2c bred.lus -n bred}
+PASS: sh bred.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bred.lus  {}
+PASS: ./lus2lic  {-2c bred_lv4.lus -n bred_lv4}
+PASS: sh bred_lv4.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bred_lv4.lus  {}
+PASS: ./lus2lic  {-2c bug.lus -n bug}
+PASS: sh bug.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bug.lus  {}
+PASS: ./lus2lic  {-2c bug2.lus -n bug2}
+PASS: sh bug2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c bug2.lus  {}
+PASS: ./lus2lic  {-2c calculs_max.lus -n calculs_max}
+PASS: sh calculs_max.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c calculs_max.lus  {}
+PASS: ./lus2lic  {-2c call.lus -n call}
+PASS: ./lus2lic  {-2c call01.lus -n call01}
+PASS: ./lus2lic  {-2c call02.lus -n call02}
+PASS: sh call02.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c call02.lus  {}
+PASS: ./lus2lic  {-2c call03.lus -n call03}
+PASS: ./lus2lic  {-2c call04.lus -n call04}
+PASS: sh call04.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c call04.lus  {}
+PASS: ./lus2lic  {-2c call05.lus -n call05}
+PASS: ./lus2lic  {-2c call06.lus -n call06}
+PASS: ./lus2lic  {-2c call07.lus -n call07}
+PASS: sh call07.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c call07.lus  {}
+PASS: ./lus2lic  {-2c carV2.lus -n carV2}
+PASS: sh carV2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c carV2.lus  {}
+PASS: ./lus2lic  {-2c carligths.lus -n carligths}
+PASS: sh carligths.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c carligths.lus  {}
+PASS: ./lus2lic  {-2c ck2.lus -n ck2}
+PASS: sh ck2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ck2.lus  {}
+PASS: ./lus2lic  {-2c ck3.lus -n ck3}
+PASS: sh ck3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ck3.lus  {}
+PASS: ./lus2lic  {-2c ck4.lus -n ck4}
+PASS: sh ck4.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ck4.lus  {}
+PASS: ./lus2lic  {-2c ck5.lus -n ck5}
+PASS: sh ck5.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ck5.lus  {}
+PASS: ./lus2lic  {-2c ck7.lus -n ck7}
+PASS: sh ck7.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ck7.lus  {}
+PASS: ./lus2lic  {-2c clock1_2ms.lus -n clock1_2ms}
+PASS: sh clock1_2ms.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c clock1_2ms.lus  {}
+PASS: ./lus2lic  {-2c clock_ite.lus -n clock_ite}
+PASS: sh clock_ite.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c clock_ite.lus  {}
+PASS: ./lus2lic  {-2c cminus.lus -n cminus}
+PASS: sh cminus.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c cminus.lus  {}
+PASS: ./lus2lic  {-2c complex.lus -n complex}
+PASS: ./lus2lic  {-2c compteur.lus -n compteur}
+PASS: sh compteur.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c compteur.lus  {}
+PASS: ./lus2lic  {-2c cond01.lus -n cond01}
+PASS: sh cond01.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c cond01.lus  {}
+PASS: ./lus2lic  {-2c consensus.lus -n consensus}
+PASS: sh consensus.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c consensus.lus  {}
+PASS: ./lus2lic  {-2c consensus2.lus -n consensus2}
+PASS: sh consensus2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c consensus2.lus  {}
+PASS: ./lus2lic  {-2c contractForElementSelectionInArray.lus -n contractForElementSelectionInArray}
+PASS: sh contractForElementSelectionInArray.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c contractForElementSelectionInArray.lus  {}
+PASS: ./lus2lic  {-2c convert.lus -n convert}
+PASS: sh convert.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c convert.lus  {}
+PASS: ./lus2lic  {-2c count.lus -n count}
+PASS: sh count.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c count.lus  {}
+PASS: ./lus2lic  {-2c cpt.lus -n cpt}
+PASS: sh cpt.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c cpt.lus  {}
+PASS: ./lus2lic  {-2c cst.lus -n cst}
+PASS: sh cst.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c cst.lus  {}
+PASS: ./lus2lic  {-2c dadic.lus -n dadic}
+PASS: ./lus2lic  {-2c deSimone.lus -n deSimone}
+PASS: sh deSimone.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c deSimone.lus  {}
+PASS: ./lus2lic  {-2c decl.lus -n decl}
+PASS: ./lus2lic  {-2c declaration.lus -n declaration}
+PASS: ./lus2lic  {-2c deconne.lus -n deconne}
+PASS: ./lus2lic  {-2c dep.lus -n dep}
+PASS: sh dep.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c dep.lus  {}
+PASS: ./lus2lic  {-2c depend.lus -n depend}
+PASS: sh depend.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c depend.lus  {}
+PASS: ./lus2lic  {-2c dependeur.lus -n dependeur}
+PASS: sh dependeur.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c dependeur.lus  {}
+PASS: ./lus2lic  {-2c dependeur_struct.lus -n dependeur_struct}
+PASS: sh dependeur_struct.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c dependeur_struct.lus  {}
+PASS: ./lus2lic  {-2c double_delay.lus -n double_delay}
+PASS: sh double_delay.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c double_delay.lus  {}
+PASS: ./lus2lic  {-2c ec.lus -n ec}
+PASS: sh ec.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ec.lus  {}
+PASS: ./lus2lic  {-2c enum0.lus -n enum0}
+PASS: sh enum0.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c enum0.lus  {}
+PASS: ./lus2lic  {-2c ex.lus -n ex}
+PASS: sh ex.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ex.lus  {}
+PASS: ./lus2lic  {-2c exclusion.lus -n exclusion}
+PASS: sh exclusion.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c exclusion.lus  {}
+PASS: ./lus2lic  {-2c filliter.lus -n filliter}
+PASS: sh filliter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c filliter.lus  {}
+PASS: ./lus2lic  {-2c filter.lus -n filter}
+PASS: sh filter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c filter.lus  {}
+PASS: ./lus2lic  {-2c flo.lus -n flo}
+PASS: sh flo.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c flo.lus  {}
+PASS: ./lus2lic  {-2c followed_by.lus -n followed_by}
+PASS: sh followed_by.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c followed_by.lus  {}
+PASS: ./lus2lic  {-2c fresh_name.lus -n fresh_name}
+PASS: sh fresh_name.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c fresh_name.lus  {}
+PASS: ./lus2lic  {-2c func_with_body.lus -n func_with_body}
+PASS: ./lus2lic  {-2c hanane.lus -n hanane}
+PASS: sh hanane.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c hanane.lus  {}
+PASS: ./lus2lic  {-2c heater_control.lus -n heater_control}
+PASS: sh heater_control.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c heater_control.lus  {}
+PASS: ./lus2lic  {-2c impl_priority.lus -n impl_priority}
+PASS: sh impl_priority.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c impl_priority.lus  {}
+PASS: ./lus2lic  {-2c import1.lus -n import1}
+PASS: ./lus2lic  {-2c initial.lus -n initial}
+PASS: sh initial.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c initial.lus  {}
+PASS: ./lus2lic  {-2c integrator.lus -n integrator}
+PASS: sh integrator.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c integrator.lus  {}
+PASS: ./lus2lic  {-2c is_stable.lus -n is_stable}
+PASS: sh is_stable.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c is_stable.lus  {}
+PASS: ./lus2lic  {-2c iter.lus -n iter}
+PASS: sh iter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c iter.lus  {}
+PASS: ./lus2lic  {-2c iterFibo.lus -n iterFibo}
+PASS: sh iterFibo.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c iterFibo.lus  {}
+PASS: ./lus2lic  {-2c iterate.lus -n iterate}
+PASS: sh iterate.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c iterate.lus  {}
+PASS: ./lus2lic  {-2c long_et_stupide_nom_de_noeud.lus -n long_et_stupide_nom_de_noeud}
+PASS: sh long_et_stupide_nom_de_noeud.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c long_et_stupide_nom_de_noeud.lus  {}
+PASS: ./lus2lic  {-2c lucky.lus -n lucky}
+PASS: sh lucky.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c lucky.lus  {}
+PASS: ./lus2lic  {-2c lustre_test1_ok.lus -n lustre_test1_ok}
+PASS: sh lustre_test1_ok.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c lustre_test1_ok.lus  {}
+PASS: ./lus2lic  {-2c map_red_iter.lus -n map_red_iter}
+PASS: sh map_red_iter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c map_red_iter.lus  {}
+PASS: ./lus2lic  {-2c mapdeRed.lus -n mapdeRed}
+PASS: sh mapdeRed.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mapdeRed.lus  {}
+PASS: ./lus2lic  {-2c mapinf.lus -n mapinf}
+PASS: sh mapinf.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mapinf.lus  {}
+PASS: ./lus2lic  {-2c mapiter.lus -n mapiter}
+PASS: sh mapiter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mapiter.lus  {}
+PASS: ./lus2lic  {-2c mappredef.lus -n mappredef}
+PASS: sh mappredef.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mappredef.lus  {}
+PASS: ./lus2lic  {-2c matrice.lus -n matrice}
+PASS: sh matrice.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c matrice.lus  {}
+PASS: ./lus2lic  {-2c matrice2.lus -n matrice2}
+PASS: sh matrice2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c matrice2.lus  {}
+PASS: ./lus2lic  {-2c matrix_constant.lus -n matrix_constant}
+PASS: sh matrix_constant.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c matrix_constant.lus  {}
+PASS: ./lus2lic  {-2c minmax1.lus -n minmax1}
+PASS: sh minmax1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax1.lus  {}
+PASS: ./lus2lic  {-2c minmax2.lus -n minmax2}
+PASS: sh minmax2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax2.lus  {}
+PASS: ./lus2lic  {-2c minmax3.lus -n minmax3}
+PASS: sh minmax3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax3.lus  {}
+PASS: ./lus2lic  {-2c minmax4.lus -n minmax4}
+PASS: sh minmax4.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax4.lus  {}
+PASS: ./lus2lic  {-2c minmax4_bis.lus -n minmax4_bis}
+PASS: sh minmax4_bis.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax4_bis.lus  {}
+PASS: ./lus2lic  {-2c minmax5.lus -n minmax5}
+PASS: ./lus2lic  {-2c minmax5_random.lus -n minmax5_random}
+PASS: ./lus2lic  {-2c minmax6.lus -n minmax6}
+PASS: sh minmax6.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minmax6.lus  {}
+PASS: ./lus2lic  {-2c minus.lus -n minus}
+PASS: sh minus.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c minus.lus  {}
+PASS: ./lus2lic  {-2c mm.lus -n mm}
+PASS: sh mm.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mm.lus  {}
+PASS: ./lus2lic  {-2c mm1.lus -n mm1}
+PASS: sh mm1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mm1.lus  {}
+PASS: ./lus2lic  {-2c mm22.lus -n mm22}
+PASS: sh mm22.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mm22.lus  {}
+PASS: ./lus2lic  {-2c mm3.lus -n mm3}
+PASS: sh mm3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mm3.lus  {}
+PASS: ./lus2lic  {-2c modelInst.lus -n modelInst}
+PASS: ./lus2lic  {-2c modes3x2_v2.lus -n modes3x2_v2}
+PASS: sh modes3x2_v2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c modes3x2_v2.lus  {}
+PASS: ./lus2lic  {-2c modes3x2_v3.lus -n modes3x2_v3}
+PASS: sh modes3x2_v3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c modes3x2_v3.lus  {}
+PASS: ./lus2lic  {-2c modes3x2_v4.lus -n modes3x2_v4}
+PASS: ./lus2lic  {-2c mouse.lus -n mouse}
+PASS: sh mouse.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mouse.lus  {}
+PASS: ./lus2lic  {-2c mouse1.lus -n mouse1}
+PASS: sh mouse1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mouse1.lus  {}
+PASS: ./lus2lic  {-2c mouse2.lus -n mouse2}
+PASS: sh mouse2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mouse2.lus  {}
+PASS: ./lus2lic  {-2c mouse3.lus -n mouse3}
+PASS: sh mouse3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c mouse3.lus  {}
+PASS: ./lus2lic  {-2c moyenne.lus -n moyenne}
+PASS: sh moyenne.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c moyenne.lus  {}
+PASS: ./lus2lic  {-2c multiclock.lus -n multiclock}
+PASS: sh multiclock.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c multiclock.lus  {}
+PASS: ./lus2lic  {-2c multipar.lus -n multipar}
+PASS: sh multipar.sh 
+
+==> lus2lic2.sum <==
+Test run by jahier on Mon Jul  5 17:32:32 
+Native configuration is x86_64-pc-linux-gnu
+
+		=== lus2lic2 tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running ./lus2lic.tests/test2.exp ...
+PASS: ./lus2lic  {-2c SOURIS.lus -n SOURIS}
+PASS: sh SOURIS.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c SOURIS.lus  {}
+PASS: ./lus2lic  {-2c STABLE.lus -n STABLE}
+PASS: sh STABLE.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c STABLE.lus  {}
+PASS: ./lus2lic  {-2c SWITCH.lus -n SWITCH}
+PASS: sh SWITCH.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c SWITCH.lus  {}
+PASS: ./lus2lic  {-2c SWITCH1.lus -n SWITCH1}
+PASS: sh SWITCH1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c SWITCH1.lus  {}
+PASS: ./lus2lic  {-2c TIME_STABLE.lus -n TIME_STABLE}
+PASS: sh TIME_STABLE.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c TIME_STABLE.lus  {}
+PASS: ./lus2lic  {-2c TIME_STABLE1.lus -n TIME_STABLE1}
+PASS: sh TIME_STABLE1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c TIME_STABLE1.lus  {}
+PASS: ./lus2lic  {-2c Watch.lus -n Watch}
+PASS: ./lus2lic  {-2c X.lus -n X}
+PASS: sh X.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c X.lus  {}
+PASS: ./lus2lic  {-2c X2.lus -n X2}
+PASS: sh X2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c X2.lus  {}
+PASS: ./lus2lic  {-2c Xr.lus -n Xr}
+PASS: sh Xr.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c Xr.lus  {}
+PASS: ./lus2lic  {-2c nc1.lus -n nc1}
+PASS: sh nc1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc1.lus  {}
+PASS: ./lus2lic  {-2c nc10.lus -n nc10}
+PASS: sh nc10.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc10.lus  {}
+PASS: ./lus2lic  {-2c nc2.lus -n nc2}
+PASS: sh nc2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc2.lus  {}
+PASS: ./lus2lic  {-2c nc3.lus -n nc3}
+PASS: sh nc3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc3.lus  {}
+PASS: ./lus2lic  {-2c nc4.lus -n nc4}
+PASS: sh nc4.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc4.lus  {}
+PASS: ./lus2lic  {-2c nc5.lus -n nc5}
+PASS: sh nc5.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc5.lus  {}
+PASS: ./lus2lic  {-2c nc6.lus -n nc6}
+PASS: sh nc6.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc6.lus  {}
+PASS: ./lus2lic  {-2c nc7.lus -n nc7}
+PASS: sh nc7.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc7.lus  {}
+PASS: ./lus2lic  {-2c nc8.lus -n nc8}
+PASS: sh nc8.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc8.lus  {}
+PASS: ./lus2lic  {-2c nc9.lus -n nc9}
+PASS: sh nc9.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nc9.lus  {}
+PASS: ./lus2lic  {-2c nested.lus -n nested}
+PASS: sh nested.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nested.lus  {}
+PASS: ./lus2lic  {-2c newpacks.lus -n newpacks}
+PASS: ./lus2lic  {-2c noAlarm.lus -n noAlarm}
+PASS: sh noAlarm.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c noAlarm.lus  {}
+PASS: ./lus2lic  {-2c node_caller1.lus -n node_caller1}
+PASS: sh node_caller1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c node_caller1.lus  {}
+PASS: ./lus2lic  {-2c nodeparam.lus -n nodeparam}
+PASS: sh nodeparam.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c nodeparam.lus  {}
+PASS: ./lus2lic  {-2c noeudsIndependants.lus -n noeudsIndependants}
+PASS: sh noeudsIndependants.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c noeudsIndependants.lus  {}
+PASS: ./lus2lic  {-2c noinput.lus -n noinput}
+PASS: sh noinput.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c noinput.lus  {}
+PASS: ./lus2lic  {-2c normal.lus -n normal}
+PASS: sh normal.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c normal.lus  {}
+PASS: ./lus2lic  {-2c notTwo.lus -n notTwo}
+PASS: sh notTwo.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c notTwo.lus  {}
+PASS: ./lus2lic  {-2c o2l_feux_compl.lus -n o2l_feux_compl}
+PASS: sh o2l_feux_compl.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c o2l_feux_compl.lus  {}
+PASS: ./lus2lic  {-2c oneq.lus -n oneq}
+PASS: sh oneq.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c oneq.lus  {}
+PASS: ./lus2lic  {-2c onlyroll.lus -n onlyroll}
+PASS: sh onlyroll.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c onlyroll.lus  {}
+PASS: ./lus2lic  {-2c onlyroll2.lus -n onlyroll2}
+PASS: sh onlyroll2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c onlyroll2.lus  {}
+PASS: ./lus2lic  {-2c over2.lus -n over2}
+PASS: sh over2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c over2.lus  {}
+PASS: ./lus2lic  {-2c over3.lus -n over3}
+PASS: sh over3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c over3.lus  {}
+PASS: ./lus2lic  {-2c overload.lus -n overload}
+PASS: sh overload.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c overload.lus  {}
+PASS: ./lus2lic  {-2c p.lus -n p}
+PASS: ./lus2lic  {-2c pack1.lus -n pack1}
+PASS: ./lus2lic  {-2c packageTableau.lus -n packageTableau}
+PASS: ./lus2lic  {-2c packed_cst.lus -n packed_cst}
+PASS: ./lus2lic  {-2c packs.lus -n packs}
+PASS: ./lus2lic  {-2c param_node.lus -n param_node}
+PASS: sh param_node.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c param_node.lus  {}
+PASS: ./lus2lic  {-2c param_node2.lus -n param_node2}
+PASS: sh param_node2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c param_node2.lus  {}
+PASS: ./lus2lic  {-2c param_node3.lus -n param_node3}
+PASS: sh param_node3.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c param_node3.lus  {}
+PASS: ./lus2lic  {-2c param_node4.lus -n param_node4}
+PASS: sh param_node4.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c param_node4.lus  {}
+PASS: ./lus2lic  {-2c param_struct.lus -n param_struct}
+PASS: sh param_struct.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c param_struct.lus  {}
+PASS: ./lus2lic  --expand-nodes {-2c pilote.lus -n pilote}
+PASS: ./lus2lic  {-2c pipeline.lus -n pipeline}
+PASS: sh pipeline.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c pipeline.lus  {}
+PASS: ./lus2lic  {-2c plus.lus -n plus}
+PASS: sh plus.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c plus.lus  {}
+PASS: ./lus2lic  {-2c ply01.lus -n ply01}
+PASS: sh ply01.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ply01.lus  {}
+PASS: ./lus2lic  {-2c ply02.lus -n ply02}
+PASS: sh ply02.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ply02.lus  {}
+PASS: ./lus2lic  {-2c ply03.lus -n ply03}
+PASS: sh ply03.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ply03.lus  {}
+PASS: ./lus2lic  {-2c polymorphic_pack.lus -n polymorphic_pack}
+PASS: ./lus2lic  {-2c poussoir.lus -n poussoir}
+PASS: sh poussoir.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c poussoir.lus  {}
+PASS: ./lus2lic  {-2c pplus.lus -n pplus}
+PASS: sh pplus.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c pplus.lus  {}
+PASS: ./lus2lic  {-2c pre_x.lus -n pre_x}
+PASS: sh pre_x.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c pre_x.lus  {}
+PASS: ./lus2lic  {-2c predef01.lus -n predef01}
+PASS: sh predef01.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c predef01.lus  {}
+PASS: ./lus2lic  {-2c predef02.lus -n predef02}
+PASS: sh predef02.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c predef02.lus  {}
+PASS: ./lus2lic  {-2c predef03.lus -n predef03}
+PASS: sh predef03.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c predef03.lus  {}
+PASS: ./lus2lic  {-2c predefOp.lus -n predefOp}
+PASS: sh predefOp.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c predefOp.lus  {}
+PASS: ./lus2lic  {-2c produitBool.lus -n produitBool}
+PASS: sh produitBool.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c produitBool.lus  {}
+PASS: ./lus2lic  {-2c real_ex.lus -n real_ex}
+PASS: sh real_ex.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c real_ex.lus  {}
+PASS: ./lus2lic  {-2c redIf.lus -n redIf}
+PASS: sh redIf.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c redIf.lus  {}
+PASS: ./lus2lic  {-2c rediter.lus -n rediter}
+PASS: sh rediter.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c rediter.lus  {}
+PASS: ./lus2lic  {-2c redoptest.lus -n redoptest}
+PASS: sh redoptest.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c redoptest.lus  {}
+PASS: ./lus2lic  {-2c remplissage.lus -n remplissage}
+PASS: ./lus2lic  {-2c rs.lus -n rs}
+PASS: sh rs.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c rs.lus  {}
+PASS: ./lus2lic  {-2c sample_time_change.lus -n sample_time_change}
+PASS: sh sample_time_change.sh 
+FAIL: Try to compare lus2lic -exec and -2c: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c sample_time_change.lus  {}
+PASS: ./lus2lic  {-2c sample_time_change_MainNode.lus -n sample_time_change_MainNode}
+PASS: sh sample_time_change_MainNode.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c sample_time_change_MainNode.lus  {}
+PASS: ./lus2lic  {-2c shiftFill_ludic.lus -n shiftFill_ludic}
+PASS: sh shiftFill_ludic.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c shiftFill_ludic.lus  {}
+PASS: ./lus2lic  {-2c shift_ludic.lus -n shift_ludic}
+PASS: sh shift_ludic.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c shift_ludic.lus  {}
+PASS: ./lus2lic  {-2c simple.lus -n simple}
+PASS: ./lus2lic  {-2c simpleRed.lus -n simpleRed}
+PASS: sh simpleRed.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c simpleRed.lus  {}
+PASS: ./lus2lic  {-2c sincos.lus -n sincos}
+PASS: sh sincos.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c sincos.lus  {}
+PASS: ./lus2lic  --expand-nodes {-2c speedcontrol.lus -n speedcontrol}
+PASS: sh speedcontrol.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c speedcontrol.lus  { --expand-nodes}
+PASS: ./lus2lic  {-2c stopwatch.lus -n stopwatch}
+PASS: sh stopwatch.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c stopwatch.lus  {}
+PASS: ./lus2lic  {-2c struct0.lus -n struct0}
+PASS: sh struct0.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c struct0.lus  {}
+PASS: ./lus2lic  {-2c struct_equality.lus -n struct_equality}
+PASS: sh struct_equality.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c struct_equality.lus  {}
+PASS: ./lus2lic  {-2c struct_with.lus -n struct_with}
+PASS: sh struct_with.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c struct_with.lus  {}
+PASS: ./lus2lic  {-2c t0.lus -n t0}
+PASS: ./lus2lic  {-2c t1.lus -n t1}
+PASS: sh t1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c t1.lus  {}
+PASS: ./lus2lic  {-2c t2.lus -n t2}
+PASS: sh t2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c t2.lus  {}
+PASS: ./lus2lic  {-2c test.lus -n test}
+PASS: sh test.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test.lus  {}
+PASS: ./lus2lic  {-2c testBoite.lus -n testBoite}
+PASS: ./lus2lic  {-2c testCA.lus -n testCA}
+PASS: sh testCA.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c testCA.lus  {}
+PASS: ./lus2lic  {-2c testCapt.lus -n testCapt}
+PASS: ./lus2lic  {-2c testPilote.lus -n testPilote}
+PASS: ./lus2lic  {-2c test_Int.lus -n test_Int}
+PASS: ./lus2lic  {-2c test_arrow.lus -n test_arrow}
+PASS: sh test_arrow.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_arrow.lus  {}
+PASS: ./lus2lic  {-2c test_boolred.lus -n test_boolred}
+PASS: sh test_boolred.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_boolred.lus  {}
+PASS: ./lus2lic  {-2c test_clash.lus -n test_clash}
+PASS: ./lus2lic  {-2c test_condact.lus -n test_condact}
+PASS: sh test_condact.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_condact.lus  {}
+PASS: ./lus2lic  {-2c test_const.lus -n test_const}
+PASS: sh test_const.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_const.lus  {}
+PASS: ./lus2lic  {-2c test_diese.lus -n test_diese}
+PASS: sh test_diese.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_diese.lus  {}
+PASS: ./lus2lic  {-2c test_enum.lus -n test_enum}
+PASS: sh test_enum.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_enum.lus  {}
+PASS: ./lus2lic  {-2c test_extern.lus -n test_extern}
+PASS: ./lus2lic  {-2c test_lustre.lus -n test_lustre}
+PASS: ./lus2lic  {-2c test_map.lus -n test_map}
+PASS: sh test_map.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_map.lus  {}
+PASS: ./lus2lic  {-2c test_merge.lus -n test_merge}
+PASS: sh test_merge.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_merge.lus  {}
+PASS: ./lus2lic  {-2c test_model.lus -n test_model}
+PASS: ./lus2lic  {-2c test_node_expand.lus -n test_node_expand}
+PASS: sh test_node_expand.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_node_expand.lus  {}
+PASS: ./lus2lic  {-2c test_node_expand2.lus -n test_node_expand2}
+PASS: sh test_node_expand2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_node_expand2.lus  {}
+PASS: ./lus2lic  {-2c test_poly.lus -n test_poly}
+PASS: sh test_poly.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_poly.lus  {}
+PASS: ./lus2lic  {-2c test_sqrt.lus -n test_sqrt}
+PASS: ./lus2lic  {-2c test_struct.lus -n test_struct}
+PASS: sh test_struct.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c test_struct.lus  {}
+PASS: ./lus2lic  {-2c titi.lus -n titi}
+PASS: sh titi.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c titi.lus  {}
+PASS: ./lus2lic  {-2c toolate.lus -n toolate}
+PASS: sh toolate.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c toolate.lus  {}
+PASS: ./lus2lic  {-2c toto.lus -n toto}
+PASS: sh toto.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c toto.lus  {}
+PASS: ./lus2lic  {-2c tri.lus -n tri}
+PASS: sh tri.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c tri.lus  {}
+PASS: ./lus2lic  {-2c triSel.lus -n triSel}
+PASS: sh triSel.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c triSel.lus  {}
+PASS: ./lus2lic  {-2c trivial.lus -n trivial}
+PASS: sh trivial.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c trivial.lus  {}
+PASS: ./lus2lic  {-2c trivial2.lus -n trivial2}
+PASS: sh trivial2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c trivial2.lus  {}
+PASS: ./lus2lic  {-2c trivial_array.lus -n trivial_array}
+PASS: sh trivial_array.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c trivial_array.lus  {}
+PASS: ./lus2lic  {-2c ts01.lus -n ts01}
+PASS: sh ts01.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ts01.lus  {}
+PASS: ./lus2lic  {-2c ts04.lus -n ts04}
+PASS: sh ts04.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c ts04.lus  {}
+PASS: ./lus2lic  {-2c tuple.lus -n tuple}
+PASS: sh tuple.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c tuple.lus  {}
+PASS: ./lus2lic  {-2c type_decl.lus -n type_decl}
+PASS: sh type_decl.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c type_decl.lus  {}
+PASS: ./lus2lic  {-2c uu.lus -n uu}
+PASS: sh uu.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c uu.lus  {}
+PASS: ./lus2lic  {-2c v1.lus -n v1}
+PASS: sh v1.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c v1.lus  {}
+PASS: ./lus2lic  {-2c when_tuple.lus -n when_tuple}
+PASS: ./lus2lic  {-2c xx.lus -n xx}
+PASS: sh xx.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c xx.lus  {}
+PASS: ./lus2lic  {-2c yyy.lus -n yyy}
+PASS: sh yyy.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c yyy.lus  {}
+PASS: ./lus2lic  {-2c zzz.lus -n zzz}
+PASS: sh zzz.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c zzz.lus  {}
+PASS: ./lus2lic  {-2c zzz2.lus -n zzz2}
+PASS: sh zzz2.sh 
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c zzz2.lus  {}
+
+==> lus2lic3.sum <==
+Test run by jahier on Mon Jul  5 17:33:03 
+Native configuration is x86_64-pc-linux-gnu
+
+		=== lus2lic3 tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running ./lus2lic.tests/test3.exp ...
+PASS: ./lus2lic {} {-lic -o COUNTER.lic COUNTER.lus -n COUNTER}
+PASS: ./lus2lic {-ec -o COUNTER.ec COUNTER.lus -n COUNTER}
+PASS: ./myec2c {-o COUNTER.c COUNTER.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node COUNTER.lus {}
+PASS: ./lus2lic {} {-lic -o CURRENT.lic CURRENT.lus -n CURRENT}
+PASS: ./lus2lic {-ec -o CURRENT.ec CURRENT.lus -n CURRENT}
+PASS: ./myec2c {-o CURRENT.c CURRENT.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node CURRENT.lus {}
+PASS: ./lus2lic {} {-lic -o Condact.lic Condact.lus -n Condact}
+PASS: ./lus2lic {-ec -o Condact.ec Condact.lus -n Condact}
+PASS: ./myec2c {-o Condact.c Condact.ec}
+PASS: ./lus2lic {} {-lic -o EDGE.lic EDGE.lus -n EDGE}
+PASS: ./lus2lic {-ec -o EDGE.ec EDGE.lus -n EDGE}
+PASS: ./myec2c {-o EDGE.c EDGE.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node EDGE.lus {}
+PASS: ./lus2lic {} {-lic -o ELMU.lic ELMU.lus -n ELMU}
+PASS: ./lus2lic {-ec -o ELMU.ec ELMU.lus -n ELMU}
+PASS: ./myec2c {-o ELMU.c ELMU.ec}
+PASS: ./lus2lic {} {-lic -o FALLING_EDGE.lic FALLING_EDGE.lus -n FALLING_EDGE}
+PASS: ./lus2lic {-ec -o FALLING_EDGE.ec FALLING_EDGE.lus -n FALLING_EDGE}
+PASS: ./myec2c {-o FALLING_EDGE.c FALLING_EDGE.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node FALLING_EDGE.lus {}
+PASS: ./lus2lic {} {-lic -o FillFollowedByRed.lic FillFollowedByRed.lus -n FillFollowedByRed}
+PASS: ./lus2lic {-ec -o FillFollowedByRed.ec FillFollowedByRed.lus -n FillFollowedByRed}
+PASS: ./myec2c {-o FillFollowedByRed.c FillFollowedByRed.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node FillFollowedByRed.lus {}
+PASS: ./lus2lic {} {-lic -o Gyroscope.lic Gyroscope.lus -n Gyroscope}
+PASS: ./lus2lic {-ec -o Gyroscope.ec Gyroscope.lus -n Gyroscope}
+PASS: ./myec2c {-o Gyroscope.c Gyroscope.ec}
+FAIL: Try to compare lus2lic -exec and ecexe: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node Gyroscope.lus {}
+PASS: ./lus2lic {} {-lic -o Gyroscope2.lic Gyroscope2.lus -n Gyroscope2}
+PASS: ./lus2lic {-ec -o Gyroscope2.ec Gyroscope2.lus -n Gyroscope2}
+PASS: ./myec2c {-o Gyroscope2.c Gyroscope2.ec}
+FAIL: Try to compare lus2lic -exec and ecexe: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node Gyroscope2.lus {}
+PASS: ./lus2lic {} {-lic -o aa.lic aa.lus -n aa}
+PASS: ./lus2lic {-ec -o aa.ec aa.lus -n aa}
+PASS: ./myec2c {-o aa.c aa.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node aa.lus {}
+PASS: ./lus2lic {} {-lic -o access.lic access.lus -n access}
+PASS: ./lus2lic {-ec -o access.ec access.lus -n access}
+PASS: ./myec2c {-o access.c access.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node access.lus {}
+PASS: ./lus2lic { --expand-nodes} {-lic -o activation1.lic activation1.lus -n activation1}
+PASS: ./lus2lic {-ec -o activation1.ec activation1.lus -n activation1}
+PASS: ./myec2c {-o activation1.c activation1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node activation1.lus { --expand-nodes}
+PASS: ./lus2lic { --expand-nodes} {-lic -o activation2.lic activation2.lus -n activation2}
+PASS: ./lus2lic {-ec -o activation2.ec activation2.lus -n activation2}
+PASS: ./myec2c {-o activation2.c activation2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node activation2.lus { --expand-nodes}
+PASS: ./lus2lic {} {-lic -o activation_ec.lic activation_ec.lus -n activation_ec}
+PASS: ./lus2lic {-ec -o activation_ec.ec activation_ec.lus -n activation_ec}
+PASS: ./myec2c {-o activation_ec.c activation_ec.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node activation_ec.lus {}
+PASS: ./lus2lic {} {-lic -o after.lic after.lus -n after}
+PASS: ./lus2lic {-ec -o after.ec after.lus -n after}
+PASS: ./myec2c {-o after.c after.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node after.lus {}
+PASS: ./lus2lic {} {-lic -o alias.lic alias.lus -n alias}
+PASS: ./lus2lic {-ec -o alias.ec alias.lus -n alias}
+PASS: ./myec2c {-o alias.c alias.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node alias.lus {}
+PASS: ./lus2lic {} {-lic -o amaury.lic amaury.lus -n amaury}
+PASS: ./lus2lic {-ec -o amaury.ec amaury.lus -n amaury}
+PASS: ./myec2c {-o amaury.c amaury.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node amaury.lus {}
+PASS: ./lus2lic {} {-lic -o arbitre.lic arbitre.lus -n arbitre}
+PASS: ./lus2lic {-ec -o arbitre.ec arbitre.lus -n arbitre}
+PASS: ./myec2c {-o arbitre.c arbitre.ec}
+PASS: ./lus2lic {} {-lic -o argos.lic argos.lus -n argos}
+PASS: ./lus2lic {-ec -o argos.ec argos.lus -n argos}
+PASS: ./myec2c {-o argos.c argos.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node argos.lus {}
+PASS: ./lus2lic {} {-lic -o array_concat.lic array_concat.lus -n array_concat}
+PASS: ./lus2lic {-ec -o array_concat.ec array_concat.lus -n array_concat}
+PASS: ./myec2c {-o array_concat.c array_concat.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node array_concat.lus {}
+PASS: ./lus2lic {} {-lic -o array_concat2.lic array_concat2.lus -n array_concat2}
+PASS: ./lus2lic {-ec -o array_concat2.ec array_concat2.lus -n array_concat2}
+PASS: ./myec2c {-o array_concat2.c array_concat2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node array_concat2.lus {}
+PASS: ./lus2lic {} {-lic -o array_equals.lic array_equals.lus -n array_equals}
+PASS: ./lus2lic {-ec -o array_equals.ec array_equals.lus -n array_equals}
+PASS: ./myec2c {-o array_equals.c array_equals.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node array_equals.lus {}
+PASS: ./lus2lic {} {-lic -o arrays.lic arrays.lus -n arrays}
+PASS: ./lus2lic {-ec -o arrays.ec arrays.lus -n arrays}
+PASS: ./myec2c {-o arrays.c arrays.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node arrays.lus {}
+PASS: ./lus2lic { --expand-nodes} {-lic -o asservi.lic asservi.lus -n asservi}
+PASS: ./lus2lic {-ec -o asservi.ec asservi.lus -n asservi}
+PASS: ./myec2c {-o asservi.c asservi.ec}
+PASS: ./lus2lic {} {-lic -o bad_call03.lic bad_call03.lus -n bad_call03}
+PASS: ./lus2lic {-ec -o bad_call03.ec bad_call03.lus -n bad_call03}
+PASS: ./myec2c {-o bad_call03.c bad_call03.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bad_call03.lus {}
+PASS: ./lus2lic {} {-lic -o bascule.lic bascule.lus -n bascule}
+PASS: ./lus2lic {-ec -o bascule.ec bascule.lus -n bascule}
+PASS: ./myec2c {-o bascule.c bascule.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bascule.lus {}
+PASS: ./lus2lic {} {-lic -o bob.lic bob.lus -n bob}
+PASS: ./lus2lic {-ec -o bob.ec bob.lus -n bob}
+PASS: ./myec2c {-o bob.c bob.ec}
+UNRESOLVED: Time out: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bob.lus {}
+PASS: ./lus2lic {} {-lic -o bred.lic bred.lus -n bred}
+PASS: ./lus2lic {-ec -o bred.ec bred.lus -n bred}
+PASS: ./myec2c {-o bred.c bred.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bred.lus {}
+PASS: ./lus2lic {} {-lic -o bred_lv4.lic bred_lv4.lus -n bred_lv4}
+PASS: ./lus2lic {-ec -o bred_lv4.ec bred_lv4.lus -n bred_lv4}
+PASS: ./myec2c {-o bred_lv4.c bred_lv4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bred_lv4.lus {}
+PASS: ./lus2lic {} {-lic -o bug.lic bug.lus -n bug}
+PASS: ./lus2lic {-ec -o bug.ec bug.lus -n bug}
+PASS: ./myec2c {-o bug.c bug.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bug.lus {}
+PASS: ./lus2lic {} {-lic -o bug2.lic bug2.lus -n bug2}
+PASS: ./lus2lic {-ec -o bug2.ec bug2.lus -n bug2}
+PASS: ./myec2c {-o bug2.c bug2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node bug2.lus {}
+FAIL: without any option: ./lus2lic {} {-lic -o bug_map_fby.lic bug_map_fby.lus -n bug_map_fby}
+PASS: ./lus2lic {} {-lic -o calculs_max.lic calculs_max.lus -n calculs_max}
+PASS: ./lus2lic {-ec -o calculs_max.ec calculs_max.lus -n calculs_max}
+PASS: ./myec2c {-o calculs_max.c calculs_max.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node calculs_max.lus {}
+PASS: ./lus2lic {} {-lic -o call.lic call.lus -n call}
+PASS: ./lus2lic {-ec -o call.ec call.lus -n call}
+PASS: ./myec2c {-o call.c call.ec}
+PASS: ./lus2lic {} {-lic -o call01.lic call01.lus -n call01}
+PASS: ./lus2lic {-ec -o call01.ec call01.lus -n call01}
+PASS: ./myec2c {-o call01.c call01.ec}
+PASS: ./lus2lic {} {-lic -o call02.lic call02.lus -n call02}
+PASS: ./lus2lic {-ec -o call02.ec call02.lus -n call02}
+PASS: ./myec2c {-o call02.c call02.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node call02.lus {}
+PASS: ./lus2lic {} {-lic -o call03.lic call03.lus -n call03}
+PASS: ./lus2lic {-ec -o call03.ec call03.lus -n call03}
+PASS: ./myec2c {-o call03.c call03.ec}
+PASS: ./lus2lic {} {-lic -o call04.lic call04.lus -n call04}
+PASS: ./lus2lic {-ec -o call04.ec call04.lus -n call04}
+PASS: ./myec2c {-o call04.c call04.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node call04.lus {}
+PASS: ./lus2lic {} {-lic -o call05.lic call05.lus -n call05}
+PASS: ./lus2lic {-ec -o call05.ec call05.lus -n call05}
+PASS: ./myec2c {-o call05.c call05.ec}
+PASS: ./lus2lic {} {-lic -o call06.lic call06.lus -n call06}
+PASS: ./lus2lic {-ec -o call06.ec call06.lus -n call06}
+PASS: ./myec2c {-o call06.c call06.ec}
+PASS: ./lus2lic {} {-lic -o call07.lic call07.lus -n call07}
+PASS: ./lus2lic {-ec -o call07.ec call07.lus -n call07}
+PASS: ./myec2c {-o call07.c call07.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node call07.lus {}
+PASS: ./lus2lic {} {-lic -o carV2.lic carV2.lus -n carV2}
+PASS: ./lus2lic {-ec -o carV2.ec carV2.lus -n carV2}
+PASS: ./myec2c {-o carV2.c carV2.ec}
+PASS: ./lus2lic {} {-lic -o carligths.lic carligths.lus -n carligths}
+PASS: ./lus2lic {-ec -o carligths.ec carligths.lus -n carligths}
+PASS: ./myec2c {-o carligths.c carligths.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node carligths.lus {}
+PASS: ./lus2lic {} {-lic -o ck2.lic ck2.lus -n ck2}
+PASS: ./lus2lic {-ec -o ck2.ec ck2.lus -n ck2}
+PASS: ./myec2c {-o ck2.c ck2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ck2.lus {}
+PASS: ./lus2lic {} {-lic -o ck3.lic ck3.lus -n ck3}
+PASS: ./lus2lic {-ec -o ck3.ec ck3.lus -n ck3}
+PASS: ./myec2c {-o ck3.c ck3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ck3.lus {}
+PASS: ./lus2lic {} {-lic -o ck4.lic ck4.lus -n ck4}
+PASS: ./lus2lic {-ec -o ck4.ec ck4.lus -n ck4}
+PASS: ./myec2c {-o ck4.c ck4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ck4.lus {}
+PASS: ./lus2lic {} {-lic -o ck5.lic ck5.lus -n ck5}
+PASS: ./lus2lic {-ec -o ck5.ec ck5.lus -n ck5}
+PASS: ./myec2c {-o ck5.c ck5.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ck5.lus {}
+FAIL: without any option: ./lus2lic {} {-lic -o ck6.lic ck6.lus -n ck6}
+PASS: ./lus2lic {} {-lic -o ck7.lic ck7.lus -n ck7}
+PASS: ./lus2lic {-ec -o ck7.ec ck7.lus -n ck7}
+PASS: ./myec2c {-o ck7.c ck7.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ck7.lus {}
+PASS: ./lus2lic {} {-lic -o clock1_2ms.lic clock1_2ms.lus -n clock1_2ms}
+PASS: ./lus2lic {-ec -o clock1_2ms.ec clock1_2ms.lus -n clock1_2ms}
+PASS: ./myec2c {-o clock1_2ms.c clock1_2ms.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node clock1_2ms.lus {}
+PASS: ./lus2lic {} {-lic -o clock_ite.lic clock_ite.lus -n clock_ite}
+PASS: ./lus2lic {-ec -o clock_ite.ec clock_ite.lus -n clock_ite}
+PASS: ./myec2c {-o clock_ite.c clock_ite.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node clock_ite.lus {}
+PASS: ./lus2lic {} {-lic -o cminus.lic cminus.lus -n cminus}
+PASS: ./lus2lic {-ec -o cminus.ec cminus.lus -n cminus}
+PASS: ./myec2c {-o cminus.c cminus.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node cminus.lus {}
+PASS: ./lus2lic {} {-lic -o complex.lic complex.lus -n complex}
+PASS: ./lus2lic {-ec -o complex.ec complex.lus -n complex}
+PASS: ./myec2c {-o complex.c complex.ec}
+PASS: ./lus2lic {} {-lic -o compteur.lic compteur.lus -n compteur}
+PASS: ./lus2lic {-ec -o compteur.ec compteur.lus -n compteur}
+PASS: ./myec2c {-o compteur.c compteur.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node compteur.lus {}
+PASS: ./lus2lic {} {-lic -o cond01.lic cond01.lus -n cond01}
+PASS: ./lus2lic {-ec -o cond01.ec cond01.lus -n cond01}
+PASS: ./myec2c {-o cond01.c cond01.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node cond01.lus {}
+PASS: ./lus2lic {} {-lic -o consensus.lic consensus.lus -n consensus}
+PASS: ./lus2lic {-ec -o consensus.ec consensus.lus -n consensus}
+PASS: ./myec2c {-o consensus.c consensus.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node consensus.lus {}
+PASS: ./lus2lic {} {-lic -o consensus2.lic consensus2.lus -n consensus2}
+PASS: ./lus2lic {-ec -o consensus2.ec consensus2.lus -n consensus2}
+PASS: ./myec2c {-o consensus2.c consensus2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node consensus2.lus {}
+PASS: ./lus2lic {} {-lic -o contractForElementSelectionInArray.lic contractForElementSelectionInArray.lus -n contractForElementSelectionInArray}
+PASS: ./lus2lic {-ec -o contractForElementSelectionInArray.ec contractForElementSelectionInArray.lus -n contractForElementSelectionInArray}
+PASS: ./myec2c {-o contractForElementSelectionInArray.c contractForElementSelectionInArray.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node contractForElementSelectionInArray.lus {}
+PASS: ./lus2lic {} {-lic -o convert.lic convert.lus -n convert}
+PASS: ./lus2lic {-ec -o convert.ec convert.lus -n convert}
+PASS: ./myec2c {-o convert.c convert.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node convert.lus {}
+PASS: ./lus2lic {} {-lic -o count.lic count.lus -n count}
+PASS: ./lus2lic {-ec -o count.ec count.lus -n count}
+PASS: ./myec2c {-o count.c count.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node count.lus {}
+PASS: ./lus2lic {} {-lic -o cpt.lic cpt.lus -n cpt}
+PASS: ./lus2lic {-ec -o cpt.ec cpt.lus -n cpt}
+PASS: ./myec2c {-o cpt.c cpt.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node cpt.lus {}
+PASS: ./lus2lic {} {-lic -o cst.lic cst.lus -n cst}
+PASS: ./lus2lic {-ec -o cst.ec cst.lus -n cst}
+PASS: ./myec2c {-o cst.c cst.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node cst.lus {}
+PASS: ./lus2lic {} {-lic -o dadic.lic dadic.lus -n dadic}
+PASS: ./lus2lic {-ec -o dadic.ec dadic.lus -n dadic}
+PASS: ./myec2c {-o dadic.c dadic.ec}
+FAIL: without any option: ./lus2lic { dadic.lus} {-lic -o dadic_x5_c.lic dadic_x5_c.lus -n dadic_x5_c}
+PASS: ./lus2lic {} {-lic -o deSimone.lic deSimone.lus -n deSimone}
+PASS: ./lus2lic {-ec -o deSimone.ec deSimone.lus -n deSimone}
+PASS: ./myec2c {-o deSimone.c deSimone.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node deSimone.lus {}
+PASS: ./lus2lic {} {-lic -o decl.lic decl.lus -n decl}
+PASS: ./lus2lic {-ec -o decl.ec decl.lus -n decl}
+PASS: ./myec2c {-o decl.c decl.ec}
+PASS: ./lus2lic {} {-lic -o declaration.lic declaration.lus -n declaration}
+PASS: ./lus2lic {-ec -o declaration.ec declaration.lus -n declaration}
+PASS: ./myec2c {-o declaration.c declaration.ec}
+PASS: ./lus2lic {} {-lic -o deconne.lic deconne.lus -n deconne}
+PASS: ./lus2lic {-ec -o deconne.ec deconne.lus -n deconne}
+PASS: ./myec2c {-o deconne.c deconne.ec}
+PASS: ./lus2lic {} {-lic -o dep.lic dep.lus -n dep}
+PASS: ./lus2lic {-ec -o dep.ec dep.lus -n dep}
+PASS: ./myec2c {-o dep.c dep.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node dep.lus {}
+PASS: ./lus2lic {} {-lic -o depend.lic depend.lus -n depend}
+PASS: ./lus2lic {-ec -o depend.ec depend.lus -n depend}
+PASS: ./myec2c {-o depend.c depend.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node depend.lus {}
+PASS: ./lus2lic {} {-lic -o dependeur.lic dependeur.lus -n dependeur}
+PASS: ./lus2lic {-ec -o dependeur.ec dependeur.lus -n dependeur}
+PASS: ./myec2c {-o dependeur.c dependeur.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node dependeur.lus {}
+PASS: ./lus2lic {} {-lic -o dependeur_struct.lic dependeur_struct.lus -n dependeur_struct}
+PASS: ./lus2lic {-ec -o dependeur_struct.ec dependeur_struct.lus -n dependeur_struct}
+PASS: ./myec2c {-o dependeur_struct.c dependeur_struct.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node dependeur_struct.lus {}
+PASS: ./lus2lic {} {-lic -o double_delay.lic double_delay.lus -n double_delay}
+PASS: ./lus2lic {-ec -o double_delay.ec double_delay.lus -n double_delay}
+PASS: ./myec2c {-o double_delay.c double_delay.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node double_delay.lus {}
+PASS: ./lus2lic {} {-lic -o ec.lic ec.lus -n ec}
+PASS: ./lus2lic {-ec -o ec.ec ec.lus -n ec}
+PASS: ./myec2c {-o ec.c ec.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ec.lus {}
+PASS: ./lus2lic {} {-lic -o enum0.lic enum0.lus -n enum0}
+PASS: ./lus2lic {-ec -o enum0.ec enum0.lus -n enum0}
+PASS: ./myec2c {-o enum0.c enum0.ec}
+PASS: ./lus2lic {} {-lic -o ex.lic ex.lus -n ex}
+PASS: ./lus2lic {-ec -o ex.ec ex.lus -n ex}
+PASS: ./myec2c {-o ex.c ex.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ex.lus {}
+PASS: ./lus2lic {} {-lic -o exclusion.lic exclusion.lus -n exclusion}
+PASS: ./lus2lic {-ec -o exclusion.ec exclusion.lus -n exclusion}
+PASS: ./myec2c {-o exclusion.c exclusion.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node exclusion.lus {}
+PASS: ./lus2lic {} {-lic -o filliter.lic filliter.lus -n filliter}
+PASS: ./lus2lic {-ec -o filliter.ec filliter.lus -n filliter}
+PASS: ./myec2c {-o filliter.c filliter.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node filliter.lus {}
+PASS: ./lus2lic {} {-lic -o filter.lic filter.lus -n filter}
+PASS: ./lus2lic {-ec -o filter.ec filter.lus -n filter}
+PASS: ./myec2c {-o filter.c filter.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node filter.lus {}
+PASS: ./lus2lic {} {-lic -o flo.lic flo.lus -n flo}
+PASS: ./lus2lic {-ec -o flo.ec flo.lus -n flo}
+PASS: ./myec2c {-o flo.c flo.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node flo.lus {}
+PASS: ./lus2lic {} {-lic -o followed_by.lic followed_by.lus -n followed_by}
+PASS: ./lus2lic {-ec -o followed_by.ec followed_by.lus -n followed_by}
+PASS: ./myec2c {-o followed_by.c followed_by.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node followed_by.lus {}
+PASS: ./lus2lic {} {-lic -o fresh_name.lic fresh_name.lus -n fresh_name}
+PASS: ./lus2lic {-ec -o fresh_name.ec fresh_name.lus -n fresh_name}
+PASS: ./myec2c {-o fresh_name.c fresh_name.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node fresh_name.lus {}
+PASS: ./lus2lic {} {-lic -o func_with_body.lic func_with_body.lus -n func_with_body}
+PASS: ./lus2lic {-ec -o func_with_body.ec func_with_body.lus -n func_with_body}
+PASS: ./myec2c {-o func_with_body.c func_with_body.ec}
+PASS: ./lus2lic {} {-lic -o hanane.lic hanane.lus -n hanane}
+PASS: ./lus2lic {-ec -o hanane.ec hanane.lus -n hanane}
+PASS: ./myec2c {-o hanane.c hanane.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node hanane.lus {}
+PASS: ./lus2lic {} {-lic -o heater_control.lic heater_control.lus -n heater_control}
+PASS: ./lus2lic {-ec -o heater_control.ec heater_control.lus -n heater_control}
+PASS: ./myec2c {-o heater_control.c heater_control.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node heater_control.lus {}
+PASS: ./lus2lic {} {-lic -o impl_priority.lic impl_priority.lus -n impl_priority}
+PASS: ./lus2lic {-ec -o impl_priority.ec impl_priority.lus -n impl_priority}
+PASS: ./myec2c {-o impl_priority.c impl_priority.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node impl_priority.lus {}
+PASS: ./lus2lic {} {-lic -o import1.lic import1.lus -n import1}
+PASS: ./lus2lic {-ec -o import1.ec import1.lus -n import1}
+PASS: ./myec2c {-o import1.c import1.ec}
+PASS: ./lus2lic {} {-lic -o initial.lic initial.lus -n initial}
+PASS: ./lus2lic {-ec -o initial.ec initial.lus -n initial}
+PASS: ./myec2c {-o initial.c initial.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node initial.lus {}
+PASS: ./lus2lic {} {-lic -o integrator.lic integrator.lus -n integrator}
+PASS: ./lus2lic {-ec -o integrator.ec integrator.lus -n integrator}
+PASS: ./myec2c {-o integrator.c integrator.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node integrator.lus {}
+PASS: ./lus2lic {} {-lic -o is_stable.lic is_stable.lus -n is_stable}
+PASS: ./lus2lic {-ec -o is_stable.ec is_stable.lus -n is_stable}
+PASS: ./myec2c {-o is_stable.c is_stable.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node is_stable.lus {}
+PASS: ./lus2lic {} {-lic -o iter.lic iter.lus -n iter}
+PASS: ./lus2lic {-ec -o iter.ec iter.lus -n iter}
+PASS: ./myec2c {-o iter.c iter.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node iter.lus {}
+PASS: ./lus2lic {} {-lic -o iterFibo.lic iterFibo.lus -n iterFibo}
+PASS: ./lus2lic {-ec -o iterFibo.ec iterFibo.lus -n iterFibo}
+PASS: ./myec2c {-o iterFibo.c iterFibo.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node iterFibo.lus {}
+PASS: ./lus2lic {} {-lic -o iterate.lic iterate.lus -n iterate}
+PASS: ./lus2lic {-ec -o iterate.ec iterate.lus -n iterate}
+PASS: ./myec2c {-o iterate.c iterate.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node iterate.lus {}
+PASS: ./lus2lic { "--expand-nodes -esa"} {-lic -o iterate_on_plus.lic iterate_on_plus.lus -n iterate_on_plus}
+PASS: ./lus2lic {} {-lic -o left.lic left.lus -n left}
+PASS: ./lus2lic {-ec -o left.ec left.lus -n left}
+PASS: ./myec2c {-o left.c left.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node left.lus {}
+PASS: ./lus2lic {} {-lic -o long_et_stupide_nom_de_noeud.lic long_et_stupide_nom_de_noeud.lus -n long_et_stupide_nom_de_noeud}
+PASS: ./lus2lic {-ec -o long_et_stupide_nom_de_noeud.ec long_et_stupide_nom_de_noeud.lus -n long_et_stupide_nom_de_noeud}
+PASS: ./myec2c {-o long_et_stupide_nom_de_noeud.c long_et_stupide_nom_de_noeud.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node long_et_stupide_nom_de_noeud.lus {}
+PASS: ./lus2lic {} {-lic -o lucky.lic lucky.lus -n lucky}
+PASS: ./lus2lic {-ec -o lucky.ec lucky.lus -n lucky}
+PASS: ./myec2c {-o lucky.c lucky.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node lucky.lus {}
+PASS: ./lus2lic {} {-lic -o lustre_test1_ok.lic lustre_test1_ok.lus -n lustre_test1_ok}
+PASS: ./lus2lic {-ec -o lustre_test1_ok.ec lustre_test1_ok.lus -n lustre_test1_ok}
+PASS: ./myec2c {-o lustre_test1_ok.c lustre_test1_ok.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node lustre_test1_ok.lus {}
+PASS: ./lus2lic {} {-lic -o map_red_iter.lic map_red_iter.lus -n map_red_iter}
+PASS: ./lus2lic {-ec -o map_red_iter.ec map_red_iter.lus -n map_red_iter}
+PASS: ./myec2c {-o map_red_iter.c map_red_iter.ec}
+PASS: ./lus2lic {} {-lic -o mapdeRed.lic mapdeRed.lus -n mapdeRed}
+PASS: ./lus2lic {-ec -o mapdeRed.ec mapdeRed.lus -n mapdeRed}
+PASS: ./myec2c {-o mapdeRed.c mapdeRed.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mapdeRed.lus {}
+PASS: ./lus2lic {} {-lic -o mapinf.lic mapinf.lus -n mapinf}
+PASS: ./lus2lic {-ec -o mapinf.ec mapinf.lus -n mapinf}
+PASS: ./myec2c {-o mapinf.c mapinf.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mapinf.lus {}
+PASS: ./lus2lic {} {-lic -o mapiter.lic mapiter.lus -n mapiter}
+PASS: ./lus2lic {-ec -o mapiter.ec mapiter.lus -n mapiter}
+PASS: ./myec2c {-o mapiter.c mapiter.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mapiter.lus {}
+PASS: ./lus2lic {} {-lic -o mappredef.lic mappredef.lus -n mappredef}
+PASS: ./lus2lic {-ec -o mappredef.ec mappredef.lus -n mappredef}
+PASS: ./myec2c {-o mappredef.c mappredef.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mappredef.lus {}
+PASS: ./lus2lic {} {-lic -o matrice.lic matrice.lus -n matrice}
+PASS: ./lus2lic {-ec -o matrice.ec matrice.lus -n matrice}
+PASS: ./myec2c {-o matrice.c matrice.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node matrice.lus {}
+PASS: ./lus2lic {} {-lic -o matrice2.lic matrice2.lus -n matrice2}
+PASS: ./lus2lic {-ec -o matrice2.ec matrice2.lus -n matrice2}
+PASS: ./myec2c {-o matrice2.c matrice2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node matrice2.lus {}
+PASS: ./lus2lic {} {-lic -o matrix_constant.lic matrix_constant.lus -n matrix_constant}
+PASS: ./lus2lic {-ec -o matrix_constant.ec matrix_constant.lus -n matrix_constant}
+PASS: ./myec2c {-o matrix_constant.c matrix_constant.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node matrix_constant.lus {}
+PASS: ./lus2lic {} {-lic -o minmax1.lic minmax1.lus -n minmax1}
+PASS: ./lus2lic {-ec -o minmax1.ec minmax1.lus -n minmax1}
+PASS: ./myec2c {-o minmax1.c minmax1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax1.lus {}
+PASS: ./lus2lic {} {-lic -o minmax2.lic minmax2.lus -n minmax2}
+PASS: ./lus2lic {-ec -o minmax2.ec minmax2.lus -n minmax2}
+PASS: ./myec2c {-o minmax2.c minmax2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax2.lus {}
+PASS: ./lus2lic {} {-lic -o minmax3.lic minmax3.lus -n minmax3}
+PASS: ./lus2lic {-ec -o minmax3.ec minmax3.lus -n minmax3}
+PASS: ./myec2c {-o minmax3.c minmax3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax3.lus {}
+PASS: ./lus2lic {} {-lic -o minmax4.lic minmax4.lus -n minmax4}
+PASS: ./lus2lic {-ec -o minmax4.ec minmax4.lus -n minmax4}
+PASS: ./myec2c {-o minmax4.c minmax4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax4.lus {}
+PASS: ./lus2lic {} {-lic -o minmax4_bis.lic minmax4_bis.lus -n minmax4_bis}
+PASS: ./lus2lic {-ec -o minmax4_bis.ec minmax4_bis.lus -n minmax4_bis}
+PASS: ./myec2c {-o minmax4_bis.c minmax4_bis.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax4_bis.lus {}
+PASS: ./lus2lic {} {-lic -o minmax5.lic minmax5.lus -n minmax5}
+PASS: ./lus2lic {-ec -o minmax5.ec minmax5.lus -n minmax5}
+PASS: ./myec2c {-o minmax5.c minmax5.ec}
+PASS: ./lus2lic {} {-lic -o minmax5_random.lic minmax5_random.lus -n minmax5_random}
+PASS: ./lus2lic {-ec -o minmax5_random.ec minmax5_random.lus -n minmax5_random}
+PASS: ./myec2c {-o minmax5_random.c minmax5_random.ec}
+PASS: ./lus2lic {} {-lic -o minmax6.lic minmax6.lus -n minmax6}
+PASS: ./lus2lic {-ec -o minmax6.ec minmax6.lus -n minmax6}
+PASS: ./myec2c {-o minmax6.c minmax6.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minmax6.lus {}
+PASS: ./lus2lic {} {-lic -o minus.lic minus.lus -n minus}
+PASS: ./lus2lic {-ec -o minus.ec minus.lus -n minus}
+PASS: ./myec2c {-o minus.c minus.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node minus.lus {}
+PASS: ./lus2lic {} {-lic -o mm.lic mm.lus -n mm}
+PASS: ./lus2lic {-ec -o mm.ec mm.lus -n mm}
+PASS: ./myec2c {-o mm.c mm.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mm.lus {}
+PASS: ./lus2lic {} {-lic -o mm1.lic mm1.lus -n mm1}
+PASS: ./lus2lic {-ec -o mm1.ec mm1.lus -n mm1}
+PASS: ./myec2c {-o mm1.c mm1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mm1.lus {}
+PASS: ./lus2lic {} {-lic -o mm22.lic mm22.lus -n mm22}
+PASS: ./lus2lic {-ec -o mm22.ec mm22.lus -n mm22}
+PASS: ./myec2c {-o mm22.c mm22.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mm22.lus {}
+PASS: ./lus2lic {} {-lic -o mm3.lic mm3.lus -n mm3}
+PASS: ./lus2lic {-ec -o mm3.ec mm3.lus -n mm3}
+PASS: ./myec2c {-o mm3.c mm3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mm3.lus {}
+PASS: ./lus2lic {} {-lic -o modelInst.lic modelInst.lus -n modelInst}
+PASS: ./lus2lic {-ec -o modelInst.ec modelInst.lus -n modelInst}
+PASS: ./myec2c {-o modelInst.c modelInst.ec}
+PASS: ./lus2lic {} {-lic -o modes3x2_v2.lic modes3x2_v2.lus -n modes3x2_v2}
+PASS: ./lus2lic {-ec -o modes3x2_v2.ec modes3x2_v2.lus -n modes3x2_v2}
+PASS: ./myec2c {-o modes3x2_v2.c modes3x2_v2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node modes3x2_v2.lus {}
+PASS: ./lus2lic {} {-lic -o modes3x2_v3.lic modes3x2_v3.lus -n modes3x2_v3}
+PASS: ./lus2lic {-ec -o modes3x2_v3.ec modes3x2_v3.lus -n modes3x2_v3}
+PASS: ./lus2lic {} {-lic -o modes3x2_v4.lic modes3x2_v4.lus -n modes3x2_v4}
+PASS: ./lus2lic {-ec -o modes3x2_v4.ec modes3x2_v4.lus -n modes3x2_v4}
+PASS: ./lus2lic {} {-lic -o morel.lic morel.lus -n morel}
+PASS: ./lus2lic {-ec -o morel.ec morel.lus -n morel}
+PASS: ./myec2c {-o morel.c morel.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node morel.lus {}
+PASS: ./lus2lic {} {-lic -o morel2.lic morel2.lus -n morel2}
+PASS: ./lus2lic {-ec -o morel2.ec morel2.lus -n morel2}
+PASS: ./myec2c {-o morel2.c morel2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node morel2.lus {}
+PASS: ./lus2lic {} {-lic -o morel3.lic morel3.lus -n morel3}
+PASS: ./lus2lic {-ec -o morel3.ec morel3.lus -n morel3}
+PASS: ./myec2c {-o morel3.c morel3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node morel3.lus {}
+PASS: ./lus2lic {} {-lic -o morel4.lic morel4.lus -n morel4}
+PASS: ./lus2lic {-ec -o morel4.ec morel4.lus -n morel4}
+PASS: ./myec2c {-o morel4.c morel4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node morel4.lus {}
+PASS: ./lus2lic {} {-lic -o morel5.lic morel5.lus -n morel5}
+PASS: ./lus2lic {-ec -o morel5.ec morel5.lus -n morel5}
+PASS: ./myec2c {-o morel5.c morel5.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node morel5.lus {}
+PASS: ./lus2lic {} {-lic -o mouse.lic mouse.lus -n mouse}
+PASS: ./lus2lic {-ec -o mouse.ec mouse.lus -n mouse}
+PASS: ./myec2c {-o mouse.c mouse.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mouse.lus {}
+PASS: ./lus2lic {} {-lic -o mouse1.lic mouse1.lus -n mouse1}
+PASS: ./lus2lic {-ec -o mouse1.ec mouse1.lus -n mouse1}
+PASS: ./myec2c {-o mouse1.c mouse1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mouse1.lus {}
+PASS: ./lus2lic {} {-lic -o mouse2.lic mouse2.lus -n mouse2}
+PASS: ./lus2lic {-ec -o mouse2.ec mouse2.lus -n mouse2}
+PASS: ./myec2c {-o mouse2.c mouse2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mouse2.lus {}
+PASS: ./lus2lic {} {-lic -o mouse3.lic mouse3.lus -n mouse3}
+PASS: ./lus2lic {-ec -o mouse3.ec mouse3.lus -n mouse3}
+PASS: ./myec2c {-o mouse3.c mouse3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node mouse3.lus {}
+PASS: ./lus2lic {} {-lic -o moyenne.lic moyenne.lus -n moyenne}
+PASS: ./lus2lic {-ec -o moyenne.ec moyenne.lus -n moyenne}
+PASS: ./myec2c {-o moyenne.c moyenne.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node moyenne.lus {}
+PASS: ./lus2lic {} {-lic -o multiclock.lic multiclock.lus -n multiclock}
+PASS: ./lus2lic {-ec -o multiclock.ec multiclock.lus -n multiclock}
+PASS: ./myec2c {-o multiclock.c multiclock.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node multiclock.lus {}
+PASS: ./lus2lic {} {-lic -o multipar.lic multipar.lus -n multipar}
+PASS: ./lus2lic {-ec -o multipar.ec multipar.lus -n multipar}
+PASS: ./myec2c {-o multipar.c multipar.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node multipar.lus {}
+
+
+==> lus2lic4.sum <==
+Test run by jahier on Mon Jul  5 17:33:45 
+Native configuration is x86_64-pc-linux-gnu
+
+		=== lus2lic4 tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Running ./lus2lic.tests/test4.exp ...
+FAIL: without any option: ./lus2lic {} {-lic -o PCOND.lic PCOND.lus -n PCOND}
+FAIL: without any option: ./lus2lic {} {-lic -o PCOND1.lic PCOND1.lus -n PCOND1}
+PASS: ./lus2lic {} {-lic -o SOURIS.lic SOURIS.lus -n SOURIS}
+PASS: ./lus2lic {-ec -o SOURIS.ec SOURIS.lus -n SOURIS}
+PASS: ./myec2c {-o SOURIS.c SOURIS.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node SOURIS.lus {}
+PASS: ./lus2lic {} {-lic -o STABLE.lic STABLE.lus -n STABLE}
+PASS: ./lus2lic {-ec -o STABLE.ec STABLE.lus -n STABLE}
+PASS: ./myec2c {-o STABLE.c STABLE.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node STABLE.lus {}
+PASS: ./lus2lic {} {-lic -o SWITCH.lic SWITCH.lus -n SWITCH}
+PASS: ./lus2lic {-ec -o SWITCH.ec SWITCH.lus -n SWITCH}
+PASS: ./myec2c {-o SWITCH.c SWITCH.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node SWITCH.lus {}
+PASS: ./lus2lic {} {-lic -o SWITCH1.lic SWITCH1.lus -n SWITCH1}
+PASS: ./lus2lic {-ec -o SWITCH1.ec SWITCH1.lus -n SWITCH1}
+PASS: ./myec2c {-o SWITCH1.c SWITCH1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node SWITCH1.lus {}
+PASS: ./lus2lic {} {-lic -o TIME_STABLE.lic TIME_STABLE.lus -n TIME_STABLE}
+PASS: ./lus2lic {-ec -o TIME_STABLE.ec TIME_STABLE.lus -n TIME_STABLE}
+PASS: ./myec2c {-o TIME_STABLE.c TIME_STABLE.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node TIME_STABLE.lus {}
+PASS: ./lus2lic {} {-lic -o TIME_STABLE1.lic TIME_STABLE1.lus -n TIME_STABLE1}
+PASS: ./lus2lic {-ec -o TIME_STABLE1.ec TIME_STABLE1.lus -n TIME_STABLE1}
+PASS: ./myec2c {-o TIME_STABLE1.c TIME_STABLE1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node TIME_STABLE1.lus {}
+PASS: ./lus2lic {} {-lic -o Watch.lic Watch.lus -n Watch}
+PASS: ./lus2lic {-ec -o Watch.ec Watch.lus -n Watch}
+PASS: ./myec2c {-o Watch.c Watch.ec}
+PASS: ./lus2lic {} {-lic -o X.lic X.lus -n X}
+PASS: ./lus2lic {-ec -o X.ec X.lus -n X}
+PASS: ./myec2c {-o X.c X.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node X.lus {}
+PASS: ./lus2lic {} {-lic -o X2.lic X2.lus -n X2}
+PASS: ./lus2lic {-ec -o X2.ec X2.lus -n X2}
+PASS: ./myec2c {-o X2.c X2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node X2.lus {}
+FAIL: without any option: ./lus2lic {} {-lic -o X6.lic X6.lus -n X6}
+PASS: ./lus2lic {} {-lic -o Xr.lic Xr.lus -n Xr}
+PASS: ./lus2lic {-ec -o Xr.ec Xr.lus -n Xr}
+PASS: ./myec2c {-o Xr.c Xr.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node Xr.lus {}
+PASS: ./lus2lic {} {-lic -o nc1.lic nc1.lus -n nc1}
+PASS: ./lus2lic {-ec -o nc1.ec nc1.lus -n nc1}
+PASS: ./myec2c {-o nc1.c nc1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc1.lus {}
+PASS: ./lus2lic {} {-lic -o nc10.lic nc10.lus -n nc10}
+PASS: ./lus2lic {-ec -o nc10.ec nc10.lus -n nc10}
+PASS: ./myec2c {-o nc10.c nc10.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc10.lus {}
+PASS: ./lus2lic {} {-lic -o nc2.lic nc2.lus -n nc2}
+PASS: ./lus2lic {-ec -o nc2.ec nc2.lus -n nc2}
+PASS: ./myec2c {-o nc2.c nc2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc2.lus {}
+PASS: ./lus2lic {} {-lic -o nc3.lic nc3.lus -n nc3}
+PASS: ./lus2lic {-ec -o nc3.ec nc3.lus -n nc3}
+PASS: ./myec2c {-o nc3.c nc3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc3.lus {}
+PASS: ./lus2lic {} {-lic -o nc4.lic nc4.lus -n nc4}
+PASS: ./lus2lic {-ec -o nc4.ec nc4.lus -n nc4}
+PASS: ./myec2c {-o nc4.c nc4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc4.lus {}
+PASS: ./lus2lic {} {-lic -o nc5.lic nc5.lus -n nc5}
+PASS: ./lus2lic {-ec -o nc5.ec nc5.lus -n nc5}
+PASS: ./myec2c {-o nc5.c nc5.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc5.lus {}
+PASS: ./lus2lic {} {-lic -o nc6.lic nc6.lus -n nc6}
+PASS: ./lus2lic {-ec -o nc6.ec nc6.lus -n nc6}
+PASS: ./myec2c {-o nc6.c nc6.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc6.lus {}
+PASS: ./lus2lic {} {-lic -o nc7.lic nc7.lus -n nc7}
+PASS: ./lus2lic {-ec -o nc7.ec nc7.lus -n nc7}
+PASS: ./myec2c {-o nc7.c nc7.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc7.lus {}
+PASS: ./lus2lic {} {-lic -o nc8.lic nc8.lus -n nc8}
+PASS: ./lus2lic {-ec -o nc8.ec nc8.lus -n nc8}
+PASS: ./myec2c {-o nc8.c nc8.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc8.lus {}
+PASS: ./lus2lic {} {-lic -o nc9.lic nc9.lus -n nc9}
+PASS: ./lus2lic {-ec -o nc9.ec nc9.lus -n nc9}
+PASS: ./myec2c {-o nc9.c nc9.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nc9.lus {}
+PASS: ./lus2lic {} {-lic -o nested.lic nested.lus -n nested}
+PASS: ./lus2lic {-ec -o nested.ec nested.lus -n nested}
+PASS: ./myec2c {-o nested.c nested.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nested.lus {}
+PASS: ./lus2lic {} {-lic -o newpacks.lic newpacks.lus -n newpacks}
+PASS: ./lus2lic {-ec -o newpacks.ec newpacks.lus -n newpacks}
+PASS: ./myec2c {-o newpacks.c newpacks.ec}
+PASS: ./lus2lic {} {-lic -o noAlarm.lic noAlarm.lus -n noAlarm}
+PASS: ./lus2lic {-ec -o noAlarm.ec noAlarm.lus -n noAlarm}
+PASS: ./myec2c {-o noAlarm.c noAlarm.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node noAlarm.lus {}
+PASS: ./lus2lic {} {-lic -o node_caller1.lic node_caller1.lus -n node_caller1}
+PASS: ./lus2lic {-ec -o node_caller1.ec node_caller1.lus -n node_caller1}
+PASS: ./myec2c {-o node_caller1.c node_caller1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node node_caller1.lus {}
+PASS: ./lus2lic {} {-lic -o nodeparam.lic nodeparam.lus -n nodeparam}
+PASS: ./lus2lic {-ec -o nodeparam.ec nodeparam.lus -n nodeparam}
+PASS: ./myec2c {-o nodeparam.c nodeparam.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node nodeparam.lus {}
+PASS: ./lus2lic {} {-lic -o noeudsIndependants.lic noeudsIndependants.lus -n noeudsIndependants}
+PASS: ./lus2lic {-ec -o noeudsIndependants.ec noeudsIndependants.lus -n noeudsIndependants}
+PASS: ./myec2c {-o noeudsIndependants.c noeudsIndependants.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node noeudsIndependants.lus {}
+PASS: ./lus2lic {} {-lic -o noinput.lic noinput.lus -n noinput}
+FAIL: Generate ec code  : ./lus2lic {-ec -o noinput.ec noinput.lus -n noinput}
+PASS: ./lus2lic {} {-lic -o normal.lic normal.lus -n normal}
+PASS: ./lus2lic {-ec -o normal.ec normal.lus -n normal}
+PASS: ./myec2c {-o normal.c normal.ec}
+PASS: ./lus2lic {} {-lic -o notTwo.lic notTwo.lus -n notTwo}
+PASS: ./lus2lic {-ec -o notTwo.ec notTwo.lus -n notTwo}
+PASS: ./myec2c {-o notTwo.c notTwo.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node notTwo.lus {}
+PASS: ./lus2lic {} {-lic -o o2l_feux_compl.lic o2l_feux_compl.lus -n o2l_feux_compl}
+PASS: ./lus2lic {-ec -o o2l_feux_compl.ec o2l_feux_compl.lus -n o2l_feux_compl}
+PASS: ./myec2c {-o o2l_feux_compl.c o2l_feux_compl.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node o2l_feux_compl.lus {}
+PASS: ./lus2lic {} {-lic -o oneq.lic oneq.lus -n oneq}
+PASS: ./lus2lic {-ec -o oneq.ec oneq.lus -n oneq}
+PASS: ./myec2c {-o oneq.c oneq.ec}
+PASS: ./lus2lic {} {-lic -o onlyroll.lic onlyroll.lus -n onlyroll}
+PASS: ./lus2lic {-ec -o onlyroll.ec onlyroll.lus -n onlyroll}
+PASS: ./myec2c {-o onlyroll.c onlyroll.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node onlyroll.lus {}
+PASS: ./lus2lic {} {-lic -o onlyroll2.lic onlyroll2.lus -n onlyroll2}
+PASS: ./lus2lic {-ec -o onlyroll2.ec onlyroll2.lus -n onlyroll2}
+PASS: ./myec2c {-o onlyroll2.c onlyroll2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node onlyroll2.lus {}
+PASS: ./lus2lic {} {-lic -o over2.lic over2.lus -n over2}
+PASS: ./lus2lic {-ec -o over2.ec over2.lus -n over2}
+PASS: ./myec2c {-o over2.c over2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node over2.lus {}
+PASS: ./lus2lic {} {-lic -o over3.lic over3.lus -n over3}
+PASS: ./lus2lic {-ec -o over3.ec over3.lus -n over3}
+PASS: ./myec2c {-o over3.c over3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node over3.lus {}
+PASS: ./lus2lic {} {-lic -o overload.lic overload.lus -n overload}
+PASS: ./lus2lic {-ec -o overload.ec overload.lus -n overload}
+PASS: ./myec2c {-o overload.c overload.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node overload.lus {}
+PASS: ./lus2lic {} {-lic -o p.lic p.lus -n p}
+PASS: ./lus2lic {-ec -o p.ec p.lus -n p}
+PASS: ./myec2c {-o p.c p.ec}
+PASS: ./lus2lic {} {-lic -o pack1.lic pack1.lus -n pack1}
+PASS: ./lus2lic {-ec -o pack1.ec pack1.lus -n pack1}
+PASS: ./myec2c {-o pack1.c pack1.ec}
+PASS: ./lus2lic {} {-lic -o packageTableau.lic packageTableau.lus -n packageTableau}
+PASS: ./lus2lic {-ec -o packageTableau.ec packageTableau.lus -n packageTableau}
+PASS: ./myec2c {-o packageTableau.c packageTableau.ec}
+PASS: ./lus2lic {} {-lic -o packed_cst.lic packed_cst.lus -n packed_cst}
+PASS: ./lus2lic {-ec -o packed_cst.ec packed_cst.lus -n packed_cst}
+PASS: ./myec2c {-o packed_cst.c packed_cst.ec}
+PASS: ./lus2lic {} {-lic -o packs.lic packs.lus -n packs}
+PASS: ./lus2lic {-ec -o packs.ec packs.lus -n packs}
+PASS: ./myec2c {-o packs.c packs.ec}
+PASS: ./lus2lic {} {-lic -o param_node.lic param_node.lus -n param_node}
+PASS: ./lus2lic {-ec -o param_node.ec param_node.lus -n param_node}
+PASS: ./myec2c {-o param_node.c param_node.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node param_node.lus {}
+PASS: ./lus2lic {} {-lic -o param_node2.lic param_node2.lus -n param_node2}
+PASS: ./lus2lic {-ec -o param_node2.ec param_node2.lus -n param_node2}
+PASS: ./myec2c {-o param_node2.c param_node2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node param_node2.lus {}
+PASS: ./lus2lic {} {-lic -o param_node3.lic param_node3.lus -n param_node3}
+PASS: ./lus2lic {-ec -o param_node3.ec param_node3.lus -n param_node3}
+PASS: ./myec2c {-o param_node3.c param_node3.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node param_node3.lus {}
+PASS: ./lus2lic {} {-lic -o param_node4.lic param_node4.lus -n param_node4}
+PASS: ./lus2lic {-ec -o param_node4.ec param_node4.lus -n param_node4}
+PASS: ./myec2c {-o param_node4.c param_node4.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node param_node4.lus {}
+PASS: ./lus2lic {} {-lic -o param_struct.lic param_struct.lus -n param_struct}
+PASS: ./lus2lic {-ec -o param_struct.ec param_struct.lus -n param_struct}
+PASS: ./myec2c {-o param_struct.c param_struct.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node param_struct.lus {}
+PASS: ./lus2lic { --expand-nodes} {-lic -o pilote.lic pilote.lus -n pilote}
+PASS: ./lus2lic {-ec -o pilote.ec pilote.lus -n pilote}
+PASS: ./myec2c {-o pilote.c pilote.ec}
+PASS: ./lus2lic {} {-lic -o pipeline.lic pipeline.lus -n pipeline}
+PASS: ./lus2lic {-ec -o pipeline.ec pipeline.lus -n pipeline}
+PASS: ./myec2c {-o pipeline.c pipeline.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node pipeline.lus {}
+PASS: ./lus2lic {} {-lic -o plus.lic plus.lus -n plus}
+PASS: ./lus2lic {-ec -o plus.ec plus.lus -n plus}
+PASS: ./myec2c {-o plus.c plus.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node plus.lus {}
+PASS: ./lus2lic {} {-lic -o ply01.lic ply01.lus -n ply01}
+PASS: ./lus2lic {-ec -o ply01.ec ply01.lus -n ply01}
+PASS: ./myec2c {-o ply01.c ply01.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ply01.lus {}
+PASS: ./lus2lic {} {-lic -o ply02.lic ply02.lus -n ply02}
+PASS: ./lus2lic {-ec -o ply02.ec ply02.lus -n ply02}
+PASS: ./myec2c {-o ply02.c ply02.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ply02.lus {}
+PASS: ./lus2lic {} {-lic -o ply03.lic ply03.lus -n ply03}
+PASS: ./lus2lic {-ec -o ply03.ec ply03.lus -n ply03}
+PASS: ./myec2c {-o ply03.c ply03.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ply03.lus {}
+PASS: ./lus2lic {} {-lic -o polymorphic_pack.lic polymorphic_pack.lus -n polymorphic_pack}
+PASS: ./lus2lic {-ec -o polymorphic_pack.ec polymorphic_pack.lus -n polymorphic_pack}
+PASS: ./myec2c {-o polymorphic_pack.c polymorphic_pack.ec}
+PASS: ./lus2lic {} {-lic -o poussoir.lic poussoir.lus -n poussoir}
+PASS: ./lus2lic {-ec -o poussoir.ec poussoir.lus -n poussoir}
+PASS: ./myec2c {-o poussoir.c poussoir.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node poussoir.lus {}
+PASS: ./lus2lic {} {-lic -o pplus.lic pplus.lus -n pplus}
+PASS: ./lus2lic {-ec -o pplus.ec pplus.lus -n pplus}
+PASS: ./myec2c {-o pplus.c pplus.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node pplus.lus {}
+PASS: ./lus2lic {} {-lic -o pre_x.lic pre_x.lus -n pre_x}
+PASS: ./lus2lic {-ec -o pre_x.ec pre_x.lus -n pre_x}
+PASS: ./myec2c {-o pre_x.c pre_x.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node pre_x.lus {}
+PASS: ./lus2lic {} {-lic -o predef01.lic predef01.lus -n predef01}
+PASS: ./lus2lic {-ec -o predef01.ec predef01.lus -n predef01}
+PASS: ./myec2c {-o predef01.c predef01.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node predef01.lus {}
+PASS: ./lus2lic {} {-lic -o predef02.lic predef02.lus -n predef02}
+PASS: ./lus2lic {-ec -o predef02.ec predef02.lus -n predef02}
+PASS: ./myec2c {-o predef02.c predef02.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node predef02.lus {}
+PASS: ./lus2lic {} {-lic -o predef03.lic predef03.lus -n predef03}
+PASS: ./lus2lic {-ec -o predef03.ec predef03.lus -n predef03}
+PASS: ./myec2c {-o predef03.c predef03.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node predef03.lus {}
+PASS: ./lus2lic {} {-lic -o predefOp.lic predefOp.lus -n predefOp}
+PASS: ./lus2lic {-ec -o predefOp.ec predefOp.lus -n predefOp}
+PASS: ./myec2c {-o predefOp.c predefOp.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node predefOp.lus {}
+PASS: ./lus2lic {} {-lic -o produitBool.lic produitBool.lus -n produitBool}
+PASS: ./lus2lic {-ec -o produitBool.ec produitBool.lus -n produitBool}
+PASS: ./myec2c {-o produitBool.c produitBool.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node produitBool.lus {}
+PASS: ./lus2lic {} {-lic -o real_ex.lic real_ex.lus -n real_ex}
+PASS: ./lus2lic {-ec -o real_ex.ec real_ex.lus -n real_ex}
+PASS: ./myec2c {-o real_ex.c real_ex.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node real_ex.lus {}
+PASS: ./lus2lic {} {-lic -o redIf.lic redIf.lus -n redIf}
+PASS: ./lus2lic {-ec -o redIf.ec redIf.lus -n redIf}
+PASS: ./myec2c {-o redIf.c redIf.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node redIf.lus {}
+PASS: ./lus2lic {} {-lic -o rediter.lic rediter.lus -n rediter}
+PASS: ./lus2lic {-ec -o rediter.ec rediter.lus -n rediter}
+PASS: ./myec2c {-o rediter.c rediter.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node rediter.lus {}
+PASS: ./lus2lic {} {-lic -o redoptest.lic redoptest.lus -n redoptest}
+PASS: ./lus2lic {-ec -o redoptest.ec redoptest.lus -n redoptest}
+PASS: ./myec2c {-o redoptest.c redoptest.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node redoptest.lus {}
+PASS: ./lus2lic {} {-lic -o remplissage.lic remplissage.lus -n remplissage}
+PASS: ./lus2lic {-ec -o remplissage.ec remplissage.lus -n remplissage}
+PASS: ./myec2c {-o remplissage.c remplissage.ec}
+PASS: ./lus2lic {} {-lic -o rs.lic rs.lus -n rs}
+PASS: ./lus2lic {-ec -o rs.ec rs.lus -n rs}
+PASS: ./myec2c {-o rs.c rs.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node rs.lus {}
+PASS: ./lus2lic {} {-lic -o sample_time_change.lic sample_time_change.lus -n sample_time_change}
+PASS: ./lus2lic {-ec -o sample_time_change.ec sample_time_change.lus -n sample_time_change}
+PASS: ./myec2c {-o sample_time_change.c sample_time_change.ec}
+FAIL: Try to compare lus2lic -exec and ecexe: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node sample_time_change.lus {}
+PASS: ./lus2lic {} {-lic -o sample_time_change_MainNode.lic sample_time_change_MainNode.lus -n sample_time_change_MainNode}
+PASS: ./lus2lic {-ec -o sample_time_change_MainNode.ec sample_time_change_MainNode.lus -n sample_time_change_MainNode}
+PASS: ./myec2c {-o sample_time_change_MainNode.c sample_time_change_MainNode.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node sample_time_change_MainNode.lus {}
+PASS: ./lus2lic {} {-lic -o shiftFill_ludic.lic shiftFill_ludic.lus -n shiftFill_ludic}
+PASS: ./lus2lic {-ec -o shiftFill_ludic.ec shiftFill_ludic.lus -n shiftFill_ludic}
+PASS: ./myec2c {-o shiftFill_ludic.c shiftFill_ludic.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node shiftFill_ludic.lus {}
+PASS: ./lus2lic {} {-lic -o shift_ludic.lic shift_ludic.lus -n shift_ludic}
+PASS: ./lus2lic {-ec -o shift_ludic.ec shift_ludic.lus -n shift_ludic}
+PASS: ./myec2c {-o shift_ludic.c shift_ludic.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node shift_ludic.lus {}
+PASS: ./lus2lic {} {-lic -o simple.lic simple.lus -n simple}
+PASS: ./lus2lic {-ec -o simple.ec simple.lus -n simple}
+PASS: ./myec2c {-o simple.c simple.ec}
+PASS: ./lus2lic {} {-lic -o simpleRed.lic simpleRed.lus -n simpleRed}
+PASS: ./lus2lic {-ec -o simpleRed.ec simpleRed.lus -n simpleRed}
+PASS: ./myec2c {-o simpleRed.c simpleRed.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node simpleRed.lus {}
+PASS: ./lus2lic {} {-lic -o sincos.lic sincos.lus -n sincos}
+PASS: ./lus2lic {-ec -o sincos.ec sincos.lus -n sincos}
+PASS: ./myec2c {-o sincos.c sincos.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node sincos.lus {}
+PASS: ./lus2lic { --expand-nodes} {-lic -o speedcontrol.lic speedcontrol.lus -n speedcontrol}
+PASS: ./lus2lic {-ec -o speedcontrol.ec speedcontrol.lus -n speedcontrol}
+PASS: ./myec2c {-o speedcontrol.c speedcontrol.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node speedcontrol.lus { --expand-nodes}
+PASS: ./lus2lic {} {-lic -o stopwatch.lic stopwatch.lus -n stopwatch}
+PASS: ./lus2lic {-ec -o stopwatch.ec stopwatch.lus -n stopwatch}
+PASS: ./myec2c {-o stopwatch.c stopwatch.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node stopwatch.lus {}
+PASS: ./lus2lic {} {-lic -o struct0.lic struct0.lus -n struct0}
+PASS: ./lus2lic {-ec -o struct0.ec struct0.lus -n struct0}
+PASS: ./myec2c {-o struct0.c struct0.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node struct0.lus {}
+PASS: ./lus2lic {} {-lic -o struct_equality.lic struct_equality.lus -n struct_equality}
+PASS: ./lus2lic {-ec -o struct_equality.ec struct_equality.lus -n struct_equality}
+PASS: ./myec2c {-o struct_equality.c struct_equality.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node struct_equality.lus {}
+PASS: ./lus2lic {} {-lic -o struct_with.lic struct_with.lus -n struct_with}
+PASS: ./lus2lic {-ec -o struct_with.ec struct_with.lus -n struct_with}
+PASS: ./myec2c {-o struct_with.c struct_with.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node struct_with.lus {}
+PASS: ./lus2lic {} {-lic -o t0.lic t0.lus -n t0}
+PASS: ./lus2lic {-ec -o t0.ec t0.lus -n t0}
+PASS: ./myec2c {-o t0.c t0.ec}
+PASS: ./lus2lic {} {-lic -o t1.lic t1.lus -n t1}
+PASS: ./lus2lic {-ec -o t1.ec t1.lus -n t1}
+PASS: ./myec2c {-o t1.c t1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node t1.lus {}
+PASS: ./lus2lic {} {-lic -o t2.lic t2.lus -n t2}
+PASS: ./lus2lic {-ec -o t2.ec t2.lus -n t2}
+PASS: ./myec2c {-o t2.c t2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node t2.lus {}
+PASS: ./lus2lic {} {-lic -o test.lic test.lus -n test}
+PASS: ./lus2lic {-ec -o test.ec test.lus -n test}
+PASS: ./myec2c {-o test.c test.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test.lus {}
+PASS: ./lus2lic {} {-lic -o testBoite.lic testBoite.lus -n testBoite}
+PASS: ./lus2lic {-ec -o testBoite.ec testBoite.lus -n testBoite}
+PASS: ./myec2c {-o testBoite.c testBoite.ec}
+PASS: ./lus2lic {} {-lic -o testCA.lic testCA.lus -n testCA}
+PASS: ./lus2lic {-ec -o testCA.ec testCA.lus -n testCA}
+PASS: ./myec2c {-o testCA.c testCA.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node testCA.lus {}
+PASS: ./lus2lic {} {-lic -o testCapt.lic testCapt.lus -n testCapt}
+PASS: ./lus2lic {-ec -o testCapt.ec testCapt.lus -n testCapt}
+PASS: ./myec2c {-o testCapt.c testCapt.ec}
+PASS: ./lus2lic {} {-lic -o testPilote.lic testPilote.lus -n testPilote}
+PASS: ./lus2lic {-ec -o testPilote.ec testPilote.lus -n testPilote}
+PASS: ./myec2c {-o testPilote.c testPilote.ec}
+PASS: ./lus2lic {} {-lic -o test_Int.lic test_Int.lus -n test_Int}
+PASS: ./lus2lic {-ec -o test_Int.ec test_Int.lus -n test_Int}
+PASS: ./myec2c {-o test_Int.c test_Int.ec}
+PASS: ./lus2lic {} {-lic -o test_arrow.lic test_arrow.lus -n test_arrow}
+PASS: ./lus2lic {-ec -o test_arrow.ec test_arrow.lus -n test_arrow}
+PASS: ./myec2c {-o test_arrow.c test_arrow.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_arrow.lus {}
+PASS: ./lus2lic {} {-lic -o test_boolred.lic test_boolred.lus -n test_boolred}
+PASS: ./lus2lic {-ec -o test_boolred.ec test_boolred.lus -n test_boolred}
+PASS: ./myec2c {-o test_boolred.c test_boolred.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_boolred.lus {}
+PASS: ./lus2lic {} {-lic -o test_clash.lic test_clash.lus -n test_clash}
+PASS: ./lus2lic {-ec -o test_clash.ec test_clash.lus -n test_clash}
+PASS: ./myec2c {-o test_clash.c test_clash.ec}
+PASS: ./lus2lic {} {-lic -o test_condact.lic test_condact.lus -n test_condact}
+PASS: ./lus2lic {-ec -o test_condact.ec test_condact.lus -n test_condact}
+PASS: ./myec2c {-o test_condact.c test_condact.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_condact.lus {}
+PASS: ./lus2lic {} {-lic -o test_const.lic test_const.lus -n test_const}
+PASS: ./lus2lic {-ec -o test_const.ec test_const.lus -n test_const}
+PASS: ./myec2c {-o test_const.c test_const.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_const.lus {}
+PASS: ./lus2lic {} {-lic -o test_diese.lic test_diese.lus -n test_diese}
+PASS: ./lus2lic {-ec -o test_diese.ec test_diese.lus -n test_diese}
+PASS: ./myec2c {-o test_diese.c test_diese.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_diese.lus {}
+PASS: ./lus2lic {} {-lic -o test_enum.lic test_enum.lus -n test_enum}
+PASS: ./lus2lic {-ec -o test_enum.ec test_enum.lus -n test_enum}
+PASS: ./myec2c {-o test_enum.c test_enum.ec}
+PASS: ./lus2lic {} {-lic -o test_extern.lic test_extern.lus -n test_extern}
+PASS: ./lus2lic {-ec -o test_extern.ec test_extern.lus -n test_extern}
+PASS: ./myec2c {-o test_extern.c test_extern.ec}
+PASS: ./lus2lic {} {-lic -o test_lustre.lic test_lustre.lus -n test_lustre}
+PASS: ./lus2lic {-ec -o test_lustre.ec test_lustre.lus -n test_lustre}
+PASS: ./myec2c {-o test_lustre.c test_lustre.ec}
+PASS: ./lus2lic {} {-lic -o test_map.lic test_map.lus -n test_map}
+PASS: ./lus2lic {-ec -o test_map.ec test_map.lus -n test_map}
+PASS: ./myec2c {-o test_map.c test_map.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_map.lus {}
+PASS: ./lus2lic {} {-lic -o test_merge.lic test_merge.lus -n test_merge}
+PASS: ./lus2lic {-ec -o test_merge.ec test_merge.lus -n test_merge}
+PASS: ./lus2lic {} {-lic -o test_model.lic test_model.lus -n test_model}
+PASS: ./lus2lic {-ec -o test_model.ec test_model.lus -n test_model}
+PASS: ./myec2c {-o test_model.c test_model.ec}
+FAIL: without any option: ./lus2lic {} {-lic -o test_model2.lic test_model2.lus -n test_model2}
+PASS: ./lus2lic {} {-lic -o test_node_expand.lic test_node_expand.lus -n test_node_expand}
+PASS: ./lus2lic {-ec -o test_node_expand.ec test_node_expand.lus -n test_node_expand}
+PASS: ./myec2c {-o test_node_expand.c test_node_expand.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_node_expand.lus {}
+PASS: ./lus2lic {} {-lic -o test_node_expand2.lic test_node_expand2.lus -n test_node_expand2}
+PASS: ./lus2lic {-ec -o test_node_expand2.ec test_node_expand2.lus -n test_node_expand2}
+PASS: ./myec2c {-o test_node_expand2.c test_node_expand2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_node_expand2.lus {}
+PASS: ./lus2lic {} {-lic -o test_poly.lic test_poly.lus -n test_poly}
+PASS: ./lus2lic {-ec -o test_poly.ec test_poly.lus -n test_poly}
+PASS: ./myec2c {-o test_poly.c test_poly.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_poly.lus {}
+PASS: ./lus2lic {} {-lic -o test_sqrt.lic test_sqrt.lus -n test_sqrt}
+PASS: ./lus2lic {-ec -o test_sqrt.ec test_sqrt.lus -n test_sqrt}
+PASS: ./myec2c {-o test_sqrt.c test_sqrt.ec}
+PASS: ./lus2lic {} {-lic -o test_struct.lic test_struct.lus -n test_struct}
+PASS: ./lus2lic {-ec -o test_struct.ec test_struct.lus -n test_struct}
+PASS: ./myec2c {-o test_struct.c test_struct.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node test_struct.lus {}
+PASS: ./lus2lic {} {-lic -o titi.lic titi.lus -n titi}
+PASS: ./lus2lic {-ec -o titi.ec titi.lus -n titi}
+PASS: ./myec2c {-o titi.c titi.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node titi.lus {}
+PASS: ./lus2lic {} {-lic -o toolate.lic toolate.lus -n toolate}
+PASS: ./lus2lic {-ec -o toolate.ec toolate.lus -n toolate}
+PASS: ./myec2c {-o toolate.c toolate.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node toolate.lus {}
+PASS: ./lus2lic {} {-lic -o toto.lic toto.lus -n toto}
+PASS: ./lus2lic {-ec -o toto.ec toto.lus -n toto}
+PASS: ./myec2c {-o toto.c toto.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node toto.lus {}
+PASS: ./lus2lic {} {-lic -o tranche.lic tranche.lus -n tranche}
+PASS: ./lus2lic {-ec -o tranche.ec tranche.lus -n tranche}
+PASS: ./myec2c {-o tranche.c tranche.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node tranche.lus {}
+PASS: ./lus2lic {} {-lic -o tri.lic tri.lus -n tri}
+PASS: ./lus2lic {-ec -o tri.ec tri.lus -n tri}
+PASS: ./myec2c {-o tri.c tri.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node tri.lus {}
+PASS: ./lus2lic {} {-lic -o triSel.lic triSel.lus -n triSel}
+PASS: ./lus2lic {-ec -o triSel.ec triSel.lus -n triSel}
+PASS: ./myec2c {-o triSel.c triSel.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node triSel.lus {}
+PASS: ./lus2lic {} {-lic -o trivial.lic trivial.lus -n trivial}
+PASS: ./lus2lic {-ec -o trivial.ec trivial.lus -n trivial}
+PASS: ./myec2c {-o trivial.c trivial.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node trivial.lus {}
+PASS: ./lus2lic {} {-lic -o trivial2.lic trivial2.lus -n trivial2}
+PASS: ./lus2lic {-ec -o trivial2.ec trivial2.lus -n trivial2}
+PASS: ./myec2c {-o trivial2.c trivial2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node trivial2.lus {}
+PASS: ./lus2lic {} {-lic -o trivial_array.lic trivial_array.lus -n trivial_array}
+PASS: ./lus2lic {-ec -o trivial_array.ec trivial_array.lus -n trivial_array}
+PASS: ./myec2c {-o trivial_array.c trivial_array.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node trivial_array.lus {}
+PASS: ./lus2lic {} {-lic -o ts01.lic ts01.lus -n ts01}
+PASS: ./lus2lic {-ec -o ts01.ec ts01.lus -n ts01}
+PASS: ./myec2c {-o ts01.c ts01.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ts01.lus {}
+PASS: ./lus2lic {} {-lic -o ts04.lic ts04.lus -n ts04}
+PASS: ./lus2lic {-ec -o ts04.ec ts04.lus -n ts04}
+PASS: ./myec2c {-o ts04.c ts04.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node ts04.lus {}
+PASS: ./lus2lic {} {-lic -o tuple.lic tuple.lus -n tuple}
+PASS: ./lus2lic {-ec -o tuple.ec tuple.lus -n tuple}
+PASS: ./myec2c {-o tuple.c tuple.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node tuple.lus {}
+PASS: ./lus2lic {} {-lic -o type_decl.lic type_decl.lus -n type_decl}
+PASS: ./lus2lic {-ec -o type_decl.ec type_decl.lus -n type_decl}
+PASS: ./myec2c {-o type_decl.c type_decl.ec}
+PASS: ./lus2lic {} {-lic -o uu.lic uu.lus -n uu}
+PASS: ./lus2lic {-ec -o uu.ec uu.lus -n uu}
+PASS: ./myec2c {-o uu.c uu.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node uu.lus {}
+PASS: ./lus2lic {} {-lic -o v1.lic v1.lus -n v1}
+PASS: ./lus2lic {-ec -o v1.ec v1.lus -n v1}
+PASS: ./myec2c {-o v1.c v1.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node v1.lus {}
+PASS: ./lus2lic {} {-lic -o when_tuple.lic when_tuple.lus -n when_tuple}
+PASS: ./lus2lic {-ec -o when_tuple.ec when_tuple.lus -n when_tuple}
+PASS: ./myec2c {-o when_tuple.c when_tuple.ec}
+PASS: ./lus2lic {} {-lic -o xx.lic xx.lus -n xx}
+PASS: ./lus2lic {-ec -o xx.ec xx.lus -n xx}
+PASS: ./myec2c {-o xx.c xx.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node xx.lus {}
+PASS: ./lus2lic {} {-lic -o yyy.lic yyy.lus -n yyy}
+PASS: ./lus2lic {-ec -o yyy.ec yyy.lus -n yyy}
+PASS: ./myec2c {-o yyy.c yyy.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node yyy.lus {}
+PASS: ./lus2lic {} {-lic -o zzz.lic zzz.lus -n zzz}
+PASS: ./lus2lic {-ec -o zzz.ec zzz.lus -n zzz}
+PASS: ./myec2c {-o zzz.c zzz.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node zzz.lus {}
+PASS: ./lus2lic {} {-lic -o zzz2.lic zzz2.lus -n zzz2}
+PASS: ./lus2lic {-ec -o zzz2.ec zzz2.lus -n zzz2}
+PASS: ./myec2c {-o zzz2.c zzz2.ec}
+PASS: /home/jahier/lus2lic/test/../utils/test_lus2lic_no_node zzz2.lus {}
+==> lus2lic0.sum <==
+
+		=== lus2lic0 Summary ===
+
+# of expected passes		1
+# of expected failures		54
+
+==> lus2lic1.sum <==
+PASS: /home/jahier/lus2lic/test/../utils/compare_exec_and_2c multipar.lus 34087 {}
+
+		=== lus2lic1 Summary ===
+
+# of expected passes		337
+
+==> lus2lic2.sum <==
+
+		=== lus2lic2 Summary ===
+
+# of expected passes		327
+# of unexpected failures	1
+
+==> lus2lic3.sum <==
+		=== lus2lic3 Summary ===
+
+# of expected passes		496
+# of unexpected failures	5
+# of unresolved testcases	1
+
+==> lus2lic4.sum <==
+
+		=== lus2lic4 Summary ===
+
+# of expected passes		468
+# of unexpected failures	6
+===============================
+# Total number of failures: 12
+lus2lic0.log:testcase ./lus2lic.tests/test0.exp completed in 0 seconds
+lus2lic1.log:testcase ./lus2lic.tests/test1.exp completed in 24 seconds
+lus2lic2.log:testcase ./lus2lic.tests/test2.exp completed in 31 seconds
+lus2lic3.log:testcase ./lus2lic.tests/test3.exp completed in 42 seconds
+lus2lic4.log:testcase ./lus2lic.tests/test4.exp completed in 21 seconds
+* Ref time: 
+70.07user 16.26system 1:57.78elapsed 73%CPU (0avgtext+0avgdata 42024maxresident)k
+0inputs+141784outputs (0major+8289671minor)pagefaults 0swaps
+* Quick time (-j 4):
+103.03user 21.61system 0:49.46elapsed 251%CPU (0avgtext+0avgdata 42204maxresident)k
+0inputs+139656outputs (0major+8238341minor)pagefaults 0swaps

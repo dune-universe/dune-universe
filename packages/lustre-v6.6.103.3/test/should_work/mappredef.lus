@@ -1,0 +1,13 @@
+const N = 3;
+type tab_real = int^N;
+     tab_int = int^N;
+     tab_bool = bool^N;
+
+node mappredef(x: tab_bool; a, b: tab_int) returns (c, d: tab_int);
+	var 
+		z : int; 
+	let
+		z = if(x[0]) then a[0] else b[0] ;
+		c = map<<Lustre::if,  N>>(x, a, b);
+		d = map<<Lustre::uminus,  N>>(b);		
+	tel

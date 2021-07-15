@@ -1,0 +1,20 @@
+node ck3 (a: bool; b: bool; c: bool)
+returns (x: bool);
+var
+  b_on_a : bool when a;
+let
+  assert(a->true);
+  assert(b->true);
+  b_on_a = b when a;
+  x = ck3_clk(a, b_on_a, c when b_on_a);
+
+  -- the following does not work. Shoul it?
+--  x = ck3_clk(a, b when a, c when b_on_a);
+tel
+
+
+node ck3_clk (a: bool; b: bool when a; c: bool when b)
+returns (x: bool);
+let
+  x = current(current(c));
+tel

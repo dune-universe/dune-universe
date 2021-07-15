@@ -1,0 +1,4 @@
+node after(x: bool) returns (after: bool);
+let
+   after = x or (false->pre(after));
+tel

@@ -1,0 +1,11 @@
+
+-- A node parametrized by a node
+
+node toto_n<<type t; const x: t; const n: int>>(a:t) 
+returns (res: t^n);
+let
+  res =  a ^ n;
+tel
+
+node parametric_node3 = toto_n<<int, 3>>; -- one arg is missing
+

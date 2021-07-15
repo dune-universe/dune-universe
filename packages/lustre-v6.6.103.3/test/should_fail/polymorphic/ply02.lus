@@ -1,0 +1,9 @@
+
+(* ne passe pas DoNotPoly ... *)
+node truc = map<<+,42>>;
+
+(* PASSE DoNotPoly en spécialisant truc ! ... *)
+node ply02(x,y: int) returns (o: int^42);
+let
+	o = if (x < y) then 0^42 else truc(x^42, y^42);
+tel

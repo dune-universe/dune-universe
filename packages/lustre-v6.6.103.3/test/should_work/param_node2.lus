@@ -1,0 +1,8 @@
+---- A node parametrized by a type and a constant
+node mk_tab<<type t; const init: t; const size: int>>
+       (a:t) returns (res: t^size);
+let
+  res =  init ^ size;
+tel ---
+node tab_int3 = mk_tab<<int, 0, 3>>; ---
+node param_node2 = mk_tab<<bool, true, 4>>;

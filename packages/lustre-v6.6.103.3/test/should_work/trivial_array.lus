@@ -1,0 +1,18 @@
+function trivial_array(x:int^3) returns (y: int^3^4);
+let
+	y =  [x]|[x]|[x]|[x];
+tel
+
+function trivial_array2(x:int^3) returns (y: int);
+let
+	y =  x[0]+x[2]*x[1];
+tel
+
+function trivial_array3(i:int) returns (y: int);
+var 
+  x : int^3;
+let
+  x = i^3;
+	y =  x[0]+x[2]*x[1];
+tel
+

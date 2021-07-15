@@ -1,0 +1,40 @@
+-- to test complex dependencies with struct and arrays
+
+type complex = struct {
+	re : real = 0.;
+	im : real = 0.
+}; ---
+
+type bizzare = { 
+    a : complex ^ 2;
+    b : complex ^ 2; 
+};
+
+function depend(x,y: real) returns (res:bizzare^2);
+var
+ a,b:complex ^ 2;
+ c:complex;
+ biz1,biz2:bizzare;
+
+let
+  biz1 = bizzare { a = a ; b = b};
+  biz2 = bizzare { a = biz1.b ; b = biz1.a};
+  res[0] = biz1;
+
+  res[1].b = b;
+  res[1].a[0] = a[1];
+
+ res[1].a[1] = res[1].a[0]; -- such expr is rejected because of the splitting!
+
+  a[0] = opp(b[1]);
+  a[1] = opp(b[0]);
+  b = c^2;
+  c =  complex { re = x; im = y };
+tel
+  -- end of depend
+
+function opp(x:complex) returns (res:complex);
+let
+  res = complex { re =  x.im ; im = x.re} ;
+tel
+  -- end of opp

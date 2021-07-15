@@ -1,0 +1,13 @@
+model Int 
+  needs 
+     const n:int;
+  provides   
+     type Int;
+     const zero: Int;
+
+body
+type Int = bool^n;
+const zero = false^n; -- n is not a constant
+
+
+

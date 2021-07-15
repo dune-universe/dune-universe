@@ -1,0 +1,21 @@
+opam-version: "2.0"
+name: "anders"
+version: "0.7.2"
+maintainer: "Namdak Tonpa <maxim@synrc.com>"
+authors: [
+  "Namdak Tonpa @5HT"
+  "Siegmentation Fault @siegment"
+]
+homepage: "https://groupoid.space/homotopy/"
+bug-reports: "https://github.com/groupoid/anders/issues"
+dev-repo: "git+https://github.com/groupoid/anders"
+synopsis: "CCHM homotopy system type checker with strict equality"
+license: "ISC"
+depends: [
+  "dune" {>= "2.0"}
+  "ocaml" {>= "4.10"}
+  "menhir" {>= "20200123"}
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]

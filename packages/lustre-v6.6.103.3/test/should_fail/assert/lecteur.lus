@@ -1,0 +1,32 @@
+node Environnement(diff: int; Plus,Moins: bool) returns (ok: bool);
+let
+  ok = (-4 <= diff and diff <= 4) and 
+     (if (true -> pre Plus) then diff >= 1 else true) and
+     (if (false -> pre Moins) then diff <= -1 else true);
+tel
+
+node Controleur(diff: int) returns (vitesse: int; Plus,Moins: bool);
+let
+  vitesse = 0 -> pre(vitesse)+diff;
+  Plus = vitesse <= 9;
+  Moins = vitesse >= 11;
+tel
+
+node Propriete(vitesse: int) returns (ok: bool);
+var cpt: int;
+    acceptable: bool;
+let
+  acceptable = 8 <= vitesse and vitesse <= 12;
+  cpt = 0 -> if acceptable then 0 else pre(cpt)+1;
+  ok = true -> (pre cpt<15);
+tel
+
+node lecteur(diff:int) returns (ok: bool);
+var vitesse: int; 
+    Plus,Moins,realiste: bool;
+let
+  (vitesse,Plus,Moins) = Controleur(diff);
+  realiste =  Environnement(diff,Plus,Moins);
+  assert(realiste);
+  ok = Propriete(vitesse);
+tel

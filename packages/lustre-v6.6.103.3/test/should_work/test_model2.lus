@@ -1,0 +1,39 @@
+
+model m
+needs 
+  type elementType;
+  type elementTypeBis;
+  node _isEqualTo_(e1 : elementType; e2 : elementTypeBis) returns (x : bool);
+provides
+  node est_egal(e1 : elementType; e2 : elementType) returns (x : bool);
+body
+
+
+node est_egal = _isEqualTo_;
+
+end
+
+
+package u
+provides
+   node egal(i1:int; i2:int) returns (o:bool);
+body
+   node egal(i1:int; i2:int) returns (o:bool);
+  let
+  o = (i1 = i2);
+  tel
+
+end
+
+
+ package p = m(elementType=int, elementTypeBis=int, _isEqualTo_ = u::egal);
+
+package p2 = m(elementType=int, elementTypeBis=int, _isEqualTo_= Lustre::eq);
+
+package test_model2
+provides
+   function test_model2 (e1,e2:int) returns (x:bool);
+  body
+   function test_model2 (e1,e2:int) returns (x:bool) = p2::est_egal;
+
+  end

@@ -1,0 +1,6 @@
+
+
+node cond01(c: bool; x,y:int) returns (o: int);
+let
+	o = condact<<Lustre::iplus,0>>(c,x,y);
+tel

@@ -1,0 +1,212 @@
+----------------------------------------------------
+----------------------------------------------------
+--												          
+--  Selection sort with lustre iterators            
+-- 			author : L.Morel					          
+-- 			started on : 15 Mars 2002			      
+-- 			last update : 3 July 2002	             
+----------------------------------------------------
+----------------------------------------------------
+
+
+-- PARTOUT,  JE SUPPOSE QUE LES ELEMENTS SONT TOUS POSITIFS
+
+-- CONSTANTS
+
+const size = 10;	-- size of the arrays
+
+
+-- TYPES
+type INTSIZE = int^size;
+type Sort_accu = {CurrentRank : int;
+				  Tab : INTSIZE};
+
+type Exchange_accu = {MinVal : int;
+					  MinRank : int;
+					  RankFrom : int;
+					  CurrentVal : int;
+					  Rank : int};
+
+type Select_accu = {RankToFind : int;
+					CurrentRank : int;
+					Val : int};
+
+type MinFR_accu = {MinVal : int;
+     MinRank : int;
+     RankFrom : int;
+     Rank : int};
+
+
+
+-- Unary_sort takes as input an array of integers (accu_in.Tab).
+-- First, it determines the minimum of the elements that are after the rank 'accu_in.currentRank'
+-- 			in accu_in.Tab (it gets its rank and value)
+-- Then it gets the current element of Tab (determinex by accu_in.currentRank) : 
+--      'select' iteration
+--		and switches it with the next minimum	'Exchange' iteration
+-- accu_in.CurrentRank : indice permettant d'identifier les élements
+--                       traités jusque là. A cet étage de l'itération, on trie les élements
+--                       d'indice compris entre accu_in.CurrentRank et la taille du tableau -1
+-- accu_in.Tab : tableau en cours de tri, Tab est tel que \forall i, j < accu_in.CurrentRank. i<j => Tab[i]<Tab[j]
+-- accu_out.CurrentRank : accu_in.CurrentRank + 1 : à l'étage suivant de l'itération, on s'occupera de trier
+--                        les élements d'incide compris entre accu_out.CurrentRank et la taille du tableau -1
+-- accu_in.Tab : tableau en cours de tri, Tab est tel que \forall i, j < accu_out.CurrentRank. i<j => Tab[i]<Tab[j]
+node UnarySort(accu_in : Sort_accu ; eltIn :  int) 
+	returns (accu_out : Sort_accu);
+var
+	accu_out_select : Select_accu;
+-- accu_out_select.RankToFind : rang de l'élement dont on cherche la valeur
+-- accu_out_select.CurrentRank : rang courant dans l'itération
+-- accu_out_select.Val : valeur de l'élement de rang RankToFind
+	accu_out_min : MinFR_accu; 
+-- accu_out_min.MinVal : valeur du minimum
+-- accu_out_min.MinRank : rang du minimum
+-- acc_out_min.RankFrom : rang à partir duquel on cherche le minimum
+-- accu_out_min.Rank :  rang courant (inutile en dehors de l'itération
+	accu_out_exchange : Exchange_accu;
+-- accu_out_exchange.MinVal : Valeur du minimum dans la tranche considérée
+-- accu_out_exchange.MinRank : rang du minimum dans la tranche considérée
+-- accu_out_exchange.RankFrom : rang à partir duquel on fait l'échange
+-- accu_out_exchange.CurrentVal :               -- les 4 premieres valeurs ne changent jamis
+-- accu_out_exchange.Rank : rang ou on en est dans le parcours de l'échange
+	localTab : int^size; 
+-- localTab : tableau calculé (trié un cran plus loin)
+let
+  -- je commence par trouver le minimum à partir de accu_in.CurrentRank
+  accu_out_min = red<<minFromRank, size>>(MinFR_accu{MinVal = 0; 
+                                         MinRank = accu_in.CurrentRank;
+                                         RankFrom = accu_in.CurrentRank;
+                                         Rank = 0}, 
+                                         accu_in.Tab);
+
+  -- ensuite, je trouve la valeur du rang courant (rang où j'en suis 
+  -- de l'itération de UnarySort
+  accu_out_select = red<<select, size>>(Select_accu{RankToFind = accu_in.CurrentRank;
+                                       CurrentRank = 0;
+                                       Val = 0},
+                                       accu_in.Tab);
+
+  -- puis j'échange le minimum trouvé et l'élement de rang courant
+  --    (courant dans l'itération de UnarySort)
+  accu_out_exchange, localTab = fillred<<Exchange_i_j, size>>(
+                                                             Exchange_accu{MinVal = accu_out_min.MinVal;
+                                                             MinRank = accu_out_min.MinRank;
+                                                             RankFrom = accu_out_select.RankToFind;
+                                                             CurrentVal = accu_out_select.Val;
+                                                             Rank = 0},
+                                                             accu_in.Tab);
+  accu_out = Sort_accu{CurrentRank = accu_in.CurrentRank + 1;
+                       Tab = localTab};
+tel
+
+
+
+
+
+node minFromRank(accu_in : MinFR_accu; TabEltIn : int)
+	returns (accu_out : MinFR_accu);
+let
+  accu_out = MinFR_accu{MinVal = if (accu_in.Rank<=accu_in.RankFrom) 
+                                 then TabEltIn
+                                 else
+                                   if (accu_in.Rank>=accu_in.RankFrom)    
+                                   -- I can start looking at TabEltIn
+                                   then if(TabEltIn<accu_in.MinVal)
+                                   -- I compare the current elt with 
+                                   -- the minimum of the elements already observed
+                                        then TabEltIn			            
+                                        -- the current elt is smaller,  
+                                        -- then, I remember it as the new minimum
+                                        else accu_in.MinVal	            
+                                       -- It's not a minimum,  
+                                       -- I remember the one I observed before
+                                   else accu_in.MinVal; 	                
+                                   -- I'm still not in the zone of the array 
+                                   --I want to search a minimum in
+                        MinRank = if (accu_in.Rank>accu_in.RankFrom)   
+                                  then if(TabEltIn<accu_in.MinVal)
+                                       then accu_in.Rank
+                                       else accu_in.MinRank
+                                  else accu_in.MinRank ;
+                       RankFrom = accu_in.RankFrom;
+                       --Never changes (rank from which I want 
+                       --               to start the search)
+                       Rank = accu_in.Rank + 1	                        
+                       -- Current rank for this iteration
+                       };
+tel
+
+
+
+
+-- les acc servent juste à mémoriser les valeurs qu'on veut 
+node Exchange_i_j(accu_in : Exchange_accu ; eltIn : int) 
+	returns (accu_out : Exchange_accu ; eltOut : int);
+let
+	accu_out = Exchange_accu{MinVal = accu_in.MinVal;
+				             MinRank = accu_in.MinRank;
+				             RankFrom = accu_in.RankFrom;
+				             CurrentVal = accu_in.CurrentVal;
+				             Rank = accu_in.Rank + 1};
+
+	eltOut = if(accu_in.Rank = accu_in.MinRank)
+			 then accu_in.CurrentVal
+			 else if(accu_in.Rank = accu_in.RankFrom)
+				  then accu_in.MinVal
+				  else eltIn;
+tel
+
+
+
+-- selection function.
+node select(accu_in : Select_accu; elt : int) 
+	returns (accu_out : Select_accu);
+let
+	accu_out = Select_accu{RankToFind = accu_in.RankToFind;
+				CurrentRank = accu_in.CurrentRank + 1;
+				Val =  if(accu_in.RankToFind=accu_in.CurrentRank)
+					  then elt
+					  else accu_in.Val};
+tel
+
+
+
+-- the main node gets an array TIn as inputs and give the corresponding sorted array Ttrie
+node tri(TIn : int^size) returns (TSorted : int^size); 
+var 
+	UnarySort_accu_out : Sort_accu;
+let
+	UnarySort_accu_out = red<<UnarySort,size>>(
+                              Sort_accu{CurrentRank = 0;
+                                        Tab = [7,8,4,3,2,9,1,10,2,7]
+                                            },  -- Values given for test
+                                    [7,8,4,3,2,9,1,10,2,7]);	-- same
+	TSorted = UnarySort_accu_out.Tab;
+tel
+
+
+
+
+-- Property
+-- is the array obtained by applying the "main" node sorted
+type sorted_iter_accu = {prev_elt :  int;
+                         prop_is_tt : bool};
+
+
+node Sorted(TIn :  int^size) 
+     returns (res :  bool);
+var accu_out : sorted_iter_accu;
+    TSorted :  int^size;
+let
+  TSorted = tri(TIn);
+  accu_out = red<<sorted_iter,size>>(sorted_iter_accu{prev_elt = 0; prop_is_tt = true}, TSorted);
+  res = accu_out.prop_is_tt;
+tel
+
+
+node sorted_iter(accu_in : sorted_iter_accu; elt : int)
+     returns(accu_out : sorted_iter_accu);
+let
+  accu_out = sorted_iter_accu{prev_elt = elt;
+              prop_is_tt = (accu_in.prev_elt <= elt) and (accu_in.prop_is_tt)};
+tel

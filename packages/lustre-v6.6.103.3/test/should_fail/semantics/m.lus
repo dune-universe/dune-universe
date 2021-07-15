@@ -1,0 +1,29 @@
+
+type 
+        tube = {in:int, out:int} ;
+        toto = {titi:tube, tutu:bool} ;
+				
+
+node m(i:int) returns (f:int^2);
+var 
+	yo : int^4^5^6;
+let
+	--f = mcmorel(i);
+	f[0] = yo[0][1][2];
+	f[1] = yo[5][4][3];
+	--yo = 42^4^5^6;
+	yo = i^4^5^6 ;
+	yo[5][4][3] = i ;
+         
+tel
+
+node mcmorel(i:int) returns (t:int^2);
+var
+        yo : toto;
+let
+       -- yo.titi = tube{in=i, out=i+1} ;
+       -- yo.tutu = true ;
+        t[0] = [yo.titi.in, yo.titi.out] -> [pre(t[0])+1,pre(t[1])] ;
+tel
+
+				

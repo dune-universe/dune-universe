@@ -1,0 +1,33 @@
+
+
+node nc7 (nc7e1:int) returns (ok:bool);
+var nc7b1:int;
+let
+
+	nc7b1 = n1(nc7e1);
+	
+	ok = (nc7b1 = nc7e1*5);
+
+tel
+
+
+
+node n1(n1e1:int) returns (n1s:int);
+let
+	n1s = n2(n1e1);				
+tel
+
+node n2(n2e1:int) returns (n2s:int);
+let
+	n2s = n3(n2e1);				
+tel
+
+node n3(n3e1:int) returns (n3s:int);
+let
+	n3s = n4(n3e1,n3e1,n3e1,n3e1,n3e1);				
+tel
+
+node n4(n4e1,n4e2,n4e3,n4e4,n4e5:int) returns (n4s:int);
+let
+	n4s = n4e1 + n4e2 + n4e3 + n4e4 + n4e5;				
+tel

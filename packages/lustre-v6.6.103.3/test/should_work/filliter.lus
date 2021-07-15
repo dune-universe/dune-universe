@@ -1,0 +1,37 @@
+const 
+  NBC: int = 3; 
+type t = int^5; 
+
+node copie(acc_in : int) 
+     returns (acc_out : int; elt : int);
+let
+   acc_out = acc_in;
+   elt = acc_in;
+tel
+
+-- remplissage d'un tableau avec 0, 1, 2, ...
+node incr_acc( acc_in : int) returns ( acc_out: int; res : int);
+let
+        res = acc_in;
+        acc_out = res + 1;
+tel
+
+node filliter(c: bool; i1, i2: int) returns (s1, s2: int^NBC);
+var
+  s1_on_c,s2_on_c: int^NBC when c;
+let
+  assert(c->true);
+  s1_on_c,s2_on_c = filliter_clk(c, i1 when c, i2 when c);
+  s1 = current (s1_on_c);
+  s2 = current (s2_on_c);
+tel
+
+node filliter_clk(c: bool; i1, i2: int when c) returns (s1, s2: int^NBC when c);
+var x : int^4 when c;
+    bid1,  bid2 : int when c;
+
+let
+  s1 = x[0..2];
+  (bid1, x) = fill<<copie, 4 >>(i1);
+  (bid2, s2) = fill<<incr_acc,  NBC >>(i2);
+tel

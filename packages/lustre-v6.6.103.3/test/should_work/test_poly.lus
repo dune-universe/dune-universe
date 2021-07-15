@@ -1,0 +1,10 @@
+
+
+node truc = map<<+,42>>;
+
+(* PASSE DoNotPoly en spécialisant truc ! ... *)
+node test_poly(x,y: int) returns (o: int^42; o2:real^42);
+let
+  o = if (x < y) then 0^42 else truc(x^42, y^42); 
+  o2=truc(3.0^42, 2.0^42); 
+tel

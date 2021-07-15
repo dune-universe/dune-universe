@@ -1,0 +1,7 @@
+type color1 = enum { blue, white, black };
+type color2 = enum { green, orange, yellow };
+
+node enum0(x: color1) returns (y: color2);
+let
+  y = if x = blue then green else if x = white then orange else yellow;
+tel

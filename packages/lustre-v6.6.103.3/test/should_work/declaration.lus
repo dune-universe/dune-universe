@@ -1,0 +1,50 @@
+-- constantes 
+const 
+  a, b, c: int;
+  d = true;
+  e = 8.5;
+  f = blanc;
+  g : int = 4;
+  h = if d then 2 else 3;
+
+
+-- types
+type
+  t1; t2; t3;
+  t4 = t1^(2*g);
+  t5 = t4^(2*h+1);
+  coord = {x: real;  y: real};
+  couleur = enum {bleu, blanc, rouge};
+  coord_tab = coord^(2*g-7);
+
+
+-- noeuds et fonctions définis
+------------------------------
+node declaration(a1: int) returns (b1: int);
+let
+  b1 = a1;
+tel;
+
+------------------------------
+node n4(a1: bool) returns (b1: bool);
+var
+  c1: bool;
+let
+  c1 = not (false fby c1);
+  b1 = not(a1 and c1);
+tel;
+
+------------------------------
+node n5(a1: real) returns (b1: real);
+var
+  c1: real;
+let
+  b1 = a1 / c1;
+-- R1: fix that non-def local
+  c1 = 1.0;
+tel;
+
+-- noeuds et fonctions externes
+extern node n1(a1, b1, c1: t1) returns (d1: bool);
+extern node n2(a1, b1, c1: t4; d1: bool) returns (e1: t5);
+extern function f1(a1, b1, c1: couleur) returns (d1: bool^h) ;

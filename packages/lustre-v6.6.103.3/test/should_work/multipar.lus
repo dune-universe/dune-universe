@@ -1,0 +1,27 @@
+
+(* Verif des static args *)
+
+
+node gup(x: int) returns (y:int);
+let
+   y = 2 * sil<< multipar >>(x);
+tel
+
+node bok(x:int)returns(y:int);
+let
+  assert(-100 < x and x < 100);
+   y = (x * (x + 1)) / 2;
+tel 
+
+node sil<<  node f(x:int)returns(y:int) >>(x:int) returns(y:int); 
+let
+   y = x + f(x);
+tel
+
+node lis<< node g(x:int)returns(y:int) >>(x:int)returns(y:int); 
+let
+  assert(-100 < x and x < 100);
+   y = x * g(x);
+tel
+
+node multipar = lis <<bok>>;

@@ -1,0 +1,37 @@
+const n=5;
+
+node iter(init : int) returns (Tab_out : int^n ; Red_plus : int ; zorroTab : int^5 ; zorroAcc : int);
+var 
+	T_inter : int^n;
+	bidon : int;	
+let
+	bidon, T_inter = fill<<filled,n>>(init);
+	Tab_out = map<<mapped,n>>(T_inter);
+	Red_plus = red<<Lustre::plus,n>>(-100, Tab_out);
+
+	zorroAcc, zorroTab = fillred<<garcia,5>>(0,[0,0,0,0,0]);
+tel
+
+node filled(accu_in : int) returns (accu_out : int ; elt : int);
+let 
+	accu_out = accu_in + 1 ;
+	elt = accu_in ;
+tel
+
+node mapped(elt_in : int) returns (elt_out : int);
+let
+	elt_out = elt_in + 1;
+tel
+
+node plus(accu_in, elt_in : int) returns (accu_out : int);
+let
+	accu_out = accu_in + elt_in ;
+tel
+
+node garcia(accu_in, elt_in : int) returns (accu_out, elt_out : int);
+let
+	accu_out = accu_in + 1;
+	elt_out = elt_in + accu_out;
+tel
+
+

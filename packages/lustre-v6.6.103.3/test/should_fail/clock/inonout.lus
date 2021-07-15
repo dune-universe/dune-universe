@@ -1,0 +1,3 @@
+
+-- we cannot have an input clocked on an output
+extern node inonout( a : bool; b : bool when c ) returns (c : bool);

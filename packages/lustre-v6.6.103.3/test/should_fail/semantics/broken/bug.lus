@@ -1,0 +1,91 @@
+-- Could work with a smart modular compilation à la raymond-pouzet or à la v4
+
+
+--include "bug_lib.lus"
+-- " X vaut vrai ssi C a valu vrai au moins une fois 
+--   entre A et B "
+node once_from_to (C,A,B: bool) returns (X: bool);
+let
+	X = implies(B, false -> pre(once_since(C,A)));
+tel
+
+-- " X vaut vrai ssi C a valu vrai depuis A "
+node once_since (C,A: bool) returns (X: bool);
+let
+        X = if A then C else
+            if after(A) then C or (false -> pre(X))
+	    else false;
+tel
+
+-- " XimpliesY est vrai ssi X=>Y "
+node implies (X,Y : bool) returns (XimpliesY : bool);
+let
+	XimpliesY = (not X) or Y;
+tel
+
+-- " afterX vaut vrai ssi X a valu vrai dans le passe "
+node after (X: bool) returns (afterX: bool);
+var
+     bidon1, bidon2 : bool;
+let
+	afterX = false -> pre(X or afterX) or bidon2 and bidon1;
+        (bidon1, bidon2) = bidon(X);
+tel
+
+-- "edge detecte un changement de front sur le signal d'entree. "
+node edge_detect (in : bool) returns (edge : bool);
+var
+     bidon1, bidon2 : bool;
+let
+        edge = false -> in and not(pre(in)) or bidon2 and bidon1;
+        (bidon1, bidon2) = bidon(in);
+tel
+
+node bidon(in: bool) returns (out1, out2 : bool);
+var
+    toto : tab1;
+let
+        toto[0] = 10;
+	toto[1] = 5;
+
+        out1 = true or in and (toto[0]<20);
+--	out1 = true or in;
+--	out2 = false and in and (toto[1]<10);
+      out2 = false and in;
+tel
+
+-- Exemple de programme qui bug :
+
+const ze_const_int = 5 ;
+
+type bool4 = bool^ze_const_int ;
+     tab2 = int^3^4;
+     tab1 = int^2;
+     tab3 = int^5^6^7;
+     really = real;
+
+
+-- " le noeud bug declenche une alarme si
+--   pendant la periode ou active=vrai, action
+--   n'a pas eu lieu "
+
+-- node bug (active,action : bool) returns (alarm : bool);
+node bug (active,action: bool; intI: int; realI: really) returns (alarm: bool; intO: int; realO: really);
+var
+	begin,en : bool;
+        x,y : int;
+let
+	begin = active -> edge_detect(active);
+	en = edge_detect(not active);
+ 	alarm = not once_from_to(action,begin,en);
+
+        -- intO = 10 -> pre(intO) * intI;
+        -- realO = 10.0 -> pre(realO) * realI;
+        -- (intO, realO) = (10 -> pre(intO) * intI, 10.0 -> pre(realO) * realI);
+        -- (intO, realO) = (10,10.0) -> (pre(intO) * intI, pre(realO) * realI);
+        (intO, realO) = (ze_const_int+x+y,10.0 - 10.0 - 10.0) -> (intI, pre(realO) * realI);
+
+        x = 0 -> if active then y else pre(x)+1;
+        y = 1 -> if active then pre(y)+1 else x;
+tel
+

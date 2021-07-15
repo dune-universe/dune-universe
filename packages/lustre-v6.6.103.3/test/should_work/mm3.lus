@@ -1,0 +1,9 @@
+type pair = {a:int; b:int};
+type pairpair = {a:pair; b:pair};
+
+node mm3 (a:pair) returns (y: pair);
+let
+   (y.a,y.b) = if a.a>a.b
+       then (a.b,a.a)
+       else (a.a,a.b);
+tel

@@ -1,0 +1,21 @@
+node activation_ec
+  (evt: bool)
+returns
+  (scie: int);
+
+var
+  V10_go_up: bool;
+
+let
+  scie = (0 -> (if evt
+  						then (if V10_go_up 	then ((pre scie) + 1)
+  													else ((pre scie) - 1))
+						else (pre scie)));
+  V10_go_up =
+		(true -> (if ((pre scie) >= 5)
+						then false
+						else (if ((pre scie) <= 0)
+							  then true
+							  else (pre V10_go_up))));
+tel
+

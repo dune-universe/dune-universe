@@ -1,0 +1,33 @@
+
+const A=1^2^1;
+const B = if false then 1^2 else 2^2;
+
+node toto ( x : bool) returns (
+	a : int^2^3;
+	b : int^2
+);
+let
+	b = B;
+	a = A;
+	--b = operator +(B,A[0]);
+tel
+
+node map2
+<<
+	type t1;
+        type t2;
+	const n: int;
+	node n(x: t1; y: t2) returns (z: t3)
+>>
+(X: t1^n; Y:t2^n) returns (Z: t3^n);
+let
+	Z = with (n=1) then [ n(X[0], Y[0]) ]
+	    else (
+	        [n(X[0], Y[0])] | map2<<t1,t2,n-1>>(X[1..n-1],Y[1..n-1]) 
+	    ) ;
+tel
+
+-- not supposed to work...
+const A =
+  [[ 1, 2 ] , [ 3 , 4], [5, 6] ]
++ [[ 1, 2 ] , [ 3 , 4], [5, 6] ] ;

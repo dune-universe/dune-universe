@@ -1,0 +1,14 @@
+
+
+node clock(a: bool; b: bool) returns (c: bool; d: bool when c);
+
+let 
+  (c, d) = clock4(a, b when not(a));
+
+tel
+
+
+-- Entree sur entree et sortie sur sortie:  ok
+extern node clock4(clock4_u: bool; clock4_v: bool when not clock4_u) 
+returns (clock4_x: bool; clock4_y: bool when clock4_x);
+

@@ -1,0 +1,5 @@
+
+function call07(x,y,z : bool) returns (t : bool);
+let
+	t = #(x,y,z);
+tel

@@ -1,0 +1,25 @@
+-- Time-stamp: <modified the 20/02/2017 (at 11:19) by Erwan Jahier>
+
+
+
+function foo() returns (x: bool);
+let
+   x = true;
+tel
+
+node bar(a: bool) returns (b: bool);
+let
+   b = foo() -> pre a;
+tel
+
+  -- FIXME:
+  -- XXX:
+ 
+node noinput(x1,x2:int) returns (y:int); 
+let
+  y = x1+ if bar(x2<0) then 1 else 0;
+tel
+  -- end of myplus
+
+  -- comment
+    

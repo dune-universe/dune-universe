@@ -1,0 +1,11 @@
+node bob(i : bool ) returns (o : bool);
+let
+	assert (i -> true) ;
+	o = current(bob_clk(true -> i));
+tel
+
+
+node bob_clk(i : bool ) returns (o : bool when i);
+let
+	o = (true -> pre(false -> pre(i))) when i;
+tel

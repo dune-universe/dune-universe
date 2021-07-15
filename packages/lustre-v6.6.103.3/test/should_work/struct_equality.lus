@@ -1,0 +1,10 @@
+type complex = struct {
+	re : real = 42.0;
+	im : real = 42.0;
+}; 
+
+node struct_equality(a,b : complex) returns (res:bool);
+let
+  res = a=b;
+tel
+  -- end of struct_equality

@@ -1,0 +1,37 @@
+const size=10;
+
+type elementType = int;
+type iteratedStruct = 
+  {
+     currentRank : int; 
+     rankToSelect : int; 
+     elementSelected : elementType
+};
+
+node selectEltInArray(array : elementType^size; rankToSelect : int) returns (elementSelected : elementType);
+var iterationResult : iteratedStruct;
+let
+  iterationResult = red<<selectOneStage, size>>(
+     iteratedStruct{
+          currentRank=0; 
+          rankToSelect=rankToSelect; 
+          elementSelected=0}, 
+     array);
+  elementSelected = iterationResult.elementSelected; 
+tel
+
+
+
+node selectOneStage(acc_in : iteratedStruct; currentElt : elementType) 
+returns (acc_out : iteratedStruct);
+let
+  acc_out = iteratedStruct{
+                   currentRank = acc_in.currentRank+1;
+                   rankToSelect = acc_in.rankToSelect;
+                   elementSelected = if(acc_in.currentRank=acc_in.rankToSelect)
+                                     then currentElt
+                                     else acc_in.elementSelected
+                   };
+tel
+
+node contractForElementSelectionInArray = selectOneStage

@@ -1,0 +1,4 @@
+node count (x,y: int) returns (s: int);
+let
+ s = 2*(x+y);
+tel

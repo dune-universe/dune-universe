@@ -1,0 +1,4 @@
+node integrator(F,STEP,init: real) returns (Y: real);
+let
+ Y = init -> pre(Y) + ((F + pre(F))*STEP)/2.0;
+tel

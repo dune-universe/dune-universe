@@ -1,0 +1,9 @@
+
+node toto = Lustre::and;
+node titi = toto;
+
+node call02(x,y : bool) returns (z : bool);
+let
+	z = titi(x,y);
+tel
+

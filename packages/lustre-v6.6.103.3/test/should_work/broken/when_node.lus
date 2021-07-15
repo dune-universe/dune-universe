@@ -1,0 +1,12 @@
+
+node clock(a, b,  c: bool) returns (x: bool when a; y: bool when a);
+
+let 
+  (x, y) = current (toto(b when tutu(a), c when tutu(a))) when a;
+
+tel
+
+
+extern node toto(u: bool; v: bool) returns (x: bool; y: bool);
+extern node tutu(u: bool) returns (x: bool);
+

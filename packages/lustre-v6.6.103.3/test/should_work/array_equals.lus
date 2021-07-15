@@ -1,0 +1,10 @@
+
+node array_equals(x,y:bool^2) returns (res:bool);
+let
+  res = (x=y);
+tel
+node array_not_equals(x,y:bool^2) returns (res:bool);
+let
+  res = (x<>y);
+tel
+  -- end of some_node

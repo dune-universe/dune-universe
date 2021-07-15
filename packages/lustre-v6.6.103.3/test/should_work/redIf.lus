@@ -1,0 +1,11 @@
+function redIf(a : bool; b, c : bool^3) returns (r : bool);
+let
+--  r = red<<if, 3>>(a,b,c);
+  r = red<<monIf, 3>>(a,b,c);
+tel
+
+
+function monIf(a,b,c : bool) returns (r : bool);
+let
+  r = if(a) then b else c;
+tel

@@ -1,0 +1,7 @@
+node initial(justDoIt:bool)
+returns (oa:bool; ob:int; oc:real);
+let
+   oa = false -> pre(oa) ;
+   ob = 42 -> pre(ob) ;
+   oc = 42.42 -> pre(oc) ;
+tel

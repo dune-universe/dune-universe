@@ -1,0 +1,30 @@
+
+node node_caller1 (a:int) returns (b:int);
+ let
+	 b = ex1(a);
+ tel;
+
+node ex1(a:int) returns (b:int);
+ let
+	 b = ex2(a) + 1;
+ tel;
+
+node ex2(a:int) returns (b:int);
+ let
+	 b = ex3(a) + 2;
+ tel;
+
+node ex3(a:int) returns (b:int);
+ let
+	 b = ex4(a) + 3;
+ tel;
+
+node ex4(a:int) returns (b:int);
+ let
+	 b = ex5(a) + 4;
+ tel;
+
+node ex5(a:int) returns (b:int);
+ let
+	 b = a - 700000;
+ tel;

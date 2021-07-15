@@ -1,0 +1,16 @@
+-- Simple "tupled" node call
+
+node minmax2(a,b:int)
+	returns(min,max:int);
+
+let
+	(min,max) = minmax(a,b);
+tel
+
+
+node minmax(a,b:int)
+	returns(min,max:int);
+
+let
+	(min,max) = if (a<b) then (a,b) else (b,a);
+tel

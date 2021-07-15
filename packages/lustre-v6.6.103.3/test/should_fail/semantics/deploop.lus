@@ -1,0 +1,18 @@
+
+type 
+  complexe = {x: real;  y: real};
+  cdouble = {x: complexe; y: complexe};
+
+node deploop(a, b: real) returns (ok: bool );
+var
+  i: real;
+ z: cdouble;
+let 
+  z.x.x = 0. -> z.y.y;  -- loop !
+  z.x.y = z.x.x;
+  z.y.x = z.x.x;
+  z.y.y = z.y.x;
+  i = 1.;
+  ok = z.y.y < z.y.x;
+
+tel

@@ -1,0 +1,7 @@
+
+
+
+node predef02(x: bool^42) returns (o: bool);
+let
+	o = red<<or, 42>>(false,x);
+tel

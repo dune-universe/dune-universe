@@ -1,0 +1,8 @@
+type complex = struct {
+	re : real;
+	im : real
+}; 
+node plus_im (a : real; b : complex) returns (c : complex);
+let
+  c = complex { im = a+b.im };
+tel

@@ -1,0 +1,4 @@
+node v1 (m: int; b: bool) returns (n: int);
+let n = if b then m else m-1;
+tel
+

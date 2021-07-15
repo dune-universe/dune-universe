@@ -1,0 +1,8 @@
+type A_int_2 = int^2;
+function zzz(i1:int; i2:A_int_2) returns (o:int);
+var
+   _acc1:int;
+let
+   _acc1 = Lustre::iplus(i1, i2[0]);
+   o = Lustre::iplus(_acc1, i2[1]);
+tel

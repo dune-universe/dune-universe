@@ -1,0 +1,10 @@
+-- nonreg: --expand-nodes
+node speedcontrol(c:bool;) returns (counter:int);
+let
+ counter=(0)->f(counter);
+tel
+
+node f(x:int) returns (y:int;);
+let
+ y=0->pre(x)+1;
+tel

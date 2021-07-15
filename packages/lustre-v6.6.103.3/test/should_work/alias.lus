@@ -1,0 +1,50 @@
+--================================================
+--   Ce programme (sans semantique) a pour  
+--   objectif de tester les défintions 
+--   d´"alias".
+--====================================================
+--   Warning: ce test montre la possiblite d''ecrire 
+--   des alias de noeud. La traduction en V4 n'est pas 
+--   termine, ok pour le format Xec.
+--================================================
+
+--================================================
+--        Declaration de constantes
+--================================================
+const SIZE = 3;
+
+--================================================
+--        Le noeud principal
+--================================================
+function alias (a:bool) returns (b:bool; c:int);
+let
+   b = aliasPredefNot(a); 
+   c = aliasGivenNode(0, map<<Lustre::iplus; SIZE>>(0^SIZE, SIZE^SIZE));
+tel
+
+--================================================
+--        Un noeud 
+--================================================
+function unNoeud(a: int; b: int ^ SIZE ) returns (c: int);
+  var x : bool;  
+let
+  c = aliasIterOp(a, b);
+  x = aliasBoolRed([true, false]);
+tel 
+
+--================================================
+--         DEFINITIONS DES ALIAS
+--================================================
+-- alias vers un operateur predefini 
+function aliasPredefNot = Lustre::not;
+
+-- alias vers un noeud défini
+function aliasGivenNode = unNoeud;
+
+-- alias d´un iterateur
+function aliasIterOp = red<<Lustre::iplus; SIZE>>;
+
+-- alias de l´iterateur booleen. 
+function aliasBoolRed = boolred<<0, SIZE-2, SIZE-1>>;
+
+ 

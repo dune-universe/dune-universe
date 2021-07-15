@@ -1,0 +1,6 @@
+
+node pre_x(a, b: int) returns (x: bool);
+let
+	x = false -> if pre(a)=pre(b) then not pre(x) else pre(x);
+tel
+

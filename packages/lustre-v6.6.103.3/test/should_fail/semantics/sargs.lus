@@ -1,0 +1,13 @@
+
+(* Verif des static args *)
+
+
+node pluton<<const n:int>>(x: int) returns (y:int);
+let
+   y = n + x;
+tel
+
+node sargs(x: int) returns (y:int);
+let
+   y = 2 * pluton<<42.0>>(x);
+tel

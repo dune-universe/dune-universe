@@ -1,0 +1,17 @@
+
+
+type t = enum {A,  B,  C};
+
+node when_enum(a : t ; b,  c: bool) returns (x: bool when a; y: bool when a);
+var
+  clk :  bool;
+let 
+  clk = tutu(a);
+  (x, y) = toto(b when clk, c when A(a)); -- clock error !
+
+tel
+
+
+extern node toto(u: bool; v: bool) returns (x: bool; y: bool);
+extern node tutu(u: t) returns (x: bool);
+

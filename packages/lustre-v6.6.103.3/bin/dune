@@ -1,0 +1,11 @@
+(executable
+ (name main)
+ (modes byte exe)
+ (libraries lutils extlib lustre-v6)
+)
+
+(install
+ (section bin)
+ (package lustre-v6)
+ (files (main.exe as lv6))
+)

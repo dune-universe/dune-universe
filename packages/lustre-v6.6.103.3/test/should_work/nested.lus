@@ -1,0 +1,7 @@
+
+node incr(x: int) returns (y: int) ;
+let
+  y=x+1;
+tel;
+
+node nested = map<<map<<map<<incr, 3>>,  5>>, 42>>;

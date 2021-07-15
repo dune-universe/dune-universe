@@ -1,0 +1,14 @@
+node oneq(x:bool) returns (y:bool);
+let
+  y = x;
+tel
+
+type alias = int;
+type pair = struct { a:int; b:int };
+type color = enum { blue, white, black };
+
+function type_decl(i1, i2: int) returns (x: pair);
+let
+  x= pair {a=i1; b=i2};
+tel
+

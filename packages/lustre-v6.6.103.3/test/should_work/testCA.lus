@@ -1,0 +1,23 @@
+(*  This file is a trivial test for "activation condition and nodecall *)
+
+node testCA(
+		time_in_ms:int -- time of the day in millisecond from 00:00
+		) returns (
+			hour:int;
+			minute:int;
+			second:int;
+			ms:int
+			);
+var
+	time_in_min: int;
+	time_in_second: int;
+let
+	
+	hour = time_in_min div 60 ;
+	minute = time_in_min mod 60 ;
+	time_in_min = time_in_second div 60 ;
+	second = time_in_second mod 60 ;
+	time_in_second = time_in_ms div 1000 ;
+	ms = time_in_ms mod 1000 ;
+	
+tel

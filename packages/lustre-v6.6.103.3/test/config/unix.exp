@@ -1,0 +1,7 @@
+
+proc lus2lic_load {} {}
+proc lus2lic_start {} {}
+proc lus2lic_exit {} {}
+
+proc lus2lic_version {} {
+}
