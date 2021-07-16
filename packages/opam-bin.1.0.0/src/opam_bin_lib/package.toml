@@ -1,3 +1,0 @@
-gen-version = "version.ml"
-kind = "library"
-name = "opam_bin_lib"
