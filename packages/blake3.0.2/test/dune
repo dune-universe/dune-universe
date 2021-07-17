@@ -1,0 +1,4 @@
+(tests
+ (names test)
+ (modes exe)
+ (libraries blake3 hacl-star))

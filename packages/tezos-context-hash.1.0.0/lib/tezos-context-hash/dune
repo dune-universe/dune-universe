@@ -1,0 +1,4 @@
+(library
+ (name tezos_context_hash)
+ (public_name tezos-context-hash)
+ (libraries fmt zarith digestif repr))

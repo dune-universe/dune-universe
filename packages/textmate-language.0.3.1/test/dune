@@ -1,0 +1,4 @@
+(tests
+ (names test_find test_tokenize)
+ (deps (glob_files data/*))
+ (libraries alcotest ezjsonm markup plist-xml textmate-language yojson))

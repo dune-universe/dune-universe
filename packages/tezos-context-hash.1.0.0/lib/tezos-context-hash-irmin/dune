@@ -1,0 +1,4 @@
+(library
+ (name tezos_context_hash_irmin)
+ (public_name tezos-context-hash-irmin)
+ (libraries tezos-context-hash irmin irmin-pack))
