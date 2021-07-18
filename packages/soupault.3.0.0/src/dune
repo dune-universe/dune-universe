@@ -1,0 +1,22 @@
+(executable
+ (name soupault)
+ (public_name soupault)
+ ; Uncomment for a static build, note that it requires a +musl+static+flambda compiler variant to work
+; (flags (-ccopt -static))
+ (libraries
+   lambdasoup
+   otoml
+   containers
+   fileutils
+   logs
+   logs.fmt
+   fmt.tty
+   re
+   odate
+   spelll
+   ezjsonm
+   yaml
+   jingoo
+   base64
+   tsort
+   lua-ml))
