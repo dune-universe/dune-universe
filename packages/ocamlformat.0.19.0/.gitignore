@@ -1,0 +1,7 @@
+.merlin
+/_build
+/ocamlformat.install
+/test-extra/code
+/_opam
+/_coverage
+/_build-mingw64

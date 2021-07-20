@@ -1,0 +1,61 @@
+(rule
+ (deps
+  enable_outside_detected_project/dune-project
+  enable_outside_detected_project/main.ml
+  .ocamlformat)
+ (package ocamlformat)
+ (action
+  (with-stdout-to
+   enable_outside_detected_project.output
+   (chdir
+    enable_outside_detected_project
+    (run ocamlformat --enable-outside-detected-project main.ml)))))
+
+(rule
+ (alias runtest)
+ (package ocamlformat)
+ (action
+  (diff
+   enable_outside_detected_project.expected
+   enable_outside_detected_project.output)))
+
+(rule
+ (deps
+  outside_detected_project/dune-project
+  outside_detected_project/main.ml)
+ (package ocamlformat)
+ (enabled_if
+  (<> %{os_type} Win32))
+ (action
+  (with-outputs-to
+   outside_detected_project.output
+   (chdir
+    outside_detected_project
+    (run ocamlformat main.ml)))))
+
+(rule
+ (alias runtest)
+ (package ocamlformat)
+ (enabled_if
+  (<> %{os_type} Win32))
+ (action
+  (diff outside_detected_project.expected outside_detected_project.output)))
+
+(rule
+ (deps
+  (source_tree outside_detected_project_with_name))
+ (package ocamlformat)
+ (action
+  (with-outputs-to
+   outside_detected_project_with_name.output
+   (chdir
+    outside_detected_project_with_name/project_root
+    (run ocamlformat --name a.ml ../outside_root/a.ml)))))
+
+(rule
+ (alias runtest)
+ (package ocamlformat)
+ (action
+  (diff
+   outside_detected_project_with_name.expected
+   outside_detected_project_with_name.output)))
