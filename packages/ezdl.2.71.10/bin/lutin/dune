@@ -1,0 +1,10 @@
+(executable
+ (name main)
+ (libraries lutin ezdl gbddml camlidl)
+)
+
+(install
+ (section bin)
+ (package lutin)
+ (files (main.exe as lutin))
+)

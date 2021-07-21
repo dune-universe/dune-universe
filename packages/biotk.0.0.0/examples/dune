@@ -1,0 +1,4 @@
+(executables
+  (names bam_bai bam_traversal)
+  (libraries core_bench biotk)
+  (preprocess (pps ppx_jane)))

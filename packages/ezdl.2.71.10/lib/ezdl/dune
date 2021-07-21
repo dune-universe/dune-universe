@@ -1,0 +1,9 @@
+(library
+  (name ezdl)
+  (public_name ezdl)
+  (libraries camlidl)
+;  (wrapped false)
+  (modules Ezdl Inspect) 
+  (foreign_stubs (language c) (names Ezdl_c Inspect_c) (flags -fPIC))
+  (synopsis "Easy dynamic linking of C functions from ocaml.")
+)

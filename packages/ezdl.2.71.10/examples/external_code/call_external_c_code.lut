@@ -1,0 +1,10 @@
+extern sqrt(x:  real): real
+extern sin(x:  real) : real
+extern rand_up_to(min, max: int): int
+
+node Fun_Call() returns (f1: real = 1.0; f2:  real; i:  int) = 
+  loop {
+   0.0 < f1 and f1 < 100.0
+   and (f2 = sin(sqrt(pre f1)))
+   and (i = rand_up_to(0, 10))
+  }

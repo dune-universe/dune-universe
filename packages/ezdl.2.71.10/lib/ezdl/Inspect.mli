@@ -1,0 +1,3 @@
+
+val inspect : 'a -> 'a
+

@@ -1,0 +1,220 @@
+/* -*- mode: c -*- */
+/* $Id: matrix.idl,v 1.4 2004/02/27 10:34:10 bjeannet Exp $ */
+
+/* IDL file for matrix */
+
+quote(C, "#include \"polka_caml.h\"")
+
+import "vector.idl";
+
+typedef
+  [abstract,c2ml(camlidl_polka_matrix_c2ml),ml2c(camlidl_polka_matrix_ml2c)]
+  struct matrix_t * matrix__t;
+
+typedef [mltype("{\n  var : int;\n  expr : Vector.t\n}"),c2ml(camlidl_polka_equation_c2ml),ml2c(camlidl_polka_equation_ml2c)]
+ struct equation_t equation_t;
+
+quote(MLI,"val dummy : t")
+
+/* \section{External functions} %============================================ */
+
+matrix__t matrix_make(int nbrows, int nbcolumns) quote(call,
+"  if (nbrows<0 || nbcolumns<0) { \n\
+     fprintf(stderr,\"nbrows=%d, nbcolumns=%d\\n\",nbrows,nbcolumns);  \n\
+     invalid_argument(\"Matrix.make: at least one argument is negative !\"); \n\
+   } \n\
+   _res = matrix_alloc(nbrows,nbcolumns,true);");
+
+quote(ML,"let dummy = make 0 0")
+
+matrix__t matrix_copy(matrix__t mat);
+void matrix__print(matrix__t mat) quote("matrix_print(mat);");
+int matrix_compare(matrix__t mata, matrix__t matb);
+int matrix_hash(matrix__t mat);
+int matrix_compare_sort(matrix__t mata, matrix__t matb);
+int matrix_hash_sort(matrix__t mat);
+
+long matrix_get(matrix__t mat, int row,int col)
+quote(call,
+"  if (row<0 || col<0 || row>=mat->nbrows || col>=mat->nbcolumns){ \n\
+     fprintf(stderr,\"row=%d,col=%d,nbrows=%d,nbcols=%d\\n\", \n\
+	     row,col,mat->nbrows,mat->nbcolumns); \n\
+     invalid_argument(\"Matrix.get: indices\"); \n\
+   } \n\
+   int_set_pkint(&_res,mat->p[row][col],false); \n\
+");
+[string] char* matrix_get_str10(matrix__t mat, int row,int col)
+quote(call,
+"  if (row<0 || col<0 || row>=mat->nbrows || col>=mat->nbcolumns){ \n\
+     fprintf(stderr,\"row=%d,col=%d,nbrows=%d,nbcols=%d\\n\", \n\
+	     row,col,mat->nbrows,mat->nbcolumns); \n\
+     invalid_argument(\"Matrix.get: indices\"); \n\
+   } \n\
+   _res = pkint_get_str10(NULL,mat->p[row][col]); \n")
+quote(dealloc,"free(_res);");
+
+void matrix_set(matrix__t mat, int row,int col, int val)
+quote(call,
+"  if (row<0 || col<0 || row>=mat->nbrows || col>=mat->nbcolumns) { \n\
+     fprintf(stderr,\"row=%d,col=%d,nbrows=%d,nbcols=%d\\n\", \n\
+	     row,col,mat->nbrows,mat->nbcolumns); \n\
+     invalid_argument(\"Matrix.set: indices\"); \n\
+   } \n\
+   pkint_set_si(mat->p[row][col],val); \n\
+");
+void matrix_set_str10(matrix__t mat, int row,int col, [string] char* val)
+quote(call,
+"  if (row<0 || col<0 || row>=mat->nbrows || col>=mat->nbcolumns) { \n\
+     fprintf(stderr,\"row=%d,col=%d,nbrows=%d,nbcols=%d\\n\", \n\
+	     row,col,mat->nbrows,mat->nbcolumns); \n\
+     invalid_argument(\"Matrix.set: indices\"); \n\
+   } \n\
+   pkint_set_str10(mat->p[row][col],val);\n\
+");
+vector__t matrix_get_row(matrix__t mat, int row)
+quote(call,
+"  if (row<0 || row>=mat->nbrows){ \n\
+     fprintf(stderr,\"row=%d,mat->nbrows=%d\\n\", \n\
+	     row,mat->nbrows); \n\
+     invalid_argument(\"Matrix.get_row: index\"); \n\
+   } \n\
+   _res.size = mat->nbcolumns; \n\
+   _res.q = vector_copy(mat->p[row],_res.size); \n\
+");
+void matrix_set_row(matrix__t mat, int row, vector__t vec)
+quote(call,
+"  if (row<0 || row>=mat->nbrows || mat->nbcolumns != vec.size){ \n\
+     fprintf(stderr,\"row=%d,mat->nbrows=%d,mat->nbcolumns=%d,vec.size=%d\\n\", \n\
+	     row,mat->nbrows,mat->nbcolumns,vec.size); \n\
+     invalid_argument(\"Matrix.set_row: index or incompatible dimensions\"); \n\
+   } \n\
+   { \n\
+     int i; \n\
+     for (i=0; i<vec.size; i++) pkint_set(mat->p[row][i],vec.q[i]); \n\
+   } \n\
+");
+
+int matrix_nbrows(matrix__t mat)     quote(call, "_res = mat->nbrows;");
+int matrix_nbcolumns(matrix__t mat)  quote(call, "_res = mat->nbcolumns;");
+void matrix_sort_rows(matrix__t mat);
+matrix__t matrix_merge_sort(matrix__t mata, matrix__t matb);
+
+matrix__t matrix_assign_variable(matrix__t mat, int var, vector__t vec)
+  quote(call,"_res=matrix_assign_variable(mat,polka_dec+var,vec.q);");
+matrix__t matrix_substitute_variable(matrix__t mat, int var, vector__t vec)
+  quote(call,"_res=matrix_substitute_variable(mat,polka_dec+var,vec.q);");
+matrix__t matrix_assign_variables(matrix__t mat, [size_is(size)] equation_t eqn[], int size)
+  quote(call, "_res=matrix_assign_variables(mat,eqn,size);");
+matrix__t matrix_substitute_variables(matrix__t mat, [size_is(size)] equation_t eqn[], int size)
+  quote(call, "_res=matrix_substitute_variables(mat,eqn,size);");
+
+matrix__t matrix_add_dims(matrix__t mat, int dimsup)
+     quote(call,"_res = matrix_add_dimensions(mat,dimsup);");
+matrix__t matrix_add_dims_multi(matrix__t mat, [size_is(multi)] dimsup_t tab[], int multi)
+  quote(call, "_res = matrix_add_dimensions_multi(mat,tab,multi);");
+matrix__t matrix_del_dims_multi(matrix__t mat, [size_is(multi)] dimsup_t tab[], int multi)
+  quote(call, "_res = matrix_remove_dimensions_multi(mat,tab,multi);");
+matrix__t matrix_add_permute_dims(matrix__t mat, int dimsup, [size_is(size)] int permutation[], int size)
+  quote(call, " \n\
+{ \n\
+  if (dimsup < 0) invalid_argument(\"Matrix.add_permute_dims: negative integer argument !\"); \n\
+  if (size != mat->nbcolumns+dimsup-polka_dec) invalid_argument(\"Matrix.add_permute_dims: wrong size for the permutation array !\"); \n\
+  _res = matrix_add_permute_dimensions(mat,dimsup,permutation); \n\
+}");
+matrix__t matrix_permute_del_dims(matrix__t mat, int dimsup, [size_is(size)] int permutation[], int size)
+  quote(call, " \n\
+{ \n\
+  if (dimsup < 0) invalid_argument(\"Matrix.permute_del_dims: negative integer argument !\"); \n\
+  if (size != mat->nbcolumns-polka_dec) invalid_argument(\"Matrix.add_permute_dims: wrong size for the permutation array !\"); \n\
+  _res = matrix_permute_remove_dimensions(mat,dimsup,permutation); \n\
+}");
+
+
+boolean matrix_is_row_dummy_constraint(matrix__t mat, int row)
+  quote(call, "_res = vector_is_dummy_constraint(mat->p[row],mat->nbcolumns);");
+
+/* \section{Input/Output functions} %======================================== */
+quote(MLI," \n\
+val get_big_int : t -> int -> int -> Big_int.big_int
+val set_big_int : t -> int -> int -> Big_int.big_int -> unit
+val print : Format.formatter -> t -> unit \n\
+val print_constraints : (int -> string) -> Format.formatter -> t -> unit \n\
+val print_frames : (int -> string) -> Format.formatter -> t -> unit \n\
+val of_lconstraints : (string -> int) -> int -> string list -> t \n\
+val of_lframes : (string -> int) -> int -> string list -> t \n\
+")
+
+quote(ML," \n\
+let get_big_int mat i j = \n\
+  try Big_int.big_int_of_int (get mat i j) \n\
+  with Polka.Overflow(s) -> Big_int.big_int_of_string s \n\
+let set_big_int mat i j v = \n\
+  if Big_int.is_int_big_int v \n\
+  then set mat i j (Big_int.int_of_big_int v) \n\
+  else set_str10 mat i j (Big_int.string_of_big_int v) \n\
+let print formatter mat = \n\
+  let nbrows = nbrows mat in \n\
+  Format.fprintf formatter \"@[<v>\"; \n\
+  for i=0 to nbrows-1 do \n\
+    Format.fprintf formatter \"%a@ \" Vector.print (get_row mat i); \n\
+  done; \n\
+  Format.fprintf formatter \"@]\"; \n\
+  () \n\
+let print_constraints assoc formatter mat =  \n\
+  let nbrows = nbrows mat \n\
+  and nbcolumns = nbcolumns mat \n\
+  in \n\
+  if nbrows > !Polka.print_limit then \n\
+    Format.fprintf formatter \"matrix with %i constraints\" nbrows \n\
+  else begin \n\
+    let lchaines = ref [] in \n\
+    for i = nbrows-1 downto 0 do \n\
+      lchaines := (Polka.to_constraint assoc \n\
+		    (fun j -> get_big_int mat i j)  \n\
+		    nbcolumns) :: !lchaines \n\
+    done; \n\
+    Polka.print_list formatter \"{@[<hov>\" \",@,\" \"@]}\"  \n\
+       Format.pp_print_string \n\
+       !lchaines \n\
+  end \n\
+ \n\
+let print_frames assoc formatter mat =  \n\
+  let nbrows = nbrows mat                \n\
+  and nbcolumns = nbcolumns mat          \n\
+  in \n\
+  if nbrows > !Polka.print_limit then \n\
+     Format.fprintf formatter \"matrix with %i frames\" nbrows \n\
+  else begin \n\
+  let lchaines = ref [] in \n\
+  for i = nbrows-1 downto 0 do \n\
+    lchaines := (Polka.to_frame assoc \n\
+		  (fun j -> get_big_int mat i j)  \n\
+		  nbcolumns) :: !lchaines \n\
+  done; \n\
+  Polka.print_list formatter \"{@[<hov>\" \",@,\" \"@]}\" \n\
+     Format.pp_print_string \n\
+     !lchaines \n\
+  end \n\
+ \n\
+let of_lconstraints assoc dim lstr = \n\
+  let mat = make (List.length lstr) (!Polka.dec + dim) in \n\
+  let i = ref 0 and l = ref lstr in \n\
+  while !l<>[] do \n\
+    let vec = Vector.of_constraint assoc dim (List.hd !l) in \n\
+    set_row mat !i vec; \n\
+    incr i;  \n\
+    l := List.tl !l \n\
+  done; \n\
+  mat \n\
+ \n\
+let of_lframes assoc dim lstr = \n\
+  let mat = make (List.length lstr) (!Polka.dec + dim) in \n\
+  let i = ref 0 and l = ref lstr in \n\
+  while !l<>[] do \n\
+    let vec = Vector.of_frame assoc dim (List.hd !l) in \n\
+    set_row mat !i vec; \n\
+    incr i;  \n\
+    l := List.tl !l \n\
+  done; \n\
+  mat \n\
+")

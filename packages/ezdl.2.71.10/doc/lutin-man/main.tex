@@ -1,0 +1,102 @@
+
+\documentclass[11pt,a4paper,twoside,titlepage]{article}
+
+\usepackage{color}
+\usepackage[pdftex, backref, colorlinks, linkcolor=blue]{hyperref}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage[pdftex]{graphicx}
+\usepackage{fancyhdr}
+\usepackage{bold-extra}
+\usepackage{alltt}
+
+\input{x11colors}
+
+
+\setlength{\textwidth}{161mm} %21cm - (2 * 1cm)
+\setlength{\textheight}{224mm}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+%\setlength{\topmargin}{0pt}
+%\setlength{\partopsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+\input{commands}
+\input{version}
+
+\ifx\pdftexversion\undefined
+  \usepackage[dvips]{graphicx}
+\else
+  \usepackage[pdftex]{graphicx}
+\fi
+
+
+
+\fancyhead[LO, RE]{\color{grey} \hyperlink{toc}{Table of contents}}
+\fancyhead[RO, LE]{\color{grey} \thepage}
+% \fancyhead[RO, LE]{\color{grey} \thepage /\pageref{LastPage}}
+
+\fancyfoot[LO, RE]{\color{grey} }
+\fancyfoot[RO, LE]{\color{grey} }
+
+\pagestyle{fancy}
+
+\title{\lutin Reference manual\\ Version \versionname-\version{}}
+\author{Pascal Raymond\\Erwan Jahier}
+\date{last commit : \versiondate{} (sha:\sha)}
+
+\begin{document}
+
+
+
+%\maketitlepage
+
+\maketitle
+
+\tableofcontents
+\section*{Abstract.}
+A reactive  system indefinitely responds  to its environment.  We are
+particularly  interested here in  control and  embedded applications,
+where  the  environment is  often  the  physical  world.  During  the
+development  of such  systems, non-determinism  is often  useful, for
+describing a partially designed system and/or its environment.
+
+\lutin  is a  language designed  to describe  and simulate  such non
+deterministic reactive systems.
+
+
+Executing  a  \lutin  program  consists  in  randomly  generating  a
+particular  behaviour consistent  with its  definition.  In  order to
+guide  the  generation, the  language  provides  some constructs  for
+controlling the random choices.
+
+
+
+
+
+\newpage
+
+
+%\input{lutyacc.tex}
+
+\input{lutin_overview}
+\newpage
+
+\input{language}
+\newpage
+\input{lutsyntax}
+\newpage
+\input{semantics}
+
+\newpage
+\input{lutin_toplevel}
+
+\newpage
+\input{lutin_examples}
+
+\bibliographystyle{abbrv}
+
+\bibliography{bib}
+
+\end{document}

@@ -1,0 +1,255 @@
+/* -*- mode: c -*- */
+/* $Id: poly.idl,v 1.4 2004/02/27 10:34:11 bjeannet Exp $ */
+
+/* IDL file for poly */
+
+quote(C, "#include \"polka_caml.h\"")
+
+import "vector.idl";
+import "matrix.idl";
+
+
+
+/* \section{Management of abstract datatypes} %============================== */
+
+enum tbool { tbool_bottom=0, tbool_true=1, tbool_false=2, tbool_top=3 };
+
+typedef [abstract,c2ml(camlidl_polka_poly_c2ml),ml2c(camlidl_polka_poly_ml2c)]
+  struct poly_t * poly__t;
+
+typedef [mltype(" Matrix.equation = {\n  var : int;\n  expr : Vector.t\n}"),c2ml(camlidl_polka_equation_c2ml),ml2c(camlidl_polka_equation_ml2c)]
+ struct equation_t equation_t;
+
+quote(MLI,"val dummy : t")
+
+/* \section{Constructors} %================================================== */
+quote(MLMLI,"(* Constructors *)")
+
+poly__t poly_empty(int dim);
+quote(ML,"let dummy = empty 0")
+poly__t poly_universe(int dim);
+poly__t poly_of_constraints(matrix__t mat)
+	quote(call, "_res = poly_of_constraints(matrix_copy(mat));");
+poly__t poly_of_frames(matrix__t mat)
+	quote(call, "_res = poly_of_frames(matrix_copy(mat));");
+void poly_minimize(poly__t po);
+void poly_canonicalize(poly__t po);
+
+/* \section{Access functions} %============================================== */
+quote(MLMLI,"(* Access functions *)")
+
+int poly_dim(poly__t po) quote(call, "_res = poly_dimension(po);");
+int poly_nbequations(poly__t po);
+int poly_nblines(poly__t po);
+int poly_nbconstraints(poly__t po);
+int poly_nbframes(poly__t po);
+quote(MLMLI," \n\
+external constraints : t -> Matrix.t option = \"camlidl_polka_poly_constraints\" \n\
+external frames : t -> Matrix.t option = \"camlidl_polka_poly_frames\" \n\
+")
+
+/* \section{Tests} %========================================================= */
+quote(MLMLI,"(* Tests *)")
+
+boolean poly_is_minimal(poly__t po);
+boolean poly_is_empty(poly__t po);
+boolean poly_is_universe(poly__t po);
+enum tbool poly_is_empty_lazy(poly__t po);
+enum tbool poly_is_universe_lazy(poly__t po);
+boolean poly_constraints_available(poly__t po)
+  quote(call, "_res = (po->C!=0);");
+boolean poly_frames_available(poly__t po)
+  quote(call, "_res = (po->F!=0);");
+
+enum tbool poly_poly_versus_constraint(poly__t po, vector__t vec)
+  quote(call,
+"   if (polka_dec + po->dim != vec.size) \n\
+      invalid_argument(\"Poly.poly_versus_constraint: incompatible dimensions\"); \n\
+    _res = poly_versus_constraint(po,vec.q); \n\
+");
+boolean poly_is_generator_included_in(vector__t vec, poly__t po)
+  quote(call,
+"   if (polka_dec + po->dim != vec.size) \n\
+      invalid_argument(\"Poly.is_generator_included_in: incompatible dimensions\"); \n\
+    _res = poly_is_generator_included_in(vec.q,po); \n\
+");
+
+boolean poly_is_included_in(poly__t pa, poly__t pb);
+boolean poly_is_equal(poly__t pa, poly__t pb);
+
+/* \section{Change of dimensions} %========================================== */
+quote(MLMLI,"(* Change of dimensions *)")
+
+poly__t poly_add_dims_and_embed(poly__t po, int dim)
+  quote(call, "_res = poly_add_dimensions_and_embed(po,dim);");
+poly__t poly_add_dims_and_project(poly__t po, int dim)
+  quote(call, "_res = poly_add_dimensions_and_project(po,dim);");
+poly__t poly_del_dims(poly__t po, int dim)
+  quote(call, "_res = poly_remove_dimensions(po,dim);");
+
+poly__t poly_add_dims_and_embed_multi(poly__t po, [size_is(size)] dimsup_t tab[], int size)
+  quote(call, "_res = poly_add_dimensions_and_embed_multi(po,tab,size);");
+poly__t poly_add_dims_and_project_multi(poly__t po, [size_is(size)] dimsup_t tab[], int size)
+  quote(call, "_res = poly_add_dimensions_and_project_multi(po,tab,size);");
+poly__t poly_del_dims_multi(poly__t po, [size_is(size)] dimsup_t tab[], int size)
+  quote(call, "_res = poly_remove_dimensions_multi(po,tab,size);");
+
+poly__t poly_add_permute_dims_and_embed(poly__t po, int dimsup, [size_is(size)] int permut[], int size)
+quote(call, " \n\
+  if (dimsup < 0) invalid_argument(\"Poly.add_permute_dims_and_embed: negative integer argument !\"); \n\
+  if (size != po->dim+dimsup) invalid_argument(\"Poly.add_permute_dims_and_embed: wrong size for the permutation array !\"); \n\
+  _res = poly_add_permute_dimensions_and_embed(po,dimsup,permut); \n\
+");
+poly__t poly_add_permute_dims_and_project(poly__t po, int dimsup, [size_is(size)] int permut[], int size)
+quote(call, " \n\
+  if (dimsup < 0) invalid_argument(\"Poly.add_permute_dims_and_project: negative integer argument !\"); \n\
+  if (size != po->dim+dimsup) invalid_argument(\"Poly.add_permute_dims_and_project: wrong size for the permutation array !\"); \n\
+  _res = poly_add_permute_dimensions_and_project(po,dimsup,permut); \n\
+");
+poly__t poly_permute_del_dims(poly__t po, int dimsup, [size_is(size)] int permut[], int size)
+quote(call, " \n\
+  if (dimsup <= 0) invalid_argument(\"Poly.permute_del_dims: negative integer argument !\"); \n\
+  if (size != po->dim) invalid_argument(\"Poly.permute_remove_dims: wrong size for the permutation array !\"); \n\
+  _res = poly_permute_remove_dimensions(po,dimsup,permut); \n\
+");
+
+/* \section{Intersection and convex hull, both version} %==================== */
+quote(MLMLI, "(* Intersection and convex hull *)")
+
+poly__t poly_inter_array([size_is(size)] poly__t po[], int size)
+  quote(call, "_res = poly_intersection_array(po,size);");
+poly__t poly_inter(poly__t pa, poly__t pb)
+  quote(call, "_res = poly_intersection(pa,pb);");
+poly__t poly_add_constraints(poly__t po, matrix__t mat);
+poly__t poly_add_constraint(poly__t po, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.add_constraint: incompatible dimensions\"); \n\
+   _res = poly_add_constraint(po,vec.q); \n\
+");
+
+poly__t poly_union_array([size_is(size)] poly__t po[], int size)
+  quote(call, "_res = poly_convex_hull_array(po,size);");
+poly__t poly_union(poly__t pa, poly__t pb)
+  quote(call, "_res = poly_convex_hull(pa,pb);");
+poly__t poly_add_frames(poly__t po, matrix__t mat);
+poly__t poly_add_frame(poly__t po, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.add_frame: incompatible dimensions\"); \n\
+   _res = poly_add_frame(po,vec.q); \n\
+");
+
+poly__t poly_inter_array_lazy([size_is(size)] poly__t po[], int size)
+  quote(call, "_res = poly_intersection_array_lazy(po,size);");
+poly__t poly_inter_lazy(poly__t pa, poly__t pb)
+  quote(call, "_res = poly_intersection_lazy(pa,pb);");
+poly__t poly_add_constraints_lazy(poly__t po, matrix__t mat);
+poly__t poly_add_constraint_lazy(poly__t po, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.add_constraint_lazy: incompatible dimensions\"); \n\
+   _res = poly_add_constraint_lazy(po,vec.q); \n\
+");
+
+poly__t poly_union_array_lazy([size_is(size)] poly__t po[], int size)
+  quote(call, "_res = poly_convex_hull_array_lazy(po,size);");
+poly__t poly_union_lazy(poly__t pa, poly__t pb)
+  quote(call, "_res = poly_convex_hull_lazy(pa,pb);");
+poly__t poly_add_frames_lazy(poly__t po, matrix__t mat);
+poly__t poly_add_frame_lazy(poly__t po, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.add_frame_lazy: incompatible dimensions\"); \n\
+   _res = poly_add_frame_lazy(po,vec.q); \n\
+");
+
+quote(MLI, " \n\
+val inter_list: t list -> t \n\
+val union_list: t list -> t \n\
+val inter_list_lazy: t list -> t \n\
+val union_list_lazy: t list -> t \n\
+")
+quote(ML, " \n\
+let inter_list l = inter_array (Array.of_list l) \n\
+let union_list l = union_array (Array.of_list l) \n\
+let inter_list_lazy l = inter_array_lazy (Array.of_list l) \n\
+let union_list_lazy l = union_array_lazy (Array.of_list l) \n\
+")
+
+/* \section{Linear transformation} %========================================= */
+quote(MLMLI, "(* Linear transformation *)")
+
+poly__t poly_assign_var(poly__t po, int var, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.assign_var: incompatible dimensions\"); \n\
+   _res = poly_assign_variable(po,var,vec.q); \n\
+");
+poly__t poly_substitute_var(poly__t po, int var, vector__t vec)
+  quote(call,
+"  if (polka_dec + po->dim != vec.size) \n\
+     invalid_argument(\"Poly.substiute_var: incompatible dimensions\"); \n\
+   _res = poly_substitute_variable(po,var,vec.q); \n\
+");
+poly__t poly_assign_vars(poly__t po, [size_is(size)] equation_t eqn[], int size)
+     quote(call, "_res=poly_assign_variables(po,eqn,size);");
+poly__t poly_substitute_vars(poly__t po, [size_is(size)] equation_t eqn[], int size)
+     quote(call, "_res=poly_substitute_variables(po,eqn,size);");
+
+
+/* \section{Widening} %====================================================== */
+quote(MLMLI, "(* Widening *)")
+poly__t poly_widening(poly__t pa, poly__t pb);
+poly__t poly_limited_widening(poly__t pa, poly__t pb, matrix__t mat);
+
+/* \section{Closure} %====================================================== */
+quote(MLMLI, "(* Closure *)")
+poly__t poly_closure(poly__t po)
+     quote(call, "_res = poly_closure(po);");
+poly__t poly_closure_lazy(poly__t po)
+     quote(call, "_res = poly_closure_lazy(po);");
+
+/* \section{Input/Output functions} %======================================== */
+
+quote(MLI," \n\
+val print_constraints: (int -> string) -> Format.formatter -> t -> unit \n\
+val print_frames: (int -> string) -> Format.formatter -> t -> unit \n\
+val print: (int -> string) -> Format.formatter -> t -> unit \n\
+val of_lconstraints : (string -> int) -> int -> string list -> t \n\
+val of_lframes : (string -> int) -> int -> string list -> t \n\
+")
+
+quote(ML," \n\
+let print_constraints assoc formatter poly = \n\
+  if is_empty_lazy poly = True then \n\
+    Format.fprintf formatter \"empty(%i)\" (dim poly) \n\
+  else \n\
+    match (constraints poly) with \n\
+    | Some(cons) -> (Matrix.print_constraints assoc) formatter cons \n\
+    | None -> Format.fprintf formatter \"constraints not available(%i)\" \n\
+	      (dim poly) \n\
+let print_frames assoc formatter poly = \n\
+  if is_empty_lazy poly = True then \n\
+    Format.fprintf formatter \"empty(%i)\" (dim poly) \n\
+  else \n\
+    match (frames poly) with \n\
+    | Some(frames) -> (Matrix.print_frames assoc) formatter frames \n\
+    | None -> Format.fprintf formatter \"frames not available(%i)\" \n\
+	       (dim poly) \n\
+     \n\
+let print assoc formatter poly = \n\
+  if is_empty_lazy poly = True then \n\
+    Format.fprintf formatter \"empty(%i)\" (dim poly) \n\
+  else begin \n\
+    Format.fprintf formatter \"(@[<v>%a,@ %a@])\"  \n\
+      (print_constraints assoc) poly        \n\
+     (print_frames assoc) poly \n\
+  end \n\
+ \n\
+let of_lconstraints assoc dim lstr = \n\
+  of_constraints (Matrix.of_lconstraints assoc dim lstr) \n\
+ \n\
+let of_lframes assoc dim lstr = \n\
+  of_frames (Matrix.of_lframes assoc dim lstr) \n\
+")

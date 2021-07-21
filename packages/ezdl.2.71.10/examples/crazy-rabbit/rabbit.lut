@@ -1,0 +1,81 @@
+include "../crazy-rabbit/ud.lut"
+include "../crazy-rabbit/moving-obstacle.lut"
+
+node rabbit_speed (low, high:real) returns (Speed: real) =
+   exist Delta, SpeedLow, SpeedHigh: real in
+   let draw_params() =
+      between(Delta, 0.5, 1.0) and
+      between(SpeedLow, 0.0, low) and between(SpeedHigh, 1.0, high)
+    in
+    let keep_params() = 
+       (Delta = pre Delta) and (SpeedLow = pre SpeedLow) and 
+       (SpeedHigh = pre SpeedHigh)
+    in
+       {
+          &> loop { draw_params() fby loop ~100: 10 { keep_params() } } 
+          &> Speed = 1.0 fby 
+             run Speed := up_and_down(pre SpeedLow, pre SpeedHigh, pre Delta) 
+       }
+extern sin(x:  real) : real
+extern cos(x:  real) : real
+
+-- extern printint(i:int):unit 
+
+exception Pb
+
+node rabbit (x_min, x_max, y_min, y_max : real)
+returns(x, y, p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y:  real ; freeze:bool) =
+   exist Speed, Alpha, Beta : real in
+   let keep_position() = ((x = pre x) and (y = pre y)) in
+   let draw_params() = between(Alpha, -3.14, 3.14) and between(Beta, -0.3, 0.3)
+   in
+   -- The beginning
+   run Speed := rabbit_speed(5.0, 50.0) in
+   run p1x,p1y, p2x,p2y, p3x,p3y, p4x,p4y := obstacle(x_min, x_max, y_min, y_max) in
+   let line() =
+     (x = (pre x + Speed * cos(pre Alpha))) and
+     (y = (pre y + Speed * sin(pre Alpha))) and
+     (Alpha = pre Alpha) and
+    -- And he always avoids the obstacle
+     not is_inside(x,y,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y)
+   in
+   let escape () = 
+      try
+         between(x, pre x - 21.0, pre x + 21.) and
+         between(y, pre y - 21.0, pre y + 21.) and
+         not is_inside(x,y,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y)
+     do raise Pb 
+   in
+   let curve() =
+     (x = (pre x + Speed * cos(pre Alpha))) and
+     (y = (pre y + Speed * sin(pre Alpha))) and
+     (Alpha = pre Alpha - Beta) and (Beta = pre Beta) and
+     not is_inside(x,y,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y)
+   in
+   let spiral() =
+     (x = (pre x + Speed * cos(pre Alpha))) and
+     (y = (pre y + Speed * sin(pre Alpha))) and
+     (Alpha = pre Alpha - Beta) and (Beta = pre Beta- 0.02) and
+     not is_inside(x,y,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y)
+   in
+   assert
+       -- The rabbit always remains in its playground
+        between(x, x_min, x_max) and
+        between(y, y_min, y_max)
+   in
+   assert (freeze = is_inside(x,y,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y)) in
+      draw_params() fby
+      try loop {
+--         try
+                { draw_params() &> escape() } fby
+--                { draw_params() and keep_position() } fby
+                {
+                  |1: loop [0,40] line()  -- forward straigth ahead for a while
+                  |3: loop [0,40] curve() -- forward by turning for a while
+                  |3: loop [0,60] spiral() -- forward by turning for a while
+               
+                }
+--          do escape() 
+        -- nb: if it is inside the obstacle, it keeps its position until it can move
+     } 
+

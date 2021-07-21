@@ -1,0 +1,51 @@
+type t
+
+(* Init du module *)
+external init    : unit -> unit = "gbdd_cml_init"
+
+(* Accès aux noeuds *)
+external root_var  : t -> int   = "gbdd_cml_root_var"
+external high_part : t -> t     = "gbdd_cml_high_part"
+external low_part  : t -> t     = "gbdd_cml_low_part"
+
+(* Tests *)
+external is_leaf   : t -> bool  = "gbdd_cml_is_leaf"
+external is_true   : t -> bool  = "gbdd_cml_is_true"
+external is_false  : t -> bool  = "gbdd_cml_is_false"
+
+(* Constantes *)
+external dtrue   : unit -> t  = "gbdd_cml_true"
+external dfalse  : unit -> t  = "gbdd_cml_false"
+external null   : unit -> t  = "gbdd_cml_null"
+
+(* Identité et Inverse *)
+external idy     : int -> t   = "gbdd_cml_idy"
+external nidy    : int -> t   = "gbdd_cml_nidy"
+
+(* Opérations booléennes *)
+external dnot    : t -> t -> t = "gbdd_cml_not"
+external dor     : t -> t -> t = "gbdd_cml_or"
+external dand    : t -> t -> t = "gbdd_cml_and"
+external xor     : t -> t -> t = "gbdd_cml_xor"
+external eq      : t -> t -> t = "gbdd_cml_eq "
+external ite     : t -> t -> t -> t = "gbdd_cml_ite"
+
+(* Infos sur la structure *)
+external size : t -> int = "gbdd_cml_size"
+external supportsize : t -> int = "gbdd_cml_supportsize"
+
+(* Extra *)
+external print_mons : t -> unit = "gbdd_cml_print_mons"
+
+(* compatibilité cudd *)
+external topvar  : t -> int   = "gbdd_cml_root_var"
+external dthen   : t -> t     = "gbdd_cml_high_part"
+external delse   : t -> t     = "gbdd_cml_low_part"
+external ithvar  : int -> t   = "gbdd_cml_idy"
+external is_leaf : t -> bool  = "gbdd_cml_is_leaf"
+
+external support : t -> t     = "gbdd_cml_cube"
+
+(* Extra programmés directement en caml *)
+
+val list_of_support : t -> int list

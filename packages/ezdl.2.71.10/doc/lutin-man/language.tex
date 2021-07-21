@@ -1,0 +1,692 @@
+
+
+
+
+\section{The \lutin\ language}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Data types}
+
+There exists 3 pre-defined data types: \key{bool}, \key{int}, and
+\key{real}. 
+
+Structured data-types (arrays, enums, structures) and user-defined
+abstract types are not yet implemented (coming soon hopefully).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Nodes}
+
+Nodes are  entry points for \lutin\  programs.  Nodes are  made of an
+interface  declaration and  a body.  \lutin\ nodes  can be  reused in
+other \lutin\  nodes (as \lustre  nodes); they can also  be top-level
+programs. 
+
+\subsubsection{Support variables}
+
+The \key{node}\footnote{used to be called \key{system} in the earlier
+  versions  of  \lutin,  to  highlight the  difference  with  \lustre
+  nodes.}  interface declares the  set of input and output variables;
+they  are  called  the  {\em  support variables}.   During  the  node
+execution,  actual   input  values   are  provided  by   the  program
+environment.  Output  variable ranges can  specified (or not)  in the
+declaration. By default, numeric value ranges from -10000 to 10000.
+
+%% \begin{example}
+%% \begin{program}
+%% \key{node} foo(x:bool) \key{returns} (t:real; i:\key{int}) = \syn{NodeBodyStatement} 
+%% \end{program}
+%% \end{example}
+
+
+
+\begin{example}
+\begin{program}
+\key{node} foo(x:bool) \key{returns} (t:real [0.0;100.0]; i:\key{int}) =\\
+ \syn{NodeBodyStatement} 
+\end{program}
+\end{example}
+
+
+
+
+The node body is made of statements that we describe below.
+
+
+\subsubsection{Local variables}
+
+Node   body   statements   can   be   made  of   a   local   variable
+declarations.  Such  variables  are  declared  with  the  \key{exist}
+keyword.
+
+\begin{example}
+\begin{program}
+ \key{exist} y \key{:} real \key{in} \syn{st}\\ 
+ \key{exist} z \key{:} int [-100000; 100000] \key{in} \syn{st}
+\end{program}
+\end{example}
+
+In their scope, local variables  are similar to outputs; we call them
+the {\em controllable variables}.
+
+
+\subsubsection{Memory variables}
+
+Any expression  may refer to the  previous value of  a variable using
+the \key{pre}  keyword.  The value of \prg{\key{pre}  x} is inherited
+from the past and cannot be modified.  Memories are therefore similar
+to inputs; we sometimes call them the {\em uncontrollable variables}.
+
+
+A memory variable  \prg{\key{pre} x} doesn't need to  be declared, as
+long as the variable \prg{x} is declared.
+
+
+% This is the {\em non-backtracking principle}.
+
+\begin{example}
+\begin{program}
+\key{if} x \key{then} (t > \key{pre} t) \key{else} (t <= \key{pre} t )
+\end{program}
+describes any valuation  of the support where \prg{t}  is higher than
+its value  at the  previous instant when  \prg{x} is true,  and lower
+otherwise.
+\end{example}
+
+Note that \key{pre} can only operates over variables. For example,
+\key{pre} \prg{(t+10.0)} is forbidden.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Trace Statements}
+
+%% \todo{La terminologie ``Basic  statements'' est vraiment pas terrible **)
+%%   je  trouve (R1)  : Trace  statement  ? Regular  statement ?  Kleene **)
+%%   statement ? Pattern statement ?} **)
+
+A node body can be made  of statements that describes how support and
+local variables  evolve at each instant.  Such  statements are called
+{\em  trace  expressions}  (or  a  {\em  trace  statements}).   Trace
+expressions are either atomic, or composed of other trace expressions
+using operators inspired by regular expressions, and described below.
+
+
+\subsubsection{Atomic Trace Statements (Constraints)}
+
+
+An atomic  trace is simply a  relation (or a  constraint) between the
+program variables.  A constraint is a trace of length 1.
+
+
+\begin{example}
+\begin{program}
+\prg{x} \key{and} (0.0 < t) \key{and} (t <= 10.0)
+\end{program}
+
+ The  constraint  above  describes   any  valuation  of  the  support
+ variables where \prg{x} is true and \prg{t} is between \prg{0.0} and
+ \prg{10.0}.
+\end{example}
+
+Note  that, during  the  execution, if  \prg{x}  is an  input of  the
+current node, and if \prg{x} is  false at the current instant, then
+the constraint is unsatisfiable.
+
+
+
+%%%% l'utilsateur (le  débutant en particulier)  se fout de  la facon
+%%%% dont sont compilés les alternatives !!!
+
+
+%% In this  case, the constraint dynamically raises  a {\em deadlock}
+%% exception.
+
+%% The  deadlocks Handling  is central  in \lutin:  most of  the language
+%% constructs are defined in terms of deadlock catching, as explained in
+%% the sequel.
+
+
+Atomic statements can be combined to describe longer traces using the
+trace operators described below.
+
+An atomic statement is said to be  {\em startable} if it is made of a
+satisfiable constraint.  When an atomic statement is not satisfiable,
+we say that it {\em deadlocks}.
+
+
+
+
+\subsubsection{Sequence}
+
+If \syn{st1} and \syn{st2} are 2 trace expressions,
+ \syn{st1} \key{fby} \syn{st2}
+is a trace expression that 
+\begin{itemize}
+\item  behaves  as \syn{st1},  and  when  it  terminates, behaves  as
+  \syn{st2};
+\item deadlocks as soon as \syn{t1} or \syn{t2} deadlocks.
+\end{itemize}
+
+The sequence \syn{st1} \key{fby}  \syn{st2} is {\em startable} if and
+only if \syn{st1} is startable.
+
+
+\subsubsection{Choice}
+
+If  \syn{st1}, \dots  \syn{stn}  are n  trace  expressions, \OB  \BAR
+\syn{st1} \BAR ... \BAR \syn{stn}  \CB\ (the first \BAR\ is optional)
+behaves  as  follows: randomly  choose  one  of  the {\em  startable}
+statements  from \syn{st1}, \dots,  \syn{stn}.  If  none of  them are
+startable, the  whole statement  deadlocks.  \OB \BAR  \syn{st1} \BAR
+...   \BAR \syn{stn}  \CB\ is  startable if  and only  if one  of the
+\syn{sti} is startable.
+
+
+
+
+\paragraph{Weighted choice.}
+ 
+In a choice, the random selection of a particular startable statement
+is uniform.  For instance,  if $k$ of  $n$ statements  are startable,
+each of them is chosen with a probability of $1/k$.
+
+This  is the  reason  why the  choice  is not  a binary,  associative
+statement:\\  \OB \syn{st1}  \BAR  \OB \syn{st2}  \BAR \syn{st3}  \CB
+\CB\\ is  not {\em stockastically} equivalent to\\  \OB \OB \syn{st1}
+\BAR \syn{st2} \CB \BAR \syn{st3} \CB
+
+In order  to influence  the probabilities, the  user may  assign {\em
+  weights} to the branches of a choice:\\
+
+\OB 
+\BAR \syn{w1}\COL\ \syn{st1} $\cdots$
+\BAR \syn{wn}\COL\ \syn{stn}
+\CB \\
+
+
+Weights  (\syn{wi})  may be  any  {\em  integer  expression} made  of
+constants  and uncontrollable  variables.  In  other terms,  only the
+environment  and the past  may influence  the probabilities.   If not
+specified, the  weight is equal to  1, and the first  bar is optional
+(e.g., '\OB \syn{st1} \BAR \syn{st2}  \CB' is equivalent to '\OB \BAR
+1:  \syn{st1} \BAR  1: \syn{st2}  \CB').  Weights  do not  define the
+probability to be chosen among the choices, but the probability to be
+chosen  among  the {\em  possible}  choices,  (i.e., among  startable
+statements).
+
+\paragraph{Priority Choice.}
+
+ \OB \SBAR \syn{st1} \SBAR ... \SBAR \syn{stn} \CB\
+behaves as \syn{st1} if \syn{st1} is startable, otherwise
+behaves as \syn{st2} if \syn{st2} is startable, etc.
+If none of them are startable, the whole statement deadlocks.
+The first \SBAR\ is optionnal.
+
+
+\subsubsection{Loops}
+
+%\paragraph{Infinite loops.}
+
+   \key{loop}   \syn{st}  terminates   {\em  normally}   if  \syn{st}
+   deadlocks; otherwise, it  behaves as \syn{st} \key{fby} \key{loop}
+   \syn{st}. This can be read as ``repeat the behavior of \syn{st} as
+   long as possible''.
+
+
+
+\paragraph{Nested loops.}
+
+The execution of nested loops may results on infinite,
+instantaneous loops.
+
+\begin{example}
+If \syn{c} is a non satisfiable constraint, the statement
+\begin{program}
+\key{loop} \key{loop} \syn{c}
+\end{program}
+keeps the control but do nothing.
+\end{example}
+
+We consider programs that  generates such instantaneous loops as {\em
+  incorrect}  (this  is  quite   similar  to  infinite  recursion  in
+classical languages).
+
+Statically checking  if a program  is free of instantaneous  loops is
+undecidable. One solution is  to adopt a statical criterium rejecting
+all incorrect programs, but also some correct ones.
+
+Typically, a program is certainly  free of instantaneous loop if each
+control branch whitin a loop contains a statement that ``takes time''
+(i.e., a constraint).
+
+\begin{example}
+The (potentially) incorrect program:
+\begin{program}
+\key{loop} \key{loop} \syn{c}
+\end{program}
+can be safely replaced by: 
+\begin{program}
+\key{loop} \OB \syn{c} \key{fby} \key{loop} \syn{c} \CB
+\end{program}
+\end{example}
+
+The opposite solution is to accept a priori any programs and generate
+a  runtime  error  if   an  instantaneous  loops  arises  during  the
+execution.  This is the solution adopted in the operational semantics
+(Section~\ref{semantics}).
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Exceptions}
+
+\subsubsection{Defining and Raising Exceptions}
+
+Global    exceptions    can   be    declared    outside   the    main
+node:
+
+   \key{exception} \syn{ident}
+
+   or locally within a trace statement:
+
+ \key{exception} \syn{ident} \key{in} \syn{st}
+
+
+
+An existing exception \syn{ident} can be raised with the statement:
+\key{raise} \syn{ident}\\
+
+\subsubsection{Catching exceptions}
+
+An  exception  can  be   caught  with  the  statement:\\  \key{catch}
+\syn{ident} \key{in} \syn{st1}  \key{do} \syn{st2}\\ If the exception
+is raised in \syn{st1}, the control immediatelly passes to \syn{st2}.
+If  the  ``\key{do}''  part  is  omitted,  the  statement  terminates
+normally.
+
+
+
+\subsubsection{The predefined \key{Deadlock} exception}
+
+When a  trace expression  deadlocks, the \key{Deadlock}  exception is
+raised.  In fact, this exception  is internal and cannot be redefined
+nor raised by the user.   The only possible use of the \key{Deadlock}
+in programs is one try to catch it: 
+
+\begin{example}
+\begin{program}
+  \key{catch} \key{Deadlock} \key{in} \syn{st1} \key{do} \syn{st2}
+\end{program}
+\end{example}
+
+Cf Section~\ref{try}.
+
+
+
+
+
+\subsubsection{Non determinism and deadlocks}
+The general rule is that, if a statement can start, then it must 
+start; this is the {\em reactivity principle}.
+%For the time being, this principle concerns only the \BAR\ construct
+%(both \SBAR\ and \key{loop} are deterministic).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Parallel composition}
+
+\subsubsection{The \ES\ operator}
+
+In order to put in parallel several statements, one can write:\\
+\OB \ES \syn{st1} \ES ... \ES \syn{stn} \CB\\
+where the first \ES\ can be omitted.
+
+This  statement executes  in  parallel all  the statements  \syn{st1}
+... \syn{stn}.  All along the parallel execution each branch produces
+its own  constraint; the conjunction of these  local constraints gives
+the global constraint.
+
+If one branch terminates  normally, the other branches continue.  The
+whole statement terminates when the last branches terminates.
+
+If (at  least) one  branch raises an  exception, the  whole statement
+raises the exception.
+
+
+\subsubsection{Parallelism versus stockastic directives}
+
+
+It  is impossible  to define  a  parallel composition  which is  fair
+according to the stockastic directive.
+
+
+\begin{example}
+Consider the statement:\\ 
+\OB~\OB \BAR 1000: \syn{X} \BAR \syn{Y} \CB
+~\ES~
+\OB \BAR 1000: \syn{A}  \BAR \syn{B} \CB
+~\CB\\
+where \syn{X}, \syn{A}, \syn{X$\wedge$B}, \syn{A$\wedge$Y} are all
+satisfiable, but not \syn{X$\wedge$A}:
+\begin{minitemize}
+\item the priority can be given to \syn{X$\wedge$B}, which 
+does not respect the stockastic directive of the second branch,
+\item or to \syn{A$\wedge$Y}, which
+does not respect the stockastic directive of the first branch.
+\end{minitemize}
+\end{example}
+In order to solve the problem, the stockastic directives are not
+treated in parallel, but in {\em sequence}, from left to right:
+\begin{minitemize}
+\item the first branch makes its choice, according its local
+stockastic directives, 
+\item the second one  branch makes its choice, according to what has
+been chosen by the first one etc. 
+\end{minitemize}
+In the example, the priority is then given to
+\syn{X$\wedge$B}. 
+
+Finally, the treatment is:
+\begin{itemize}
+\item parallel w.r.t. constraints (it's a conjunction),
+\item but sequential w.r.t.  weights directives (left to right).
+\end{itemize}
+
+Note that the concrete syntax (\ES) reflects the fact the operation
+is not commutative.
+
+
+\subsubsection{Parallelism and exceptions}
+There is no notion  of ``muti-raising'', even when several statements
+are  executed  in parallel.   In  a  parallel composition,  exception
+raising  are, like  stockastic directives,  treated in  sequence from
+left to right.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Calling nodes from nodes: a cheap parallel composition mechanism}
+
+The \key{run}/\key{:=}/\key{in} construct is another way of executing
+code in parallel.  It is actually the only way of calling Lutin nodes
+from other nodes.  Nodes are executed, and the result of this
+execution is re-injected in the calling nodes (as if an external call
+is made).
+
+Let i1, ...., im be m uncontrollable variables, and 
+o1, ..., on be n controllable ones, then
+
+\key{run} (o1, ..., on) \key{:=} a\_node(i1, ...., im) \key{in} \syn{st}
+
+will execute the node a\_node, and compute values for o1, ..., on that
+will be substituted in \syn{st}. In \syn{st} o1, ..., om are therefore
+uncontrollable.
+
+
+
+Follows a working example that makes use of \key{run} statements:
+
+
+\begin{example}
+\begin{program}
+\key{node} N() \key{returns} (\key{y}:int) = y = 0 \key{fby} \key{loop} y = pre y+1 \\
+\key{node} incr(x:int) returns (y:\key{int}) =  \key{loop} y = x+1  \\
+\key{node} use\_run() \key{returns}(x:\key{int}) = \\
+~~~  \key{exist} a,b:\key{int in} \\
+~~~  \key{run} a := N() \key{in} \\
+~~~  \key{run} b := incr(a) \key{in} \\
+~~~  \key{run} x := incr(b) \key{in} \\
+~~~    \key{loop} true
+\end{program}
+\end{example}
+
+ If the chosen values during a run make a constraint unsatisfiable, no
+ backtracking occurs.  For instance, the following expression is very
+ likely to deadlock:
+
+\begin{example}
+\begin{program}
+  \key{run} x := within(0,100) \key{in} x = 42
+\end{program}
+\end{example}
+
+ Indeed, if 42 is not chosen during the call to the \key{within} node
+ (which definition is obvious), the constraint x=42 will fail.
+
+
+This form of parallelism is cheaper, because contraints are solved
+locally.  But of course it is less powerful: constraints are not
+merged, but solved in sequence (no backtracking).  More detail on the
+\key{run} semantics is provided in Section~\ref{run-function}.
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Some sugared shortcuts}
+
+In this  section, we present a set  of operators that do  not add any
+expressing power  to the language, but  that ought to  make the \lutin
+programmer's life more harmonious.
+
+\subsubsection{Propagating a constraint into a scope}
+
+Very often, one wants to  define some constraints that should hold in
+all (or  most) of the  program statements. One  way to do this  is to
+to put it in parallel with the statement, and to raise an exception as 
+soon as one branch finishes.
+
+\begin{example}
+\begin{program}
+\key{trap} stop \key{in} \{\\ 
+   \ES \ \key{loop} \{  \syn{exp} \} \key{fby} \key{raise} stop\\ 
+   \ES \  \syn{st} \key{fby} \key{raise} stop\\
+ \} 
+\end{program}
+\end{example}
+
+Because  this  is  very  useful,  we defined  a  dedicated  construct
+(\key{assert}) that has exactly the same semantics:
+
+\begin{example}
+\begin{program}
+  \key{assert} \syn{exp} \key{in} \syn{st}
+\end{program}
+\end{example}
+In other  words, the constraint  \syn{exp} (a Boolean  expression) is
+distributed  (propagated) in  all  the constraints  of the  statement
+\syn{st}.
+
+
+
+\subsubsection{Random loops}
+ 
+Random loops are defined by constraining the number of iterations. 
+There are actually two pre-defined kinds of random loops:\\
+\begin{itemize}
+\item  Interval:   \LOOPI{\syn{min}}{\syn{max}}  \\  the   number  of
+  iteration  should  be   comprized  between  the  integer  constants
+  \syn{min} and \syn{max} (which  must satisfy $0 \leq \syn{min} \leq
+  \syn{max}$).
+\item  Average: \LOOPA{\syn{av}}{\syn{sd}}\\  the  average number  of
+  iteration should  be \syn{av}, with a  standard deviation \syn{sd}.
+  The behavior is defined if and only if $4*\syn{sd} < \syn{av}$.
+\end{itemize}
+
+\paragraph{Note.}
+Random  loops are  following  the {\em  reactivity principle},  which
+means that the  actual number of loops may  significantly differ from
+the  ``expected'' one  since  looping may  sometimes  be required  or
+impossible,  according  to  the  satisfiability of  constraints.  The
+precise semantics is given in~\S\ref{semantics}.
+
+
+
+\subsubsection{Define and catch an exception}
+
+The following statement:\\
+\key{trap} \syn{x} \key{in} \syn{st1} \key{do} \syn{st2}\\
+is a shortcut for:
+\key{exception} \syn{x} \key{in}
+\key{catch} \syn{x} \key{in} \syn{st1} \key{do} \syn{st2}
+
+\subsubsection{Catching deadlocks}
+\label{try}
+
+  \key{catch} \key{Deadlock} \key{in} \syn{st1} \key{do} \syn{st2}
+
+
+can be written:\\
+
+%A dynamic deadlock can be caught using the statement:\\
+
+\key{try} \syn{st1} \key{do} \syn{st2}\\
+
+If  a deadlock  is  raised  during the  execution  of \syn{st1},  the
+control  passes  immediately to  \syn{st2}.  If \syn{st1}  terminates
+normally, the  whole statement terminates  and the control  passes to
+the sequel.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Combinators}
+\label{combinators}
+
+
+ {\em  Combinator} were  introduced  in the  language  to allow  code
+ reuse. It's a kind of  well-typed macro. One can define a combinator
+ with the \key{let} statement:\\
+
+{\tt  \key{let}  \syn{id}  (\syn{Params})  :~\syn{Type}  =  \syn{St1}
+  \key{in} \syn{St2}}\\
+
+\begin{itemize}
+
+\item Such a  definition may appear at top-level,  outside a node, in
+  which case the "{\tt \key{in} \syn{St2}}" is absent.
+
+\item Classical scoping rules apply for \syn{St1}: free variables are
+  first binded  to the  \syn{Params} declaration, otherwise  they are
+  binded to the scope in which the whole statement appears.
+
+\item  The   "{\tt  (\syn{Params})}"   part  is  optional;   with  no
+  parameters, the declaration simply  means that \syn{id} is an alias
+  for the expression \syn{St1} within \syn{St2}.
+
+\item The "{\tt :~\syn{Type}}" is  optional; when absent, the type is
+  deduced from the expression \syn{St1}.
+
+\item  The  type  is   either  a  data-type  (\key{bool},  \key{int},
+  \key{real}) or  the type  \key{trace}, meaning that  the expression
+  "\syn{St1}"  (and   thus  the  identifier   "\syn{id}")  denotes  a
+  behaviour.   \key{trace} is  an  abstract type.   It  does not  say
+  anything about the support variables of the denoted behaviour.
+\end{itemize}
+
+ Here  is  an  example  of  (global)  Boolean  combinator  over  data
+ expressions: \
+
+\begin{example}
+\begin{program}
+\key{let} within\=(x,~min,~max:~\key{real}):~\key{bool}~=  (min <= x) \key{and} (x <= max)
+\end{program}
+\end{example}
+~\\
+
+Here  is an example  of trace  combinator.  It  takes two  traces and
+returns a trace that:
+\begin{itemize}
+\item runs the two trace arguments in parallel,
+\item terminates when the second one terminates.
+\end{itemize}
+\begin{example}
+\begin{program}
+\key{let} as\_long\_as(X, Y : \key{trace}) : \key{trace} = \\
+    \> \key{trap} \= Stop \key{in}\\
+    \>      \> X  \EA~\OB Y \key{fby} \key{raise} Stop\CB\\
+    \> \CB
+\end{program}
+\end{example}
+
+
+\subsubsection{Reference declarations}
+\label{ref-declaration}
+
+If one wants to acces to the previous value of a variable, one has to
+declare in  the combinator profile that  it is a  reference using the
+\key{ref} keyword.
+
+
+\begin{example}
+\begin{program}
+\key{let} foo(pt: real \key{ref}, t: real) : \key{bool} = \\
+       \> \key{if} \key{pre} pt < pt \key{then} pt < t \key{else} t < pt 
+\end{program}
+\end{example}
+
+Another  example  of the  use  of  reference  variables is  given  in
+Section~\ref{up-and-down}.
+
+\subsubsection{Pre-defined combinators: nor, xor, and \#}
+\label{Pre-defined-combinators}
+
+Some useful combinators are predefined to state that, among a list of
+Boolean expressions:
+
+\begin{itemize}
+\item none is true (\key{not})
+\item exactly one is true (\key{xor})
+\item exactly zero or one is true (\key{\#})
+\end{itemize}
+
+
+\begin{example}
+  \begin{program}
+    \key{node} N() \key{returns} (\key{x,y,t}:bool) = \\
+        \{ \\
+          | \key{nor}(x,y,z) or \key{xor}(x,y,z) \\
+          | \#(x,y,t) -- actually equivalent to the previous line\\
+        \}
+\end{program}
+\end{example}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Calling external code}
+
+
+In order to use external code from \lutin, we provide a mechanism based
+on dynamic (shared) libraries (a.k.a.  {\tt .so} or {\tt .dll} files). 
+%
+Such dynamic libraries should be built and used according to certain
+conventions that we describe in this section.
+
+Moreover, the  type of imported  functions should be declared  in the
+\lutin\  file, and  of course,  the declared  types should  match their
+definitions in the library. For example,  in order to be able to call
+the {\tt sin} and the {\tt cos} extern functions in a lutin file, one
+have to declare them like that:
+
+\begin{example}
+A \lutin\ program calling 2 extern functions  {\tt sin()} and {\tt cos()}.
+\begin{alltt}
+\begin{small}
+\input{polar.lut}
+\end{small}
+\end{alltt}
+\end{example}
+
+Another example,  as well as  the extern library  compilation process
+and    the    \lutin\    interpreter    options,   is    provided    in
+Section~\ref{call-extern-c-code}
+
+
+{\bf BEWARE: } if the types you declare in the Lutin file does not
+match their definitions, it might run silently returning wrong values!
+
+

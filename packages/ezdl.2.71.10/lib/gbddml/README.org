@@ -1,0 +1,1 @@
+A BDD library in C + an ocaml wrapper, by Pascal Raymond.

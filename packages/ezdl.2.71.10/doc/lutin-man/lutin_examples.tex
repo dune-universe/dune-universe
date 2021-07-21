@@ -1,0 +1,108 @@
+\section{Examples}
+
+\subsection{Up and down}
+\label{up-and-down}
+
+
+The {\tt examples/lutin/up\_and\_down}  directory of the \lutin\ distribution
+contains a complete running (via the Makefile) example.
+
+\begin{example}
+The {\tt ud.lut} file.
+\begin{alltt}
+\begin{small}
+\input{ud.lut}
+\end{small}
+\end{alltt}
+\end{example}
+
+
+This program  first defines 3  combinators: {\tt between},  {\tt up},
+and  {\tt down}.   {\tt between}  is  used to  constraint a  variable
+between a min and a max. Is  is used by the {\tt up} combinator, that
+constraint a  controllable variable to be between  its previous value
+and its previous value plus  a constant (delta).  The parameter of up
+needs to  be declared as  reference, so that  it possible to  use its
+previous value (cf~\ref{ref-declaration}).
+
+Then comes the definition of the main node. At the first instant, the
+output x is chosen between  the minimum and the maximum. Then, either
+it goes  up or it goes  down. If it goes  up (resp down),  it does so
+until the maximum (resp minimum)  value is exceeded, and then it goes
+down (resp up), and so on forever.
+
+
+
+\begin{figure}
+\includegraphics[width=15cm]{ud.jpg}
+\caption{
+This  image has  been obtained  with the  command {\tt  lutin  -l 100
+  ud.lut -main main > ud.rif ; gnuplot-rif -jpg ud.rif}
+}\label{gnuplot-ud}
+\end{figure}
+
+\subsection{The crazy rabbit}
+
+The  {\tt   examples/lutin/crazy\_rabbit}  directory  of   the  \lutin
+distribution contains a bigger program.
+
+
+\begin{example}
+The {\tt rabbit.lut} file.
+\begin{alltt}
+\begin{small}
+\input{rabbit.lut}
+\end{small}
+\end{alltt}
+\end{example}
+
+
+\subsection{Calling external code}
+\label{call-extern-c-code}
+
+The  {\tt  examples/lutin/external\_code}  directory of  the  \lutin
+distribution contains a complete running (via the Makefile) example
+of calling extern code from \lutin.
+
+This  directory  contains a  C  file {\tt  foo.c}  that  defines a  C
+function {\tt  rand\_up\_to}. 
+
+
+\begin{example}
+The {\tt foo.c} file.
+\begin{alltt}
+\begin{small}
+\input{foo.c}
+\end{small}
+\end{alltt}
+\end{example}
+
+This C function,  as well as two other function that  are part of the
+standard  C  math library  is  are used  in  the  \lutin\ program  {\tt
+  call\_external\_c\_code.lut}.
+
+\begin{example}
+The {\tt call\_external\_c\_code.lut} file. 
+\begin{alltt}
+\begin{small}
+\input{call_external_c_code.lut}
+\end{small}
+\end{alltt}
+\end{example}
+
+
+
+One needs  to generate a  shared lib from  this C file  (foo.so under
+unix, or foo.dll  under windows), and to pass  this shared library to
+the \lutin\  interpreter via the  {\tt -L foo.so} option.   Since the
+\lutin\ file  also uses  the {\tt sin}  and the {\tt  sqrt} functions
+that are part of the standard math library, one also need to pass the
+{\tt -L libm.so} option.  For instance
+
+\begin{alltt}
+  lutin call_external_c_code.lut -m Fun_Call -L libm.so -L obj/foo.so
+\end{alltt}
+
+All  this compilation process  is illustrated  in the  {\tt Makefile}
+contained in the directory.
+

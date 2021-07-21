@@ -1,0 +1,254 @@
+\section{Executing  \lutin programs}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The toplevel interpreter}
+
+Here is the output of {\tt lutin --help}:
+\begin{alltt}
+\input{lutin}
+\end{alltt}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The C and the \ocaml API}
+\label{api}
+
+It is  possible to call  the \lutin interpreter  from C or  from \Ocaml
+programs.
+
+\paragraph{Calling the \lutin interpreter from C.}
+
+In order to do that from C, one can use the functions provided in the
+\verb+luc4c_stubs.h+   header   file   (that   should   be   in   the
+distribution).    A    complete    example    can   be    found    in
+\verb+examples/lutin/C/+.  It  contains, a C file, a  \lutin file that
+is  called  in  the C  file,  and  a  Makefile that  illustrates  the
+different compilers  and options  that should be  used to  generate a
+stand-alone executable.
+
+\paragraph{Calling the \lutin interpreter from \Ocaml.}
+
+
+
+In order call \lutin from \ocaml, one can use the functions provided in
+the  \verb+luc4ocaml.mli+   interface  file  (or   cf  the  ocamlcdoc
+\href{http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lurette/doc/luc4ocaml/Luc4ocaml.html}{generated  html  files}).   A  complete  example can  be  found  in
+\verb+examples/lutin/ocaml/+.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Tools that can be used in conjunction with \lutin}
+
+
+
+Some tools developed in the Verimag  lab might be useful in you write
+\lutin\  programs. In  this section,  we  list the  tools and  describe
+briefly how they can be used in conjunction with \lutin.
+
+
+
+\subsubsection{\lustre}
+
+Using the {\tt lutin --2c-4lustre <string>} option and the C API
+described in Section\ref{api}, one can call the
+\lutin interpreter from  a lustre node.
+A complete example can be found in \verb+examples/lutin/lustre/+.
+
+\subsubsection{\luciole}
+
+
+\luciole is GUI that provides buttons and slide bars to
+ease the execution of \lustre programs.
+
+
+Using the  {\tt lutin --2c-4luciole}  option, one can use  the \lutin
+interpreter in conjunction with Luciole.  This can be very handy when
+writing \lutin programs.
+A complete example can be found in \verb+examples/lutin/luciole/+.
+
+\todo{Faire une copie d'ecran illustrant une simu luciole/lutin.}
+
+
+\subsubsection{\lurette}
+
+\lurette is  a tool that  automates the testing of  reactive programs,
+for example written \lustre. The \lutin program interpreter is embedded
+into \lurette;  it is  mainly used to  program the environment  of the
+System Under Test  (a.k.a. SUT).  Hence, \lurette is  able to test the
+program into a  simulated environment.  The SUT inputs  are the \lutin
+outputs, and vice versa.
+
+Therefore, \lutin is used to  close the reactive programs by providing
+inputs. From a lutin-centric point  of view, a \lutin program could use
+\lurette and \lustre to close the \lutin program.
+
+A complete example can be found in {\tt examples/lutin/xlurette}.
+
+\subsubsection{\rdbg}
+Lutin programs can be debugged with \rdbg{} (\url{http://rdbg.forge.imag.fr/}).
+
+\subsubsection{\checkrif}
+
+A  tool that performs  post-mortem oracle  checking using  the
+ Lustre expanded code (.ec) interpreter \ecexe.
+
+Here is the output of {\tt check-rif --help}:
+\begin{alltt}
+\input{checkrif}
+\end{alltt}
+
+\subsubsection{\simtochro}
+
+\simtochro is  a program written par Yann  R\'emond that displays
+data files that follows the  RIF convention.  For example, to display
+à RIF file, one can launch the command : {\tt sim2chrogtk -ecran -in
+  data.rif }
+
+\subsubsection{\gnuplotrif}
+
+{\gnuplotrif} is another tool that displays RIF files.  Sometimes
+it performs a better job than \simtochro, sometimes not.
+
+
+Here is the output of {\tt gnuplot-rif --help}:
+\begin{alltt}
+\input{gnuplotrif}
+\end{alltt}
+
+
+An    example    is    provided   in    Figure~\ref{gnuplot-ud}    of
+Section~\ref{up-and-down}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Known bugs and issues}
+
+\subsection{Numeric solver issues}
+\label{lucky-numeric-solver}
+
+Since we target the test of real-time software, we put the emphasis
+on the efficiency of the solver.
+
+
+In order to  solve numeric linear constraints, we  use the library of
+convex  polyhedron  {\sc   Polka}~\cite{polka}  which  is  reasonably
+efficient, at  least for small dimension of  manipulated polyhedra --
+the  algorithms complexity  is exponential  in the  dimension  of the
+polyhedron. Polyhedron of dimension  bigger that $15$ generally leads
+to unreasonable response time.
+
+Note however that independent  variables -- namely, variables that do
+not  appear  in the  same  constraint  --  are handled  in  different
+polyhedra. This means  that the limitation of 15  dimensions does not
+lead to a limitation of  15 variables.  Fortunately, having more than
+15 variables that are truly interdependent in the same cycle ought to
+be quite rare.
+
+
+\subsubsection{Solving integer constraints in dimension $n \geq 2$}
+When the dimension is greater than  2, for the sake of efficiency, we
+do not use classical methods such as linear logic for solving integer
+constraints:  we solve those  constraints in  the domain  of rational
+numbers  and then we  truncate.  The  problem is  of course  that the
+result may not be a solution of the constraints.
+
+In  such  a  case,  we  chose  to  pretend  that  the  constraint  is
+unsatisfiable  (after   a  few   more  tries  according   to  various
+heuristics), which can be wrong, but which is safe in some sense. The
+right solution  there would  be to call  an integer solver,  which is
+very expensive, and yet to be done.
+
+
+\subsubsection{Fairness versus efficiency}
+
+A \lutin program can be  interpreted in two different modes; one that
+emphasises the  fairness of the  draw; the other one  that emphasises
+the  efficiency.  Indeed,  suppose  we want  to  solve the  following
+constraint:
+
+$$ ((b \wedge \alpha_1) \vee (\overline{b} \wedge \alpha_2)) \wedge \alpha_3 \wedge (\alpha_4 \vee \alpha_5) $$
+
+where $b$ is a Boolean, and where $\alpha_i$ are atomic numeric
+constraints of the form: $\sum_i a_i x_i < cst$.  The first step is to
+find solution from the Boolean point of view. This leads to the four solutions:
+
+$$ b \alpha_1 \overline{\alpha_2} \alpha_3 \overline{\alpha_4} \alpha_5, \ \ \ \
+ b \alpha_1 \overline{\alpha_2} \alpha_3 \alpha_4 \overline{\alpha_5}, \ \ \ \
+ \overline{b} \overline{\alpha_1} \alpha_2 \alpha_3 \overline{\alpha_4} \alpha_5, \ \ \ \ 
+ \overline{b} \overline{\alpha_1} \alpha_2 \alpha_3 \alpha_4 \overline{\alpha_5}$$
+
+\noindent
+Now, suppose that:
+$$\alpha_1 = 100 > x, \ \
+\alpha_2 = 200 > x, \ \
+\alpha_3 = x > 0, \ \
+\alpha_4 = x > x, \ \
+\alpha_5 = x > 1$$
+
+\noindent
+ where $x$ is an integer variable that has to be generated by \lutin. We
+ use the convex polyhedron  library to solve the numeric constraints,
+ which lead respectively to the following sets of solutions:
+
+$$S1 = b \wedge x \in [2;100]; \ \ 
+S2 = b \wedge x = 0; \ \ 
+S3 = b \wedge \overline{x} \in [2;200]; \ \ 
+S4 = b \wedge \overline{x} = 0 $$
+
+
+In order  to perform a fair draw  among the set of  all solutions, we
+need to compute the number of  solutions in each of the set $Si$. But
+this  computation  is  very  very  expensive for  polyhedron  of  big
+dimension.  Moreover, as  we use Binary Decision Diagrams~\cite{cudd}
+to solve the Boolean part,  associating a volume to each numeric part
+results in a lost of sharing in BBDs.
+
+Therefore, we have  adopted a pragmatic approach:
+\begin{itemize}
+\item implement an efficient mode that is fair with respect to the Boolean part only; 
+\item implement a fair mode that performs an approximation of the polyhedron volume.
+\end{itemize}
+
+The polyhedron volume is approximated by the smallest hypercube
+containing the polyhedron.  Note that this leads to no approximation
+for polyhedron of dimension 1 (intervals), and reasonable
+approximation in dimension 2. But the error made increases
+exponentionally in the dimension.
+%
+Therefore, for polyhedron of big dimension, it is better to use the
+efficient mode, and to rely only the probability defined by
+transition weights.
+
+
+
+Note that when there are only Boolean variables as output or local
+variables, the two modes are completely equivalent.
+
+\subsubsection{Fair mode and precision and the computations}
+
+In the fair  mode, we compute an approximation  of polyhedron volume.
+But  how to  mix set  of solutions  that involves  both  integers and
+floats (which are necessarily computed by distinct polyhedra)?
+
+The solution we have adopted is the following: relate both domain via
+the precision of the computations, which is a parameter of the \lutin
+programs interpreter. For example, with a precision of 2 digits after
+the  dot, we  consider  that the  set  $x \in  [0;3]$ contains  $300$
+solutions.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Last breath}
+
+ 
+ Before stopping (Vanish exception), the \lutin interpreter generates
+ one dummy vector of values that should be ignored.
+

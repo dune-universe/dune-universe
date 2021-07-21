@@ -1,0 +1,4 @@
+(library
+ (name biotk_pipes_unix)
+ (public_name biotk.pipes.unix)
+ (libraries biotk.pipes))

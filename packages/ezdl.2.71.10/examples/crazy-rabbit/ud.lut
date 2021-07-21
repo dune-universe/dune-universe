@@ -1,0 +1,19 @@
+
+let between(x, min, max : real) : bool = ((min < x) and (x < max))
+
+node up(init, delta:real) returns( x : real) = 
+   x = init fby loop { between(x, pre x, pre x + delta) }
+
+node down(init, delta:real) returns( x : real) = 
+   x = init fby loop { between(x, pre x - delta, pre x) }
+   
+node up_and_down(min, max, delta : real) returns (x : real) =   
+   between(x, min, max)
+ fby
+   loop {
+        | run x := up(pre x, delta)   in loop { x < max }
+        | run x := down(pre x, delta) in loop { x > min }
+       }
+
+node main () returns (x :  real) =
+    run x:= up_and_down(0.0, 100.0, 5.0)

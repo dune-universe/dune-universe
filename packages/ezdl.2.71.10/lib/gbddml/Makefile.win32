@@ -1,0 +1,134 @@
+#------------------------------------------------------------------
+# wrappeur ocaml pour gbdd
+#------------------------------------------------------------------
+# n.b. on recompile gbdd.o plutot que d'utiliser la librairie standard
+#      du LUSTRE_INSTALL (pour être sur d'utiliser des compilos
+#      caml et gcc compatibles)
+#------------------------------------------------------------------
+# Pour utiliser la librairie, il faut linker avec une commande du style :
+#
+# pour gcc > 3.* !
+#  ocamlopt bdd.cmx $(MES_CMX) gbdd_cml.o gbdd.o -cclib -lstdc++ -o $(MON_PRG)
+#
+#------------------------------------------------------------------
+# SOURCES
+#------------
+# * bdd.ml => bdd.cmi et bdd.cmx
+#             (interface + qq utils en ocaml)
+#
+# * gbdd_cml.cc => gbdd_cml.o
+#             (le gros de l'implementation de bdd.ml
+#              en C++ compatible C via macro extern "C")
+#
+# * gbdd.cc/gbdd.h => gbdd.o
+#              (le source du module C++ originel)
+#
+# * test.ml => un test pour voir ...
+#
+#------------------------------------------------------------------
+
+#OCAML_INSTALL=$OCAMLLIB
+
+
+ifeq ($(HOST_TYPE),win32)
+# windows
+	OCAML_LIB="c:\TEMP\ocaml\lib"
+	OCAMLOPT = /cygdrive/c/TEMP/ocaml/bin/ocamlopt
+	OCAMLC = /cygdrive/c/TEMP/ocaml/bin/ocamlc
+	OCAML = /cygdrive/c/TEMP/ocaml/bin/ocaml
+	CPP_COMPILER=g++ -mno-cygwin
+	CPP_LINKER=g++  -mno-cygwin
+else 
+ifeq ($(HOST_TYPE),sparc-sun)
+	OCAML_LIB=ocaml
+	OCAMLOPT =ocamlopt
+	OCAMLC = ocamlc
+	CPP_COMPILER=g++
+	CPP_LINKER=g++ 
+else 
+ifeq ($(HOST_TYPE),mac)
+	OCAML_LIB=/private/var/automount/import/macos/ocaml/3.09.3/lib/ocaml
+	OCAMLOPT =ocamlopt -cc g++
+	OCAMLC = ocamlc
+	CPP_COMPILER=g++
+	OCAMLFLAGS= -cc g++
+	CPP_LINKER=g++ 
+else
+	OCAML_LIB=ocaml
+	OCAMLOPT =ocamlopt
+	OCAMLC = ocamlc
+	CPP_COMPILER=g++ # -DGBDD_CML_PARANO -DGBDD_CML_DBG
+	CPP_LINKER=g++ 
+endif
+endif
+endif
+
+#OCAMLOPT = ocamlopt
+
+CPP_FLAGS=-g -O0 -fno-operator-names
+
+LFLAGS =  -cclib -lstdc++
+
+
+# bdd.cmi : bdd.mli
+# 	ocamlopt -c bdd.mli
+
+bdd.cmx : bdd.ml
+	$(OCAMLOPT) -c  bdd.ml
+
+test.cmx : test.ml
+	$(OCAMLOPT) -c test.ml
+
+gbdd_cml.o : gbdd.h gbdd_cml.cc
+	$(CPP_COMPILER) -c $(CPP_FLAGS) gbdd_cml.cc -o gbdd_cml.o
+
+gbdd.o : gbdd.h gbdd.cc
+	$(CPP_COMPILER) -c $(CPP_FLAGS) gbdd.cc -o gbdd.o
+
+
+test :  bdd.cmx gbdd_cml.o gbdd.o test.cmx 
+	$(OCAMLOPT) bdd.cmx test.cmx gbdd_cml.o gbdd.o $(LFLAGS) -o test
+
+
+libbdd_stubs.a : gbdd_cml.o gbdd.o
+	ar rc libbdd_stubs.a  gbdd_cml.o gbdd.o
+	ranlib libbdd_stubs.a
+
+%.cmo: %.ml %.cmi
+	$(OCAMLC) -c $<
+
+bdd.cma: bdd.cmo
+	$(OCAMLC) -a -o bdd.cma bdd.cmo
+
+bdd.cmxa : bdd.ml libbdd_stubs.a bdd.cmx
+	$(OCAMLOPT) -a  -verbose -cclib -lstdc++  -cclib -lbdd_stubs   \
+			 -o bdd.cmxa bdd.cmx
+
+
+
+bdd.a: bdd.cmx
+	ar rc bdd.a bdd.o
+	ranlib bdd.a
+
+all : bdd.a libbdd_stubs.a bdd.cmxa bdd.cma
+
+clean:
+	rm -f *.o *.cmo *.cmi *.cmx *.a *.cma *.cmxa
+
+cp:  
+	cp libbdd_stubs.a ../$(HOSTTYPE)/lib/
+	cp bdd.a ../$(HOSTTYPE)/lib/
+	cp bdd.a ../$(HOSTTYPE)/lib/libbdd.a
+	cp bdd.cm* ../$(HOSTTYPE)/lib/
+
+VERIMAG_INSTALL_DIR=`ocamlc -where`/lucky
+
+cp-verimag:  
+	cp libbdd_stubs.a $(VERIMAG_INSTALL_DIR)
+	cp bdd.a $(VERIMAG_INSTALL_DIR)
+	cp bdd.a $(VERIMAG_INSTALL_DIR)/libbdd.a
+	cp bdd.cm* $(VERIMAG_INSTALL_DIR)
+
+
+
+

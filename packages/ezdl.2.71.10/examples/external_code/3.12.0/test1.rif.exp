@@ -1,0 +1,24 @@
+# The random engine was initialized with the seed 834966010
+#inputs 
+#outputs "f1":real "f2":real "i":int 
+#step 1
+#outs 87.36 0.84 9 
+#step 2
+#outs 61.26 0.08 4 
+#step 3
+#outs 31.94 1.00 8 
+#step 4
+#outs 64.31 -0.59 8 
+#step 5
+#outs 96.69 0.99 10 
+#step 6
+#outs 66.59 -0.40 2 
+#step 7
+#outs 15.51 0.95 3 
+#step 8
+#outs 77.29 -0.72 8 
+#step 9
+#outs 26.98 0.59 3 
+#step 10
+#outs 24.66 -0.89 6 
+#end. Max step number reached.

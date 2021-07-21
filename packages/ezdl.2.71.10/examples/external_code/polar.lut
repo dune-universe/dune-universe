@@ -1,0 +1,8 @@
+extern sin(x:  real) : real
+extern cos(x:  real) : real
+
+node cartesian(r, alpha: real) returns (x, y: real) =
+  loop {
+       (x = r * cos (alpha)) and
+       (y = r * sin (alpha))
+  }

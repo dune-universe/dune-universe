@@ -1,0 +1,20 @@
+(executable
+ (name lurette)
+ (modes (byte exe) (native exe))
+ (libraries lustre-v6 lutin)
+; (libraries camlidl lustre-v6 lutin sasa)
+
+  ;;; necessary to be able to use sasa because sasa use Dynlink
+  ;;; but it fails because of lutin (well, because of camlidl to be precise)
+ ; (link_flags (-linkall)) 
+
+)
+
+(install
+ (section bin)
+ (package lutin)
+ (files
+  (lurette.exe as lurette)
+  (lurette.bc as lurette4dbg)
+ )
+)

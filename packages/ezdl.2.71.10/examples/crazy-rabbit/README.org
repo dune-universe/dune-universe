@@ -1,0 +1,2 @@
+Make sure that caml code can be called from lurette.
+ 

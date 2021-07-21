@@ -1,0 +1,33 @@
+
+
+
+Une collection de macros (écrites par Pasca Raypond) qui permet de
+faire du link dynamique indifféremment sous unix ou win32
+
+Les macros fournies sont des versions "simplifiées"
+de dlopen et dlsym (posix) :
+
+#+BEGIN_SRC c
+void* ezdlopen(char* n)
+#+END_SRC
+   - retourne le handler (NULL si erreur)
+
+#+BEGIN_SRC c
+void* ezdlsym(void* h, char* n)
+#+END_SRC
+   - retourne la fonction n dans h (NULL si erreur)
+
+#+BEGIN_SRC c
+char* ezdlerror()
+#+END_SRC
+   - une explication si et quand il vient juste
+   d'y avoir une erreur (indéfini sinon)
+
+Pour utiliser il faut juste inclure : 
+
+#+BEGIN_SRC c
+#include "ezdl.h"
+#+END_SRC
+
+et, sous win32, compiler avec l'option =-DWIN32=
+(par défaut c'est du posix)

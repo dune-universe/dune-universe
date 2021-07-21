@@ -1,0 +1,5 @@
+extern bool_utils_au_plus_2_parmi_3(b1, b2, b3:bool): bool
+
+node au_plus_2_parmi_3(b1, b2, b3:bool) returns (ok:bool) =
+loop
+  ok = bool_utils_au_plus_2_parmi_3(b1, b2, b3)

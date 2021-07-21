@@ -1,0 +1,3 @@
+(library
+ (name biotk_pipes)
+ (public_name biotk.pipes))

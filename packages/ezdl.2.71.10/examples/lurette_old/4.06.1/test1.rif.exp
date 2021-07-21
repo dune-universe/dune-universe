@@ -1,0 +1,408 @@
+#inputs "T":real "T1":real "T2":real "T3":real 
+#outputs "Heat_on":bool 
+#oracle_outputs "ok":bool "c1":bool "c2":bool "c3":bool 
+#oracle_outputs "ok":bool "c4":bool "c5":bool "c6":bool 
+#step 0
+7.00 6.56 6.85 7.48 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 1
+7.87 8.11 8.29 8.05 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 2
+7.87 8.23 8.15 8.16 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 3
+8.26 8.45 8.56 7.95 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 4
+8.26 8.34 8.33 8.05 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 5
+9.06 9.33 8.60 8.77 #outs t
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 6
+9.06 8.62 9.50 9.52 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 7
+8.64 8.86 8.32 8.40 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 8
+8.44 8.35 8.56 8.72 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 9
+7.93 8.36 8.42 7.87 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 10
+7.15 7.64 7.54 6.76 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 11
+6.90 6.78 6.44 7.17 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 12
+6.41 6.64 6.65 6.89 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 13
+5.52 5.95 5.78 5.02 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 14
+6.41 6.59 5.98 5.98 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 15
+6.41 6.42 5.99 6.43 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 16
+6.41 6.66 6.85 6.47 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 17
+6.54 6.87 6.97 7.03 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 18
+6.54 6.32 6.36 6.66 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 19
+7.12 6.94 6.74 7.35 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 20
+7.76 8.20 7.59 7.88 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 21
+8.70 9.15 9.14 8.74 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 22
+8.68 8.57 8.91 8.80 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 23
+7.69 7.52 7.48 7.22 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 24
+6.74 6.76 6.96 6.71 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 25
+6.21 5.95 6.28 5.98 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 26
+6.86 6.71 7.24 6.58 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 27
+7.46 7.46 7.09 7.81 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 28
+7.46 7.36 7.34 7.68 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 29
+7.78 7.65 7.31 7.29 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 30
+8.70 8.50 8.43 8.90 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 31
+9.63 9.16 10.12 9.97 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 32
+8.64 8.22 8.42 8.79 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 33
+8.26 8.54 8.40 8.41 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 34
+8.08 7.83 7.78 8.33 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 35
+7.53 7.40 7.10 7.69 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 36
+7.43 7.74 7.74 7.39 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 37
+6.83 6.65 7.09 7.08 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 38
+6.57 6.24 6.35 6.39 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 39
+5.74 5.26 5.85 5.68 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 40
+6.14 6.51 6.48 6.24 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 41
+6.14 5.91 6.08 5.82 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 42
+6.14 6.08 5.70 6.44 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 43
+6.88 7.23 6.47 6.46 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 44
+6.88 7.13 6.63 6.63 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 45
+7.03 7.02 7.52 7.09 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 46
+7.03 7.21 7.21 6.59 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 47
+7.76 8.00 7.83 8.03 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 48
+7.76 7.30 7.83 7.70 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 49
+7.76 7.35 7.94 7.86 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 50
+8.47 7.98 8.80 8.33 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 51
+8.47 8.27 8.18 8.82 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 52
+9.09 8.90 8.70 8.95 #outs t
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 53
+9.09 8.64 9.23 9.25 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 54
+9.01 9.33 9.04 8.81 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 55
+8.39 8.58 8.59 8.80 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 56
+7.44 7.14 7.12 6.95 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 57
+7.07 6.98 7.25 6.97 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 58
+6.14 6.11 6.51 6.13 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 59
+6.07 6.06 6.28 6.22 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 60
+6.05 6.06 6.36 5.57 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 61
+5.36 4.96 5.71 5.84 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 62
+5.36 5.67 5.38 5.76 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 63
+5.60 5.18 6.10 5.98 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 64
+5.60 5.29 5.51 5.78 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 65
+5.60 5.95 5.84 5.35 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 66
+5.60 5.67 5.48 5.15 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 67
+6.34 6.66 6.80 6.79 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 68
+6.40 6.40 5.90 6.72 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 69
+6.72 6.82 6.60 6.40 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 70
+6.72 6.49 6.27 6.56 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 71
+6.72 7.05 6.57 7.14 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 72
+7.53 7.79 7.79 7.15 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 73
+7.53 8.00 8.01 7.65 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 74
+8.28 7.89 8.73 8.36 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 75
+8.90 9.38 8.61 8.84 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 76
+9.30 9.13 9.64 8.97 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 77
+9.20 9.25 9.65 9.19 #outs f
+#oracle_outs t f f f
+#oracle_outs t t f f
+#step 78
+8.56 8.94 8.50 8.19 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 79
+8.05 8.41 7.97 8.44 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 80
+7.53 7.76 7.75 7.77 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 81
+6.68 7.05 6.69 6.34 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 82
+6.50 6.46 6.46 6.99 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 83
+5.89 6.37 6.18 5.41 #outs f
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 84
+5.80 6.24 5.77 5.87 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 85
+5.80 5.34 6.24 5.65 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 86
+5.80 5.81 6.00 5.48 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t
+#step 87
+6.28 6.02 5.78 6.58 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 88
+6.70 6.23 6.49 6.54 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 89
+6.70 6.92 6.82 6.25 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 90
+7.69 7.66 7.69 7.92 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 91
+7.70 8.00 7.33 7.98 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 92
+8.37 8.49 8.45 8.50 #outs t
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 93
+8.98 8.78 9.24 8.74 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 94
+8.55 9.02 9.01 8.82 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 95
+8.26 8.40 8.35 8.50 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 96
+7.49 7.65 7.93 7.84 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 97
+7.08 7.38 7.55 6.77 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 98
+6.79 7.23 6.74 6.83 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 99
+6.43 6.05 6.48 6.02 #outs f
+#oracle_outs t f f f
+#oracle_outs t f f t
+#step 100
+5.45 5.39 5.37 5.92 #outs t
+#oracle_outs t t f t
+#oracle_outs t f f t

@@ -1,0 +1,16 @@
+
+
+let abs_int(x: int) =
+  if x>=0 then x else -x
+let abs_real(x: real) =
+  if x>=0.0 then x else -x
+
+
+node main(a:int; b:bool; c:real) returns ( x:int [-100000; 100000]; y:bool; z:real [-100000.0;100000.0]) =
+  loop
+    {
+       (b=>y) and abs_int(x - a) < 5 and abs_real(z - c) < 5.0
+   }
+
+
+      

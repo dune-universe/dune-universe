@@ -1,0 +1,95 @@
+include "../crazy-rabbit/ud.lut"
+
+--------------------------------------------------------------------------------
+--
+-- 
+--  --------------------------------------
+-- |                                      |
+-- |                                      |
+-- |       -----------------              |
+-- |      | p1     |  p2    |             |
+-- |      |        |        |             |
+-- |      |        |        |             |
+-- |      |--------c--------|             |
+-- |      |        |        |             |
+-- |      |        |        |             |
+-- |      |  p4    |      p3|             |
+-- |       -----------------              |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+-- |                                      |
+--  --------------------------------------
+-- 
+-- c is moving in the big square (the graphics window).
+-- p1, p2, p3, p4 are moving in the 4 small squares (depends on c)
+
+
+node obstacle(x_min, x_max, y_min, y_max : real) 
+returns (p1x, p1y, p2x, p2y, p3x, p3y, p4x, p4y : real) =
+
+   exist cx, cy : real in
+   let cote_x = (x_max-x_min) / 4.0 in
+   let cote_y = (y_max-y_min) / 4.0 in
+
+   let eps = 10.0 in
+   run cx := up_and_down(x_min + cote_x/2.0 , x_max-cote_x/2.0, eps) in
+   run cy := up_and_down(y_min + cote_y/2.0 , y_max-cote_y/2.0, eps) in
+
+   assert 
+       -- each pi remains inside one of the small squares
+       between(p1x, cx - cote_x, cx) and
+       between(p1y, cy - cote_y, cy) and
+
+       between(p2x, cx, cx + cote_x) and
+       between(p2y, cy - cote_y, cy) and
+
+       between(p3x, cx, cx + cote_x) and
+       between(p3y, cy, cy + cote_y) and
+
+       between(p4x, cx - cote_x, cx) and
+       between(p4y, cy, cy + cote_y) 
+   in
+
+      true fby loop {
+
+       -- each pi does not move too fast
+       between(p1x, pre p1x - eps, pre p1x + eps) and
+       between(p1y, pre p1y - eps, pre p1y + eps) and
+
+       between(p2x, pre p2x - eps, pre p2x + eps) and
+       between(p2y, pre p2y - eps, pre p2y + eps) and
+
+       between(p3x, pre p3x - eps, pre p3x + eps) and
+       between(p3y, pre p3y - eps, pre p3y + eps) and
+
+       between(p4x, pre p4x - eps, pre p4x + eps) and
+       between(p4y, pre p4y - eps, pre p4y + eps) 
+     }
+
+let cross_product(ux,uy,vx,vy:real) : real = (ux*vy-uy*vx)
+
+-- we look at the sign (of the z-axis) of p1p4 ^ p1p (cross product), etc.
+let is_inside(px,py,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y : real) : bool = 
+    let p1p_x = px-p1x in
+    let p1p_y = py-p1y in
+    let p2p_x = px-p2x in
+    let p2p_y = py-p2y in
+    let p3p_x = px-p3x in
+    let p3p_y = py-p3y in
+    let p4p_x = px-p4x in
+    let p4p_y = py-p4y in
+    let p2p1_x = p1x-p2x in
+    let p2p1_y = p1y-p2y in
+    let p1p4_x = p4x-p1x in
+    let p1p4_y = p4y-p1y in
+    let p4p3_x = p3x-p4x in
+    let p4p3_y = p3y-p4y in
+    let p3p2_x = p2x-p3x in
+    let p3p2_y = p2y-p3y in
+        cross_product(p2p1_x, p2p1_y, p2p_x, p2p_y) < 0.0 and --  p2p1 ^ p2p < 0
+        cross_product(p1p4_x, p1p4_y, p1p_x, p1p_y) < 0.0 and --  p1p4 ^ p1p < 0
+        cross_product(p4p3_x, p4p3_y, p4p_x, p4p_y) < 0.0 and --  p4p3 ^ p4p < 0
+        cross_product(p3p2_x, p3p2_y, p3p_x, p3p_y) < 0.0     --  p3p2 ^ p3p < 0
+

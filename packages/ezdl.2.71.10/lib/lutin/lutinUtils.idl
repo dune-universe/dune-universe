@@ -1,0 +1,5 @@
+
+int gauss_continue(int x, int mu, int sigma);
+int gauss_stop(int x, int mu, int sigma);
+int interval_continue(int x, int min, int max);
+int interval_stop(int x, int min, int max);

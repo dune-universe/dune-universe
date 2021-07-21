@@ -1,0 +1,4 @@
+(executable
+  (name croquis_demo)
+  (modules Croquis_demo)
+  (libraries biotk biotk.croquis))

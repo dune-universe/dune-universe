@@ -1,0 +1,7 @@
+(library
+  (name bddrand)
+  (public_name bddrand)
+  (libraries lutin)
+  (wrapped false)
+  (synopsis "A simple front-end to the lutin Random toss machinary")
+)

@@ -1,0 +1,95 @@
+
+%%% mly2bnf customization
+
+%\newcommand{\bnftoken}[1]{{\color{blue2}\bfseries\ttfamily #1}}
+\newcommand{\bnftoken}[1]{\mbox{\color{blue2}\bfseries\ttfamily #1}}
+\newcommand{\bnfleftident}[1]{{\color{purple4}\itshape #1}}
+\newcommand{\bnfrightident}[1]{~\hspace{-1ex}{\color{purple4}\itshape #1}}
+\newcommand{\bnfdef}{\mbox{\color{red}$::=$}}
+\newcommand{\bnfor}{\mbox{\color{red3}$|$}}
+\newcommand{\bnfopt}[1]{\mbox{\color{red3}$\lbrack$} #1 \mbox{\color{red3}$\rbrack$}}
+\newcommand{\bnflist}[1]{\mbox{\color{red3}$\lbrace$} #1 \mbox{\color{red3}$\rbrace$}}
+\newcommand{\bnfgroup}[1]{\mbox{\color{red3}$($} #1 \mbox{\color{red3}$)$}}
+%short cuts ...
+\newcommand{\key}[1]{\mbox{\bnftoken{#1}}}
+\newcommand{\prg}[1]{\mbox{\bfseries\ttfamily #1}}
+\newcommand{\syn}[1]{\mbox{\bnfrightident{#1}}}
+
+
+%\newcommand {\key}[1]{\mbox{\texttt{\textbf{#1}}}}
+%\newcommand {\key}[1]{\mbox{\tt #1}}
+%\newcommand {\syn}[1]{\mbox{\it #1}}
+\newcommand {\opt}[1]{\mbox{$[$ #1  $]$}}
+\newcommand {\oom}[1]{\mbox{$\{$ #1 $\}^+$}}
+\newcommand {\zom}[1]{\mbox{$\{$ #1 $\}^*$}}
+\newcommand {\comm}[1]{\framebox{#1}}
+
+\newcommand{\COL}{{\tt \symbol{"3A}}}  %{
+\newcommand{\OB}{{\tt \symbol{"7B}}}  %{
+\newcommand{\CB}{{\tt \symbol{"7D}}}  %}
+\newcommand{\BAR}{{\tt \symbol{"7C}}} %|
+\newcommand{\SBAR}{{\tt \symbol{"7C}\symbol{"3E}}}  %|>
+\newcommand{\OS}{{\tt \symbol{"5B}}}  %[
+\newcommand{\CS}{{\tt \symbol{"5D}}}  %]
+\newcommand{\TI}{{\tt \symbol{"7E}}}  %~
+\newcommand{\EE}{{\tt \symbol{"26}\symbol{"26}}}  %&&
+\newcommand{\ES}{{\tt \symbol{"26}\symbol{"3E}}}  %&>
+\newcommand{\OP}{{\tt \symbol{"28}}}  %(
+\newcommand{\CP}{{\tt \symbol{"29}}}  %)
+\newcommand{\LOOPI}[2]{{\tt loop\OS\mbox{#1},\mbox{#2}\CS}}
+\newcommand{\LOOPA}[2]{{\tt loop\TI\mbox{#1}:\mbox{#2}}}
+\newcommand{\EA}{\key{\symbol{"26}\symbol{"3E}}}  %&>
+
+
+\newenvironment{program}{\tt\vspace{0.0cm}\par \begin{minipage}{\fboxrule}\begin{tabbing} XX \= XX  \= XX  \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= \+\kill}{\end{tabbing} \end{minipage}\vspace{0.0cm}\rm\noindent\par}
+\newenvironment{smallprogram}{\vspace{0.3cm}\par \begin{minipage}{\fboxrule}\small\tt\begin{tabbing} XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= XX \= \+\kill}{\end{tabbing} \end{minipage}\vspace{0.3cm}\rm\noindent\par}
+\newenvironment{tinyprogram}{\tt\footnotesize\hspace{-5mm}\par \begin{minipage}{\fboxrule}\begin{tabbing} X \= X \= X \= X \= X \= X \= X \= X \= X \= X \= X \= \+\kill}{\end{tabbing} \end{minipage}\vspace{0.3cm}\rm\noindent\par}
+
+\newenvironment{example}
+{\vspace{1ex}\noindent
+\begin{tabular}{|p{15.8cm}|}
+{\bfseries $\triangleright$ Example:}
+}
+{\end{tabular}\vspace{1ex}}
+
+\newenvironment{definition}
+{\vspace{1ex}\noindent
+\begin{tabular}{||p{15.8cm}||}
+{\bfseries $\triangleright$ Definition:}
+}
+{\end{tabular}\vspace{1ex}}
+
+%\newenvironment{minitemize}{\begin{itemize}
+%\renewcommand{\labelitemi}{\mbox{--}}
+%\renewcommand{\labelitemii}{\mbox{$\bullet$}}
+%\setlength{\itemsep}{0mm}
+%\setlength{\topsep}{0mm}
+%}{\end{itemize}}
+
+\newcommand{\bug}{{\bf bug}}
+\newcommand{\todo}[1]{{\bf todo : } \emph{#1}}
+
+
+\newenvironment{minitemize}{\begin{itemize}
+\setlength{\itemsep}{0mm}
+\setlength{\topsep}{0mm}
+}{\end{itemize}}
+
+\usepackage{xspace}
+\newcommand{\lutin}{{\sc Lutin}\xspace}
+\newcommand{\lustre}{{\sc Lustre}\xspace}
+\newcommand{\lurette}{{\sc Lurette}\xspace}
+\newcommand{\rdbg}{{\sc RDBG}\xspace}
+\newcommand{\simtochro}{{\sc Sim2chro}\xspace}
+\newcommand{\simtochrogtk}{{\sc Sim2chrogtk}\xspace}
+\newcommand{\luciole}{{\sc Luciole}\xspace}
+\newcommand{\gnuplotrif}{{\sc Gnuplot-rif}\xspace}
+\newcommand{\checkrif}{{\sc check-rif}\xspace}
+\newcommand{\ecexe}{{\sc ecexe}\xspace}
+
+\newcommand{\Ocaml}{{\sc Ocaml}\xspace}
+\newcommand{\ocaml}{{\sc Ocaml}\xspace}
+\newcommand{\kwd}[1]{{\bf\color{red4}#1}}
+\newcommand{\kwdd}[1]{{\color{DarkSlateGrey}#1}}
+\newcommand{\kwddd}[1]{{\bf\color{green4}#1}}
+\newcommand{\commentaire}[1]{{\color{blue3}#1}}

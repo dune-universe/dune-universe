@@ -1,0 +1,11 @@
+(library
+  (name gbddml)
+  (public_name gbddml)
+  (libraries camlidl)
+  (wrapped false)
+  (modules Bdd) 
+  (foreign_stubs (language c) (names gbdd_cml gbdd)
+   (flags -x c++ -g -O2 -fno-operator-names -fPIC))   
+  (c_library_flags -lstdc++) 
+  (synopsis "gbddml: A BDD library in C + an ocaml wrapper")
+)

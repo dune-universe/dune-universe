@@ -1,0 +1,90 @@
+#------------------------------------------------------------------
+# wrappeur ocaml pour gbdd
+#------------------------------------------------------------------
+# n.b. on recompile gbdd.o plutot que d'utiliser la librairie standard
+#      du LUSTRE_INSTALL (pour être sur d'utiliser des compilos
+#      caml et gcc compatibles)
+#------------------------------------------------------------------
+# Pour utiliser la librairie, il faut linker avec une commande du style :
+#
+#  ocamlopt bdd.cmx $(MES_CMX) gbdd_cml.o gbdd.o -cclib -lstdc++ -o $(MON_PRG)
+#
+#------------------------------------------------------------------
+# SOURCES
+#------------
+# * bdd.ml => bdd.cmi et bdd.cmx
+#             (interface + qq utils en ocaml)
+#
+# * gbdd_cml.cc => gbdd_cml.o
+#             (le gros de l'implementation de bdd.ml
+#              en C++ compatible C via macro extern "C")
+#
+# * gbdd.cc/gbdd.h => gbdd.o
+#              (le source du module C++ originel)
+#
+# * test.ml => un test pour voir ...
+#
+#------------
+# TARGETS
+#------------
+# * test => un exemple d'executable natif
+#
+# * lib => bdd.cma
+#
+# * runtime => ocamlbddrun (ocaml + bdd runtime)
+#
+# * toplevel => ocamlbdd (ocaml + bdd toplevel)
+#
+#------------------------------------------------------------------
+
+OCAML_INSTALL=/usr/local/soft/ocaml/3.08
+OCAML_LIB=$(OCAML_INSTALL)/lib/ocaml/
+
+CPP_COMPILER=g++
+CPP_LINKER=g++
+C_COMPILER=gcc
+C_LINKER=gcc
+CPP_FLAGS=-g -fno-operator-names -I$(OCAML_LIB)
+
+LFLAGS =  -cclib -lstdc++
+
+#	-ccopt -L$(LUSTRE_INSTALL)/lib -cclib -lgbdd
+#	-ccopt -L$(OCAML_LIB) -cclib -lcamlrun 
+
+
+all : test
+lib : bdd.cma
+toplevel : ocamlbdd
+runtime : ocamlbddrun
+
+test :  bdd.cmx gbdd_cml.o gbdd.o test.cmx 
+	ocamlopt bdd.cmx test.cmx gbdd_cml.o gbdd.o $(LFLAGS) -o test
+
+
+bdd.cma : bdd.cmo gbdd_cml.o gbdd.o
+	ocamlc -a -o bdd.cma -custom bdd.cmo gbdd_cml.o gbdd.o $(LFLAGS)	
+#	ocamlopt -a -o bdd.cma -custom bdd.cmx gbdd_cml.o gbdd.o $(LFLAGS)	
+
+ocamlbdd : bdd.cma
+	ocamlmktop -o ocamlbdd bdd.cma
+
+ocamlbddrun : bdd.cma
+	ocamlc -make-runtime -o ocamlbddrun bdd.cma
+
+bdd.cmo : bdd.ml
+	ocamlc -c bdd.ml
+
+bdd.cmx : bdd.ml
+	ocamlopt -c bdd.ml
+
+test.cmx : test.ml
+	ocamlopt -c test.ml
+
+gbdd_cml.o : gbdd.h gbdd_cml.cc
+	$(CPP_COMPILER) -c $(CPP_FLAGS) gbdd_cml.cc -o gbdd_cml.o
+
+gbdd.o : gbdd.h gbdd.cc
+	$(CPP_COMPILER) -c $(CPP_FLAGS) gbdd.cc -o gbdd.o
+
+clean:
+	rm -f *.o *.cmo *.cmi *.cmx

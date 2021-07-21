@@ -1,0 +1,76 @@
+-- Time-stamp: <modified the 08/07/2016 (at 10:45) by Erwan Jahier>
+-- Mimick the content of the Stimulus Temporal library
+
+let OnceNow(condition:bool): trace = condition 
+let Repeat(BODY:trace)     : trace = loop BODY
+let Always(condition:bool) : trace = loop condition
+let DoAfterwards(DO,AFTER: trace) : trace = DO fby AFTER
+let AlwaysDuring(duration:int; condition:bool) : trace = loop [duration] condition
+
+let AsLongAs(event:bool; BODY:trace) : trace = assert event in BODY
+let From(event:bool; BODY:trace)     : trace = loop not event fby BODY
+let Until(event:bool; BODY:trace)    : trace = assert not event in BODY
+                           
+let OnceWithin(delay:int; condition:bool) : trace = 
+   loop [0,delay] not condition fby condition
+
+let AlwaysUntil(condition,event:bool) : trace = 
+    assert condition in loop not event fby event
+
+let OnceBefore(condition,event:bool) : trace = 
+    loop { not (event and condition)} fby
+    event and condition
+
+let when(condition:bool; BODY:trace) : trace =
+  loop { 
+    | assert condition in BODY
+    | not condition
+  }
+
+let IfThenElse(condition:bool;THEN,ELSE: trace) : trace = { 
+   |> { condition &> THEN }
+   |> ELSE
+}
+
+
+-- Tests
+let integers(init: int; cpt: int ref):trace =
+  cpt = init fby loop cpt = 1 + pre cpt
+           
+node test_when(condition:bool) returns (res:int) =
+  when(condition, integers(0,res))
+
+node test_AsLongAs(condition:bool) returns (res:int) =
+  AsLongAs(condition, integers(0,res))
+
+node test_From(condition:bool) returns (res:int) =
+  From(condition, integers(0,res))
+
+node test_Until(condition:bool) returns (res:int) =
+  Until(condition, integers(0,res))
+
+node test_IfThenElse(condition:bool) returns (res:int) =
+  IfThenElse(condition, integers(0,res), integers(-100,res))
+
+node test_DoAfterwards() returns (res:int) =
+  DoAfterwards( loop [2,5] res = 0, loop [2] res=1)
+
+node test_Repeat() returns (res:int) =
+     Repeat (res=0 fby res=1 fby res=2)
+
+node test_OnceBefore(event : bool) returns( condition : bool) =
+     OnceBefore(condition,event)
+
+node main(event:bool) returns (res:int) =
+
+trap stop in 
+ { &> loop event  fby raise stop 
+   &> integers(0,res) 
+ } fby
+  raise stop
+
+
+
+
+
+

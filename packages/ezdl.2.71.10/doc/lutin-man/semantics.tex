@@ -1,0 +1,263 @@
+
+\newcommand{\trans}[1]{\mbox{$\stackrel{#1}{\rightarrow}$}}
+\newcommand{\vanish}{\raisebox{-0mm}{$\;\rotatebox{90}{$\scriptstyle \hookleftarrow$}$}}
+\newcommand{\diewith}[1]{\raisebox{-0mm}{$\;\rotatebox{90}{$\scriptstyle \hookrightarrow$}^{#1}$}}
+\newcommand{\catch}[2]{\mbox{$[#2]_{#1}$}}
+\newcommand{\catchdo}[3]{\mbox{$[#1\stackrel{#2}{\hookrightarrow}#3]$}}
+\newcommand{\try}[1]{\mbox{$[#1]_{\delta}$}}
+\newcommand{\trydo}[2]{\catchdo{#1}{\delta}{#2}}
+\newcommand{\deadlock}{\diewith{\delta}}
+\newcommand{\merge}[2]{\mbox{$#1\;\&\;#2$}}
+\newcommand{\WLOOP}[2]{\mbox{$#1^{(\omega_c, \omega_s)}_{#2}$}}
+
+\newcommand{\RUN}{\mbox{\it Run}}
+\newcommand{\RUNE}{\mbox{${\cal R}_e$}}
+
+\newcommand{\ACTIONS}{\mbox{$\cal A$}}
+\newcommand{\TRACES}{\mbox{$\cal T$}}
+\newcommand{\CONSTRAINTS}{\mbox{$\cal C$}}
+\newcommand{\TERMINATIONS}{\mbox{$\cal X$}}
+
+\newcommand{\ITE}[3]{(#1)?\;#2\,:\,#3}
+\newcommand{\LET}{\mbox{\it let}}
+\newcommand{\IN}{\mbox{\it in}}
+\newcommand{\WHERE}{\mbox{\it where}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Semantics}
+\label{semantics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Abstract syntax}
+
+The semantics is defined according to the following abstract syntax,
+where:
+\begin{minitemize}
+\item we only consider binary priority choice and parallel composition,
+since they are left-associative,
+\item we define the empty-behaviour ($\varepsilon$)
+and the empty-behaviour filter ($t\setminus\varepsilon$),
+which are not available in the concrete syntax, but useful for defining
+the semantics,
+\item random loops are {\em normalized} by expliciting their
+weight functions:
+\begin{minitemize}
+\item the stop function $\omega_s$ takes the number of iteration already performed
+and returns the relative weight of the ``stop'' choice, 
+\item the continue function $\omega_c$ takes the number of iteration already performed
+and returns the relative weight of the ``continue'' choice. 
+\end{minitemize}
+These functions  are completly determined  by the ``profile''  of the
+loop in the  concrete syntax (interval or average,  together with the
+corresponding  static  arguments).  See~\S\ref{loop-profiles}  for  a
+precise definition of these weight functions.
+\item the actual number of (already) performed iterations is syntacticaly attached
+to the loop; this is convenient to define the semantics in terms
+of rewriting. In the main statement, this flag is obviously set
+to $0$.
+\end{minitemize}
+
+\begin{minipage}{70mm}
+\begin{tabular}{rl}
+empty behaviour: & $\varepsilon$ \\
+atomic constraint: & $c$ \\
+raise: & $\diewith{x}$ \\
+sequence: & $t \;\cdot\; t'$ \\
+priority: & $t \;\succ\; t'$ \\
+parallel: & $\merge{t}{t'}$
+\end{tabular}
+\end{minipage}\begin{minipage}{6cm}
+\begin{tabular}{rl}
+empty filter: & $t\setminus\varepsilon$ \\
+catch: & $\catchdo{t}{x}{t'}$ \\
+%choice: & $t/w \;|\; t'/w'$ \\
+choice: & $|_{i=1}^n\;\;t_i/w_i$\\
+random loop: & $\WLOOP{t}{i}$ \\
+priority loop: & $t^*$
+\end{tabular}
+\end{minipage}
+
+\TRACES\ denotes the set of trace expressions, and \CONSTRAINTS\ the
+set of constraints.
+%% \begin{definition} **)
+%% \end{definition} **)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The run function}
+\label{run-function}
+The semantics of an execution step is given by a function
+taking an environment $e$ and a (trace) expression $t$:
+$\RUN(e,t)$.
+%The semantics accepts any programs, comprising 
+%incorrect ones that can generates instantaneous loops.
+%When an instantaneous loop is detected a
+%fatal run-time errors is raised.
+
+This function returns an {\em action} which is either:
+\begin{minitemize}
+\item a transition $\trans{c}{n}$, which means that $t$ produces
+a constraint $c$ and rewrite itself in the (next) trace $n$,
+\item a termination $\diewith{x}$, where $x$ is a termination flag
+which is either $\varepsilon$ (normal termination),
+$\delta$ (deadlock) or some user-defined exception.
+\end{minitemize}
+
+\ACTIONS\ denotes the set of actions, and \TERMINATIONS\ denotes the
+ set of termination flags.
+%% \begin{definition} **)
+%% \end{definition} **)
+
+The run function is inductively defined using a 
+recursive function $\RUNE(t, g, s)$ where the parameters
+$g$ and $s$ are continuation functions returning actions.
+\begin{minitemize}
+\item $g: \CONSTRAINTS \times \TRACES \mapsto \ACTIONS$
+is the {\em goto} function, defining how
+a local transition should be treated according to the calling context.
+\item $s: \TERMINATIONS \mapsto \ACTIONS$
+is the {\em stop} function, defining how
+a local termination should be treated according to the calling context.
+\end{minitemize}
+
+At the top level, \RUNE\ is simply called with the trivial continuations:
+\begin{eqnarray}
+\RUN(e,t) & = & \RUNE(t,\;\;
+\lambda(c,v).\trans{c}{v},\;\;
+\lambda x. \diewith{x}
+)
+\end{eqnarray}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The recursive run function}
+
+\subsubsection{Basic traces.}
+
+The empty behavior raises the termination flag in the current context:
+\[
+\RUNE(\varepsilon, g, s) = s(\varepsilon)
+\]
+A raise statement terminates with the corresponding flag:
+\[
+\RUNE(\diewith{x}, g, s) = s(x)
+\]
+A constraint generates a goto or raises a deadlock, depending on its 
+satisfiability in the environment:
+\[
+\RUNE(c, g, s) = \ITE{e\models c}{g(c, \varepsilon)}{s(\delta)}
+\]
+
+\subsubsection{Sequence.}
+
+\[
+\RUNE(t \cdot t', g, s) = \RUNE(t, g', s')
+\]
+where:
+\begin{eqnarray*}
+%g' & = & \lambda c n. g(c, n \cdot t')\\
+%s' & = & \lambda x. \ITE{x = \varepsilon}{\RUNE(t', g, s)}{s(x)}
+g'(c,n) & = & g(c, n \cdot t')\\
+s'(x) & = & \ITE{x = \varepsilon}{\RUNE(t', g, s)}{s(x)}
+\end{eqnarray*}
+
+\subsubsection{Priority choice.}
+
+There is no continuation here: just a deterministic
+choice between the two branches.
+The second branch is taken if and only if the first branch deadlocks
+in the current context.
+
+\[
+\RUNE(t \succ t', g, s) =
+	\ITE{r \neq \diewith{\delta}}{r}{\RUNE(t', g, s)}
+	\;\;\;\WHERE\;\;\;
+   r = \RUNE(t, g, s))
+\]
+
+\subsubsection{Empty filter.}
+This internal construct is introduced to ease the definition
+of the loops. Intuitively, it forbids the core $t$ to terminate 
+immediately.
+\[
+\RUNE(t\setminus\varepsilon, g, s) = \RUNE(t, g, s')
+\]
+where:
+\begin{eqnarray*}
+s'(x) & = & \ITE{x = \varepsilon}{\diewith{\deadlock}}{s(x)}
+\end{eqnarray*}
+
+
+\subsubsection{Priority loop.}
+
+The semantics is defined according to the equivalence:
+\begin{eqnarray*}
+t^* & \Leftrightarrow & (t\setminus\varepsilon)\cdot t^* \succ \varepsilon
+\end{eqnarray*}
+
+\subsubsection{Catch.}
+Note that $z$ is a catchable exception (either $\delta$ or a user-defined
+exception).
+\[
+\RUNE(\catchdo{t}{z}{t'}, g, s) = \RUNE(t, g', s')
+\]
+where:
+\begin{eqnarray*}
+g'(c,n) & = & g(c, \catchdo{n}{z}{t'})\\
+s'(x) & = & \ITE{x = z}{\RUNE(t', g, s)}{s(x)}
+\end{eqnarray*}
+
+\subsubsection{Parallel composition.}
+\[
+\RUNE(\merge{t}{t'}, g, s) = \RUNE(t, g', s')
+\]
+where:
+\begin{eqnarray*}
+s'(x) & = & \ITE{x = \varepsilon}{\RUNE(t', g, s)}{s(x)}\\
+g'(c,n) & = & \RUNE(t', g'', s'') \;\;\;\mbox{with:}\\
+s''(x) & = & \ITE{x = \varepsilon}{g(c,n)}{s(x)}\\
+g''(c',n') & = & g(c \wedge c', \merge{n}{n'})
+\end{eqnarray*}
+
+\subsubsection{Weighted choice.}
+
+\newcommand{\SORTE}{\mbox{$\mbox{\it Sort}_e$}}
+
+The evaluation of the weights, and the (random) total ordering
+of the branches according those actual weights are both 
+performed by the environment:\\
+$\SORTE(t_1/w_1, \cdots, t_n/w_n)$ returns:
+\begin{itemize}
+\item a priority expression $t_{\sigma(1)} \succ \cdots \succ t_{\sigma(k)}$ 
+reflecting the priorities that have been (randomly) assigned 
+to the branches; note that $k$ may be less than $n$, since some branches may have
+an actual weight of $0$.  
+\item the deadlock expression $\diewith{\delta}$ if all weights
+are evaluated to $0$.
+\end{itemize}
+See~\S\ref{random-sort} for the precise definition of \SORTE.
+
+\[
+\RUNE(|_{i=1}^n\;\;t_i/w_i, g, s) = 
+\RUNE(\SORTE(t_1/w_1, \cdots, t_n/w_n), g, s)
+\]
+
+\subsubsection{Random loop.}
+
+The semantics is defined according to the equivalence:
+\begin{eqnarray*}
+\WLOOP{t}{i}
+& \Leftrightarrow &
+(t\setminus\varepsilon)\cdot \WLOOP{t}{i+1} / \omega_c(i)
+\;\;\;|\;\;\;
+\varepsilon / \omega_s(i)
+\end{eqnarray*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The execution environment}
+
+\subsubsection{Random sort of weighted choices}
+\label{random-sort}
+
+\subsection{Predefined loop profiles}
+\label{loop-profiles}

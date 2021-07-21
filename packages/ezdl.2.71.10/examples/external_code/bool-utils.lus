@@ -1,0 +1,15 @@
+
+-- incremente le compteur si b
+node incr_cond(cpt:int; c:bool) returns (n_cpt:int);
+let
+  n_cpt = cpt + if c then 1 else 0;
+tel;
+
+node compte__m<<const m:int>>(tab : bool^m) 
+returns (ok:bool);
+let 
+  ok = (red<<incr_cond, m>>(0, tab) <= n);
+tel;
+
+node bool_utils_au_plus_2_parmi_3 = au_plus_n_parmi_m<<2,3>>;
+

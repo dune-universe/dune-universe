@@ -1,0 +1,20 @@
+(library
+  (name polka)
+  (public_name polka)
+  (wrapped false)
+  (libraries num gmp camlidl)
+  (modules Polka PolkaIO Vector Matrix Poly Polka_parser Polka_lexer)
+  (foreign_stubs (language c)
+     (names polka_c internal bit satmat cherni vector_c matrix_c poly_c
+             vector_caml matrix_caml poly_caml polka_caml)
+     (flags -O3 -fPIC -DPOLKA_NUM=3  -I$pkg_camlidl -I/usr/local/include/))
+ (synopsis "polka: convex polyhedron library by Bertrand Jeannet (now part of apron).")
+)
+(ocamllex polka_lexer)
+(ocamlyacc polka_parser)
+(ocamlyacc libpolka_stubs)
+
+(rule
+ (targets poly_caml.c poly.ml poly.mli vector.mli vector.ml poly.mli poly.ml matrix.mli matrix.ml matrix_caml.c vector_caml.c)
+ (deps Makefile vector.idl matrix.idl poly.idl)
+ (action (run make)))

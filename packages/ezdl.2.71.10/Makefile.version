@@ -1,0 +1,17 @@
+#
+
+# if it is not a git version, it has to be an opam version!
+SHA:=$(shell git log -1 --pretty=format:"%h" || echo "opam")
+BRANCH:=$(shell git branch | grep "*" | cut -d ' ' -f 2 ||  echo "opam")
+VERSION=$(shell git describe --tags --abbrev=0 || basename `pwd` | cut -d '.' -f2-4)
+
+
+.PHONY: doc/version.tex
+doc/version.tex:
+	echo "\\\newcommand{\\\version}{$(VERSION)}" > $@ ; \
+	echo "\\\newcommand{\\\sha}{$(SHA)}" >>  $@ ; \
+	echo "\\\newcommand{\\\versionname}{Trilby}" >>  $@ ; \
+	echo "\\\newcommand{\\\versiondate}{`date +%d-%m-%y`}" >>  $@ ;\
+	[ -d doc/lutin-man/objs ] || mkdir doc/lutin-man/objs; \
+   cp doc/version.tex doc/lutin-man/objs/ ;\
+   cp doc/version.tex doc/lutin-man/

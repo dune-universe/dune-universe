@@ -1,0 +1,21 @@
+opam-version: "2.0"
+synopsis: "Easy dynamic linking of C functions from ocaml"
+description: "Easy dynamic linking of C functions from ocaml"
+maintainer: "erwan.jahier@univ-grenoble-alpes.fr"
+authors: "Pascal Raymond"
+authors: [
+  "Pascal Raymond"
+]
+license: "CECILL-2.1"
+tags: ["clib:stdc" "clib:camlidl"]
+homepage: "http://www-verimag.imag.fr/"
+dev-repo: "git+https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutin"
+bug-reports: "https://gricad-gitlab.univ-grenoble-alpes.fr/verimag/synchrone/lutin"
+depends: [
+  "ocaml" {>= "4.05"}
+  "base-unix" {build}
+  "camlidl"
+  "dune" {>= "2.0"}
+]
+post-messages:
+  "The last version can be obtained via (opam repo add) http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/opam-repository/"

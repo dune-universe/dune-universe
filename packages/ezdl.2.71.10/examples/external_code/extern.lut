@@ -1,0 +1,20 @@
+extern sqrt(x:  real): real
+
+extern sin(x:  real) : real
+
+extern pi(): real
+
+extern rand_up_to(min, max: int): int
+
+node main(
+--    deg: real
+dummy:bool;
+) returns (
+    a: real;
+    s: real
+) =
+  exist deg: real [0.0; 360.0] = 0.0 in
+  let a1 = (((pre deg) * pi()) / 180.0) in
+  loop {
+        (a = a1) and (s = sin(a1))
+  }

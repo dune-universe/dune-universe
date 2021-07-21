@@ -1,0 +1,48 @@
+OCAMLMAKEFILE = ./OCamlMakefile
+
+
+ifeq ($(HOST_TYPE),cygwin)
+# windows
+	OCAML_LIB="c:\TEMP\ocaml\lib"
+	OCAMLLIB=c:\TEMP\ocaml\lib
+	OCAMLOPT = /cygdrive/c/TEMP/ocaml/bin/ocamlopt
+	OCAMLC = /cygdrive/c/TEMP/ocaml/bin/ocamlc
+	OCAML = /cygdrive/c/TEMP/ocaml/bin/ocaml
+	GCC=g++ -O2  -mno-cygwin
+	CXX=g++ -O2   -fno-operator-names   -mno-cygwin
+else
+# 	OCAML_LIB=/usr/local/soft/ocaml/3.08/lib/ocaml
+# 	OCAMLLIB=/usr/local/soft/ocaml/3.08/lib/ocaml
+# 	OCAMLOPT = /usr/local/soft/ocaml/3.08/bin/ocamlopt
+	GCC=g++ -O2 
+	CXX=g++ -O2   -fno-operator-names
+endif
+
+
+
+
+CFLAGS= -g -fno-operator-names
+
+OCAMLLDFLAGS= -verbose -cclib -lstdc++ 
+
+
+SOURCES = gbdd_cml.cc gbdd.cc bdd.ml
+RESULT  = bdd
+
+
+all: ncl bdd.cma
+
+include $(OCAMLMAKEFILE)
+
+
+cp: ncl 
+	cp libbdd_stubs.a $(HOME)/$(HOSTTYPE)/lib/
+	cp bdd.a $(HOME)/$(HOSTTYPE)/lib/
+	cp bdd.cm* $(HOME)/$(HOSTTYPE)/lib/
+
+
+up:clean
+	cp /home/raymond/other_tools/gcc3/GBDDML/gbdd.cc .
+	cp /home/raymond/other_tools/gcc3/GBDDML/gbdd_cml.cc .
+	cp /home/raymond/other_tools/gcc3/GBDDML/gbdd.h .
+	make cp

@@ -1,0 +1,113 @@
+
+\section{Syntax}
+
+%%% Include yacc syntax
+\input{lutyacc.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lexical conventions}
+
+\begin{itemize}
+\item
+One-line comments start with \key{--} and  stop at the the end of the
+line.
+\item
+Multi-line comments start with \key{(*} and end at the next following
+\key{*)}. Multi-line comments cannot be nested.
+\item
+\bnfrightident{Ident} stands for identifier, following the C standard
+(\bnftoken{[\_a-zA-Z][\_a-zA-Z0-9]*}),
+\item
+\bnfrightident{Floating} and \bnfrightident{Integer} stands for decimal floating point and integer
+notations, following C standard,
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Syntax notation (EBNF)}
+\begin{itemize}
+\item Keywords are displayed like that: \bnftoken{keyword}.
+\item Grammatical symbols like that: \bnfleftident{GramaticalSymbol}.
+\item Optional parts like that: \bnfopt{something}.
+\item List (0 or more)  parts like that: \bnflist{something}.
+\item Grouped parts like that: \bnfgroup{something}.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Syntax rules}
+
+
+ Those syntax rules are automatically extracted from the yacc.
+
+
+
+\paragraph{\lutin\ files.}
+
+A  Lutin file  ({\tt .lut})  is  a list  of declarations.   Top-level
+declarations can be combinator, exception, or node declarations.\\
+
+\decls
+
+
+\paragraph{Variable and combinator Parameter Declaration.}
+Both are declared  with their type. The \bnftoken{ref}  type flag may
+only  appear in  combinator parameter  declaration.  A  default value
+(\bnftoken{=}\bnfleftident{Exp})   may   only   appear  in   variable
+declaration.   Range  annotations  are  only meaningful  for  numeric
+variables.
+
+\varparams
+
+\types
+
+\paragraph{Trace expressions.}
+
+ A Trace expression is a statement of type \bnftoken{trace}.
+
+%, by opposition to data expressions (\syn{Exp}).
+
+\statements
+
+Trace expressions  are surrounded by braces, and  data expressions by
+parenthesis.
+
+\paragraph{Data Expressions.}
+ A  data   expression  is   a  statement  of   type  \bnftoken{bool},
+ \bnftoken{int},  or  \bnftoken{real}.   They  are  almost  classical
+ algebraic   expressions,   except   for   the   special   "operator"
+ \bnftoken{pre} which requires a variable identifier.
+
+
+\expressions
+
+
+Ident references, with or without  arguments, appear in both trace or
+data expressions.  Arguments can be any expressions.
+
+
+\identref
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Priorities}
+
+Priorities are the following, from lower precedence to higher precedence.
+In the same level, the default is to group binary operators left-to-right
+(note that it may result in type errors).
+
+\begin{itemize}
+\item \bnftoken{else},
+\item \bnftoken{=>}, logical implication, group {\bf right-to-left},
+\item \bnftoken{or},
+\item \bnftoken{xor},
+\item \bnftoken{and},
+\item \bnftoken{=}, \bnftoken{<>},
+\item \bnftoken{>}, \bnftoken{<}, \bnftoken{>=}, \bnftoken{<=},
+\item \bnftoken{+}, \bnftoken{-} (binary),
+\item \bnftoken{*}, \bnftoken{/}, \bnftoken{div}, \bnftoken{mod},
+\item \bnftoken{not},
+\item \bnftoken{-} (unary).
+\end{itemize}
+
+

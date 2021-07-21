@@ -1,0 +1,47 @@
+(library
+ (name biotk_croquis)
+ (public_name biotk.croquis)
+ (libraries core_kernel otfm vg vg.pdf vg.svg)
+ (private_modules Dejavu_sans_mono Dejavu_sans_mono_bold
+                  Dejavu_sans_mono_oblique Dejavu_sans_mono_bold_oblique
+                  Vg_text))
+
+(rule
+  (target dejavu_sans_mono.ml)
+  (deps (file ocamlify_font.sh) (:font DejaVuSansMono.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target dejavu_sans_mono_bold.ml)
+  (deps (file ocamlify_font.sh) (:font DejaVuSansMono-Bold.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target dejavu_sans_mono_oblique.ml)
+  (deps (file ocamlify_font.sh) (:font DejaVuSansMono-Oblique.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target dejavu_sans_mono_bold_oblique.ml)
+  (deps (file ocamlify_font.sh) (:font DejaVuSansMono-BoldOblique.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target liberation_sans.ml)
+  (deps (file ocamlify_font.sh) (:font LiberationSans-Regular.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target liberation_sans_bold.ml)
+  (deps (file ocamlify_font.sh) (:font LiberationSans-Bold.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target liberation_sans_italic.ml)
+  (deps (file ocamlify_font.sh) (:font LiberationSans-Italic.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))
+
+(rule
+  (target liberation_sans_bold_italic.ml)
+  (deps (file ocamlify_font.sh) (:font LiberationSans-BoldItalic.ttf))
+  (action (run bash ocamlify_font.sh %{font} %{target})))

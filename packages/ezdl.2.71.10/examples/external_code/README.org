@@ -1,0 +1,1 @@
+Test that makes sure that lutin is still able to call c code

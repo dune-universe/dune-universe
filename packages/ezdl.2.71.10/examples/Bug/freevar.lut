@@ -1,0 +1,5 @@
+-- ok works fine, but not ko:
+
+ node ko () returns (b: int [0; 0]; a: int) = a = b 
+ node ok () returns (a: int [0; 0]; b: int) = a = b
+

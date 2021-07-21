@@ -1,0 +1,29 @@
+(library
+  (name lutinRun)
+  (public_name lutin)
+  (libraries polka num rdbg camlidl str unix ezdl gbddml gmp)
+  (foreign_stubs (language c) (names lutinUtils_stubs lutinUtils_c myuid))
+  (wrapped false)
+  (library_flags (-linkall))  
+ ; (install_c_headers myuid)
+  (modules LutinRun Auto2Lucky AutoGen Bddd CheckEnv CheckType CkIdentInfo
+           CkTypeEff CoAlgExp CoIdent CoTraceExp Constraint Draw Exp ExpEval
+           Expand ExprUtil FGen Formula_to_bdd GenOcamlGlue Glue Gne Guard
+           Lexeme LoopWeights Luc2alice Luc2c LucFGen Lucky LutErrors LutExe LutinUtils
+             LutLexer LutParser LutPredef LutProg Version MainArg Ne Parsers
+           Poly_draw Polyhedron Prevar Prog Reactive Rif Sol_nb Solver Store
+           Syntaxe SyntaxeDump Thickness Type Util Utils Value Var Verbose)
+ (synopsis "An API to call lutin from rdbg and ocaml.")
+)
+(ocamllex lutLexer)
+(ocamlyacc lutParser)
+
+(rule
+ (targets version.ml)
+ (deps generate-version.sh)
+ (action (run ./generate-version.sh)))
+
+(rule
+ (targets lutinUtils.mli lutinUtils.ml lutinUtils_stubs.c)
+ (deps Makefile lutinUtils.idl)
+ (action (run make)))

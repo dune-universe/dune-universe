@@ -1,0 +1,142 @@
+
+\section{An overview of the language}
+%\section{The language principles}
+\label{lutin-section}
+
+
+Synchronous  programs~\cite{signal,esterel,lustre}  deterministically
+produce  outputs   from  input  values.   To  be   able  to  compile,
+synchronous programs need to be fully deterministic.
+ However,  sometimes, we  want to  be able  to  describe synchronous
+systems in a non deterministic manner.
+
+\begin{itemize}
+\item  If  one wants  to  describe  (and  simulate) an  intrinsically
+  non-deterministic system.   A typical example  is when one  want to
+  describe  the environment  of a  reactive program;  it can  be very
+  useful for testing and simulation purposes.
+  
+\item  Another potential  use of  the animation  of non-deterministic
+  code  is when  one  wants to  simulate  partially written  reactive
+  programs (some  components are missing).  The idea is then  to take
+  advantage  of  program  signatures,  pre/post conditions,  or  code
+  chunks to simulate those programs the more realisticly as possible,
+  taking  into account  the  available constraints,  and drawing  the
+  non-deterministic parts.  This can be  very useful to  simulate and
+  test applications at every stage of the development process.
+\end{itemize}
+
+We call an \emph{non-deterministic  program} such pieces of code that
+produce their  outputs non-deterministically.  \lutin\  is a language
+to  describe   such  non-deterministic  programs.    \lutin\  program
+describes a  set of data-flow  constraints over Booleans  and numeric
+values, that are combined with an explicit control-structure based on
+regular expressions.
+%
+\lutin\  can be seen as a language to program stochastic processes
+(Markov chains).
+
+
+
+
+
+\subsection{Symbolic state/transition systems}
+The   basic   qualitative   model   consists  in   a   very   general
+state/transition system, characterised by:
+
+\begin{itemize}
+\item  a  memory:   a  finite  set  of  variables   with  no  special
+  restrictions on  their domains (to simplify, we  will consider here
+  just boolean, integer and floating values);
+\item  an interface: variables  are declared  as inputs,  outputs, or
+  locals;
+\item a finite control  structure based on regular expressions, whose
+  atoms represent reactions of the machine.
+\end{itemize}
+
+A  global state of  the system  is then  a pair  made of  the current
+control point  (the {\em control-state}), and a  current valuation of
+its  memory (the  {\em  data-state}).  
+
+\subsection{Synchronous relations}
+We adopt  the synchronous approach  for the reactions: all  values in
+the memory are changing  simultaneously when a reaction is performed.
+The  previous   value  of  the  memory  corresponds   to  the  source
+data-state,  and  the current  value  to  the  next data-state.   The
+program statements denote what are the possible values of the current
+memory  depending on  the  current data-state.   This information  is
+quite general:  it is a {\em  relation} between the  past and current
+values of the variables.   In particular, no syntactic distinction is
+made between uncontrollable (inputs and past values) and controllable
+(locals and  outputs) variables.  Performing a  reaction will consist
+in  finding solutions  to such  a  formula.  This  problem induces  a
+restriction: we suppose that, once  reduced according to the past and
+input   values,  the   constraints  are   solvable  by   some  actual
+procedure\footnote{concretely, we have  developed a constraint solver
+  for mixed boolean/linear constraints.}.
+
+
+\subsection{Weights}
+Since we have to deal with uncontrollable variables, defining a sound
+notion  of distribution  must  be done  carefully:  depending on  its
+variables,  a  formula  may   be  infeasible,  and  thus  its  actual
+probability is zero.  In other terms, if we want to use probabilistic
+distributions, we would  have to define a reaction as  a map from the
+tuple $\langle$source state, past  values, input values$\rangle$ to a
+distribution  over  the   pairs  $\langle$controllable  values,  next
+state$\rangle$.  Expressing  and exploiting this kind  of model would
+be too  complex. We prefer  a pragmatic approach  where probabilities
+are introduced in a more symbolic way.
+
+The main  idea is to  keep the distinction between  the probabilistic
+information  and the constraint  information.  Since  constraints are
+influencing probabilities  (zero or non-zero),  this information does
+not express  the probability to be  drawn, but the  probability to be
+{\em tried}.   Therefore, we do  not use distributions (i.e.,  set of
+positive values the  sum of which is 1) but  {\em weights}.  A weight
+is  a  positive  integer:   if  two  possible  reactions  (i.e.,  the
+corresponding   constraints  are   both  satisfiable)   are  labelled
+respectively with the  weights $w$ and $w'$, then  the probability to
+perform the  former is  $w/w'$ times the  probability to  perform the
+latter.
+
+
+
+\subsection{Static weights versus dynamic weights}
+The simplest solution is to  define weights as constants, but in this
+case, the expressive power can be too weak. With such static weights,
+the    uncontrollable   variables    qualitatively    influence   the
+probabilities  (zero or not,  depending on  the constraints)  but not
+quantitatively: the idea  is then to define {\em  dynamic weights} as
+numerical  functions  of  the  inputs and  the  past-values.   Taking
+numerical past-values into account can be particularly useful. A good
+example is  when simulating an  {\em alive process} where  the system
+has a  known average  life expectancy before  breaking down;  at each
+reaction, the probability to  work properly depends {\em numerically}
+on an internal counter of the process age.
+
+
+
+\subsection{Global concurrency}
+Concurrency  (i.e.,  parallel  execution)  is  a  central  issue  for
+reactive  systems. The  problem  of merging  sequential and  parallel
+constructs  has   been  largely  studied:   classical  solutions  are
+hierarchical       automata        ``\`a       la       StateCharts''
+\cite{syncchart96,maraninchi92},  or  statement-based languages  like
+Esterel~\cite{esterel}.   Our  opinion  is  that  deeply  merging
+sequence  and parallelism is  a problem  of high-level  language, and
+that  it  is sufficient  to  have  a  notion of  global  parallelism:
+intuitively, local  parallelism can always  be made global  by adding
+extra  idle states.   As a  consequence, concurrency  is a  top level
+notion  in  our model:  a  complete system  is  a  set of  concurrent
+program,  each one  producing its  own constraints  on  the resulting
+global behaviour.
+
+
+\subsection{More reading}
+
+Some case studies that use Lutin can be found in \cite{tacas,sies}.
+A description of the constraint solving algorithms is done here:
+\cite{jahier-cstva06}.
+A Lutin tutorial is also available in \href{http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lurette/doc/lutin-tuto/lutin-tuto-html.html}{html} and \href{http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lurette/doc/lutin-tuto/lutin-tuto-pdf.pdf}{pdf}.  
+

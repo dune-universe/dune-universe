@@ -1,0 +1,347 @@
+/* -*- mode: c -*- */
+/* $Id: vector.idl,v 1.5 2004/02/27 10:32:07 bjeannet Exp $ */
+
+/* IDL file for vector */
+
+quote(C, "#include \"polka_caml.h\"")
+
+typedef
+  [abstract,c2ml(camlidl_polka_vector_c2ml),ml2c(camlidl_polka_vector_ml2c)]
+  struct vector__t vector__t;
+typedef
+  [mltype("Polka.dimsup"),c2ml(camlidl_polka_dimsup_c2ml),ml2c(camlidl_polka_dimsup_ml2c)] struct dimsup_t dimsup_t;
+
+quote(MLI,"val dummy : t")
+/* \section{External functions} %============================================ */
+
+vector__t vector_make(int size)
+quote(call, " \n\
+   if (size<0) invalid_argument(\"Vector.make: size is negative !\"); \n\
+   if (size==0) \n\
+     _res.q = 0; \n\
+   else \n\
+     _res.q = vector_alloc(size); \n\
+   _res.size = size; \n\
+");
+
+quote(ML,"let dummy = make 0")
+
+vector__t vector_copy(vector__t vec)
+     quote(call, "_res.q = vector_copy(vec.q,vec.size); _res.size = vec.size;");
+void vector__print(vector__t vec)
+     quote(call, "vector_print(vec.q,vec.size);");
+long vector_get(vector__t vec, int i)
+     quote(call,
+"  if (i<0 || i >= vec.size) invalid_argument(\"Vector.get: index\"); \n\
+   int_set_pkint(&_res,vec.q[i],false);");
+
+[string] char* vector_get_str10(vector__t vec, int i)
+     quote(call,
+"  if (i<0 || i >= vec.size) invalid_argument(\"Vector.get_str: index\"); \n\
+   _res = pkint_get_str10(NULL,vec.q[i]);")
+     quote(dealloc,"free(_res);");
+void vector_set(vector__t vec, int i, int val)
+     quote(call,
+"  if (i<0 || i >= vec.size) invalid_argument(\"Vector.set: index\"); \n\
+   pkint_set_si(vec.q[i],val);");
+void vector_set_str10(vector__t vec, int i, [string] char* val)
+     quote(call,
+"  if (i<0 || i >= vec.size) invalid_argument(\"Vector.set_str: index\"); \n\
+   pkint_set_str10(vec.q[i],val);");
+
+int vector_length(vector__t vec)
+     quote(call, "_res = vec.size;");
+int vector_compare(vector__t veca, vector__t vecb)
+     quote(call,
+" _res = veca.size - vecb.size; \n\
+  _res = _res==0 ? vector_compare(veca.q,vecb.q,veca.size) : _res;");
+int vector_compare_expr(vector__t veca, vector__t vecb)
+     quote(call,
+" _res = veca.size - vecb.size; \n\
+  _res = _res==0 ? vector_compare_expr(veca.q,vecb.q,veca.size) : _res;");
+int vector_hash(vector__t vec)
+     quote(call, "_res = vector_hash(vec.q, vec.size);");
+long vector_product(vector__t veca, vector__t vecb)
+     quote(call,
+"  { \n\
+     pkint_t prod; \n\
+     if (veca.size != vecb.size) \n\
+       invalid_argument(\"Vector.product: incompatible sizes\"); \n\
+     pkint_init(prod); \n\
+     vector_product(&prod, veca.q, vecb.q, veca.size); \n\
+     int_set_pkint(&_res,prod,true); \n\
+   }");
+long vector_product_strict (vector__t veca, vector__t vecb)
+     quote(call,
+"  { \n\
+     pkint_t prod; \n\
+     if (veca.size != vecb.size) \n\
+       invalid_argument(\"Vector.product: incompatible sizes\"); \n\
+     pkint_init(prod); \n\
+     vector_product_strict(&prod, veca.q, vecb.q, veca.size); \n\
+     int_set_pkint(&_res,prod,true); \n\
+   }");
+void vector_norm (vector__t vec)
+     quote(call, "vector_normalize(vec.q,vec.size);");
+void vector_norm_expr(vector__t vec)
+     quote(call, "vector_normalize_expr(vec.q,vec.size);");
+vector__t vector_add_expr(vector__t veca, vector__t vecb)
+  quote(call,
+"  if (veca.size != vecb.size) \n\
+     invalid_argument(\"Vector.add_expr: incompatible sizes\"); \n\
+   _res.size = veca.size; \n\
+   _res.q = vector_alloc(_res.size); \n\
+   vector_add_expr(_res.q, veca.q, vecb.q, _res.size); \n\
+   _res.size = veca.size; \n\
+");
+
+vector__t vector_sub_expr(vector__t veca, vector__t vecb)
+  quote(call,
+"  if (veca.size != vecb.size) \n\
+     invalid_argument(\"Vector.sub_expr: incompatible sizes\"); \n\
+   _res.size = veca.size; \n\
+   _res.q = vector_alloc(_res.size); \n\
+   vector_sub_expr(_res.q, veca.q, vecb.q, _res.size); \n\
+   _res.size = veca.size; \n\
+");
+vector__t vector_scale_expr(int num, int den, vector__t vec)
+  quote(call, " \n\
+  pkint_set_si(camlidl_polka_tmp[0],num); \n\
+  pkint_set_si(camlidl_polka_tmp[1],den); \n\
+   _res.size = vec.size; \n\
+   _res.q = vector_alloc(_res.size); \n\
+  vector_scale_expr(_res.q, \n\
+		    camlidl_polka_tmp[0],camlidl_polka_tmp[1],vec.q, \n\
+		    _res.size); \n\
+");
+
+vector__t vector_add_dims(int n, vector__t vec)
+  quote(call, " \n\
+_res.size = vec.size + n; \n\
+if (_res.size < 0) invalid_argument(\"Vector.add_dims: new size would be negative !\"); \n\
+if (_res.size==0) \n\
+  _res.q = 0; \n\
+else { \n\
+  _res.q = vector_alloc(_res.size); \n\
+  vector_add_dimensions(_res.q, vec.q, vec.size, n); \n\
+}");
+vector__t vector_add_dims_multi(vector__t vec, [size_is(multi)] dimsup_t tab[], int multi)
+  quote(call, " \n\
+{ \n\
+  int n; \n\
+  n = check_add_dimsup_of_multi(vec.size,tab,multi); \n\
+  _res.size = vec.size + n; \n\
+  _res.q = vector_alloc(_res.size); \n\
+  vector_add_dimensions_multi(_res.q, vec.q, vec.size, tab, multi); \n\
+}");
+vector__t vector_del_dims_multi(vector__t vec, [size_is(multi)] dimsup_t tab[], int multi)
+  quote(call, " \n\
+{ \n\
+  int n; \n\
+  n = check_remove_dimsup_of_multi(vec.size,tab,multi); \n\
+  _res.size = vec.size + n; \n\
+  if (_res.size==0) \n\
+    _res.q = 0; \n\
+  else { \n\
+    _res.q = vector_alloc(_res.size); \n\
+    vector_remove_dimensions_multi(_res.q, vec.q, vec.size, tab, multi); \n\
+  } \n\
+}");
+vector__t vector_add_permute_dims(vector__t vec, int dimsup, [size_is(size)] int permutation[], int size)
+  quote(call, " \n\
+{ \n\
+  if (dimsup < 0) invalid_argument(\"Vector.add_permute_dims: negative integer argument !\"); \n\
+  if (size != vec.size+dimsup-polka_dec) invalid_argument(\"Vector.add_permute_dims: wrong size for the permutation array !\"); \n\
+  _res.size = vec.size+dimsup; \n\
+  _res.q = vector_alloc(_res.size);  \n\
+  vector_add_permute_dimensions(_res.q,vec.q,vec.size,dimsup,permutation); \n\
+}");
+vector__t vector_permute_del_dims(vector__t vec, int dimsup, [size_is(size)] int permutation[], int size)
+  quote(call, " \n\
+{ \n\
+  if (dimsup < 0) invalid_argument(\"Vector.permute_del_dims: negative integer argument !\"); \n\
+  if (size != vec.size-polka_dec) invalid_argument(\"Vector.permute_remove_dims: wrong size for the permutation array !\"); \n\
+  _res.size = vec.size-dimsup; \n\
+  _res.q = vector_alloc(_res.size);  \n\
+  vector_permute_remove_dimensions(_res.q,vec.q,vec.size,dimsup,permutation); \n\
+}");
+
+boolean vector_is_positivity_constraint(vector__t vec)
+     quote(call, "_res = vector_is_positivity_constraint(vec.q, vec.size);");
+boolean vector_is_strictness_constraint(vector__t vec)
+     quote(call, "_res = vector_is_strictness_constraint(vec.q, vec.size);");
+boolean vector_is_dummy_constraint(vector__t vec)
+     quote(call, "_res = vector_is_dummy_constraint(vec.q, vec.size);");
+
+/* \section{Input/Output functions} %======================================== */
+
+quote(MLI," \n\
+val get_big_int : t -> int -> Big_int.big_int \n\
+val set_big_int : t -> int -> Big_int.big_int -> unit \n\
+val to_constraint: (int -> string) -> t -> string \n\
+val to_frame: (int -> string) -> t -> string \n\
+val to_expr: (int -> string) -> t -> string \n\
+val print : Format.formatter -> t -> unit \n\
+val print_constraint: (int -> string) -> Format.formatter -> t -> unit \n\
+val print_frame: (int -> string) -> Format.formatter -> t -> unit \n\
+val print_expr: (int -> string) -> Format.formatter -> t -> unit \n\
+ \n\
+val of_constraint: (string -> int) -> int -> string -> t \n\
+val of_frame: (string -> int) -> int -> string -> t \n\
+val of_expr: (string -> int) -> int -> string -> t \n\
+")
+
+quote(ML," \n\
+let get_big_int vec i = \n\
+  try Big_int.big_int_of_int (get vec i) \n\
+  with Polka.Overflow(s) -> Big_int.big_int_of_string s \n\
+let set_big_int vec i v = \n\
+  if Big_int.is_int_big_int v \n\
+  then set vec i (Big_int.int_of_big_int v) \n\
+  else set_str10 vec i (Big_int.string_of_big_int v) \n\
+let to_constraint assoc vec = \n\
+  Polka.to_constraint assoc (get_big_int vec) (length vec) \n\
+let to_frame assoc vec = \n\
+  Polka.to_frame assoc (get_big_int vec) (length vec) \n\
+let to_expr assoc vec = \n\
+  Polka.to_expr assoc (get_big_int vec) (length vec) \n\
+ \n\
+let print formatter vec = \n\
+  let length = length vec in \n\
+  Format.fprintf formatter \"@[<h 6>\"; \n\
+  for i=0 to length-1 do \n\
+    Format.fprintf formatter \"@<6>%i@ \" (get vec i) \n\
+  done; \n\
+  Format.fprintf formatter \"@]\"; \n\
+  () \n\
+let print_constraint assoc formatter vec = \n\
+  Format.pp_print_string formatter (to_constraint assoc vec) \n\
+let print_frame assoc formatter vec = \n\
+  Format.pp_print_string formatter (to_frame assoc vec) \n\
+let print_expr assoc formatter vec = \n\
+  Format.pp_print_string formatter (to_expr assoc vec) \n\
+ \n\
+let of_constraint assoc dim str = \n\
+  let (cons,list) = \n\
+    try \n\
+      let lexbuf = Lexing.from_string str in \n\
+      try Polka_parser.constrain Polka_lexer.lex lexbuf \n\
+      with Parsing.Parse_error -> \n\
+	failwith \n\
+	(Format.sprintf \n\
+	   \"Syntaxical error, characters %d-%d in constraint %s\" \n\
+	    (Lexing.lexeme_start lexbuf) \n\
+	    (Lexing.lexeme_end lexbuf) \n\
+	   str) \n\
+  with Polka_lexer.Error (s,e) -> \n\
+    failwith \n\
+      (Format.sprintf \n\
+	 \"Lexical error, characters %d-%d in constraint %s\" \n\
+	 s e str) \n\
+  in \n\
+  let denominator = Polka.denominator_of_list list in \n\
+  let vec = make (!Polka.dec + dim) in \n\
+  begin match cons with \n\
+  | Polka.Sup -> \n\
+      set vec 0 1; \n\
+      if !Polka.strict then \n\
+	set vec 2 (-1) \n\
+      else \n\
+	failwith \"Vector.of_constraint: strict inequalities not possible with the linked polyhedra library !\" \n\
+  | Polka.SupEgal -> \n\
+      set vec 0 1; \n\
+  | Polka.Egal -> \n\
+      () \n\
+  end; \n\
+  let l = ref list in \n\
+  while !l<>[] do \n\
+    let (n,d,v) = List.hd !l in \n\
+    let rank = (if v=\"\" then 1 else !Polka.dec + (assoc v)) in \n\
+    let coeff = get_big_int vec rank in \n\
+    set_big_int vec rank \n\
+      (Big_int.add_big_int \n\
+        coeff \n\
+        (Big_int.mult_big_int \n\
+          n \n\
+          (Big_int.div_big_int denominator d))); \n\
+    l := List.tl !l \n\
+  done; \n\
+  norm vec; \n\
+  vec \n\
+ \n\
+let of_frame assoc dim str = \n\
+  let (gen,list) = \n\
+    try \n\
+      let lexbuf = Lexing.from_string str in \n\
+      try Polka_parser.frame Polka_lexer.lex lexbuf \n\
+      with Parsing.Parse_error -> \n\
+	failwith \n\
+	(Format.sprintf \n\
+	    \"Syntaxical error, characters %d-%d in generator %s\" \n\
+	    (Lexing.lexeme_start lexbuf) \n\
+	    (Lexing.lexeme_end lexbuf) \n\
+	  str) \n\
+  with Polka_lexer.Error (s,e) -> \n\
+    failwith \n\
+      (Format.sprintf \n\
+	\"Lexical error, characters %d-%d in generator %s\" \n\
+	s e str) \n\
+  in \n\
+  let denominator = Polka.denominator_of_list list in \n\
+  let vec = make (!Polka.dec + dim) in \n\
+  set vec 0 (if gen = Polka.Line then 0 else 1); \n\
+  set_big_int vec 1 (if gen = Polka.Vertex then denominator else Big_int.zero_big_int); \n\
+  let l = ref list in \n\
+  while !l<>[] do \n\
+    let (n,d,v) = List.hd !l in \n\
+    if v=\"\" && (Big_int.sign_big_int n)<>0 then failwith (\"Constant has no sense in generator \"^str); \n\
+    let rank = !Polka.dec + (assoc v) in \n\
+    let coeff = get_big_int vec rank in \n\
+    set_big_int vec rank \n\
+      (Big_int.add_big_int \n\
+        coeff \n\
+        (Big_int.mult_big_int \n\
+          n \n\
+          (Big_int.div_big_int denominator d))); \n\
+    l := List.tl !l \n\
+  done; \n\
+  norm vec; \n\
+  vec \n\
+ \n\
+let of_expr assoc dim str = \n\
+  let list = \n\
+    try \n\
+      let lexbuf = Lexing.from_string str in \n\
+      try Polka_parser.expression Polka_lexer.lex lexbuf \n\
+      with Parsing.Parse_error -> \n\
+	failwith \n\
+	(Format.sprintf \n\
+	    \"Syntaxical error, characters %d-%d in expression %s\" \n\
+	    (Lexing.lexeme_start lexbuf) \n\
+	    (Lexing.lexeme_end lexbuf) \n\
+	  str) \n\
+  with Polka_lexer.Error (s,e) -> \n\
+    failwith \n\
+      (Format.sprintf \n\
+	\"Lexical error, characters %d-%d in expression %s\" \n\
+	s e str) \n\
+  in \n\
+  let denominator = Polka.denominator_of_list list in \n\
+  let vec = make (!Polka.dec + dim) in \n\
+  set_big_int vec 0 denominator; \n\
+  let l = ref list in \n\
+  while !l<>[] do \n\
+    let (n,d,v) = List.hd !l in \n\
+    let rank = (if v=\"\" then 1 else !Polka.dec + (assoc v)) in \n\
+    let coeff = get_big_int vec rank in \n\
+    set_big_int vec rank \n\
+      (Big_int.add_big_int \n\
+        coeff \n\
+        (Big_int.mult_big_int \n\
+          n \n\
+          (Big_int.div_big_int denominator d))); \n\
+    l := List.tl !l \n\
+  done; \n\
+  norm_expr vec; \n\
+  vec \n\
+")
