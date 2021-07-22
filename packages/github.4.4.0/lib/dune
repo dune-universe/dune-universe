@@ -1,0 +1,5 @@
+(library
+  (public_name github)
+  (wrapped false)
+  (modules_without_implementation github_s)
+  (libraries cohttp uri cohttp-lwt yojson github-data))

@@ -1,0 +1,18 @@
+(rule
+ (alias  runtest)
+ (action (run ../tests/main.exe)))
+
+(library
+ (flags     (-w "+a-4-9-29-40-42-44-48@8"))
+ (name lt_code)
+ (public_name lt-code)
+ (instrumentation (backend bisect_ppx))
+ (libraries cstruct
+            containers
+  )
+ (foreign_stubs
+  (language c)
+  (names lt_code_stubs)
+  (flags :standard -O3)
+ )
+ )

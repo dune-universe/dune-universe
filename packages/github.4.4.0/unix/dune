@@ -1,0 +1,5 @@
+(library
+ (name github_unix)
+  (public_name github-unix)
+  (wrapped false)
+  (libraries lwt.unix cohttp-lwt-unix github bytes))

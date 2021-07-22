@@ -1,0 +1,5 @@
+*.swp
+_build/
+.merlin
+*.install
+lib_test/config.ml
