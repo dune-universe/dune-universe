@@ -1,4 +1,0 @@
-source: site
-destination: public
-layout_dir: templates
-partial_dir: includes

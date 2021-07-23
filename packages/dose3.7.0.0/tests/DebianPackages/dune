@@ -1,0 +1,78 @@
+(rule
+ (target Packages_20201226T144309Z_amd64_noaspell)
+ (deps Packages_20201226T144309Z_amd64.xz)
+ (action
+  (with-outputs-to
+   %{target}
+   (pipe-outputs
+    (run unxz --to-stdout %{deps})
+    (run ./debGrep.exe --not --exact-match -F Package aspell)))))
+
+(rule
+ (target Packages_20201226T144309Z_amd64_nogrep)
+ (deps Packages_20201226T144309Z_amd64.xz)
+ (action
+  (with-outputs-to
+   %{target}
+   (pipe-outputs
+    (run unxz --to-stdout %{deps})
+    (run ./debGrep.exe --not --exact-match -F Package grep)))))
+
+(executable
+ (name debGrep)
+ (libraries extlib dose3.common dose3-extra.doseparse dose3-extra.debian)
+ (modules debGrep grep_argv_parser grep_argv_types))
+
+(ocamlyacc grep_argv_parser)
+
+; In the past, dose-ceve used the integer 2147483646 to denote a "nan" version
+; on 64bit and 1073741822 on 32bit systems. The former integer is too large for
+; ocaml on 32bit architectures and to produce the same output on all platforms,
+; the "nan" integer is now 1073741822 everywhere. Instead of replacing the
+; existing cudf file with one that uses 1073741822 instead of 2147483646, we
+; run it through sed, to not unnecessarily increase the size of the repository.
+
+(rule
+ (target debian_20201226T144309Z.cudf)
+ (deps debian_20201226T144309Z.cudf.xz)
+ (action
+  (with-stdout-to
+   %{target}
+   (with-stdin-from
+    %{deps}
+    (system "unxz --to-stdout | sed s/2147483646/1073741822/g")))))
+
+; to test the debGrep tool we use a complex filter that should never match
+; that simple filters work is already tested by other unit tests that require
+; aspell and grep being removed, respectively (see above)
+
+(rule
+ (target Packages_20201226T144309Z_amd64_debgrep)
+ (deps Packages_20201226T144309Z_amd64.xz)
+ (action
+  (with-outputs-to
+   %{target}
+   (pipe-outputs
+    (run unxz --to-stdout %{deps})
+    (run ./debGrep.exe --not --exact-match "(" -F foo bar --and -F blub bla
+      ")")))))
+
+(rule
+ (alias runtest)
+ (package dose3-extra)
+ (deps
+  (:p1 Packages_20201226T144309Z_amd64.xz)
+  (:p2 Packages_20201226T144309Z_amd64_debgrep))
+ (action
+  (progn
+   ; check if debGrep does not modify its input Packages file
+   (pipe-outputs
+    (run unxz --to-stdout %{p1})
+    (run cmp - %{p2}))
+   ; check if debGrep can handle multiline fields
+   (pipe-outputs
+    (echo "Test: foo\n bar\n")
+    (run ./debGrep.exe --quiet --not --field Test foobar))
+   (pipe-outputs
+    (echo "Test: foo\n bar\n")
+    (run ./debGrep.exe --quiet --field Test "foo\n bar")))))

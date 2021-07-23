@@ -1,0 +1,10 @@
+<!doctype html>
+<html>
+  <head>
+    {% include "head.jingoo" %}
+  </head>
+  <body>
+    {% include "nav.jingoo" %}
+    {{ content }}
+  </body>
+</html>

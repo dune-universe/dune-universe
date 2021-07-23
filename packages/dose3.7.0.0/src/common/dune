@@ -1,0 +1,25 @@
+(library
+ (name dose_common)
+ (public_name dose3.common)
+ (libraries extlib cudf re.pcre stdlib-shims unix)
+ (flags (:standard)))
+
+(ocamllex shell_lexer)
+
+(rule
+ (target versionInfo.ml)
+ (action
+  (with-stdout-to
+   %{target}
+   (echo "let version = \"%{version:dose3}\""))))
+
+(rule
+ (targets gitVersionInfo.ml)
+ ; Ensures the hash update whenever a source file is modified ;
+ (deps
+  (source_tree %{workspace_root}/.git)
+  (:script get-git-info.mlt))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run %{ocaml} unix.cma %{script}))))

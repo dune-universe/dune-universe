@@ -1,0 +1,6 @@
+(library
+ (name dose_doseparse)
+ (public_name dose3-extra.doseparse)
+ (libraries extlib dose3.common dose3-extra.pef dose3-extra.debian
+   dose3-extra.opam2 dose3-extra.npm dose3-extra.opencsw)
+ (flags (:standard)))

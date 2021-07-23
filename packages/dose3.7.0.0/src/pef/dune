@@ -1,0 +1,18 @@
+(library
+ (name dose_pef)
+ (public_name dose3-extra.pef)
+ (libraries extlib cudf dose3-extra dose3.common dose3.versioning)
+ (flags (:standard)))
+
+(ocamllex packages_lexer)
+
+(ocamlyacc packages_parser)
+
+(rule
+ (alias runtest)
+ (package dose3-extra)
+ (deps ../../tests/pef/unittests.pef)
+ (action
+  (chdir
+   ../../
+   (run ./src/pef/tests/tests.exe))))

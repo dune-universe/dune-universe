@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    {% include "head.jingoo" %}
+  </head>
+  <body>
+    {% include "nav.jingoo" %}
+    Published: {{ format_date("%B %_d, %Y", frontmatter.date) }}<br>
+    Tags:
+    [
+    {%- set ns = namespace (sep = false) -%}
+    {%- for tag in frontmatter.taxonomies.tags -%}
+      {%- if ns.sep -%}
+        , 
+      {% else -%}
+        {%- set ns.sep = true -%}
+      {%- endif -%}
+      <a href='/tags/{{ slugify(tag) }}.html'>{{ tag }}</a>
+    {%- endfor -%}
+    ]
+    {{ content }}
+  </body>
+</html>

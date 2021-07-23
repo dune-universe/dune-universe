@@ -1,0 +1,80 @@
+(executable
+ (name distcheck)
+ (public_name dose-distcheck)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse)
+ (modules distcheck))
+
+(executable
+ (name ceve)
+ (public_name dose-ceve)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse)
+ (modules ceve))
+
+(executable
+ (name challenged)
+ (public_name dose-challenged)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse parmap)
+ (modules challenged))
+
+(executable
+ (name outdated)
+ (public_name dose-outdated)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse)
+ (modules outdated))
+
+(executable
+ (name aptCudf)
+ (public_name apt-cudf)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse
+   dose3-extra.debian)
+ (modules aptCudf))
+
+(executable
+ (name debBuildcheck)
+ (public_name dose-builddebcheck)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse
+   dose3-extra.debian)
+ (modules debBuildcheck))
+
+(executable
+ (name debCoinstall)
+ (public_name dose-deb-coinstall)
+ (package dose3-extra)
+ (libraries extlib dose3.common dose3.algo dose3-extra.doseparse
+   dose3-extra.debian)
+ (modules debCoinstall))
+
+(rule
+ (alias runtest)
+ (package dose3-extra)
+ (deps
+  distcheck.exe
+  ceve.exe
+  challenged.exe
+  outdated.exe
+  aptCudf.exe
+  debBuildcheck.exe
+  debCoinstall.exe
+  (:lst dose-tests.list)
+  (glob_files ../../tests/algo/*)
+  (glob_files ../../tests/applications/dose-tests/*)
+  (glob_files ../../tests/applications/dose-tests/versionend_provides/*)
+  (glob_files ../../tests/applications/outdated/*)
+  (glob_files ../../tests/cudf/*)
+  (glob_files ../../tests/cudf/explanationgraph/*)
+  (glob_files ../../tests/cudf/incomplete/*)
+  (glob_files ../../tests/deb/*)
+  (glob_files ../../tests/deb/edsp/*)
+  (glob_files ../../tests/DebianPackages/*)
+  (glob_files ../../tests/deb/misc/*)
+  (glob_files ../../tests/opam/*))
+ (action
+  (chdir
+   ../../
+   (run ./src/applications/dose-tests.py %{lst}))))

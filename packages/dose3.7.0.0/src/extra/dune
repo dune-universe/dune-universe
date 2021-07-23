@@ -1,0 +1,22 @@
+(library
+ (name dose_extra)
+ (public_name dose3-extra)
+ (libraries dose3.common extlib zip bz2)
+ (flags (:standard)))
+
+(ocamllex format822_lexer)
+
+(ocamlyacc format822_parser)
+
+(ocamllex criteria_lexer)
+
+(ocamlyacc criteria_parser)
+
+(rule
+ (alias runtest)
+ (package dose3-extra)
+ (deps ../../tests/cudf/legacy.cudf)
+ (action
+  (chdir
+   ../../
+   (run ./src/extra/tests/tests.exe))))

@@ -1,0 +1,28 @@
+(library
+ (name dose_algo)
+ (public_name dose3.algo)
+ (libraries extlib cudf dose3.common ocamlgraph)
+ (flags (:standard)))
+
+(rule
+ (alias runtest)
+ (package dose3)
+ (deps ../../tests/DebianPackages/debian_20201226T144309Z.cudf
+   ../../tests/algo/coinst.cudf ../../tests/algo/cone.cudf
+   ../../tests/algo/engine-conflicts.cudf
+   ../../tests/algo/conj_dependency.cudf ../../tests/algo/dependency.cudf
+   ../../tests/algo/dominators_cycle.cudf
+   ../../tests/algo/dominators_order.cudf
+   ../../tests/algo/dominators_order.cudf ../../tests/algo/selfprovide.cudf
+   ../../tests/algo/strongcfl-simple.cudf
+   ../../tests/algo/strongcfl-triangle.cudf
+   ../../tests/algo/strongdep-conflict.cudf
+   ../../tests/algo/strongdep-conj.cudf ../../tests/algo/strongdep-cycle.cudf
+   ../../tests/algo/strongdep-deep-dsj.cudf
+   ../../tests/algo/strongdep-simple.cudf
+   ../../tests/cudf/is_consistent_failure.cudf
+   ../../tests/cudf/is_consistent_success.cudf ../../tests/cudf/legacy.cudf)
+ (action
+  (chdir
+   ../../
+   (run ./src/algo/tests/tests.exe))))

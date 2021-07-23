@@ -1,0 +1,13 @@
+(library
+ (name dose_versioning)
+ (public_name dose3.versioning)
+ (libraries extlib cudf dose3.common)
+ (flags (:standard)))
+
+(rule
+ (alias runtest)
+ (package dose3)
+ (action
+  (chdir
+   ../../
+   (run ./src/versioning/tests/tests.exe))))
