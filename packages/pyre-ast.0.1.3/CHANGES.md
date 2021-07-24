@@ -1,3 +1,9 @@
+## 0.1.3 (2021-7-22)
+
+- Fix crashes when parsing non-UTF8-decodable string literals.
+- \N escape sequence in string literals will no longer cause a syntax error.
+- Module parsing APIs now accept an additional `enable_type_comment` argument, controlling whether to parse type comments or not.
+
 ## 0.1.2 (2021-07-20)
 
 - Fix linking flags and tests on Linux.

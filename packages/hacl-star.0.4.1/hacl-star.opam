@@ -1,7 +1,11 @@
 opam-version: "2.0"
 name: "hacl-star"
-version: "0.4.0"
+version: "0.4.1"
 synopsis: "OCaml API for EverCrypt/HACL*"
+description: """
+Documentation for this library can be found
+[here](https://hacl-star.github.io/ocaml_doc/hacl-star/index.html).
+"""
 maintainer: "Victor Dumitrescu <victor.dumitrescu@nomadic-labs.com>"
 authors: [ "Project Everest" ]
 license: "Apache-2.0"
@@ -16,7 +20,9 @@ depends: [
   "cppo" {build}
   "odoc" {with-doc}
 ]
-available: os-family != "bsd"
+available: [
+  os = "freebsd" | os-family != "bsd"
+]
 build: [
   [
     "dune" "build" "-p" name "-j" jobs

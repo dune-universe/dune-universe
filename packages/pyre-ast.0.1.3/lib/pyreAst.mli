@@ -198,8 +198,15 @@ module TaglessFinal : sig
       string_ : string -> 'a;
           (** Represents Python string literals (e.g. ["derp"]).
 
-              Unlike non-ascii identifiers, non-ascii string literals can be parsed properly by this
-              library. That also means it has no trouble handling strings with embedded null bytes. *)
+              At OCaml level, the value of the string literal is a UTF-8 decoded byte array of the
+              original string literal in Python. If the original literal cannot be UTF-8 decoded,
+              the {{:https://docs.python.org/3/library/codecs.html#error-handlers}
+              [backslahreplace]} error handler is used, which replaces the un-decodable parts with
+              backslashed escape sequence.
+
+              Note that due to technical limitations, \N escape sequence translation is not
+              supported: String literal "\N\{FOO\}" will be treated as an ascii string of length 7
+              as opposed to a Unicode string of length 1. *)
       byte_string : string -> 'a;
           (** Represents Python string literals (e.g. [b"derp"]).
 
@@ -1691,21 +1698,22 @@ end
     syntactical constructs. These APIs will always hand back a {!type: Result.t} where if the
     parsing fails, a {!type: Parser.Error.t} gets returned.
 
-    Under the hood, this library actually compiles and calls into the actual CPython parser code
-    (with {{:https://docs.python.org/3.10/library/ast.html#ast.PyCF_TYPE_COMMENTS}
-    PyCF_TYPE_COMMENTS} flag enabled), and then it walk through the CPython AST and translate them
-    into OCaml structures via C bindings. This is how 100% fidelity with the official CPython
-    implementation is achieved -- we are actually relying on exactly the same parser implementation
-    that CPython uses. This approach has some notable implications:
+    Under the hood, this library actually compiles and calls into the actual CPython parser code,
+    and then walks through the CPython AST translating them into OCaml structures via C bindings.
+    This is how 100% fidelity with the official CPython implementation is achieved -- we are
+    actually relying on exactly the same parser implementation that CPython uses. This approach has
+    some notable implications:
 
     - The parsing APIs are stateful as one need to intialize/finalize CPython runtime before
       invoking its parser. The low-level details are abstracted away with the {!module:
       Parser.Context} module, but the fact that no parsing can be done prior to obtaining a {!type:
       Parser.Context.t} still holds.
-    - As of the latest release, I have yet to find an easy way for the parser to handle Unicode
-      identifier names. Unicode characters in string literals are fine, but Unicode identifier name
-      is something that a barely-initialized CPython runtime cannot handle even with utf-8 mode
-      enabled. *)
+    - Text encoding support is crippled. A large part of Unicode handling in CPython is provided via
+      extension modules, which a barely-initialized CPython runtime cannot handle. For example,
+      Unicode character in identifier name is not allowed, and "\N" escape sequence in string
+      literals are not properly translated. What's more, the [-*- coding: X -*-] header (see
+      {{:https://www.python.org/dev/peps/pep-0263/} PEP 263}) is mostly not supported unless [X] is
+      [utf-8]. *)
 module Parser : sig
   (** This module contains a type that abstracts away the details of global states required to set
       up the parser. *)
@@ -1755,6 +1763,7 @@ module Parser : sig
       spec:
         (_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 'module_, _, _, _, _, _, _) TaglessFinal.t ->
       ?filename:string ->
+      ?enable_type_comment:bool ->
       string ->
       ('module_, Error.t) Result.t
     (** [parse_module ~context ~spec input] takes the string [input] and parse it as Python module
@@ -1762,7 +1771,11 @@ module Parser : sig
         meaning of the [context] argument.
 
         Optionally a [filename] argument can be specified. If there is a parse error, [filename]
-        will appear in the {!field: Error.message} field. *)
+        will appear in the {!field: Error.message} field.
+
+        Optionally an [enable_type_comment] argument can be specified. If it is true, the parser
+        will attempt to populate the [type_comment] section of each AST node that has it. Otherwise,
+        contents in comments will all get ignored and [type_comment] will always be unset. *)
 
     val parse_expression :
       context:Context.t ->
@@ -1795,7 +1808,11 @@ module Parser : sig
       ('expression, Error.t) Result.t
     (** [parse_expression ~context ~spec input] takes the string [input] and parse it as Python
         expression using tagless-final specification [spec]. See documentation of {!type: Context.t}
-        for the meaning of the [context] argument. *)
+        for the meaning of the [context] argument.
+
+        Optionally an [enable_type_comment] argument can be specified. If it is true, the parser
+        will attempt to populate the [type_comment] section of each AST node that has it. Otherwise,
+        contents in comments will all get ignored and [type_comment] will always be unset. *)
 
     val parse_function_type :
       context:Context.t ->
@@ -1845,12 +1862,20 @@ module Parser : sig
       {!module:Parser.TaglessFinal} module. *)
   module Concrete : sig
     val parse_module :
-      context:Context.t -> ?filename:string -> string -> (Concrete.Module.t, Error.t) result
+      context:Context.t ->
+      ?filename:string ->
+      ?enable_type_comment:bool ->
+      string ->
+      (Concrete.Module.t, Error.t) result
     (** [parse_module ~context input] takes the string [input] and parse into a Python module. See
         documentation of {!type: Context.t} for the meaning of the [context] argument.
 
         Optionally a [filename] argument can be specified. If there is a parse error, [filename]
         will appear in the {!field: Error.message} field.
+
+        Optionally an [enable_type_comment] argument can be specified. If it is true, the parser
+        will attempt to populate the [type_comment] section of each AST node that has it. Otherwise,
+        contents in comments will all get ignored and [type_comment] will always be unset.
 
         Calling this function is equivalent to calling {!val: TaglessFinal.parse_module} with [spec]
         set to the return value of {!val: PyreAst.Concrete.make_tagless_final}. *)
