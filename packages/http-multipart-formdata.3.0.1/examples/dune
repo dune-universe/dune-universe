@@ -1,0 +1,6 @@
+(executable
+ (name multipart_httpaf)
+ (modules multipart_httpaf)
+ (libraries http-multipart-formdata lwt lwt.unix httpaf httpaf-lwt-unix)
+ (preprocess
+  (pps ppx_deriving.show ppx_deriving.ord)))

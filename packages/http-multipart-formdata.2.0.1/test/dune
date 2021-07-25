@@ -1,6 +1,0 @@
-(library
- (name test)
- (libraries http-multipart-formdata lwt lwt.unix)
- (inline_tests)
- (preprocess
-  (pps ppx_deriving.show ppx_deriving.ord ppx_expect)))

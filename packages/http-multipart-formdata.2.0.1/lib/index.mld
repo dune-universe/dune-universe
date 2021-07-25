@@ -1,9 +1,0 @@
-{0 Http_multipart_formdata}
-
-A library which enables HTTP file uploads in ocaml web applications. HTTP file upload requests are generally encoded as [multipart/form-data] media content type. The library provides a simple api to parse and process such requests.
-
-The parser implements HTTP [multipart/form-data] standard as defined in {{:https://tools.ietf.org/html/rfc7578} RFC 7578}.
-
-{1 Modules}
-
-{!module:Http_multipart_formdata}
