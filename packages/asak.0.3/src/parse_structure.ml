@@ -52,7 +52,10 @@ let type_with_init lst =
   try
     ret @@
       extract_typedtree @@
-        Typemod.type_structure (init_env ()) lst Location.none
+        Typemod.type_structure (init_env ()) lst
+#if OCAML_VERSION < (4, 12, 0)
+    Location.none
+#endif
   with Typetexp.Error _ | Typecore.Error _ -> fail "type error"
 
 let simplify_lambda lambda =
@@ -62,11 +65,20 @@ let simplify_lambda lambda =
   Simplif.simplify_lambda "" lambda
 #endif
 
+let transl_exp expr =
+#if OCAML_VERSION >= (4, 12, 0)
+  Translcore.transl_exp ~scopes:Debuginfo.Scoped_location.empty_scopes expr
+#elif OCAML_VERSION >= (4, 11, 0)
+  Translcore.transl_exp ~scopes:[] expr
+#else
+  Translcore.transl_exp expr
+#endif
+
 let lambda_of_expression ?name expr =
   Lambda_normalization.normalize_local_variables ?name @@
     Lambda_normalization.inline_all @@
       simplify_lambda @@
-        Translcore.transl_exp expr
+        transl_exp expr
 
 let get_name_of_pat pat =
   match pat.pat_desc with
@@ -119,7 +131,12 @@ let find_let_in_parsetree_items f =
 let rec read_module_expr ~prefix m =
   match m.mod_desc with
   | Tmod_structure structure -> read_structure_with_loc ~prefix structure
-  | Tmod_functor (_,_,_,m) -> read_module_expr ~prefix m
+#if OCAML_VERSION >= (4, 10, 0)
+  | Tmod_functor (_,m) ->
+#else
+  | Tmod_functor (_,_,_,m) ->
+#endif
+      read_module_expr ~prefix m
   | _ -> []
 
 and read_value_binding ~prefix x =
@@ -131,7 +148,14 @@ and read_value_binding ~prefix x =
 
 and read_item_desc ~prefix x =
   let read_module_expr m =
-    let prefix = prefix ^ "." ^ Ident.name m.mb_id in
+    let mid =
+#if OCAML_VERSION >= (4, 10, 0)
+      Option.value ~default:"" (Option.map Ident.name m.mb_id)
+#else
+      Ident.name m.mb_id
+#endif
+    in
+    let prefix = prefix ^ "." ^ mid in
      read_module_expr ~prefix m.mb_expr in
   match x.str_desc with
   | Tstr_value (_,xs) -> filter_map (read_value_binding ~prefix) xs
