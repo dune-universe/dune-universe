@@ -1,0 +1,6 @@
+(ocamllex pla_lex)
+
+(library
+ (name pla)
+ (public_name pla)
+ (libraries compiler-libs))

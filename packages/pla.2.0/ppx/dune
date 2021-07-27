@@ -1,0 +1,5 @@
+(library
+ (name pla_ppx)
+ (public_name pla.ppx)
+ (kind ppx_rewriter)
+ (libraries pla compiler-libs ppxlib))

@@ -1,0 +1,8 @@
+(executable
+ (name iso)
+ (modules iso)
+ (libraries pecu fmt astring crowbar))
+
+(alias
+ (name runtest)
+ (action (run ./iso.exe)))

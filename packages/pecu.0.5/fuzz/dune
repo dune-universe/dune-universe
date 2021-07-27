@@ -1,4 +1,0 @@
-(executable
- (name iso)
- (modules iso)
- (libraries pecu fmt astring crowbar))

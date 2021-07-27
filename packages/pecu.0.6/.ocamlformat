@@ -1,0 +1,6 @@
+version=0.18.0
+module-item-spacing=compact
+break-struct=natural
+break-infix=fit-or-vertical
+parens-tuple=always
+wrap-comments=true
