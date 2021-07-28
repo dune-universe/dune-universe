@@ -1,0 +1,5 @@
+(library
+ (name CoreAndMore)
+ (public_name core-and-more)
+ (preprocess (pps ppx_hash ppx_sexp_conv ppx_bin_prot ppx_deriving.std))
+ (libraries core posix-math))
