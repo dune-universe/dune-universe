@@ -1,0 +1,21 @@
+{
+  "name": "@reasonml-community/graphql-ppx",
+  "refmt": 3,
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "sources": [
+    {
+      "dir": "bucklescript",
+      "subdirs": true
+    }
+  ],
+  "graphql": {
+    "customFields": {
+      "DateTime": "DateTime",
+      "Color": "Color"
+    }
+  }
+}
