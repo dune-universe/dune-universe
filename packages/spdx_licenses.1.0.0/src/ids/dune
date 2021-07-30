@@ -1,0 +1,16 @@
+(rule
+ (targets licenses.json)
+ (mode promote)
+ (enabled_if (= %{profile} "regenerate"))
+ (action (run curl -sLO https://raw.githubusercontent.com/spdx/license-list-data/master/json/licenses.json)))
+
+(rule
+ (targets exceptions.json)
+ (mode promote)
+ (enabled_if (= %{profile} "regenerate"))
+ (action (run curl -sLO https://raw.githubusercontent.com/spdx/license-list-data/master/json/exceptions.json)))
+
+(executable
+ (name generate)
+ (enabled_if (= %{profile} "regenerate"))
+ (libraries ezjsonm))
