@@ -6,7 +6,7 @@ Key-parsers offers parsers and printers for various asymmetric key formats.
 
 ## `Key_parsers`
 
-It currently comes with three submodules.
+It currently comes with four submodules.
 
 ### `Asn1`
 
@@ -24,6 +24,13 @@ Here you can find parsers for the following formats:
   [RFC 5280](https://tools.ietf.org/html/rfc5280#appendix-A)
 - DER encodings of DSA, EC and DH Parameters and Private keys as produced by OpenSSL
   commands such as `dsaparam` and `gendsa`
+
+### `Pgp`
+
+Parsers for PGP (Pretty Good Privacy) encodings of DSA, RSA and Elgamal Public and
+Private keys and user IDs as defined in [RFC 4880] (https://datatracker.ietf.org/doc/html/rfc4880)
+Note that the parsers in this module expect raw byte string. They don't handle PEM armoring
+nor decode Base64 or hex.
 
 ### `Ltpa`
 

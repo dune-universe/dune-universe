@@ -1,7 +1,6 @@
 (** Lightweight Third Party Authentication - keys used in IBM Websphere & Lotus Notes*)
 
 module Rsa : sig
-
   module Private : sig
     (** The format for private keys is:
 
@@ -18,13 +17,12 @@ module Rsa : sig
          raised in that case.
     *)
 
-    type t = {
-      e: Z.t;
-      d: Z.t;
-      p: Z.t;
-      q: Z.t;
-    }
-    [@@deriving eq,ord,show]
+    type t =
+      { e : Z.t
+      ; d : Z.t
+      ; p : Z.t
+      ; q : Z.t }
+    [@@deriving eq, ord, show]
 
     val decode : Cstruct.t -> (t, string) Result.result
   end
@@ -38,15 +36,13 @@ module Rsa : sig
         Here again there is an ambiguity, so e is assumed to be 0x010001: this
         is checked and an error is parsed if that is not the case.
     *)
-    type t = {
-      e: Z.t;
-      n: Z.t;
-    }
-    [@@deriving eq,ord,show]
+    type t =
+      { e : Z.t
+      ; n : Z.t }
+    [@@deriving eq, ord, show]
 
     val decode : Cstruct.t -> (t, string) Result.result
   end
 end
 
-module RSA = Rsa
-[@@ocaml.deprecated "Use module Rsa instead"]
+module RSA = Rsa [@@ocaml.deprecated "Use module Rsa instead"]

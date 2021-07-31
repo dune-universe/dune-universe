@@ -1,4 +1,4 @@
-version: "1.1.0"
+version: "1.2.1"
 opam-version: "2.0"
 maintainer: "Cryptosense <opensource@cryptosense.com>"
 authors: [
@@ -18,13 +18,13 @@ run-test: [
 ]
 depends: [
   "asn1-combinators" {>= "0.2.0"}
-  "cstruct" {>= "1.6.0"}
-  "dune" {>= "1.11.0"}
+  "cstruct" {>= "6.0.0"}
+  "dune" {>= "2.0"}
   "hex" {>= "1.0.0"}
-  "ocaml" {>= "4.04.1"}
+  "ocaml" {>= "4.08.0"}
   "ounit" {with-test & >= "2.0.0"}
   "ppx_deriving" {>= "4.0"}
-  "result" {>= "1.2"}
+  "result" {>= "1.5"}
   "zarith" {>= "1.4.1"}
 ]
 conflicts: [

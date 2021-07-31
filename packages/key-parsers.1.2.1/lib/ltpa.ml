@@ -14,13 +14,12 @@ module Rsa = struct
       invalid_arg ("RSA_LTPA: invalid public exponent: " ^ Z.to_string e)
 
   module Private = struct
-    type t = {
-      e: Derivable.Z.t;
-      d: Derivable.Z.t;
-      p: Derivable.Z.t;
-      q: Derivable.Z.t;
-    }
-    [@@deriving ord,eq,show]
+    type t =
+      { e : Derivable.Z.t
+      ; d : Derivable.Z.t
+      ; p : Derivable.Z.t
+      ; q : Derivable.Z.t }
+    [@@deriving ord, eq, show]
 
     let decode cs =
       try
@@ -30,31 +29,32 @@ module Rsa = struct
         let e_len = 3 in
         let e = get_z_be cs e_off e_len in
         check_public_exponent e;
-        let p_len = d_len / 2 + 1 in
+        let p_len = (d_len / 2) + 1 in
         let p_off = e_off + 3 in
         let p = get_z_be cs p_off p_len in
         let q = get_z_be cs (p_off + p_len) p_len in
-        Result.Ok { e ; d ; p ; q }
-      with Invalid_argument s -> Result.Error s
+        Result.Ok {e; d; p; q}
+      with
+      | Invalid_argument s -> Result.Error s
   end
 
   module Public = struct
-    type t = {
-      e: Derivable.Z.t;
-      n: Derivable.Z.t;
-    }
-    [@@deriving ord,eq,show]
+    type t =
+      { e : Derivable.Z.t
+      ; n : Derivable.Z.t }
+    [@@deriving ord, eq, show]
 
     let decode cs =
       try
-        let e_off = Cstruct.len cs - 3 in
+        let e_off = Cstruct.length cs - 3 in
         let e_len = 3 in
         let e = get_z_be cs e_off e_len in
         check_public_exponent e;
         let n_len = e_off in
         let n = get_z_be cs 0 n_len in
-        Result.Ok { e ; n }
-      with Invalid_argument s -> Result.Error s
+        Result.Ok {e; n}
+      with
+      | Invalid_argument s -> Result.Error s
   end
 end
 
