@@ -1,0 +1,25 @@
+(executables
+ (names bench replay)
+ (libraries
+  encoding
+  cactus
+  cmdliner
+  mtime
+  progress
+  fmt.tty
+  fmt.cli
+  logs.cli
+  logs.fmt
+  oracle
+  memtrace)
+ (preprocess
+  (pps ppx_repr)))
+
+(alias
+ (name bench)
+ (deps ./bench.exe))
+
+(rule
+ (alias runbench)
+ (action
+  (run ./bench.exe -- --minimal --clear)))

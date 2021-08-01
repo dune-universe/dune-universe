@@ -1,0 +1,5 @@
+
+(executable
+  (name argiope)
+  (modes native)
+  (libraries uri lambdasoup lwt ezcurl-lwt containers))

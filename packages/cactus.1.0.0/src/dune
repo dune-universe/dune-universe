@@ -1,0 +1,19 @@
+(library
+ (name btree)
+ (foreign_stubs
+  (language c)
+  (names pread pwrite))
+ (public_name cactus)
+ (libraries
+  bentov
+  repr
+  unix
+  hex
+  mtime
+  mtime.clock.os
+  logs
+  optint
+  progress
+  lru)
+ (preprocess
+  (pps ppx_repr)))
