@@ -12,6 +12,10 @@ See documentation at https://sapristi.github.io/easy_logging/easy_logging
 
 ## Changelog
 
+### Version 0.8.2
+
+ - fix license in source code files (Mozilla Public License Version 2.0)
+
 ### Version 0.8.1
 
  - General cleanup

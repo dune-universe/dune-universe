@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "easy_logging_yojson"
-version: "0.8.1"
+version: "0.8.2"
 synopsis: "Configuration loader for easy_logging with yojson backend"
 maintainer: "mathiasmillet@gmail.com"
 authors: "Mathias Millet"
@@ -12,7 +12,7 @@ depends: [
   "ocaml" {>= "4.07.0"}
   "dune" {>= "1.8"}
   "ppx_deriving"{>= "4.0"}
-  "ppx_deriving_yojson"
+  "ppx_deriving_yojson"{>="3.5"}
   "easy_logging" {= version}
 ]
 build: [
