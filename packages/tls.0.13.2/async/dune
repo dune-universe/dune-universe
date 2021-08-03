@@ -1,5 +1,0 @@
-(library
-  (name        tls_async)
-  (public_name tls-async)
-  (preprocess (pps ppx_jane))
-  (libraries async core cstruct-async mirage-crypto-rng-async tls))
