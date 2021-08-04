@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <head>
+    {% include "head.jingoo" %}
+    <link rel='stylesheet' type='text/css' href='/index.css' >
+  </head>
+  <body>
+    {% include "header.jingoo" %}
+    {{ content }}
+    {% include "footer.jingoo" %}
+  </body>
+</html>

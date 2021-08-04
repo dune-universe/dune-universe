@@ -1,0 +1,17 @@
+(executables
+ (names tree account)
+ (preprocess (pps ppx_deriving_qcheck)))
+
+(rule
+ (alias runtest_tree)
+ (action (run %{exe:tree.exe})))
+
+(rule
+ (alias runtest_account)
+ (action (run %{exe:account.exe})))
+
+(rule
+ (alias runtest)
+ (deps (alias runtest_tree)
+       (alias runtest_account))
+ (action (progn)))

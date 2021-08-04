@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    {% include "head.jingoo" %}
+    <link rel='stylesheet' type='text/css' href='/docs.css'/>
+  </head>
+  <body>
+    {% include "header.jingoo" %}
+    <div class='main'>
+      <div>
+        <nav class='sidebar'>
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href='commands.html'>Commands</a></li>
+            <li><a href='configuration.html'>Configuration</a></li>
+            <li><a href='pages.html'>Pages</a></li>
+            <li><a href='highlighting.html'>Syntax Highlighting</a></li>
+            <li><a href='taxonomies.html'>Taxonomies</a></li>
+            <li><a href='templates.html'>Templates</a></li>
+          </ul>
+        </nav>
+        <main>
+          {{ content }}
+        </main>
+      </div>
+    </div>
+    {% include "footer.jingoo" %}
+  </body>
+</html>

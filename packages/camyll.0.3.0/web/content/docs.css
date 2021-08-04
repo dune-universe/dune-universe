@@ -1,0 +1,42 @@
+.main {
+  width: 100%;
+  background-color: #f0f0f0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.main > div {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+}
+
+nav.sidebar {
+  width: 20%;
+  margin: 10px;
+}
+
+@media (max-width: 700px) {
+  .main > div {
+    flex-direction: column;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  nav.sidebar {
+    width: 100%;
+  }
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+main {
+  padding: 2em 5%;
+  width: 80%;
+  margin: 10px;
+}

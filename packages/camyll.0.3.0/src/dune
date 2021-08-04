@@ -1,0 +1,5 @@
+(library
+ (name camyll)
+ (libraries
+  calendar httpaf httpaf-lwt-unix jingoo lambdasoup lwt omd plist-xml re
+  textmate-language toml uri))

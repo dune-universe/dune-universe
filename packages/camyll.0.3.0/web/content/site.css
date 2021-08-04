@@ -1,0 +1,128 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #333;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  /* Without these two attributes, mobile browsers give some lines of formatted
+     code larger fonts. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: none;
+}
+
+a[href] {
+  color: #e57600;
+  text-decoration: none;
+}
+
+a[href]:hover {
+  text-decoration: underline;
+}
+
+header {
+  background-color: #222;
+  width: 100%;
+  box-shadow: 0 0 5px #222;
+  line-height: 3rem;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.logo {
+  color: white;
+  padding: 0 1rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.logo img {
+  max-height: 2.5rem;
+  vertical-align: middle;
+}
+
+nav.nav {
+  display: inline-block;
+  border: 0;
+  margin: 0 auto;
+}
+
+.nav ul {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  display: inline-block;
+  height: 100%;
+}
+
+.nav a {
+  color: white;
+  display: inline-block;
+  height: 100%;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: white;
+  background-color: #f48a32;
+}
+
+@media screen and (max-width: 700px) {
+  .logo {
+    display: block;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+code {
+  font-size: 1rem;
+}
+
+pre code {
+  border: none;
+  border-radius: 0;
+}
+
+p code, li code {
+  padding: 0 5px;
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+pre {
+  line-height: 1;
+  overflow: auto;
+  padding: 5px;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  padding: 1em;
+}

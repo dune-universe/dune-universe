@@ -1,0 +1,6 @@
+(library
+ (name ppx_deriving_qcheck)
+ (public_name ppx_deriving_qcheck)
+ (libraries ppxlib arbitrary)
+ (ppx_runtime_libraries qcheck)
+ (kind ppx_deriver))

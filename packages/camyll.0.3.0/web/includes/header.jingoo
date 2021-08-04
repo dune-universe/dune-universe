@@ -1,0 +1,14 @@
+<header>
+  <nav class='nav'>
+    <div class='logo'>
+      <img src='/logo.svg'/>
+      CAMYLL
+    </div>
+    <ul>
+      <li><a href='/'>Home</a></li>
+      <li><a href='/docs/index.html'>Docs</a></li>
+      <li><a href='https://github.com/alan-j-hu/camyll'>GitHub</a></li>
+      <li><a href='https://opam.ocaml.org/packages/camyll/'>Opam</a></li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,32 @@
+Release 3.0:
+- Use dune to build
+- Require ocaml >= 4.12.0
+
+Release 2.2.2:
+- fix: remove the beginning and ending spaces in contents of xml
+  nodes, but do not collapse spaces inside PCData. (by C. Troestler)
+
+Release 2.2.1:
+- fix: do not set default namespace in final rss
+- fix: rdf parsing
+- fix: Rss.sort_items_by_date sorts with old items last, as documented
+
+Release 2.2.0:
+- add: Rss.compare_item
+- fix: provide polymorphic functions on channel_t and on item_t
+- add: Rss.channel_t_of_xmls
+- add: Rss.xml_of_source
+- fix #5: incorrect sort
+
+Release 2.1.0:
+- handle namespaces (the list is stored in the channel structure)
+- allow the library user to read addition information from
+  <item> and <channel> prefixed subnodes, as the RSS 2.0 specification
+  indicates this is the way to extend RSS information
+- handle cloud, skipHours, skipDays, picsRating in Channel
+- use Neturl.url instead of sting
+- use Netdate instead of Rss_date, which was a copy of Netdate
+- default encoding is now UTF-8
+- new parameter "indent" for printing
+- new "opts" parameter when reading
+- reading returns error list besides channel

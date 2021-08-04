@@ -1,0 +1,5 @@
+(executable
+ (name rsstest)
+ (flags -g -rectypes :standard -w -6-7-9-10-27-32-33-34-35-36-50-52 -no-strict-sequence)
+ (libraries rss)
+)

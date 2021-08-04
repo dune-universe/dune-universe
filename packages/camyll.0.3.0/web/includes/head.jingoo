@@ -1,0 +1,6 @@
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>{{ frontmatter.title }}</title>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico?'>
+<link rel='stylesheet' type='text/css' href='/site.css'>
+

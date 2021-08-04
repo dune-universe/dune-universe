@@ -1,0 +1,12 @@
+source_dir = "site"
+dest_dir = "public"
+agda_dir = "lagda"
+exclude = ["*.agdai"]
+
+[[taxonomies]]
+name = "categories"
+layout = "tag.jingoo"
+
+[[taxonomies]]
+name = "tags"
+layout = "tag.jingoo"

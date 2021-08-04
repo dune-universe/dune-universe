@@ -1,0 +1,9 @@
+rss.cmo : rss_types.cmo rss_io.cmo rss.cmi
+rss.cmx : rss_types.cmx rss_io.cmx rss.cmi
+rss_io.cmo : rss_types.cmo
+rss_io.cmx : rss_types.cmx
+rss_types.cmo :
+rss_types.cmx :
+rsstest.cmo : rss.cmi
+rsstest.cmx : rss.cmx
+rss.cmi :

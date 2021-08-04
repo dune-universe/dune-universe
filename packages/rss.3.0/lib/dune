@@ -1,0 +1,9 @@
+(library
+ (name rss)
+ (public_name rss)
+ (wrapped false)
+ (flags -g :standard -w -6-7-9-10-27-32-33-34-35-36-50-52 -no-strict-sequence)
+ (libraries uri ptime xmlm)
+)
+(documentation)
+
