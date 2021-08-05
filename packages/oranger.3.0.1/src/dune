@@ -1,0 +1,17 @@
+(library
+ (name oranger)
+ (public_name oranger)
+ (modules utls RF)
+ (libraries dolog batteries re line_oriented))
+
+(executable
+ (name RFR)
+ (public_name oranger_rfr)
+ (modules RFR common mol gnuplot)
+ (libraries dolog cpm molenc minicli oranger line_oriented parany))
+
+;; never installed executables, because they don't have a public name
+(executables
+ (names test)
+ (modules test)
+ (libraries dolog minicli cpm batteries oranger))
