@@ -1,0 +1,3 @@
+(executables
+ (names bench_fasta bench_fasta_exe)
+ (libraries core core_bench bio_io))

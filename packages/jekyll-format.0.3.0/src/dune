@@ -1,0 +1,17 @@
+(library
+ (name jekyll_format)
+ (public_name jekyll-format)
+ (wrapped false)
+ (flags -w -32)
+ (libraries
+  astring
+  sexplib
+  omd
+  ezjsonm
+  result
+  rresult
+  fmt
+  ptime
+  fpath
+  yaml
+  yaml-sexp))

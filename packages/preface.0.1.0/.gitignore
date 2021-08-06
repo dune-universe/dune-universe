@@ -1,0 +1,12 @@
+_build
+*~
+\.\#*
+\#*#
+*.native
+*.byte
+*.install
+_tests/
+.merlin
+node_modules
+_esy
+esy.lock

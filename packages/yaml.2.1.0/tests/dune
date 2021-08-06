@@ -1,4 +1,0 @@
-(test
- (name test)
- (libraries yaml bos ezjsonm alcotest junit_alcotest)
- (deps (source_tree yaml)))

@@ -1,0 +1,13 @@
+(library
+ (name core)
+ (public_name ppx_pbt.ppx.core)
+ (preprocess (pps ppx_deriving.show ppxlib.metaquot))
+ (libraries ppxlib
+            menhirLib
+            ppx_deriving_qcheck
+            pbt))
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser))

@@ -1,0 +1,26 @@
+name: Jekyll Format
+on: [ push, pull_request ]
+jobs:
+  run:
+    name: Tests
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [macos-latest, ubuntu-latest, windows-latest]
+        ocaml-compiler: [ '4.12.0', '4.11.1', '4.10.2', '4.09.1', '4.08.1' ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ocaml/setup-ocaml@v2
+      with:
+        ocaml-compiler: ${{ matrix.ocaml-version }}
+    - run: opam pin add jekyll-format.dev -n .
+    - name: Packages
+      run: opam depext -y jekyll-format
+    - name: Dependencies
+      run: opam install -t . --deps-only
+    - name: Build
+      run: opam exec -- dune build
+    - name: Install 
+      run: opam exec -- dune install
+    - name: Test
+      run: opam exec -- dune runtest

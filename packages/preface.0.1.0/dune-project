@@ -1,0 +1,5 @@
+(lang dune 2.8)
+(name preface)
+(version v0.1.0)
+(using mdx 0.1)
+(package (name preface))

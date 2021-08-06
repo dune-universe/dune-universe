@@ -1,0 +1,1114 @@
+=== jsonm.SingleElem ===
+[
+  []
+]
+=== jsonm.SingleElem ===
+[
+  [
+    2
+  ]
+]
+=== jsonm.Longarray ===
+[
+  [
+    4,
+    2,
+    3,
+    1
+  ]
+]
+=== jsonm.EmptyInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [],
+    "a": "a"
+  }
+]
+=== jsonm.SingleInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [
+      2
+    ],
+    "a": "a"
+  }
+]
+=== jsonm.MultiInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [
+      4,
+      2,
+      3,
+      1
+    ],
+    "a": "a"
+  }
+]
+=== jsonm.ArrayOfArrays ===
+[
+  {
+    "a": [
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ]
+  }
+]
+=== jsonm.ArrayOfArrays2 ===
+[
+  [
+    [],
+    [
+      [],
+      [
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    [
+      []
+    ],
+    [
+      [
+        2
+      ]
+    ]
+  ]
+]
+=== jsonm.Tuple ===
+[
+  [
+    [
+      10,
+      [
+        20,
+        30,
+        40
+      ],
+      [
+        "s50",
+        "s60",
+        "s70"
+      ],
+      [
+        [
+          100,
+          200
+        ],
+        [
+          300,
+          400
+        ],
+        [
+          500,
+          600
+        ]
+      ]
+    ],
+    [
+      11,
+      [
+        21,
+        31,
+        41
+      ],
+      [
+        "s51",
+        "s61",
+        "s71"
+      ],
+      [
+        [
+          101,
+          201
+        ],
+        [
+          301,
+          401
+        ],
+        [
+          501,
+          601
+        ]
+      ]
+    ],
+    [
+      12,
+      [
+        22,
+        32,
+        42
+      ],
+      [
+        "s52",
+        "s62",
+        "s72"
+      ],
+      [
+        [
+          102,
+          202
+        ],
+        [
+          302,
+          402
+        ],
+        [
+          502,
+          602
+        ]
+      ]
+    ],
+    [
+      13,
+      [
+        23,
+        33,
+        43
+      ],
+      [
+        "s53",
+        "s63",
+        "s73"
+      ],
+      [
+        [
+          103,
+          203
+        ],
+        [
+          303,
+          403
+        ],
+        [
+          503,
+          603
+        ]
+      ]
+    ]
+  ]
+]
+=== jsonm.Any ===
+[
+  {
+    "u": {
+      "ua": 7
+    },
+    "v": [
+      "B",
+      [
+        5,
+        6,
+        7
+      ],
+      [
+        10,
+        11,
+        12
+      ]
+    ],
+    "z": 101,
+    "record": {
+      "y": "string",
+      "x": 5
+    },
+    "varray": [
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ],
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ],
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ]
+    ],
+    "vlist": [
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ],
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ],
+      [
+        "B",
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          10,
+          11,
+          12
+        ]
+      ]
+    ],
+    "tuple": [
+      5,
+      "protocol",
+      false
+    ],
+    "intref": 4,
+    "intoption": 100,
+    "intlist": [
+      3,
+      4,
+      5
+    ],
+    "bytes": "bytes",
+    "string2": "1",
+    "string": "string",
+    "float": 3.14,
+    "nativeint": 20,
+    "int64": 10,
+    "int32": 5,
+    "int": 2,
+    "char": "x",
+    "bool": true
+  }
+]
+=== jsonm.Record ===
+[
+  {
+    "t_il": [
+      1000,
+      1001,
+      1002
+    ],
+    "t_tl": [
+      [
+        100,
+        101,
+        [
+          "s100",
+          "s101"
+        ]
+      ],
+      [
+        110,
+        111,
+        [
+          "s110",
+          "s111"
+        ]
+      ],
+      [
+        120,
+        121,
+        [
+          "s120",
+          "s121"
+        ]
+      ],
+      [
+        130,
+        131,
+        [
+          "s130",
+          "s131"
+        ]
+      ],
+      [
+        140,
+        141,
+        [
+          "s140",
+          "s141"
+        ]
+      ]
+    ],
+    "t_t": [
+      100,
+      101,
+      [
+        "s100",
+        "s101"
+      ]
+    ],
+    "t_i": 1000,
+    "t_bl": [],
+    "t_b": {
+      "b_al": [
+        {
+          "a_string": "s7",
+          "a_int": 7
+        },
+        {
+          "a_string": "s8",
+          "a_int": 8
+        },
+        {
+          "a_string": "s9",
+          "a_int": 9
+        }
+      ],
+      "b_a": {
+        "a_string": "s6",
+        "a_int": 6
+      },
+      "b_string": "s5",
+      "b_int": 5
+    },
+    "t_al": [
+      {
+        "a_string": "s2",
+        "a_int": 2
+      },
+      {
+        "a_string": "s3",
+        "a_int": 3
+      },
+      {
+        "a_string": "s4",
+        "a_int": 4
+      }
+    ],
+    "t_a": {
+      "a_string": "s1",
+      "a_int": 1
+    }
+  }
+]
+=== jsonm.list ===
+[
+  {
+    "a": [
+      1,
+      2,
+      3
+    ]
+  }
+]
+=== jsonm.Lists ===
+[
+  {
+    "l": [
+      [
+        "A",
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        "B",
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4,
+            5
+          ],
+          [
+            2
+          ]
+        ],
+        [
+          3,
+          1
+        ],
+        5
+      ],
+      [
+        "C",
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          3,
+          4,
+          5
+        ]
+      ]
+    ],
+    "c": [
+      100,
+      101,
+      102,
+      103
+    ],
+    "b": [
+      [
+        8,
+        9
+      ],
+      [
+        10,
+        20,
+        30,
+        40
+      ]
+    ],
+    "a": [
+      [
+        1,
+        2,
+        3
+      ],
+      [],
+      [
+        10,
+        20,
+        30,
+        40
+      ],
+      [
+        100,
+        101
+      ]
+    ]
+  }
+]
+=== jsonm.array ===
+[
+  {
+    "a": [
+      1,
+      2,
+      3
+    ]
+  }
+]
+=== jsonm.EmptyList ===
+[
+  []
+]
+=== jsonm.SingleElem ===
+[
+  [
+    2
+  ]
+]
+=== jsonm.Longlist ===
+[
+  [
+    4,
+    3,
+    2,
+    1
+  ]
+]
+=== jsonm.EmptyInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [],
+    "a": "a"
+  }
+]
+=== jsonm.SingleInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [
+      2
+    ],
+    "a": "a"
+  }
+]
+=== jsonm.MultiInsideRec ===
+[
+  {
+    "c": "c",
+    "V": [
+      4,
+      2,
+      3,
+      1
+    ],
+    "a": "a"
+  }
+]
+=== jsonm.ListOfLists ===
+[
+  {
+    "a": [
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ]
+  }
+]
+=== jsonm.ListOfLists2 ===
+[
+  [
+    [],
+    [
+      [],
+      [
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    [
+      []
+    ],
+    [
+      [
+        2
+      ]
+    ]
+  ]
+]
+=== jsonm.Nonrec ===
+[
+  [
+    "A",
+    [
+      "Cons",
+      4,
+      [
+        "Cons",
+        3,
+        "Nil"
+      ]
+    ]
+  ]
+]
+=== jsonm.Nonrec2 ===
+[
+  [
+    "Cons",
+    4,
+    [
+      "Cons",
+      3,
+      "Nil"
+    ]
+  ]
+]
+=== jsonm.None ===
+[
+  null
+]
+=== jsonm.Some None ===
+[
+  {
+    "__option": null
+  }
+]
+=== jsonm.Some Some None ===
+[
+  {
+    "__option": {
+      "__option": null
+    }
+  }
+]
+=== jsonm.Some Some Some Unit ===
+[
+  {
+    "__option": {
+      "__option": {
+        "__option": {
+          "__option": null
+        }
+      }
+    }
+  }
+]
+=== jsonm.simple ===
+[
+  5
+]
+=== jsonm.record ===
+[
+  {
+    "a": 5
+  }
+]
+=== jsonm.multiple ===
+[
+  [
+    5,
+    "5",
+    true
+  ]
+]
+=== jsonm.reference ===
+[
+  {
+    "a": {
+      "a": 5
+    }
+  }
+]
+=== jsonm.recursive ===
+[
+  {
+    "c": {
+      "b": {
+        "a": 5
+      }
+    }
+  }
+]
+=== jsonm.Simple ===
+[
+  [
+    "A",
+    [
+      "B",
+      5
+    ],
+    [
+      "C",
+      [
+        6,
+        7
+      ]
+    ],
+    [
+      "D",
+      [
+        8,
+        9
+      ]
+    ]
+  ]
+]
+=== jsonm.Tree ===
+[
+  [
+    "Node",
+    [
+      [
+        "Node",
+        [
+          "Leaf",
+          3,
+          "Leaf"
+        ]
+      ],
+      10,
+      "Leaf"
+    ]
+  ]
+]
+=== jsonm.MutualRecursion ===
+[
+  [
+    "T1",
+    [
+      "V",
+      [
+        "T",
+        [
+          "V",
+          [
+            "V1",
+            [
+              "V1",
+              [
+                "V1",
+                [
+                  "V0",
+                  5
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+=== jsonm.InsideRec ===
+[
+  {
+    "c": "c",
+    "V": "A",
+    "a": "a"
+  }
+]
+=== jsonm.RecordList ===
+[
+  {
+    "objects": [
+      {
+        "key": 1
+      },
+      {
+        "key": 2
+      }
+    ]
+  }
+]
+=== jsonm.SimpleRecord ===
+[
+  {
+    "HostId": "SDsd",
+    "RequestId": "sdfsd",
+    "Endpoint": null,
+    "Bucket": null,
+    "Message": "Message",
+    "Code": "Error"
+  }
+]
+=== jsonm.Test_sig ===
+[
+  {
+    "x": [
+      "A",
+      [
+        [
+          "A",
+          7
+        ],
+        7,
+        7,
+        [
+          "B",
+          0.7
+        ],
+        7
+      ]
+    ]
+  }
+]
+=== jsonm.Test_sig2 ===
+[
+  [
+    1,
+    2,
+    "3.0",
+    null,
+    [
+      "A",
+      1
+    ],
+    {
+      "c": "3.0",
+      "b": 2,
+      "a": 1
+    },
+    [
+      "A",
+      1
+    ]
+  ]
+]
+=== jsonm.S3 ===
+[
+  {
+    "Contents": [
+      {
+        "ETag": "Etag",
+        "StorageClass": "STANDARD"
+      }
+    ],
+    "Prefix": "prefix"
+  }
+]
+=== jsonm.Types ===
+[
+  {
+    "baz": {
+      "y_yd": [
+        "Variant_two1",
+        1
+      ],
+      "y_yc": [
+        "three",
+        [
+          100,
+          200,
+          300
+        ]
+      ],
+      "y_b": [
+        "two",
+        [
+          10,
+          20,
+          30
+        ]
+      ],
+      "y_a": 2
+    },
+    "bar": "true",
+    "foo": 1
+  }
+]
+=== jsonm.Some Some Some true ===
+[
+  true
+]
+=== jsonm.Some Some None ===
+[
+  {
+    "__option": {
+      "__option": null
+    }
+  }
+]
+=== jsonm.Some None ===
+[
+  {
+    "__option": null
+  }
+]
+=== jsonm.None ===
+[
+  null
+]
+=== jsonm.Some Some Some true ===
+[
+  {
+    "a": true
+  }
+]
+=== jsonm.Some Some None ===
+[
+  {
+    "a": {
+      "__option": {
+        "__option": null
+      }
+    }
+  }
+]
+=== jsonm.Some None ===
+[
+  {
+    "a": {
+      "__option": null
+    }
+  }
+]
+=== jsonm.None ===
+[
+  {
+    "a": null
+  }
+]
+=== jsonm.unit option option list option option ===
+[
+  [
+    {
+      "__option": {
+        "__option": null
+      }
+    },
+    {
+      "__option": null
+    },
+    null
+  ]
+]
+=== jsonm.confuse deserialization by using reserved word ===
+[
+  {
+    "o": {
+      "option": true
+    }
+  }
+]
+=== jsonm.Simple ===
+[
+  [
+    "A",
+    [
+      "B",
+      5
+    ],
+    [
+      "C",
+      6,
+      7
+    ],
+    [
+      "D",
+      [
+        8,
+        9
+      ]
+    ]
+  ]
+]
+=== jsonm.Tuple ===
+[
+  [
+    "A",
+    [
+      3,
+      4
+    ]
+  ]
+]
+=== jsonm.Tree ===
+[
+  [
+    "Node",
+    [
+      "Node",
+      "Leaf",
+      3,
+      "Leaf"
+    ],
+    10,
+    "Leaf"
+  ]
+]
+=== jsonm.MutualRecursion ===
+[
+  [
+    "T1",
+    [
+      "V",
+      [
+        "T",
+        [
+          "V",
+          [
+            "V1",
+            [
+              "V1",
+              [
+                "V1",
+                [
+                  "V0",
+                  5
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+=== jsonm.InsideRec ===
+[
+  {
+    "c": "c",
+    "V": "A",
+    "a": "a"
+  }
+]
+=== jsonm.InlineRecord ===
+[
+  [
+    "A",
+    {
+      "a": "a"
+    }
+  ]
+]
+=== jsonm.InlineRecord2 ===
+[
+  [
+    "aa",
+    {
+      "b": [
+        "aa",
+        {
+          "b": [
+            "B",
+            5
+          ],
+          "A": "a"
+        }
+      ],
+      "A": "a"
+    }
+  ]
+]
+=== jsonm.Poly ===
+[
+  [
+    "aaa",
+    5
+  ]
+]
+=== jsonm.Option.Ok ===
+[
+  [
+    "Ok",
+    2
+  ]
+]
+=== jsonm.Option.Error ===
+[
+  [
+    "Error",
+    "Error string"
+  ]
+]

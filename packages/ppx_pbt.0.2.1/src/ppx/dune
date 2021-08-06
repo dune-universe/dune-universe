@@ -1,0 +1,10 @@
+(library
+ (name ppx_pbt)
+ (public_name ppx_pbt)
+ (kind ppx_rewriter)
+ (libraries ppxlib ppx_deriving qcheck core)
+ (ppx_runtime_libraries ppx_pbt.pbt ppx_pbt.runner)
+ (preprocess (pps ppxlib.metaquot ppx_deriving.show))
+ (inline_tests.backend
+  (generate_runner (echo "let () =  Runner.run () ;;"))
+  (runner_libraries qcheck ppx_pbt.runner)))

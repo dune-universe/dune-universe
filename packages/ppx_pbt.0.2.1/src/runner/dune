@@ -1,0 +1,4 @@
+(library
+ (name runner)
+ (public_name ppx_pbt.runner)
+ (libraries qcheck-alcotest))

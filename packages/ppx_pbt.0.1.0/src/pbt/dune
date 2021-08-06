@@ -1,4 +1,0 @@
-(library
- (name pbt)
- (public_name ppx_pbt.pbt)
- (libraries qcheck))

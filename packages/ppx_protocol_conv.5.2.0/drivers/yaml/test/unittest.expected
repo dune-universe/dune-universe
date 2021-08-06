@@ -1,0 +1,600 @@
+=== yaml.SingleElem ===
+[]
+
+=== yaml.SingleElem ===
+- 2
+
+=== yaml.Longarray ===
+- 4
+- 2
+- 3
+- 1
+
+=== yaml.EmptyInsideRec ===
+c: c
+V: []
+a: a
+
+=== yaml.SingleInsideRec ===
+c: c
+V:
+- 2
+a: a
+
+=== yaml.MultiInsideRec ===
+c: c
+V:
+- 4
+- 2
+- 3
+- 1
+a: a
+
+=== yaml.ArrayOfArrays ===
+a:
+- - 2
+  - 3
+- - 4
+  - 5
+
+=== yaml.ArrayOfArrays2 ===
+- []
+- - []
+  - - 2
+  - - 3
+    - 4
+- - []
+- - - 2
+
+=== yaml.Tuple ===
+- - 10
+  - - 20
+    - 30
+    - 40
+  - - s50
+    - s60
+    - s70
+  - - - 100
+      - 200
+    - - 300
+      - 400
+    - - 500
+      - 600
+- - 11
+  - - 21
+    - 31
+    - 41
+  - - s51
+    - s61
+    - s71
+  - - - 101
+      - 201
+    - - 301
+      - 401
+    - - 501
+      - 601
+- - 12
+  - - 22
+    - 32
+    - 42
+  - - s52
+    - s62
+    - s72
+  - - - 102
+      - 202
+    - - 302
+      - 402
+    - - 502
+      - 602
+- - 13
+  - - 23
+    - 33
+    - 43
+  - - s53
+    - s63
+    - s73
+  - - - 103
+      - 203
+    - - 303
+      - 403
+    - - 503
+      - 603
+
+=== yaml.Any ===
+u:
+  ua: 7
+v:
+- B
+- - 5
+  - 6
+  - 7
+- - 10
+  - 11
+  - 12
+z: 101
+record:
+  "y": string
+  x: 5
+varray:
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+vlist:
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+- - B
+  - - 5
+    - 6
+    - 7
+  - - 10
+    - 11
+    - 12
+tuple:
+- 5
+- protocol
+- false
+intref: 4
+intoption: 100
+intlist:
+- 3
+- 4
+- 5
+bytes: bytes
+string2: "1"
+string: string
+float: 3.14
+nativeint: 20
+int64: 10
+int32: 5
+int: 2
+char: x
+bool: true
+
+=== yaml.Record ===
+t_il:
+- 1000
+- 1001
+- 1002
+t_tl:
+- - 100
+  - 101
+  - - s100
+    - s101
+- - 110
+  - 111
+  - - s110
+    - s111
+- - 120
+  - 121
+  - - s120
+    - s121
+- - 130
+  - 131
+  - - s130
+    - s131
+- - 140
+  - 141
+  - - s140
+    - s141
+t_t:
+- 100
+- 101
+- - s100
+  - s101
+t_i: 1000
+t_bl: []
+t_b:
+  b_al:
+  - a_string: s7
+    a_int: 7
+  - a_string: s8
+    a_int: 8
+  - a_string: s9
+    a_int: 9
+  b_a:
+    a_string: s6
+    a_int: 6
+  b_string: s5
+  b_int: 5
+t_al:
+- a_string: s2
+  a_int: 2
+- a_string: s3
+  a_int: 3
+- a_string: s4
+  a_int: 4
+t_a:
+  a_string: s1
+  a_int: 1
+
+=== yaml.list ===
+a:
+- 1
+- 2
+- 3
+
+=== yaml.Lists ===
+l:
+- - A
+  - - 1
+    - 2
+    - 3
+- - B
+  - - - 1
+      - 2
+    - - 3
+      - 4
+      - 5
+    - - 2
+  - - 3
+    - 1
+  - 5
+- - C
+  - - 1
+    - 2
+    - 3
+  - - 3
+    - 4
+    - 5
+c:
+- 100
+- 101
+- 102
+- 103
+b:
+- - 8
+  - 9
+- - 10
+  - 20
+  - 30
+  - 40
+a:
+- - 1
+  - 2
+  - 3
+- []
+- - 10
+  - 20
+  - 30
+  - 40
+- - 100
+  - 101
+
+=== yaml.array ===
+a:
+- 1
+- 2
+- 3
+
+=== yaml.EmptyList ===
+[]
+
+=== yaml.SingleElem ===
+- 2
+
+=== yaml.Longlist ===
+- 4
+- 3
+- 2
+- 1
+
+=== yaml.EmptyInsideRec ===
+c: c
+V: []
+a: a
+
+=== yaml.SingleInsideRec ===
+c: c
+V:
+- 2
+a: a
+
+=== yaml.MultiInsideRec ===
+c: c
+V:
+- 4
+- 2
+- 3
+- 1
+a: a
+
+=== yaml.ListOfLists ===
+a:
+- - 2
+  - 3
+- - 4
+  - 5
+
+=== yaml.ListOfLists2 ===
+- []
+- - []
+  - - 2
+  - - 3
+    - 4
+- - []
+- - - 2
+
+=== yaml.Nonrec ===
+- A
+- - Cons
+  - 4
+  - - Cons
+    - 3
+    - Nil
+
+=== yaml.Nonrec2 ===
+- Cons
+- 4
+- - Cons
+  - 3
+  - Nil
+
+=== yaml.None ===
+
+
+=== yaml.Some None ===
+__option:
+
+=== yaml.Some Some None ===
+__option:
+  __option:
+
+=== yaml.Some Some Some Unit ===
+__option:
+  __option:
+    __option:
+      __option:
+
+=== yaml.simple ===
+5
+
+=== yaml.record ===
+a: 5
+
+=== yaml.multiple ===
+- 5
+- "5"
+- true
+
+=== yaml.reference ===
+a:
+  a: 5
+
+=== yaml.recursive ===
+c:
+  b:
+    a: 5
+
+=== yaml.Simple ===
+- A
+- - B
+  - 5
+- - C
+  - - 6
+    - 7
+- - D
+  - - 8
+    - 9
+
+=== yaml.Tree ===
+- Node
+- - - Node
+    - - Leaf
+      - 3
+      - Leaf
+  - 10
+  - Leaf
+
+=== yaml.MutualRecursion ===
+- T1
+- - V
+  - - T
+    - - V
+      - - V1
+        - - V1
+          - - V1
+            - - V0
+              - 5
+
+=== yaml.InsideRec ===
+c: c
+V: A
+a: a
+
+=== yaml.RecordList ===
+objects:
+- key: 1
+- key: 2
+
+=== yaml.SimpleRecord ===
+HostId: SDsd
+RequestId: sdfsd
+Endpoint:
+Bucket:
+Message: Message
+Code: Error
+
+=== yaml.Test_sig ===
+x:
+- A
+- - - A
+    - 7
+  - 7
+  - 7
+  - - B
+    - 0.7
+  - 7
+
+=== yaml.Test_sig2 ===
+- 1
+- 2
+- "3.0"
+-
+- - A
+  - 1
+- c: "3.0"
+  b: 2
+  a: 1
+- - A
+  - 1
+
+=== yaml.S3 ===
+Contents:
+- ETag: Etag
+  StorageClass: STANDARD
+Prefix: prefix
+
+=== yaml.Types ===
+baz:
+  y_yd:
+  - Variant_two1
+  - 1
+  y_yc:
+  - three
+  - - 100
+    - 200
+    - 300
+  y_b:
+  - two
+  - - 10
+    - 20
+    - 30
+  y_a: 2
+bar: "true"
+foo: 1
+
+=== yaml.Some Some Some true ===
+true
+
+=== yaml.Some Some None ===
+__option:
+  __option:
+
+=== yaml.Some None ===
+__option:
+
+=== yaml.None ===
+
+
+=== yaml.Some Some Some true ===
+a: true
+
+=== yaml.Some Some None ===
+a:
+  __option:
+    __option:
+
+=== yaml.Some None ===
+a:
+  __option:
+
+=== yaml.None ===
+a:
+
+=== yaml.unit option option list option option ===
+- __option:
+    __option:
+- __option:
+-
+
+=== yaml.confuse deserialization by using reserved word ===
+o:
+  option: true
+
+=== yaml.Simple ===
+- A
+- - B
+  - 5
+- - C
+  - 6
+  - 7
+- - D
+  - - 8
+    - 9
+
+=== yaml.Tuple ===
+- A
+- - 3
+  - 4
+
+=== yaml.Tree ===
+- Node
+- - Node
+  - Leaf
+  - 3
+  - Leaf
+- 10
+- Leaf
+
+=== yaml.MutualRecursion ===
+- T1
+- - V
+  - - T
+    - - V
+      - - V1
+        - - V1
+          - - V1
+            - - V0
+              - 5
+
+=== yaml.InsideRec ===
+c: c
+V: A
+a: a
+
+=== yaml.InlineRecord ===
+- A
+- a: a
+
+=== yaml.InlineRecord2 ===
+- aa
+- b:
+  - aa
+  - b:
+    - B
+    - 5
+    A: a
+  A: a
+
+=== yaml.Poly ===
+- aaa
+- 5
+
+=== yaml.Option.Ok ===
+- Ok
+- 2
+
+=== yaml.Option.Error ===
+- Error
+- Error string
+
