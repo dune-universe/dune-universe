@@ -1,5 +1,0 @@
-(executable
- (name demo)
- (libraries wtr)
- (preprocess
-  (pps wtr.ppx)))

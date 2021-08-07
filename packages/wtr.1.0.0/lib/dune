@@ -1,8 +1,0 @@
-(library
- (name wtr)
- (libraries uri)
- (public_name wtr))
-
-(documentation
- (package wtr)
- (mld_files index))

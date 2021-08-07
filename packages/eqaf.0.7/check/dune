@@ -1,8 +1,0 @@
-(executable
- (name check)
- (libraries eqaf base64 clock))
-
-(alias
- (name runtest)
- (deps (:check check.exe))
- (action (run %{check})))

@@ -1,9 +1,0 @@
-(library
- (name microtime)
- (modules microtime)
- (c_names microtime))
-
-(executable
- (name attack)
- (modules attack)
- (libraries fmt unix microtime))
