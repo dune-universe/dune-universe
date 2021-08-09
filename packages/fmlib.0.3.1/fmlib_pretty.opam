@@ -1,19 +1,10 @@
 opam-version: "2.0"
 
-synopsis: "Functional monadic library"
+synopsis: "Pretty printing support for tree like structures"
 
 description: """
 
-Library supporting functional programming with managed effects. It features
-
-- Fmlib_std: A lot of standard data types.
-
-- Fmlib_parse: Monadic parsing functions with combinators suitable for indentation sensitive
-  parsing.
-
-- Fmlib_pretty: Pretty printing functions.
-
-- Fmlib_js: Interface to javscript via js_of_ocaml.
+Easy to use pretty printing library.
 
 """
 
@@ -37,5 +28,6 @@ depends: [
     "ocaml" {>= "4.08.0"}
     "dune" {>= "1.10"}
     "odoc" {with-doc}
-    "ppx_inline_test" {>= "v0.12.0"}
+    "ppx_inline_test" {>= "v0.13.0"}
+    "fmlib_std" {=version}
 ]
