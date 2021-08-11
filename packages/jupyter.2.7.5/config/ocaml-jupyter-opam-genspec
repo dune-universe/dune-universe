@@ -1,0 +1,26 @@
+#!/bin/sh -eu
+
+OPAM_BINDIR="$(opam var bin)"
+OPAM_SWITCH="$(opam var switch)"
+OPAM_SHAREDIR="$(opam var share)/jupyter"
+
+mkdir -p "$OPAM_SHAREDIR/"
+
+cat <<EOF >"$OPAM_SHAREDIR/kernel.json"
+{
+  "display_name": "OCaml $OPAM_SWITCH",
+  "language": "OCaml",
+  "argv": [
+    "/bin/sh",
+    "-c",
+    "eval \$(opam env --switch=$OPAM_SWITCH --shell=sh) && $OPAM_BINDIR/ocaml-jupyter-kernel \"\$@\"",
+    "ocaml-jupyter-kernel",
+    "-init", "$HOME/.ocamlinit",
+    "--merlin", "$OPAM_BINDIR/ocamlmerlin",
+    "--verbosity", "app",
+    "--connection-file", "{connection_file}"
+  ]
+}
+EOF
+
+echo "Generated kernelspec at $OPAM_SHAREDIR/kernel.json"
