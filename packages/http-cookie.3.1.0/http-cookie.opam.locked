@@ -1,0 +1,54 @@
+opam-version: "2.0"
+name: "http-cookie"
+version: "3.1.0"
+synopsis: "HTTP cookie library for OCaml"
+description: "OCaml library to manipulate HTTP cookie. Adheres to RFC 6265."
+maintainer: "Bikal Lem"
+authors: "Bikal Lem <gbikal@gmail.com>"
+license: "MPL-2.0"
+homepage: "https://github.com/lemaetech/http-cookie"
+bug-reports: "https://github.com/lemaetech/http-cookie/issues"
+depends: [
+  "astring" {= "0.8.5" & with-doc}
+  "base-bigarray" {= "base"}
+  "base-threads" {= "base"}
+  "base-unix" {= "base"}
+  "cmdliner" {= "1.0.4" & with-doc}
+  "cppo" {= "1.6.7" & with-doc}
+  "dune" {= "2.9.0"}
+  "fmt" {= "0.8.9" & with-doc}
+  "fpath" {= "0.7.3" & with-doc}
+  "logs" {= "0.7.0" & with-doc}
+  "ocaml" {= "4.12.0"}
+  "ocaml-base-compiler" {= "4.12.0"}
+  "ocaml-config" {= "2"}
+  "ocaml-migrate-parsetree" {= "2.2.0" & with-doc}
+  "ocaml-options-vanilla" {= "1"}
+  "ocamlbuild" {= "0.14.0" & with-doc}
+  "ocamlfind" {= "1.9.1" & with-doc}
+  "odoc" {= "dev" & with-doc}
+  "odoc-parser" {= "0.9.0" & with-doc}
+  "re" {= "1.9.0" & with-doc}
+  "result" {= "1.5" & with-doc}
+  "seq" {= "base" & with-doc}
+  "stdlib-shims" {= "0.3.0" & with-doc}
+  "topkg" {= "1.0.3" & with-doc}
+  "tyxml" {= "4.5.0" & with-doc}
+  "uchar" {= "0.0.2" & with-doc}
+  "uutf" {= "1.0.2" & with-doc}
+]
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
+dev-repo: "git+https://github.com/lemaetech/http-cookie.git"

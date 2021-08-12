@@ -1,0 +1,3 @@
+(library
+ (name http_cookie)
+ (public_name http-cookie))
