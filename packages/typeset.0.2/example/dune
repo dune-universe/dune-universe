@@ -1,3 +1,0 @@
-(library
-  (name example)
-  (libraries typeset typeset_util))

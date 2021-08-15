@@ -1,0 +1,5 @@
+(library
+  (name example)
+  (libraries
+    typeset
+    cps_toolbox))

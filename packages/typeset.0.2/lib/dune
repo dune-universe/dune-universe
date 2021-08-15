@@ -1,4 +1,0 @@
-(library
-  (name typeset)
-  (public_name typeset)
-  (libraries typeset_util))

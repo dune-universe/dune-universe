@@ -1,0 +1,10 @@
+(executable
+  (name Tests)
+  (libraries
+    typeset
+    cps_toolbox
+    qcheck))
+
+(rule
+ (alias  runtest)
+ (action (run ./Tests.exe)))
