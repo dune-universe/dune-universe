@@ -1,0 +1,512 @@
+
+; camlp5 
+(cram (deps test000.exe test001.exe test002.exe test003.exe test004.exe test005.exe test006.exe test007.exe test008.exe test009.exe test010.exe test011.exe test012.exe test013.exe test014.exe test015.exe test016.exe test017.exe test018.exe test019.exe test020.exe test021.exe test022.exe test023.exe test024.exe test025.exe test026.exe test027.exe test028.exe test029.exe test030.exe test031.exe test032.exe test036.exe test037.exe test040.exe test041.exe test042.exe test082mutal.exe test083polyvar.exe test086std.exe test087stateful.exe test089struct.exe test090eval.exe test091eval.exe test705.exe))
+
+(executable
+  (name test000)
+  (modules test000)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test001)
+  (modules test001)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test002)
+  (modules test002)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test003)
+  (modules test003)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test004)
+  (modules test004)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test005)
+  (modules test005)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test006)
+  (modules test006)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test007)
+  (modules test007)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test008)
+  (modules test008)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test009)
+  (modules test009)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test010)
+  (modules test010)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test011)
+  (modules test011)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test012)
+  (modules test012)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test013)
+  (modules test013)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test014)
+  (modules test014)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test015)
+  (modules test015)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test016)
+  (modules test016)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test017)
+  (modules test017)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test018)
+  (modules test018)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test019)
+  (modules test019)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test020)
+  (modules test020)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test021)
+  (modules test021)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test022)
+  (modules test022)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test023)
+  (modules test023)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test024)
+  (modules test024)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test025)
+  (modules test025)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test026)
+  (modules test026)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test027)
+  (modules test027)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test028)
+  (modules test028)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test029)
+  (modules test029)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test030)
+  (modules test030)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test031)
+  (modules test031)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test032)
+  (modules test032)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test036)
+  (modules test036)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test037)
+  (modules test037)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test040)
+  (modules test040)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test041)
+  (modules test041)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test042)
+  (modules test042)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test082mutal)
+  (modules test082mutal)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test083polyvar)
+  (modules test083polyvar)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test086std)
+  (modules test086std)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test087stateful)
+  (modules test087stateful)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test089struct)
+  (modules test089struct)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test090eval)
+  (modules test090eval)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test091eval)
+  (modules test091eval)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+(executable
+  (name test705)
+  (modules test705)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+; camlp5+rectypes
+(cram (deps test081llist.exe))
+
+(executable
+  (name test081llist)
+  (modules test081llist)
+  (flags (:standard -rectypes))
+  (libraries GT)
+  (preprocess (action (run %{project_root}/camlp5/pp5+gt+plugins+dump.exe %{input-file})))
+  (preprocessor_deps (file %{project_root}/camlp5/pp5+gt+plugins+dump.exe)))
+
+; ppx
+(cram (deps test800.exe test802mutal.exe test803polyvar.exe test804polyvar.exe test805std.exe test806fmt.exe test807showT.exe test811compare.exe test812html.exe test813htmlTy.exe test815abstr.exe test816hash.exe test820spec.exe test821clab.exe test822.exe test823list.exe test824mut.exe test825tuples.exe test826antiph.exe test828combi.exe test829enum.exe test840garrique.exe))
+
+(executable
+  (name test800)
+  (modules test800)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test802mutal)
+  (modules test802mutal)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test803polyvar)
+  (modules test803polyvar)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test804polyvar)
+  (modules test804polyvar)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test805std)
+  (modules test805std)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test806fmt)
+  (modules test806fmt)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test807showT)
+  (modules test807showT)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test811compare)
+  (modules test811compare)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test812html)
+  (modules test812html)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test813htmlTy)
+  (modules test813htmlTy)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test815abstr)
+  (modules test815abstr)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test816hash)
+  (modules test816hash)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test820spec)
+  (modules test820spec)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test821clab)
+  (modules test821clab)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test822)
+  (modules test822)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test823list)
+  (modules test823list)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test824mut)
+  (modules test824mut)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test825tuples)
+  (modules test825tuples)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test826antiph)
+  (modules test826antiph)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test828combi)
+  (modules test828combi)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test829enum)
+  (modules test829enum)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test840garrique)
+  (modules test840garrique)
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+; ppx+rectypes
+(cram (deps test798gen.exe test817logic.exe))
+
+(executable
+  (name test798gen)
+  (modules test798gen)
+  (flags (:standard -rectypes))
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))
+
+(executable
+  (name test817logic)
+  (modules test817logic)
+  (flags (:standard -rectypes))
+  (libraries GT)
+  (preprocess (action (run %{project_root}/ppx/pp_gt.exe --as-pp %{input-file})))
+  (preprocessor_deps (file %{project_root}/ppx/pp_gt.exe)))

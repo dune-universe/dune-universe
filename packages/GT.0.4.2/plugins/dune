@@ -1,0 +1,108 @@
+(env
+ (_
+  (flags
+   (:standard -warn-error -A -w -7-9-13-27 -linkall))))
+
+(library
+ (name show)
+ (public_name GT.syntax.show)
+ (modules show)
+ (libraries GTCommon)
+ (synopsis "Plugin 'show'"))
+
+(library
+ (name gfmt)
+ (public_name GT.syntax.gfmt)
+ (modules gfmt)
+ (libraries GTCommon)
+ (synopsis "Plugin 'gfmt'"))
+
+(library
+ (name foldl)
+ (public_name GT.syntax.foldl)
+ (modules foldl)
+ (libraries GTCommon)
+ (synopsis "Plugin 'foldl'"))
+
+(library
+ (name foldr)
+ (public_name GT.syntax.foldr)
+ (modules foldr)
+ (libraries GTCommon foldl)
+ (synopsis "Plugin 'foldr'"))
+
+(library
+ (name eq)
+ (public_name GT.syntax.eq)
+ (modules eq)
+ (libraries GTCommon compare)
+ (synopsis "Plugin 'eq'"))
+
+(library
+ (name compare)
+ (public_name GT.syntax.compare)
+ (modules compare)
+ (synopsis "Plugin 'compare'")
+ (libraries GTCommon)
+ (flags
+  (:standard -w -7-9)))
+
+(library
+ (name gmap)
+ (public_name GT.syntax.map)
+ (modules gmap)
+ (synopsis "Plugin 'map' a.k.a. functor's fmap")
+ (libraries GTCommon))
+
+(library
+ (name eval)
+ (public_name GT.syntax.eval)
+ (modules eval)
+ (libraries GTCommon gmap)
+ (synopsis "Plugin 'eval'")
+ (flags
+  (:standard -w -7-9-13-36)))
+
+(library
+ (name stateful)
+ (public_name GT.syntax.stateful)
+ (modules stateful)
+ (libraries GTCommon gmap)
+ (synopsis "Plugin 'stateful'")
+ (flags (:standard)))
+
+(library
+ (name html)
+ (public_name GT.syntax.html)
+ (modules html)
+ (libraries GTCommon)
+ (synopsis "Plugin 'html'")
+ (flags
+  (:standard -w -7-9-13-36)))
+
+(library
+ (name ghash)
+ (public_name GT.syntax.hash)
+ (modules ghash)
+ (libraries GTCommon)
+ (synopsis "Plugin 'hash'")
+ (flags
+  (:standard -w -7-9-13-36)))
+
+(library
+ (name enum)
+ (public_name GT.syntax.enum)
+ (modules genum)
+ (libraries GTCommon)
+ (synopsis "Plugin 'enum'")
+ (flags
+  (:standard -w -7-9-13-36)))
+
+(library
+ (name syntax_all)
+ (public_name GT.syntax.all)
+ (wrapped false)
+ (modules)
+ (libraries GT.syntax.show GT.syntax.gfmt GT.syntax.foldl GT.syntax.foldr
+   GT.syntax.eq GT.syntax.compare GT.syntax.map GT.syntax.eval
+   GT.syntax.stateful GT.syntax.html GT.syntax.hash))

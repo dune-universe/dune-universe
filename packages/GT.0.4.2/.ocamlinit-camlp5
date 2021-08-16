@@ -1,0 +1,8 @@
+#use "topfind";;
+#rectypes;;
+#require "GT";;
+
+#use "topfind.camlp5"
+#camlp5o;;
+#require "GT-p5,GT.syntax.all";;
+#load "pa_gt.cma";;

@@ -1,0 +1,8 @@
+## 0.4.2 (2021-08-09)
+
+### Changed
+
+- Add PPX rewriter GT.ppx_all that incapsulated all available plugins
+- Generated code has less warnings
+
+## 0.4.1 (2021-02-19)

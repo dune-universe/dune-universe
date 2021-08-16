@@ -1,0 +1,67 @@
+name: Build master
+
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+        ocaml-version:
+          - 4.10.1
+
+    env:
+      GT_WITH_DOCS: yes
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Retrieve date for cache key
+        id: cache-key
+        run: echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: bash
+
+      - name: Restore opam cache
+        id: opam-cache
+        uses: actions/cache@v2
+        with:
+          path: "~/.opam"
+          # invalidate cache daily, gets built daily using a scheduled job
+          key: ${{ steps.cache-key.outputs.date }}
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin add GT.dev . --no-action
+      - run: opam depext GT.dev --yes --with-test
+
+      - name: Install dependecies for documentation
+        run: opam install odoc pa_ppx --yes
+
+      - run: opam install . --deps-only --with-test
+      - run: opam exec -- make      DFLAGS=--profile=release
+      - run: opam exec -- make test DFLAGS=--profile=release
+
+      - name: Build documentation
+        run: opam exec -- make doc
+
+      - name: Installing using Opam
+        run: opam exec -- make install DFLAGS=--profile=release
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_build/default/_doc/_html

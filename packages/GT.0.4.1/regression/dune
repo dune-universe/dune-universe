@@ -1,7 +1,0 @@
-(env
-  (dev
-    (flags (:standard -warn-error -A -w -27-39-32-7-34))))
-
-(include dune.tests)
-
-

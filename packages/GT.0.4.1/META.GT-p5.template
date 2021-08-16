@@ -1,8 +1,0 @@
-# DISABLED DUNE_GEN
-version = "0.4.1"
-requires = "camlp5 ppxlib GT.common"
-archive(syntax,preprocessor) = "pa_gt.cma"
-archive(syntax,preprocessor,byte) = "pa_gt.cma"
-archive(syntax,preprocessor,native) = "pa_gt.cmxa"
-plugin(syntax,preprocessor,byte) = "pa_gt.cma"
-plugin(syntax,preprocessor,native) = "pa_gt.cmxs"

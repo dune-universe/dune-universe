@@ -1,3 +1,0 @@
-(lang dune 1.8)
-(name salsa20)
-(version 1.1.0)

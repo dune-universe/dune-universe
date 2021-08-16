@@ -1,0 +1,4 @@
+(library
+ (name session_postgresql)
+ (public_name session-postgresql)
+ (libraries mirage-crypto-rng base64 postgresql session threads))
