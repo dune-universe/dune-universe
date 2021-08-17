@@ -1,0 +1,17 @@
+(lang dune 2.9)
+
+(name ockt)
+(version 0.0.1)
+
+(generate_opam_files true)
+
+(source (uri "git+https://git.sr.ht/~cricket/ockt"))
+(bug_reports "https://lists.sr.ht/~cricket/ockt-devel")
+(homepage "https://sr.ht/~cricket/ckt")
+(license LicenseRef-CPPL-0.3)
+(authors "c. c. piapiac")
+(maintainers "c. c. piapiac <_c@piapiac.org>")
+
+(package
+ (name ockt)
+ (synopsis "OCaml library for parsing ckt files into hashtables"))

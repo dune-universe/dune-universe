@@ -1,0 +1,16 @@
+this is a little ocaml library for ckt
+takes ckt source string and spits out a hashtable
+
+some notes:
+this code is not made to be performant, in fact, in may be really unperformant!
+
+this is just because it was more fun to code this way, however unperformant it may be
+
+this is also because it was a little easier for me to treat strings as char lists, 
+which comes with a lot of memory & performance overheads.
+
+for this i don't think it really matters, but if you're really looking for performance,
+oops!
+
+i also dont know if this is the 'ocaml way' of doing things or w/e, coming from other
+languages such as haskell i treated it like i was programming in those languages!
