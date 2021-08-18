@@ -1,0 +1,33 @@
+(lang dune 2.8)
+(name um-abt)
+(version v0.1.3)
+
+(generate_opam_files true)
+
+(source (github shonfeder/um-abt))
+(license MIT)
+
+(authors "Shon Feder")
+(maintainers "shon.feder@gmail.com")
+(documentation "https://shonfeder.github.io/um-abt")
+
+(package
+ (name um-abt)
+ (synopsis
+  "An OCaml library implementing unifiable abstract binding trees (UABTs)")
+ (description
+  "um-abt provides an abstract binding tree (ABT) library following the
+   principles of Robert Harper's 'Practical Foundations for Programming
+   Languages'.
+
+   The library uses immutable pointers to represent variable binding and extends
+   ABTs with unification, providing unifiable abstract binding trees (UABTs).")
+ (depends
+  (ocaml (>= 4.08.0))
+  (ppx_expect (>= v0.14.1))
+  (ppx_deriving (>= 5.2.1))
+  (logs (>= 0.7.0))
+  (logs-ppx (>= 0.2.0))
+  (qcheck (and :with-test (>= 0.17)))
+  (bos (and :with-test (>= 0.2.0)))
+  (mdx (and :with-test (>= 1.10.1)))))

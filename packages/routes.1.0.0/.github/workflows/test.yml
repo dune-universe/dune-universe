@@ -1,0 +1,43 @@
+name: RoutesTest
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system:
+          - ubuntu-latest
+        ocaml-version:
+          - 4.12.x
+          - 4.11.x
+          - 4.07.x
+          - 4.05.x
+        include:
+          - operating-system: windows-latest
+            ocaml-version: 4.12.x
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup OCaml ${{ matrix.ocaml-version }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-version }}
+          dune-cache: ${{ matrix.operating-system == 'ubuntu-latest' }}
+          opam-depext-flags: --with-test
+      - name: Install dependencies
+        run: |
+          opam pin add routes.dev -n .
+          opam install -t . --deps-only
+      - name: Run tests
+        run: |
+          opam exec -- dune runtest
+      - name: Run doctest
+        if: runner.os == 'Linux'
+        run: |
+          opam exec -- dune build @doctest
+          opam exec -- dune build @example

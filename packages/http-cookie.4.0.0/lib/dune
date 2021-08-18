@@ -1,0 +1,4 @@
+(library
+ (name http_cookie)
+ (libraries angstrom fmt)
+ (public_name http-cookie))

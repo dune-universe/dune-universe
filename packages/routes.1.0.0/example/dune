@@ -1,0 +1,8 @@
+(executable
+ (name no_http)
+ (modules no_http)
+ (libraries routes))
+
+(alias
+ (name example)
+ (deps no_http.exe))
