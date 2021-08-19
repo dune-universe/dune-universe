@@ -1,3 +1,0 @@
-(executable
- (name      redirect_stdin)
- (libraries unix))

@@ -1,0 +1,19 @@
+(rule
+ (targets test.out)
+ (deps
+  (:ppx ../tools/standalone.exe)
+  (:tt ../../toplevel/tt.exe))
+ (action
+  (with-stdout-to
+   test.out
+   (with-stdin-from
+    test.ml
+    (run %{tt} -color never -noprompt -no-version -ppx "%{ppx} --as-ppx")))))
+
+(rule
+ (alias runtest)
+ (package landmarks-ppx)
+ (enabled_if
+  (>= %{ocaml_version} "4.08"))
+ (action
+  (diff test.out.expected test.out)))

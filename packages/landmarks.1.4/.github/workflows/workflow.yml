@@ -1,0 +1,51 @@
+name: Main workflow
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-compiler:
+          - 4.12.x
+          - 4.11.x
+          - 4.10.x
+          - 4.09.x
+          - 4.08.x
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          dune-cache: true
+          opam-pin: false
+          opam-depext: false
+
+      - run: opam pin add -ny .
+
+      - run: opam install --deps-only --with-doc --with-test -y landmarks
+
+      - run: opam exec -- dune build -p landmarks
+
+      - run: opam exec -- dune build -p landmarks @runtest
+        continue-on-error: ${{ runner.os == 'Windows' }}
+        
+      - run: opam install --deps-only --with-doc --with-test -y landmarks-ppx
+
+      - run: opam exec -- dune build -p landmarks-ppx
+
+      - run: opam exec -- dune build -p landmarks-ppx @runtest
+        continue-on-error: ${{ runner.os == 'Windows' }}

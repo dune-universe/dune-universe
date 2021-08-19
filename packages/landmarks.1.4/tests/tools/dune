@@ -1,0 +1,3 @@
+(executable
+ (name standalone)
+ (libraries ppxlib ppx_landmarks))

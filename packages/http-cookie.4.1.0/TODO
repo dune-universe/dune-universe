@@ -1,0 +1,6 @@
+[17/08/2020]
+1. Use mdx on README
+2. Improve 'of_cookie' error message
+3. Improve 'of_set_cookie' error message
+4. Add more validation tests for 'of_cookie' and 'of_set_cookie'
+5. Use afl/bun?

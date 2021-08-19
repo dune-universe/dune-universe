@@ -1,0 +1,7 @@
+(library
+ (name ppx_landmarks)
+ (public_name landmarks-ppx)
+ (private_modules mapper register)
+ (kind ppx_rewriter)
+ (libraries ppxlib)
+ (ppx_runtime_libraries landmarks))
