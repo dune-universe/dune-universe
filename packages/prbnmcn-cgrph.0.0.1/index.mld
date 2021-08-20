@@ -1,0 +1,13 @@
+{0 prbnmcn-cgrph}
+
+prbnmcn-cgrph is a basic library to describe and run incremental computations.
+
+This library is pretty young: use at your own perils. If you are looking for a
+ more mature library, have a look at {{: https://github.com/janestreet/incremental} Incremental}, {{: https://github.com/ocurrent/current_incr} current_incr}
+or perhaps {{: https://github.com/let-def/lwd} lwd}.
+
+See the {{!Cgraph.introduction}introduction} for some usage example.
+
+{1:api API}
+
+{!modules: Cgraph}

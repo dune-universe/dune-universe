@@ -1,0 +1,9 @@
+(library
+  (public_name prbnmcn-cgrph)
+  (name cgraph)
+)
+
+(documentation
+   (package prbnmcn-cgrph)
+   (mld_files index)
+)
