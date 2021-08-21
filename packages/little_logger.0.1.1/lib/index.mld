@@ -1,0 +1,25 @@
+{0 Little_logger}
+
+A tiny, little logger <3
+
+{b {{!Little_logger} The full API is browsable here}}.
+
+If you have any issues or find any bugs, open an issue on the
+{{:https://github.com/mooreryan/little_logger/issues} GitHub page}.
+
+{1 License}
+
+{{:https://github.com/mooreryan/little_logger}{%html: <img
+src="https://img.shields.io/badge/license-MIT%20or%20Apache%202.0-blue"
+alt="license MIT or Apache 2.0"/> %}}
+
+Licensed under the Apache License, Version 2.0 or the MIT license, at
+your option. This program may not be copied, modified, or distributed
+except according to those terms.
+
+{1 Modules}
+
+These are the main modules of [Little_logger].  API docs and examples can be
+found on the respective pages.
+
+- {{!Little_logger.Logger} Logger}: the main logger module

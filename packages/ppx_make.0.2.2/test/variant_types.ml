@@ -54,3 +54,7 @@ type record_v =
       cm3 : int option; [@main]
     }
 [@@deriving make]
+
+type none_v = N_none [@@deriving make]
+
+[@@@end]

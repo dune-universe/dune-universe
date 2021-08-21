@@ -45,6 +45,8 @@ let record_complex_2 _ =
     (R_complex_with_main { cm1 = 8; cm2 = Some 27; cm3 = Some 64 })
     (make_r_complex_with_main_of_record_v ~cm2:27 8 (Some 64))
 
+let none _ = OUnit2.assert_equal N_none (make_n_none_of_none_v ())
+
 let suite =
   let open OUnit2 in
   "variant"
@@ -55,4 +57,5 @@ let suite =
          "record_basic" >:: record_basic;
          "record_complex_1" >:: record_complex_1;
          "record_complex_2" >:: record_complex_2;
+         "none" >:: none;
        ]

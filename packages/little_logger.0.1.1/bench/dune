@@ -1,0 +1,3 @@
+(executables
+ (names bench_little_logger bench_file_log)
+ (libraries core core_bench little_logger easy_logging dolog))

@@ -1,0 +1,9 @@
+(library
+ (name little_logger)
+ (public_name little_logger)
+ (libraries core)
+ (instrumentation
+  (backend bisect_ppx))
+ (preprocess (pps ppx_compare)))
+
+(documentation)

@@ -69,3 +69,14 @@ end
 [@@ocaml.doc "@inline"]
 
 [@@@end]
+
+type none_v = N_none [@@deriving_inline make]
+
+include sig
+  [@@@ocaml.warning "-32"]
+
+  val make_n_none_of_none_v : unit -> none_v
+end
+[@@ocaml.doc "@inline"]
+
+[@@@end]
