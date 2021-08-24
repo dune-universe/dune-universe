@@ -1,0 +1,3 @@
+(library (name proptest) (public_name prbnmcn-proptest)
+  (libraries zarith prbnmcn-basic-structures crowbar)
+  (ocamlopt_flags (-warn-error -39)))
