@@ -1,0 +1,4 @@
+(executable
+ (public_name opam-custom-install)
+ (flags (:standard -w -24))
+ (libraries opam-client))

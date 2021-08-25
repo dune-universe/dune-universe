@@ -1,0 +1,7 @@
+_build/
+_opam/
+*~
+.#*
+\#*#
+.merlin
+opam-custom-install

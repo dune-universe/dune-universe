@@ -1,0 +1,8 @@
+(library (name linalg) (public_name prbnmcn-linalg)
+  (libraries prbnmcn-basic-structures)
+  (ocamlopt_flags -O3) (flags (:standard -open Basic_structures)))
+
+(documentation
+   (package prbnmcn-linalg)
+   (mld_files index)
+)

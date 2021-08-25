@@ -1,0 +1,164 @@
+{0 prbnmcn-linalg: metaprogramming-friendly linear algebra}
+
+This library ([linalg] for short) is a DSL allowing to construct and
+run computations on vectors and matrices, independently of
+their underlying {e representation}. Concretely, this allows,
+given the description of a program in [linalg], to either run this
+program on [float arrays] or [bigarrays], or even to generate code.
+
+{1 Example}
+
+As a first example, we show how to standardize a vector. We
+start by computing the mean and standard deviation.
+
+{[
+open Linalg
+module V = Vec.Float
+
+let mean vec =
+  let dim = Tensor.Int.numel @@ V.idim vec in
+  let tot = V.reduce ( +. ) 0.0 vec in
+  tot /. float_of_int dim
+
+let stddev vec =
+  let m = mean vec in
+  let shape = V.idim vec in
+  let idim = 1. /. float_of_int (Tensor.Int.numel shape) in
+  let delta = V.sub vec (V.const shape m) in
+  sqrt @@ (idim *. V.reduce ( +. ) 0.0 (V.mul delta delta))
+]}
+To test this out, we have to come up with a vector.
+Here's how to create a vector out of a [float array].
+{[
+let in_of_array (a : float array) =
+  let n = Array.length a in
+  let shape = Tensor.Int.rank_one n in
+  Vec (shape, fun i -> Array.unsafe_get a i)
+]}
+[in_of_array] returns an "input vector".
+The [Vec] constructor packs two things:
+- a {e shape}, which embodies the valid indices into the vector as well as how to iterate on this vector,
+- a function which associates an index to a value.
+{[
+let test_array = [| 1.; 2.; 3. |]
+
+let () =
+  let vec = in_of_array test_array in
+  assert (mean vec =. 2.) ;
+  assert (String.equal (string_of_float (stddev vec)) "0.816496580928")
+]}
+How about {e writing back} to the array? We need to create an "output vector"
+as follows:
+{[
+let out_of_array (a : float array) =
+  let n = Array.length a in
+  let shape = Tensor.Int.rank_one n in
+  OVec (shape, fun i v -> Array.unsafe_set a i v)
+]}
+Using these ingredients, let's write a function that standardizes a float array:
+{[
+let standardize array =
+  let vec = in_of_array array in
+  let ovec = out_of_array array in
+  let mean = mean vec in
+  let std = stddev vec in
+  let shape = V.idim vec in
+  V.(ovec := smul (1. /. std) (sub vec (const shape mean)))
+
+let () =
+  let vec = in_of_array test_array in
+  assert (mean vec =. 0.) ;
+  assert (String.equal (string_of_float (stddev vec)) "1.")
+]}
+
+
+{1 Introduction}
+
+{2 Abstract vectors}
+
+In [linalg], vectors, matrices and higher tensors are represented as pairs of
+functions encoding getters and setters. In the following, we call these
+"abstract vectors" to distinguish them from 1d vectors.
+The corresponding types are {!Linalg.vec}, for "getters" aka "input vectors", and
+{!Linalg.ovec} for "setters" aka "output vectors".
+{[
+(** Type of generic input vectors (vectors from which we {e get} elements) *)
+type ('s, 'i, 'e) vec = Vec of 's * ('i -> 'e)
+
+(** Type of generic output vectors (vectors to which we {e set} elements). *)
+type ('s, 'i, 'e, 'w) ovec = OVec of 's * ('i -> 'e -> 'w)
+]}
+
+The first type parameter ['s] corresponds to the shape of the vectors:
+for 1d vector, this could correspond to a contiguous interval of
+indices [0; ...; n-1] while for matrices, this could be the cartesian
+product of two such intervals, denoting every possible position in the
+matrix. This generalizes to higher dimensions, and even to non-regular
+indexation schemes.
+
+The second parameter ['i] corresponds to the type of indices, typically
+we will consider integers, or some {e representation} of integers (eg
+['i] could be a computation yielding an integer).
+
+The third parameter, ['e] corresponds to the type of elements. We're most
+used to manipulating [float]-valued vectors and matrices, but it could
+also be [Complex.t] or even some other vector, or some computation yielding
+a value!
+
+We see that values of type [vec] are essentially functions from inputs
+to elements. The role of the ['s] component is to check that accesses to
+a vector are in the domain of that vector: obviously, the way this is
+performed will depend on the concrete implementation we will use for shapes.
+
+The type [ovec] has an additional type parameter ['w], which corresponds to
+the outcome of {e writing} an element in a particular position. When
+performing run-of-the-mill computations, ['w] will correspond to the type
+[unit], but again this could be something more complicated.
+
+{2 Tensor shapes}
+
+A shape specifies the domain of definition of an abstract vector and how
+to iterate on it. Shapes are related by shape morphisms: transporting vectors
+along those morphisms generalizes "reshaping" in other libraries.
+
+Grid-like shapes, which are most common in practice correspond to
+the {!Linalg.Intf.Tensor} module type. The module
+{!Linalg.Tensor.Int} implements this signature for the case of
+[0]-based indexing, column major tensor-like shapes.
+
+{2 Vectors and Matrices}
+
+The functors {!Linalg.Vec.Make} and {!Linalg.Mat.Make} are implemented on top of this infrastructure.
+These functors are further instantiated in directly usable modules:
+- {!Linalg.Vec.Float} and {!Linalg.Mat.Float} for manipulating resp. [float]-valued vectors and matrices
+- {!Linalg.Vec.Rational} and {!Linalg.Mat.Rational} for their [Q]-valued counterparts.
+
+{1 (TODO) Reshaping}
+
+TODO: document how to reshape matrices and etc
+
+{1 (TODO) Metaprogramming}
+
+TODO: document how to use [linalg] to generate code
+
+{1 Technical notes}
+
+Our approach is essentially to program numerical algorithms
+in tagless final form, abstracting away the typed syntax
+of the language in which the algorithms are implemented.
+
+This effort is largely inspired by the work of Oleg Kiselyov et al.
+on {{: http://okmij.org/ftp/meta-programming/} meta-programming}.
+The idea to represent vectors as pairs of input/output vectors, along with
+many other ideas, was drawn from his book
+{{:http://okmij.org/ftp/meta-programming/tutorial/index.html} Reconciling Abstraction with High Performance: A MetaOCaml approach}.
+
+If using [MetaOCaml] is a viable option for you, we encourage
+you to use it instead: indeed, our approach boils down to
+that of [MetaOCaml], but without the nice syntax and extra safety
+brought by the scope extrusion check.
+
+On the plus side, we can use the mainline OCaml compiler.
+
+{1:api API}
+{!modules: Linalg}
