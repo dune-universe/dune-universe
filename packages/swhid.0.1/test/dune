@@ -1,0 +1,14 @@
+(test
+ (name test_compute)
+ (modules test_compute)
+ (libraries swhid))
+
+(test
+ (name test_parser)
+ (modules test_parser)
+ (libraries swhid))
+
+(test
+ (name test_download)
+ (modules test_download)
+ (libraries swhid))

@@ -1,0 +1,4 @@
+(library
+ (name happy_eyeballs)
+ (public_name happy-eyeballs)
+ (libraries domain-name ipaddr fmt duration logs))

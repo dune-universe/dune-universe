@@ -1,0 +1,14 @@
+(executable
+ (name dl)
+ (modules dl)
+ (libraries swhid))
+
+(executable
+ (name dl_rev)
+ (modules dl_rev)
+ (libraries swhid))
+
+(executable
+ (name compute_and_print)
+ (modules compute_and_print)
+ (libraries swhid))

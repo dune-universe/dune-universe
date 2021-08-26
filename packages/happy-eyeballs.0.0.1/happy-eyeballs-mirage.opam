@@ -1,0 +1,37 @@
+version: "0.0.1"
+opam-version: "2.0"
+maintainer: "Robur <team@robur.coop>"
+authors: ["Robur <team@robur.coop>"]
+homepage: "https://github.com/roburio/happy-eyeballs"
+dev-repo: "git+https://github.com/roburio/happy-eyeballs.git"
+bug-reports: "https://github.com/roburio/happy-eyeballs/issues"
+license: "ISC"
+
+depends: [
+  "ocaml" {>= "4.10.0"}
+  "dune" {>= "2.0.0"}
+  "happy-eyeballs" {=version}
+  "duration"
+  "dns-client"
+  "domain-name"
+  "ipaddr"
+  "fmt"
+  "logs"
+  "lwt"
+  "mirage-clock"
+  "mirage-stack"
+  "mirage-random"
+  "mirage-time"
+  "rresult"
+]
+build: [
+  ["dune" "subst"] {dev}
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+synopsis: "Connecting to a remote host via IP version 4 or 6 using Lwt_unix"
+description: """
+Happy eyeballs is an implementation of RFC 8305 which specifies how to connect
+to a remote host using either IP protocol version 4 or IP protocol version 6.
+This uses Lwt and Lwt_unix for side effects.
+"""

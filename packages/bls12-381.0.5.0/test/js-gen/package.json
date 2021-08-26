@@ -1,8 +1,0 @@
-{
-    "dependencies": {
-        "@dannywillems/rustc-bls12-381-node": "0.8.1"
-    },
-    "scripts": {
-        "test": "npm install && node test_fr.js && node test_fq12.js && node test_pairing.js && node test_g1.js && node test_g2.js"
-    }
-}

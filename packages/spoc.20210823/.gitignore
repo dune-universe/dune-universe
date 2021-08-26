@@ -1,0 +1,10 @@
+.merlin
+ocp-buid.root*
+*.root
+_site
+Gemfile.lock
+serve.sh
+*.byte
+*.asm
+_build
+dune-project

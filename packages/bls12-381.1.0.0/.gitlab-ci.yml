@@ -1,0 +1,259 @@
+stages:
+  - dependencies-check
+  - lint
+  - build
+  - benchmark
+  - install
+  - doc
+  - deploy
+
+check-blst-version:
+  stage: dependencies-check
+  image: alpine:3.14
+  before_script:
+    - apk add --no-cache wget diffutils
+    - diff --version
+  script:
+    - .ci/check_blst_version.sh
+  rules:
+    - when: always
+
+lint-ocaml:
+  stage: lint
+  image: ocaml/opam:debian-ocaml-4.11
+  before_script:
+    - opam install ocamlformat.0.15.0
+  script:
+    - dune build @fmt
+  rules:
+    - when: always
+
+lint-js:
+  image: node:lts
+  stage: lint
+  before_script:
+    - cd .ci
+    - npm install -d
+  script:
+    - ./node_modules/eslint/bin/eslint.js -c .eslintrc.js ../test/js/node/run.js
+    - ./node_modules/eslint/bin/eslint.js -c .eslintrc.js ../test/js/browser/run.js
+  rules:
+    - when: always
+
+.build-test: &build_definition
+  stage: build
+  before_script:
+    # Required to get the right Rust version.
+    - . $HOME/.cargo/env
+    # Always update system package manager + setup OPAM env
+    - sudo apt-get update
+    - eval $(opam env)
+    - opam update
+    - opam depext -i -y conf-pkg-config conf-libffi
+    # Install NVM for the JS test
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - . "$NVM_DIR/nvm.sh"
+    - nvm install 14.12.0
+    - nvm use 14.12.0
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - node --version
+    - echo $OPAM_SWITCH_PREFIX
+  script:
+    # Install external dependencies
+    - opam depext -i -y zarith
+    # Pin for later installation
+    - opam pin add bls12-381-gen.dev . --no-action
+    - opam pin add bls12-381.dev . --no-action
+    - opam pin add bls12-381-unix.dev . --no-action
+    - opam pin add bls12-381-unix-rust.dev . --no-action
+    - opam pin add bls12-381-js-gen.dev . --no-action
+    - opam pin add bls12-381-js.dev . --no-action
+    # Install the dependencies
+    - opam install bls12-381-gen -y --with-test --deps-only
+    - opam install bls12-381 -y --with-test --deps-only
+    - opam install bls12-381-unix -y --with-test --deps-only
+    - opam install bls12-381-unix-rust -y --with-test --deps-only
+    - opam install bls12-381-js-gen -y --with-test --deps-only
+    - opam install bls12-381-js -y --with-test --deps-only
+    - dune build @install
+    - dune runtest
+    # Additional test for the browser case of `js`. Tests are not automatic.
+    # Only checking the stanza does work
+    - dune build @test/js/browser/serve
+  rules:
+    - when: always
+
+build-ocaml-4.08-rust-1.44.0:
+  <<: *build_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.08-1.44.0
+
+build-ocaml-4.09-rust-1.44.0:
+  <<: *build_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.44.0
+
+build-ocaml-4.10-rust-1.44.0:
+  <<: *build_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.44.0
+
+build-ocaml-4.11-rust-1.44.0:
+  <<: *build_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.44.0
+
+# Not using the same images than the others as it seems 4.12 images are too old
+build-ocaml-4.12-rust-1.44.0:
+  <<: *build_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.12-1.44.0
+
+# Benchmarks
+.benchmark: &benchmark_definition
+  stage: benchmark
+  before_script:
+    # Required to get the right Rust version.
+    - . $HOME/.cargo/env
+    # Always update system package manager + setup OPAM env
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - eval $(opam env)
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - echo $OPAM_SWITCH_PREFIX
+    # Depext
+    - opam depext -i -y zarith conf-pkg-config conf-libffi
+    # Pin for later installation
+    - opam pin add bls12-381-gen.dev . --no-action
+    - opam pin add bls12-381.dev . --no-action
+    - opam pin add bls12-381-unix.dev . --no-action
+    - opam pin add bls12-381-js-gen.dev . --no-action
+    - opam pin add bls12-381-js.dev . --no-action
+    # Install the packages
+    - opam install bls12-381-gen -y --with-test
+    - opam install bls12-381 -y --with-test
+    - opam install bls12-381-unix -y --with-test
+    - opam install bls12-381-unix -y --with-test
+    - opam install bls12-381-js-gen -y --with-test
+    - opam install bls12-381-js -y --with-test
+  script:
+    # Benchmark
+    - opam install core_bench
+    - dune build benchmark/bench_fr.exe
+    - dune build benchmark/bench_g1.exe
+    - dune build benchmark/bench_g2.exe
+    - dune build benchmark/bench_pairing.exe
+    - dune build benchmark/bench_signature.exe
+  rules:
+    - when: always
+
+benchmark-ocaml-4.09-rust-1.44.0:
+  <<: *benchmark_definition
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.44.0
+
+opam-install-and-remove:
+  parallel:
+    matrix:
+      - OPAM_PACKAGE: [bls12-381-gen, bls12-381, bls12-381-js-gen, bls12-381-unix, bls12-381-unix-rust, bls12-381-js]
+  stage: install
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.44.0
+  before_script:
+    - . $HOME/.cargo/env
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - echo $OPAM_SWITCH_PREFIX
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+  script:
+  script:
+    - opam pin add bls12-381-gen.dev . --no-action
+    - opam pin add bls12-381.dev . --no-action
+    - opam pin add bls12-381-js-gen.dev . --no-action
+    - opam pin add bls12-381-js.dev . --no-action
+    - opam pin add bls12-381-unix.dev . --no-action
+    - opam pin add bls12-381-unix-rust.dev . --no-action
+
+    - opam depext $OPAM_PACKAGE.dev -y -v
+    - opam install $OPAM_PACKAGE.dev -y -v --deps-only
+    - opam install $OPAM_PACKAGE.dev -y -v
+    - opam remove -a -y $OPAM_PACKAGE.dev
+  rules:
+    - when: always
+
+opam-install-and-remove-local-switch:
+  parallel:
+    matrix:
+      - OPAM_PACKAGE: [bls12-381-gen, bls12-381, bls12-381-js-gen, bls12-381-unix, bls12-381-unix-rust, bls12-381-js]
+  stage: install
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.44.0
+  before_script:
+    # Run everything in a local switch
+    - opam switch create ./ 4.09.1 --no-install
+    - eval $(opam config env)
+    # Load rust version
+    - . $HOME/.cargo/env
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - echo $OPAM_SWITCH_PREFIX
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+  script:
+    - opam pin add bls12-381-gen.dev . --no-action
+    - opam pin add bls12-381.dev . --no-action
+    - opam pin add bls12-381-js-gen.dev . --no-action
+    - opam pin add bls12-381-js.dev . --no-action
+    - opam pin add bls12-381-unix.dev . --no-action
+    - opam pin add bls12-381-unix-rust.dev . --no-action
+
+    - opam depext $OPAM_PACKAGE.dev -y -v
+    - opam install $OPAM_PACKAGE.dev -y -v --deps-only
+    - opam install $OPAM_PACKAGE.dev -y -v
+    - opam remove -a -y $OPAM_PACKAGE.dev
+  rules:
+    - when: always
+
+doc:
+  stage: doc
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.12-1.44.0
+  before_script:
+    - sudo apt-get update && sudo apt-get upgrade -y
+    - eval $(opam env)
+    - opam repository set-url default https://opam.ocaml.org
+    - opam update
+    - opam depext -i -y zarith conf-libffi conf-rust conf-perl conf-pkg-config
+    - sudo apt-get install m4 -y
+    # Pin dev versions. Avoid clash with public opam-repository
+    - opam pin add bls12-381-gen.dev . --no-action
+    - opam pin add bls12-381.dev . --no-action
+    - opam pin add bls12-381-js-gen.dev . --no-action
+    - opam pin add bls12-381-js.dev . --no-action
+    - opam pin add bls12-381-unix.dev . --no-action
+    - opam pin add bls12-381-unix-rust.dev . --no-action
+    - opam install odoc -y
+    - opam install . -y --deps-only
+  script:
+    - dune build @doc
+    - cp -r _build/default/_doc/_html _odoc/
+  artifacts:
+    paths:
+      - _odoc
+  rules:
+    - when: always
+
+pages:
+  stage: deploy
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.12-1.44.0
+  script:
+    - cp -r _odoc public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'

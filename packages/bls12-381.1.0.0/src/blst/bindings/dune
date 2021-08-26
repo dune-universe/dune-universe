@@ -1,0 +1,13 @@
+;; BLST
+
+(executable
+ (name blst_gen)
+ (modules blst_gen blst_bindings)
+ (libraries ctypes.stubs ctypes ctypes.foreign))
+
+(rule
+ (targets blst_stubs.ml blst_ctypes_c_stubs.c)
+ (deps
+  (:gen ./blst_gen.exe))
+ (action
+  (run %{gen} %{targets})))

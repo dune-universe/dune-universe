@@ -1,0 +1,10 @@
+(library
+ (name ppx_inline_alcotest)
+ (public_name ppx_inline_alcotest)
+ (kind ppx_rewriter)
+ (ppx_runtime_libraries alcotest ppx_inline_alcotest.runner)
+ (libraries ppxlib)
+ (preprocess (pps ppxlib.metaquot))
+ (inline_tests.backend
+  (generate_runner (echo "let () = Ppx_inline_alcotest_runner.run ()"))
+  (runner_libraries alcotest ppx_inline_alcotest.runner)))

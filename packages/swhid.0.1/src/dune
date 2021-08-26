@@ -1,0 +1,13 @@
+(library
+ (public_name swhid)
+ (modules compute download git json lang lexer menhir_parser parse pp)
+ (private_modules git json lexer menhir_parser)
+ (libraries digestif ezcurl jsonm)
+ (instrumentation
+  (backend bisect_ppx)))
+
+(ocamllex
+ (modules lexer))
+
+(menhir
+ (modules menhir_parser))

@@ -1,0 +1,8 @@
+(copy_files ../../common/{fft.ml,fft.mli})
+
+(library
+ (name bls12_381_gen)
+ (public_name bls12-381-gen)
+ (instrumentation
+  (backend bisect_ppx))
+ (libraries zarith ff-sig))

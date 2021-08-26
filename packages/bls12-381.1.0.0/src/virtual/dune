@@ -1,0 +1,5 @@
+(library
+ (name bls12_381)
+ (public_name bls12-381)
+ (libraries zarith ff-sig)
+ (virtual_modules bls12_381))

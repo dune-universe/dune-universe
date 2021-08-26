@@ -1,0 +1,59 @@
+(copy_files ../../common/{fft.ml,fft.mli})
+
+(copy_files bindings/{blst_bindings.ml})
+
+(copy_files bindings/{blst_stubs.ml})
+
+(copy_files bindings/blst_ctypes_c_stubs.c)
+
+(copy_files libblst/bindings/blst.h)
+
+(copy_files libblst/bindings/blst_aux.h)
+
+(data_only_dirs libblst)
+
+(rule
+ (deps
+  (source_tree libblst))
+ (targets libblst.a dllblst.so)
+ (action
+  (no-infer
+   (progn
+    (chdir
+     libblst
+     (run ./build.sh -shared))
+    (run cp libblst/libblst.a libblst.a)
+    (with-accepted-exit-codes
+     (or 0 1)
+     (run cp libblst/libblst.so dllblst.so))
+    (with-accepted-exit-codes
+     (or 0 1)
+     (run cp libblst/libblst.dylib dllblst.so))))))
+
+(library
+ (public_name bls12-381-unix)
+ (name bls12_381_unix)
+ (modules
+  bls12_381
+  fr
+  fq12
+  g1
+  g2
+  pairing
+  signature
+  ;; private
+  fq
+  fq2
+  Blst_bindings
+  fft
+  Blst_stubs)
+ (implements bls12-381)
+ (instrumentation
+  (backend bisect_ppx))
+ (private_modules fq fq2 Blst_bindings Blst_stubs fft)
+ (libraries hex zarith ctypes ctypes.foreign)
+ (library_flags :standard -linkall -ccopt -lpthread)
+ (foreign_archives blst)
+ (foreign_stubs
+  (language c)
+  (names blst_ctypes_c_stubs)))

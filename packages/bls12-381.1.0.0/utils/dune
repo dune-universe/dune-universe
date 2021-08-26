@@ -1,0 +1,91 @@
+(copy_files ../test/test_vectors/sig_g2_basic/{*})
+
+(copy_files ../test/test_vectors/sig_g2_aug/{*})
+
+(copy_files ../test/test_vectors/sig_g2_pop/{*})
+
+(copy_files ../test/test_vectors/pop_g2/{*})
+
+(executable
+ (name generate_pairing_vectors)
+ (modules generate_pairing_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_miller_loop_vectors)
+ (modules generate_miller_loop_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_final_exponentiation_vectors)
+ (modules generate_final_exponentiation_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_g1_test_vectors)
+ (modules generate_g1_test_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_g2_test_vectors)
+ (modules generate_g2_test_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_hash_to_curve_vectors)
+ (modules generate_hash_to_curve_vectors)
+ (libraries hex bls12-381-unix))
+
+(executable
+ (name generate_test_vectors_from_bls_sigs_ref_for_blst)
+ (modules generate_test_vectors_from_bls_sigs_ref_for_blst)
+ (libraries hex bls12-381-unix core))
+
+(rule
+ (alias generate_test_vectors_for_bls_sig_g2_basic)
+ (deps sig_g2_basic_fips_186_3_B233 sig_g2_basic_fips_186_3_B283
+   sig_g2_basic_fips_186_3_B409 sig_g2_basic_fips_186_3_B571
+   sig_g2_basic_fips_186_3_K233 sig_g2_basic_fips_186_3_K409
+   sig_g2_basic_fips_186_3_K571 sig_g2_basic_fips_186_3_P224
+   sig_g2_basic_fips_186_3_P256 sig_g2_basic_fips_186_3_P384
+   sig_g2_basic_fips_186_3_P521 sig_g2_basic_rfc6979)
+ ; (mode
+ ;  (promote
+ ;   (into ../../srs)))
+ (action
+  (run %{exe:generate_test_vectors_from_bls_sigs_ref_for_blst.exe}
+    sig_g2_basic %{deps})))
+
+(rule
+ (alias generate_test_vectors_for_bls_sig_g2_aug)
+ (deps sig_g2_aug_fips_186_3_B233 sig_g2_aug_fips_186_3_B283
+   sig_g2_aug_fips_186_3_B409 sig_g2_aug_fips_186_3_B571
+   sig_g2_aug_fips_186_3_K233 sig_g2_aug_fips_186_3_K409
+   sig_g2_aug_fips_186_3_K571 sig_g2_aug_fips_186_3_P224
+   sig_g2_aug_fips_186_3_P256 sig_g2_aug_fips_186_3_P384
+   sig_g2_aug_fips_186_3_P521 sig_g2_aug_rfc6979)
+ (action
+  (run %{exe:generate_test_vectors_from_bls_sigs_ref_for_blst.exe} sig_g2_aug
+    %{deps})))
+
+(rule
+ (alias generate_test_vectors_for_bls_sig_g2_pop)
+ (deps sig_g2_pop_fips_186_3_B233 sig_g2_pop_fips_186_3_B283
+   sig_g2_pop_fips_186_3_B409 sig_g2_pop_fips_186_3_B571
+   sig_g2_pop_fips_186_3_K233 sig_g2_pop_fips_186_3_K409
+   sig_g2_pop_fips_186_3_K571 sig_g2_pop_fips_186_3_P224
+   sig_g2_pop_fips_186_3_P256 sig_g2_pop_fips_186_3_P384
+   sig_g2_pop_fips_186_3_P521 sig_g2_pop_rfc6979)
+ (action
+  (run %{exe:generate_test_vectors_from_bls_sigs_ref_for_blst.exe} sig_g2_pop
+    %{deps})))
+
+(rule
+ (alias generate_test_vectors_for_bls_pop_g2)
+ (deps pop_g2_fips_186_3_B233 pop_g2_fips_186_3_B283 pop_g2_fips_186_3_B409
+   pop_g2_fips_186_3_B571 pop_g2_fips_186_3_K233 pop_g2_fips_186_3_K409
+   pop_g2_fips_186_3_K571 pop_g2_fips_186_3_P224 pop_g2_fips_186_3_P256
+   pop_g2_fips_186_3_P384 pop_g2_fips_186_3_P521 pop_g2_rfc6979)
+ (action
+  (run %{exe:generate_test_vectors_from_bls_sigs_ref_for_blst.exe} pop_g2
+    %{deps})))

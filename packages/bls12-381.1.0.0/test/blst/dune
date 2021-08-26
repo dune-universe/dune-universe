@@ -1,0 +1,129 @@
+(copy_files ../{*.ml})
+
+(copy_files ../rust/{test_g1_fft.ml,test_g2_fft.ml})
+
+(copy_files ../test_vectors/{*})
+
+(copy_files ../test_vectors/hash_to_curve_g1/{*})
+
+(copy_files ../test_vectors/hash_to_curve_g2/{*})
+
+(copy_files ../test_vectors/sig_g2_basic/{*})
+
+(copy_files ../test_vectors/sig_g2_aug/{*})
+
+(copy_files ../test_vectors/sig_g2_pop/{*})
+
+(copy_files ../test_vectors/pop_g2/{*})
+
+(tests
+ (names
+  test_fr
+  ; test_fq12
+  test_g1
+  test_g1_fft
+  test_g2
+  test_g2_fft
+  test_pairing
+  test_random_state
+  test_hash_to_curve
+  test_signature
+  test_aggregated_signature)
+ (modules
+  test_fr
+  ; test_fq12
+  test_g1
+  test_g1_fft
+  test_g2
+  test_g2_fft
+  test_pairing
+  test_ec_make
+  test_random_state
+  test_hash_to_curve
+  test_signature
+  test_aggregated_signature)
+ (package bls12-381-unix)
+ (deps
+  fft_test_vector_g1_2
+  fft_test_vector_g2_2
+  ifft_test_vector_g1_2
+  ifft_test_vector_g2_2
+  test_vector_g1_2
+  test_vector_g2_2
+  ;; These files come from https://github.com/algorand/bls_sigs_ref/pull/7.
+  ;; ;; hash_to_curve
+  g1_fips_186_3_B233
+  g1_fips_186_3_B283
+  g1_fips_186_3_B409
+  g1_fips_186_3_B571
+  g1_fips_186_3_K233
+  g1_fips_186_3_K409
+  g1_fips_186_3_K571
+  g1_fips_186_3_P224
+  g1_fips_186_3_P256
+  g1_fips_186_3_P384
+  g1_fips_186_3_P521
+  g1_rfc6979
+  g2_fips_186_3_B233
+  g2_fips_186_3_B283
+  g2_fips_186_3_B409
+  g2_fips_186_3_B571
+  g2_fips_186_3_K233
+  g2_fips_186_3_K409
+  g2_fips_186_3_K571
+  g2_fips_186_3_P224
+  g2_fips_186_3_P256
+  g2_fips_186_3_P384
+  g2_fips_186_3_P521
+  g2_rfc6979
+  ;; ;; signature
+  sig_g2_basic_fips_186_3_B233_blst
+  sig_g2_basic_fips_186_3_B283_blst
+  sig_g2_basic_fips_186_3_B409_blst
+  sig_g2_basic_fips_186_3_B571_blst
+  sig_g2_basic_fips_186_3_K233_blst
+  sig_g2_basic_fips_186_3_K409_blst
+  sig_g2_basic_fips_186_3_K571_blst
+  sig_g2_basic_fips_186_3_P224_blst
+  sig_g2_basic_fips_186_3_P256_blst
+  sig_g2_basic_fips_186_3_P384_blst
+  sig_g2_basic_fips_186_3_P521_blst
+  sig_g2_basic_rfc6979_blst
+  sig_g2_aug_fips_186_3_B233_blst
+  sig_g2_aug_fips_186_3_B283_blst
+  sig_g2_aug_fips_186_3_B409_blst
+  sig_g2_aug_fips_186_3_B571_blst
+  sig_g2_aug_fips_186_3_K233_blst
+  sig_g2_aug_fips_186_3_K409_blst
+  sig_g2_aug_fips_186_3_K571_blst
+  sig_g2_aug_fips_186_3_P224_blst
+  sig_g2_aug_fips_186_3_P256_blst
+  sig_g2_aug_fips_186_3_P384_blst
+  sig_g2_aug_fips_186_3_P521_blst
+  sig_g2_aug_rfc6979_blst
+  sig_g2_pop_fips_186_3_B233_blst
+  sig_g2_pop_fips_186_3_B283_blst
+  sig_g2_pop_fips_186_3_B409_blst
+  sig_g2_pop_fips_186_3_B571_blst
+  sig_g2_pop_fips_186_3_K233_blst
+  sig_g2_pop_fips_186_3_K409_blst
+  sig_g2_pop_fips_186_3_K571_blst
+  sig_g2_pop_fips_186_3_P224_blst
+  sig_g2_pop_fips_186_3_P256_blst
+  sig_g2_pop_fips_186_3_P384_blst
+  sig_g2_pop_fips_186_3_P521_blst
+  sig_g2_pop_rfc6979_blst
+  ;; ;; pop
+  pop_g2_fips_186_3_B233_blst
+  pop_g2_fips_186_3_B283_blst
+  pop_g2_fips_186_3_B409_blst
+  pop_g2_fips_186_3_B571_blst
+  pop_g2_fips_186_3_K233_blst
+  pop_g2_fips_186_3_K409_blst
+  pop_g2_fips_186_3_K571_blst
+  pop_g2_fips_186_3_P224_blst
+  pop_g2_fips_186_3_P256_blst
+  pop_g2_fips_186_3_P384_blst
+  pop_g2_fips_186_3_P521_blst
+  pop_g2_rfc6979_blst)
+ (libraries bls12-381-unix alcotest ff-pbt hex))

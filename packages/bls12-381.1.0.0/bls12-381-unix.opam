@@ -1,0 +1,24 @@
+opam-version: "2.0"
+authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
+synopsis: "UNIX version of BLS12-381 primitives implementing the virtual package
+bls12-381 with blst backend"
+homepage: "https://gitlab.com/dannywillems/ocaml-bls12-381"
+dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
+bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
+license: "MIT"
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "2.8.4"}
+  "dune-configurator" {build}
+  "zarith" {>= "1.10" & < "2.0"}
+  "ctypes" {>= "0.18.0" & < "0.19.0"}
+  "ctypes-foreign"
+  "bls12-381" {= version}
+  "hex"
+  "alcotest" {with-test}
+  "bisect_ppx" {with-test & >= "2.5"}
+  "ff-pbt" {>= "0.6.0" & < "0.7.0" & with-test}
+]
+build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
