@@ -1,0 +1,28 @@
+version: "1.0.1"
+opam-version: "2.0"
+maintainer: ["Cryptosense <opensource@cryptosense.com>"]
+authors: ["Cryptosense <opensource@cryptosense.com>"]
+homepage: "https://github.com/cryptosense/pkcs11"
+bug-reports: "https://github.com/cryptosense/pkcs11/issues"
+license: "BSD-2-Clause"
+dev-repo: "git+https://github.com/cryptosense/pkcs11.git"
+doc: "https://cryptosense.github.io/pkcs11/doc"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ctypes"
+  "ctypes-foreign"
+  "dune" {>= "1.3.0"}
+  "pkcs11" {>= "0.18.0"}
+  "pkcs11-driver" {>= "1.0.0"}
+]
+conflicts: [
+  "ctypes" { < "0.12.0" }
+]
+tags: ["org:cryptosense"]
+available: [os != "macos"]
+synopsis: "Reverse bindings to pkcs11"
+description: """
+This library contains helpers to write reverse PKCS#11 bindings.
+"""

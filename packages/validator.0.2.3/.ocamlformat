@@ -1,0 +1,13 @@
+version = 0.19.0
+break-cases=nested
+break-fun-decl=fit-or-vertical
+break-fun-sig=fit-or-vertical
+function-indent=4
+if-then-else=k-r
+let-and=sparse
+let-binding-indent=4
+let-binding-spacing=sparse
+let-module=sparse
+margin=60
+single-case=sparse
+type-decl=sparse

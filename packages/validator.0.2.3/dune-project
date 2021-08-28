@@ -1,0 +1,31 @@
+(lang dune 2.7)
+
+(name validator)
+(version 0.2.3)
+
+(license ISC)
+
+(authors "Sebastian Porto")
+
+(maintainers "Sebastian Porto")
+
+(homepage "https://github.com/sporto/ocaml_validator")
+
+(source
+ (github "sporto/ocaml_validator"))
+
+(bug_reports "https://github.com/sporto/ocaml_validator")
+
+(generate_opam_files true)
+
+(package
+ (name validator)
+ (synopsis "Create a record validator via composable sub-validators")
+ (description "Create a record validator via composable sub-validators")
+ (depends
+  (ocaml
+   (>= 4.08.0))
+  dune
+  (alcotest :with-test)
+  (ppx_deriving :with-test)
+  (odoc :with-doc)))

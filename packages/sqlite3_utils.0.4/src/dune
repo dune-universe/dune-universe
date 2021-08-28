@@ -1,0 +1,5 @@
+
+(library
+ (name sqlite3_utils)
+ (libraries sqlite3 seq)
+ (public_name sqlite3_utils))

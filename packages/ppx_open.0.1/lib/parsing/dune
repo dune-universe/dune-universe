@@ -1,0 +1,9 @@
+(library
+ (public_name ppx_open.parsing)
+ (name ppx_open_parsing)
+ (libraries base ppxlib))
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser))
