@@ -1,0 +1,5 @@
+(tests
+  (names dist_test)
+  (libraries prbnmcn-stats qcheck)
+  (flags (:standard -open Basic_structures -open Stats))
+)

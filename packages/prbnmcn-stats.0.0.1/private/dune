@@ -1,0 +1,5 @@
+(executables
+  (names mh_test)
+  (libraries prbnmcn-stats prbnmcn-gnuplot qcheck)
+  (flags (:standard -open Basic_structures -open Stats))
+)

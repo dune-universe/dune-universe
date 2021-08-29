@@ -1,0 +1,9 @@
+{0 prbnmcn-stats}
+
+[prbnmcn-stats] provides basic functions to construct, manipulate and analyze probability distributions.
+
+See the {{!Stats.introduction}introduction}.
+
+{1:api API}
+
+{!modules: Stats}
