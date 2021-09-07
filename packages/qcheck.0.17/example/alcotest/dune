@@ -1,4 +1,0 @@
-
-(executable
-  (name QCheck_alcotest_test)
-  (libraries qcheck-core qcheck-alcotest alcotest))

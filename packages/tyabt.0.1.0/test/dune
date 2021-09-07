@@ -1,0 +1,3 @@
+(tests
+ (names stlc)
+ (libraries tyabt))

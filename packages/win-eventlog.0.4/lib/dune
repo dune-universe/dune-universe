@@ -1,0 +1,9 @@
+(library
+ (name win_eventlog)
+ (public_name win-eventlog)
+ (libraries result logs unix)
+ (foreign_stubs
+  (language c)
+  (names eventlog_stubs))
+ (wrapped
+  (transition "The library is now wrapped")))

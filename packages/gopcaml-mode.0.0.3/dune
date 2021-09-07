@@ -1,0 +1,18 @@
+(executable
+ (name gopcaml)
+ (libraries core ecaml generic_parser ocaml-migrate-parsetree)
+ (preprocess (pps ppx_let ppx_here ppx_deriving.std ppx_sexp_conv))
+ (modes (native shared_object))
+ (flags "-w" "-33"))
+
+
+(install
+ (section share_root)
+ (files (gopcaml-mode.el as emacs/site-lisp/gopcaml-mode.el)
+  (gopcaml-smartparens.el as emacs/site-lisp/gopcaml-smartparens.el)
+  (gopcaml-multiple-cursors.el as emacs/site-lisp/gopcaml-multiple-cursors.el)
+))
+(install
+ (section lib)
+ (files gopcaml.so))
+

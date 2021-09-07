@@ -1,0 +1,19 @@
+name: install-test
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        ocaml-compiler:
+          - 4.12.x
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-version }}
+      - name: Install
+        run: opam install . -t

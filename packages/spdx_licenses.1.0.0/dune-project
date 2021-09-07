@@ -1,4 +1,0 @@
-(lang dune 2.3)
-(name spdx_licenses)
-(version v1.0.0)
-(formatting disabled)

@@ -1,0 +1,10 @@
+(library
+ (public_name graphv_gles2_native_impl)
+ (foreign_stubs (language c) 
+    (names gles2_stubs)
+    (flags :standard -O2)
+  )
+ (libraries
+   graphv_core_lib
+  )
+ )

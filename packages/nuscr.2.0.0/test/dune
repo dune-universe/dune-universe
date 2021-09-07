@@ -1,0 +1,5 @@
+(tests
+ (names test)
+ (libraries nuscr.lib base stdio)
+ (deps
+  (source_tree examples)))

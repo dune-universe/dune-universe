@@ -1,0 +1,21 @@
+
+(executables
+  (names QCheck_runner_test)
+  (libraries qcheck))
+
+(rule
+  (targets output.txt)
+  (deps ./QCheck_runner_test.exe)
+  (enabled_if (= %{os_type} "Unix"))
+  (action
+    (with-accepted-exit-codes
+      1
+      (with-stdout-to
+        %{targets}
+        (run ./QCheck_runner_test.exe --no-colors -s 1234)))))
+
+(rule
+  (alias runtest)
+  (enabled_if (= %{os_type} "Unix"))
+  (package qcheck)
+  (action (diff output.txt.expected output.txt)))

@@ -1,0 +1,12 @@
+(executable
+ (name main)
+ (public_name fit)
+ (libraries ezjsonm cmdliner fit rresult))
+
+(rule
+ (target build.ml)
+ (deps (universe) build.sh)
+ (action
+  (with-stdout-to
+   %{target}
+   (bash "./build.sh"))))

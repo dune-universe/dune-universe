@@ -1,0 +1,18 @@
+language: c
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+services:
+- docker
+env:
+  global:
+  - PINS="qcheck:. qcheck-core:. qcheck-ounit:. qcheck-alcotest:."
+  - DISTRO="ubuntu-16.04"
+  - PACKAGE="qcheck"
+  - DEPOPTS="ounit alcotest"
+  matrix:
+    # OCAML_VERSION is used by https://github.com/ocaml/ocaml-ci-scripts/blob/master/README-travis.md
+    - OCAML_VERSION="4.08"
+    - OCAML_VERSION="4.09"
+    - OCAML_VERSION="4.10"
+    - OCAML_VERSION="4.11"
+    - OCAML_VERSION="4.12"

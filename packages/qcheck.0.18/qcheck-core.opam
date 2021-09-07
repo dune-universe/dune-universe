@@ -1,0 +1,31 @@
+opam-version: "2.0"
+maintainer: "simon.cruanes.2007@m4x.org"
+author: [ "the qcheck contributors" ]
+homepage: "https://github.com/c-cube/qcheck/"
+license: "BSD-2-Clause"
+synopsis: "Core qcheck library"
+doc: ["http://c-cube.github.io/qcheck/"]
+version: "0.18"
+tags: [
+  "test"
+  "property"
+  "quickcheck"
+]
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "@doc" "-p" name "-j" jobs] {with-doc}
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+depends: [
+  "dune" { >= "2.2" }
+  "base-bytes"
+  "base-unix"
+  "alcotest" {with-test}
+  "odoc" {with-doc}
+  "ocaml" {>= "4.08.0"}
+]
+dev-repo: "git+https://github.com/c-cube/qcheck.git"
+bug-reports: "https://github.com/c-cube/qcheck/issues"
+conflicts: [
+  "ounit" { < "2.0" }
+]

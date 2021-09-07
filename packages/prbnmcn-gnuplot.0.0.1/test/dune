@@ -1,0 +1,4 @@
+(tests
+        (names gnuplot_test example)
+        (libraries prbnmcn-gnuplot)
+)

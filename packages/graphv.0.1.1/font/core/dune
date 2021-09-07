@@ -1,0 +1,6 @@
+(library
+ (public_name graphv_font)
+ (libraries 
+    graphv_core_lib
+ )
+ )

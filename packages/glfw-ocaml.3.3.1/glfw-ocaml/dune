@@ -1,0 +1,21 @@
+(library
+ (name                      GLFW)
+ (public_name               glfw-ocaml)
+ (modules                   GLFW)
+ (wrapped                   false)
+ (libraries                 bigarray)
+ (foreign_stubs
+  (language    c)
+  (names       GLFW_stubs)
+  (extra_deps  GLFW_key_conv_arrays.inl))
+ (c_library_flags           -lglfw))
+
+(rule
+ (target  GLFW_key_conv_arrays.inl)
+ (deps    (:gen gen_key_conv_arrays.exe))
+ (action  (run %{gen})))
+
+(executable
+ (name      gen_key_conv_arrays)
+ (modules   gen_key_conv_arrays)
+ (libraries str dune.configurator))

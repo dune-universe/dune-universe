@@ -1,9 +1,0 @@
-(executable
- (name AdderMonadic)
- (modules AdderMonadic C S)
- (libraries threads lwt lwt.unix))
-
-(env
- (dev
-  (flags
-   (:standard -warn-error -A))))

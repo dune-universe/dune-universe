@@ -1,0 +1,9 @@
+(library
+ (name graphv_core_lib_tests)
+ (inline_tests)
+ (libraries 
+   graphv_font
+    )
+ (preprocess (pps ppx_expect))
+ (enabled_if (= %{profile} dev)) 
+ )

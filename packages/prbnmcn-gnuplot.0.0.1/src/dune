@@ -1,0 +1,6 @@
+(library (name plot) (public_name prbnmcn-gnuplot) (libraries unix))
+
+(documentation
+   (package prbnmcn-gnuplot)
+   (mld_files index)
+)

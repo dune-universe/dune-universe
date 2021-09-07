@@ -1,0 +1,13 @@
+.*.swp
+.*.swo
+_build
+*.native
+.session
+TAGS
+*.docdir
+man
+*.install
+*.tar.gz
+*.byte
+.merlin
+_opam/

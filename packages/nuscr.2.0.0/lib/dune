@@ -1,0 +1,26 @@
+(env
+ (_
+  (flags
+   (:standard -w +A-39-4-42))))
+
+(library
+ (name nuscrlib)
+ (public_name nuscr.lib)
+ (libraries
+  base
+  stdio
+  ocamlgraph
+  ppxlib
+  unix
+  process
+  utils
+  syntaxtree
+  mpst
+  codegen)
+ (preprocess
+  (pps
+   ppx_deriving.show
+   ppx_deriving.eq
+   ppx_deriving.ord
+   ppx_sexp_conv
+   ppxlib.metaquot)))

@@ -1,0 +1,30 @@
+opam-version: "2.0"
+name: "osnap"
+version: "0.1.0"
+license: "MIT"
+synopsis: "OCaml random snapshot testing"
+
+homepage: "https://github.com/vch9/osnap"
+bug-reports: "https://github.com/vch9/osnap/issues"
+
+maintainer: [
+  "Valentin Chaboche <valentin.chaboche@nomadic-labs.com>"
+]
+
+authors: [
+ "Valentin Chaboche <valentin.chaboche@nomadic-labs.com>"
+]
+
+depends: [
+  "dune" {>= "2.8.0" }
+  "ocaml" {>= "4.12.0" }
+  "qcheck" {>= "0.17" }
+  "patdiff" { >= "0.14.0" }
+  "ppx_deriving" { >= "5.2.1" }
+  "alcotest" { with-test & >= "1.4.0" }
+  "odoc" { with-doc }
+]
+
+build: ["dune" "build" "-p" name "-j" jobs]
+
+dev-repo: "git+https://github.com/vch9/osnap.git"

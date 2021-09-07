@@ -1,0 +1,9 @@
+(*# NestedProtocols #*)
+
+global protocol P(role A, role B) {
+
+}
+
+nested protocol P2(role A, role B) {
+  
+}

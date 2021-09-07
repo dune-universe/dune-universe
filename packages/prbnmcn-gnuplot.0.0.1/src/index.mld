@@ -1,0 +1,12 @@
+{0 prbnmcn-gnuplot}
+
+[prbnmcn-gnuplot] is a declarative overlay over Gnuplot.  The library produces
+self-contained Gnuplot scripts, and can either simply write them to some file or
+display them to various backends. Not all features of Gnuplot are supported,
+additional features will be added as needed.
+
+Have a look at the documentation in {!Plot} for more details.
+
+{1:api API}
+
+{!modules: Plot}
