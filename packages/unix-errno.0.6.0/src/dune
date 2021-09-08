@@ -1,0 +1,12 @@
+(executable
+  (name errno_srcgen)
+  (modules errno_srcgen)
+  (libraries integers unix-errno)
+  )
+
+(executable
+  (name errno_map)
+  (public_name errno-map)
+  (modules errno_map)
+  (libraries unix-errno unix-errno.unix)
+  )

@@ -1,0 +1,15 @@
+opam-version: "2.0"
+name: "ppx_matches"
+version: "0.1"
+synopsis: "Small ppx to help check if a value matches a pattern"
+description: """
+Translates [%matches? <PATTERN>] into (function | <PATTERN> -> true | _ -> false)
+"""
+maintainer: "Will Robson <will at will robson dot uk>"
+authors: "Will Robson <will at will robson dot uk>"
+license: "MIT"
+homepage: "https://github.com/wrbx/ppx_matches"
+bug-reports: "https://github.com/wrbx/ppx_matches/issues"
+dev-repo: "git://github.com/wrbs/ppx_matches"
+depends: [ "ocaml" "ppxlib" "dune" ]
+build: ["dune" "build" "-p" name "-j" jobs]

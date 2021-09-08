@@ -1,8 +1,0 @@
-;; -*-lisp-*-
-
-(test
- (name test)
- (libraries
-  utilsLib
-  logic))
-

@@ -1,0 +1,16 @@
+(rule (action (copy ../lib_gen/unix_errno_stubs.c unix_errno_stubs.c)))
+
+(library
+  (name unix_errno)
+  (public_name unix-errno.unix)
+  (wrapped false)
+  (foreign_stubs (language c) (names unix_errno_util unix_errno_stubs))
+  (libraries
+    ctypes.stubs
+    errno
+    integers
+    unix
+    errno_bindings
+    errno_types
+    errno_types_detected)
+  )

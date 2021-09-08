@@ -1,0 +1,9 @@
+;; -*-lisp-*-
+
+(test
+ (name test)
+ (flags (:standard -w -27))
+ (libraries
+  utilsLib
+  logic))
+

@@ -1,0 +1,68 @@
+(library
+  (name errno_bindings)
+  (package unix-errno)
+  (modules unix_errno_bindings)
+  (wrapped false)
+  (libraries ctypes)
+  )
+
+(executables
+  (names unix_errno_stubgen_c unix_errno_stubgen_ml)
+  (modules unix_errno_stubgen_c unix_errno_stubgen_ml)
+  (libraries ctypes.stubs errno_bindings)
+  )
+
+(rule
+  (targets unix_errno_stubs.c)
+  (deps unix_errno_stubgen_c.exe)
+  (action (run %{deps})))
+
+(rule
+  (targets unix_errno_generated.ml)
+  (deps unix_errno_stubgen_ml.exe)
+  (action (with-stdout-to %{targets} (run %{deps}))))
+
+(library
+  (name errno_types)
+  (package unix-errno)
+  (modules unix_errno_types unix_errno_generated)
+  (wrapped false)
+  (libraries ctypes integers)
+  )
+
+; Generate library errno_types_detected using ctypes_stubs
+; See https://github.com/cedlemo/ctypes-stubs-generation-notes for more info
+
+(executable
+  (name unix_errno_typegen)
+  (modules unix_errno_typegen)
+  (libraries ctypes.stubs errno_types)
+  )
+
+(rule
+  (targets unix_errno_types_detect.c)
+  (deps unix_errno_typegen.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -c)))
+  )
+
+(rule
+  (targets unix_errno_types_detect.exe)
+  (deps unix_errno_types_detect.c)
+  (action (bash
+    "%{cc} %{deps} -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` -I %{ocaml_where} -o %{targets}"))
+  )
+
+(rule
+  (targets unix_errno_types_detected.ml)
+  (deps unix_errno_types_detect.exe)
+  (action (with-stdout-to %{targets} (run %{deps} -ml)))
+  )
+
+(library
+  (name errno_types_detected)
+  (package unix-errno)
+  (modules unix_errno_types_detected)
+  (flags (:standard -w -9-27))
+  (libraries ctypes integers)
+  (wrapped false)
+  )

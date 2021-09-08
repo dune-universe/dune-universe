@@ -1,0 +1,19 @@
+(rule (with-stdin-from ../maps/linux_4_4_6 (with-stdout-to errno_map_linux_4_4_6.ml (run ../src/errno_srcgen.exe))))
+
+(rule (with-stdin-from ../maps/osx_10_11_4 (with-stdout-to errno_map_osx_10_11_4.ml (run ../src/errno_srcgen.exe))))
+
+(library
+  (name errno)
+  (public_name unix-errno)
+  (wrapped false)
+  (modules errno)
+  (libraries integers result)
+  )
+
+(library
+  (name errno_host)
+  (public_name unix-errno.host)
+  (wrapped false)
+  (modules :standard \ errno)
+  (libraries errno integers result)
+  )

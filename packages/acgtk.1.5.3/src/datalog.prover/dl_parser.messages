@@ -1,0 +1,258 @@
+rule: IDENT LPAR IDENT RPAR FROM SLASH
+##
+## Ends in an error in state: 49.
+##
+## rule -> atom FROM . separated_nonempty_list(COMMA,atom) DOT [ # ]
+##
+## The known suffix of the stack is as follows:
+## atom FROM
+##
+rule: SLASH
+##
+## Ends in an error in state: 46.
+##
+## rule' -> . rule [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+query: SLASH
+##
+## Ends in an error in state: 39.
+##
+## query' -> . query [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+program: IDENT LPAR IDENT RPAR DOT SLASH
+##
+## Ends in an error in state: 22.
+##
+## nonempty_list(rule) -> rule . [ EOI ]
+## nonempty_list(rule) -> rule . nonempty_list(rule) [ EOI ]
+##
+## The known suffix of the stack is as follows:
+## rule
+##
+program: IDENT LPAR IDENT RPAR FROM IDENT LPAR IDENT RPAR COMMA SLASH
+##
+## Ends in an error in state: 33.
+##
+## separated_nonempty_list(COMMA,atom) -> atom COMMA . separated_nonempty_list(COMMA,atom) [ DOT ]
+##
+## The known suffix of the stack is as follows:
+## atom COMMA
+##
+program: IDENT LPAR IDENT RPAR FROM SLASH
+##
+## Ends in an error in state: 29.
+##
+## rule -> atom FROM . separated_nonempty_list(COMMA,atom) DOT [ IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## atom FROM
+##
+program: SLASH
+##
+## Ends in an error in state: 21.
+##
+## program' -> . program [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+extensional_facts: SLASH
+##
+## Ends in an error in state: 0.
+##
+## extensional_facts' -> . extensional_facts [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+extensional_facts: IDENT LPAR IDENT RPAR DOT SLASH
+##
+## Ends in an error in state: 9.
+##
+## nonempty_list(extensional_fact) -> extensional_fact . [ EOI ]
+## nonempty_list(extensional_fact) -> extensional_fact . nonempty_list(extensional_fact) [ EOI ]
+##
+## The known suffix of the stack is as follows:
+## extensional_fact
+##
+
+A predicate symbol is expected.
+
+rule: IDENT LPAR IDENT RPAR SLASH
+##
+## Ends in an error in state: 48.
+##
+## rule -> atom . DOT [ # ]
+## rule -> atom . FROM separated_nonempty_list(COMMA,atom) DOT [ # ]
+##
+## The known suffix of the stack is as follows:
+## atom
+##
+program: IDENT LPAR IDENT RPAR SLASH
+##
+## Ends in an error in state: 28.
+##
+## rule -> atom . DOT [ IDENT EOI ]
+## rule -> atom . FROM separated_nonempty_list(COMMA,atom) DOT [ IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## atom
+##
+
+A "." or a ":-" is expected.
+
+query: IDENT LPAR INT RPAR SLASH
+##
+## Ends in an error in state: 44.
+##
+## query -> atom_sym LPAR separated_nonempty_list(COMMA,parameter) RPAR . QUESTION_MARK [ # ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym LPAR separated_nonempty_list(COMMA,parameter) RPAR
+##
+
+A "?" is expected.
+
+query: IDENT SLASH INT SLASH
+##
+## Ends in an error in state: 41.
+##
+## query -> atom_sym . LPAR separated_nonempty_list(COMMA,parameter) RPAR QUESTION_MARK [ # ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym
+##
+program: IDENT SLASH INT SLASH
+##
+## Ends in an error in state: 24.
+##
+## atom -> atom_sym . LPAR separated_nonempty_list(COMMA,parameter) RPAR [ FROM DOT COMMA ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym
+##
+
+A "(" is expected.
+
+program: IDENT LPAR IDENT RPAR FROM IDENT LPAR IDENT RPAR SLASH
+##
+## Ends in an error in state: 32.
+##
+## separated_nonempty_list(COMMA,atom) -> atom . [ DOT ]
+## separated_nonempty_list(COMMA,atom) -> atom . COMMA separated_nonempty_list(COMMA,atom) [ DOT ]
+##
+## The known suffix of the stack is as follows:
+## atom
+##
+
+A "." or a "," is expected.
+
+query: IDENT LPAR SLASH
+##
+## Ends in an error in state: 42.
+##
+## query -> atom_sym LPAR . separated_nonempty_list(COMMA,parameter) RPAR QUESTION_MARK [ # ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym LPAR
+##
+program: IDENT LPAR SLASH
+##
+## Ends in an error in state: 25.
+##
+## atom -> atom_sym LPAR . separated_nonempty_list(COMMA,parameter) RPAR [ FROM DOT COMMA ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym LPAR
+##
+extensional_facts: IDENT LPAR INT COMMA SLASH
+##
+## Ends in an error in state: 19.
+##
+## separated_nonempty_list(COMMA,parameter) -> parameter COMMA . separated_nonempty_list(COMMA,parameter) [ RPAR ]
+##
+## The known suffix of the stack is as follows:
+## parameter COMMA
+##
+extensional_facts: IDENT LPAR SLASH
+##
+## Ends in an error in state: 12.
+##
+## extensional_fact -> atom_sym LPAR . separated_nonempty_list(COMMA,parameter) RPAR DOT [ IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym LPAR
+##
+
+A variable or a constant (natural number) is expected.
+
+extensional_facts: IDENT LPAR INT RPAR SLASH
+##
+## Ends in an error in state: 16.
+##
+## extensional_fact -> atom_sym LPAR separated_nonempty_list(COMMA,parameter) RPAR . DOT [ IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym LPAR separated_nonempty_list(COMMA,parameter) RPAR
+##
+
+A "." or a "," is expected.
+
+extensional_facts: IDENT LPAR INT SLASH
+##
+## Ends in an error in state: 18.
+##
+## separated_nonempty_list(COMMA,parameter) -> parameter . [ RPAR ]
+## separated_nonempty_list(COMMA,parameter) -> parameter . COMMA separated_nonempty_list(COMMA,parameter) [ RPAR ]
+##
+## The known suffix of the stack is as follows:
+## parameter
+##
+
+A "," or a ")" is expected.
+
+extensional_facts: IDENT RPAR
+##
+## Ends in an error in state: 1.
+##
+## atom_sym -> IDENT . option(arity) [ LPAR ]
+##
+## The known suffix of the stack is as follows:
+## IDENT
+##
+
+A "/" or a "(" is expected.
+
+extensional_facts: IDENT SLASH INT SLASH
+##
+## Ends in an error in state: 11.
+##
+## extensional_fact -> atom_sym . LPAR separated_nonempty_list(COMMA,parameter) RPAR DOT [ IDENT EOI ]
+##
+## The known suffix of the stack is as follows:
+## atom_sym
+##
+
+A "(" is expected.
+
+extensional_facts: IDENT SLASH SLASH
+##
+## Ends in an error in state: 2.
+##
+## arity -> SLASH . INT [ LPAR ]
+##
+## The known suffix of the stack is as follows:
+## SLASH
+##
+
+An integer is expected.
+
+
+
+

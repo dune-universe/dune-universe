@@ -1,0 +1,92 @@
+;; -*-lisp-*-
+
+(ocamllex script_lexer)
+
+(menhir
+; (flags (--explain --table --compile-errors /home/pogodall/work/dev/ACGtk/src/scripting/command_parser.messages))
+ (flags (--explain --table))
+ (modules command_parser))
+
+;; Rule to generate the messages ml file
+(rule
+ (targets messages.ml)
+ (enabled_if (= %{profile} dev))
+ (mode promote)
+ (deps
+  (alias update)
+  (alias check_all_messages)
+  (:message_file command_parser.messages)
+  (:parser command_parser.mly)
+  )
+ (action
+  (with-stdout-to messages.ml (run menhir --explain --table --compile-errors %{message_file} %{parser})))
+ )
+
+;; Rule to generate the automatic message file
+(rule
+ (targets command_parser.messages.automatic)
+ (deps (:parser command_parser.mly))
+ (action
+  (with-stdout-to command_parser.messages.automatic (run menhir --explain --table --list-errors %{parser})))
+ )
+
+;; Rule to generate the message file
+(rule
+ (targets command_parser.messages.new)
+ (deps (:parser command_parser.mly))
+ (action (with-stdout-to command_parser.messages.new (run menhir --explain --table --update-errors command_parser.messages %{parser}))
+  )
+ )
+
+(alias
+ (name update)
+ (action (diff command_parser.messages command_parser.messages.new))
+ )
+
+(alias
+ (name check_all_messages)
+ (deps
+  command_parser.messages.automatic
+  command_parser.messages
+  (:parser command_parser.mly)
+  )
+ (action (run menhir --explain --table --compare-errors command_parser.messages.automatic --compare-errors command_parser.messages %{parser}))
+ )
+
+
+
+;; This stanza declares the scripting library
+(library
+ (name scripting)
+  (flags (:standard -w -58))
+  (modules (:standard \ acg io_test))
+  (libraries
+   cairo2
+   yojson
+   
+   utilsLib
+   acgData
+   grammars
+   ))
+
+
+;; This declares the acgc executable implemented by acg.ml
+(executable
+ (name acg)
+ (public_name acg)
+ (package acgtk)
+ (modules acg)
+ (flags (:standard -w -58))
+ (libraries
+  cairo2
+  fmt.tty
+  cmdliner
+  
+  utilsLib
+  acgData
+  grammars
+  scripting
+  ))
+ 
+
+(documentation (package acgtkLib))

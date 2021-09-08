@@ -1,0 +1,106 @@
+(*
+ * Copyright (c) 2015 David Sheets <sheets@alum.mit.edu>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ *)
+
+module C(F: Cstubs.Types.TYPE) = struct
+
+  let e2big = F.(constant "E2BIG" sint)
+  let eacces = F.(constant "EACCES" sint)
+  let eaddrinuse = F.(constant "EADDRINUSE" sint)
+  let eaddrnotavail = F.(constant "EADDRNOTAVAIL" sint)
+  let eafnosupport = F.(constant "EAFNOSUPPORT" sint)
+  let eagain = F.(constant "EAGAIN" sint)
+  let ealready = F.(constant "EALREADY" sint)
+  let ebadf = F.(constant "EBADF" sint)
+  let ebadmsg = F.(constant "EBADMSG" sint)
+  let ebusy = F.(constant "EBUSY" sint)
+  let ecanceled = F.(constant "ECANCELED" sint)
+  let echild = F.(constant "ECHILD" sint)
+  let econnaborted = F.(constant "ECONNABORTED" sint)
+  let econnrefused = F.(constant "ECONNREFUSED" sint)
+  let econnreset = F.(constant "ECONNRESET" sint)
+  let edeadlk = F.(constant "EDEADLK" sint)
+  let edestaddrreq = F.(constant "EDESTADDRREQ" sint)
+  let edom = F.(constant "EDOM" sint)
+  let edquot = F.(constant "EDQUOT" sint)
+  let eexist = F.(constant "EEXIST" sint)
+  let efault = F.(constant "EFAULT" sint)
+  let efbig = F.(constant "EFBIG" sint)
+  let ehostdown = F.(constant "EHOSTDOWN" sint)
+  let ehostunreach = F.(constant "EHOSTUNREACH" sint)
+  let eidrm = F.(constant "EIDRM" sint)
+  let eilseq = F.(constant "EILSEQ" sint)
+  let einprogress = F.(constant "EINPROGRESS" sint)
+  let eintr = F.(constant "EINTR" sint)
+  let einval = F.(constant "EINVAL" sint)
+  let eio = F.(constant "EIO" sint)
+  let eisconn = F.(constant "EISCONN" sint)
+  let eisdir = F.(constant "EISDIR" sint)
+  let eloop = F.(constant "ELOOP" sint)
+  let emfile = F.(constant "EMFILE" sint)
+  let emlink = F.(constant "EMLINK" sint)
+  let emsgsize = F.(constant "EMSGSIZE" sint)
+  let emultihop = F.(constant "EMULTIHOP" sint)
+  let enametoolong = F.(constant "ENAMETOOLONG" sint)
+  let enetdown = F.(constant "ENETDOWN" sint)
+  let enetreset = F.(constant "ENETRESET" sint)
+  let enetunreach = F.(constant "ENETUNREACH" sint)
+  let enfile = F.(constant "ENFILE" sint)
+  let enobufs = F.(constant "ENOBUFS" sint)
+  let enodev = F.(constant "ENODEV" sint)
+  let enoent = F.(constant "ENOENT" sint)
+  let enoexec = F.(constant "ENOEXEC" sint)
+  let enolck = F.(constant "ENOLCK" sint)
+  let enolink = F.(constant "ENOLINK" sint)
+  let enomem = F.(constant "ENOMEM" sint)
+  let enomsg = F.(constant "ENOMSG" sint)
+  let enoprotoopt = F.(constant "ENOPROTOOPT" sint)
+  let enospc = F.(constant "ENOSPC" sint)
+  let enosys = F.(constant "ENOSYS" sint)
+  let enotblk = F.(constant "ENOTBLK" sint)
+  let enotconn = F.(constant "ENOTCONN" sint)
+  let enotdir = F.(constant "ENOTDIR" sint)
+  let enotempty = F.(constant "ENOTEMPTY" sint)
+  let enotrecoverable = F.(constant "ENOTRECOVERABLE" sint)
+  let enotsock = F.(constant "ENOTSOCK" sint)
+  let enotsup = F.(constant "ENOTSUP" sint)
+  let enotty = F.(constant "ENOTTY" sint)
+  let enxio = F.(constant "ENXIO" sint)
+  let eopnotsupp = F.(constant "EOPNOTSUPP" sint)
+  let eoverflow = F.(constant "EOVERFLOW" sint)
+  let eownerdead = F.(constant "EOWNERDEAD" sint)
+  let eperm = F.(constant "EPERM" sint)
+  let epfnosupport = F.(constant "EPFNOSUPPORT" sint)
+  let epipe = F.(constant "EPIPE" sint)
+  let eproto = F.(constant "EPROTO" sint)
+  let eprotonosupport = F.(constant "EPROTONOSUPPORT" sint)
+  let eprototype = F.(constant "EPROTOTYPE" sint)
+  let erange = F.(constant "ERANGE" sint)
+  let eremote = F.(constant "EREMOTE" sint)
+  let erofs = F.(constant "EROFS" sint)
+  let eshutdown = F.(constant "ESHUTDOWN" sint)
+  let esocktnosupport = F.(constant "ESOCKTNOSUPPORT" sint)
+  let espipe = F.(constant "ESPIPE" sint)
+  let esrch = F.(constant "ESRCH" sint)
+  let estale = F.(constant "ESTALE" sint)
+  let etimedout = F.(constant "ETIMEDOUT" sint)
+  let etoomanyrefs = F.(constant "ETOOMANYREFS" sint)
+  let etxtbsy = F.(constant "ETXTBSY" sint)
+  let eusers = F.(constant "EUSERS" sint)
+  let ewouldblock = F.(constant "EWOULDBLOCK" sint)
+  let exdev = F.(constant "EXDEV" sint)
+
+end

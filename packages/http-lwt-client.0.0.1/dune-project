@@ -1,4 +1,0 @@
-(lang dune 2.0)
-(name http-lwt-client)
-(version v0.0.1)
-(formatting disabled)

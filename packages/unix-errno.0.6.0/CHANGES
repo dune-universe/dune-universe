@@ -1,0 +1,65 @@
+## 0.6.0 (2021-08-19):
+* Port to dune
+
+## 0.5.2 (2017-01-20):
+* Install cmx files
+
+## 0.5.1 (2016-08-05):
+* Add a missing ctypes findlib dependency.
+
+## 0.5.0 (2016-07-26):
+* Switch errno from int to Ctypes.sint
+
+## 0.4.2 (2016-06-01):
+* Add support for ctypes 0.6.0
+
+## 0.4.1 (2016-05-04):
+* Fix linking of Errno_host
+
+## 0.4.0 (2016-05-01):
+* Remove Errno_host.Linux.v4_0_5 and Errno_host.OSX.v10_11_1
+* Add Errno_host.Linux.v4_4_6 and Errno_host.OSX.v10_11_4
+* Changed the return type of Errno_unix.raise_on_errno to be 'a option
+* Changed the host parameters of Errno_unix.to_unix and
+  Errno_unix.of_unix to be optional (default Errno_unix.host)
+* Documented Errno_unix
+* Add Errno_unix.get_errno
+* Add Errno_unix.reset_errno
+* Add Errno_unix.raise_errno
+* Add Errno_unix.to_errno_exn
+* Add Errno_unix.with_errno_exn
+* Add Errno_unix.to_unix_exn
+* Add ENOTBLK, EREMOTE, and EUSERS which are available on Linux, OS X,
+  and FreeBSD
+* Add ECHRNG, EL2NSYNC, EL3HLT, EL3RST, ELNRNG, EUNATCH, ENOCSI, EL2HLT,
+  EBADE, EBADR, EXFULL, ENOANO, EBADRQC, EBADSLT, EBFONT, ENONET, ENOPKG,
+  EADV, ESRMNT, ECOMM, EDOTDOT, ENOTUNIQ, EBADFD, EREMCHG, ELIBACC,
+  ELIBBAD, ELIBSCN, ELIBMAX, ELIBEXEC, ERESTART, ESTRPIPE, EUCLEAN,
+  ENOTNAM, ENAVAIL, EISNAM, EREMOTEIO, ENOMEDIUM, EMEDIUMTYPE, ENOKEY,
+  EKEYEXPIRED, EKEYREVOKED, EKEYREJECTED, ERFKILL, and EHWPOISON which are
+  available on Linux only
+* Add EPWROFF, EDEVERR, EBADEXEC, EBADARCH, ESHLIBVERS, EBADMACHO,
+  ENOPOLICY, and EQFULL which are available on OS X only
+* Add EDOOFUS, ENOTCAPABLE, and ECAPMODE which are available on FreeBSD only
+* Add EPROCLIM, EBADRPC, ERPCMISMATCH, EPROGUNAVAIL, EPROGMISMATCH,
+  EPROCUNAVAIL, EFTYPE, EAUTH, ENEEDAUTH, and ENOATTR which are
+  available on OS X and FreeBSD
+* Add ENOSTR, ENODATA, ETIME, and ENOSR which are available on Linux and OS X
+
+## 0.3.0 (2015-11-30):
+* Use result instead of rresult
+* Split findlib package into errno and errno.unix (depopt ctypes+unix)
+* Add Errno.{Host.to_defns, string_of_defns, defns_of_string}
+* Add errno-map executable to print the errno map of the current host
+* Add errno-srcgen executable to create source for an Errno.Host.t from a map
+* Move Errno.host_of_defns to Errno.Host.of_defns and Errno.host to Errno.Host.t
+* Add Errno.iter_defns
+* Add Errno_host module in errno findlib package with common Errno.Host.t values
+
+## 0.2.0 (2015-07-26):
+* Use ctypes >= 0.4.0 with stub generation
+* Separate modules into Unix-dependent and Unix-independent sets
+* Add support for all POSIX 2008 errnos
+
+## 0.1.0 (2015-07-26):
+* Initial public release

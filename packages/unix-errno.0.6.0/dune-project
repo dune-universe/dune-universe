@@ -1,0 +1,4 @@
+(lang dune 2.8)
+(name unix-errno)
+(version v0.6.0)
+(implicit_transitive_deps false)

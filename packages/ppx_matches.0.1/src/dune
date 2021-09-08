@@ -1,0 +1,4 @@
+(library
+ (public_name ppx_matches)
+ (kind ppx_rewriter)
+ (libraries ppxlib))
