@@ -1,0 +1,9 @@
+(library
+ (name ppx_defer)
+ (public_name ppx_defer)
+ (synopsis "Defer evaluation of expressions")
+ (modules ppx_defer)
+ (libraries ppxlib)
+ (kind ppx_rewriter)
+ (preprocess
+  (pps ppxlib.metaquot)))

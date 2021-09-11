@@ -1,4 +1,0 @@
-(library
- (name dune_file_watcher)
- (libraries spawn unix stdune threads.posix)
- (synopsis "Internal Dune library, do not use!"))

@@ -1,0 +1,70 @@
+name: Build and Test
+
+on:
+  pull_request:
+  push:
+  schedule:
+    # Prime the caches every Monday
+    - cron: 0 1 * * MON
+
+jobs:
+  build-and-test:
+    name: Build and Test
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-compiler:
+          - 4.12.x
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Use latest LTS Node.js release
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Install npm packages
+        run: yarn --frozen-lockfile
+        working-directory: ocaml-lsp-server/test/e2e
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          dune-cache: ${{ matrix.os != 'macos-latest' }}
+
+      - name: Install opam packages
+        run: opam install .
+
+      # the makefile explains why we don't use test dependencies
+      - name: Install test dependencies
+        run: make install-test-deps
+
+      - name: Check formatting
+        run: opam exec -- make fmt
+        if: ${{ matrix.os == 'ubuntu-latest' && always() }}
+
+      - name: Run build
+        run: opam exec -- make all
+
+      - name: Run the unit tests
+        run: opam exec -- make test-ocaml
+
+      - name: Run the template integration tests
+        run: opam exec -- make test-e2e

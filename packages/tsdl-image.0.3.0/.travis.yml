@@ -1,0 +1,23 @@
+language: c
+dist: bionic
+sudo: required
+install:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-ocaml.sh
+  - bash -ex .travis-ocaml.sh
+  - opam install -y depext
+  - opam depext -y tsdl
+  - opam pin -y add tsdl 0.9.6 # workaround for missing sdl 2.0.9
+script:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-opam.sh
+  - bash -ex .travis-opam.sh
+env:
+  - OCAML_VERSION=4.02
+  - OCAML_VERSION=4.03
+  - OCAML_VERSION=4.04
+  - OCAML_VERSION=4.05
+  - OCAML_VERSION=4.06
+  - OCAML_VERSION=4.07
+  - OCAML_VERSION=4.08
+os:
+  - linux
+  - osx

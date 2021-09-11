@@ -1,0 +1,7 @@
+configure eol=lf
+*.sh eol=lf
+*.patch eol=lf
+tests/merlin-wrapper eol=lf
+parser_raw.ml binary
+src/utils/menhirLib.ml binary
+src/utils/menhirLib.mli binary

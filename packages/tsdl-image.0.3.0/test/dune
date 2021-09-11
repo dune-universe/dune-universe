@@ -1,0 +1,5 @@
+(test
+ (name test)
+ (modules test)
+ (libraries tsdl tsdl-image)
+ (deps "what.png"))
