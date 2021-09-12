@@ -1,0 +1,6 @@
+(library
+  (name tsdl_mixer)
+  (public_name tsdl-mixer)
+  (modules tsdl_mixer)
+  (libraries ctypes tsdl)
+  (c_library_flags -lSDL2_mixer))
