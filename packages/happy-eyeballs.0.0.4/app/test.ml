@@ -36,6 +36,6 @@ let port =
 
 let cmd =
   Term.(term_result (const jump $ setup_log $ host $ port)),
-  Term.info "test" ~version:"0.0.3"
+  Term.info "test" ~version:"0.0.4"
 
 let () = match Term.eval cmd with `Ok () -> exit 0 | _ -> exit 1
