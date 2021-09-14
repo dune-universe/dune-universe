@@ -1,4 +1,0 @@
-(library
- (name duniverse_lib)
- (libraries bos fmt logs lwt.unix ocaml-version opam-0install
-   opam-file-format opam-format sexplib stdext threads uri))

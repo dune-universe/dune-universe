@@ -1,0 +1,31 @@
+name: Generate Docs
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/mooreryan/bio_io_generate_docs:b7e69b8
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - run: make docs_site
+      - run: git checkout gh-pages
+      - run: if [ -d docs ]; then rm -r docs; fi
+      - run: mv _docs docs
+
+      - name: Commit site changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add docs
+          git commit -m "Update docs site"
+          git push

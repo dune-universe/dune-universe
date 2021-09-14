@@ -1,0 +1,7 @@
+(env
+ (dev
+  (flags
+   (:standard
+    -w @A ; All warnings
+    -w -48 ; .. except eliminated-optional-arguments (warn 48) which has issues with ( |> ) on OCaml < 4.13
+   ))))

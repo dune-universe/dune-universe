@@ -1,0 +1,9 @@
+(library
+ (name bio_io)
+ (public_name bio_io)
+ (libraries base stdio)
+ (instrumentation
+  (backend bisect_ppx))
+ (preprocess (pps ppx_sexp_conv)))
+
+(documentation)

@@ -1,0 +1,37 @@
+{0 Bio_io}
+
+{{:https://github.com/mooreryan/bio_io/actions/workflows/build_and_test.yml}{%html:
+<img
+src="https://github.com/mooreryan/bio_io/actions/workflows/build_and_test.yml/badge.svg?branch=main"
+alt="Build and test"/> %}}
+{{:https://coveralls.io/github/mooreryan/bio_io?branch=main}{%html:
+<img
+src="https://coveralls.io/repos/github/mooreryan/bio_io/badge.svg?branch=main"
+alt="Coverage Status"/> %}}
+
+{b {{!Bio_io} The full API is browsable here}}.
+
+[Bio_io] is an OCaml library that provides programmatic access to
+common file formats used in bioinformatics like FASTA files.
+
+If you have any issues or find any bugs, open an issue on the
+{{:https://github.com/mooreryan/bio_io/issues} GitHub page}.
+
+{1 License}
+
+{{:https://github.com/mooreryan/bio_io}{%html: <img
+src="https://img.shields.io/badge/license-MIT%20or%20Apache%202.0-blue"
+alt="license MIT or Apache 2.0"/> %}}
+
+Licensed under the Apache License, Version 2.0 or the MIT license, at
+your option. This program may not be copied, modified, or distributed
+except according to those terms.
+
+{1 Modules}
+
+These are the main modules of [Bio_io].  API docs and examples can be
+found on the respective pages.
+
+- {{!Bio_io.Fasta_in_channel} Fasta_in_channel}: an input channel for
+  reading FASTA files
+- {{!Bio_io.Fasta_record} Fasta_record}: a record type for FASTA files
