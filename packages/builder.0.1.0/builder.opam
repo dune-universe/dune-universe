@@ -1,0 +1,47 @@
+version: "0.1.0"
+opam-version: "2.0"
+maintainer: "Robur <team@robur.coop>"
+authors: ["Robur <team@robur.coop>"]
+homepage: "https://github.com/roburio/builder"
+dev-repo: "git+https://github.com/roburio/builder.git"
+bug-reports: "https://github.com/roburio/builder/issues"
+license: "ISC"
+
+depends: [
+  "ocaml" {>= "4.10.0"}
+  "dune" {>= "2.0.0"}
+  "asn1-combinators"
+  "bheap"
+  "bos"
+  "cmdliner"
+  "cstruct" {>= "6.0.0"}
+  "duration"
+  "fmt"
+  "fpath"
+  "logs"
+  "lwt"
+  "ptime"
+  "rresult"
+  "uuidm"
+  "http-lwt-client" {>= "0.0.2"}
+  "base64"
+]
+build: [
+  ["dune" "subst"] {dev}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["sh" "-ex" "packaging/FreeBSD/create_package.sh"] {os = "freebsd"}
+  ["sh" "-ex" "packaging/debian/create_package.sh"] {os-family = "debian"}
+]
+
+synopsis: "Scheduling and executing shell jobs"
+description: """
+The builder server has a schedule of jobs to be executed, stored persistently
+on disk. Any number of workers can connect via TCP (using ASN.1 encoded
+messages) that execute a single job -- usually contained in a sandbox (FreeBSD
+jail or Docker container). A client is a command-line interface to modify the
+schedule. Access control is out of scope - run it locally on your build host.
+The server receives the output artifacts of each job, and either stores them
+on the local file system or upload them to a remote server via http.
+
+See https://builds.robur.coop for the live web frontend (builder-web).
+"""

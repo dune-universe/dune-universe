@@ -1,0 +1,6 @@
+(library
+  (name tsdl_ttf)
+  (public_name tsdl-ttf)
+  (modules tsdl_ttf)
+  (libraries ctypes tsdl)
+  (c_library_flags -lSDL2_ttf))

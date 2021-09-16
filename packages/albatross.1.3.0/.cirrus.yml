@@ -1,0 +1,27 @@
+pkg_install_task_template: &PKG_INSTALL_TASK_TEMPLATE
+  pkg_install_script: pkg install -y ocaml-opam gmp gmake pkgconf bash
+
+regular_task_template: &REGULAR_TASK_TEMPLATE
+  dependencies_script: eval `opam env` && opam install -y --deps-only .
+  build_script: eval `opam env` && dune build
+  watermark_script: eval `opam env` && dune subst
+  release_script: eval `opam env` && dune build --profile=release
+  package_script: packaging/FreeBSD/create_package.sh
+  albatross_artifacts:
+    path: albatross.pkg
+
+task:
+  << : *PKG_INSTALL_TASK_TEMPLATE
+  ocaml_script: opam init -a --comp=4.11.1
+  << : *REGULAR_TASK_TEMPLATE
+  name: FreeBSD 12.2
+  freebsd_instance:
+    image_family: freebsd-12-2
+
+task:
+  << : *PKG_INSTALL_TASK_TEMPLATE
+  ocaml_script: opam init -a --comp=4.12.0
+  << : *REGULAR_TASK_TEMPLATE
+  name: FreeBSD 13
+  freebsd_instance:
+    image_family: freebsd-13-0

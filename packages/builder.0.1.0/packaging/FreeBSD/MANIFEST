@@ -1,0 +1,21 @@
+name:         builder
+version:      0.1.0
+origin:	      local/builder
+comment:      Builder service
+www:	      https://github.com/roburio/builder
+maintainer:   Robur <team@robur.coop>
+prefix:	      /usr/local
+licenselogic: single
+licenses:     [ISCL]
+flatsize:     %%FLATSIZE%%
+categories:   [local]
+deps {
+    gmp {
+        origin = "math/gmp";
+    },
+}
+
+desc = <<EOD
+A server and client conducting build jobs
+
+EOD;

@@ -1,0 +1,16 @@
+[Unit]
+Description=Builder worker
+After=syslog.target network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/docker run --rm --name %n ubuntu:20.04 sh -c 'apt update; apt install --no-install-recommends --no-install-suggests -y wget; wget http://192.168.0.12:3000/job/builder-ubuntu-20.04/build/latest/f/bin/builder.deb; apt install -y ./builder.deb; builder-worker -r 172.17.0.1:1234'
+ExecStop=/usr/bin/docker stop %n
+# Apparently this is needed in case "docker run" dies for other reasons.
+ExecStopPost=/usr/bin/docker stop %n
+# Is Restart=on-success sufficient?
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

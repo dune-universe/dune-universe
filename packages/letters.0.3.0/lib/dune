@@ -1,0 +1,22 @@
+(library
+ (name letters)
+ (public_name letters)
+ (libraries
+   ptime.clock.os
+   lwt
+   lwt.unix
+   tls
+   tls.lwt
+   fpath
+   colombe
+   colombe.emile
+   mrmime
+   sendmail
+   sendmail.starttls
+   ca-certs
+ )
+)
+
+(env
+  (dev
+    (flags (:standard -w -16))))

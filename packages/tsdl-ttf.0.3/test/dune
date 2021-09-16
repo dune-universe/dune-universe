@@ -1,0 +1,7 @@
+(test
+ (name show_string)
+ (modules show_string)
+ (libraries tsdl tsdl_ttf)
+ (deps "f500.ttf")
+ (modes exe)
+)

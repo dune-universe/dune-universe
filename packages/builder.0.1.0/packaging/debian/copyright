@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: orb
+Upstream-Contact: Robur Team <team@robur.coop>
+Source: https://github.com/roburio/builder
+
+Files: *
+Copyright: "Reynir Björnsson <reynir@reynir.dk" "Hannes Mehnert <hannes@mehnert.org>"
+License: ISC

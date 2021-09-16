@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -ex
+
+fetch http://127.0.2.1:3000/job/orb-freebsd/build/latest/f/bin/orb.pkg && pkg install -y orb.pkg && rm orb.pkg
+
+repos="default:https://opam.ocaml.org,unikernels:https://git.robur.io/robur/unikernel-repo.git"
+orb build --solver-timeout=600 --switch-name=/tmp/myswitch --date=1589138087 --out=. --repos=$repos %%OPAM_PACKAGE%%

@@ -1,0 +1,31 @@
+(executable
+ (name worker)
+ (public_name builder-worker)
+ (modules worker)
+ (libraries cmdliner builder logs.fmt fmt.cli logs.cli fmt.tty bos))
+
+(executable
+ (name client)
+ (public_name builder-client)
+ (modules client)
+ (libraries cmdliner builder logs.fmt fmt.cli logs.cli fmt.tty bos))
+
+(executable
+ (name server)
+ (public_name builder-server)
+ (modules server)
+ (libraries cmdliner builder logs.fmt fmt.cli logs.cli fmt.tty lwt lwt.unix
+   bos bheap ptime.clock.os duration http-lwt-client))
+
+(executable
+ (name inspect)
+ (public_name builder-inspect)
+ (modules inspect)
+ (libraries cmdliner builder logs.fmt fmt.cli logs.cli fmt.tty bos rresult
+    duration))
+
+(executable
+ (name test)
+ (public_name test)
+ (modules test)
+ (libraries builder ptime.clock.os base64))

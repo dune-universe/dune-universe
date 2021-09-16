@@ -1,0 +1,20 @@
+language: c
+sudo: required
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then yes | sudo add-apt-repository ppa:zoogie/sdl2-snapshots && sudo apt-get update -qq && sudo apt-get -qq -yy install libsdl2-ttf-dev; fi
+install:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-ocaml.sh
+  - bash -ex .travis-ocaml.sh
+  - opam install -y depext
+  - opam depext -y tsdl
+  - opam pin -y add tsdl 0.9.1 # workaround for missing sdl 2.0.5
+script:
+  - wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-opam.sh
+  - bash -ex .travis-opam.sh
+env:
+  - OCAML_VERSION=4.02
+  - OCAML_VERSION=4.03
+  - OCAML_VERSION=4.04
+os:
+  - linux
+  - osx
