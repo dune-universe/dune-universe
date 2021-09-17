@@ -1,0 +1,4 @@
+(library
+ (name bare_structs)
+ (public_name tezos-lwt-result-stdlib.bare.structs)
+ (libraries lwt tezos-lwt-result-stdlib.bare.sigs))

@@ -1,0 +1,37 @@
+(library
+ (name tezos_validator)
+ (public_name tezos-validator)
+ (libraries tezos-base
+            tezos-base.unix
+            tezos-context
+            tezos-stdlib-unix
+            tezos-protocol-environment
+            tezos-protocol-updater
+            tezos-shell
+            tezos-shell-context
+            tezos-validation)
+ (flags (:standard -open Tezos_base__TzPervasives
+                   -open Tezos_context
+                   -open Tezos_stdlib_unix
+                   -open Tezos_shell
+                   -open Tezos_shell_services
+                   -open Tezos_validation
+                   -open Tezos_protocol_updater
+                   -open Tezos_shell_context))
+ (modules Validator))
+
+(executable
+ (name main_validator)
+ (public_name tezos-validator)
+ (package tezos-validator)
+ (libraries tezos_validator)
+ (flags (:standard -open Tezos_base__TzPervasives
+                   -open Tezos_context
+                   -open Tezos_stdlib_unix
+                   -open Tezos_shell
+                   -open Tezos_shell_services
+                   -open Tezos_validation
+                   -open Tezos_protocol_updater
+                   -open Tezos_validator
+                   -linkall))
+ (modules Main_validator))

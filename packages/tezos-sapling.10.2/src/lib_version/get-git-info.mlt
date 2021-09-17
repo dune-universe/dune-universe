@@ -1,0 +1,26 @@
+#!/usr/bin/env ocaml
+;;
+#load "unix.cma"
+
+let query ?env ~default cmd =
+  let default () =
+    match env with
+    |None -> default
+    |Some env -> try Sys.getenv env with Not_found -> default
+  in
+  try
+    let chan = Unix.open_process_in cmd in
+    let out = input_line chan in
+    if Unix.close_process_in chan = Unix.WEXITED 0 then out
+    else default ()
+  with End_of_file -> default ()
+
+let hash = query ~env:"GIT_SHORTREF" ~default:"unknown" "git show -s --pretty=format:%H"
+
+let date = query ~env:"GIT_DATETIME" ~default:"not-available" "git show -s --pretty=format:%ci"
+
+let () =
+  Format.printf
+    "@[<v>let commit_hash = \"%s\"@,let committer_date = \"%s\"@]@."
+    hash
+    date
