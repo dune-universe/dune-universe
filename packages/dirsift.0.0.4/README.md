@@ -20,8 +20,14 @@ PATH defaults to `.` if unspecified
 
 TYPE can be one of
 - `git`
-  - Directory contains `.git` subdirectory
+  - Directory identified as git repository
 - `not-git`
+- `borg`
+  - Directory identified as BorgBackup backup program repository
+- `not-borg`
+- `restic`
+  - Directory identified as Restic backup program repository
+- `not-restic`
 - `hidden`
   - Name of directory begins with `.`
 - `not-hidden`
@@ -36,3 +42,13 @@ TYPE can be one of
 
 If multiple `-t TYPE` are specified, they are connected by `and` (conjunction),
 i.e. directory must satisfy all TYPE requirements to be listed
+
+## Configuration
+
+Create a file at `~/.config/dirsift/config`, add any number of the options
+from the example config as follows
+
+```
+hot_upper_bound = "7d"
+warm_upper_bound = "30d"
+```

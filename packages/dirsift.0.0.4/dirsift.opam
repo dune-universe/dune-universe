@@ -1,5 +1,5 @@
 opam-version: "2.0"
-synopsis: "Search for directories"
+synopsis: "Search for directories by type"
 description: """
 ```
 dirsift -t TYPE [PATH]
@@ -11,8 +11,14 @@ PATH defaults to `.` if unspecified
 
 TYPE can be one of
 - `git`
-  - Directory contains `.git` subdirectory
+  - Directory identified as git repository
 - `not-git`
+- `borg`
+  - Directory identified as BorgBackup backup program repository
+- `not-borg`
+- `restic`
+  - Directory identified as Restic backup program repository
+- `not-restic`
 - `hidden`
   - Name of directory begins with `.`
 - `not-hidden`
@@ -37,12 +43,13 @@ dev-repo: "git+https://github.com/darrenldl/dirsift"
 depends: [
   "ocaml" {>= "4.08.1"}
   "dune" {>= "2.7.0"}
-  "containers" {>= "3.0"}
+  "containers" {>= "3.4"}
   "fileutils"
   "cmdliner"
-  "toml" {>= "6.0.0"}
-  "timere"
-  "timere-parse"
+  "otoml" {>= "0.9.1"}
+  "timedesc" {>= "0.5.1"}
+  "timere" {>= "0.6.0"}
+  "timere-parse" {>= "0.0.5"}
   "dune-build-info"
 ]
 build: [
