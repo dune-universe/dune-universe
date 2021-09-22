@@ -1,0 +1,8 @@
+(executable
+  (name Test)
+  (libraries
+     trax
+     alcotest
+     re
+  )
+)

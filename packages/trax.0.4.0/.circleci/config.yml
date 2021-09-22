@@ -1,0 +1,18 @@
+#
+# Circle CI configuration. Runs each time we push a new commit to Github.
+#
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: mjambon/mj-ocaml:alpine
+    working_directory: ~/dune-deps
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: opam exec -- make
+      - run:
+          name: Test
+          command: opam exec -- make test
